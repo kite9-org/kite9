@@ -4,12 +4,9 @@ import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
-import org.kite9.diagram.common.elements.vertex.AbstractAnchoringVertex
-import org.kite9.diagram.common.elements.vertex.ContainerSideVertex
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
+import org.kite9.diagram.common.elements.vertex.*
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMax
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMin
-import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
@@ -49,6 +46,9 @@ class ContainerConnectionTransform2(elementMapper: ElementMapper?) : Planarizati
     private fun createContainerEdgeVertices(pln: Planarization) {
         var number = 0
         for (v in (pln as MGTPlanarization).vertexOrder) {
+            if (v is PortVertex)
+                continue
+
             if (v is MultiCornerVertex && sideOrd(v) && v.getEdgeCount() > 3) {
                 val edgeDirectionToSplit = getDirectionForSideVertex(v)
                 if (edgeDirectionToSplit != null) {

@@ -4,6 +4,7 @@ import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
@@ -16,6 +17,8 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkD
 interface ContradictionHandler {
 
     fun checkForContainerContradiction(c: Connection)
+
+    fun checkForPortContradiction(p: Port)
 
     fun checkContradiction(
         ad: Direction?,

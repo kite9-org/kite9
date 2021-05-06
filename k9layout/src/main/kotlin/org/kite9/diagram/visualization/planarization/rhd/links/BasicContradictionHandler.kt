@@ -11,6 +11,8 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionContradicting
+import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionRendered
 import org.kite9.diagram.visualization.planarization.Tools.Companion.setConnectionContradiction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.getDirectionForLayout
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.isHorizontalDirection
@@ -113,6 +115,24 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
             }
         } else {
             throw LogicException("Contradicting, ordering direction: $ad $bd")
+        }
+    }
+
+    /**
+     * Makes sure straight edges leaving port are in the right direction
+     */
+    override fun checkForPortContradiction(p: Port) {
+        val expectedDirection = p.getPortDirection()
+
+        val badDirecteds = p.getLinks()
+            .filter { it.getDrawDirection() != null }
+            .filter { it.getDrawDirectionFrom(p) != expectedDirection }
+
+        if (badDirecteds.isNotEmpty()) {
+            badDirecteds.forEach {
+                setConnectionContradiction( it, true, isConnectionRendered( it ) )
+                log.send("Direction of $it not same as port side")
+            }
         }
     }
 

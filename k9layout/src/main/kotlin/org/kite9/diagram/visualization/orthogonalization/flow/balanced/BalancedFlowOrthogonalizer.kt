@@ -185,11 +185,11 @@ open class BalancedFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) : 
     private fun getVertexMaxDepth(v: Vertex): Int {
         return v.getDiagramElements()
             .map { de: DiagramElement -> de.getDepth() }
-            .reduce { a: Int, b: Int ->
+            .reduceOrNull { a: Int, b: Int ->
                 max(
                     a!!, b!!
                 )
-            }.toInt()
+            }?.toInt() ?: 0
     }
 
     companion object {

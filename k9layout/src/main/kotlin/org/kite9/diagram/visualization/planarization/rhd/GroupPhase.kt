@@ -133,6 +133,9 @@ abstract class GroupPhase(
 
     private fun setupLinks(o: DiagramElement) {
         if (o is Connected) {
+            if (o is Port) {
+                ch.checkForPortContradiction(o)
+            }
             for (c in o.getLinks()) {
                 if (!allLinks.contains(c)) {
                     allLinks.add(c)

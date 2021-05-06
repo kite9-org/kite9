@@ -112,11 +112,11 @@ abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPosit
         }
         when (ep) {
             EdgePhase.SINGLE_DIRECTION -> if (!contradicting && directed) {
-                done = edgeRouter!!.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
+                done = edgeRouter.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
             }
             EdgePhase.SINGLE_DIRECTION_CONTRADICTORS -> if (contradicting && directed) {
                 // have a go at getting the connections in, on the off chance they will fit.
-                done = edgeRouter!!.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
+                done = edgeRouter.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
                 if (done) {
                     setUnderlyingContradiction(e, false)
                 }
@@ -127,14 +127,14 @@ abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPosit
                 var d: Direction? = null
                 if (comm!!.getLayout() != null && comm.getLayout() !== Layout.GRID) {
                     d = getInsertionDirection(comm.getLayout(), e.getFrom(), e.getTo())
-                    done = edgeRouter!!.addPlanarizationEdge(p, e, d, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED)
+                    done = edgeRouter.addPlanarizationEdge(p, e, d, CrossingType.NOT_BACKWARDS, GeographyType.RELAXED)
                 }
             }
             EdgePhase.RELAXED_DIRECTIONS -> {
                 if (e.getDrawDirection() != null) {
                     setUnderlyingContradiction(e, true)
                 }
-                done = edgeRouter!!.addPlanarizationEdge(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED)
+                done = edgeRouter.addPlanarizationEdge(p, e, null, CrossingType.UNDIRECTED, GeographyType.RELAXED)
             }
         }
         if (!done) {

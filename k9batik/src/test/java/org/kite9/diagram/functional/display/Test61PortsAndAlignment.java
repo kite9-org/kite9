@@ -3,21 +3,35 @@ package org.kite9.diagram.functional.display;
 import java.util.Arrays;
 import java.util.Collections;
 
+import kotlin.jvm.Throws;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.*;
 import org.kite9.diagram.dom.css.CSSConstants;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
 import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.model.style.BorderTraversal;
+import org.kite9.diagram.testing.DiagramChecker;
 import org.w3c.dom.Element;
 
 public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
+	/**
+	 * Disabling some checks.  61_12 edges don't run straight anymore, however it's correct behaviour.
+	 * @return
+	 */
+	@Override
+	protected TestingEngine.Checks checks() {
+		TestingEngine.Checks out = new TestingEngine.Checks();
+		out.everythingStraight = false;
+		out.checkEdgeDirections = false;
+		return out;
+	}
 
 	@Test
 	public void test_61_1_PortPlacement() throws Exception {
@@ -124,7 +138,30 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test61_6_PortAndNonPortFanning() throws Exception{
+		Glyph one = createGlyph("One");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		one.appendChild(oneSocket);
 
+		Glyph two = createGlyph("Two");
+		Glyph three = createGlyph("Three");
+		Glyph four = createGlyph("Four");
+		Glyph five = createGlyph("Five");
+
+		Context i1 = new Context("i1", Arrays.asList( two, three, four, five ), true, null, Layout.DOWN);
+
+		// two links to the first guy
+		Link l4 = new Link(oneSocket, two);
+		Link l4_2 = new Link(oneSocket, two);
+
+		Link l3 = new Link(oneSocket, three, null, null, null, null, null);
+
+		// links not on port
+		Link l5 = new Link(one, four);
+		Link l6 = new Link(one, five);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, i1), null);
+		renderDiagram(d);
 	}
 
 	@Test
@@ -232,10 +269,27 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
     }
 
 
-
+	/**
+	 * This should throw a layout exception, because the edges don't go in a straight line anymore - there
+	 * is fanning.
+	 *
+	 * @throws Exception
+	 */
 	@Test
 	public void test_61_12_MultipleDirectedLinksToPort() throws Exception {
+		Glyph one = createGlyph("One");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		one.appendChild(oneSocket);
 
+		Glyph two = createGlyph("Two");
+		Glyph three = createGlyph("Three");
+
+		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
+		new Link(oneSocket, three, null, null, null, null, Direction.RIGHT);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
+		renderDiagram(d);
 	}
 
 }
