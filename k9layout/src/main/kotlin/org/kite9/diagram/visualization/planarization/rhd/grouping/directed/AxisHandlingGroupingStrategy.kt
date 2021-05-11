@@ -147,7 +147,7 @@ abstract class AxisHandlingGroupingStrategy(
                 DirectedGroupAxis.getState(out) === MergePlane.Y_FIRST_MERGE && isHorizontalDirection(ld.direction)
     }
 
-    fun identifyGroupDirection(out: CompoundGroup, ms: BasicMergeState) {
+    open fun identifyGroupDirection(out: CompoundGroup, ms: BasicMergeState) {
         val c = getCommonContainer(out)
         val layoutDirection = getAxisLayoutForContainer(c)
         val lda = out.internalLinkA

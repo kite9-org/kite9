@@ -4,9 +4,11 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 
 import org.kite9.diagram.common.elements.RoutingInfo
+import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
@@ -67,6 +69,11 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
                 rh.getTopLevelBounds(horiz)
             }
 
+            var port = getPortGroup(g!!)
+            if (port != null) {
+                out = rh.edge(port.getPortDirection(), out, horiz, true)
+            }
+
             //log.send("Setting "+(temp? "temp" : "real") + (horiz ? "horiz" : "vert")+" position for "+g+"\n\t"+out);
             if (temp) {
                 rh.setTempPosition(g, out!!, horiz)
@@ -81,6 +88,14 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             out
         } else {
             ri
+        }
+    }
+
+    private fun getPortGroup(g: Group) : Port? {
+        return if (g is LeafGroup) {
+            g.connected as? Port
+        } else {
+            null
         }
     }
 

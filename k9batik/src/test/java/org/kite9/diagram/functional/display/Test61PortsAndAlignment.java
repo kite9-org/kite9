@@ -1,23 +1,19 @@
 package org.kite9.diagram.functional.display;
 
-import java.util.Arrays;
-import java.util.Collections;
-
-import kotlin.jvm.Throws;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.*;
+import org.kite9.diagram.common.HelpMethods;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.common.HelpMethods;
-import org.kite9.diagram.model.position.Turn;
 import org.kite9.diagram.model.style.BorderTraversal;
-import org.kite9.diagram.testing.DiagramChecker;
 import org.w3c.dom.Element;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
@@ -116,7 +112,9 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
 		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.TOP, "50%");
+		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "50%");
 		one.appendChild(oneSocket);
+		one.appendChild(twoSocket);
 
 		Glyph two = createGlyph("Two");
 		Glyph three = createGlyph("Three");
@@ -129,7 +127,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		Link l4 = new Link(oneSocket, two);
 		Link l3 = new Link(oneSocket, three, null, null, null, null, null);
 		Link l5 = new Link(oneSocket, four);
-		Link l6 = new Link(oneSocket, five);
+		Link l6 = new Link(twoSocket, five);
 		Link l7 = new Link(oneSocket, six);
 
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, i1), null);
@@ -137,7 +135,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
-	public void test61_6_PortAndNonPortFanning() throws Exception{
+	public void test_61_6_PortAndNonPortFanning() throws Exception{
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
 		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
@@ -165,14 +163,21 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
-	public void test_61_7_ComplexArrivalSides() throws Exception {
+	public void test_61_7_DirectedWithPorts() throws Exception {
+		Glyph one = createGlyph("One");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
 
-	}
+		Glyph two = createGlyph("Two");
+		Glyph three = createGlyph("Three");
 
+		Context i1 = new Context("i1", Arrays.asList( two, three), true, null, Layout.RIGHT);
+		BasicSocket i1Socket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		i1.appendChild(i1Socket);
 
-	@Test
-	public void test_61_8_ComplexArrivalSides() throws Exception {
+		new Link(i1Socket, one);
 
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, i1), null);
+		renderDiagram(d);
 	}
 
 	@Test
@@ -229,20 +234,6 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		return g;
 	}
 
-
-	@Test
-	public void test_61_11_DirectedPortSideContradiction() throws Exception {
-		Glyph one = createGlyph("One");
-		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
-		one.appendChild(oneSocket);
-
-		Glyph two = createGlyph("Two");
-		ContradictingLink l4 = new ContradictingLink(oneSocket, two, null, null, null, null, Direction.LEFT);
-
-		DiagramKite9XMLElement d= new DiagramKite9XMLElement("dia", HelpMethods.listOf(two, one), Layout.RIGHT, null);
-		renderDiagram(d);
-	}
 
 	@Test
     public void test_61_12_LinkedDifferentDirection() throws Exception {

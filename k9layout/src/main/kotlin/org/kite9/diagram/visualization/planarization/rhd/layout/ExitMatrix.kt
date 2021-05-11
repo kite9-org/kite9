@@ -13,6 +13,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 /**
  * The exit matrix keeps track of links leaving a group in order that we can perform
+ * evaluation of the best way to layout it's parent.
  *
  * @author robmoffat
  */

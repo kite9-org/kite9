@@ -210,11 +210,13 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 
 				// arrange diagram
 				BasicArrangementPipeline pipeline = new BasicArrangementPipeline(def, new BasicCompleteDisplayer(false));
-				d = pipeline.arrange(d);
-				lastDiagram = d;
-				lastPipeline = pipeline;
-				lastContext = (Kite9BridgeContext) ctx;
-
+				try {
+					d = pipeline.arrange(d);
+				} finally {
+					lastDiagram = d;
+					lastPipeline = pipeline;
+					lastContext = (Kite9BridgeContext) ctx;
+				}
 			}
 
 

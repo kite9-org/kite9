@@ -31,7 +31,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	protected void transcodeSVG(String s) throws Exception {
 		try {
 			super.transcodeSVG(s);
-			
+		} finally {
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
 			if (lastDiagram != null) {
 				AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
@@ -40,7 +40,6 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			if (checkXML()) {
 				checkIdenticalXML();
 			}
-		} finally {
 			try {
 				copyTo(getOutputFile(".svg"), "svg-output");
 			} catch (Exception e) {

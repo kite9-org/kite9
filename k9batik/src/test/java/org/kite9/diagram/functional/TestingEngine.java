@@ -82,8 +82,7 @@ public class TestingEngine extends TestingHelp {
 					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG().getBytes());
 				}
 				if (RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
-					TestingEngine.drawPositions((Collection<Vertex>) RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), RHDPlanarization.class, "positions", "vertex.png");
-
+					TestingEngine.drawPositions(RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), theTest, "positions", "vertex.png");
 				}
 			} catch (PlanarizationException pe) {
 				pln = pe.getPlanarization();

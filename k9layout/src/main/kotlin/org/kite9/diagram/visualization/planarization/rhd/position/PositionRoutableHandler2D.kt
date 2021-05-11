@@ -53,6 +53,22 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         }
     }
 
+    override fun edge(d: Direction, b: Bounds, horiz: Boolean): Bounds {
+        return if (horiz) {
+            when (d) {
+                Direction.LEFT -> BasicBounds(b.distanceMin, b.distanceMin)
+                Direction.RIGHT -> BasicBounds(b.distanceMax, b.distanceMax)
+                else -> b
+            }
+        } else {
+            when (d) {
+                Direction.UP -> BasicBounds(b.distanceMin, b.distanceMin)
+                Direction.DOWN -> BasicBounds(b.distanceMax, b.distanceMax)
+                else -> b
+            }
+        }
+    }
+
     override fun narrow(d: Layout?, `in`: Bounds, horiz: Boolean, applyGutters: Boolean): Bounds {
         var `in`: Bounds? = `in`
         `in` = `in` ?: getTopLevelBounds(horiz)
@@ -232,31 +248,6 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         }
     }
 
-    /*override fun drawPositions(out: Collection<Routable>): BufferedImage {
-        val size = (out.size * 40).toDouble()
-        val bi = BufferedImage(size.toInt() + 60, size.toInt() + 60, BufferedImage.TYPE_3BYTE_BGR)
-        val g = bi.createGraphics()
-        g.color = Color.WHITE
-        g.fillRect(0, 0, size.toInt() + 60, size.toInt() + 60)
-        val cols = arrayOf(Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY)
-        var i = 0
-        for (o in out) {
-            val ri = o.routingInfo
-            val pri = ri as PositionRoutingInfo?
-            if (pri != null) {
-                g.color = cols[i % 4]
-                g.stroke = BasicStroke(1)
-                i++
-                g.drawRoundRect(
-                    (pri.getMinX() * size + 20) as Int, (pri.getMinY() * size + 20) as Int,
-                    (pri.getWidth() * size) as Int, (pri.getHeight() * size) as Int, 3, 3
-                )
-                g.drawString(o.toString(), (pri.centerX() * size + 20) as Int, (pri.centerY() * size + 20) as Int)
-            }
-        }
-        g.dispose()
-        return bi
-    }*/
 
     override fun isWithin(area: RoutingInfo, pos: RoutingInfo): Boolean {
         val areax = (area as BoundsBasedPositionRoutingInfo).x

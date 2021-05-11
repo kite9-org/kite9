@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.position
 import org.kite9.diagram.common.HintMap
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 
@@ -25,6 +26,7 @@ interface RoutableHandler2D : RoutableReader {
     fun setTempPosition(r: Any?, ri: Bounds, horiz: Boolean)
     fun clearTempPositions(horiz: Boolean)
     fun getTopLevelBounds(horiz: Boolean): Bounds
+    fun edge(direction: Direction, b: Bounds, horiz: Boolean) : Bounds
     fun narrow(layout: Layout?, b: Bounds, horiz: Boolean, applyGutters: Boolean): Bounds
     fun createRouting(x: Bounds, y: Bounds): RoutingInfo
     fun outputSettings()
@@ -60,11 +62,6 @@ interface RoutableHandler2D : RoutableReader {
      * Determines the order the two RI's must be in for the planarization line.  returns -1, 1 or 0 if same
      */
     fun order(a: RoutingInfo, b: RoutingInfo): Int
-
-    /**
-     * Useful debug method.
-     */
-    //fun drawPositions(out: Collection<Routable>): BufferedImage
 
     /**
      * Reports the bounds into the hintmap object for future renderings
