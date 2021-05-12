@@ -241,7 +241,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String glyphLeaf(String xml, String extraAtts) {
 		return "    <svg:g style=\"--kite9-type: svg; " +extraAtts+" \">\n"+
 	           "      <svg:g style='--kite9-usage: decal; --kite9-type: svg; '>\n" +
-	           "        <svg:rect x='0' y='0' width='#{$x1}' height='#{$y1}' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" + 
+	           "        <svg:rect x='0' y='0' width='0' k9:width='$width' k9:height='$height' height='0' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" +
 	           "      </svg:g>\n" +
 	           xml + 
 	           "    </svg:g>";

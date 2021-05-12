@@ -288,10 +288,12 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val c: Container? = lg.container
 
             // sizing
-            val ri: RoutingInfo = lg.axis.getPosition((routableReader), false)
-            if (lg.occupiesSpace()) {
+            if (l !is Port) {
+                val ri: RoutingInfo = lg.axis.getPosition((routableReader), false)
                 vp.checkMinimumGridSizes(ri)
-                routableReader.setPlacedPosition(l as Rectangular, ri)
+                if (lg.occupiesSpace()) {
+                    routableReader.setPlacedPosition(l as Rectangular, ri)
+                }
                 ensureContainerBoundsAreLargeEnough(ri, c, lg)
             }
 

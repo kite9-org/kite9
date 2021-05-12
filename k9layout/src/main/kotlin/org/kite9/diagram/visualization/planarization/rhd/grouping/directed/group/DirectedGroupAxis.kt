@@ -71,7 +71,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
             var port = getPortGroup(g!!)
             if (port != null) {
-                out = rh.edge(port.getPortDirection(), out, horiz, true)
+                out = rh.edge(port.getPortDirection(), out, horiz)
             }
 
             //log.send("Setting "+(temp? "temp" : "real") + (horiz ? "horiz" : "vert")+" position for "+g+"\n\t"+out);

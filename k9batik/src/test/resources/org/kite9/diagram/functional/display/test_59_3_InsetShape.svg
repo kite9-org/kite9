@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" k9:width="$width" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
+<svg:svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" xmlns:k9="http://www.kite9.org/schema/adl" style="--kite9-type: diagram; " version="1.0" width="71" k9:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=71.0, h=71.0); position: none; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" k9:height="$height"
 >
 <svg:defs
   ><svg:style xml:space="preserve"
@@ -11,11 +11,11 @@
       /><svg:stop stop-color="#DDD" offset="100%"
     /></svg:linearGradient
   ></svg:defs
-  >    <svg:g style="--kite9-type: svg;  "
+  >    <svg:g style="--kite9-type: svg;  " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=41.0, h=41.0); position: none; " transform="translate(15.5,15.5)"
   >
-      <svg:g style="--kite9-usage: decal; --kite9-type: svg; "
+      <svg:g style="--kite9-usage: decal; --kite9-type: svg; " k9-info=""
     >
-        <svg:rect x="0" y="0" width="#{$x1}" style="fill: url(#glyph-background); " class="glyph-back" rx="8" ry="8" height="#{$y1}"
+        <svg:rect x="0" y="0" k9:width="$width" width="41" style="fill: url(#glyph-background); " k9:height="$height" class="glyph-back" rx="8" ry="8" height="41"
       />
       </svg:g
       >
