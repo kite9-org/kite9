@@ -13,13 +13,6 @@ class RouteRenderingInformationImpl : AbstractRenderingInformationImpl(), RouteR
         return if (pos >= hops.size) false else hops[pos]
     }
 
-    fun setHop(pos: Int) {
-        while (hops.size <= pos) {
-            hops.add(false)
-        }
-        hops[pos] = true
-    }
-
     override fun getWaypoint(pos: Int): Dimension2D? {
         return routePositions[pos]
     }

@@ -3,6 +3,8 @@ package org.kite9.diagram.dom.painter
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.RouteRenderingInformation
+import kotlin.math.abs
+import kotlin.math.min
 
 /**
  * This class knows how to render anything with a
@@ -91,9 +93,11 @@ class RoutePainterImpl {
                 drawHopEnd(m1.xe.toDouble(), m1.ye.toDouble(), m1.xs.toDouble(), m1.ys.toDouble(), gp)
             } else if (next != null) {
                 val c = m1.copy()
-                c.trim(0f, radius)
+                val aRadius : Float = min(radius, m1.length / 2.0f)
+                val bRadius : Float = min(radius, next.length / 2.0f)
+                c.trim(0f, aRadius)
                 gp.lineTo(c.xe.toDouble(), c.ye.toDouble())
-                drawCorner(gp, m1, m1.direction, next.direction)
+                drawCorner(gp, m1, m1.direction, next.direction, aRadius.toDouble(), bRadius.toDouble())
             } else {
                 gp.lineTo(m1.xe.toDouble(), m1.ye.toDouble())
             }
@@ -135,31 +139,30 @@ class RoutePainterImpl {
             return radius
         }
 
-        protected fun drawCorner(gp: Route, a: Move, da: Direction, db: Direction) {
+        protected fun drawCorner(gp: Route, a: Move, da: Direction, db: Direction, aRadius: Double, bRadius: Double) {
             if (radius == 0f) {
                 return
             }
-            val cs = radius.toDouble()
             when (da) {
                 Direction.RIGHT -> if (db === Direction.UP) {
-                    gp.arc(a.xe - cs, a.ye.toDouble() ,a.xe.toDouble(), a.ye-cs, false)
+                    gp.arc(a.xe - aRadius, a.ye.toDouble() ,a.xe.toDouble(), a.ye-bRadius, false)
                 } else if (db === Direction.DOWN) {
-                    gp.arc(a.xe - cs, a.ye.toDouble(), a.xe.toDouble(), a.ye+cs, true)
+                    gp.arc(a.xe - aRadius, a.ye.toDouble(), a.xe.toDouble(), a.ye+bRadius, true)
                 }
                 Direction.LEFT -> if (db === Direction.UP) {
-                    gp.arc(a.xe + cs, a.ye.toDouble(),  a.xe.toDouble(), a.ye - cs, true)
+                    gp.arc(a.xe + aRadius, a.ye.toDouble(),  a.xe.toDouble(), a.ye - bRadius, true)
                 } else if (db === Direction.DOWN) {
-                    gp.arc(a.xe + cs, a.ye.toDouble(), a.xe.toDouble(), a.ye + cs, false)
+                    gp.arc(a.xe + aRadius, a.ye.toDouble(), a.xe.toDouble(), a.ye + bRadius, false)
                 }
                 Direction.UP -> if (db === Direction.LEFT) {
-                    gp.arc(a.xe.toDouble(), a.ye + cs, a.xe - cs, a.ye.toDouble(), false)
+                    gp.arc(a.xe.toDouble(), a.ye + aRadius, a.xe - bRadius, a.ye.toDouble(), false)
                 } else if (db === Direction.RIGHT) {
-                    gp.arc(a.xe.toDouble(), a.ye + cs, a.xe + cs, a.ye.toDouble(), true)
+                    gp.arc(a.xe.toDouble(), a.ye + aRadius, a.xe + bRadius, a.ye.toDouble(), true)
                 }
                 Direction.DOWN -> if (db === Direction.LEFT) {
-                    gp.arc(a.xe.toDouble(), a.ye - cs, a.xe - cs, a.ye.toDouble(), true)
+                    gp.arc(a.xe.toDouble(), a.ye - aRadius, a.xe - bRadius, a.ye.toDouble(), true)
                 } else if (db === Direction.RIGHT) {
-                    gp.arc(a.xe.toDouble(), a.ye - cs, a.xe + cs, a.ye.toDouble(), false)
+                    gp.arc(a.xe.toDouble(), a.ye - aRadius, a.xe + bRadius, a.ye.toDouble(), false)
                 }
             }
         }
@@ -209,44 +212,19 @@ class RoutePainterImpl {
         return gp.toString()
     }
 
-    //	private void drawEnd(EndDisplayer start, boolean visible, Paint lineColour, Paint fillColour) {
-    //		if (isOutputting() && visible) {
-    //			start.draw(g2, lineColour, fillColour);
-    //		}
-    //	}
-    protected fun drawLength(
-        x1: Double, y1: Double, x2: Double, y2: Double,
-        gp: Route, startCrop: Double, endCrop: Double, start: Boolean
-    ) {
-        if (x1 - x2 != 0.0) {
-            if (x1 < x2) {
-                // left right arrow
-                if (start) gp.moveTo(x1 + startCrop, y1)
-                gp.lineTo(x2 - endCrop, y2)
-            } else {
-                // right-left arrow
-                if (start) gp.moveTo(x1 - startCrop, y1)
-                gp.lineTo(x2 + endCrop, y2)
-            }
-        } else {
-            if (y1 < y2) {
-                if (start) gp.moveTo(x1, y1 + startCrop)
-                gp.lineTo(x2, y2 - endCrop)
-            } else {
-                if (start) gp.moveTo(x1, y1 - startCrop)
-                gp.lineTo(x2, y2 + endCrop)
-            }
-        }
-    }
 
     /**
      * Moves are straight-line sections within the route
      *
      * @author robmoffat
      */
-    class Move(var xs: Float, var ys: Float, var xe: Float, var ye: Float, hopStart: Boolean, hopEnd: Boolean) {
+    data class Move(var xs: Float, var ys: Float, var xe: Float, var ye: Float, val hs: Boolean, val he: Boolean) {
+
         val hopStart : Boolean
         val hopEnd : Boolean
+
+        val length = abs(xe - xs) + abs(ye - ys)
+
         fun trim(start: Float, end: Float) {
             if (xs == xe) {
                 if (ys > ye) {
@@ -298,8 +276,8 @@ class RoutePainterImpl {
 
         init {
             if (direction === Direction.LEFT || direction === Direction.RIGHT) {
-                this.hopStart = hopStart
-                this.hopEnd = hopEnd
+                this.hopStart = hs
+                this.hopEnd = he
             } else {
                 this.hopStart = false
                 this.hopEnd = false

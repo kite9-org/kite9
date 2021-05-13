@@ -107,43 +107,4 @@ class ConnectionRouteCompactionStep : CompactionStep {
         rri.size = BasicDimension2D(x2 - x1, y2 - y1)
     }
 
-    private fun getRotatedSize(t: Terminator?, r: Int, d: Direction): Double {
-        var r = r
-        var d: Direction? = d
-        while (r > 0) {
-            d = rotateClockwise(d!!)
-            r--
-        }
-        return t?.getPadding(d!!) ?: 0.0
-    }
-
-    protected fun getTerminatorRotation(pos: Dimension2D?, from: Dimension2D?): Int {
-        var r = 0
-        r = if (from!!.y() == pos!!.y()) {
-            // horizontal
-            if (from.x() < pos.x()) {
-                // right
-                2
-            } else if (from.x() > pos.x()) {
-                // left
-                0
-            } else {
-                throw LogicException()
-            }
-        } else if (from.x() == pos.x()) {
-            // vertical
-            if (from.y() < pos.y()) {
-                // down
-                1
-            } else if (from.y() > pos.y()) {
-                // up
-                3
-            } else {
-                throw LogicException()
-            }
-        } else {
-            throw LogicException()
-        }
-        return r
-    }
 }

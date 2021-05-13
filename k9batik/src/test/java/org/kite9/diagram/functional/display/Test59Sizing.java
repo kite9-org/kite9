@@ -29,17 +29,11 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	/**
-	 * Can we have decals in svg elements?  This doesn't work - svg type should _only_ contain svg elements.
-	 * Need to improve exception
+	 * Can we have decals in svg elements?  Apparently yes.
 	 */
 	@Test
 	public void test_59_3_InsetShape() throws Exception {
-		try {
-			renderDiagram(basicDiagram(glyphLeaf(ellipse(), "")));
-			Assert.fail();
-		} catch (Kite9XMLProcessingException e) {
-			// expected
-		}
+		renderDiagram(basicDiagram(glyphLeaf(ellipse(), "")));
 	}
 	
 	/**
