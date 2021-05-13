@@ -117,7 +117,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		one.appendChild(twoSocket);
 
 		Glyph two = createGlyph("Two");
-		Glyph three = createGlyph("Three");
+		Glyph three = createGlyph("3");
 		Glyph four = createGlyph("Four");
 		Glyph five = createGlyph("Five");
 		Glyph six = createGlyph("Six");
