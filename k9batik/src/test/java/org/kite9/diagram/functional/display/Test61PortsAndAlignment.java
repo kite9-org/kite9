@@ -181,6 +181,29 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
+	public void test_61_8_AlignmentAndPorts() throws Exception {
+		Glyph one = createGlyph("One");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		one.appendChild(oneSocket);
+
+		Glyph two = createGlyph("Two");
+
+		Glyph three = createGlyph("Three");
+		BasicSocket threeSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "50%");
+		three.appendChild(threeSocket);
+
+
+		Context i1 = new Context("i1", Arrays.asList(one, two, three), true, null, Layout.RIGHT);
+
+		new Link(oneSocket, threeSocket);
+		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(i1), null);
+		renderDiagram(d);
+	}
+
+	@Test
 	public void test_61_9_OffsetPortsAndMiddles() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
@@ -236,7 +259,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
 
 	@Test
-    public void test_61_12_LinkedDifferentDirection() throws Exception {
+    public void test_61_11_LinkedDifferentDirection() throws Exception {
     	Context i1 = new Context("i1", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	Context i2 = new Context("i2", Collections.EMPTY_LIST, true, null, Layout.DOWN);
     	Context i3 = new Context("i3", Collections.EMPTY_LIST, true, null, Layout.DOWN);
@@ -282,5 +305,6 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
 		renderDiagram(d);
 	}
+
 
 }
