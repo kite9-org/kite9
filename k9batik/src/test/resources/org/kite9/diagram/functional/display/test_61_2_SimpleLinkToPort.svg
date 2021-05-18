@@ -10,7 +10,7 @@
   ></defs
   ><g filter="url(#dropshadow)"
   >
-  <g k9-elem="glyph" id="2-two" style="--kite9-traversal: PREVENT;" transform="translate(25.0,15.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=15.0); rect-size: BasicDimension2D(w=57.0, h=47.0); position: none; " rank="0"
+  <g k9-elem="glyph" id="2-two" transform="translate(25.0,15.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=15.0); rect-size: BasicDimension2D(w=57.0, h=47.0); position: none; " rank="0"
     ><rect x="0" y="0" k9:width="$width" width="57" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="47"
       />
     <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(9.4,14.7)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=35.0, h=21.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; "
@@ -29,7 +29,7 @@
       >
   </g
       >
-  <g k9-elem="glyph" id="0-one" style="--kite9-traversal: PREVENT;" transform="translate(15.0,82.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=82.0); rect-size: BasicDimension2D(w=57.0, h=140.0); position: none; " rank="1"
+  <g k9-elem="glyph" id="0-one" transform="translate(15.0,82.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=82.0); rect-size: BasicDimension2D(w=57.0, h=140.0); position: none; " rank="1"
       ><rect x="0" y="0" k9:width="$width" width="57" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="140"
         />
     <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(9.4,45.7)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=119.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; "

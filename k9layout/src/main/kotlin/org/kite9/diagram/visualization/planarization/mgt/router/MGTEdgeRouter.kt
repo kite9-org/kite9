@@ -327,21 +327,9 @@ class MGTEdgeRouter(private val rh: RoutableReader, private val em: ElementMappe
     ): Boolean {
         return try {
             logPlanarEmbeddingDetails(p, log)
-            val f = if (ci is ContainerLayoutEdge) LayoutEdgeRouteFinder(
-                p,
-                rh,
-                ci,
-                em,
-                d!!
-            ) else if (ci is BorderEdge) ContainerEdgeRouteFinder(p, rh, ci) else ConnectionEdgeRouteFinder(
-                p,
-                rh,
-                (ci as ConnectionEdge),
-                em,
-                d,
-                it,
-                gt
-            )
+            val f = if (ci is ContainerLayoutEdge) LayoutEdgeRouteFinder(p, rh, ci, em, d!!)
+                else if (ci is BorderEdge) ContainerEdgeRouteFinder(p, rh, ci)
+                else ConnectionEdgeRouteFinder(p, rh, (ci as ConnectionEdge), em, d, it, gt)
             log.send("Routing " + ci + " from " + ci.getFrom() + " to " + ci.getTo() + "d=" + ci.getDrawDirection())
             val ep: EdgePath = f.createShortestPath()
             if (ep.costing.illegalEdgeCrossings > 0) {

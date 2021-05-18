@@ -21,7 +21,7 @@ public class Test62PortContradictions extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_62_1_ComplexArrivalSides() throws Exception {
 		Glyph one = createGlyph("One");
-		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		//one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
 		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "50%");
 		one.appendChild(oneSocket);
 

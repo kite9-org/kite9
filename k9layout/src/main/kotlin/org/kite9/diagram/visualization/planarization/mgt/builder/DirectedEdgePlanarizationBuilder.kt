@@ -4,6 +4,7 @@ import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
+import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
@@ -115,10 +116,14 @@ abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPosit
                 done = edgeRouter.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
             }
             EdgePhase.SINGLE_DIRECTION_CONTRADICTORS -> if (contradicting && directed) {
-                // have a go at getting the connections in, on the off chance they will fit.
-                done = edgeRouter.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
-                if (done) {
-                    setUnderlyingContradiction(e, false)
+                if ((e.getFrom() !is PortVertex) && (e.getTo() !is PortVertex)) {
+                    // have a go at getting the connections in, on the off chance they will fit
+                    // not allowed for port vertices, since directed edges from them must leave in
+                    // the right direction
+                    done = edgeRouter.addPlanarizationEdge(p, e, e.getDrawDirection(), CrossingType.STRICT, GeographyType.STRICT)
+                    if (done) {
+                        setUnderlyingContradiction(e, false)
+                    }
                 }
             }
             EdgePhase.FORWARDS_DIRECTIONS -> if (!contradicting && !directed) {
