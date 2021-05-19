@@ -56,4 +56,21 @@ public class Test62PortContradictions extends AbstractDisplayFunctionalTest {
 		renderDiagram(d);
 	}
 
+	@Test
+	public void test_62_3_ImpossibleDirectedLinks() throws Exception {
+		Glyph one = createGlyph("One");
+		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		one.appendChild(oneSocket);
+
+		Glyph two = createGlyph("Two");
+		Glyph three = createGlyph("Three");
+
+		new ContradictingLink(oneSocket, three, null, null, null, null, Direction.RIGHT);
+		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement("dia", HelpMethods.listOf(one, two, three), Layout.RIGHT, null);
+		renderDiagram(d);
+	}
+
 }

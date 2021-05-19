@@ -124,8 +124,10 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
     override fun checkForPortContradiction(p: Port) {
         val expectedDirection = p.getPortDirection()
 
-        val badDirecteds = p.getLinks()
+        val allDirecteds = p.getLinks()
             .filter { it.getDrawDirection() != null }
+
+        var badDirecteds = allDirecteds
             .filter { it.getDrawDirectionFrom(p) != expectedDirection }
 
         if (badDirecteds.isNotEmpty()) {
@@ -134,6 +136,19 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
                 log.send("Direction of $it not same as port side")
             }
         }
+
+        // check for multiple edges in the same direction
+        val remaining = allDirecteds - badDirecteds
+
+        if (remaining.size > 1) {
+            remaining
+                .filterIndexed { i, v -> i < remaining.size - 1}
+                .forEach {
+                    setConnectionContradiction( it, true, isConnectionRendered( it ) )
+                    log.send("Port Leaver $it goes in fixed direction, but we already have one")
+                }
+        }
+
     }
 
     /**

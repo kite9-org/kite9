@@ -126,7 +126,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             .sortedBy { it.getPortPosition() }
 
         val num = portsOnSide.indexOf(de) + 1
-        val denom = portsOnSide.size + 2
+        val denom = portsOnSide.size + 1
         val fraction = LongFraction(num.toLong(), denom.toLong())
 
         return when (de.getPortDirection()) {

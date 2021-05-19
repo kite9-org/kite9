@@ -5,6 +5,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.*
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -13,6 +14,7 @@ import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
 import org.kite9.diagram.visualization.orthogonalization.edge.IncidentDart
 import org.kite9.diagram.visualization.orthogonalization.vertex.VertexArranger.TurnInformation
+import org.kite9.diagram.visualization.planarization.Tools
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
 
 /**
@@ -137,7 +139,7 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
 
             val outList = mutableListOf<IncidentDart>()
             var lastStartVertex : Vertex? = null
-            val midPoint : Float = (list.size - 1.0f) / 2.0f
+            val midPoint : Float = calculateMidPoint(list)
             for (i in list.indices) {
                 val current = list[i]
                 incidentDirection = ti.getIncidentDartDirection(current)
@@ -193,4 +195,22 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
             return super.handleEdgeBucketing(ti, cd, o, from, list)
         }
     }
+
+    private fun calculateMidPoint(list: List<PlanarizationEdge>) : Float {
+        // if we have a straight edge, use that
+        val straightEdges = list
+            .filter {
+                it.isStraightInPlanarization() &&
+                !Tools.isUnderlyingContradicting(it)
+            }
+
+        if (straightEdges.size > 1) {
+            throw LogicException("Should only be one non-contradicting straight edge leaving a port: $straightEdges")
+        } else if (straightEdges.isEmpty()) {
+            return (list.size - 1.0f) / 2.0f
+        } else {
+            return list.indexOf(straightEdges.first()).toFloat()
+        }
+    }
+
 }
