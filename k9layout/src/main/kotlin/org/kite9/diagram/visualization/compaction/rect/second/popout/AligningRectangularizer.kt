@@ -14,6 +14,7 @@ import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.orthogonalization.DartFace
+import kotlin.math.abs
 
 /**
  * Does extra calculations of the [PrioritisedRectOption] to make sure that it will be
@@ -178,7 +179,7 @@ abstract class AligningRectangularizer(cd: CompleteDisplayer?) : PrioritizingRec
             }
 
             val pixelsFromEnd = when (p.type) {
-                Measurement.PIXELS -> if (amount < 0) Math.abs(amount) else totalDist - amount
+                Measurement.PIXELS -> if (amount < 0) abs(amount) else totalDist - amount
                 else -> totalDist - pixelsFromStart
             }
             return Pair(pixelsFromStart, pixelsFromEnd)

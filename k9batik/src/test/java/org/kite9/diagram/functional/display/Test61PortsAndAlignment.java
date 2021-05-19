@@ -253,28 +253,28 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		return g;
 	}
 
-	/**
-	 * This should throw a layout exception, because the edges don't go in a straight line anymore - there
-	 * is fanning.
-	 *
-	 * @throws Exception
-	 */
+
 	@Test
-	public void test_61_12_MultipleDirectedLinksToPort() throws Exception {
+	public void test_61_11_MultiplePortsDirectedLinks() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "25%");
 		one.appendChild(oneSocket);
+		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "75%");
+		one.appendChild(twoSocket);
 
 		Glyph two = createGlyph("Two");
 		Glyph three = createGlyph("Three");
+		Glyph four = createGlyph("Three");
+
 
 		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
-		new Link(oneSocket, three, null, null, null, null, Direction.RIGHT);
+		new Link(twoSocket, three, null, null, null, null, Direction.RIGHT);
+		new Link(one, four, null, null, null, null, Direction.RIGHT);
 
-		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three), null);
+
+		DiagramKite9XMLElement d= new DiagramKite9XMLElement( HelpMethods.listOf(one, two, three, four), null);
 		renderDiagram(d);
 	}
-
 
 }

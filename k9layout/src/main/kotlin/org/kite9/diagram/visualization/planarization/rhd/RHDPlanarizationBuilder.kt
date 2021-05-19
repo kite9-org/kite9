@@ -484,14 +484,14 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val ri0: RoutingInfo? = arg0.routingInfo
             val ri1: RoutingInfo? = arg1.routingInfo
             var out: Int = 0
-            val yc: DPos = routableReader!!.compare(ri0, ri1, false)
+            val yc: DPos = routableReader.compare(ri0, ri1, false)
             if (yc == DPos.BEFORE) {
                 out = -1
             } else if (yc == DPos.AFTER) {
                 out = 1
             }
             if (out == 0) {
-                val xc: DPos = routableReader!!.compare(ri0, ri1, true)
+                val xc: DPos = routableReader.compare(ri0, ri1, true)
                 if (xc == DPos.BEFORE) {
                     out = -1
                 } else if (xc == DPos.AFTER) {

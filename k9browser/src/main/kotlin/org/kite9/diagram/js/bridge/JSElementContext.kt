@@ -113,6 +113,10 @@ class JSElementContext : ElementContext {
         TODO("Not yet implemented")
     }
 
+    override fun getCSSStylePlacementProperty(prop: String, e: Element): Placement {
+        TODO("Not yet implemented")
+    }
+
     override fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement> {
         return children.getOrElse(parent) { mutableListOf() }
     }
