@@ -82,7 +82,7 @@ public class TestingEngine extends TestingHelp {
 					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG().getBytes());
 				}
 				if (RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
-					TestingEngine.drawPositions(RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), theTest, "positions", "vertex.png");
+					TestingEngine.drawPositions(RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), theTest, subtest, subtest + "-positions.png");
 				}
 			} catch (PlanarizationException pe) {
 				pln = pe.getPlanarization();
@@ -96,8 +96,6 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			if (pln != null) {
-				AbstractPlanarizer planarizer = (AbstractPlanarizer) pipeline.getPlanarizer();
-				drawPositions(planarizer.getElementMapper().allVertices(), theTest, subtest, subtest + "-positions.png");
 				writeVertexOrder((MGTPlanarization) pln, theTest, subtest, subtest + "-vertex-order.txt");
 			}
 

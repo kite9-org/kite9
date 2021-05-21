@@ -12,12 +12,13 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.getO
 import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.fraction.LongFraction
-import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE_HALF
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -48,96 +49,174 @@ class VertexPositionerImpl(
         }
     }
 
-    private fun addExtraSideVertex(
-        c: Connected,
-        d: Direction?,
-        to: Connected?,
-        cvs: CornerVertices,
-        cx: Bounds,
-        cy: Bounds,
+    data class LongFractionExtent(val up: LongFraction, val down: LongFraction) {
+
+        fun isEmpty() : Boolean {
+            return up == down
+        }
+    }
+
+    data class FreeBounds(val b: Bounds, val from: LongFractionExtent, val to:LongFractionExtent) {
+
+        fun bisect(o: FreeBounds): List<FreeBounds> {
+            return generateOptions(o)
+                .filter { !it.from.isEmpty() }
+                .filter { !it.to.isEmpty() }
+        }
+
+        private fun min(a: LongFraction, b: LongFraction): LongFraction {
+            if (a<b) {
+                return a
+            } else {
+                return b
+            }
+        }
+
+        private fun max(a: LongFraction, b: LongFraction): LongFraction {
+            if (a>b) {
+                return a
+            } else {
+                return b
+            }
+        }
+
+        private fun upper(base: LongFractionExtent, intersect: LongFractionExtent) : LongFractionExtent {
+            return LongFractionExtent(base.up, min(base.down, intersect.down))
+        }
+
+        private fun lower(base: LongFractionExtent, intersect: LongFractionExtent) : LongFractionExtent {
+            return LongFractionExtent(max(base.up, intersect.up), base.down)
+        }
+
+        private fun generateOptions(
+            o: FreeBounds
+        ): List<FreeBounds> {
+            if ((this.b.distanceMin < o.b.distanceMin) && (this.b.distanceMax > o.b.distanceMax)) {
+                // intersection
+                return listOf(
+                    FreeBounds(BasicBounds(b.distanceMin, o.b.distanceMin), upper(from, o.from), upper(to, o.to)),
+                    FreeBounds(BasicBounds(o.b.distanceMax, b.distanceMax), lower(from, o.from), lower(to, o.to))
+                )
+            } else if (b.distanceMax < o.b.distanceMin) {
+                return listOf(FreeBounds(BasicBounds(b.distanceMin, b.distanceMax), upper(from, o.from), upper(to, o.to)))
+            } else if (b.distanceMin > o.b.distanceMax) {
+                return listOf(FreeBounds(BasicBounds(b.distanceMin, b.distanceMax), lower(from, o.from), lower(to, o.to)))
+            } else if (b.distanceMin < o.b.distanceMin) {
+                return listOf(
+                    FreeBounds(BasicBounds(b.distanceMin, o.b.distanceMin), upper(from, o.from), upper(to, o.to))
+                )
+            } else if (b.distanceMax > o.b.distanceMax) {
+                return listOf(
+                    FreeBounds(BasicBounds(o.b.distanceMax, b.distanceMax), lower(from, o.from), lower(to, o.to))
+                )
+            } else {
+                return emptyList()
+            }
+        }
+
+    }
+
+    private fun addFacingVertices(
+        from: Connected,
+        d: Direction,
+        to: Connected,
         out: MutableList<Vertex>,
-        trim: BorderTrim
     ) {
-        if (to != null) {
-            val toBounds = rh.getPlacedPosition(to)
-            val tox = rh.getBoundsOf(toBounds, true)
-            val toy = rh.getBoundsOf(toBounds, false)
-            val toHasCornerVertices = em.hasOuterCornerVertices(to)
-            when (d) {
-                Direction.UP, Direction.DOWN -> {
-                    val yOrd = getOrdForYDirection(d)
-                    val cvNew = cvs.createVertex(ONE_HALF, yOrd, null)
-                    val left = if (d === Direction.UP) cvs.getTopLeft() else cvs.getBottomLeft()
-                    val right = if (d === Direction.UP) cvs.getTopRight() else cvs.getBottomRight()
-                    val leftBounds = rh.getBoundsOf(left.routingInfo, true)
-                    val rightBounds = rh.getBoundsOf(right.routingInfo, true)
-                    val gap = trim.xe - trim.xs
-                    val cVertexBounds: Bounds = BasicBounds(leftBounds.distanceMax + gap, rightBounds.distanceMin - gap)
-                    val yBounds = rh.getBoundsOf(left.routingInfo, false)
-                    val xBounds = getSideBounds(cx, tox, toHasCornerVertices, borderTrimAreaX, cVertexBounds, gap)
-                    setSideVertexRoutingInfo(c, d, out, xBounds, yBounds, cvNew)
-                    log.send("Added side vertex: $cvNew")
+        val toHasCornerVertices = em.hasOuterCornerVertices(to)
+        val fromHasCornerVertices = em.hasOuterCornerVertices(from)
+        val horiz = d == Direction.LEFT || d == Direction.RIGHT
+
+        val toBounds = rh.getPlacedPosition(to)
+        val tox = rh.getBoundsOf(toBounds, true)
+        val toy = rh.getBoundsOf(toBounds, false)
+
+        val fromBounds = rh.getPlacedPosition(from)
+        val fromx = rh.getBoundsOf(fromBounds, true)
+        val fromy = rh.getBoundsOf(fromBounds, false)
+
+        // first, figure out the shared area
+        val sharedBounds = mutableListOf(
+            FreeBounds(
+                when (d) {
+                    Direction.UP, Direction.DOWN -> fromx.narrow(tox)
+                    Direction.LEFT, Direction.RIGHT -> fromy.narrow(toy)
                 }
-                Direction.LEFT, Direction.RIGHT -> {
-                    val xOrd = getOrdForXDirection(d)
-                    val cvNew = cvs.createVertex(xOrd, ONE_HALF, null)
-                    val up = if (d === Direction.LEFT) cvs.getTopLeft() else cvs.getTopRight()
-                    val down = if (d === Direction.LEFT) cvs.getBottomLeft() else cvs.getBottomRight()
-                    val upBounds = rh.getBoundsOf(up.routingInfo, false)
-                    val downBounds = rh.getBoundsOf(down.routingInfo, false)
-                    val gap2 = trim.ye - trim.ys
-                    val cVertexBounds2: Bounds = BasicBounds(upBounds.distanceMax + gap2, downBounds.distanceMin - gap2)
-                    val xBounds2 = rh.getBoundsOf(up.routingInfo, true)
-                    val yBounds2 = getSideBounds(cy, toy, toHasCornerVertices, borderTrimAreaY, cVertexBounds2, gap2)
-                    setSideVertexRoutingInfo(c, d, out, xBounds2, yBounds2, cvNew)
-                    log.send("Added side vertex: $cvNew")
+            ,
+            LongFractionExtent(LongFraction.ZERO, LongFraction.ONE),
+            LongFractionExtent(LongFraction.ZERO, LongFraction.ONE)
+        ))
+
+        // now figure out any interfering corner vertices
+        val interferingBounds =
+            (if (fromHasCornerVertices) em.getOuterCornerVertices(from).getVerticesOnSide(d).map {
+                val bounds = rh.getBoundsOf(it.routingInfo!!, !horiz)
+                val frac = if (horiz) {
+                    it.yOrdinal
+                } else {
+                    it.xOrdinal
                 }
+                FreeBounds(bounds, LongFractionExtent(frac, frac), LongFractionExtent(LongFraction.ZERO, LongFraction.ONE))
+            } else emptyList()) + (if (toHasCornerVertices) em.getOuterCornerVertices(to).getVerticesOnSide(Direction.reverse(d)!!).map {
+                val bounds = rh.getBoundsOf(it.routingInfo!!, !horiz)
+                val frac = if (horiz) {
+                    it.yOrdinal
+                } else {
+                    it.xOrdinal
+                }
+                FreeBounds(bounds, LongFractionExtent(LongFraction.ZERO, LongFraction.ONE), LongFractionExtent(frac, frac))
+            } else emptyList())
+
+
+        // bisect the bounds, removing areas that are already blocked by vertices
+        var openBounds: List<FreeBounds> = sharedBounds
+        interferingBounds.forEach { ib ->
+            openBounds = openBounds.flatMap { it.bisect(ib) }
+        }
+
+        // for now, use the first remaining section (if there is one)
+        var largestFreeBounds = openBounds.maxByOrNull { it.b.size() }
+
+        if (largestFreeBounds == null) {
+            throw LogicException("Couldn't find place for a vertex between $from and $to")
+        }
+
+        addSideVertex(fromHasCornerVertices, d, from, horiz, largestFreeBounds.b, largestFreeBounds.from, out)
+        addSideVertex(toHasCornerVertices, Direction.reverse(d)!!, to, horiz, largestFreeBounds.b, largestFreeBounds.to, out)
+
+    }
+
+    private fun addSideVertex(
+        hasCornerVertices: Boolean,
+        d: Direction,
+        c: Connected,
+        horiz: Boolean,
+        bounds: Bounds,
+        extent: LongFractionExtent,
+        out: MutableList<Vertex>
+    ) {
+        // now, construct a vertex on each connected using these bounds
+        if (hasCornerVertices) {
+            val cvs = em.getOuterCornerVertices(c)
+            val otherBounds = rh.getBoundsOf(rh.getPlacedPosition(c), horiz)
+
+            if (horiz) {
+                // mid-point fraction
+                val yOrd = (extent.up.add(extent.down)).multiply(LongFraction.ONE_HALF)
+                val xOrd = getOrdForXDirection(d)
+                val cvNew = cvs.createVertex(xOrd, yOrd, HPos.getFromDirection(d), VPos.getFromDirection(d), c, null)
+                setCornerVertexRoutingAndMerge(c, cvs, cvNew, otherBounds, bounds, out, mapOf(xOrd to xOrd.doubleValue()), mapOf(yOrd to yOrd.doubleValue()))
+                log.send("Added side vertex: $cvNew")
+            } else {
+                // mid-point fraction
+                val xOrd = (extent.up.add(extent.down)).multiply(LongFraction.ONE_HALF)
+                val yOrd = getOrdForYDirection(d)
+                val cvNew = cvs.createVertex(xOrd, yOrd, HPos.getFromDirection(d), VPos.getFromDirection(d), c, null)
+                setCornerVertexRoutingAndMerge(c, cvs, cvNew, bounds, otherBounds, out, mapOf(xOrd to xOrd.doubleValue()), mapOf(yOrd to yOrd.doubleValue()))
+                log.send("Added side vertex: $cvNew")
             }
         }
     }
 
-    private fun getSideBounds(
-        cBounds: Bounds,
-        toDeBounds: Bounds,
-        toHasCornerVertices: Boolean,
-        trimVertex: Double,
-        cVertexBounds: Bounds,
-        gap: Double
-    ): Bounds {
-        return if (toHasCornerVertices) {
-            // in this case, we need to find the mid-point of the common area between the two diagram-element bounds.
-            val out = cBounds.narrow(toDeBounds)
-            val centre = out.distanceCenter
-            val radius = gap / 2.0
-            BasicBounds(centre - radius, centre + radius)
-        } else {
-            // in the case that we are dealing with a regular vertex, we need to be the same size as that vertex.
-            val toVertexBounds = toDeBounds.narrow(trimVertex)
-            cVertexBounds.narrow(toVertexBounds)
-        }
-    }
-
-    private fun setSideVertexRoutingInfo(
-        c: Connected,
-        d: Direction,
-        out: MutableList<Vertex>,
-        xNew: Bounds,
-        yNew: Bounds,
-        cvNew: MultiCornerVertex
-    ) {
-        if (cvNew.routingInfo == null) {
-            // new vertex				
-            cvNew.routingInfo = rh.createRouting(xNew, yNew)
-            cvNew.addAnchor(HPos.getFromDirection(d), VPos.getFromDirection(d), c)
-            out.add(cvNew)
-        } else {
-            // extend the existing vertex
-            val existing = cvNew.routingInfo!!
-            val ri = rh.createRouting(xNew, yNew)
-            val merged = rh.increaseBounds(existing, ri)
-            cvNew.routingInfo = merged
-        }
-    }
 
     class BorderTrim {
         var xs = 0.0
@@ -159,7 +238,6 @@ class VertexPositionerImpl(
     override fun setPerimeterVertexPositions(
         before: Connected?,
         c: DiagramElement,
-        after: Connected?,
         cvs: CornerVertices,
         out: MutableList<Vertex>
     ) {
@@ -198,49 +276,41 @@ class VertexPositionerImpl(
         for (cv in cvs.getVerticesAtThisLevel()) {
             setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY)
         }
-        addSideVertices(before, c, after, cvs, out, bx, by)
+
+        addSideVertices(before, c, out)
     }
 
     private fun addSideVertices(
         before: Connected?,
         c: DiagramElement,
-        after: Connected?,
-        cvs: CornerVertices,
         out: MutableList<Vertex>,
-        bx: Bounds,
-        by: Bounds
     ) {
-        val trim = calculateBorderTrims(cvs)
         val l = if (c.getParent() == null) null else (c.getParent() as Container?)!!.getLayout()
         if (c is Connected) {
 
             // add extra vertices for connections to keep the layout
             if (l != null) {
-                when (l) {
-                    Layout.UP, Layout.DOWN, Layout.VERTICAL -> {
-                        val d1 = if (before != null && cmp(c, before) == 1) Direction.UP else Direction.DOWN
-                        val d2 = if (after != null && cmp(c, after) == 1) Direction.UP else Direction.DOWN
-                        addExtraSideVertex(c, d1, before, cvs, bx, by, out, trim)
-                        addExtraSideVertex(c, d2, after, cvs, bx, by, out, trim)
-                    }
-                    Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> {
-                        val d1 = if (before != null && cmp(c, before) == 1) Direction.LEFT else Direction.RIGHT
-                        val d2 = if (after != null && cmp(c, after) == 1) Direction.LEFT else Direction.RIGHT
-                        addExtraSideVertex(c, d1, before, cvs, bx, by, out, trim)
-                        addExtraSideVertex(c, d2, after, cvs, bx, by, out, trim)
-                    }
-                    else -> {
+                val d = when (l) {
+                    Layout.UP, Layout.DOWN, Layout.VERTICAL -> Direction.DOWN
+                    Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> Direction.RIGHT
+                    else -> return
+                }
+                if (before != null) {
+                    if (cmp(c, before) == 1) {
+                        addFacingVertices(before, d, c, out)
+                    } else {
+                        addFacingVertices(c, d, before, out)
                     }
                 }
             }
+        }
+    }
 
-            // add border vertices for directed edges.
-            for (conn in c.getLinks()) {
-                if (conn.getDrawDirection() != null && !conn.getRenderingInformation().isContradicting) {
-                    val d = conn.getDrawDirectionFrom(c)
-                    addExtraSideVertex(c, d, conn.otherEnd(c), cvs, bx, by, out, trim)
-                }
-            }
+    override fun setFacingVerticesForStraightEdges(conn: Connection, out: MutableList<Vertex>) {
+        // add border vertices for directed edges.
+        val drawDirection = conn.getDrawDirection()
+        if (drawDirection != null && !conn.getRenderingInformation().isContradicting) {
+            addFacingVertices(conn.getFrom(), drawDirection, conn.getTo(), out)
         }
     }
 

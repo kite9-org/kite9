@@ -22,9 +22,9 @@ open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdina
         return false
     }
 
-    private val anchors: MutableList<Anchor> = ArrayList(4)
+    private val anchors: MutableSet<Anchor> = mutableSetOf()
 
-    fun getAnchors(): List<Anchor> {
+    fun getAnchors(): Set<Anchor> {
         return anchors
     }
 

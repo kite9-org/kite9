@@ -5,6 +5,7 @@ import org.kite9.diagram.common.elements.mapping.CornerVertices
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 
 /**
@@ -21,10 +22,11 @@ interface VertexPositioner {
     fun setPerimeterVertexPositions(
         before: Connected?,
         c: DiagramElement,
-        after: Connected?,
         cvs: CornerVertices,
         out: MutableList<Vertex>
     )
+
+    fun setFacingVerticesForStraightEdges(conn: Connection, out: MutableList<Vertex>)
 
     fun setCentralVertexPosition(c: DiagramElement, out: MutableList<Vertex>)
 }

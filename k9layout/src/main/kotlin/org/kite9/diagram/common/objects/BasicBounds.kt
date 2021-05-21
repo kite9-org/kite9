@@ -74,6 +74,10 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         return BasicBounds(lower, upper)
     }
 
+    override fun size(): Double {
+       return distanceMax - distanceMin
+    }
+
     override fun narrow(vertexTrim: Double): Bounds {
         return BasicBounds(distanceMin + vertexTrim, distanceMax - vertexTrim)
     }

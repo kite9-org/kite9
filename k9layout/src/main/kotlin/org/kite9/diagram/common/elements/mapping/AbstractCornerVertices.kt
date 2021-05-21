@@ -8,6 +8,7 @@ import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Port
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.VPos
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
@@ -26,19 +27,13 @@ abstract class AbstractCornerVertices(
     private var br: MultiCornerVertex? = null
 
     protected fun createInitialVertices(c: DiagramElement?) {
-        tl = createVertex(ZERO, ZERO, null)
-        tr = createVertex(ONE, ZERO, null)
-        bl = createVertex(ZERO, ONE, null)
-        br = createVertex(ONE, ONE, null)
-        if (c != null) {
-            tl!!.addAnchor(HPos.LEFT, VPos.UP, c)
-            tr!!.addAnchor(HPos.RIGHT, VPos.UP, c)
-            bl!!.addAnchor(HPos.LEFT, VPos.DOWN, c)
-            br!!.addAnchor(HPos.RIGHT, VPos.DOWN, c)
-        }
+        tl = createVertex(ZERO, ZERO, HPos.LEFT, VPos.UP, c,null)
+        tr = createVertex(ONE, ZERO, HPos.RIGHT, VPos.UP, c,null)
+        bl = createVertex(ZERO, ONE, HPos.LEFT, VPos.DOWN,c,null)
+        br = createVertex(ONE, ONE, HPos.RIGHT, VPos.DOWN,c,null)
     }
 
-    abstract override fun createVertex(x: LongFraction, y: LongFraction, p: Port?): MultiCornerVertex
+  //  abstract override fun createVertex(x: LongFraction, y: LongFraction, hp: HPos?, vp: VPos?, de: DiagramElement?, p: Port?): MultiCornerVertex
 
     protected fun createVertexHere(
         x: LongFraction,
@@ -166,5 +161,17 @@ abstract class AbstractCornerVertices(
             y = y.add(range.a)
             return y
         }
+    }
+
+    override fun getVerticesOnSide(d: Direction): List<MultiCornerVertex> {
+        return getVerticesAtThisLevel()
+            .filter {
+                when (d) {
+                    Direction.UP -> it.getAnchors().any { it.ud == VPos.UP }
+                    Direction.DOWN -> it.getAnchors().any { it.ud == VPos.DOWN}
+                    Direction.LEFT -> it.getAnchors().any { it.lr == HPos.LEFT}
+                    Direction.RIGHT -> it.getAnchors().any { it.lr == HPos.RIGHT }
+                }
+            }
     }
 }

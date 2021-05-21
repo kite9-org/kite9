@@ -5,6 +5,8 @@ import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Port
+import org.kite9.diagram.model.position.HPos
+import org.kite9.diagram.model.position.VPos
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
@@ -48,12 +50,12 @@ class SubGridCornerVertices(
         return (baseGrid as AbstractCornerVertices).getTopContainerVertices()
     }
 
-    override fun createVertex(x: LongFraction, y: LongFraction, p: Port?): MultiCornerVertex {
+    override fun createVertex(x: LongFraction, y: LongFraction, hp: HPos?, vp:VPos?, de: DiagramElement?, p: Port?): MultiCornerVertex {
         var x = x
         var y = y
         x = scale(x, xRange)
         y = scale(y, yRange)
-        val out = (baseGrid as AbstractCornerVertices).createVertex(x, y, p)
+        val out = (baseGrid as AbstractCornerVertices).createVertex(x, y, hp, vp, de, p)
         elements[OPair(x, y)] = out
         return out
     }

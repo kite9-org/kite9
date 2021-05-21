@@ -20,4 +20,6 @@ interface Bounds : Comparable<Bounds> {
     fun keep(buffer: Double, width: Double, atFraction: Double): Bounds
     fun narrow(trim: Double): Bounds
 
+    fun size() : Double
+
 }

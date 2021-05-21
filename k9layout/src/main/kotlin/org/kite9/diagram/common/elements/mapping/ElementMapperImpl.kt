@@ -9,7 +9,9 @@ import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.model.position.VPos
 import org.kite9.diagram.model.style.BorderTraversal
 
 class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
@@ -110,7 +112,10 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
                 val c1 = de.getContainer()!!
                 val cv = getOuterCornerVertices(c1)
                 val (fracX, fracY) = buildFractions(c1, de)
-                v = cv.createVertex(fracX, fracY, de)
+                v = cv.createVertex(fracX, fracY,
+                    HPos.getFromDirection(de.getPortDirection()), VPos.getFromDirection(de.getPortDirection()),
+                    c1, de)
+
                 singleVertices[de] = v
             } else {
                 throw LogicException("Not sure how to create vertex for $de")

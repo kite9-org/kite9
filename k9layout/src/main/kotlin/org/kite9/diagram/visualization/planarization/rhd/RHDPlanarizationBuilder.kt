@@ -93,58 +93,64 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         val out: MutableList<Vertex> = ArrayList(elements * 2)
         var connections: ConnectionManager? = null
         var sortedContainerContents: MutableMap<Container, MutableList<ConnectedRectangular>> = mutableMapOf()
-        try {
-            while (run != PlanarizationRun.DONE) {
-                routableReader = PositionRoutableHandler2D()
-                vp = newVertexPositioner()
-                val ch: ContradictionHandler = BasicContradictionHandler(em)
-                val strategy = GeneratorBasedGroupingStrategyImpl(c, elements, ch, gridHelp, em)
-                strategy.buildInitialGroups()
-                val mr = strategy.group()
-                if (!log.go()) {
-                    log.send("Created Groups:", mr.groups())
-                }
-                if (mr.groups().size > 1) {
-                    throw LogicException("Should end up with a single group")
-                }
-                val topGroup: Group = mr.groups().iterator().next()
-                if (!log.go()) {
-                    outputGroupInfo(topGroup, 0)
-                }
 
-                // Layout
-                val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
-                layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
+        while (run != PlanarizationRun.DONE) {
+            routableReader = PositionRoutableHandler2D()
+            vp = newVertexPositioner()
+            val ch: ContradictionHandler = BasicContradictionHandler(em)
+            val strategy = GeneratorBasedGroupingStrategyImpl(c, elements, ch, gridHelp, em)
+            strategy.buildInitialGroups()
+            val mr = strategy.group()
+            if (!log.go()) {
+                log.send("Created Groups:", mr.groups())
+            }
+            if (mr.groups().size > 1) {
+                throw LogicException("Should end up with a single group")
+            }
+            val topGroup: Group = mr.groups().iterator().next()
+            if (!log.go()) {
+                outputGroupInfo(topGroup, 0)
+            }
 
-                // positioning
-                connections = RankBasedConnectionQueue(routableReader)
-                buildPositionMap(topGroup, connections)
-                if (!log.go()) {
-                    outputGroupInfo(topGroup, 0)
-                }
-                if (connections.hasContradictions()) {
-                    if (!checkLayoutIsConsistent(c)) {
-                        if (run == PlanarizationRun.FIRST) {
-                            log.send("Contradiction forces regroup")
-                            run = PlanarizationRun.REDO
-                            continue
-                        }
+            // Layout
+            val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
+            layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
+
+            // positioning
+            connections = RankBasedConnectionQueue(routableReader)
+            buildPositionMap(topGroup, connections)
+            if (!log.go()) {
+                outputGroupInfo(topGroup, 0)
+            }
+            if (connections.hasContradictions()) {
+                if (!checkLayoutIsConsistent(c)) {
+                    if (run == PlanarizationRun.FIRST) {
+                        log.send("Contradiction forces regroup")
+                        run = PlanarizationRun.REDO
+                        continue
                     }
                 }
-
-                // vertex ordering
-                sortedContainerContents = HashMap(topGroup.groupNumber * 2)
-                instantiateContainerVertices(c)
-                buildVertexList(null, c, null, out, sortedContainerContents)
-                sortContents(out, routableReader.getTopLevelBounds(true), routableReader.getTopLevelBounds(false))
-                run = PlanarizationRun.DONE
             }
-        } finally {
-            LAST_PLANARIZATION_DEBUG = out
+
+            // vertex ordering
+            sortedContainerContents = HashMap(topGroup.groupNumber * 2)
+            instantiateContainerVertices(c)
+            buildVertexList(null, c, null, out, sortedContainerContents)
+            addStraightConnectionVertices(out, connections)
+            LAST_PLANARIZATION_DEBUG = out.toList()
+            sortContents(out, routableReader.getTopLevelBounds(true), routableReader.getTopLevelBounds(false))
+            run = PlanarizationRun.DONE
         }
+
         val planOut: Planarization = buildPlanarization(c, out, connections!!, sortedContainerContents)
         (planOut as RHDPlanarizationImpl).setRoutableReader((routableReader))
         return planOut
+    }
+
+    private fun addStraightConnectionVertices(out: MutableList<Vertex>, connections: ConnectionManager) {
+        connections
+            .filterIsInstance<Connection>()
+            .forEach { vp.setFacingVerticesForStraightEdges(it, out) }
     }
 
     private fun newVertexPositioner() = VertexPositionerImpl(em, routableReader) { a, b -> compareDiagramElements(a, b) }
@@ -335,7 +341,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val cvs: CornerVertices = em.getOuterCornerVertices(c)
             val bounds: RoutingInfo? = routableReader.getPlacedPosition(c)
             log.send("Placed position of container: $c is $bounds")
-            vp.setPerimeterVertexPositions(before, c, after, cvs, out)
+            vp.setPerimeterVertexPositions(before, c, cvs, out)
             if (c is Container) {
                 buildVertexListForContainerContents(out, c, sortedContainerContents)
             }
