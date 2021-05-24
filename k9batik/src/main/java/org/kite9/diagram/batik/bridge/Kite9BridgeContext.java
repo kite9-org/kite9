@@ -233,7 +233,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	}
 
 
-	public Placement getConnectionAlignment(String prop, Element e) {
+	public Placement getPlacement(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
 
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {

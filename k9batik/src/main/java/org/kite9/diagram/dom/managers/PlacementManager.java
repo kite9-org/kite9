@@ -16,9 +16,9 @@ import org.w3c.dom.css.CSSValue;
  * @author robmoffat
  *
  */
-public class PortPlacementManager extends MarginLengthManager {
+public class PlacementManager extends MarginLengthManager {
 
-	public PortPlacementManager(String prop) {
+	public PlacementManager(String prop) {
 		super(prop);
 	}
 

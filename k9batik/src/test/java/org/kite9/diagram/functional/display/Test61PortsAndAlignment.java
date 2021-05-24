@@ -224,9 +224,8 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_61_10_Alignments() throws Exception {
-		String alignmentStyle = CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY+ ": -5px; "+
-				CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY+": -5px; "+
-				CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY+": 10px; "+
+		String alignmentStyle = CSSConstants.HORIZONTAL_ALIGN_POSITION+ ": -5px; "+
+				CSSConstants. VERTICAL_ALIGN_POSITION+": 10px; "+
 				CSSConstants.LINK_INSET+": 0px; ";
 		Glyph one = createStyledGlyph("One", alignmentStyle);
 		Glyph two = createStyledGlyph("Two", alignmentStyle);

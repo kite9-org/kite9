@@ -12,8 +12,6 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.model.style.*;
 import org.w3c.dom.css.CSSPrimitiveValue;
 
-import javax.swing.text.html.CSS;
-
 /**
  * Extends the SVG DOM Implementation by adding Kite9 Namespace support, and
  * handing for Kite9 CSS definitions.
@@ -83,12 +81,9 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.CENTER, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER, false));
 		
-		registerCustomCSSShorthandManager(new FourDirectionalShorthandManager(CSSConstants.CONNECTION_ALIGN_PROPERTY));
-		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY));
-		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY));
-		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY));
-		registerCustomCSSValueManager(new ConnectionAlignmentLengthManager(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY));
-		
+		registerCustomCSSValueManager(new PlacementManager(CSSConstants.VERTICAL_ALIGN_POSITION));
+		registerCustomCSSValueManager(new PlacementManager(CSSConstants.HORIZONTAL_ALIGN_POSITION));
+
 		// LINK DIRECTION
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTION_DIRECTION, Direction.class, null, true));
 
@@ -123,7 +118,7 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 
 		// PORTS
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.PORT_SIDE, PortSide.class, PortSide.BOTTOM, false));
-		registerCustomCSSValueManager(new PortPlacementManager(CSSConstants.PORT_POSITION));
+		registerCustomCSSValueManager(new PlacementManager(CSSConstants.PORT_POSITION));
 
 	}
 

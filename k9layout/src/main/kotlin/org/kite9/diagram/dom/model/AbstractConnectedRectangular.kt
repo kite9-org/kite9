@@ -43,10 +43,10 @@ abstract class AbstractConnectedRectangular(
 
     protected fun initConnectionAlignment() {
         alignments = arrayOf(
-            ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY, theElement),
-            ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY, theElement),
-            ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY, theElement),
-            ctx.getConnectionAlignment(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY, theElement)
+            ctx.getPlacement(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
+            ctx.getPlacement(CSSConstants.VERTICAL_ALIGN_POSITION, theElement),
+            ctx.getPlacement(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
+            ctx.getPlacement(CSSConstants.VERTICAL_ALIGN_POSITION, theElement)
         )
     }
 

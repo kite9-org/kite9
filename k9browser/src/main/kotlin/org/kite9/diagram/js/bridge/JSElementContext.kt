@@ -121,7 +121,7 @@ class JSElementContext : ElementContext {
         return children.getOrElse(parent) { mutableListOf() }
     }
 
-    override fun getConnectionAlignment(prop: String, e: Element): Placement {
+    override fun getPlacement(prop: String, e: Element): Placement {
         val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
 
         if (s.asDynamic().value == "none") {

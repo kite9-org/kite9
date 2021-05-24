@@ -40,7 +40,7 @@ abstract class AbstractRouteFinder(
     override val prefix: String
         get() = "GTRF"
     override val isLoggingEnabled: Boolean
-        get() = false
+        get() = true
 
 
 	@Deprecated("")

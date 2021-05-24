@@ -80,10 +80,6 @@ svg {
 --kite9-margin-right: 10px;
 --kite9-margin-bottom: 10px;
 --kite9-margin-left: 10px;
---kite9-connection-align-top: 50%;
---kite9-connection-align-right: 50%;
---kite9-connection-align-bottom: 50%;
---kite9-connection-align-left: 50%;
 }
 
 *[k9-elem="glyph"] *[k9-elem="symbols"] {
@@ -136,10 +132,6 @@ text-align: middle;
 --kite9-layout: GRID;
 --kite9-grid-columns: 2;
 --kite9-grid-rows: 1;
---kite9-connection-align-top: 50%;
---kite9-connection-align-right: 50%;
---kite9-connection-align-bottom: 50%;
---kite9-connection-align-left: 50%;
 }
 
 *[k9-elem="key"] *[k9-elem="text-lines"] *[k9-elem="text-label"], *[k9-elem="glyph"] *[k9-elem="text-lines"] *[k9-elem="text-label"], *[k9-elem="symbol-text-line"] *[k9-elem="k9-text"] {
@@ -353,10 +345,6 @@ fill: none;
 --kite9-margin-left: 2px;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-connection-align-top: 50%;
---kite9-connection-align-right: 50%;
---kite9-connection-align-bottom: 50%;
---kite9-connection-align-left: 50%;
 --kite9-link-inset: 0px;
 }
 
@@ -374,10 +362,6 @@ fill: none;
 --kite9-margin-bottom: 0;
 --kite9-margin-left: 0;
 --kite9-vertical-align: TOP;
---kite9-connection-align-top: 50%;
---kite9-connection-align-right: 50%;
---kite9-connection-align-bottom: 50%;
---kite9-connection-align-left: 50%;
 }
 
 *[k9-elem="text-line"], *[k9-elem="k9-text"], *[k9-elem="bodyText"] {
@@ -401,10 +385,6 @@ fill: none;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
 --kite9-connections: SEPARATE;
---kite9-connection-align-top: 50%;
---kite9-connection-align-right: 50%;
---kite9-connection-align-bottom: 50%;
---kite9-connection-align-left: 50%;
 --kite9-link-inset: 4px;
 }
 

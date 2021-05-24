@@ -9,10 +9,7 @@ import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -146,18 +143,20 @@ class ConnectionEdgeRouteFinder(
             checkContainerNotWithinGrid(c!!)
             val cvs = em.getOuterCornerVertices(c)
             for (v in cvs.getPerimeterVertices()) {
-                if (!v.isPartOf(c)) {
-                    // ensure anchors are set correctly for the perimeter.
-                    v.addAnchor(null, null, c)
-                }
-                if (onCorrectSideOfContainer(v, false)) {
-                    createInitialPathsFrom(pq, v)
+                if (v !is PortVertex) {
+                    if (!v.isPartOf(c)) {
+                        // ensure anchors are set correctly for the perimeter.
+                        v.addAnchor(null, null, c)
+                    }
+                    if (onCorrectSideOfContainer(v, false)) {
+                        createInitialPathsFrom(pq, v)
+                    }
                 }
             }
             if (allowConnectionsToContainerContents()) {
                 for (con in c.getContents()) {
                     if (con is Connected) {
-                        if (con !is Container) {
+                        if ((con !is Container) && (con !is Port)) {
                             val vcon = em.getPlanarizationVertex(con)
                             createInitialPathsFrom(pq, vcon)
                         }

@@ -71,7 +71,6 @@ svg {
 	--kite9-layout: down;	
 	--kite9-padding: 6px 10px 6px 10px;
 	--kite9-margin: 10px;
-	--kite9-connection-align: 50%;
 }
 
 [k9-elem=glyph]  [k9-elem=symbols] {
@@ -111,7 +110,6 @@ svg {
 	--kite9-sizing: maximize;
 	--kite9-layout: grid;
 	--kite9-grid-size: 2 1;
-	--kite9-connection-align: 50%;
 }
 
 [k9-elem=key] [k9-elem=text-lines] [k9-elem=text-label],
@@ -293,7 +291,6 @@ svg {
     --kite9-margin-bottom: 0px;
     --kite9-margin-left: 2px;
     --kite9-sizing: minimize;
-	--kite9-connection-align: 50%;
 	--kite9-link-inset: 0px;
 }
 
@@ -310,7 +307,6 @@ svg {
 	--kite9-padding-right: 0px;
 	--kite9-margin: 0;
 	--kite9-vertical-align: top;
-	--kite9-connection-align: 50%;
 }
 
 [k9-elem=text-line],
@@ -332,7 +328,6 @@ svg {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-connections: separate;
-	--kite9-connection-align: 50%;
 	--kite9-link-inset: 4px;
 }
 

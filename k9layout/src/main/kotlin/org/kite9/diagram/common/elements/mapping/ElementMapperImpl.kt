@@ -13,6 +13,7 @@ import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.VPos
 import org.kite9.diagram.model.style.BorderTraversal
+import org.kite9.diagram.model.style.Placement
 
 class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
 
@@ -21,6 +22,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     private var baseGrids: MutableMap<DiagramElement?, BaseGridCornerVertices> = HashMap()
     private var edges: MutableMap<BiDirectional<Connected>, PlanarizationEdge> = HashMap()
     private var hasConnections: MutableMap<DiagramElement?, Boolean> = HashMap()
+    private var fractions: MutableMap<Pair<DiagramElement, Direction>, Map<DiagramElement, LongFraction>> = hashMapOf()
 
     override fun hasOuterCornerVertices(d: DiagramElement): Boolean {
         return cornerVertices.containsKey(d)
@@ -111,7 +113,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             }else if (de is Port) {
                 val c1 = de.getContainer()!!
                 val cv = getOuterCornerVertices(c1)
-                val (fracX, fracY) = buildFractions(c1, de)
+                val (fracX, fracY) = buildFractionPair(c1, de)
                 v = cv.createVertex(fracX, fracY,
                     HPos.getFromDirection(de.getPortDirection()), VPos.getFromDirection(de.getPortDirection()),
                     c1, de)
@@ -124,15 +126,32 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
         return v
     }
 
-    private fun buildFractions(c1: Container, de: Port): Pair<LongFraction, LongFraction> {
-        val portsOnSide = c1.getContents()
-            .filterIsInstance<Port>()
-            .filter { it.getPortDirection() == de.getPortDirection() }
-            .sortedBy { it.getPortPosition() }
+    override fun getFractions(c: DiagramElement, d: Direction): Map<DiagramElement, LongFraction> {
+        return fractions.getOrPut(Pair(c, d), {
+            val allItems: List<Pair<DiagramElement, Placement>> = if (c is Container) {
+                c.getContents()
+                    .filterIsInstance<Port>()
+                    .filter { it.getPortDirection() == d }
+                    .map { it to it.getPortPosition() }
+            } else {
+                emptyList()
+            } + if (c is Connected) {
+                listOf(c to c.getConnectionAlignment(d))
+            } else {
+                emptyList()
+            }
 
-        val num = portsOnSide.indexOf(de) + 1
-        val denom = portsOnSide.size + 1
-        val fraction = LongFraction(num.toLong(), denom.toLong())
+            val denom = allItems.size + 1
+
+            allItems
+                .sortedBy { it.second }
+                .mapIndexed { idx, v -> v.first to LongFraction((idx+1).toLong(), denom.toLong()) }
+                .toMap()
+        })
+    }
+
+    private fun buildFractionPair(c1: Container, de: Port): Pair<LongFraction, LongFraction> {
+        val fraction = getFractions(c1, de.getPortDirection())[de]!!
 
         return when (de.getPortDirection()) {
             Direction.UP -> Pair(fraction, LongFraction.ZERO)

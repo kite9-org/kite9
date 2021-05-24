@@ -12,6 +12,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMax
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMin
+import org.kite9.diagram.common.elements.vertex.MultiElementVertex
 import org.kite9.diagram.common.elements.vertex.NoElementVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
@@ -350,7 +351,14 @@ abstract class AbstractBiDiEdgeRouteFinder(
             ci: BiDirectionalPlanarizationEdge,
             from: Boolean
         ): RoutingInfo? {
-            return rh.getPlacedPosition((if (from) ci.getFromConnected() else ci.getToConnected())!!)
+            val v = if (from) ci.getFrom() else ci.getTo()
+            if (v is MultiElementVertex) {
+                // we don't care about the vertex specifically, it could be one of a number...
+                    // so return the whole area containing all the vertices
+                return rh.getPlacedPosition((if (from) ci.getFromConnected() else ci.getToConnected())!!)
+            } else {
+                return v.routingInfo
+            }
         }
 
         private fun getBoundedAxis(e: Edge, gt: GeographyType): Axis? {

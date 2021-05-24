@@ -410,5 +410,5 @@ class MGTEdgeRouter(private val rh: RoutableReader, private val em: ElementMappe
     override val prefix: String
         get() = "MGER"
     override val isLoggingEnabled: Boolean
-        get() = false
+        get() = true
 }

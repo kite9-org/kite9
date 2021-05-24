@@ -17,10 +17,7 @@ import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.Layout
@@ -53,6 +50,17 @@ class VertexPositionerImpl(
 
         fun isEmpty() : Boolean {
             return up == down
+        }
+
+        fun contains(f: LongFraction?) : Int {
+            if (f==null) {
+                return 0
+            }
+            return if  ((up <= f) && (down >= f)) {
+                1
+            } else {
+                0
+            }
         }
     }
 
@@ -173,8 +181,11 @@ class VertexPositionerImpl(
             openBounds = openBounds.flatMap { it.bisect(ib) }
         }
 
-        // for now, use the first remaining section (if there is one)
-        var largestFreeBounds = openBounds.maxByOrNull { it.b.size() }
+        // find the one closest to our fraction
+        val fromFraction = if (from is Port) { null } else { em.getFractions(from, d)[from]!! }
+        val toFraction = if (to is Port) { null } else { em.getFractions(to, Direction.reverse(d)!!)[to]!! }
+        var largestFreeBounds =
+            openBounds.maxByOrNull { it.from.contains(fromFraction) + it.to.contains(toFraction) + it.b.size() }!!
 
         if (largestFreeBounds == null) {
             throw LogicException("Couldn't find place for a vertex between $from and $to")

@@ -67,15 +67,10 @@ interface CSSConstants {
         const val CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"
 
         // controls whether we try and align connections along the mid-point of the connected.
-        private const val CONNECTION_ALIGN_PROPERTY_PREFIX = KITE9_CSS_PROPERTY_PREFIX + "connection-align-"
-        const val CONNECTION_ALIGN_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "connection-align"
-        const val CONNECTION_ALIGN_BOTTOM_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + BOTTOM
-        const val CONNECTION_ALIGN_TOP_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + TOP
-        const val CONNECTION_ALIGN_RIGHT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + RIGHT
-        const val CONNECTION_ALIGN_LEFT_PROPERTY = CONNECTION_ALIGN_PROPERTY_PREFIX + LEFT
         const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
         const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
-
+        const val VERTICAL_ALIGN_POSITION = KITE9_CSS_PROPERTY_PREFIX + "vertical-align-position"
+        const val HORIZONTAL_ALIGN_POSITION = KITE9_CSS_PROPERTY_PREFIX + "horizontal-align-position"
 
         // for aligning content within a container
         const val VERTICAL_ALIGNMENT = KITE9_CSS_PROPERTY_PREFIX + "vertical-align"
