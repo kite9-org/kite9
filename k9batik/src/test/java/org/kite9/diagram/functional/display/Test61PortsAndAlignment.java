@@ -13,7 +13,6 @@ import org.kite9.diagram.model.style.BorderTraversal;
 import org.w3c.dom.Element;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
@@ -26,6 +25,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		TestingEngine.Checks out = new TestingEngine.Checks();
 		out.everythingStraight = false;
 		out.checkEdgeDirections = false;
+		out.checkMidConnection = false;
 		return out;
 	}
 

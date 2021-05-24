@@ -34,6 +34,7 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
             if ((pro.vt2.turnPriority != VertexTurn.TurnPriority.MAXIMIZE_RECTANGULAR) ||
                 (pro.vt4.turnPriority != VertexTurn.TurnPriority.MAXIMIZE_RECTANGULAR)
             ) {
+                log.send(if (log.go()) null else "Change: $ro")
                 // change the slideable on meets, extender to bufferSlideable
                 val dimension = pro.vt5.slideable.dimension
                 val oldSlideables = listOf(pro.vt1.slideable, pro.vt5.slideable)

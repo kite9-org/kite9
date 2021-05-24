@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.mgt.router
 
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
-import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
@@ -14,7 +13,6 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.style.BorderTraversal
-import org.kite9.diagram.visualization.planarization.Tools.Companion.isUnderlyingContradicting
 import org.kite9.diagram.visualization.planarization.mgt.BorderEdge
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
 
@@ -86,32 +84,29 @@ class ConnectionEdgeRouteFinder(
         )
     }
 
+    private fun getCorrentParent(c: Connected): Container? {
+        if (c is Port) {
+            return c.getContainer()?.getContainer()
+        } else {
+            return c.getContainer()
+        }
+    }
+
     private fun getMustCrossContainers(from: Connected, to: Connected): Set<Container> {
-        var from: Connected? = from
-        var to: Connected? = to
+        var from: Container? = getCorrentParent(from)
+        var to: Container? = getCorrentParent(to)
         val out: MutableSet<Container> = HashSet()
         while (from !== to) {
             val fromDepth = from!!.getDepth()
             val toDepth = to!!.getDepth()
-            if (fromDepth > toDepth) {
-                if (from is Container) {
-                    out.add(from as Container)
-                }
-                from = from.getParent() as Connected?
-            } else if (toDepth > fromDepth) {
-                if (to is Container) {
-                    out.add(to as Container)
-                }
-                to = to.getParent() as Connected?
-            } else {
-                if (from is Container) {
-                    out.add(from as Container)
-                }
-                if (to is Container) {
-                    out.add(to as Container)
-                }
-                from = from.getParent() as Connected?
-                to = to.getParent() as Connected?
+            if (fromDepth >= toDepth) {
+                out.add(from)
+                from = from.getContainer()
+            }
+
+            if (toDepth >= fromDepth) {
+                out.add(to)
+                to = to.getContainer()
             }
         }
         return out
@@ -256,35 +251,6 @@ class ConnectionEdgeRouteFinder(
             }
         }
         return false
-    }
-
-    companion object {
-        private fun getBoundedAxis(e: Edge, gt: GeographyType): Axis? {
-            val dir = e.getDrawDirection() ?: return null
-            if (gt === GeographyType.RELAXED) {
-                return null
-            }
-            var out: Axis? = null
-            out = when (dir) {
-                Direction.UP, Direction.DOWN -> Axis.VERTICAL
-                Direction.LEFT, Direction.RIGHT -> Axis.HORIZONTAL
-            }
-            return out
-        }
-
-        private fun getExpensiveAxis(e: Edge, it: GeographyType): Axis? {
-            val edgeDir = e.getDrawDirection()
-            val flip = isUnderlyingContradicting(e)
-            if (edgeDir == null) {
-                return null
-            }
-            var out: Axis? = null
-            out = when (edgeDir) {
-                Direction.UP, Direction.DOWN -> if (flip) Axis.VERTICAL else Axis.HORIZONTAL
-                Direction.LEFT, Direction.RIGHT -> if (flip) Axis.HORIZONTAL else Axis.VERTICAL
-            }
-            return out
-        }
     }
 
     init {

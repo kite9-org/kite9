@@ -6,6 +6,7 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
@@ -206,6 +207,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isAligning(Connected v, Direction side) {
+				if (v instanceof SizedRectangular) {
+					if (((SizedRectangular) v).getSizing(Direction.Companion.isHorizontal(side)) == DiagramElementSizing.MAXIMIZE) {
+						return false;
+					}
+				}
 				return (!(v instanceof Port)) && (v.getConnectionAlignment(side) != Placement.Companion.getNONE());
 			}
 

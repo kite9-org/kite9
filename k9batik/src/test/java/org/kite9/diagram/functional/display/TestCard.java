@@ -13,6 +13,7 @@ import org.kite9.diagram.adl.Symbol;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TextLine;
+import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.common.HelpMethods;
 
@@ -103,8 +104,17 @@ public class TestCard extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = createTestCard();
 		renderDiagram(d);
 	}
-	
 
+	/**
+	 * Disabling some checks.  61_12 edges don't run straight anymore, however it's correct behaviour.
+	 * @return
+	 */
+	@Override
+	protected TestingEngine.Checks checks() {
+		TestingEngine.Checks out = new TestingEngine.Checks();
+		out.checkMidConnection = false;
+		return out;
+	}
 	
 }
 
