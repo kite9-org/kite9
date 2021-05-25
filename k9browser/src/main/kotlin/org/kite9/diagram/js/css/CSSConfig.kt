@@ -77,16 +77,11 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.VERTICAL_ALIGNMENT,syntax<VerticalAlignment>(), lower(VerticalAlignment.CENTER), false))
     css.registerProperty( CSSProperty(CSSConstants.HORIZONTAL_ALIGNMENT,syntax<HorizontalAlignment>(), lower(HorizontalAlignment.CENTER), false))
 
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTION_ALIGN_PROPERTY,"<length-percentage>", "50%", false))
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTION_ALIGN_LEFT_PROPERTY,"<length-percentage> | none", "none", false))
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTION_ALIGN_TOP_PROPERTY,"<length-percentage> | none", "none", false))
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTION_ALIGN_RIGHT_PROPERTY,"<length-percentage> | none", "none", false))
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTION_ALIGN_BOTTOM_PROPERTY,"<length-percentage> | none", "none", false))
+    css.registerProperty( CSSProperty(CSSConstants.VERTICAL_ALIGN_POSITION,"<length-percentage>", "50%", false))
+    css.registerProperty( CSSProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION,"<length-percentage>", "50%", false))
 
     // LINK DIRECTION
     css.registerProperty( CSSProperty(CSSConstants.CONNECTION_DIRECTION,syntax<Direction>()+" | none","none", true))
-
-
 
     // LINK LENGTHS
     css.registerProperty( CSSProperty(CSSConstants.LINK_INSET,"<length>","0", false))
