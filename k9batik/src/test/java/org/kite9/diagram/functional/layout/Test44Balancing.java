@@ -12,6 +12,11 @@ import org.kite9.diagram.common.HelpMethods;
 
 public class Test44Balancing extends AbstractLayoutFunctionalTest {
 
+	@Override
+	protected boolean checkMidConnections() {
+		return false;
+	}
+
 	@Test
 	public void test_44_1_SingleGlyph() throws Exception {
 		Glyph a = new Glyph("a", "", "a", null, null);

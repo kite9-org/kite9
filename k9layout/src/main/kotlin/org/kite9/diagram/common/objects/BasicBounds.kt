@@ -69,8 +69,8 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         val pos = fraction * span
         var lower = distanceMin + pos - width / 2.0 + buffer
         var upper = distanceMin + pos + width / 2.0 + buffer
-        lower = (distanceMin + buffer).coerceAtLeast(lower)
-        upper = (distanceMax - buffer).coerceAtMost(upper)
+        lower = (distanceMin + buffer).coerceAtLeast(lower).coerceAtMost(upper)
+        upper = (distanceMax - buffer).coerceAtMost(upper).coerceAtLeast(lower)
         return BasicBounds(lower, upper)
     }
 
