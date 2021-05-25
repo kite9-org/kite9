@@ -66,6 +66,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
+	// this doesn't look great, but at least it tests labels.
 	public void test_61_3_MultipleUndirectedLinksToPortLabelled() throws Exception {
 		Glyph one = createGlyph("One");
 		BasicSocket oneSocket = new BasicSocket("sock1", BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "30px");

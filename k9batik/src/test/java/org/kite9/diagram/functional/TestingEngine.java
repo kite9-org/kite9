@@ -175,7 +175,7 @@ public class TestingEngine extends TestingHelp {
 							case DOWN:
 								if (isAligning(v, connectionSide)) {
 									double alignPoint = getAlignPoint(r2d.getX(), r2d.getWidth(), v, connectionSide);
-									if (Math.abs(p2d.getX() - alignPoint) > 1) {
+									if (Math.abs(p2d.getX() - alignPoint) > 2) {
 										if (!straightWithLayoutException(c, v)) {
 											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}
@@ -185,7 +185,8 @@ public class TestingEngine extends TestingHelp {
 							case LEFT:
 							case RIGHT:
 								if (isAligning(v, connectionSide)) {
-									if (Math.abs(p2d.getY() - getAlignPoint(r2d.getY(), r2d.getHeight(), v, connectionSide)) > 1) {
+									double alignPoint = getAlignPoint(r2d.getY(), r2d.getHeight(), v, connectionSide);
+									if (Math.abs(p2d.getY() - alignPoint) > 2) {
 										if (!straightWithLayoutException(c, v)) {
 											throw new LayoutErrorException(c + " Not mid side of " + v + ": " + r2d + " and " + p2d);
 										}

@@ -113,6 +113,7 @@ public class TestCard extends AbstractDisplayFunctionalTest {
 	protected TestingEngine.Checks checks() {
 		TestingEngine.Checks out = new TestingEngine.Checks();
 		out.checkMidConnection = false;
+		out.everythingStraight = false;
 		return out;
 	}
 	
