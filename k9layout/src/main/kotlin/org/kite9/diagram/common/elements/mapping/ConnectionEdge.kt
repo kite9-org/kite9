@@ -7,7 +7,6 @@ import org.kite9.diagram.common.elements.edge.PlanarizationEdge.RemovalType
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Pair
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -25,8 +24,8 @@ class ConnectionEdge(
     private var tas: Direction?,
     straightIn: Boolean,
     val underlying: Connection,
-    var fromUnderlying: Connected?,
-    var toUnderlying: Connected?
+    override var fromUnderlying: DiagramElement?,
+    override var toUnderlying: DiagramElement?
 ) : AbstractPlanarizationEdge(
     f, t, d
 ), BiDirectionalPlanarizationEdge {
@@ -74,7 +73,7 @@ class ConnectionEdge(
                 getToArrivalSide(),
                 isStraightInPlanarization(),
                 getOriginalUnderlying(),
-                getFromConnected(),
+                fromUnderlying,
                 null
             ),
             ConnectionEdge(
@@ -86,7 +85,7 @@ class ConnectionEdge(
                 isStraightInPlanarization(),
                 getOriginalUnderlying(),
                 null,
-                getToConnected()
+                toUnderlying
             )
         )
         return out
@@ -98,22 +97,6 @@ class ConnectionEdge(
 
     override fun getDiagramElements(): MutableMap<DiagramElement, Direction?> {
         return mutableMapOf(kotlin.Pair(getOriginalUnderlying(), null))
-    }
-
-    override fun getFromConnected(): Connected? {
-        return fromUnderlying
-    }
-
-    override fun getToConnected(): Connected? {
-        return toUnderlying
-    }
-
-    fun setFromConnected(c: Connected?) {
-        fromUnderlying = c
-    }
-
-    fun setToConnected(c: Connected?) {
-        toUnderlying = c
     }
 
     override fun getFromArrivalSide(): Direction? {

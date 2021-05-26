@@ -134,7 +134,7 @@ class ConnectionEdgeRouteFinder(
         if (from is PortVertex) {
             createInitialPathsFrom(pq, from)
         } else if (from is MultiCornerVertex) {
-            val c = (e as BiDirectionalPlanarizationEdge).getFromConnected() as Container?
+            val c = (e as BiDirectionalPlanarizationEdge).fromUnderlying as Container?
             checkContainerNotWithinGrid(c!!)
             val cvs = em.getOuterCornerVertices(c)
             for (v in cvs.getPerimeterVertices()) {
@@ -214,7 +214,7 @@ class ConnectionEdgeRouteFinder(
     }
 
     override fun isTerminationVertex(v: Int): Boolean {
-        val originalUnderlying: DiagramElement? = (e as ConnectionEdge).getToConnected()
+        val originalUnderlying: DiagramElement? = (e as ConnectionEdge).toUnderlying
         val candidate = p.vertexOrder[v]
         return if (candidate is MultiCornerVertex) {
 

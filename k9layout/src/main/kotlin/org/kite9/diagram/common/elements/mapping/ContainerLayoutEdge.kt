@@ -23,8 +23,8 @@ class ContainerLayoutEdge(
     t: Vertex,
     dd: Direction,
     val underlying: GeneratedLayoutBiDirectional,
-    val fromC: Connected?,
-    val toC: Connected?) :
+    override var fromUnderlying: DiagramElement?,
+    override var toUnderlying: DiagramElement?) :
     AbstractPlanarizationEdge(f, t, dd),
     BiDirectionalPlanarizationEdge {
 
@@ -66,7 +66,7 @@ class ContainerLayoutEdge(
                 toIntroduce,
                 getDrawDirection(),
                 underlying,
-                fromC,
+                fromUnderlying,
                 null),
             ContainerLayoutEdge(
                 toIntroduce,
@@ -74,7 +74,7 @@ class ContainerLayoutEdge(
                 getDrawDirection(),
                 underlying,
                 null,
-                toC));
+                toUnderlying));
         return out
     }
 
@@ -84,14 +84,6 @@ class ContainerLayoutEdge(
 
     override fun getDiagramElements(): MutableMap<DiagramElement, Direction?> {
         return mutableMapOf(kotlin.Pair(getOriginalUnderlying(), null))
-    }
-
-    override fun getFromConnected(): Connected? {
-        return fromC
-    }
-
-    override fun getToConnected(): Connected? {
-        return toC
     }
 
     override fun getDrawDirection() : Direction {

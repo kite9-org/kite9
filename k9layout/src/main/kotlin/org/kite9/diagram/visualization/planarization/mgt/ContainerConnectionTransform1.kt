@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.mgt
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.algorithms.det.DetHashSet
+import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
@@ -57,8 +58,9 @@ class ContainerConnectionTransform1(elementMapper: ElementMapper) : Planarizatio
                         toRemove.clear()
                     }
 
-                    (edgeMapping.edges[0] as ConnectionEdge).setFromConnected(from)
-                    (edgeMapping.edges[edgeMapping.edges.size -1] as ConnectionEdge).setToConnected(to)
+
+                    (edgeMapping.edges[0] as BiDirectionalPlanarizationEdge).fromUnderlying = from
+                    (edgeMapping.edges[edgeMapping.edges.size -1] as BiDirectionalPlanarizationEdge).toUnderlying = to
                 }
             }
         }

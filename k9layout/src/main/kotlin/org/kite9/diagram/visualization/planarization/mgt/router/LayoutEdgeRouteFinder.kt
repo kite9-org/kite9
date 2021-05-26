@@ -35,7 +35,7 @@ class LayoutEdgeRouteFinder(
 
     private fun identifyActualVertex(pe: PlanarizationEdge, d: Direction?, from: Boolean): Vertex {
         val cle = pe as ContainerLayoutEdge
-        val und = if (from) cle.getFromConnected() else cle.getToConnected()
+        val und = if (from) cle.fromUnderlying else cle.toUnderlying
         return if (em.hasOuterCornerVertices(und!!)) {
             val c = und as Container?
             val cvs = em.getOuterCornerVertices(c!!)

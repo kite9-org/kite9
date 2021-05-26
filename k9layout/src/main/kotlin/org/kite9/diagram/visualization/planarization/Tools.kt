@@ -298,11 +298,11 @@ class Tools : Logable {
         }
         if (a is ConnectionEdge) {
             val otherEnd =
-                if (b.getFrom() === toGo) (b as ConnectionEdge).getToConnected() else (b as ConnectionEdge).getFromConnected()
+                if (b.getFrom() === toGo) (b as ConnectionEdge).toUnderlying else (b as ConnectionEdge).fromUnderlying
             if (a.getFrom() === toGo) {
-                a.setFromConnected(otherEnd)
+                a.fromUnderlying = otherEnd
             } else if (a.getTo() === toGo) {
-                a.setToConnected(otherEnd)
+                a.toUnderlying = otherEnd
             } else {
                 throw LogicException("Couldn't find end")
             }

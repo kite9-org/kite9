@@ -37,15 +37,15 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         var labelSide: Direction? = null
         if (e is ConnectionEdge) {
             val ce = e
-            val fromEnd = planVertex.isPartOf(ce.getFromConnected())
-            val toEnd = planVertex.isPartOf(ce.getToConnected())
+            val fromEnd = planVertex.isPartOf(ce.fromUnderlying)
+            val toEnd = planVertex.isPartOf(ce.toUnderlying)
             if (fromEnd) {
-                if (planVertex.getDiagramElements().contains(ce.getFromConnected())) {
+                if (planVertex.getDiagramElements().contains(ce.fromUnderlying)) {
                     // we have the actual end then
                     l = ce.getOriginalUnderlying().getFromLabel()
                 }
             } else if (toEnd) {
-                if (planVertex.getDiagramElements().contains(ce.getToConnected())) {
+                if (planVertex.getDiagramElements().contains(ce.toUnderlying)) {
                     // we have the actual end then
                     l = ce.getOriginalUnderlying().getToLabel()
                 }

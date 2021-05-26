@@ -19,6 +19,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
@@ -262,8 +263,8 @@ abstract class AbstractBiDiEdgeRouteFinder(
         }
 
         // work out furthest possible vertices apart
-        val from = getFarthestVertex(bpe.getFromConnected(), bpe.getDrawDirection())
-        val to = getFarthestVertex(bpe.getToConnected(), reverse(bpe.getDrawDirection()))
+        val from = getFarthestVertex(bpe.fromUnderlying, bpe.getDrawDirection())
+        val to = getFarthestVertex(bpe.toUnderlying, reverse(bpe.getDrawDirection()))
         return if (ax != null) {
             var minPath = routeHandler.move(null, from.routingInfo!!, null)
             minPath = routeHandler.move(minPath, to.routingInfo!!, null)
@@ -279,7 +280,7 @@ abstract class AbstractBiDiEdgeRouteFinder(
         }
     }
 
-    private fun getFarthestVertex(c: Connected?, d: Direction?): Vertex {
+    private fun getFarthestVertex(c: DiagramElement?, d: Direction?): Vertex {
         return if (em.hasOuterCornerVertices(c!!)) {
             val cv = em.getOuterCornerVertices(c)
             when (d) {
@@ -355,7 +356,7 @@ abstract class AbstractBiDiEdgeRouteFinder(
             if (v is MultiElementVertex) {
                 // we don't care about the vertex specifically, it could be one of a number...
                     // so return the whole area containing all the vertices
-                return rh.getPlacedPosition((if (from) ci.getFromConnected() else ci.getToConnected())!!)
+                return rh.getPlacedPosition((if (from) ci.fromUnderlying else ci.toUnderlying)!!)
             } else {
                 return v.routingInfo
             }
