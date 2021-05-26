@@ -37,12 +37,15 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected void renderDiagram(String xml) throws Exception {
 		//transcodePNG(full);
-		transcodeSVG(xml);
-		copyTo(getOutputFile(".svg"), "svg-output");
-		Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
-		AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
-		boolean addressed = isAddressed();
-		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
+		try {
+			transcodeSVG(xml);
+			copyTo(getOutputFile(".svg"), "svg-output");
+		} finally {
+			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
+			AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+			boolean addressed = isAddressed();
+			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
+		}
 	}
 
 	private boolean isAddressed() {

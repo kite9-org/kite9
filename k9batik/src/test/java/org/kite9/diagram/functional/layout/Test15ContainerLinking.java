@@ -89,11 +89,11 @@ public class Test15ContainerLinking extends AbstractLayoutFunctionalTest {
 	public void test_15_5_CrossingLink() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);
 
-		Context con1 = new Context("con1", null, true, new TextLine("c1"), null);
+		Context con1 = new Context("con1", null, true, new TextLine("tl1", "c1"), null);
 
-		Context con2 = new Context("con2", createList(con1), true, new TextLine("c2"), null);
+		Context con2 = new Context("con2", createList(con1), true, new TextLine("tl2", "c2"), null);
 
-		new Link(con1, g1, LinkEndStyle.ARROW, new TextLine("arranges"), LinkEndStyle.ARROW, new TextLine(
+		new Link(con1, g1, LinkEndStyle.ARROW, new TextLine("l1", "arranges"), LinkEndStyle.ARROW, new TextLine("l2",
 				"meets"));
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("D", createList(con2, g1), null);

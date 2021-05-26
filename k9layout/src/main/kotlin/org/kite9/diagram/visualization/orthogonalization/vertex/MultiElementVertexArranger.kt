@@ -31,7 +31,8 @@ open class MultiElementVertexArranger(em: ElementMapper) : ConnectedVertexArrang
      * This exclude [EdgeCrossingVertex]s and grid elements.
      */
     override fun needsConversion(v: Vertex): Boolean {
-        return if (v is MultiCornerVertex && v.getDiagramElements().size == 1
+        return if ((v is MultiCornerVertex && v.getDiagramElements().size == 1)
+            || (v is EdgeCrossingVertex && v.getDiagramElements().size == 1)
             || v is ContainerSideVertex
         ) {
             true

@@ -22,6 +22,10 @@ class EdgeCrossingVertex(val id: String, val underlyings: MutableSet<DiagramElem
         underlyings.add(de)
     }
 
+    fun removeUnderlying(de: DiagramElement) {
+        underlyings.remove(de)
+    }
+
     override fun getDiagramElements(): Set<DiagramElement> {
         return underlyings
     }
