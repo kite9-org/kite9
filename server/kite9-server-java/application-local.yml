@@ -1,0 +1,31 @@
+spring:
+  mvc:
+    log-request-details: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: 70869a61f3e966205c92
+            clientSecret: c0ad986a6871a7bed5051bb27450bef06f38ec97
+            scope: repo
+  resources:
+    cache: 
+      cachecontrol:
+        no-store: true
+        max-age: 0
+
+kite9:
+  diagram-log: FILE
+  caching: false
+  
+management:
+  metrics: 
+    export:
+     azuremonitor:
+       instrumentation-key: DEV
+       
+# debug: true
+logging:
+  level:
+    org.springframework: WARN

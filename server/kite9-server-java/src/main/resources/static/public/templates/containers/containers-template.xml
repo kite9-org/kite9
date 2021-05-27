@@ -1,0 +1,57 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl' xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <svg:defs>
+    <svg:marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto" stroke="none" fill="none">
+        <svg:path k9-indicator="stroke" d="M0,0 L3,3 L0,6" />
+    </svg:marker>
+  </svg:defs>
+
+   <template id="group" k9-texture="none" k9-ui="drag delete align connect layout" k9-palette="connected" k9-contains="connected" k9-rounding="15pt">
+    <back k9-indicator="pulse stroke" />
+    <indicator />
+    <contents optional="true" />
+  </template>
+ 
+   <template id="container" 
+      k9-texture="outline" 
+      k9-palette="connected" 
+      k9-contains="connected" 
+      k9-ui="drag delete align connect layout label" 
+      k9-rounding="15pt"
+      k9-shape="pre:#{local-name()}" >
+    <back k9-indicator="pulse"/>
+    <indicator />
+    <contents optional="true" />
+  </template>
+  
+  <template id="indicator-right" k9-indicator="stroke">
+      <svg:rect x="#{$width - 25}" y="#{$height - 25}" width="20" height="20" rx="4" ry="4" fill="none" />  	
+      <svg:path d="M#{$width - 20} #{$height - 15} l10 0" marker-end='url(#indicator-arrow)' />		
+  </template>
+  
+  <template id="indicator-left" k9-indicator="stroke">
+      <svg:rect x="#{$width - 25}" y="#{$height - 25}" width="20" height="20" rx="4" ry="4" fill="none" />  	
+      <svg:path d="M#{$width - 10} #{$height - 15} l-10 0" marker-end='url(#indicator-arrow)' />		
+  </template>
+
+  <template id="indicator-horizontal" k9-indicator="stroke">
+      <svg:rect x="#{$width - 25}" y="#{$height - 25}" width="20" height="20" rx="4" ry="4" fill="none" />  	
+      <svg:path d="M#{$width - 20} #{$height - 15} l10 0" />		
+  </template>
+
+  <template id="indicator-up" k9-indicator="stroke">
+      <svg:rect x="#{$width - 25}" y="#{$height - 25}" width="20" height="20" rx="4" ry="4" fill="none" />  	
+      <svg:path d="M#{$width - 15} #{$height - 10} l0 -10" marker-end='url(#indicator-arrow)' />		
+  </template>
+
+  <template id="indicator-down" k9-indicator="stroke">
+      <svg:rect x="#{$width - 25}" y="#{$height - 25}" width="20" height="20" rx="4" ry="4" fill="none" />  	
+      <svg:path d="M#{$width - 15} #{$height - 20} l0 10" marker-end='url(#indicator-arrow)' />		
+  </template>
+
+  <template id="indicator-vertical" k9-indicator="stroke">
+      <svg:rect x="#{$width - 25}" y="#{$height - 25}" width="20" height="20" rx="4" ry="4" fill="none" />  	
+      <svg:path d="M#{$width - 15} #{$height - 20} l0 10" marker-end='url(#indicator-arrow)' />		
+  </template>
+  
+</svg:svg>

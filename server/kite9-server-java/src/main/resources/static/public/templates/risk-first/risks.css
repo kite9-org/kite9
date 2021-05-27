@@ -1,0 +1,210 @@
+
+/* Risks */
+
+[k9-elem=mitigated] {
+	kite9-type: container;
+	kite9-template: url(template.xml#mitigated);
+	kite9-min-size: 120pt 160pt;	
+}
+
+
+[k9-elem=hidden] {
+	kite9-type: container;
+	kite9-template: url(template.xml#hidden);
+	kite9-min-size: 120pt 160pt;
+}
+
+[k9-elem=hidden] > [k9-elem=back],
+[k9-elem=mitigated] > [k9-elem=back] {
+	fill: white;
+}
+
+[k9-elem=risk] {
+  kite9-template: url(template.xml#generic);
+}
+
+/* So-called "fixed risks" - you just need the class. */
+
+[k9-elem=risk].hidden {
+	kite9-template: url(template.xml#fixed) "?" url(redesign/risks/hidden_risk_v2.svg) "Hidden Risk";
+}
+
+[k9-elem=risk].invisibility {
+	kite9-template: url(template.xml#fixed) "I" url(redesign/risks/invisibility_risk_v2.svg) "Invisibility Risk";
+}
+
+[k9-elem=risk].feature {
+	kite9-template: url(template.xml#fixed) "F" url(redesign/risks/feature_risk_v2.svg) "Feature Risk";
+}
+
+[k9-elem=risk].market {
+  kite9-template: url(template.xml#fixed) "F-Ma" url(redesign/risks/feature_market_risk_v2.svg) "Market Risk";
+}
+
+[k9-elem=risk].communication {
+	kite9-template: url(template.xml#fixed) "Co" url(redesign/risks/communication_risk_v2.svg) "Communication Risk";
+}
+
+[k9-elem=risk].coordination {
+	kite9-template: url(template.xml#fixed) "Cr" url(redesign/risks/coordination_risk_v2.svg) "Coordination Risk";
+}
+
+[k9-elem=risk].complexity {
+	kite9-template: url(template.xml#fixed) "Cx" url(redesign/risks/complexity_risk_v2.svg) "Complexity Risk";
+}
+
+[k9-elem=risk].boundary {
+	kite9-template: url(template.xml#fixed) "B" url(redesign/risks/boundary_risk_v2.svg) "Boundary Risk";;
+}
+
+[k9-elem=risk].agency {
+	kite9-template: url(template.xml#fixed) "A" url(redesign/risks/agency_risk_v2.svg) "Agency Risk";;
+}
+
+[k9-elem=risk].channel {
+	kite9-template: url(template.xml#fixed) "Ch" url(redesign/risks/channel_risk_v2.svg) "Channel Risk";;
+}
+
+[k9-elem=risk].protocol {
+	kite9-template: url(template.xml#fixed) "Pr" url(redesign/risks/protocol_risk_v2.svg) "Protocol Risk";;
+}
+
+[k9-elem=risk].trust {
+	kite9-template: url(template.xml#fixed) "T" url(redesign/risks/trust_belief_risk_v2.svg) "Trust & Belief Risk";;
+}
+
+[k9-elem=risk].learning-curve {
+	kite9-template: url(template.xml#fixed) "Lc" url(redesign/risks/learning_curve_risk_v2.svg) "Learning Curve Risk";;
+}
+
+[k9-elem=risk].message {
+	kite9-template: url(template.xml#fixed) "M" url(redesign/risks/message_risk_v2.svg) "Message Risk";;
+}
+
+[k9-elem=risk].internal-model {
+	kite9-template: url(template.xml#fixed) "IM" url(redesign/risks/internal_model_risk_v2.svg) "Internal Model Risk";;
+}
+
+[k9-elem=risk].feature-fit {
+	kite9-template: url(template.xml#fixed) "FF" url(redesign/risks/feature_fit_risk_v2.svg) "Feature Fit Risk";;
+}
+
+[k9-elem=risk].implementation {
+	kite9-template: url(template.xml#fixed) "F-Im" url(redesign/risks/feature_implementation_risk_v2.svg) "Implementation Risk";
+}
+
+[k9-elem=risk].feature-drift {
+	kite9-template: url(template.xml#fixed) "F-D" url(redesign/risks/feature_drift_risk_v2.svg) "Feature Drift Risk";;
+}
+
+[k9-elem=risk].feature-access {
+	kite9-template: url(template.xml#fixed) "F-A" url(redesign/risks/feature_access_risk_v2.svg) "Feature Access Risk";
+}
+
+[k9-elem=risk].regression {
+	kite9-template: url(template.xml#fixed) "F-R" url(redesign/risks/feature_regression_risk_v2.svg) "Regression Risk";
+}
+
+[k9-elem=risk].conceptual-integrity {
+	kite9-template: url(template.xml#fixed) "F-Ci" url(redesign/risks/conceptual_integrity_risk_v2.svg) "Conceptual Integrity Risk";
+}
+
+[k9-elem=risk].codebase {
+	kite9-template: url(template.xml#fixed) "Cb" url(redesign/risks/codebase_risk_v2.svg) "Codebase Risk";
+}
+
+[k9-elem=risk].dependency {
+	kite9-template: url(template.xml#fixed) "D" url(redesign/risks/dependency_risk_v2.svg) "Dependency Risk";
+}
+
+[k9-elem=risk].dead-end {
+	kite9-template: url(template.xml#fixed) "De" url(redesign/risks/dead_end_risk_v2.svg) "Dead-End Risk";
+}
+
+[k9-elem=risk].reliability {
+	kite9-template: url(template.xml#fixed) "D-R" url(redesign/risks/dependency_reliability_risk_v2.svg) "Reliability Risk";
+}
+
+[k9-elem=risk].scarcity {
+	kite9-template: url(template.xml#fixed) "D-Sc" url(redesign/risks/dependency_scarcity_risk_v2.svg) "Scarcity Risk";
+}
+
+[k9-elem=risk].operational {
+	kite9-template: url(template.xml#fixed) "Op" url(redesign/risks/operational_risk_v2.svg) "Operational Risk";
+}
+
+[k9-elem=risk].schedule {
+	kite9-template: url(template.xml#fixed) "D-Sh" url(redesign/risks/dependency_schedule_risk_v2.svg) "Schedule Risk";
+}
+
+[k9-elem=risk].opportunity {
+	kite9-template: url(template.xml#fixed) "D-Opp" url(redesign/risks/dependency_opportunity_risk_v2.svg) "Opportunity Risk";
+}
+
+[k9-elem=risk].deadline {
+	kite9-template: url(template.xml#fixed) "D-Dl" url(redesign/risks/dependency_deadline_risk_v2.svg) "Deadline Risk";
+}
+
+[k9-elem=risk].funding {
+	kite9-template: url(template.xml#fixed) "D-Fu" url(redesign/risks/dependency_funding_risk_v2.svg) "Funding Risk";
+}
+
+[k9-elem=risk].red-queen {
+	kite9-template: url(template.xml#fixed) "D-Rq" url(redesign/risks/dependency_red_queen_risk_v2.svg) "Red Queen Risk";
+}
+
+[k9-elem=risk].staff {
+	kite9-template: url(template.xml#fixed) "D-St" url(redesign/risks/staff_risk_v2.svg) "Staff Risk";
+}
+
+[k9-elem=risk].process {
+	kite9-template: url(template.xml#fixed) "D-Pr" url(redesign/risks/dependency_process_risk_v2.svg) "Process Risk";
+}
+
+[k9-elem=risk].map-and-territory {
+	kite9-template: url(template.xml#fixed) "MT" url(redesign/risks/map_and_territory_risk_v2.svg) "Map And Territory Risk";
+}
+
+[k9-elem=risk].software-dependency {
+	kite9-template: url(template.xml#fixed) "D-Sw" url(redesign/risks/dependency_software_risk_v2.svg) "Software Dependency Risk";
+}
+
+[k9-elem=risk].security {
+	kite9-template: url(template.xml#fixed) "S" url(redesign/risks/security_risk_v2.svg) "Security Risk";
+}
+
+
+
+[k9-elem=risk] {
+	kite9-connection-align: 50%;
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-layout: down;	
+	kite9-margin: 10pt;
+	kite9-link-inset: 10pt;
+	kite9-link-gutter: 10pt;
+	kite9-type: container;
+	kite9-padding: 10pt; 
+	kite9-connection-align: 50%;
+	kite9-min-size: 120pt 160pt;
+}
+
+[k9-elem=risk] > [k9-elem=code] {
+	kite9-horizontal-align: center;
+	kite9-vertical-align: top;
+	kite9-sizing: minimize;
+	kite9-type: text;
+	font-size: 22pt;
+	font-family: "metropolis";
+	font-weight: 300;
+	fill: black;
+	text-align: middle;
+	kite9-margin-bottom: 15pt;
+  kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
+}
+
+[k9-elem=risk] > [k9-elem=image] {
+	kite9-vertical-align: top;
+	kite9-horizontal-align: middle;
+}
+

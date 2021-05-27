@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css">
+      @import url("/public/templates/common/back/back.css");
+      @import url("/public/templates/common/font-awesome/font-awesome.css");
+      @import url("/public/templates/containers/containers.css");
+    </svg:style>
+
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" id="The Diagram">
+    <container>
+      <font-awesome>&#xf005;</font-awesome>
+    </container>
+  </diagram>
+</svg:svg>

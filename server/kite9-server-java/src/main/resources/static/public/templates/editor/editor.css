@@ -1,0 +1,23 @@
+@import url(/public/templates/editor/dragable.css);
+@import url(/public/templates/indicators/indicators.css);
+@import url(/public/templates/editor/contradictions.css);
+
+/* 
+ * ensures enough space to drag in when using the editor 
+ */
+@media editor {
+  [k9-elem=diagram] {
+    kite9-padding: 200pt !important;
+  }  
+}
+
+
+/* 
+ * Prevents the original selection process 
+ */
+svg {
+  user-select: none; 
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+

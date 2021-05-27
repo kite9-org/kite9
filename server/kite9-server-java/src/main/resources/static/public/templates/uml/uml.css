@@ -1,0 +1,100 @@
+
+@import url('/public/templates/common/common.css');
+@import url('/public/templates/containers/common-containers.css');
+@import url('/public/templates/links/common-links.css');
+@import url('/public/templates/labels/common-labels.css');
+@import url('/public/templates/grid/common-grid.css');
+@import url('/public/fonts/metropolis/metropolis.css');
+@import url('uml-shapes.css');
+@import url('uml-components.css');
+@import url('/public/templates/editor/editor.css');
+
+@script url('uml.js');
+
+@params {
+	palettes: 
+   url('/public/templates/uml/palette.adl') "connected"
+   url('/public/templates/containers/common-containers.adl') "connected"
+   url('/public/templates/links/common-links.adl') "link"
+   url('/public/templates/links/common-ends.adl') "end";
+}
+
+
+/**
+ * Fonts and colours 
+ */
+[k9-elem=class-name] {
+	fill: #333300;
+	font-family: "metropolis";
+	text-align: start;
+	font-size: 10pt;	
+}
+
+
+[k9-elem=stereotype] {
+	fill: #666666;
+	font-family: "metropolis";
+	text-align: start;
+	font-size: 8pt;	
+	kite9-margin-bottom: 5pt;
+}
+ 
+
+[k9-elem=label],
+[k9-elem=textarea],
+[k9-elem=label] {
+	fill: #333300;
+	font-family: "metropolis";
+	text-align: start;
+	font-size: 10pt;
+}
+
+[k9-elem=property],
+[k9-elem=method] {
+	fill: #333300;
+	font-family: "metropolis";
+	text-align: start;
+	font-size: 8pt;
+	text-align: start;
+	kite9-horizontal-align: left;
+	kite9-margin-bottom: 2pt;
+}
+
+[k9-shape=actor] > [k9-elem=back],
+[k9-shape=interface] > [k9-elem=back],
+[k9-shape=use-case] > [k9-elem=back],
+[k9-shape=note] > [k9-elem=back],
+[k9-shape=component] > [k9-elem=back],
+[k9-shape=uml-container] > [k9-elem=back],
+[k9-shape=package] > [k9-elem=back] {
+	fill: #BBBBBB;
+  stroke: black;
+}
+
+[k9-shape=divider] > [k9-elem=back],
+[k9-elem=depiction] > [k9-elem=back]  {
+	fill: #BBBBBB;
+	stroke: black;
+}
+
+
+[k9-elem=depiction] > [k9-elem=back]  {
+	fill: #BBBBBB;
+	stroke: black;
+}
+
+[k9-elem=caption] {
+	kite9-padding: 10pt;
+}
+
+[k9-elem=class] > [k9-elem=back],
+[k9-elem=caption] > [k9-elem=back] {
+	fill: #BBBBBB;
+	stroke: black;
+}
+
+[k9-elem=label] > [k9-elem=back] {
+  fill: #BBBBBB;
+  fill-opacity: 0.01;
+}
+

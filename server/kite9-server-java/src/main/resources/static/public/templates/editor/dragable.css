@@ -1,0 +1,11 @@
+#_moveLayer [k9-indicator~=fill],
+#_moveLayer [k9-indicator~=pulse] {
+	fill: #b7c0fe !important;
+	fill-opacity: .7;
+}
+
+#_moveLayer [k9-indicator~=stroke],
+#_moveLayer [k9-indicator~=outline] {
+	stroke: #b7c0fe !important;
+	stroke-opacity: .7;
+}

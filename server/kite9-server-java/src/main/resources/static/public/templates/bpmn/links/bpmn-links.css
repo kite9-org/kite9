@@ -1,0 +1,25 @@
+@import url(/public/templates/common/links/common-links.css);
+
+@params {
+	align-template-uri:  url(common-links.adl#align);
+	link-template-uri:   url(bpmn-links.adl#l1);
+  palettes:            url(bpmn-links) "link";
+}
+
+
+/* Links */
+
+[k9-elem=link].message {
+	kite9-type: link;
+	kite9-template: url(bpmn-links-template.xml#templated-link) 'none' '';
+	kite9-margin: 20pt;
+	kite9-link-corner-radius: 10pt;
+}
+
+[k9-elem=link].message {
+  kite9-type: link;
+  kite9-template: url(bpmn-links-template.xml#templated-link) '' '';
+  kite9-margin: 20pt;
+  kite9-link-corner-radius: 10pt;
+}
+

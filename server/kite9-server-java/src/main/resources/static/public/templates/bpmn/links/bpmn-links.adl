@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+	<svg:defs>
+		<svg:style type="text/css">
+			@import url(/public/templates/bpmn/links/bpmn-links.css);
+
+			[k9-elem=hub] {
+				kite9-template: url(/public/common/links/common-links-template.xml#hub);
+				kite9-type: svg;
+				kite9-connection-align: 50%;
+				fill: #FAFAFA;
+			}
+			
+			[k9-elem=group] {
+			  kite9-type: container;
+			  kite9-margin: 20pt;
+			}
+		</svg:style>
+	</svg:defs>
+	<diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: right; kite9-type: diagram; " class="indicators-on">
+
+		<group style="kite9-layout: down; kite9-margin-right: 30pt; ">
+			<group style="kite9-layout: right; kite9-min-with: 300pt; ">
+				<hub id="from1"></hub>
+				<hub id="to1"></hub>
+			</group>
+
+			<group style="kite9-layout: right; ">
+				<hub id="from2"></hub>
+				<hub id="to2"></hub>
+			</group>
+
+			<group style="kite9-layout: right; ">
+				<hub id="from3"></hub>
+				<hub id="to3"></hub>
+			</group>
+
+			<group style="kite9-layout: right; ">
+				<hub id="from4"></hub>
+				<hub id="to4"></hub>
+			</group>
+
+			<group style="kite9-layout: right; ">
+				<hub id="from5"></hub>
+				<hub id="to5"></hub>
+			</group>
+
+			<group style="kite9-layout: right; ">
+				<hub id="from6"></hub>
+				<hub id="to6"></hub>
+			</group>
+
+   </group>
+
+		<svg:g style="kite9-link-minimum-length: 100pt !important; ">
+
+			<link id="l11" class="message">
+				<from id="l11-f" reference="from1" />
+				<to id="l11-t" reference="to1" />
+			</link>
+
+			<link id="l12" class="sequence">
+				<from id="l12-f" reference="from2" />
+				<to id="l12-t" reference="to2" />
+			</link>
+
+			<link id="l13" class="association">
+				<from id="l13-f" reference="from3" />
+				<to id="l13-t" reference="to3" />
+			</link>
+
+			<link id="l14" class="annotation">
+				<from id="l14-f" reference="from4" />
+				<to id="l14-t" reference="to4"/>
+			</link>
+
+		</svg:g>
+
+	</diagram>
+</svg:svg>

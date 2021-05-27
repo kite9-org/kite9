@@ -1,0 +1,39 @@
+/* latin */
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url('Kanit-ExtraLight.ttf') format('truetype');
+}
+/* thai */
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('Kanit-Regular.ttf') format('truetype');
+}
+/* latin */
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('Kanit-Regular.ttf') format('truetype');
+}
+/* latin */
+@font-face {
+  font-family: 'Kanit';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('Kanit-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Kanit';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('Kanit-ExtraBoldItalic.ttf') format('truetype');
+}

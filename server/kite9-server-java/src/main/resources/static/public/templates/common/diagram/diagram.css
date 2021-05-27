@@ -1,0 +1,15 @@
+@defs url(diagram-template.xml);
+
+
+diagram,
+[k9-elem=diagram] {
+  kite9-type: diagram;
+  kite9-padding: 15pt;
+  kite9-traversal: none;
+  kite9-template: url(diagram-template.xml#diagram);
+}
+
+[k9-elem=indicator] {
+  kite9-usage: decal; 
+  kite9-type: svg;  
+}

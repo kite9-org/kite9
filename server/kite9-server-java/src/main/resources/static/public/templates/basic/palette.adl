@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css">
+      @import url("/public/templates/basic/basic.css");
+    </svg:style>
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" style="kite9-layout: vertical; ">
+
+    <g id="b1" class="box">
+      <textarea id="fs1">Box</textarea>
+    </g>
+
+    <g id="b2" class="box" style="fill: #AA5500; " >
+      <textarea id="fs1">Box 2</textarea>
+    </g>
+
+  </diagram>
+</svg:svg>

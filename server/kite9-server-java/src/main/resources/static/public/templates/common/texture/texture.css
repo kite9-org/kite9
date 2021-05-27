@@ -1,0 +1,31 @@
+/**
+ * Provides some default fill options which can be used to 
+ * colour the <back /> element.  Users are encouraged to adopt the k9-texture attribute
+ * and add their own options.  See designer template for an example 
+ */
+[k9-texture=none] > [k9-elem=back] {
+	/** This allows the element to still be selected */
+	fill: white;
+  fill-opacity: .01;
+}
+
+[k9-texture=background] > [k9-elem=back] {
+	fill: white;
+	fill-opacity: 1;
+}
+
+[k9-texture=solid] > [k9-elem=back] {
+	fill: white;
+	fill-opacity: 1;
+}
+
+[k9-texture=outline] > [k9-elem=back] {
+  fill: white;
+  fill-opacity: .01;
+  stroke: black;
+}
+
+[k9-texture=foreground] > [k9-elem=back] {
+  fill: black;
+  fill-opacity: 1;
+}

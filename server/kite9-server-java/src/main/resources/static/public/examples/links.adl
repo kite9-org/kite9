@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css"> 
+       @import url("/public/templates/example/example.css");
+       @import url("/public/templates/indicators/indicators.css");
+    </svg:style>
+      
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" id="d" drag="target" class="indicators-on">
+
+     <g id="b1" class="box"><textarea>Link Me</textarea></g>
+     
+     <container id="bigbox" style="kite9-layout: vertical; ">
+       <g id="b2" class="box"><textarea>B</textarea></g>
+       <g id="b3" class="box"><textarea>Can't Drag</textarea></g>
+     </container>
+     
+     <link id="link2" drop="rect" drawDirection="DOWN">
+      <from id="link2-from" reference="b1" shape="arrow"></from>
+      <to id="link2-to" shape="arrow" class="gap" reference="b3"></to>
+     </link>
+     
+     
+     <link id="link2" drop="rect">
+      <from id="link2-from" reference="b1" shape="hoverable"></from>
+      <to id="link2-to" shape="hoverable" reference="b2"></to>
+     </link>
+     
+     <align id="a" drawDirection="DOWN">
+      <from reference="b2" />
+      <to reference="b3" />
+     </align>
+
+  </diagram>
+</svg:svg>

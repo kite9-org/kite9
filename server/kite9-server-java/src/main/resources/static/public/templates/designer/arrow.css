@@ -1,0 +1,25 @@
+/* Arrow */
+[k9-elem=arrow] {
+  kite9-padding: 3pt 5pt 3pt 5pt; 
+  kite9-margin: 10 10 10 10; 
+  kite9-type: container;
+  kite9-sizing: minimize;
+  kite9-template: url('/public/templates/common/formats/formats-template.xml#inline-text');
+  kite9-connections: separate;
+  kite9-connection-align: 50%;
+  font-weight: 400;
+  kite9-link-inset: 10pt;
+  kite9-link-gutter: 10pt;
+}
+
+[k9-texture=solid][k9-elem=arrow] > [k9-elem=back] {
+	fill: black;
+	fill-opacity: 1;
+}
+
+
+[k9-elem=arrow] > [k9-elem=textarea] {
+  fill: white;
+  stroke: none;
+  font-size: 12pt;
+}

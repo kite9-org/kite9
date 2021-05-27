@@ -1,0 +1,32 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'
+	xmlns:xlink='http://www.w3.org/1999/xlink'
+	xmlns='http://www.kite9.org/schema/adl'>
+
+  <back id="gateway">
+    <svg:path d="
+      M #{$width div 2} 0
+      L #{$width}  #{$height div 2}
+      L #{$width div 2} #{$height}
+      L 0 #{$height div 2}
+      z" />
+  </back>
+
+	<back id="activity">
+		<svg:rect x="0" y="0" width="#{$width}" height="#{$height}" rx="10" ry="10" />
+	</back>
+
+	<back id="event">
+		<svg:ellipse cx="#{$width div 2}" cy="#{$height div 2}"
+			rx="#{$width div 2}" ry="#{$height div 2}" />
+	</back>
+	
+	<back id="intermediate">
+    <svg:ellipse cx="#{$width div 2}" cy="#{$height div 2}"
+      rx="#{$width div 2}" ry="#{$height div 2}" />
+      
+    <svg:ellipse cx="#{$width div 2}" cy="#{$height div 2}"
+      rx="#{$width div 2 - 3}" ry="#{$height div 2 - 3}" />
+  </back>
+	
+
+</svg:svg>

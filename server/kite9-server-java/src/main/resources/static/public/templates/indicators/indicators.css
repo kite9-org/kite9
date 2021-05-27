@@ -1,0 +1,119 @@
+/**
+ * Highlights invisible elements like "align" links,
+ * direction indicators and layout groups.  So that you can see
+ * where elements are in the diagram.
+ * This is all controlled by the 'k9-indicator' attribute. 
+ * Meanings:
+ *
+ * fill: this is a permanently filled shape
+ * pulse: this is filled when you mouse-over the shape
+ * stroke: permanent change to the stroke effect.
+ * outline: stroke effect change on mouse-over
+ *
+ * grab: fills the shape so it can always be grabbed
+ * bar: makes the stroke wider so it can be grabbed 
+ 
+ */
+[id] > [k9-indicator] {
+	transition: fill 0.2s;	
+}
+
+/*
+ * This includes CSS directives for making it easier to grab small elements in the diagram.
+ */
+.indicators-on [k9-indicator~=grab] {
+  stroke-width: 10pt !important;
+  fill-opacity: .5 !important;
+}
+
+.indicators-on [k9-indicator~=bar] {
+  stroke-width: 10pt !important;
+  stroke-opacity: .1 !important;
+}
+
+/* Permanent effect: stroke and fill */ 
+.indicators-on [id] > [k9-indicator~=stroke] {
+	stroke: #b7c0fe;
+	stroke-opacity: .8;
+}
+
+.indicators-on [id] > [k9-indicator~=fill] {
+	fill: #b7c0fe;
+	fill-opacity: .6;
+}
+
+/* Mouse-over effects: stroke, fill + outline and pulse */
+
+.mouseover > [k9-indicator~=stroke],
+.mouseover > [k9-indicator~=outline],
+.mouseover > [k9-indicator~=bar] {
+	stroke: #BBDDEE !important;
+	stroke-opacity: 1 !important;
+}
+
+.mouseover > [k9-indicator~=pulse],
+.mouseover > [k9-indicator~=fill],
+.mouseover > [k9-indicator~=grab],
+.mouseover.grid-temporary {
+	fill: #CCEEFF !important;
+	fill-opacity: .8 !important;
+}
+
+/* selected effect: stroke, fill, outline and pulse */
+
+.selected > [k9-indicator~=outline],
+.selected > [k9-indicator~=stroke],
+.selected > [k9-indicator~=bar] {
+	stroke: rgb(255, 204, 0) !important;
+	stroke-opacity: .8 !important;
+}
+
+.selected > [k9-indicator~=pulse],
+.selected > [k9-indicator~=fill],
+.selected > [k9-indicator~=grab] {
+	fill: rgb(255, 204, 0) !important;
+	fill-opacity: .8 !important;
+}
+
+/** 
+ * Prevent diagram highlight / select
+ */
+[k9-elem=diagram].selected > [k9-indicator] {
+	fill-opacity: 0 !important;
+	fill: white !important;
+}
+
+/* Selected text effect */
+
+[id].selected > g > text {
+	fill: rgb(255, 204, 0) !important;
+	fill-opacity: .6 !important;	
+}
+
+.mouseover > g > text {
+	fill: #CCEEFF !important;
+	fill-opacity: .6 !important;
+}
+
+/* inactive effect: dims the element */
+
+.inactive > [k9-indicator~=outline],
+.inactive > [k9-indicator~=stroke],
+.inactive > [k9-indicator~=bar] {
+  stroke-opacity: .2 !important;
+}
+
+.inactive > [k9-indicator~=pulse],
+.inactive > [k9-indicator~=fill],
+.inactive > [k9-indicator~=grab],
+.inactive > g > text {
+  fill-opacity: .2 !important;
+}
+
+
+/* To be removed */
+
+.indicators-on .grid-temporary {
+	fill-opacity: .3;
+	stroke: none;
+}

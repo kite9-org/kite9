@@ -1,0 +1,15 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl' xmlns:xlink="http://www.w3.org/1999/xlink">
+  
+  <template 
+    id='label' 
+    k9-ui="delete orphan edit" 
+    k9-palette="label"
+    k9-texture="none">
+    <back />
+    <front style="kite9-type: text; ">
+      <contents optional="true" />
+    </front>
+  </template>
+  
+  
+</svg:svg>

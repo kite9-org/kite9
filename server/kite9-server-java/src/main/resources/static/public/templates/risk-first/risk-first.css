@@ -1,0 +1,159 @@
+@import url('/public/templates/common/common.css');
+@import url('/public/templates/containers/common-containers.css');
+@import url('/public/templates/links/common-links.css');
+@import url("/public/templates/grid/common-grid.css");
+@import url('/public/templates/labels/common-labels.css');
+@import url('/public/fonts/metropolis/metropolis.css');
+@import url('/public/templates/risk-first/risks.css');
+@import url('/public/templates/risk-first/artifacts.css');
+@import url('/public/templates/risk-first/actions.css');
+@import url('/public/templates/risk-first/planner.css');
+@import url('/public/templates/risk-first/site.css');
+@import url('/public/templates/risk-first/matrix.css');
+@import url('/public/templates/editor/editor.css');
+@import url('/public/templates/votes/votes.css');
+
+
+@script url('risk-first.js');
+
+@defs url('template.xml');
+
+@params {
+  palettes: 
+	  url('/public/templates/links/common-links.adl') "link"
+	  url('/public/templates/links/common-ends.adl') "end"
+    url('/public/templates/risk-first/artifact-palette.adl') "connected risk"
+    url('/public/templates/risk-first/risk-palette.adl') "connected risk"  
+    url('/public/templates/containers/common-containers.adl') "connected"
+    url('/public/templates/grid/common-grid.adl') "cell table";
+  link-template-uri:   url('/public/templates/links/common-links.adl#l6');
+}
+
+/* Titles, generally */
+
+[k9-elem=title] {
+	kite9-horizontal-align: center;
+	kite9-vertical-align: bottom;
+	kite9-sizing: minimize;
+	kite9-type: text;
+	font-size: 12pt;
+	font-family: "metropolis";
+	font-weight: 200;
+	fill: black;
+	text-align: middle;
+	kite9-text-bounds-width: 110pt;
+	kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
+}
+
+/* Labels */
+
+[k9-elem=label] > [k9-elem=front],
+[k9-elem=description]  {
+	text-align: middle;
+	fill: black;
+	font-weight: 100;
+	font-family: metropolis;
+	font-size: 12pt;
+  font-style: italic;
+}
+
+[k9-elem=container] > [k9-elem=label] > [k9-elem=front] {
+	font-weight: 600;
+  font-size: 12pt;
+  font-style: normal;
+}
+
+[k9-elem=label] [k9-elem=back] {
+	fill: #FFFFFF;
+	fill-opacity: 0.01;
+}
+
+[k9-elem=container] > [k9-elem=back] {
+	stroke-width: 1pt;
+}
+
+[k9-elem=label].title > [k9-elem=front] {
+	font-size: 25pt;
+}
+
+[k9-elem=description] {
+  kite9-usage: label;
+  kite9-type: container;
+  kite9-vertical-align: center;
+  kite9-horizontal-align: center;
+  kite9-template: url(/public/templates/labels/common-labels-template.xml#label);
+  kite9-padding: 10pt;
+  kite9-label-placement: bottom;
+}
+
+[k9-elem=description] > [k9-elem=front] {
+  fill: black;
+}
+
+/* Context */
+[k9-elem=context] {
+  kite9-type: container;
+  kite9-padding: 15pt;
+  kite9-margin: 15pt;
+  kite9-template: url(/public/templates/containers/containers-template.xml#container);
+  kite9-sizing: minimize;
+}
+
+
+/* Arrow */
+
+[k9-elem=arrow] {
+	kite9-padding: 8pt 5pt 8pt 5pt; 
+	kite9-type: container;
+	kite9-sizing: minimize;
+	kite9-template: url(/public/templates/common/formats/formats-template.xml#inline-text) '4pt' '4pt';
+	kite9-connections: separate;
+	kite9-connection-align: 50%;
+	font-size: 14pt;
+	font-family: "metropolis";
+	font-weight: 500;
+	kite9-link-inset: 3pt; 
+}
+
+[k9-elem=arrow][k9-texture=solid] > [k9-elem=back] {
+	fill: black;	
+	fill-opacity: 1; 
+}
+
+[k9-elem=arrow] > [k9-elem=textarea] {
+	fill: white;
+	fill-opacity: 1; 
+}
+
+from,
+to {
+	kite9-marker-reserve: 8pt;
+}
+
+link {
+	kite9-link-minimum-length: 30pt;
+}
+
+[k9-elem=image] {
+   kite9-template: url(/public/templates/common/formats/formats-template.xml#image-editable);
+}
+
+/* Fills */
+[k9-elem=risk][k9-texture=solid] > [k9-elem=back],
+[k9-elem=action][k9-texture=solid] > [k9-elem=shape] {
+	 fill: url(#risk-background);
+   stroke: black; 
+}
+
+[k9-texture=solid] > [k9-elem=shape] {
+   stroke: black;
+}
+
+[k9-elem=votes] .count {
+	font-family: metropolis;
+}
+
+/* Diagram */
+[k9-elem=diagram] {
+  kite9-padding: 20pt;  
+}

@@ -1,0 +1,20 @@
+.overlay {
+	background-color: grey;
+	position: absolute;
+	color: #333;
+	background: #fff;
+	padding: 10px;
+	border: 1px solid #5a5a5a;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	background: #fff;
+	user-select: none; 
+	-webkit-user-select: none;
+	opacity: .7;
+	max-width: 220px;
+}
+
+.overlay:hover {
+	background-color: #DDDDDD;
+}

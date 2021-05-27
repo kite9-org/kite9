@@ -1,0 +1,58 @@
+[k9-shape=actor],
+[k9-shape=interface],
+[k9-shape=use-case],
+[k9-shape=note],
+[k9-shape=component],
+[k9-shape=uml-container],
+[k9-shape=package] {
+	kite9-padding: 10pt;
+}
+
+[k9-shape=component] {
+	kite9-padding-left: 25pt
+}
+
+[k9-shape=actor] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#actor');
+}
+
+[k9-shape=interface] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#interface');
+}
+
+[k9-shape=use-case] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#use-case');
+}
+
+[k9-shape=note] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#note');
+}
+
+[k9-shape=component] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#component');
+}
+
+[k9-shape=uml-container] {
+	kite9-padding-top: 20pt;
+	kite9-padding-right: 20pt;
+}
+
+[k9-shape=uml-container] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#uml-container');
+}
+
+[k9-shape=package] {
+	kite9-padding-top: 25pt
+}
+
+[k9-shape=package] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#package');
+}
+
+[k9-shape=divider] {
+	kite9-padding: 0pt;
+}
+
+[k9-shape=divider] > [k9-elem=back] {
+	kite9-template: url('uml-shapes-template.xml#divider');
+}

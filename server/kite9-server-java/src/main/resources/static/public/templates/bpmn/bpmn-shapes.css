@@ -1,0 +1,27 @@
+[k9-shape=start],
+[k9-shape=end],
+[k9-shape=activity],
+[k9-shape=gateway] {
+  kite9-padding: 15pt;
+}
+
+[k9-shape=gateway] > [k9-elem=back] {
+  kite9-template: url('bpmn-shapes-template.xml#gateway');
+}
+
+[k9-shape=start] > [k9-elem=back] {
+  kite9-template: url('bpmn-shapes-template.xml#event');
+}
+
+[k9-shape=intermediate] > [k9-elem=back] {
+  kite9-template: url('bpmn-shapes-template.xml#intermediate');
+}
+
+[k9-shape=end] > [k9-elem=back] {
+  kite9-template: url('bpmn-shapes-template.xml#event');
+  stroke-width: 3pt;
+}
+
+[k9-shape=activity] > [k9-elem=back] {
+  kite9-template: url('bpmn-shapes-template.xml#activity');
+}

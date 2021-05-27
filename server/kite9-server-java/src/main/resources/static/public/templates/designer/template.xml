@@ -1,0 +1,88 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'
+	xmlns='http://www.kite9.org/schema/adl'>
+	<svg:defs>
+		<svg:linearGradient id='glyph-background' x1='0%'
+			x2='0%' y1='0%' y2='100%'>
+			<svg:stop offset='0%' stop-color='#FFF' />
+			<svg:stop offset='100%' stop-color='#DDD' />
+		</svg:linearGradient>
+
+		<svg:filter id="dropshadow" height="130%">
+			<svg:feGaussianBlur in="SourceAlpha"
+				stdDeviation="1" />
+			<svg:feOffset dx="2" dy="2" />
+			<svg:feColorMatrix type="matrix"
+				values="0 0 0 0 .5
+                0 0 0 0 .5
+                0 0 0 0 .5
+                0 0 0 1 0" />
+			<svg:feMerge>
+				<svg:feMergeNode />
+				<svg:feMergeNode in="SourceGraphic" />
+			</svg:feMerge>
+		</svg:filter>
+
+	</svg:defs>
+
+	<!-- Any text item in designer can have symbols attached to it -->
+	<template id="generic-text" k9-contains="symbol"
+		symbols="pre:#{boolean(adl:symbol)}"
+		k9-child="/public/templates/designer/template.xml#symbol-example"
+		k9-ui="delete orphan cascade edit drag" k9-texture="none"
+		k9-palette="designer-text">
+		<back k9-indicator="pulse" />
+		<textarea k9-ui="text">
+      <contents xpath="text()" />
+		</textarea>
+		<contents xpath="adl:symbol" optional="true" />
+	</template>
+
+	<template id="diagram"
+		k9-label="/public/templates/designer/template.xml#example-key"
+		k9-ui="layout" k9-contains="connected">
+		<back />
+		<svg:g filter="url(#dropshadow)" id="_dropshadow">
+			<contents optional="true" />
+		</svg:g>
+	</template>
+	
+	<template id="diagram-noshadow"
+    k9-label="/public/templates/designer/template.xml#example-key"
+    k9-ui="layout" k9-contains="connected">
+    <back />
+    <contents optional="true" />
+  </template>
+
+	<template id="key" k9-ui="delete cascade" k9-texture="none" k9-indicator="pulse">
+    <back />
+		<key-body k9-texture="solid" >
+			<contents />
+		</key-body>
+	</template>
+
+	<symbol k9-shape="circle" id="symbol-example">C</symbol>
+	
+	<text-line id="text-example">Some Text</text-line>
+
+  <template id='symbol'
+    k9-ui="drag edit delete"
+    k9-palette="symbol"
+    k9-texture="symbol"
+    k9-containers="designer-text">
+    <back k9-indicator="pulse" />
+    <textarea>
+      <contents optional="true" />
+    </textarea>
+  </template>
+  
+  <template id='glyph'
+    k9-ui="drag delete align connect insert autoconnect layout cascade"
+    k9-palette="connected" k9-shape="pre:#{local-name()}"
+    k9-contains="designer-text"
+    k9-child="/public/templates/designer/template.xml#text-example"
+    k9-format="inline-container" k9-texture="solid">
+    <back k9-indicator="pulse" />
+    <contents optional="true" />
+  </template>
+
+</svg:svg>

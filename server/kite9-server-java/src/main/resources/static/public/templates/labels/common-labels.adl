@@ -1,0 +1,14 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css">
+       @import url("/public/templates/common/common.css");
+       @import url("/public/templates/labels/common-labels.css");
+    </svg:style>
+  </svg:defs>
+ <diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: down; ">
+
+   
+    <label id="label">New Label</label>
+
+  </diagram>
+</svg:svg>
