@@ -19,7 +19,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFormat;
+import com.kite9.k9server.adl.format.media.DiagramWriteFormat;
 import com.kite9.k9server.adl.format.media.EditableSVGFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.holder.pipeline.ADLDom;
@@ -75,8 +75,8 @@ public class ADLDomMessageWriter extends AbstractGenericHttpMessageConverter<ADL
 			}
 			
 			Format f = formatSupplier.getFormatFor(contentType);
-			if (f instanceof DiagramFormat) {
-				DiagramFormat df = (DiagramFormat) f;
+			if (f instanceof DiagramWriteFormat) {
+				DiagramWriteFormat df = (DiagramWriteFormat) f;
 				String uriStr = t.getUri().toString();
 				ADLOutput<?> out = t.process(t.getUri(), df);
 	

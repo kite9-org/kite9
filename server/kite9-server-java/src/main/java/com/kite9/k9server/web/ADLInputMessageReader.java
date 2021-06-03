@@ -17,7 +17,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.format.media.Kite9MediaTypes;
 import com.kite9.k9server.adl.holder.pipeline.ADLBase; 
@@ -60,10 +60,10 @@ public class ADLInputMessageReader extends AbstractGenericHttpMessageConverter<A
 	protected ADLBase readInternal(Class<? extends ADLBase> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
 		MediaType mt = inputMessage.getHeaders().getContentType();
 		Format f = formatSupplier.getFormatFor(mt);
-		if (f instanceof DiagramFileFormat) {
+		if (f instanceof DiagramReadFormat) {
 			try {
 				URI uri = URIRewriter.getCompleteCurrentRequestURI();
-				ADLBase out = ((DiagramFileFormat) f).handleRead(inputMessage.getBody(), uri, inputMessage.getHeaders());
+				ADLBase out = ((DiagramReadFormat) f).handleRead(inputMessage.getBody(), uri, inputMessage.getHeaders());
 				return out;
 			} catch (Exception e) {
 				throw new Kite9XMLProcessingException("Couldn't extract diagram from "+f, e);

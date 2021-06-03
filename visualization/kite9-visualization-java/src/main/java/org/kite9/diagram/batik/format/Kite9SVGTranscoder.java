@@ -13,6 +13,7 @@ import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.apache.xml.utils.DefaultErrorHandler;
+import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.model.BatikDiagramElementFactory;
@@ -28,6 +29,7 @@ import org.kite9.diagram.dom.processors.TextWrapProcessor;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.Kite9InliningProcessor;
 import org.kite9.diagram.dom.processors.xpath.XPathValueReplacer;
+import org.kite9.diagram.format.Kite9Transcoder;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.model.Diagram;
@@ -58,7 +60,7 @@ import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
 /**
  * Please note - this transcoder is single-use.
  */
-public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable {
+public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable, Kite9Transcoder<Document> {
 	
 	/**
 	 * If the Encapsulating hint is set, then the SVG will not reference external files for images, fonts,
@@ -403,4 +405,22 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return true;
 	}
 
+	@Override
+	public void addTranscodingHint(Object key, Object value) {
+		if (key instanceof TranscodingHints.Key) {
+			hints.put(((TranscodingHints.Key)key), value);
+		} else {
+			throw new UnsupportedOperationException("Hint not understood: "+key);
+		}
+	}
+
+	@Override
+	public Document transcode(Document doc) throws Exception {
+    	TranscoderInput ti = new TranscoderInput();
+    	ti.setDocument(doc);
+    	ti.setURI(doc.getDocumentURI());
+    	TranscoderOutput out = new TranscoderOutput();
+    	transcode(ti, out);
+    	return out.getDocument();
+	}
 }

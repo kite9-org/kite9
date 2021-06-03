@@ -16,7 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.holder.meta.MetaReadWrite;
 import com.kite9.k9server.adl.holder.pipeline.ADLBase;
@@ -63,8 +63,8 @@ public abstract class AbstractContentController extends AbstractNegotiatingContr
 			// creating a new document
 			Format f2 = fs.getFormatFor(template).orElseThrow(() -> new Kite9ProcessingException("no format for "+template));
 			URI templateUri = new URI(template);
-			if (f2 instanceof DiagramFileFormat) {
-				ADLBase adl = ((DiagramFileFormat) f2).handleRead(templateUri, headers);
+			if (f2 instanceof DiagramReadFormat) {
+				ADLBase adl = ((DiagramReadFormat) f2).handleRead(templateUri, headers);
 				ADLDom dom = adl.parse();
 				api.commitRevision("Created New Diagram in Kite9 from "+uri, authentication, dom);
 				handleDynamicMetadata(authentication, uri, dom, api, getBestDiagramMediaType(putMediaType));

@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
 import com.kite9.k9server.adl.holder.meta.MetaReadWrite;
 import com.kite9.k9server.adl.holder.pipeline.ADLBase;
 import com.kite9.k9server.adl.holder.pipeline.ADLDom;
@@ -19,9 +19,9 @@ import com.kite9.k9server.topic.WebSocketConfig;
 
 public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileAPI implements ModifiableDiagramAPI {
 	
-	private DiagramFileFormat dff;
+	private DiagramReadFormat dff;
 	
-	public GithubDiagramFileAPI(URI u, OAuth2AuthorizedClientRepository clientRepository, DiagramFileFormat dff, MediaType mt, boolean isNew)
+	public GithubDiagramFileAPI(URI u, OAuth2AuthorizedClientRepository clientRepository, DiagramReadFormat dff, MediaType mt, boolean isNew)
 			throws URISyntaxException {
 		super(u, clientRepository, mt, isNew);
 		this.dff = dff;
@@ -37,7 +37,7 @@ public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileA
 
 	@Override
 	public void commitRevision(String message, Authentication by, ADLDom dom) {
-		ADLOutput<?> out = dom.process(sourceURI, (DiagramFileFormat) dff);
+		ADLOutput<?> out = dom.process(sourceURI, (DiagramReadFormat) dff);
 		if (dff.isBinaryFormat()) {
 			commitRevision(message, tb -> tb.add(filepath, out.getAsBytes(), false), by);
 		} else {

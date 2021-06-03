@@ -11,10 +11,10 @@
 		<artifactId>kite9-parent</artifactId>
 		<groupId>org.kite9</groupId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	
-	<name>Kite9 Pipeline</name>
+	<name>Kite9 Pipeline Common</name>
 	<description>Pipeline manages rendering of diagrams into different formats</description>
 	
 	<dependencies>
@@ -35,6 +35,10 @@
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib</artifactId>
 			<version>${kotlin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
 		</dependency>
 
 	</dependencies>

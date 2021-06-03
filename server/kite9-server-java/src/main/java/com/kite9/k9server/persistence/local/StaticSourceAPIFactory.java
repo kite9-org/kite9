@@ -28,7 +28,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.format.media.Kite9MediaTypes;
 import com.kite9.k9server.adl.format.media.NotKite9DiagramException;
@@ -116,8 +116,8 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 	protected SourceAPI createAPIFromBytes(URI uri, HttpHeaders headers, byte[] bytes, MediaType mt) throws Exception {
 		Format f = fs.getFormatFor(mt);
 		try {
-			if (f instanceof DiagramFileFormat) {
-				DiagramFileFormat dff = (DiagramFileFormat) f;
+			if (f instanceof DiagramReadFormat) {
+				DiagramReadFormat dff = (DiagramReadFormat) f;
 				ADLBase base = dff.handleRead(new ByteArrayInputStream(bytes), uri, headers);
 				return new TransientDiagramAPI(mt, base);
 			}

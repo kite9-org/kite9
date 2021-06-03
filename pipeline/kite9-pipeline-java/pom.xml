@@ -11,10 +11,10 @@
 		<artifactId>kite9-parent</artifactId>
 		<groupId>org.kite9</groupId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	
-	<name>Kite9 Pipeline Java</name>
+	<name>Kite9 Pipeline Java Batik</name>
 	<description>Pipeline manages rendering of diagrams into different formats</description>
 	
 	<dependencies>

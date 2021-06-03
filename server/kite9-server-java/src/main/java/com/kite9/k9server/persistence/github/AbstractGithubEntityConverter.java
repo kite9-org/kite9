@@ -23,7 +23,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
 import com.kite9.k9server.domain.Directory;
 import com.kite9.k9server.domain.Document;
 import com.kite9.k9server.domain.Organisation;
@@ -274,7 +274,7 @@ public abstract class AbstractGithubEntityConverter {
 			
 			@Override
 			public String getIcon() {
-				if (fs.getFormatFor(c.getName()).filter(f -> f instanceof DiagramFileFormat).isPresent()) {
+				if (fs.getFormatFor(c.getName()).filter(f -> f instanceof DiagramReadFormat).isPresent()) {
 					return l.getHref();	
 				} else {
 					return "/public/templates/admin/icons/"+getExtension(c.getName())+".svg";

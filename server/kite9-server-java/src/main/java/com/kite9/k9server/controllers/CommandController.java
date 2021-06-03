@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFormat;
+import com.kite9.k9server.adl.format.media.DiagramWriteFormat;
 import com.kite9.k9server.adl.holder.pipeline.ADLOutput;
 import com.kite9.k9server.sources.SourceAPIFactory;
 import com.kite9.k9server.update.Update;
@@ -33,10 +33,10 @@ public class CommandController extends AbstractNegotiatingController implements 
 	public static final String CHANGE_URL = "/command/v1";
 	
 	@RequestMapping(method={RequestMethod.POST}, path=CHANGE_URL, consumes= {MediaType.APPLICATION_JSON_VALUE})
-	public @ResponseBody ADLOutput<DiagramFormat> applyCommandOnStatic (
+	public @ResponseBody ADLOutput<DiagramWriteFormat> applyCommandOnStatic (
 			RequestEntity<Update> req,
 			@RequestParam(required=true, name="on") String sourceUri) throws Exception {
-		DiagramFormat df = getOutputFormat(req);
+		DiagramWriteFormat df = getOutputFormat(req);
 		URI uri = new URI(sourceUri);
 		URI base = req.getUrl();
 		uri = base.resolve(uri);

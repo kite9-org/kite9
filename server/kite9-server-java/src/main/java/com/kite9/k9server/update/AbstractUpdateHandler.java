@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.kite9.k9server.adl.format.media.DiagramFormat;
+import com.kite9.k9server.adl.format.media.DiagramWriteFormat;
 import com.kite9.k9server.adl.holder.pipeline.ADLDom;
 import com.kite9.k9server.adl.holder.pipeline.ADLOutput;
 import com.kite9.k9server.command.Command;
@@ -39,7 +39,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 	}
 	
 	@Override
-	public <X extends DiagramFormat> ADLOutput<X> performDiagramUpdate(Update update, Authentication authentication, X f) throws Exception {
+	public <X extends DiagramWriteFormat> ADLOutput<X> performDiagramUpdate(Update update, Authentication authentication, X f) throws Exception {
 		ModifiableAPI a = getModifiableAPI(update, authentication);
 		
 		if (a instanceof ModifiableDiagramAPI) {

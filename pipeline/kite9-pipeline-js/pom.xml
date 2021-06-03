@@ -4,17 +4,17 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>kite9-pipeline</artifactId>
+	<artifactId>kite9-pipeline-js</artifactId>
 	<packaging>jar</packaging>
 
 	<parent>
 		<artifactId>kite9-parent</artifactId>
 		<groupId>org.kite9</groupId>
 		<version>0.1-SNAPSHOT</version>
-		<relativePath>../..</relativePath>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	
-	<name>Kite9 Pipeline</name>
+	<name>Kite9 Pipeline Javascript</name>
 	<description>Pipeline manages rendering of diagrams into different formats</description>
 	
 	<dependencies>

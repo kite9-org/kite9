@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFormat;
+import com.kite9.k9server.adl.format.media.DiagramWriteFormat;
 import com.kite9.k9server.adl.format.media.Kite9MediaTypes;
 import com.kite9.k9server.adl.holder.pipeline.ADLDom;
 import com.kite9.k9server.adl.holder.pipeline.ADLOutput;
@@ -87,7 +87,7 @@ public class PathContentController extends AbstractContentController {
 			Authentication authentication) throws Exception {
 		URI uri = URIRewriter.getCompleteCurrentRequestURI();
 
-		DiagramFormat format = getOutputFormat(req); 
+		DiagramWriteFormat format = getOutputFormat(req);
 		
 		try {
 			update.setUri(uri);

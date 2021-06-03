@@ -56,7 +56,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlFactory;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.fasterxml.jackson.dataformat.xml.util.DefaultXmlPrettyPrinter;
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFormat;
+import com.kite9.k9server.adl.format.media.DiagramWriteFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.holder.ADLFactory;
 import com.kite9.k9server.adl.holder.pipeline.ADLDom;
@@ -149,8 +149,8 @@ public class HateoasADLHttpMessageWriter
 		try {
 			MediaType contentType = outputMessage.getHeaders().getContentType();	
 			Format f = formatSupplier.getFormatFor(contentType);
-			if (f instanceof DiagramFormat) {
-				writeADL(t, outputMessage, (DiagramFormat) f);
+			if (f instanceof DiagramWriteFormat) {
+				writeADL(t, outputMessage, (DiagramWriteFormat) f);
 			} else {
 				throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Can't format directory as "+f.getExtension());
 			}
@@ -161,7 +161,7 @@ public class HateoasADLHttpMessageWriter
 	
 	
 
-	protected void writeADL(RepresentationModel<?> t, HttpOutputMessage outputMessage, DiagramFormat f) throws Exception {
+	protected void writeADL(RepresentationModel<?> t, HttpOutputMessage outputMessage, DiagramWriteFormat f) throws Exception {
 		URI request = URIRewriter.getCompleteCurrentRequestURI();
 		URI u = new URI(getSelfRef(t));
 		u = request.resolve(u);

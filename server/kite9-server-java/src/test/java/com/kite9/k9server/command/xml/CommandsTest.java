@@ -27,7 +27,7 @@ import com.kite9.k9server.command.Command;
 import com.kite9.k9server.command.CommandException;
 import com.kite9.k9server.command.xml.insert.Delete;
 import com.kite9.k9server.command.xml.insert.InsertUrl;
-import com.kite9.k9server.command.xml.insert.InsertUrlLink;
+import com.kite9.k9server.command.xml.insert.InsertUrlWithChanges;
 import com.kite9.k9server.command.xml.insert.InsertXML;
 import com.kite9.k9server.command.xml.move.ADLMoveCells;
 import com.kite9.k9server.command.xml.move.Move;
@@ -260,7 +260,7 @@ public class CommandsTest {
 	public void testInsertUrlLinkCommand() throws CommandException, Exception {
 		String uri = sourceURI+"#link";
 		
-		InsertUrlLink copy = new InsertUrlLink();
+		InsertUrlWithChanges copy = new InsertUrlWithChanges();
 		copy.uriStr =  uri;
 		copy.fragmentId="The Diagram";
 		copy.newId="six";

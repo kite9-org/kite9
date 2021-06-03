@@ -28,7 +28,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.holder.meta.MetaReadWrite;
 import com.kite9.k9server.adl.holder.meta.UserMeta;
@@ -83,7 +83,7 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 						Optional<Format> f = formatSupplier.getFormatFor(path);
 						Format f2 = f.orElse(null);
 						
-						if (f2 instanceof DiagramFileFormat) {
+						if (f2 instanceof DiagramReadFormat) {
 							return createDiagramApi(u, f2, false);
 						} else {
 							return createRegularFileApI(u, f2, false);
@@ -126,7 +126,7 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 
 	protected SourceAPI createDiagramApi(URI u, Format f2, boolean isNew) throws URISyntaxException {
 		MediaType mainMediaType = f2.getMediaTypes()[0];
-		return new GithubDiagramFileAPI(u, clientRepository, (DiagramFileFormat) f2, mainMediaType, isNew) {
+		return new GithubDiagramFileAPI(u, clientRepository, (DiagramReadFormat) f2, mainMediaType, isNew) {
 			
 			@Override
 			public GitHub getGitHubAPI(Authentication a) {

@@ -20,8 +20,8 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.k9server.adl.format.FormatSupplier;
-import com.kite9.k9server.adl.format.media.DiagramFileFormat;
-import com.kite9.k9server.adl.format.media.DiagramFormat;
+import com.kite9.k9server.adl.format.media.DiagramReadFormat;
+import com.kite9.k9server.adl.format.media.DiagramWriteFormat;
 import com.kite9.k9server.adl.format.media.Format;
 import com.kite9.k9server.adl.format.media.NotKite9DiagramException;
 import com.kite9.k9server.adl.holder.meta.MetaReadWrite;
@@ -111,7 +111,7 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 
 	protected MediaType getBestDiagramMediaType(List<MediaType> putMediaType) {
 		return putMediaType.stream()
-			.filter(mt -> fs.getFormatFor(mt) instanceof DiagramFormat)
+			.filter(mt -> fs.getFormatFor(mt) instanceof DiagramWriteFormat)
 			.findFirst()
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Can't convert to any of "+putMediaType));
 	}
@@ -127,7 +127,7 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 			// we always load and process the diagram here, adding dynamic metadata as we go.
 		try {
 			Format inFormat = fs.getFormatFor(api.getMediaType());
-			if (inFormat instanceof DiagramFileFormat) {
+			if (inFormat instanceof DiagramReadFormat) {
 				ADLBase in =  api.getCurrentRevisionContent(authentication, headers);
 				ADLDom dom = in.parse();
 				handleDynamicMetadata(authentication, rewrittenURI, dom, api, putMediaType);
@@ -172,26 +172,26 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 	}
 	
 
-	protected DiagramFormat getOutputFormat(NativeWebRequest req) {
-		DiagramFormat format;
+	protected DiagramWriteFormat getOutputFormat(NativeWebRequest req) {
+		DiagramWriteFormat format;
 		List<MediaType> accepted = Collections.emptyList();
 		try {
 			accepted = 	new ArrayList<>(negotiator.resolveMediaTypes(req));
 			MediaType best = getBestDiagramMediaType(accepted);
-			format = (DiagramFormat) fs.getFormatFor(best);
+			format = (DiagramWriteFormat) fs.getFormatFor(best);
 		} catch (Exception e1) {
 			throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Couldn't return diagram matching "+accepted, e1);
 		}
 		return format;
 	}
 	
-	protected DiagramFormat getOutputFormat(RequestEntity<?> req) {
-		DiagramFormat format;
+	protected DiagramWriteFormat getOutputFormat(RequestEntity<?> req) {
+		DiagramWriteFormat format;
 		List<MediaType> accepted = Collections.emptyList();
 		try {
 			accepted = req.getHeaders().getAccept();
 			MediaType best = getBestDiagramMediaType(accepted);
-			format = (DiagramFormat) fs.getFormatFor(best);
+			format = (DiagramWriteFormat) fs.getFormatFor(best);
 		} catch (Exception e1) {
 			throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Couldn't return diagram matching "+accepted, e1);
 		}
