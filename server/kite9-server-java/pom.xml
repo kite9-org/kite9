@@ -16,7 +16,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.run.main-class>com.kite9.k9server.Kite9ServerApplication</spring-boot.run.main-class>
+        <spring-boot.run.main-class>com.kite9.server.Kite9ServerApplication</spring-boot.run.main-class>
     </properties>
 
     <name>Kite9 Server Redux</name>

@@ -1,3 +1,5 @@
+package com.kite9.server.command.xml;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
@@ -5,6 +7,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 
+import com.kite9.server.update.Update;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kite9.diagram.testing.TestingHelp;
@@ -18,7 +21,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StreamUtils;
 
-import com.kite9.server.pipeline.XMLCompare;
+import com.kite9.server.XMLCompare;
 import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.server.pipeline.command.Command;
@@ -36,9 +39,7 @@ import com.kite9.server.pipeline.command.xml.replace.ReplaceTagUrl;
 import com.kite9.server.pipeline.command.xml.replace.ReplaceText;
 import com.kite9.server.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
 import com.kite9.server.pipeline.command.xml.replace.ReplaceXML;
-import com.kite9.server.pipeline.controllers.CommandController;
-import com.kite9.server.pipeline.update.Update;
-import com.kite9.server.pipeline.update.Update.Type;
+import com.kite9.server.controllers.CommandController;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
@@ -284,13 +285,13 @@ public class CommandsTest {
 	
 	private RequestEntity<Update> buildRequestEntity(Command c, String uri, HttpHeaders headers) throws URISyntaxException {
 		URI uri2 = new URI(uri);
-		Update commands = new Update(Collections.singletonList(c), uri2, Type.NEW);
+		Update commands = new Update(Collections.singletonList(c), uri2, Update.Type.NEW);
 		RequestEntity<Update> out = new RequestEntity<>(commands, headers, HttpMethod.POST, uri2);
 		return out;
 	}
 	
 	private RequestEntity<Update> buildUndoRequestEntity(Command c, String base64adl, URI sourceUri, HttpHeaders headers) throws URISyntaxException {
-		Update commands = new Update(Collections.singletonList(c), base64adl, Type.UNDO);
+		Update commands = new Update(Collections.singletonList(c), base64adl, Update.Type.UNDO);
 		RequestEntity<Update> out = new RequestEntity<>(commands, headers, HttpMethod.POST, sourceUri);
 		return out;
 	}
