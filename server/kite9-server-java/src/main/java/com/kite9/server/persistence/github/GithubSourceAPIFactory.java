@@ -6,11 +6,12 @@ import static com.kite9.server.persistence.PathUtils.REPONAME;
 import static com.kite9.server.persistence.PathUtils.getPathSegment;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.topic.ChangeBroadcaster;
 import com.kite9.server.update.Update;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
@@ -20,7 +21,6 @@ import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
@@ -30,10 +30,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.DiagramReadFormat;
-import com.kite9.server.pipeline.adl.format.media.Format;
-import com.kite9.server.pipeline.adl.holder.meta.MetaReadWrite;
-import com.kite9.server.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.server.persistence.PathUtils;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.persistence.cache.CacheManagedAPIFactory;
@@ -58,7 +57,7 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		this.broadcaster = broadcaster;
 	}
 
-	public SourceAPI createBackingAPI(URI u, Authentication authentication) throws Exception {
+	public SourceAPI createBackingAPI(K9URI u, Authentication authentication) throws Exception {
 		String path = u.getPath();
 		if (GithubContentController.GITHUB.equals(PathUtils.getPathSegment(PathUtils.TYPE, path))) {
 			String owner = getPathSegment(OWNER, path);
@@ -80,23 +79,22 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 						return new GithubDirectoryAPI(path, ec.getDirectoryPage(owner, reponame, filepath, contents,  authentication));
 					} else {
 						// it's content.
-						Optional<Format> f = formatSupplier.getFormatFor(path);
-						Format f2 = f.orElse(null);
-						
-						if (f2 instanceof DiagramReadFormat) {
-							return createDiagramApi(u, f2, false);
+						Format f = formatSupplier.getFormatFor(path);
+
+						if (f instanceof DiagramFileFormat) {
+							return createDiagramApi(u, f, false);
 						} else {
-							return createRegularFileApI(u, f2, false);
+							return createRegularFileApI(u, f, false);
 						}
 					}
 				} catch (WebClientResponseException e) {
 					if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-						
-						return createDiagramApi(
-								u, 
-								formatSupplier.getFormatFor(path).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND)), 
-								true);
-						
+						Format f = formatSupplier.getFormatFor(path);
+						if (f == null) {
+							throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+						} else {
+							return createDiagramApi(u,f, true);
+						}
 					} else {
 						throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
 					}
@@ -108,8 +106,8 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		}	
 	}
 
-	protected SourceAPI createRegularFileApI(URI u, Format f2, boolean isNew) throws URISyntaxException {
-		MediaType mainMediaType = f2.getMediaTypes()[0];
+	protected SourceAPI createRegularFileApI(K9URI u, Format f2, boolean isNew) throws URISyntaxException {
+		K9MediaType mainMediaType = f2.getMediaTypes().get(0);
 		return new AbstractGithubModifiableFileAPI(u, clientRepository, mainMediaType, isNew) {
 			
 			@Override
@@ -124,9 +122,9 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		};
 	}
 
-	protected SourceAPI createDiagramApi(URI u, Format f2, boolean isNew) throws URISyntaxException {
-		MediaType mainMediaType = f2.getMediaTypes()[0];
-		return new GithubDiagramFileAPI(u, clientRepository, (DiagramReadFormat) f2, mainMediaType, isNew) {
+	protected SourceAPI createDiagramApi(K9URI u, Format f2, boolean isNew) throws URISyntaxException {
+		K9MediaType mainMediaType = f2.getMediaTypes().get(0);
+		return new GithubDiagramFileAPI(u, clientRepository, (DiagramFileFormat) f2, mainMediaType, isNew) {
 			
 			@Override
 			public GitHub getGitHubAPI(Authentication a) {

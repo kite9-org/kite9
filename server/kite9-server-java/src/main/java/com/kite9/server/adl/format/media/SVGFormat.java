@@ -1,9 +1,12 @@
 package com.kite9.server.adl.format.media;
 
-import com.kite9.server.pipeline.adl.holder.ADLFactory;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.uri.URI;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.uri.K9URI;
 import org.apache.batik.util.SVGConstants;
 import org.apache.commons.io.Charsets;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -37,9 +40,9 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
         this.factory = factory;
     }
 
-    private final List<MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getSVG());
+    private final List<K9MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getSVG());
 
-    public List<MediaType> getMediaTypes() {
+    public List<K9MediaType> getMediaTypes() {
         return mediaTypes;
     }
 
@@ -54,7 +57,7 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 
 
     @Override
-    public ADLBase handleRead(InputStream someFormat, URI in, HttpHeaders headers) throws Exception {
+    public ADLBase handleRead(InputStream someFormat, K9URI in, HttpHeaders headers) throws Exception {
         HttpHeaders newHeaders = HttpHeaders.writableHttpHeaders(headers);
         newHeaders.set(HttpHeaders.ACCEPT, getMediaTypes().stream().map(Object::toString).collect(Collectors.joining(",")));
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -67,7 +70,7 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
         return extractEncodedADLInSVG(in, headers, doc);
     }
 
-    public ADLBase extractEncodedADLInSVG(URI in, HttpHeaders headers, Document doc) {
+    public ADLBase extractEncodedADLInSVG(K9URI in, HttpHeaders headers, Document doc) {
         try {
             Element e2 = findFirst(doc.getDocumentElement(), "defs");
             Element e3 = findFirst(e2, "script");
@@ -89,7 +92,7 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
     }
 
     @Override
-    protected void setupTranscoder(Kite9Transcoder<Document> t, ADLDom toWrite) {
+    protected void setupTranscoder(Kite9Transcoder t, ADLDom toWrite) {
         t.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
     }
 

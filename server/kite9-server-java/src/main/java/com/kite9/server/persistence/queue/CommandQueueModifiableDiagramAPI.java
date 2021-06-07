@@ -1,19 +1,19 @@
 package com.kite9.server.persistence.queue;
 
 import java.io.InputStream;
-import java.net.URI;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.kite9.server.pipeline.adl.holder.ADLFactory;
-import com.kite9.server.pipeline.adl.holder.meta.MetaReadWrite;
-import com.kite9.server.pipeline.adl.holder.meta.Role;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
+import com.kite9.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.server.persistence.cache.AbstractCachingModifiableDiagramAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
@@ -25,10 +25,10 @@ import com.kite9.server.sources.ModifiableDiagramAPI;
  */
 public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableDiagramAPI {
 
-	private ChangeQueue cq;
-	private ModifiableDiagramAPI backingStore;
+	private final ChangeQueue cq;
+	private final ModifiableDiagramAPI backingStore;
 	private String localCache = null;
-	private ADLFactory factory;
+	private final ADLFactory factory;
 	
 	public CommandQueueModifiableDiagramAPI(ChangeQueue cq, ModifiableDiagramAPI backingStore, ADLFactory factory) {
 		this.cq = cq;
@@ -40,7 +40,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	public void commitRevision(String message, Authentication by, ADLDom dom) {
 		if (getAuthenticatedRole(by) == Role.EDITOR) {
 			cq.addItem(new ChangeQueue.Change(backingStore, message, dom, by));
-			localCache = dom.getXMLString();
+			localCache = dom.getAsString();
 		} else {
 			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 		}
@@ -69,10 +69,10 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 
 	@Override
 	public ADLBase getCurrentRevisionContent(Authentication a, HttpHeaders headers) throws Exception {
-		if (getAuthenticatedRole(a) != com.kite9.server.pipeline.adl.holder.meta.Role.NONE) {
+		if (getAuthenticatedRole(a) != com.kite9.pipeline.adl.holder.meta.Role.NONE) {
 			if (localCache == null) {
 				ADLBase bs = backingStore.getCurrentRevisionContent(a, headers);
-				localCache = bs.getXMLString();
+				localCache = bs.getAsString();
 				return bs;
 			}
 			
@@ -84,7 +84,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 	
 	@Override
-	protected com.kite9.server.pipeline.adl.holder.meta.Role getAuthenticatedRoleInner(Authentication a) {
+	protected com.kite9.pipeline.adl.holder.meta.Role getAuthenticatedRoleInner(Authentication a) {
 		return backingStore.getAuthenticatedRole(a);
 	}
 
@@ -99,7 +99,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 
 	@Override
-	public MediaType getMediaType() {
+	public K9MediaType getMediaType() {
 		return backingStore.getMediaType();
 	}
 
@@ -109,7 +109,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 
 	@Override
-	public URI getSourceLocation() {
+	public K9URI getSourceLocation() {
 		return backingStore.getSourceLocation();
 	}
 

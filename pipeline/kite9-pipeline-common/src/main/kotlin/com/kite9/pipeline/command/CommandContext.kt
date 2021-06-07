@@ -1,6 +1,6 @@
 package com.kite9.pipeline.command
 
-import com.kite9.k9server.pipeline.adl.holder.pipeline.ADLDom
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom
 import org.kite9.diagram.common.range.IntegerRange
 import org.w3c.dom.Attr
 import org.w3c.dom.Document

@@ -1,15 +1,15 @@
 package com.kite9.server.controllers;
 
-import java.net.URI;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.update.Update;
 import com.kite9.server.web.URIRewriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPIFactory;
 
@@ -65,14 +65,14 @@ public class PathContentController extends AbstractContentController {
 	/**
 	 * This is the basic mapping for resources, diagrams, directory contents etc. in any format
 	 */
-	@GetMapping(path = MAPPED_PATHS , produces = MediaType.ALL_VALUE)
+	@GetMapping(path = MAPPED_PATHS , produces = Kite9MediaTypes.ALL_VALUE)
 	public ResponseEntity<?> load(
 			RequestEntity<?> httpRequest, 
 			NativeWebRequest webRequest,
 			@RequestHeader HttpHeaders headers, 
 			Authentication a) throws Exception {
-		URI rewrittenURI = URIRewriter.getCompleteCurrentRequestURI();
-		List<MediaType> accepted = getMediaTypes(webRequest);
+		K9URI rewrittenURI = URIRewriter.getCompleteCurrentRequestURI();
+		List<K9MediaType> accepted = getMediaTypes(webRequest);
 		return contentNegotiation(httpRequest, rewrittenURI, rewrittenURI, headers, accepted, a);
 	}
 	
@@ -80,19 +80,19 @@ public class PathContentController extends AbstractContentController {
 	 * For updates fired without websockets. 
 	 */
 	@PostMapping(path = MAPPED_PATHS, 
-			produces = MediaType.ALL_VALUE, 
-			consumes = MediaType.APPLICATION_JSON_VALUE)
+			produces = Kite9MediaTypes.ALL_VALUE,
+			consumes = Kite9MediaTypes.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ADLOutput<?> updateViaPost(@RequestHeader HttpHeaders headers, NativeWebRequest req, @RequestBody Update update,
+	public ADLOutput updateViaPost(@RequestHeader HttpHeaders headers, NativeWebRequest req, @RequestBody Update update,
 			Authentication authentication) throws Exception {
-		URI uri = URIRewriter.getCompleteCurrentRequestURI();
+		K9URI uri = URIRewriter.getCompleteCurrentRequestURI();
 
 		DiagramWriteFormat format = getOutputFormat(req);
 		
 		try {
 			update.setUri(uri);
 			update.addHeaders(headers);
-			ADLOutput<?> adl = performDiagramUpdate(update, authentication, format);
+			ADLOutput adl = performDiagramUpdate(update, authentication, format);
 			return adl;
 		} catch (Exception e) {
 			String properCause = getProperCause(e);
@@ -109,7 +109,7 @@ public class PathContentController extends AbstractContentController {
 	 * Anything in the /public area should be cached in production.
 	 */
 	@Override
-	protected HttpHeaders createResponseHeaders(URI uri, HttpHeaders headers, MediaType mt, boolean modifiable) {
+	protected HttpHeaders createResponseHeaders(K9URI uri, HttpHeaders headers, K9MediaType mt, boolean modifiable) {
 		HttpHeaders out = super.createResponseHeaders(uri, headers, mt, modifiable);
 		if ((!modifiable) && (caching)) {
 			out.setCacheControl(cc);
@@ -123,9 +123,9 @@ public class PathContentController extends AbstractContentController {
 	@GetMapping(path = "/", 
 		produces = { 
 				Kite9MediaTypes.ADL_SVG_VALUE, 
-				MediaType.APPLICATION_XML_VALUE, 
-				MediaType.TEXT_XML_VALUE, 
-				MediaType.IMAGE_PNG_VALUE, 
+				Kite9MediaTypes.APPLICATION_XML_VALUE,
+				Kite9MediaTypes.TEXT_XML_VALUE,
+				Kite9MediaTypes.PNG_VALUE,
 				Kite9MediaTypes.SVG_VALUE })
 	public ResponseEntity<?> homePage(
 			RequestEntity<?> request, 
@@ -133,9 +133,9 @@ public class PathContentController extends AbstractContentController {
 			@RequestHeader HttpHeaders headers, 
 			Authentication a)
 			throws Exception {
-		URI rewrittenURI = URIRewriter.getCompleteCurrentRequestURI();
-		URI sourceUri = URIRewriter.resolve(homePagePath);
-		List<MediaType> accepted = getMediaTypes(webRequest);
+		K9URI rewrittenURI = URIRewriter.getCompleteCurrentRequestURI();
+		K9URI sourceUri = URIRewriter.resolve(homePagePath);
+		List<K9MediaType> accepted = getMediaTypes(webRequest);
 		return contentNegotiation(request, sourceUri, rewrittenURI, request.getHeaders(), accepted, a);
 	}
 

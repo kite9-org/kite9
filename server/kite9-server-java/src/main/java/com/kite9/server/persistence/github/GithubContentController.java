@@ -4,6 +4,7 @@ import java.net.URI;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.kite9.pipeline.uri.K9URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -50,7 +51,7 @@ public class GithubContentController extends AbstractContentController {
 	@PostMapping(path = { "/"+GITHUB+"/**" }, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> upload(@RequestHeader HttpHeaders headers, HttpServletRequest req,
 			@RequestParam("file") MultipartFile file, Authentication authentication) throws Exception {
-		URI uri = URIRewriter.getCompleteCurrentRequestURI();
+		K9URI uri = URIRewriter.getCompleteCurrentRequestURI();
 		SourceAPI api = apiFactory.createAPI(uri,authentication);
 		if (api instanceof ModifiableAPI) {
 			byte[] bytes = StreamUtils.copyToByteArray(file.getInputStream());

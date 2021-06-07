@@ -1,12 +1,12 @@
 package com.kite9.server.update;
 
-import java.net.URI;
 import java.util.List;
 
+import com.kite9.pipeline.uri.K9URI;
 import org.springframework.http.HttpHeaders;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kite9.server.pipeline.command.Command;
+import com.kite9.pipeline.command.Command;
 
 /**
  * Contains all the state required to perform a set of commands on some ADL xml.
@@ -22,7 +22,7 @@ public class Update {
 		super();
 	}
 	
-	public Update(List<Command> commands, URI uri, String base64adl, Type type) {
+	public Update(List<Command> commands, K9URI uri, String base64adl, Type type) {
 		super();
 		this.uri = uri;
 		this.commands = commands;
@@ -37,7 +37,7 @@ public class Update {
 		this.type = type;
 	}
 	
-	public Update(List<Command> commands, URI uri, Type type) {
+	public Update(List<Command> commands, K9URI uri, Type type) {
 		super();
 		this.commands = commands;
 		this.uri = uri;
@@ -46,7 +46,7 @@ public class Update {
 	
 	private List<Command> commands;
 	private String base64adl;
-	private URI uri;
+	private K9URI uri;
 	private Type type = Type.NEW;
 
 	@JsonIgnore
@@ -68,11 +68,11 @@ public class Update {
 		this.base64adl = base64adl;
 	}
 
-	public URI getUri() {
+	public K9URI getUri() {
 		return uri;
 	}
 
-	public void setUri(URI uri) {
+	public void setUri(K9URI uri) {
 		this.uri = uri;
 	}
 

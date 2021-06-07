@@ -1,10 +1,15 @@
 package com.kite9.server.adl.format.media;
 
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.server.adl.holder.ADLOutputImpl;
 import com.kite9.server.adl.holder.meta.Payload;
-import com.kite9.server.pipeline.adl.holder.ADLFactory;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.uri.URI;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.uri.K9URI;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -20,8 +25,8 @@ import org.springframework.http.HttpHeaders;
 import org.w3c.dom.Document;
 
 import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
@@ -29,14 +34,14 @@ import java.util.List;
 public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 
 	private ADLFactory factory;
-	private List<MediaType> mediaTypes;
+	private List<K9MediaType> mediaTypes;
 	
 	public PNGFormat(ADLFactory factory) {
 		this.factory = factory;
 		this.mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getPNG());
 	}
 	
-	public List<MediaType> getMediaTypes() {
+	public List<K9MediaType> getMediaTypes() {
 		return mediaTypes;
 	}
 
@@ -44,7 +49,7 @@ public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 	 * This is probably horribly inefficient, as I think lots of resources get loaded twice.
 	 * USed to use PNGTranscoderInternalCodecWriteAdapter, but now inlined to add the text.
 	 */
-	public void handleWrite(ADLDom toWrite, OutputStream baos, Kite9Transcoder<Document> t)  {
+	public ADLOutput handleWrite(ADLDom toWrite, Kite9Transcoder t)  {
 		setupTranscoder(t, toWrite);
 		Kite9SVGTranscoder svgt = (Kite9SVGTranscoder) t;
 		Document doc = transformADL(toWrite.getDocument(), toWrite.getUri(), t, toWrite);
@@ -57,7 +62,8 @@ public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 			}
 			
 		};
-		
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		png.setTranscodingHints(svgt.getTranscodingHints());
 		doc.setDocumentURI(uri);
 		TranscoderInput in = new TranscoderInput(doc);
@@ -65,6 +71,7 @@ public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 		TranscoderOutput out = new TranscoderOutput(baos);
 		try {
 			png.transcode(in, out);
+			return new ADLOutputImpl(this, toWrite, baos.toByteArray(), null, doc);
 		} catch (TranscoderException e) {
 			throw new Kite9XMLProcessingException("Couldn't convert to png", e);
 		}
@@ -80,7 +87,7 @@ public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 	}
 
 	@Override
-	public ADLBase handleRead(InputStream someFormat, URI in, HttpHeaders headers) throws Exception {
+	public ADLBase handleRead(InputStream someFormat, K9URI in, HttpHeaders headers) throws Exception {
 		PNGImageDecoder dec = new PNGImageDecoder(someFormat, new PNGDecodeParam());
 		RenderedImage ri = dec.decodeAsRenderedImage();
 		String base64 = (String) ri.getProperty("text_0:kite-adl");

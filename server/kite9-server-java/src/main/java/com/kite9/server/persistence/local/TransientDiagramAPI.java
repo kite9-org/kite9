@@ -2,29 +2,29 @@ package com.kite9.server.persistence.local;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URI;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 
-import com.kite9.server.pipeline.adl.holder.meta.MetaReadWrite;
-import com.kite9.server.pipeline.adl.holder.meta.Role;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
+import com.kite9.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
 public class TransientDiagramAPI implements ModifiableDiagramAPI {
 
-	private final MediaType underlying;
+	private final K9MediaType underlying;
 	private ADLBase dom;
 
-	public TransientDiagramAPI(MediaType underlying, ADLBase base) {
+	public TransientDiagramAPI(K9MediaType underlying, ADLBase base) {
 		this.underlying = underlying;
 		this.dom = base;
 	}
 
-	public MediaType getMediaType() {
+	public K9MediaType getMediaType() {
 		return underlying;
 	}
 
@@ -43,7 +43,7 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 		adl.setTitle(createTitle(adl.getUri()));
 	}
 
-	public static String createTitle(URI u) {
+	public static String createTitle(K9URI u) {
 		String fileNamePart = u.getPath().contains("/") ? 
 			u.getPath().substring(u.getPath().lastIndexOf("/")+1) :
 			u.getPath();
@@ -67,7 +67,7 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	}
 
 	@Override
-	public URI getSourceLocation() {
+	public K9URI getSourceLocation() {
 		return dom.getUri();
 	}
 
@@ -81,7 +81,7 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 
 	@Override
 	public InputStream getCurrentRevisionContentStream(Authentication authentication) throws Exception {
-		return new ByteArrayInputStream(dom.getXMLString().getBytes());
+		return new ByteArrayInputStream(dom.getAsString().getBytes());
 	}
 
 }

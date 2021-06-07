@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.security.core.Authentication;
 
-import com.kite9.server.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.adl.holder.meta.Role;
 
 public abstract class AbstractCachingModifiableDiagramAPI implements CachingModifiableDiagramAPI {
 	

@@ -1,11 +1,13 @@
 
 package com.kite9.server.adl.format.media;
 
+import com.kite9.pipeline.adl.format.media.EditableDiagramFormat;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import org.kite9.diagram.format.Kite9Transcoder;
-import org.w3c.dom.Document;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,11 +20,11 @@ import java.util.List;
  * @author robmoffat
  *
  */
-public class EditableSVGFormat extends AbstractSVGFormat implements EditableDiagramFormat<Document> {
+public class EditableSVGFormat extends AbstractSVGFormat implements EditableDiagramFormat {
 
-    private final List<MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getESVG());
+    private final List<K9MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getESVG());
 
-    public List<MediaType> getMediaTypes() {
+    public List<K9MediaType> getMediaTypes() {
         return mediaTypes;
     }
 

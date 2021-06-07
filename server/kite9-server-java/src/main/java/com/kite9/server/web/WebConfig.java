@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.server.topic.ChangeBroadcaster;
 import org.kite9.diagram.dom.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.Format;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled=true)
@@ -77,8 +78,8 @@ public class WebConfig implements WebMvcConfigurer {
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
 		configurer.favorParameter(true);
 		for (Format f : fs.getPriorityOrderedFormats()) {
-			for (MediaType	mt : f.getMediaTypes()) {
-				configurer.mediaType(f.getExtension(), mt);
+			for (K9MediaType mt : f.getMediaTypes()) {
+				configurer.mediaType(f.getExtension(), MediaType.parseMediaType(mt.toString()));
 			}
 		}		
 	}

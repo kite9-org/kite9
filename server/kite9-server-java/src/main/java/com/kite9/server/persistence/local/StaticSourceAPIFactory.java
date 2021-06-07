@@ -1,12 +1,13 @@
 package com.kite9.server.persistence.local;
 
 import java.io.ByteArrayInputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.concurrent.TimeUnit;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.MediaTypeHelper;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.update.Update;
 import com.kite9.server.web.URIRewriter;
@@ -22,7 +23,6 @@ import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StreamUtils;
@@ -31,11 +31,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.DiagramReadFormat;
-import com.kite9.server.pipeline.adl.format.media.Format;
-import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.server.pipeline.adl.format.media.NotKite9DiagramException;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
@@ -72,19 +71,19 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 	
 	@Override
 	public SourceAPI createAPI(Update update, Authentication a) throws Exception {
-		URI sourceUri = convertToFileURI(update);
+		K9URI sourceUri = convertToFileURI(update);
 		if (update.getBase64adl()!=null) {
 			// update contains the ADL we're going to use
 			Decoder d = Base64.getDecoder();
 			byte[] bytes = d.decode(update.getBase64adl());
-			return createAPIFromBytes(sourceUri, update.getHeaders(), bytes, Kite9MediaTypes.ADL_SVG);
+			return createAPIFromBytes(sourceUri, update.getHeaders(), bytes, Kite9MediaTypes.INSTANCE.getADL_SVG());
 		} else {
 			// we need to load from URL
 			if (sourceUri == null) { 
 				throw new Kite9ProcessingException("No URI or ADL provided in request");
 			}
 
-			MediaType underlying = fs.getMediaTypeFor(sourceUri);
+			K9MediaType underlying = fs.getMediaTypeFor(sourceUri);
 			
 			if (URIRewriter.localPublicContent(sourceUri)) {
 				// first, check local cache
@@ -114,7 +113,7 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 		}	
 	}
 
-	protected SourceAPI createAPIFromBytes(URI uri, HttpHeaders headers, byte[] bytes, MediaType mt) throws Exception {
+	protected SourceAPI createAPIFromBytes(K9URI uri, HttpHeaders headers, byte[] bytes, K9MediaType mt) throws Exception {
 		Format f = fs.getFormatFor(mt);
 		try {
 			if (f instanceof DiagramFileFormat) {
@@ -130,10 +129,9 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 		
 	}
 
-	protected URI convertToFileURI(Update update) throws URISyntaxException {
-		URI u = update.getUri();
-		URI out = new URI(u.getScheme(), u.getAuthority(), u.getPath(), null, null);
-		return out;
+	protected K9URI convertToFileURI(Update update) {
+		K9URI u = update.getUri();
+		return u.toFileUri();
 	}
 	
 	public static MultiValueMap<String, String> createCachingHeaders() {
@@ -146,19 +144,25 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 	/**
 	 * We accept "ALL" media type here since github doesn't return the correct one
 	 */
-	protected SourceAPI createAPIFromRemoteUrl(URI u) {
+	protected SourceAPI createAPIFromRemoteUrl(K9URI u) {
 		try {
 			WebClient webClient = WebClient.create(u.toString());
 			ClientResponse cr = webClient.get()
 					.header("Accept-Encoding", "identity")
-					.accept(MediaType.ALL)
+					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE)
 					.exchange().block();
 			DataBuffer db = cr.bodyToMono(DataBuffer.class).block();
-			return createAPIFromBytes(u, HttpHeaders.EMPTY, db.asByteBuffer().array(), cr.headers().contentType().orElseThrow(() ->
-				new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Media type not provided for "+u)));
+			return createAPIFromBytes(u, HttpHeaders.EMPTY, db.asByteBuffer().array(), getContentType(cr, u));
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't request data from: " + u, e, null, null);
 		}
 	}
-	
+
+	private K9MediaType getContentType(ClientResponse cr, K9URI u) {
+		return cr.headers()
+				.contentType()
+				.map(mt -> MediaTypeHelper.getKite9MediaType(mt))
+				.orElseThrow(() ->
+				new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Media type not provided for "+u));
+	}
 }

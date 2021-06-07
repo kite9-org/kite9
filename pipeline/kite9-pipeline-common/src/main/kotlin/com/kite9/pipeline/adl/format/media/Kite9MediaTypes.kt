@@ -6,6 +6,13 @@ package com.kite9.pipeline.adl.format.media
  * @author robmoffat
  */
 object Kite9MediaTypes {
+
+    // plain text
+    const val TEXT_PLAIN_VALUE = "text/plain"
+
+    // all
+    const val ALL_VALUE = "*/*"
+
     // json
     const val HAL_JSON_VALUE = "application/hal+json"
     const val APPLICATION_JSON_VALUE = "application/json"
@@ -35,24 +42,25 @@ object Kite9MediaTypes {
     const val EOT_VALUE = "application/vnd.ms-fontobject"
 
 
-    val SVG: MediaType = MediaType.parseMediaType(SVG_VALUE)
-    val XSLT: MediaType = MediaType.parseMediaType(XSLT_VALUE)
-    val ESVG: MediaType = MediaType.parseMediaType(EDITABLE_SVG_VALUE)
-    val PNG: MediaType = MediaType.parseMediaType(PNG_VALUE)
-    val JPEG: MediaType  = MediaType.parseMediaType(JPEG_VALUE)
-    val PDF: MediaType = MediaType.parseMediaType(PDF_VALUE)
-    val ADL_SVG = MediaType.parseMediaType(ADL_SVG_VALUE)
-    val CLIENT_SIDE_IMAGE_MAP = MediaType.parseMediaType(CLIENT_SIDE_IMAGE_MAP_VALUE)
-    val JS = MediaType.parseMediaType(JAVASCRIPT_VALUE)
-    val CSS = MediaType.parseMediaType(CSS_VALUE)
-    val APPLICATION_JSON = MediaType.parseMediaType(APPLICATION_JSON_VALUE)
-    val HAL_JSON = MediaType.parseMediaType(HAL_JSON_VALUE)
-    val TEXT_XML = MediaType.parseMediaType(APPLICATION_XML_VALUE)
-    val APPLICATION_XML = MediaType.parseMediaType(TEXT_XML_VALUE)
-    val WOFF: MediaType = MediaType.parseMediaType(WOFF_VALUE)
-    val WOFF2: MediaType = MediaType.parseMediaType(WOFF2_VALUE)
-    val TTF: MediaType = MediaType.parseMediaType(TTF_VALUE)
-    val EOT: MediaType = MediaType.parseMediaType(EOT_VALUE)
-    val OTF: MediaType = MediaType.parseMediaType(OTF_VALUE)
-    val HTML : MediaType = MediaType.parseMediaType(HTML_VALUE)
+    val SVG: K9MediaType = K9MediaType.parseMediaType(SVG_VALUE)
+    val XSLT: K9MediaType = K9MediaType.parseMediaType(XSLT_VALUE)
+    val ESVG: K9MediaType = K9MediaType.parseMediaType(EDITABLE_SVG_VALUE)
+    val PNG: K9MediaType = K9MediaType.parseMediaType(PNG_VALUE)
+    val JPEG: K9MediaType  = K9MediaType.parseMediaType(JPEG_VALUE)
+    val PDF: K9MediaType = K9MediaType.parseMediaType(PDF_VALUE)
+    val ADL_SVG = K9MediaType.parseMediaType(ADL_SVG_VALUE)
+    val CLIENT_SIDE_IMAGE_MAP = K9MediaType.parseMediaType(CLIENT_SIDE_IMAGE_MAP_VALUE)
+    val JS = K9MediaType.parseMediaType(JAVASCRIPT_VALUE)
+    val CSS = K9MediaType.parseMediaType(CSS_VALUE)
+    val APPLICATION_JSON = K9MediaType.parseMediaType(APPLICATION_JSON_VALUE)
+    val HAL_JSON = K9MediaType.parseMediaType(HAL_JSON_VALUE)
+    val TEXT_XML = K9MediaType.parseMediaType(APPLICATION_XML_VALUE)
+    val APPLICATION_XML = K9MediaType.parseMediaType(TEXT_XML_VALUE)
+    val WOFF: K9MediaType = K9MediaType.parseMediaType(WOFF_VALUE)
+    val WOFF2: K9MediaType = K9MediaType.parseMediaType(WOFF2_VALUE)
+    val TTF: K9MediaType = K9MediaType.parseMediaType(TTF_VALUE)
+    val EOT: K9MediaType = K9MediaType.parseMediaType(EOT_VALUE)
+    val OTF: K9MediaType = K9MediaType.parseMediaType(OTF_VALUE)
+    val HTML : K9MediaType = K9MediaType.parseMediaType(HTML_VALUE)
+    val ALL: K9MediaType = K9MediaType.parseMediaType(ALL_VALUE)
 }

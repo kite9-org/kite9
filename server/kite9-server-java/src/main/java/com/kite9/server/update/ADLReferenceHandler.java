@@ -1,15 +1,7 @@
-package com.kite9.server.command.xml;
+package com.kite9.server.update;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.kite9.diagram.dom.css.CSSConstants;
-import org.kite9.diagram.dom.elements.ADLDocument;
-import org.kite9.diagram.dom.elements.ReferencingKite9XMLElement;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.command.CommandContext;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +10,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import java.util.*;
 
 /**
  * This is now a one-shot class: use and discard.  Will fix any references that occur twice.
@@ -29,15 +21,16 @@ public class ADLReferenceHandler {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(ADLReferenceHandler.class);
 	
-	private Set<String> existingIDs = new HashSet<String>();
-	private Map<String, List<Element>> duplicates = new HashMap<>();
-	private ADLDocument doc;
-	private String url;
+	private final Set<String> existingIDs = new HashSet<String>();
+	private final Map<String, List<Element>> duplicates = new HashMap<>();
+	private final Document doc;
+	private final String url;
+	private final CommandContext ctx;
 	
-	public ADLReferenceHandler(ADLDom adl) {
+	public ADLReferenceHandler(ADLDom adl, CommandContext ctx) {
 		this.doc = adl.getDocument();
-		adl.ensureCssEngine(doc);
 		this.url = adl.getUri().toString();
+		this.ctx = ctx;
 	}
 	
 	public void ensureConsistency() {
@@ -53,17 +46,13 @@ public class ADLReferenceHandler {
 			List<Node> copy = copyToList(nl);
 			Node firstLink = null;
 			for (Node node : copy) {
-				if (node instanceof ReferencingKite9XMLElement) {
-					DiagramElementType det = ((ReferencingKite9XMLElement) node).getType();
-					
-					if (det == DiagramElementType.LINK) {
-						if (firstLink == null)  {
-							firstLink = node;
-						}
-					} else if (firstLink != null) {
-						// links should be the last content in any container
-						container.insertBefore(node, firstLink);
+				if (isType(node, DiagramElementType.LINK)) {
+					if (firstLink == null)  {
+						firstLink = node;
 					}
+				} else if (firstLink != null) {
+					// links should be the last content in any container
+					container.insertBefore(node, firstLink);
 				}
 				
 				ensureLinksAreLast(node);
@@ -76,7 +65,7 @@ public class ADLReferenceHandler {
 	protected void renameDuplicates() {
 		for (String oldId : duplicates.keySet()) {
 			for (Element e : duplicates.get(oldId)) {
-				String newId = doc.createUniqueId();
+				String newId = ctx.uniqueId(doc);
 				LOG.info("Renaming duplicate of {} to {} in {}", oldId, newId, url);	
 				e.setAttribute("id", newId);
 			}
@@ -88,7 +77,7 @@ public class ADLReferenceHandler {
 			if (((Element) n).hasAttribute("id")) {
 				String id  = ((Element) n).getAttribute("id");
 				if (existingIDs.contains(id)) {
-					List<Element> dups = duplicates.getOrDefault(id, new ArrayList<Element>());
+					List<Element> dups = duplicates.getOrDefault(id, new ArrayList<>());
 					dups.add((Element) n);
 					duplicates.put(id, dups);
 					LOG.info("Discovered duplicate for {} in {}", id, url);
@@ -111,25 +100,19 @@ public class ADLReferenceHandler {
 	 */
 	protected void checkReferences(Node n) {
 	
-		if (isType(n, DiagramElementType.LINK)) {
-			
-			String fromId = ((ReferencingKite9XMLElement) n).getIDReference(CSSConstants.LINK_FROM_XPATH);
-			String toId = ((ReferencingKite9XMLElement) n).getIDReference(CSSConstants.LINK_TO_XPATH);
-			
-			if (!findReferenceOrParentReference(n, fromId)) {
-				n.getParentNode().removeChild(n);
-			} else if (!findReferenceOrParentReference(n, toId)) {
-				n.getParentNode().removeChild(n);
-			}
-		}
-		
 		if (isType(n, DiagramElementType.LINK_END)) {
-			if (!isType(n.getParentNode(), DiagramElementType.LINK)) {
-				n.getParentNode().removeChild(n);
+			Node link = n.getParentNode();
+			String ref = ((Element)n).getAttribute("reference");
+
+			if (!findReferenceOrParentReference(ref)) {
+				link.getParentNode().removeChild(link);
+			}
+
+			if (!isType(link, DiagramElementType.LINK)) {
+				link.removeChild(n);
 			}
 		}
-		
-		
+
 		if (n instanceof Element) {
 			NodeList nl = n.getChildNodes();
 			List<Node> copy = copyToList(nl);
@@ -143,10 +126,10 @@ public class ADLReferenceHandler {
 		}
 	}
 
-	protected boolean findReferenceOrParentReference(Node n, String id) {
+	protected boolean findReferenceOrParentReference(String id) {
 		boolean found = existingIDs.contains(id);
 		int childOffset = id.indexOf("@");
-		if ((found == false) && (childOffset > 0)) {
+		if ((!found) && (childOffset > 0)) {
 			id = id.substring(0, childOffset);
 			found = existingIDs.contains(id);
 		}
@@ -154,12 +137,23 @@ public class ADLReferenceHandler {
 		return found;
 	}
 
+	/**
+	 * Shocking hack for now - we need to use Schemas.
+	 */
 	protected boolean isType(Node n, DiagramElementType t) {
-		if (n instanceof ReferencingKite9XMLElement) {
-			return ((ReferencingKite9XMLElement) n).getType() == t;
-		} else {
-			return false;
+		if (n instanceof Element) {
+			Element e = (Element) n;
+			switch (t) {
+				case LINK:
+					return e.getTagName().equals("link");
+				case LINK_END:
+					return e.getTagName().equals("from") || e.getTagName().equals("to");
+				default:
+					throw new UnsupportedOperationException("Can't figure out type from xml");
+			}
 		}
+
+		return false;
 	}
 
 	private List<Node> copyToList(NodeList nl) {

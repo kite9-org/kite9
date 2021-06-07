@@ -1,16 +1,18 @@
 package com.kite9.server.adl.format;
 
-import com.kite9.server.adl.format.media.*;
-import com.kite9.server.pipeline.adl.format.media.*;
-import com.kite9.server.pipeline.adl.holder.ADLFactory;
-import com.kite9.server.pipeline.uri.URI;
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.StaticFormat;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.*;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Collections.singletonList;
@@ -18,7 +20,7 @@ import static java.util.Collections.singletonList;
 public class BasicFormatSupplier implements FormatSupplier {
 
 	private final Format[] formats;
-	private final MediaType[] mediaTypes;
+	private final K9MediaType[] mediaTypes;
 
 	public BasicFormatSupplier(ADLFactory adlFactory) {
 		super();
@@ -55,14 +57,14 @@ public class BasicFormatSupplier implements FormatSupplier {
 		mediaTypes = Arrays.stream(formats)
 				.flatMap(f -> f.getMediaTypes().stream())
 				.collect(Collectors.toList())
-				.toArray(new MediaType[] {});
+				.toArray(new K9MediaType[] {});
 	}
 
 	@Override
-	public Format getFormatFor(MediaType mt) {
+	public Format getFormatFor(K9MediaType mt) {
 		// look for exact match first
 		for (Format format : formats) {
-			for (MediaType m : format.getMediaTypes()) {
+			for (K9MediaType m : format.getMediaTypes()) {
 				if (m.equals(mt)) {
 					return format;
 				}
@@ -71,7 +73,7 @@ public class BasicFormatSupplier implements FormatSupplier {
 		
 		// return anything suitable
 		for (Format format : formats) {
-			for (MediaType mtProvided : format.getMediaTypes()) {
+			for (K9MediaType mtProvided : format.getMediaTypes()) {
 				if (mtProvided.isCompatibleWith(mt)) {
 					return format;
 				}
@@ -81,42 +83,42 @@ public class BasicFormatSupplier implements FormatSupplier {
 		throw new IllegalArgumentException("Format not supported:" + mt);
 	}
 
-	public List<MediaType> getMediaTypes() {
+	public List<K9MediaType> getMediaTypes() {
 		return Arrays.asList(mediaTypes);
 	}
 
 	@Override
-	public Map<String, MediaType> getMediaTypeMap() {
+	public Map<String, K9MediaType> getMediaTypeMap() {
 		return Arrays.stream(formats)
 				.collect(Collectors.toMap(Format::getExtension, f -> f.getMediaTypes().get(0)));
 	}
 
 	@Override
-	public Optional<Format> getFormatFor(String path) {
+	public Format getFormatFor(String path) {
 		for (Format format : formats) {
 			if (path.endsWith(format.getExtension())) {
-				return Optional.of(format);
+				return format;
 			}
 		}
 
-		return Optional.empty();
+		return null;
 	}
 
 	@Override
-	public Optional<Format> getFormatFor(URI u) {
+	public Format getFormatFor(K9URI u) {
 		return getFormatFor(u.getPath());
 	}
 	
 
-	public MediaType getMediaTypeFor(URI sourceUri) {
+	public K9MediaType getMediaTypeFor(K9URI sourceUri) {
 		String path = sourceUri.getPath();
 		return getMediaTypeFor(path);
 	}
 
-	public MediaType getMediaTypeFor(String path) {
+	public K9MediaType getMediaTypeFor(String path) {
 		if (path.contains(".")) {
 			String ext = path.substring(path.lastIndexOf(".")+1);
-			MediaType out = getMediaTypeMap().get(ext);
+			K9MediaType out = getMediaTypeMap().get(ext);
 			if (out == null) {
 				throw new Kite9ProcessingException("Don't know media type for "+ext);
 			} else {

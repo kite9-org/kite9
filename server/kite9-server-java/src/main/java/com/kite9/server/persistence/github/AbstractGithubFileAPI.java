@@ -7,13 +7,13 @@ import static com.kite9.server.persistence.PathUtils.getPathSegment;
 
 import java.io.InputStream;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -38,9 +38,9 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 	protected String filepath;
 	protected String branchName;
 	protected OAuth2AuthorizedClientRepository clientRepository;
-	protected MediaType mediaType;
+	protected K9MediaType mediaType;
 	
-	public AbstractGithubFileAPI(String path, OAuth2AuthorizedClientRepository clientRepository, MediaType mt) {
+	public AbstractGithubFileAPI(String path, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt) {
 		this.path = path;
 		this.owner = getPathSegment(OWNER, path);
 		this.reponame = getPathSegment(REPONAME, path);
@@ -126,7 +126,7 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 	}
 
 	@Override
-	public MediaType getMediaType() {
+	public K9MediaType getMediaType() {
 		return mediaType;
 	}
 

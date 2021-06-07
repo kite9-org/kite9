@@ -1,10 +1,10 @@
 package com.kite9.server.persistence.cache;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
 import com.kite9.server.persistence.queue.ChangeQueue;
 import com.kite9.server.persistence.queue.ChangeQueueImpl;
@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 
-import com.kite9.server.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
@@ -36,7 +36,7 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 		super();
 	}
 
-	public SourceAPI createAPI(URI u, Authentication a) throws Exception {
+	public SourceAPI createAPI(K9URI u, Authentication a) throws Exception {
 		String path = u.getPath();
 		if (!path.startsWith("/github")) {
 			return null;
@@ -52,7 +52,7 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 		return out;
 	}
 
-	private SourceAPI buildNewAPI(URI u, Authentication a) throws Exception {
+	private SourceAPI buildNewAPI(K9URI u, Authentication a) throws Exception {
 		SourceAPI backingApi = createBackingAPI(u, a);
 		if (backingApi == null) {
 			return null;
@@ -74,7 +74,7 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 		return changeEventConsumerFactory.createEventConsumer(path);
 	}
 
-	protected abstract SourceAPI createBackingAPI(URI u, Authentication a) throws Exception;
+	protected abstract SourceAPI createBackingAPI(K9URI u, Authentication a) throws Exception;
 
 
 	@Scheduled(fixedDelay = 5000)

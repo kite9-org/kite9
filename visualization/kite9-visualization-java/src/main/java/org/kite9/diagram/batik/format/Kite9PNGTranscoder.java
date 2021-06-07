@@ -14,8 +14,6 @@ import org.w3c.dom.Document;
  */
 public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
 
-	
-
 	@Override
 	public String getPrefix() {
 		return "KPNG";

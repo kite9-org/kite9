@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
 
 import com.kite9.server.XMLCompare;
-import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 
 public class TemplateRenderingIT extends AbstractRestIT {
 

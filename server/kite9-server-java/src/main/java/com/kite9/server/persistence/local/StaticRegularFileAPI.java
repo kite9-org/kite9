@@ -2,27 +2,27 @@ package com.kite9.server.persistence.local;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.net.URI;
 
-import org.springframework.http.MediaType;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
 import org.springframework.security.core.Authentication;
 
-import com.kite9.server.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.server.sources.ModifiableAPI;
 
 public class StaticRegularFileAPI implements ModifiableAPI {
 	
-	private final MediaType underlying;
+	private final K9MediaType underlying;
 	private byte[] bytes;
-	private URI sourceUri;
+	private K9URI sourceUri;
 
-	public StaticRegularFileAPI(MediaType underlying, byte[] bytes, URI sourceUri) {
+	public StaticRegularFileAPI(K9MediaType underlying, byte[] bytes, K9URI sourceUri) {
 		this.underlying = underlying;
 		this.bytes = bytes;
 		this.sourceUri = sourceUri;
 	}
 
-	public MediaType getMediaType() {
+	public K9MediaType getMediaType() {
 		return underlying;
 	}
 
@@ -47,7 +47,7 @@ public class StaticRegularFileAPI implements ModifiableAPI {
 	}
 
 	@Override
-	public URI getSourceLocation() {
+	public K9URI getSourceLocation() {
 		return sourceUri;
 	}
 

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.kite9.pipeline.command.CommandContext;
+import com.kite9.server.adl.holder.meta.MetaHelper;
+import com.kite9.server.command.BatikCommandContext;
 import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.elements.ADLDocument;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.logging.Logable;
 import org.slf4j.Logger;
@@ -14,15 +16,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.kite9.server.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.server.pipeline.command.Command;
-import com.kite9.server.pipeline.command.xml.ADLReferenceHandler;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.command.Command;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.update.Update.Type;
+import org.w3c.dom.Document;
 
 /**
  * Handles updates, provided by the {@link Update} class.
@@ -33,13 +35,14 @@ import com.kite9.server.update.Update.Type;
 public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 	
 	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	protected final CommandContext ctx = new BatikCommandContext();
 		
 	public AbstractUpdateHandler() {
 		super();
 	}
 	
 	@Override
-	public <X extends DiagramWriteFormat> ADLOutput<X> performDiagramUpdate(Update update, Authentication authentication, X f) throws Exception {
+	public ADLOutput performDiagramUpdate(Update update, Authentication authentication, DiagramWriteFormat f) throws Exception {
 		ModifiableAPI a = getModifiableAPI(update, authentication);
 		
 		if (a instanceof ModifiableDiagramAPI) {
@@ -47,8 +50,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			ADLDom dom = api.getCurrentRevisionContent(authentication, update.getHeaders()).parse();
 			
 			// allows us to interrogate styles, if need be
-			ADLDocument doc = dom.getDocument();
-			dom.ensureCssEngine(doc);
+			Document doc = dom.getDocument();
 			List<Command> commands = update.getCommands();
 			
 			List<Command.Mismatch> errors = new ArrayList<>();
@@ -56,7 +58,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			if (update.getType() == Type.UNDO) {
 				Collections.reverse(commands);
 				for (Command command : commands) {
-					Command.Mismatch status = command.undoCommand(dom);
+					Command.Mismatch status = command.undoCommand(dom, ctx);
 					LOG.debug("Completed {} with status {}", command, status);
 					if (status != null) {
 						errors.add(status);
@@ -64,7 +66,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				}
 			} else {
 				for (Command command : commands) {
-					Command.Mismatch status = command.applyCommand(dom);
+					Command.Mismatch status = command.applyCommand(dom, ctx);
 					LOG.debug("Completed {} with status {}", command, status);
 					if (status != null) {
 						errors.add(status);
@@ -76,11 +78,11 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				dom.setError(errors.stream().map(s -> s.explain()).reduce("", (x, y) -> x + "\n" +y));
 			}
 			
-			new ADLReferenceHandler(dom).ensureConsistency();
+			new ADLReferenceHandler(dom, ctx).ensureConsistency();
 
-			dom.setAuthorAndNotification(authentication);
+			MetaHelper.setAuthorAndNotification(authentication, dom);
 			api.addMeta(dom);
-			ADLOutput<X> output = dom.process(update.getUri(), f);
+			ADLOutput output = dom.process(update.getUri(), f);
 		
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));

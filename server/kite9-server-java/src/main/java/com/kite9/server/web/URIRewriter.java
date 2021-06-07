@@ -5,6 +5,8 @@ import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -22,19 +24,24 @@ public final class URIRewriter {
 		String ourHost = getCompleteCurrentRequestURI().getHost();
 		return (ourHost == null) || (uri.getHost() == null) || ourHost.equals(uri.getHost());
 	}
+
+	public static boolean localPublicContent(K9URI uri) {
+		String ourHost = getCompleteCurrentRequestURI().getHost();
+		return (ourHost == null) || (uri.getHost() == null) || ourHost.equals(uri.getHost());
+	}
 	
-	public static URI getCompleteCurrentRequestURI() {
+	public static K9URI getCompleteCurrentRequestURI() {
 		HttpServletRequest req = getCurrentRequest();
 		
 		try {
 			if (req == null) { 
-				return new URI("http://localhost/unknown");
+				return URIWrapper.wrap(new URI("http://localhost/unknown"));
 			} else {
 				String qs = req.getQueryString();
 				qs = qs == null ? "" : "?" + qs;
 				String main = req.getRequestURL().toString();
 				
-				return new URI(main+qs);
+				return URIWrapper.wrap(new URI(main+qs));
 			}
 		} catch (URISyntaxException e) {
 			throw new Kite9XMLProcessingException("Couldn't determine URI of current request", e);
@@ -53,12 +60,12 @@ public final class URIRewriter {
 		}
 	}
 	
-	public static URI resolve(String url) throws URISyntaxException {
-		URI currentRequestURI = getCompleteCurrentRequestURI();
+	public static K9URI resolve(String url) throws URISyntaxException {
+		K9URI currentRequestURI = getCompleteCurrentRequestURI();
 		if (currentRequestURI != null) {
 			return currentRequestURI.resolve(url);
 		} else {
-			return new URI(url);
+			return URIWrapper.wrap(new URI(url));
 		}
 	}
 

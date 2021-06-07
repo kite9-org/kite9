@@ -1,6 +1,8 @@
 package com.kite9.server.command;
 
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.command.CommandContext;
 import org.apache.batik.anim.dom.AbstractElement;
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.css.engine.CSSStylableElement;
@@ -8,6 +10,8 @@ import org.apache.batik.css.engine.StyleMap;
 import org.apache.batik.dom.AbstractAttr;
 import org.apache.commons.io.Charsets;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.kite9.diagram.common.range.IntegerRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.css.sac.Parser;
@@ -97,11 +101,26 @@ public class BatikCommandContext implements CommandContext {
     @Override
     public String getStyleValue(@NotNull Element e, @NotNull String name) {
         if (e instanceof CSSStylableElement) {
-            StyleMap sd = ((CSSStylableElement)e).get
-            return sd.getPropertyValue(name)
+            return "";
         } else {
             return "";
         }
+
+    }
+
+    @Nullable
+    @Override
+    public IntegerRange getStyleRangeValue(@NotNull Element el, @NotNull String name) {
+        return null;
+    }
+
+    @Override
+    public void setStyleValue(@NotNull Element e, @NotNull String name, @Nullable String value) {
+
+    }
+
+    @Override
+    public void setAttributeValue(@NotNull Element insert, @NotNull String xpath, @NotNull String value) {
 
     }
 }

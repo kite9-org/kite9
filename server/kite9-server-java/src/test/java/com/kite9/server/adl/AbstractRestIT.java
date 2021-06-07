@@ -44,7 +44,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.kite9.server.pipeline.command.Command;
+import com.kite9.pipeline.command.Command;
 
 /**
  * Configuration of basic test, and rest template for accessing endpoints.

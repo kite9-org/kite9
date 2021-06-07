@@ -1,10 +1,10 @@
 package com.kite9.pipeline.command.xml
 
-import com.kite9.k9server.pipeline.adl.holder.pipeline.ADLDom
-import com.kite9.k9server.pipeline.command.Command
-import com.kite9.k9server.pipeline.command.CommandContext
-import com.kite9.k9server.pipeline.command.CommandException
-import com.kite9.k9server.pipeline.uri.URI
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom
+import com.kite9.pipeline.command.Command
+import com.kite9.pipeline.command.CommandContext
+import com.kite9.pipeline.command.CommandException
+import com.kite9.pipeline.uri.K9URI
 import org.w3c.dom.*
 
 /**
@@ -43,7 +43,7 @@ abstract class AbstractADLCommand : Command {
 
     fun getForeignElementCopy(
         currentDoc: Document?,
-        baseUri: URI,
+        baseUri: K9URI,
         uriStr: String,
         deep: Boolean,
         context: ADLDom

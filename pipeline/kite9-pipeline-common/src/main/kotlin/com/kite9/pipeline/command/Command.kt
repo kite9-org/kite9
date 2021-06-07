@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As
-import com.kite9.k9server.pipeline.adl.holder.pipeline.ADLDom
-import com.kite9.k9server.pipeline.command.xml.insert.Delete
-import com.kite9.k9server.pipeline.command.xml.insert.InsertUrl
-import com.kite9.k9server.pipeline.command.xml.insert.InsertUrlWithChanges
-import com.kite9.k9server.pipeline.command.xml.insert.InsertXML
-import com.kite9.k9server.pipeline.command.xml.move.ADLMoveCells
-import com.kite9.k9server.pipeline.command.xml.move.Move
-import com.kite9.k9server.pipeline.command.xml.replace.*
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom
+import com.kite9.pipeline.command.xml.insert.Delete
+import com.kite9.pipeline.command.xml.insert.InsertUrl
+import com.kite9.pipeline.command.xml.insert.InsertUrlWithChanges
+import com.kite9.pipeline.command.xml.insert.InsertXML
+import com.kite9.pipeline.command.xml.move.ADLMoveCells
+import com.kite9.pipeline.command.xml.move.Move
+import com.kite9.pipeline.command.xml.replace.*
 
 /**
  * Performs some change on the ADL.

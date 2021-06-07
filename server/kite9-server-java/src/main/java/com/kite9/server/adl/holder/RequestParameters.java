@@ -5,6 +5,7 @@ import java.net.URI;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscodingHints.Key;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -23,7 +24,7 @@ public class RequestParameters {
 	public static final String MAX_HEIGHT = "maxHeight";
 	public static final String MEDIA = "media";
 
-	public static void configure(URI uri, Kite9SVGTranscoder transcoder) {
+	public static void configure(URI uri, Kite9Transcoder transcoder) {
 		MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(uri).build().getQueryParams();
 		setFloatIfPresent(MAX_HEIGHT, queryParams, transcoder, SVGAbstractTranscoder.KEY_MAX_HEIGHT);
 		setFloatIfPresent(MAX_WIDTH, queryParams, transcoder, SVGAbstractTranscoder.KEY_MAX_WIDTH);
@@ -33,14 +34,14 @@ public class RequestParameters {
 		setStringIfPresent(MEDIA, queryParams, transcoder, SVGAbstractTranscoder.KEY_MEDIA);
 	}
 
-	private static void setStringIfPresent(String paramName, MultiValueMap<String, String> queryParams, Kite9SVGTranscoder transcoder, Key key) {
+	private static void setStringIfPresent(String paramName, MultiValueMap<String, String> queryParams, Kite9Transcoder transcoder, Key key) {
 		if (queryParams.containsKey(paramName)) {
 			String paramValue = queryParams.getFirst(paramName);
 			transcoder.addTranscodingHint(key, paramValue);
 		}
 	}
 
-	private static void setFloatIfPresent(String paramName, MultiValueMap<String, String> queryParams, Kite9SVGTranscoder transcoder, Key key) {
+	private static void setFloatIfPresent(String paramName, MultiValueMap<String, String> queryParams, Kite9Transcoder transcoder, Key key) {
 		if (queryParams.containsKey(paramName)) {
 			String paramValue = queryParams.getFirst(paramName);
 			float floatValue = Float.parseFloat(paramValue);

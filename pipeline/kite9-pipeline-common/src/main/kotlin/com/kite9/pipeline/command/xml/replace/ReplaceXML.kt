@@ -1,9 +1,9 @@
 package com.kite9.pipeline.command.xml.replace
 
-import com.kite9.k9server.pipeline.adl.holder.pipeline.ADLDom
-import com.kite9.k9server.pipeline.command.Command
-import com.kite9.k9server.pipeline.command.CommandContext
-import com.kite9.k9server.pipeline.command.CommandException
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom
+import com.kite9.pipeline.command.Command
+import com.kite9.pipeline.command.CommandContext
+import com.kite9.pipeline.command.CommandException
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
@@ -44,7 +44,7 @@ class ReplaceXML : AbstractReplaceCommand<Element, Element>() {
         ctx.log("Processed replace XML of $fragmentId")
     }
 
-    private fun same(existing: Element, with: Element, ctx: CommandContext): Command.Mismatch {
+    private fun same(existing: Element, with: Element, ctx: CommandContext): Command.Mismatch? {
         return ctx.twoElementsAreIdentical(existing, with)
     }
 }

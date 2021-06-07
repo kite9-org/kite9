@@ -18,27 +18,27 @@ import org.springframework.http.RequestEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StreamUtils;
 
-import com.kite9.server.pipeline.XMLCompare;
-import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.server.pipeline.command.Command;
-import com.kite9.server.pipeline.command.CommandException;
-import com.kite9.server.pipeline.command.xml.insert.Delete;
-import com.kite9.server.pipeline.command.xml.insert.InsertUrl;
-import com.kite9.server.pipeline.command.xml.insert.InsertUrlWithChanges;
-import com.kite9.server.pipeline.command.xml.insert.InsertXML;
-import com.kite9.server.pipeline.command.xml.move.ADLMoveCells;
-import com.kite9.server.pipeline.command.xml.move.Move;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceAttr;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceStyle;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceTag;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceTagUrl;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceText;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
-import com.kite9.server.pipeline.command.xml.replace.ReplaceXML;
-import com.kite9.server.pipeline.controllers.CommandController;
-import com.kite9.server.pipeline.update.Update;
-import com.kite9.server.pipeline.update.Update.Type;
+import com.kite9.pipeline.XMLCompare;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.command.CommandException;
+import com.kite9.pipeline.command.xml.insert.Delete;
+import com.kite9.pipeline.command.xml.insert.InsertUrl;
+import com.kite9.pipeline.command.xml.insert.InsertUrlWithChanges;
+import com.kite9.pipeline.command.xml.insert.InsertXML;
+import com.kite9.pipeline.command.xml.move.ADLMoveCells;
+import com.kite9.pipeline.command.xml.move.Move;
+import com.kite9.pipeline.command.xml.replace.ReplaceAttr;
+import com.kite9.pipeline.command.xml.replace.ReplaceStyle;
+import com.kite9.pipeline.command.xml.replace.ReplaceTag;
+import com.kite9.pipeline.command.xml.replace.ReplaceTagUrl;
+import com.kite9.pipeline.command.xml.replace.ReplaceText;
+import com.kite9.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
+import com.kite9.pipeline.command.xml.replace.ReplaceXML;
+import com.kite9.pipeline.controllers.CommandController;
+import com.kite9.pipeline.update.Update;
+import com.kite9.pipeline.update.Update.Type;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {

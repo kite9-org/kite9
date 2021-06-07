@@ -2,7 +2,7 @@ package com.kite9.server.sources;
 
 import java.io.InputStream;
 
-import org.springframework.http.MediaType;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import org.springframework.security.core.Authentication;
 
 /**
@@ -16,12 +16,12 @@ public interface FileAPI extends SourceAPI {
 	/**
 	 * Return bytes for current file.
 	 */
-	public InputStream getCurrentRevisionContentStream(Authentication authentication) throws Exception;
+	InputStream getCurrentRevisionContentStream(Authentication authentication) throws Exception;
 
 	/**
 	 * Returns the underlying media type required for storing the file, 
 	 * as dictated by the file's extension.
 	 */
-	public MediaType getMediaType();
+	K9MediaType getMediaType();
 	
 }

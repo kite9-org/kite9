@@ -1,13 +1,13 @@
 package com.kite9.pipeline.adl.holder.pipeline
 
-import com.kite9.k9server.pipeline.uri.URI
+import com.kite9.pipeline.uri.K9URI
 
 /**
  * Base interface that captures where an xml document came from, and it's content.
  */
 interface XMLBase {
 
-    val uri: URI
+    val uri: K9URI
 
     /**
      * Returns the HTTPHeaders that were responsible for loading this
@@ -18,5 +18,5 @@ interface XMLBase {
     /**
      * Returns the XML.
      */
-    val xMLString: String
+    val asString: String?
 }

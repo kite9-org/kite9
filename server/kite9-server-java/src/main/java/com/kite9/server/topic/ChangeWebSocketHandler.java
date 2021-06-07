@@ -1,7 +1,6 @@
 package com.kite9.server.topic;
 
 import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,8 +10,11 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.holder.meta.MetaHelper;
 import com.kite9.server.update.AbstractUpdateHandler;
 import com.kite9.server.update.Update;
+import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.dom.XMLHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +33,14 @@ import org.w3c.dom.Document;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.server.adl.format.media.EditableSVGFormat;
-import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.server.adl.holder.meta.BasicMeta;
-import com.kite9.server.pipeline.adl.holder.meta.MetaRead;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.meta.BasicMeta;
+import com.kite9.pipeline.adl.holder.meta.MetaRead;
 import com.kite9.server.adl.holder.meta.Payload;
-import com.kite9.server.pipeline.adl.holder.meta.UserMeta;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
 import com.kite9.server.persistence.queue.ChangeQueue.ChangeEvent;
 import com.kite9.server.sources.ModifiableDiagramAPI;
@@ -78,7 +80,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		String topic = getTopicFromUri(session.getUri());
+		String topic = getTopicFromUri(URIWrapper.wrap(session.getUri()));
 		List<WebSocketSession> sessionList = sessions.getOrDefault(topic, new ArrayList<WebSocketSession>());
 		sessionList.add(session);
 		sessions.put(topic, sessionList);
@@ -104,7 +106,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		Authentication principal = (Authentication) session.getPrincipal();
 
 		try {
-			ADLOutput<EditableSVGFormat> out = updateHandler.performDiagramUpdate(u, principal, updateFormat);
+			ADLOutput out = updateHandler.performDiagramUpdate(u, principal, updateFormat);
 			broadcastToTopic(out.getAsBytes(), topic);
 		} catch (Exception e) {
 			LOG.error("Problem with command", e);
@@ -118,7 +120,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		String cause = updateHandler.getProperCause(e);
 		ADLDom dom = base.parse();
 		dom.setError(cause);
-		ADLOutput<EditableSVGFormat> svg = dom.process(u.getUri(), updateFormat);
+		ADLOutput svg = dom.process(u.getUri(), updateFormat);
 		session.sendMessage(new TextMessage(svg.getAsBytes()));
 	}
 
@@ -129,7 +131,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-		String topic = getTopicFromUri(session.getUri());
+		String topic = getTopicFromUri(URIWrapper.wrap(session.getUri()));
 		List<WebSocketSession> existingSessions = sessions.getOrDefault(topic, Collections.emptyList());
 		existingSessions.remove(session);
 		
@@ -149,7 +151,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		return false;
 	}
 	
-	private String getTopicFromUri(java.net.URI u) {
+	private String getTopicFromUri(K9URI u) {
 		if (u != null) {
 			return u.getPath().replaceFirst(WebSocketConfig.TOPIC_PREFIX, "");
 		} else {
@@ -168,7 +170,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	}
 
 	@Override
-	public void broadcast(URI topicUri, ADLOutput<EditableSVGFormat> adl) {
+	public void broadcast(K9URI topicUri, ADLOutput adl) {
 		String topic = getTopicFromUri(topicUri);
 		broadcastToTopic(adl.getAsBytes(), topic);
 	}
@@ -199,7 +201,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	}
 
 	@Override
-	public List<UserMeta> getCurrentSubscribers(URI topicUri) {
+	public List<UserMeta> getCurrentSubscribers(K9URI topicUri) {
 		if (topicUri == null) {
 			return null;
 		}
@@ -218,14 +220,14 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	
 	protected UserMeta getUserFromSession(WebSocketSession session) {
 		if (session.getPrincipal() instanceof OAuth2AuthenticationToken) {
-			return BasicMeta.createUser(((OAuth2AuthenticationToken) session.getPrincipal()).getPrincipal()); 
+			return MetaHelper.createUser(((OAuth2AuthenticationToken) session.getPrincipal()).getPrincipal());
 		} else {
 			return null;
 		}
 	}
 
 	@Override
-	public void broadcastMeta(URI topicUri, MetaRead meta) {
+	public void broadcastMeta(K9URI topicUri, MetaRead meta) {
 		String topic = getTopicFromUri(topicUri);
 		metaUpdate(meta, topic);
 	}
@@ -254,8 +256,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 				return apiFactory.createAPI(u, a);
 			}
 		};
-		
-		updateFormat = (EditableSVGFormat) formatSupplier.getFormatFor(Kite9MediaTypes.ESVG);
+		updateFormat = (EditableSVGFormat) formatSupplier.getFormatFor(Kite9MediaTypes.INSTANCE.getESVG());
 	}
 
 }

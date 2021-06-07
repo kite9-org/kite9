@@ -1,8 +1,6 @@
 package com.kite9.pipeline.adl.format.media
 
-import java.util.*
-
-interface MediaType {
+interface K9MediaType {
     val type: String
     val subtype: String
     val subtypeSuffix: String?
@@ -20,7 +18,7 @@ interface MediaType {
     val isWildcardSubtype: Boolean
         get() = WILDCARD_TYPE == subtype || subtype.startsWith("*+")
 
-    fun isCompatibleWith(other: MediaType?): Boolean {
+    fun isCompatibleWith(other: K9MediaType?): Boolean {
         if (other == null) {
             return false
         }
@@ -47,7 +45,7 @@ interface MediaType {
 
     companion object {
 
-        fun parseMediaType(mimeType: String): MediaType {
+        fun parseMediaType(mimeType: String): K9MediaType {
             var index = mimeType.indexOf(';')
             var fullType = (if (index >= 0) mimeType.substring(0, index) else mimeType).trim { it <= ' ' }
             require(!fullType.isEmpty()) { "'mimeType' must not be empty" }
@@ -89,7 +87,7 @@ interface MediaType {
                 index = nextIndex
             } while (index < mimeType.length)
 
-            return object : MediaType {
+            return object : K9MediaType {
                 override val type: String
                     get() = type
                 override val subtype: String

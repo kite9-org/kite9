@@ -18,7 +18,7 @@
 		<module>visualization/kite9-visualization-java</module>
 		<module>pipeline/kite9-pipeline-common</module>
 		<module>pipeline/kite9-pipeline-js</module>
-		<module>pipeline/kite9-pipeline-java</module>
+		<!--<module>pipeline/kite9-pipeline-java</module> -->
 		<module>server/kite9-server-java</module>
 	</modules>
 

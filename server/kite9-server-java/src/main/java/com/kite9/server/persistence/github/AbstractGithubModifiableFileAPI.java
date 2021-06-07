@@ -1,11 +1,11 @@
 package com.kite9.server.persistence.github;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Date;
 import java.util.function.Consumer;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPermissionType;
@@ -13,19 +13,18 @@ import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeBuilder;
 import org.kohsuke.github.GitHub;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
-import com.kite9.server.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.server.sources.ModifiableAPI;
 
 public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFileAPI implements ModifiableAPI {
 	
 	private boolean isNew;
-	protected final URI sourceURI;
+	protected final K9URI sourceURI;
 	
-	public AbstractGithubModifiableFileAPI(URI u, OAuth2AuthorizedClientRepository clientRepository, MediaType mt, boolean isNew) throws URISyntaxException {
+	public AbstractGithubModifiableFileAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt, boolean isNew)  {
 		super(u.getPath(), clientRepository, mt);
 		this.isNew = isNew;
 		this.sourceURI = unmodifiedURI(u);
@@ -33,10 +32,9 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 
 	/**
 	 * This simplifies the URI to remove any query parameters
-	 * @throws URISyntaxException 
 	 */
-	private URI unmodifiedURI(URI u) throws URISyntaxException {
-		URI out = new URI(u.getScheme(), u.getAuthority(), u.getPath(), null, null);
+	private K9URI unmodifiedURI(K9URI u) {
+		K9URI out = u.withoutQueryParameters();
 		return out;
 	}
 
@@ -104,11 +102,11 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 	}
 
 	@Override
-	public URI getSourceLocation() {
+	public K9URI getSourceLocation() {
 		return sourceURI;
 	}
 
-	public static String createTitle(URI u) {
+	public static String createTitle(K9URI u) {
 		String fileNamePart = u.getPath().contains("/") ? 
 			u.getPath().substring(u.getPath().lastIndexOf("/")+1) :
 			u.getPath();

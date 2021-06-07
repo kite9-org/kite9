@@ -1,5 +1,7 @@
 package com.kite9.server.adl.format.media;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+
 import java.util.List;
 
 /**
@@ -8,23 +10,19 @@ import java.util.List;
 public class EntityFormat extends AbstractSVGFormat {
 	
 	private String extension;
-	private List<MediaType> mediaTypes;
+	private List<K9MediaType> mediaTypes;
 
-	public EntityFormat(String extension, List<MediaType> mediaTypes) {
+	public EntityFormat(String extension, List<K9MediaType> mediaTypes) {
 		super();
 		this.extension = extension;
 		this.mediaTypes = mediaTypes;
 	}
 	
-	@Override
-	public List<MediaType> getMediaTypes() {
+	public List<K9MediaType> getMediaTypes() {
 		return mediaTypes;
 	}
 
-
-	@Override
 	public String getExtension() {
 		return extension;
 	}
-
 }

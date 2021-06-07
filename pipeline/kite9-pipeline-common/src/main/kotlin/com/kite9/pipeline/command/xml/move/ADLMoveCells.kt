@@ -1,9 +1,9 @@
 package com.kite9.pipeline.command.xml.move
 
-import com.kite9.k9server.pipeline.adl.holder.pipeline.ADLDom
-import com.kite9.k9server.pipeline.command.Command
-import com.kite9.k9server.pipeline.command.CommandContext
-import com.kite9.k9server.pipeline.command.xml.AbstractADLCommand
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom
+import com.kite9.pipeline.command.Command
+import com.kite9.pipeline.command.CommandContext
+import com.kite9.pipeline.command.xml.AbstractADLCommand
 import org.kite9.diagram.common.range.BasicIntegerRange
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.css.CSSConstants

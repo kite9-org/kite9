@@ -1,7 +1,7 @@
 package com.kite9.pipeline.adl.holder.pipeline
 
-import com.kite9.k9server.pipeline.adl.holder.meta.MetaReadWrite
-import com.kite9.k9server.pipeline.uri.URI
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite
+import com.kite9.pipeline.uri.K9URI
 import org.w3c.dom.Document
 
 /**
@@ -19,10 +19,10 @@ interface XMLDom : XMLBase, MetaReadWrite {
     /**
      * For parsing a referenced document, provided in content.
      */
-    fun parseDocument(content: String?, uri: URI?): Document?
+    fun parseDocument(content: String, uri: K9URI): Document
 
     /**
      * For loading up a referenced document.
      */
-    fun parseDocument(uri: URI?): Document?
+    fun parseDocument(uri: K9URI): Document?
 }

@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHOrganization;
@@ -23,7 +24,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.DiagramReadFormat;
 import com.kite9.server.domain.Directory;
 import com.kite9.server.domain.Document;
 import com.kite9.server.domain.Organisation;
@@ -274,7 +274,7 @@ public abstract class AbstractGithubEntityConverter {
 			
 			@Override
 			public String getIcon() {
-				if (fs.getFormatFor(c.getName()).filter(f -> f instanceof DiagramReadFormat).isPresent()) {
+				if (fs.getFormatFor(c.getName()) instanceof DiagramFileFormat) {
 					return l.getHref();	
 				} else {
 					return "/public/templates/admin/icons/"+getExtension(c.getName())+".svg";
@@ -294,7 +294,7 @@ public abstract class AbstractGithubEntityConverter {
 	public List<Document> templateChildDiagrams(LinkBuilder lb, List<GHContent> contents)
 			throws IOException {
 		return contents.stream().filter(c -> c.isFile())
-				.filter(c -> fs.getFormatFor(c.getName()).isPresent()).map(c -> {
+				.filter(c -> fs.getFormatFor(c.getName()) != null).map(c -> {
 					Document out = templateDocument(buildDiagramLink(lb, c), c, null);
 					return out;
 				}).collect(Collectors.toList());

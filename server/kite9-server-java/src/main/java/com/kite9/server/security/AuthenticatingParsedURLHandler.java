@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.web.URIRewriter;
 import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.ParsedURLDefaultProtocolHandler;
@@ -136,7 +137,7 @@ public class AuthenticatingParsedURLHandler extends ParsedURLDefaultProtocolHand
      * @param url the java.net.URL class we reference.
      */
     protected ParsedURLData constructParsedURLData(URL url) {
-    	URI currentURI = URIRewriter.getCompleteCurrentRequestURI();
+    	K9URI currentURI = URIRewriter.getCompleteCurrentRequestURI();
     	String auth = null;
     	String cookie = null;
     	if (url.getHost().equals(currentURI.getHost())) {

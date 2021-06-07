@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.kite9.server.adl.format.MediaTypeHelper;
 import com.kite9.server.adl.format.media.EditableSVGFormat;
 import com.kite9.server.topic.ChangeBroadcaster;
 import org.kite9.diagram.dom.cache.Cache;
@@ -21,10 +23,10 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.server.pipeline.adl.format.media.Format;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 
 public class ADLDomMessageWriter extends AbstractGenericHttpMessageConverter<ADLDom> {
 	
@@ -41,7 +43,10 @@ public class ADLDomMessageWriter extends AbstractGenericHttpMessageConverter<ADL
 		this.formatSupplier = formatSupplier;
 		this.cache = c;
 		this.changeBroadcaster = changeBroadcaster;
-		setSupportedMediaTypes(formatSupplier.getMediaTypes());
+		setSupportedMediaTypes(
+				formatSupplier.getMediaTypes().stream()
+					.map(mt -> MediaType.parseMediaType(mt.toString()))
+						.collect(Collectors.toList()));
 	}
 
 	@Override
@@ -71,21 +76,21 @@ public class ADLDomMessageWriter extends AbstractGenericHttpMessageConverter<ADL
 		try {
 			LOG.info("Performing Conversion on {} ",t.getUri());
 			if (LOG.isDebugEnabled()) {
-				LOG.debug(t.getXMLString());
+				LOG.debug(t.getAsString());
 			}
 			
-			Format f = formatSupplier.getFormatFor(contentType);
+			Format f = formatSupplier.getFormatFor(MediaTypeHelper.getKite9MediaType(contentType));
 			if (f instanceof DiagramWriteFormat) {
 				DiagramWriteFormat df = (DiagramWriteFormat) f;
 				String uriStr = t.getUri().toString();
-				ADLOutput<?> out = t.process(t.getUri(), df);
+				ADLOutput out = t.process(t.getUri(), df);
 	
 				if (cache.isValid(uriStr)) {
 					cache.set(uriStr, df.getFormatIdentifier(), out.getAsBytes());
 				} 
 				
 				if (df instanceof EditableSVGFormat) {
-					changeBroadcaster.broadcast(t.getTopicUri(), (ADLOutput<EditableSVGFormat>) out);
+					changeBroadcaster.broadcast(t.getTopicUri(), out);
 				}
 	
 				StreamUtils.copy(out.getAsBytes(), outputMessage.getBody());

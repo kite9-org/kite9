@@ -3,10 +3,14 @@ package com.kite9.server.controllers;
 import java.net.URI;
 import java.util.List;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.adl.holder.meta.MetaHelper;
+import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,11 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.pipeline.adl.format.media.DiagramReadFormat;
-import com.kite9.server.pipeline.adl.format.media.Format;
-import com.kite9.server.pipeline.adl.holder.meta.MetaReadWrite;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
@@ -40,9 +43,9 @@ public abstract class AbstractContentController extends AbstractNegotiatingContr
 	}
 
 	@Override
-	protected void handleDynamicMetadata(Authentication authentication, URI uri, MetaReadWrite adl, SourceAPI api, MediaType out) {
+	protected void handleDynamicMetadata(Authentication authentication, K9URI uri, MetaReadWrite adl, SourceAPI api, K9MediaType out) {
 		super.handleDynamicMetadata(authentication, uri, adl, api, out);
-		adl.setUser();
+		MetaHelper.setUser(adl);
 		adl.setUri(uri);
 		if (api instanceof ModifiableDiagramAPI) {
 			((ModifiableDiagramAPI) api).addMeta(adl);
@@ -53,18 +56,21 @@ public abstract class AbstractContentController extends AbstractNegotiatingContr
 	}
 
 	@Override
-	protected ResponseEntity<?> handleCreatableContent(RequestEntity<?> req, Authentication authentication, URI uri,
-			ModifiableDiagramAPI api, List<MediaType> putMediaType, HttpHeaders headers) throws Exception {
-		MultiValueMap<String, String> params = UriComponentsBuilder.fromUri(uri).build().getQueryParams();
+	protected ResponseEntity<?> handleCreatableContent(RequestEntity<?> req, Authentication authentication, K9URI uri,
+													   ModifiableDiagramAPI api, List<K9MediaType> putMediaType, HttpHeaders headers) throws Exception {
+		MultiValueMap<String, String> params = UriComponentsBuilder.fromUri(URIWrapper.from(uri)).build().getQueryParams();
 		String template = params.getFirst("templateUri");
 		if (StringUtils.isEmpty(template)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File doesn't exist and templateUri parameter not supplied");
 		} else {
 			// creating a new document
-			Format f2 = fs.getFormatFor(template).orElseThrow(() -> new Kite9ProcessingException("no format for "+template));
+			Format f2 = fs.getFormatFor(template);
+			if (f2 == null) {
+				throw new Kite9ProcessingException("no format for "+template);
+			}
 			URI templateUri = new URI(template);
-			if (f2 instanceof DiagramReadFormat) {
-				ADLBase adl = ((DiagramReadFormat) f2).handleRead(templateUri, headers);
+			if (f2 instanceof DiagramFileFormat) {
+				ADLBase adl = ((DiagramFileFormat) f2).handleRead(URIWrapper.wrap(templateUri), headers);
 				ADLDom dom = adl.parse();
 				api.commitRevision("Created New Diagram in Kite9 from "+uri, authentication, dom);
 				handleDynamicMetadata(authentication, uri, dom, api, getBestDiagramMediaType(putMediaType));

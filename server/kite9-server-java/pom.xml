@@ -19,7 +19,7 @@
         <spring-boot.run.main-class>com.kite9.server.Kite9ServerApplication</spring-boot.run.main-class>
     </properties>
 
-    <name>Kite9 Server Redux</name>
+    <name>Kite9 Server (Redux)</name>
 
     <dependencies>
         <!-- Kite9 -->

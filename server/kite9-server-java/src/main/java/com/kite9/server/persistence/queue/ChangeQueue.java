@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import org.springframework.security.core.Authentication;
 
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
 public interface ChangeQueue {

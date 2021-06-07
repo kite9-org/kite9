@@ -1,12 +1,11 @@
 package com.kite9.server.topic;
 
-import java.net.URI;
-import java.util.List;
+import com.kite9.pipeline.adl.holder.meta.MetaRead;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
 
-import com.kite9.server.adl.format.media.EditableSVGFormat;
-import com.kite9.server.pipeline.adl.holder.meta.MetaRead;
-import com.kite9.server.pipeline.adl.holder.meta.UserMeta;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLOutput;
+import java.util.List;
 
 public interface ChangeBroadcaster {
 
@@ -14,13 +13,13 @@ public interface ChangeBroadcaster {
 	 * When a version of a document is updated, broadcast the contents of it like this,
 	 * so that people can edit the new version.
 	 */
-	public void broadcast(URI topicUri, ADLOutput<EditableSVGFormat> adl);
+	public void broadcast(K9URI topicUri, ADLOutput adl);
 	
 	/**
 	 * Broadcast status changes for a given topic.
 	 */
-	public void broadcastMeta(URI topicUri, MetaRead meta);
+	public void broadcastMeta(K9URI topicUri, MetaRead meta);
 	
-	public List<UserMeta> getCurrentSubscribers(URI topicUri);
+	public List<UserMeta> getCurrentSubscribers(K9URI topicUri);
 		
 }

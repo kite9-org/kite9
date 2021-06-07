@@ -1,7 +1,7 @@
 package com.kite9.pipeline.command.xml.insert
 
-import com.kite9.k9server.pipeline.adl.holder.pipeline.ADLDom
-import com.kite9.k9server.pipeline.command.CommandContext
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom
+import com.kite9.pipeline.command.CommandContext
 import org.w3c.dom.Element
 
 /**

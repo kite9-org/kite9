@@ -14,7 +14,7 @@ interface Format {
      */
     val formatIdentifier: String
 
-    val mediaTypes: List<MediaType>
+    val mediaTypes: List<K9MediaType>
 
     /**
      * In order to use format=xxx in the URL, we need to give each format an extension.

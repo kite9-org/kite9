@@ -17,15 +17,18 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import com.kite9.pipeline.adl.holder.meta.MetaRead;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.kite9.server.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.server.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.pipeline.adl.holder.pipeline.XMLBase;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.XMLBase;
 
 /**
  * Handles placing ADL content and metadata within the SVG document.  Some helper functions for the ADLFactory.
@@ -147,7 +150,7 @@ public class Payload {
     }
 
     public static String createBase64ADLString(XMLBase adl) {
-        byte[] bytes = adl.getXMLString().getBytes();
+        byte[] bytes = adl.getAsString().getBytes();
         String base64Encoded = new String(Base64.getEncoder().encode(bytes));
         return base64Encoded;
     }
