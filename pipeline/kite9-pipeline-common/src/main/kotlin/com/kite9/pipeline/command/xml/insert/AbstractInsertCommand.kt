@@ -9,10 +9,17 @@ import java.util.*
 
 abstract class AbstractInsertCommand : AbstractADLCommand() {
 
-	var fragmentId: String? = null
-	var beforeId: String? = null
-	var containedIds = emptyList<String>()
-	var newId: String? = null
+    @JvmField
+    var fragmentId: String? = null
+
+    @JvmField
+    var beforeId: String? = null
+
+    @JvmField
+    var containedIds = emptyList<String>()
+
+    @JvmField
+    var newId: String? = null
 
     protected fun doDelete(d: ADLDom, ctx: CommandContext): Mismatch? {
         val oldState = getContents(d, ctx)

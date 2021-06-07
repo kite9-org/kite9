@@ -10,10 +10,7 @@ import org.kite9.diagram.logging.Kite9LogImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.util.StreamUtils;
 
 import com.kite9.server.XMLCompare;
@@ -40,7 +37,7 @@ public class TemplateRenderingIT extends AbstractRestIT {
 	
 	protected byte[] loadStaticSVG(String page) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(Kite9MediaTypes.ESVG));
+		headers.setAccept(Arrays.asList(MediaType.parseMediaType(Kite9MediaTypes.EDITABLE_SVG_VALUE)));
 		HttpEntity<Void> ent = new HttpEntity<>(headers);
 		ResponseEntity<byte[]> back = getRestTemplate().exchange(new URI(getUrlBase()+page), HttpMethod.GET, ent, byte[].class);
 		return back.getBody();

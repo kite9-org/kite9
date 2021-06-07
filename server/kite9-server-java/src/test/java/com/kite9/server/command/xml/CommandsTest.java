@@ -1,13 +1,21 @@
 package com.kite9.server.command.xml;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
-
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.command.xml.insert.Delete;
+import com.kite9.pipeline.command.xml.insert.InsertUrl;
+import com.kite9.pipeline.command.xml.insert.InsertUrlWithChanges;
+import com.kite9.pipeline.command.xml.insert.InsertXML;
+import com.kite9.pipeline.command.xml.move.ADLMoveCells;
+import com.kite9.pipeline.command.xml.move.Move;
+import com.kite9.pipeline.command.xml.replace.*;
+import com.kite9.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.XMLCompare;
+import com.kite9.server.controllers.CommandController;
 import com.kite9.server.update.Update;
+import com.kite9.server.uri.URIWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kite9.diagram.testing.TestingHelp;
@@ -21,25 +29,10 @@ import org.springframework.http.RequestEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StreamUtils;
 
-import com.kite9.server.XMLCompare;
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.pipeline.command.Command;
-import com.kite9.pipeline.command.CommandException;
-import com.kite9.pipeline.command.xml.insert.Delete;
-import com.kite9.pipeline.command.xml.insert.InsertUrl;
-import com.kite9.pipeline.command.xml.insert.InsertUrlWithChanges;
-import com.kite9.pipeline.command.xml.insert.InsertXML;
-import com.kite9.pipeline.command.xml.move.ADLMoveCells;
-import com.kite9.pipeline.command.xml.move.Move;
-import com.kite9.pipeline.command.xml.replace.ReplaceAttr;
-import com.kite9.pipeline.command.xml.replace.ReplaceStyle;
-import com.kite9.pipeline.command.xml.replace.ReplaceTag;
-import com.kite9.pipeline.command.xml.replace.ReplaceTagUrl;
-import com.kite9.pipeline.command.xml.replace.ReplaceText;
-import com.kite9.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
-import com.kite9.pipeline.command.xml.replace.ReplaceXML;
-import com.kite9.server.controllers.CommandController;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
@@ -49,12 +42,8 @@ public class CommandsTest {
 	
 	private static final String SETUP_XML = "/public/commands/test_command1.adl";
 
-	public static final String END_SVG_DOCUMENT = "</svg:svg>";
-
 	public static final String NS = " xmlns=\"http://www.kite9.org/schema/adl\"\n  xmlns:svg='http://www.w3.org/2000/svg' ";
 
-	public static final String START_SVG_DOCUMENT = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' " + NS + ">";
-	
 	@Autowired
 	CommandController commandController;
 	
@@ -69,7 +58,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testReplaceXMLCommand1() throws CommandException, Exception {
+	public void testReplaceXMLCommand1() throws Exception {
 		ReplaceXML replace = new ReplaceXML();
 		replace.fragmentId = "The Diagram";
 		replace.from= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><diagram  id=\"The Diagram\">\n" + 
@@ -91,7 +80,7 @@ public class CommandsTest {
 
 
 	@Test
-	public void testReplaceTag() throws CommandException, Exception {
+	public void testReplaceTag() throws Exception {
 		ReplaceTag replace = new ReplaceTag();
 		replace.fragmentId = "link";
 		replace.from= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><link id=\"link\" rank=\"4\"></link></svg:svg>").getBytes());
@@ -102,7 +91,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testReplaceTagUrl() throws CommandException, Exception {
+	public void testReplaceTagUrl() throws Exception {
 		ReplaceTagUrl replace = new ReplaceTagUrl();
 		replace.fragmentId = "link";
 		replace.from= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><link id=\"link\" rank=\"4\"></link></svg:svg>").getBytes());
@@ -113,7 +102,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testMoveCommand() throws CommandException, Exception {
+	public void testMoveCommand() throws Exception {
 		Move move = new Move();
 		move.moveId = "one-label";
 		move.to = "two";
@@ -124,7 +113,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testADLMoveCellsCommand() throws CommandException, Exception {
+	public void testADLMoveCellsCommand() throws Exception {
 		ADLMoveCells move = new ADLMoveCells();
 		move.fragmentId = "table1";
 		move.horiz = true;
@@ -137,13 +126,13 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testADLMoveCellsCommand2() throws CommandException, Exception {
+	public void testADLMoveCellsCommand2() throws  Exception {
 		ADLMoveCells move = new ADLMoveCells();
 		move.fragmentId = "table1";
 		move.horiz = true;
 		move.from = 1;
 		move.push = 3;
-		move.excludedIds = Arrays.asList("t3");
+		move.excludedIds = Collections.singletonList("t3");
 		
 		sourceURI = sourceURI.replace("command1", "command2");
 		
@@ -152,7 +141,7 @@ public class CommandsTest {
 
 
 	@Test
-	public void testReplaceTextCommand1() throws CommandException, Exception {
+	public void testReplaceTextCommand1() throws  Exception {
 		ReplaceText setText = new ReplaceText();
 		setText.to =  "Winner";
 		setText.from = "";
@@ -163,7 +152,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testReplaceTextCommand2() throws CommandException, Exception {
+	public void testReplaceTextCommand2() throws Exception {
 		ReplaceText setText = new ReplaceText();
 		setText.to =  "Winner";
 		setText.from = "Two";
@@ -174,7 +163,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testReplaceAttrCommand() throws CommandException, Exception {
+	public void testReplaceAttrCommand() throws Exception {
 		ReplaceAttr setAttr = new ReplaceAttr();
 		setAttr.name =  "name";
 		setAttr.to = "value";
@@ -185,7 +174,7 @@ public class CommandsTest {
 	}
 	
 	@Test
-	public void testReplaceStyleCommand() throws CommandException, Exception {
+	public void testReplaceStyleCommand() throws Exception {
 		ReplaceStyle setStyle = new ReplaceStyle();
 		setStyle.name =  "stroke";
 		setStyle.to = "red";
@@ -196,34 +185,34 @@ public class CommandsTest {
 	}
 
 	@Test
-	public void testDeleteCommand() throws CommandException, Exception {
+	public void testDeleteCommand() throws Exception {
 		Delete delete = new Delete();
 		delete.fragmentId = "The Diagram";
 		delete.beforeId = "two";
 		delete.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><glyph id=\"one\">\n" + 
 				"      <label id=\"one-label\">One</label>\n" + 
-				"    </glyph></svg:svg>").getBytes());;
-		delete.containedIds = Arrays.asList("one-label");
+				"    </glyph></svg:svg>").getBytes());
+		delete.containedIds = Collections.singletonList("one-label");
 		
 		testDoAndUndo(delete, "delete");
 
 	}
 	
 	@Test
-	public void testDeleteAllCommand() throws CommandException, Exception {
+	public void testDeleteAllCommand() throws Exception {
 		Delete delete = new Delete();
 		delete.fragmentId = "The Diagram";
 		delete.beforeId = "two";
 		delete.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><glyph id=\"one\">\n" + 
 				"      <label id=\"one-label\">One</label>\n" + 
-				"    </glyph></svg:svg>").getBytes());;
-		
+				"    </glyph></svg:svg>").getBytes());
+
 		testDoAndUndo(delete, "deleteAll");
 
 	}
 
 	@Test
-	public void testInsertXML1Command() throws CommandException, Exception {
+	public void testInsertXML1Command() throws Exception {
 		InsertXML copy = new InsertXML();
 		copy.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><some id=\"seven\"><xml>goes</xml>here</some></svg:svg>").getBytes());
 		copy.fragmentId="The Diagram";
@@ -232,17 +221,17 @@ public class CommandsTest {
 	} 
 	
 	@Test
-	public void testInsertXML2Command() throws CommandException, Exception {
+	public void testInsertXML2Command() throws Exception {
 		InsertXML copy = new InsertXML();
 		copy.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><some id=\"seven\"><xml id=\"ig\">goes</xml>here</some></svg:svg>").getBytes());
 		copy.fragmentId="The Diagram";
 		copy.beforeId="two";
-		copy.containedIds = Arrays.asList("ig");
+		copy.containedIds = Collections.singletonList("ig");
 		testDoAndUndo(copy, "insertXML2");
 	} 
 	
 	@Test
-	public void testInsertUrlCommand() throws CommandException, Exception {
+	public void testInsertUrlCommand() throws Exception {
 		String uri = sourceURI+"#one";
 		
 		InsertUrl copy = new InsertUrl();
@@ -256,54 +245,58 @@ public class CommandsTest {
 	
 
 	@Test
-	public void testInsertUrlLinkCommand() throws CommandException, Exception {
+	public void testInsertUrlLinkCommand() throws Exception {
 		String uri = sourceURI+"#link";
 		
 		InsertUrlWithChanges copy = new InsertUrlWithChanges();
 		copy.uriStr =  uri;
 		copy.fragmentId="The Diagram";
 		copy.newId="six";
-		copy.fromId = "one-label";
-		copy.toId = "two-label";
-		
+
+		Map<String, String> xpathToValue = new HashMap<>();
+		xpathToValue.put("from/@reference", "one-label");
+		xpathToValue.put("to/@reference", "two-label");
+
+		copy.xpathToValue = xpathToValue;
+
 		testDoAndUndo(copy, "insertUrlLink");
 	} 
 	
 
-	private void testDoAndUndo(Command c, String name) throws Exception, URISyntaxException {
+	private void testDoAndUndo(Command c, String name) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(Kite9MediaTypes.ADL_SVG);
-		headers.setAccept(Collections.singletonList(Kite9MediaTypes.ADL_SVG));
-		ADLOutput<?> out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
+		headers.set(HttpHeaders.CONTENT_TYPE, Kite9MediaTypes.ADL_SVG_VALUE);
+		headers.set(HttpHeaders.ACCEPT, Kite9MediaTypes.ADL_SVG_VALUE);
+		ADLOutput out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
 		String modified = performSaveAndCheck(out, name, "/commands/after_"+name+".xml");
 		String modifiedBase64 = Base64.getEncoder().encodeToString(modified.getBytes());
-		ADLOutput<?> out2 = commandController.applyCommandOnStatic(buildUndoRequestEntity(c, modifiedBase64, new URI(sourceURI), headers), sourceURI);
+		ADLOutput out2 = commandController.applyCommandOnStatic(buildUndoRequestEntity(c, modifiedBase64, new URI(sourceURI), headers), sourceURI);
 		String resource = sourceURI.substring(sourceURI.indexOf("/public"));
 		performSaveAndCheck(out2, name+ "-2", "/static"+resource);
 	}
 	
 	
 	private RequestEntity<Update> buildRequestEntity(Command c, String uri, HttpHeaders headers) throws URISyntaxException {
-		URI uri2 = new URI(uri);
+		URI javaNetURI = new URI(uri);
+		K9URI uri2 = URIWrapper.wrap(javaNetURI);
 		Update commands = new Update(Collections.singletonList(c), uri2, Update.Type.NEW);
-		RequestEntity<Update> out = new RequestEntity<>(commands, headers, HttpMethod.POST, uri2);
-		return out;
+		return new RequestEntity<>(commands, headers, HttpMethod.POST, javaNetURI);
 	}
 	
-	private RequestEntity<Update> buildUndoRequestEntity(Command c, String base64adl, URI sourceUri, HttpHeaders headers) throws URISyntaxException {
+	private RequestEntity<Update> buildUndoRequestEntity(Command c, String base64adl, URI sourceUri, HttpHeaders headers) {
 		Update commands = new Update(Collections.singletonList(c), base64adl, Update.Type.UNDO);
 		RequestEntity<Update> out = new RequestEntity<>(commands, headers, HttpMethod.POST, sourceUri);
 		return out;
 	}
 	
 
-	public String performSaveAndCheck(ADLOutput<?> out, String name, String resource) throws Exception {
+	public String performSaveAndCheck(ADLOutput out, String name, String resource) throws Exception {
 		
 		System.out.println(out.getMetaData());
 		
 		byte[] result = out.getAsBytes();
 		TestingHelp.writeOutput(this.getClass(), null, name+".xml", result);
-		String expected4 = StreamUtils.copyToString(this.getClass().getResourceAsStream(resource), Charset.forName("UTF-8"));
+		String expected4 = StreamUtils.copyToString(this.getClass().getResourceAsStream(resource), StandardCharsets.UTF_8);
 		String s = new String(result);
 		XMLCompare.compareXML(expected4, s);
 		return s;

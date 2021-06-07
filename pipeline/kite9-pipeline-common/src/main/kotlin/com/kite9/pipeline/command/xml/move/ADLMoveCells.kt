@@ -20,11 +20,20 @@ import org.w3c.dom.Element
  */
 class ADLMoveCells : AbstractADLCommand() {
 
-	var push: Int = 0
-	var from: Int = 0
-	var horiz: Boolean = false
-	var fragmentId: String? = null
-	var excludedIds = emptyList<String>()
+    @JvmField
+    var push: Int = 0
+
+    @JvmField
+    var from: Int = 0
+
+    @JvmField
+    var horiz: Boolean = false
+
+    @JvmField
+    var fragmentId: String? = null
+
+    @JvmField
+    var excludedIds = emptyList<String>()
 
     private fun doMove(adl: ADLDom, push: Int, ctx: CommandContext) {
         checkProperties()

@@ -12,7 +12,8 @@ class ReplaceText : AbstractReplaceCommand<Element, String>() {
         BEFORE, AFTER, NONE
     }
 
-	var preserve = PreserveChildElements.AFTER
+    @JvmField
+    var preserve = PreserveChildElements.AFTER
 
     private fun collectChildren(e: Element): List<Element?> {
         return if (preserve == PreserveChildElements.NONE) {

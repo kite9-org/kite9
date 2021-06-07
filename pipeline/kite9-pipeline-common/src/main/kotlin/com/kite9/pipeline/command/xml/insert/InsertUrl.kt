@@ -7,7 +7,8 @@ import org.w3c.dom.Element
 
 open class InsertUrl : AbstractInsertCommand() {
 
- 	var uriStr : String? = null
+    @JvmField
+    var uriStr : String? = null
 
     override fun applyCommand(d: ADLDom, ctx:CommandContext): Mismatch? {
         checkProperties()

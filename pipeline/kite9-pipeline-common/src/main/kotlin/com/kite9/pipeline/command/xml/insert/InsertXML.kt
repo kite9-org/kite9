@@ -13,7 +13,8 @@ import org.w3c.dom.Element
  */
 class InsertXML : AbstractInsertCommand() {
 
-	var base64Element: String? = null
+    @JvmField
+    var base64Element: String? = null
 
     override fun applyCommand(d: ADLDom, ctx: CommandContext): Mismatch? {
         checkProperties()

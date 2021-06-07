@@ -8,7 +8,7 @@ import org.w3c.dom.Document
 class ReplaceAttr : AbstractReplaceCommand<String, String?>() {
 
     @JvmField
-	var name: String? = null
+	public var name: String? = null
 
     override fun getFromContent(d: ADLDom, ctx: CommandContext): String {
         return from!!

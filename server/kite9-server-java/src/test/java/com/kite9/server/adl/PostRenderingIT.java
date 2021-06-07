@@ -42,7 +42,7 @@ public class PostRenderingIT extends AbstractRestIT {
 	protected byte[] withBytesInFormat(MediaType output, String xml) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(output));
-		headers.setContentType( Kite9MediaTypes.ADL_SVG);
+		headers.setContentType(MediaType.parseMediaType(Kite9MediaTypes.ADL_SVG_VALUE));
 		HttpEntity<byte[]> postBody = new HttpEntity<byte[]>(xml.getBytes(), headers);
 		
 		ResponseEntity<byte[]> back = getRestTemplate().exchange(new URI(getUrlBase()+"/api/renderer"), HttpMethod.POST, postBody, byte[].class);
@@ -59,19 +59,19 @@ public class PostRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testADLAndSVGRender() throws Exception {
-		byte[] back = withBytesInFormat(Kite9MediaTypes.ADL_SVG, createDiagramXML1());
+		byte[] back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.ADL_SVG_VALUE), createDiagramXML1());
 		persistInAFile(back, "testADLRender", "diagram.adl");
 		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream("/static/public/templates/risk-first/minimal.adl"), Charset.forName("UTF-8")), new String(back));
 	}
 	
 	@Test
 	public void testSVGRender() throws Exception {
-		byte[] back = withBytesInFormat(Kite9MediaTypes.SVG, createDiagramXML1());
+		byte[] back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.SVG_VALUE), createDiagramXML1());
 		persistInAFile(back, "testSVGRender", "diagram.svg");
 		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/post/testSVGRender/diagram.svg"), Charset.forName("UTF-8")), new String(back));
 
 		// do different diagram
-		back = withBytesInFormat(Kite9MediaTypes.SVG, createDiagramXML2());
+		back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.SVG_VALUE), createDiagramXML2());
 		persistInAFile(back, "testSVGRender", "diagram-2.svg");
 		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/post/testSVGRender/diagram-2.svg"), Charset.forName("UTF-8")), new String(back));
 	}
@@ -91,7 +91,7 @@ public class PostRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testESVGRender() throws Exception {
-		byte[] back = withBytesInFormat(Kite9MediaTypes.ESVG, createDiagramXML1());
+		byte[] back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.EDITABLE_SVG_VALUE), createDiagramXML1());
 		persistInAFile(back, "testESVGRender", "diagram.svg");
 		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/post/testESVGRender/diagram.svg"), Charset.forName("UTF-8")), new String(back));
 	}

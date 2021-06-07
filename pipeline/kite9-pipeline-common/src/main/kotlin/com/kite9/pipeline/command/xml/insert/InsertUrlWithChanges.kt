@@ -11,6 +11,7 @@ import org.w3c.dom.Element
  */
 open class InsertUrlWithChanges : InsertUrl() {
 
+    @JvmField
     var xpathToValue: Map<String, String> = emptyMap()
 
     protected fun updateLinkEnds(insert: Element?, ctx: CommandContext) {

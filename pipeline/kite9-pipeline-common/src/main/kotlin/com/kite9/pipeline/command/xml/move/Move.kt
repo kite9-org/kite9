@@ -8,11 +8,20 @@ import com.kite9.pipeline.command.xml.AbstractADLCommand
 open class Move : AbstractADLCommand() {
 
     // guy we are moving
+    @JvmField
     var moveId : String? = null
-	var from: String? = null
+
+    @JvmField
+    var from: String? = null
+
+    @JvmField
     var fromBefore: String? = null
-	var to: String? = null
-	var toBefore: String? = null
+
+    @JvmField
+    var to: String? = null
+
+    @JvmField
+    var toBefore: String? = null
     
     override fun applyCommand(d: ADLDom, ctx: CommandContext): Mismatch? {
         return move(d, moveId, to, toBefore, ctx)

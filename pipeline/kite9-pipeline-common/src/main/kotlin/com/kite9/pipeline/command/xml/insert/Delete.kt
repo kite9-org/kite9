@@ -13,7 +13,8 @@ import org.w3c.dom.Element
  */
 class Delete : AbstractInsertCommand() {
 
-	var base64Element: String = ""
+    @JvmField
+    var base64Element: String = ""
 
     override fun applyCommand(d: ADLDom, ctx: CommandContext): Mismatch? {
         checkProperties()

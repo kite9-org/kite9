@@ -6,6 +6,7 @@ import com.kite9.pipeline.command.CommandContext
 
 class ReplaceStyle : AbstractReplaceCommand<String?, String?>() {
 
+    @JvmField
     var name: String = ""
 
     override fun getFromContent(context: ADLDom, ctx: CommandContext): String {

@@ -15,7 +15,10 @@ import java.util.*
  */
 open class ReplaceTag : AbstractReplaceCommand<Element, Element>() {
 
-	var keptAttributes = Arrays.asList("id") // just keep ID by default.
+    @JvmField
+    var keptAttributes = Arrays.asList("id") // just keep ID by default.
+
+    @JvmField
     var keptTags = emptyList<String>()
 
     private fun checkKeptTags(e: Element, n: Element, d: Document) {

@@ -7,8 +7,13 @@ import com.kite9.pipeline.command.xml.AbstractADLCommand
 
 abstract class AbstractReplaceCommand<E, T> : AbstractADLCommand() {
 
-    var fragmentId: String = ""
-    var from: String? = null
+    @JvmField
+    public var fragmentId: String = ""
+
+    @JvmField
+    public var from: String? = null
+
+    @JvmField
     var to: String? = null
 
     protected abstract fun getFromContent(context: ADLDom, ctx: CommandContext): T
