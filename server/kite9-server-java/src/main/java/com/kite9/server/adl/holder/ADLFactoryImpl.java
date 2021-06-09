@@ -137,7 +137,7 @@ public class ADLFactoryImpl implements ADLFactory {
 		try {
 			Kite9DocumentLoader l = ((Kite9TranscoderImpl) createNewTranscoder(uri2)).getDocLoader();
 			InputStream is = new ByteArrayInputStream(content.getBytes());
-			return l.loadDocument(uri2 == null ? null : uri2.toString(), is);
+			return l.loadXMLDocument(uri2 == null ? null : uri2.toString(), is);
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't load XML into DOM, URI: "+uri2, e, content, null);
 		}

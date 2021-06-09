@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><svg:svg xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.kite9.org/schema/adl" contentScriptType="text/ecmascript" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" version="1.0">
-  
+<?xml version="1.0" encoding="UTF-8"?>
   <diagram id="The Diagram">
     <glyph id="one">
       
@@ -12,5 +11,3 @@
       <to reference="two" class="arrow" id="link-to"/>
     </link>
   </diagram>
-
-</svg:svg>

@@ -41,9 +41,7 @@ import java.util.*;
 public class CommandsTest {
 	
 	private static final String SETUP_XML = "/public/commands/test_command1.adl";
-
-	public static final String NS = " xmlns=\"http://www.kite9.org/schema/adl\"\n  xmlns:svg='http://www.w3.org/2000/svg' ";
-
+	
 	@Autowired
 	CommandController commandController;
 	
@@ -61,7 +59,7 @@ public class CommandsTest {
 	public void testReplaceXMLCommand1() throws Exception {
 		ReplaceXML replace = new ReplaceXML();
 		replace.fragmentId = "The Diagram";
-		replace.from= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><diagram  id=\"The Diagram\">\n" + 
+		replace.from= Base64.getEncoder().encodeToString(("<diagram  id=\"The Diagram\">\n" + 
 				"    <glyph id=\"one\">\n" + 
 				"      <label id=\"one-label\">One</label>\n" + 
 				"    </glyph>\n" + 
@@ -72,8 +70,8 @@ public class CommandsTest {
 				"      <from reference=\"one\" id=\"link-from\" />\n" + 
 				"      <to class=\"arrow\" reference=\"two\" id=\"link-to\" />\n" + 
 				"    </link>\n" + 
-				"  </diagram></svg:svg>").getBytes());
-		replace.to= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><lets id=\"The Diagram\"><do>some</do>replacing</lets></svg:svg>").getBytes());
+				"  </diagram>").getBytes());
+		replace.to= Base64.getEncoder().encodeToString(("<lets id=\"The Diagram\"><do>some</do>replacing</lets>").getBytes());
 		
 		testDoAndUndo(replace, "replaceXML");
 	}
@@ -83,8 +81,8 @@ public class CommandsTest {
 	public void testReplaceTag() throws Exception {
 		ReplaceTag replace = new ReplaceTag();
 		replace.fragmentId = "link";
-		replace.from= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><link id=\"link\" rank=\"4\"></link></svg:svg>").getBytes());
-		replace.to= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><glyph id=\"The Diagram\"></glyph></svg:svg>").getBytes());
+		replace.from= Base64.getEncoder().encodeToString(("<link id=\"link\" rank=\"4\"></link>").getBytes());
+		replace.to= Base64.getEncoder().encodeToString(("<glyph id=\"The Diagram\"></glyph>").getBytes());
 		replace.keptAttributes = Arrays.asList("rank", "id");
 	
 		testDoAndUndo(replace, "replaceTag");
@@ -94,7 +92,7 @@ public class CommandsTest {
 	public void testReplaceTagUrl() throws Exception {
 		ReplaceTagUrl replace = new ReplaceTagUrl();
 		replace.fragmentId = "link";
-		replace.from= Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><link id=\"link\" rank=\"4\"></link></svg:svg>").getBytes());
+		replace.from= Base64.getEncoder().encodeToString(("<link id=\"link\" rank=\"4\"></link>").getBytes());
 		replace.to= sourceURI+"#one";
 		replace.keptAttributes = Arrays.asList("rank", "id");
 	
@@ -185,13 +183,24 @@ public class CommandsTest {
 	}
 
 	@Test
+	public void testReplaceStyleCommand2() throws Exception {
+		ReplaceStyle setStyle = new ReplaceStyle();
+		setStyle.name =  "stroke";
+		setStyle.to = "single back() border 1.5em";
+		setStyle.fragmentId="two";
+
+		testDoAndUndo(setStyle, "replaceStyle2");
+
+	}
+
+	@Test
 	public void testDeleteCommand() throws Exception {
 		Delete delete = new Delete();
 		delete.fragmentId = "The Diagram";
 		delete.beforeId = "two";
-		delete.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><glyph id=\"one\">\n" + 
+		delete.base64Element = Base64.getEncoder().encodeToString(("<glyph id=\"one\">\n" + 
 				"      <label id=\"one-label\">One</label>\n" + 
-				"    </glyph></svg:svg>").getBytes());
+				"    </glyph>").getBytes());
 		delete.containedIds = Collections.singletonList("one-label");
 		
 		testDoAndUndo(delete, "delete");
@@ -203,9 +212,9 @@ public class CommandsTest {
 		Delete delete = new Delete();
 		delete.fragmentId = "The Diagram";
 		delete.beforeId = "two";
-		delete.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><glyph id=\"one\">\n" + 
+		delete.base64Element = Base64.getEncoder().encodeToString(("<glyph id=\"one\">\n" + 
 				"      <label id=\"one-label\">One</label>\n" + 
-				"    </glyph></svg:svg>").getBytes());
+				"    </glyph>").getBytes());
 
 		testDoAndUndo(delete, "deleteAll");
 
@@ -214,7 +223,7 @@ public class CommandsTest {
 	@Test
 	public void testInsertXML1Command() throws Exception {
 		InsertXML copy = new InsertXML();
-		copy.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><some id=\"seven\"><xml>goes</xml>here</some></svg:svg>").getBytes());
+		copy.base64Element = Base64.getEncoder().encodeToString(("<some id=\"seven\"><xml>goes</xml>here</some>").getBytes());
 		copy.fragmentId="The Diagram";
 		copy.beforeId="two";
 		testDoAndUndo(copy, "insertXML1");
@@ -223,7 +232,7 @@ public class CommandsTest {
 	@Test
 	public void testInsertXML2Command() throws Exception {
 		InsertXML copy = new InsertXML();
-		copy.base64Element = Base64.getEncoder().encodeToString(("<svg:svg "+NS+"><some id=\"seven\"><xml id=\"ig\">goes</xml>here</some></svg:svg>").getBytes());
+		copy.base64Element = Base64.getEncoder().encodeToString(("<some id=\"seven\"><xml id=\"ig\">goes</xml>here</some>").getBytes());
 		copy.fragmentId="The Diagram";
 		copy.beforeId="two";
 		copy.containedIds = Collections.singletonList("ig");

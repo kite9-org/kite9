@@ -94,6 +94,8 @@ interface K9MediaType {
                     get() = subtype
                 override val parameters: Map<String, String>
                     get() = parameters
+
+                override fun toString() = mimeType
             }
         }
 

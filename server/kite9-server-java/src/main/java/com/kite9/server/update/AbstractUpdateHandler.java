@@ -77,8 +77,11 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			if (errors.size() > 0) {
 				dom.setError(errors.stream().map(s -> s.explain()).reduce("", (x, y) -> x + "\n" +y));
 			}
-			
-			new ADLReferenceHandler(dom, ctx).ensureConsistency();
+
+			// we need to use Schema to ensure consistency - either the diagram
+			// is consistent and is returned, or it is rolled back.  You can't just change stuff
+			// as that breaks undo/redo
+			//new ADLReferenceHandler(dom, ctx).ensureConsistency();
 
 			MetaHelper.setAuthorAndNotification(authentication, dom);
 			api.addMeta(dom);

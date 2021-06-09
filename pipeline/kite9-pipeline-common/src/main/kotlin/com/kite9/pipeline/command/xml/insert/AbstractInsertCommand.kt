@@ -29,7 +29,7 @@ abstract class AbstractInsertCommand : AbstractADLCommand() {
         }
 
         val toDelete = findFragmentElement(d.document, oldState.getAttribute("id"), ctx)
-        val parent = toDelete.parentNode as Element
+        val parent = toDelete?.parentNode as Element
         val m = same(toDelete, oldState, ctx)
         if (m != null) {
             return m
@@ -87,7 +87,7 @@ abstract class AbstractInsertCommand : AbstractADLCommand() {
         }
 
         val containsId = contents.getAttribute("id")
-        if (alreadyExists(d, containsId)) {
+        if (alreadyExists(d, containsId, ctx)) {
             return Mismatch { "Already contains $containsId" }
         }
         if (destination == null) {
@@ -99,7 +99,6 @@ abstract class AbstractInsertCommand : AbstractADLCommand() {
         } else {
             destination.appendChild(contents)
         }
-        ensureParentElements(destination, contents, ctx)
 
         // now make sure content is set
         val children = destination.childNodes
@@ -117,8 +116,8 @@ abstract class AbstractInsertCommand : AbstractADLCommand() {
         return null
     }
 
-    private fun alreadyExists(d: ADLDom, newId: String): Boolean {
-        return d.document.getElementById(newId) != null
+    private fun alreadyExists(d: ADLDom, newId: String, ctx: CommandContext): Boolean {
+        return ctx.getElementById(d.document, newId) != null
     }
 
     protected fun getBefore(d: ADLDom, ctx: CommandContext): Element? {
@@ -129,7 +128,7 @@ abstract class AbstractInsertCommand : AbstractADLCommand() {
         }
     }
 
-    protected fun getDestination(d: ADLDom, ctx: CommandContext): Element {
+    protected fun getDestination(d: ADLDom, ctx: CommandContext): Element? {
         return findFragmentElement(d.document, fragmentId, ctx)
     }
 

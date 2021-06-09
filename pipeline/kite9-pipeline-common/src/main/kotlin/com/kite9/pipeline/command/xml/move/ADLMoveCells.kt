@@ -35,10 +35,15 @@ class ADLMoveCells : AbstractADLCommand() {
     @JvmField
     var excludedIds = emptyList<String>()
 
-    private fun doMove(adl: ADLDom, push: Int, ctx: CommandContext) {
+    private fun doMove(adl: ADLDom, push: Int, ctx: CommandContext) : Command.Mismatch? {
         checkProperties()
         val doc: Document = adl.document
-        val container: Element = findFragmentElement(doc, fragmentId, ctx)
+        val container: Element? = findFragmentElement(doc, fragmentId, ctx)
+
+        if (container == null) {
+            return Command.Mismatch { "Couldn't find container $fragmentId" }
+        }
+
         var moved = 0
         val contents = container.childNodes
         for (i in 0 until contents.length) {
@@ -62,6 +67,7 @@ class ADLMoveCells : AbstractADLCommand() {
         }
 
         ctx.log("Processed move from $from push $push horiz=$horiz,moved=$moved")
+        return null
     }
 
     private fun checkProperties() {
@@ -71,13 +77,11 @@ class ADLMoveCells : AbstractADLCommand() {
     }
 
     override fun applyCommand(d: ADLDom, ctx: CommandContext): Command.Mismatch? {
-        doMove(d, push, ctx)
-        return null
+        return doMove(d, push, ctx)
     }
 
     override fun undoCommand(d: ADLDom, ctx: CommandContext): Command.Mismatch? {
-        doMove(d, -push, ctx)
-        return null
+        return doMove(d, -push, ctx)
     }
 
     private fun getRange(el: Element, horiz: Boolean, ctx: CommandContext) : IntegerRange? {

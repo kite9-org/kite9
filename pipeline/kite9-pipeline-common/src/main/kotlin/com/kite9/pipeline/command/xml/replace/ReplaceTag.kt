@@ -13,7 +13,7 @@ import java.util.*
  *
  * @author robmoffat
  */
-open class ReplaceTag : AbstractReplaceCommand<Element, Element>() {
+open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
 
     @JvmField
     var keptAttributes = Arrays.asList("id") // just keep ID by default.
@@ -55,20 +55,32 @@ open class ReplaceTag : AbstractReplaceCommand<Element, Element>() {
         }
     }
 
-    override fun doReplace(d: ADLDom, e: Element, n: Element, fromContent: Element, ctx: CommandContext) {
+    override fun doReplace(d: ADLDom, e: Element?, n: Element, fromContent: Element, ctx: CommandContext) : Command.Mismatch? {
+        if (e==null) {
+            // in this case, n must also be null, so nothing to do
+            return null
+        }
+
         val doc: Document = d.document
         doc.adoptNode(n)
         keepImportantAttributes(e, n)
         e.parentNode.insertBefore(n, e)
-        ensureParentElements(e.parentNode, n, ctx)
         copyAttributes(e, n, true)
         checkKeptTags(e, n, doc)
         moveContents(e, n)
         e.parentNode.removeChild(e)
         ctx.log("Processed replace tag of $fragmentId")
+        return null
     }
 
-    protected override fun same(existing: Element, with: Element): Command.Mismatch? {
+    protected override fun same(existing: Element?, with: Element, ctx: CommandContext): Command.Mismatch? {
+        if (existing==null) {
+            if (with == null) {
+                return null
+            } else {
+                return Command.Mismatch { "Existing is null, so not a replace" }
+            }
+        }
         val m1: Command.Mismatch? = checkAttributesSame(existing, with)
         return if (m1 == null) checkAttributesSame(with, existing) else m1
     }
@@ -96,7 +108,7 @@ open class ReplaceTag : AbstractReplaceCommand<Element, Element>() {
         return ctx.decodeElement(to, adl)
     }
 
-    override fun getExistingContent(d: ADLDom, ctx: CommandContext): Element {
+    override fun getExistingContent(d: ADLDom, ctx: CommandContext): Element? {
         return findFragmentElement(d.document, fragmentId, ctx)
     }
 }

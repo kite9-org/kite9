@@ -24,21 +24,20 @@ abstract class AbstractReplaceCommand<E, T> : AbstractADLCommand() {
         checkProperties()
         val existing = getExistingContent(d, ctx)
         val fromContent = getFromContent(d, ctx)
-        val m = same(existing, fromContent)
+        val m = same(existing, fromContent, ctx)
         if (m != null) {
             return m
         }
-        doReplace(d, existing, getToContent(d, ctx), fromContent, ctx)
-        return null
+        return doReplace(d, existing, getToContent(d, ctx), fromContent, ctx)
     }
 
     protected open fun checkProperties() {
         ensureNotNull("fragmentId", fragmentId)
     }
 
-    protected abstract fun doReplace(on: ADLDom, site: E, toContent: T, fromContent: T, ctx: CommandContext)
+    protected abstract fun doReplace(on: ADLDom, site: E, toContent: T, fromContent: T, ctx: CommandContext) : Mismatch?
 
-    protected open fun same(existing: E, with: T): Mismatch? {
+    protected open fun same(existing: E, with: T, ctx: CommandContext): Mismatch? {
         return if (existing == with) {
             null
         } else {
@@ -50,7 +49,7 @@ abstract class AbstractReplaceCommand<E, T> : AbstractADLCommand() {
         checkProperties()
         val existing = getExistingContent(d, ctx)
         val toContent = getToContent(d, ctx)
-        val m = same(existing, toContent)
+        val m = same(existing, toContent, ctx)
         if (m != null) {
             return m
         }

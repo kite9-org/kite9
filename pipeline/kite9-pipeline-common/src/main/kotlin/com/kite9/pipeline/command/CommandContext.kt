@@ -15,13 +15,18 @@ interface CommandContext {
      */
     fun uniqueId(d: Document) : String
 
+    /**
+     * Gets the element by it's id.
+     */
+    fun getElementById(doc: Document, fragmentId: String?): Element?
+
     fun setOwnerElement(child: Attr, parent: Element);
 
     fun twoElementsAreIdentical(expected: Element?, actual: Element?): Command.Mismatch?
 
     fun decodeElement(base64: String?, adl: ADLDom): Element
 
-    fun getStyleValue(e: Element, name: String): String?
+    fun getStyleValue(e: Element?, name: String): String?
 
     fun getStyleRangeValue(el: Element, name: String): IntegerRange?
 

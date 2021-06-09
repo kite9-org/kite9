@@ -6,7 +6,7 @@ import com.kite9.pipeline.command.CommandContext
 import org.w3c.dom.Element
 import java.util.*
 
-class ReplaceText : AbstractReplaceCommand<Element, String>() {
+class ReplaceText : AbstractReplaceCommand<Element?, String>() {
 
     enum class PreserveChildElements {
         BEFORE, AFTER, NONE
@@ -38,11 +38,15 @@ class ReplaceText : AbstractReplaceCommand<Element, String>() {
         return to!!
     }
 
-    override fun getExistingContent(o: ADLDom, ctx: CommandContext): Element {
+    override fun getExistingContent(o: ADLDom, ctx: CommandContext): Element? {
         return findFragmentElement(o.document, fragmentId, ctx)
     }
 
-    override fun doReplace(on: ADLDom, site: Element, toContent: String, fromContent: String, ctx: CommandContext) {
+    override fun doReplace(on: ADLDom, site: Element?, toContent: String, fromContent: String, ctx: CommandContext) : Mismatch? {
+        if (site==null) {
+            return null
+        }
+
         val childElements = collectChildren(site)
         site.textContent = toContent
         if (preserve == PreserveChildElements.BEFORE) {
@@ -52,10 +56,11 @@ class ReplaceText : AbstractReplaceCommand<Element, String>() {
             childElements.stream().forEach { c: Element? -> site.appendChild(c) }
         }
         ctx.log("Processed replace text of $fragmentId")
+        return null
     }
 
-    protected override fun same(existing: Element, with: String): Mismatch? {
-        val eText = existing.textContent
+    protected override fun same(existing: Element?, with: String, ctx: CommandContext): Mismatch? {
+        val eText = existing?.textContent ?: ""
         val eTextReplaced = eText.replace("\\s".toRegex(), "")
         val withReplaced = with.replace("\\s".toRegex(), "")
         return when (preserve) {

@@ -28,7 +28,7 @@ abstract class AbstractADLCommand : Command {
         doc: Document,
         fragmentId: String?,
         ctx: CommandContext
-    ): Element {
+    ): Element? {
         var fragmentId = fragmentId
         if (isEmpty(fragmentId)) {
             return doc.documentElement
@@ -38,7 +38,7 @@ abstract class AbstractADLCommand : Command {
             ctx.log("Stripping part from $fragmentId")
             fragmentId = fragmentId.substring(0, partIndex)
         }
-        return doc.getElementById(fragmentId)
+        return ctx.getElementById(doc, fragmentId)
     }
 
     fun getForeignElementCopy(
@@ -46,7 +46,8 @@ abstract class AbstractADLCommand : Command {
         baseUri: K9URI,
         uriStr: String,
         deep: Boolean,
-        context: ADLDom
+        context: ADLDom,
+        ctx: CommandContext
     ): Element {
         var currentDoc = currentDoc
         return try {
@@ -57,32 +58,20 @@ abstract class AbstractADLCommand : Command {
                 val uri = baseUri.resolve(location)
                 currentDoc = context.parseDocument(uri)
             }
-            val template = currentDoc!!.getElementById(id)
+
+            if (currentDoc ==  null) {
+                throw RuntimeException("Couldn't find referred doc at "+location);
+            }
+
+            val template = ctx.getElementById(currentDoc!!, id)
+
+            if (template == null) {
+                throw RuntimeException("Couldn't find referred template at "+location);
+            }
+
             template.cloneNode(deep) as Element
         } catch (e: Exception) {
-            throw RuntimeException("Couldn't get foreign element: $uriStr")
-        }
-    }
-
-    /**
-     * For some reason, in the clone node process, batik clears the parent element setting, and this doesn't get fixed.
-     */
-    protected fun ensureParentElements(parent: Node?, child: Node, ctx: CommandContext) {
-        if (child is Attr && child.ownerElement == null) {
-            ctx.setOwnerElement(child, (parent as Element?)!!)
-        }
-        if (child is Element) {
-            // this makes sure the document has it's id-map updated so you can
-            // use getElementById in further commands.
-            child.setAttributeNode(child.getAttributeNode("id"))
-            val children = child.getChildNodes()
-            for (i in 0 until children.length) {
-                ensureParentElements(child, children.item(i), ctx)
-            }
-            val map = child.getAttributes()
-            for (i in 0 until map.length) {
-                ensureParentElements(child, map.item(i), ctx)
-            }
+            throw RuntimeException("Couldn't get foreign element: $uriStr", e)
         }
     }
 

@@ -30,9 +30,9 @@ open class Move : AbstractADLCommand() {
     private fun move(d: ADLDom, moveId: String?, to: String?, toBefore: String?, ctx: CommandContext): Mismatch? {
         checkProperties()
         val doc = d.document
-        val moveEl = doc.getElementById(moveId)
-        val toEl = doc.getElementById(to)
-        val toBeforeEl = doc.getElementById(toBefore)
+        val moveEl = ctx.getElementById(doc, moveId)
+        val toEl = ctx.getElementById(doc, to)
+        val toBeforeEl = ctx.getElementById(doc, toBefore)
         if (moveEl == null || toEl == null) {
             return Mismatch { "Element missing, moveEl=$moveEl, toEl=$toEl" }
         }

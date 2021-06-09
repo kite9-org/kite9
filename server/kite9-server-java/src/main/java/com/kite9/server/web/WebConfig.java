@@ -1,13 +1,23 @@
 package com.kite9.server.web;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.server.adl.format.BasicFormatSupplier;
 import com.kite9.server.topic.ChangeBroadcaster;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9LogImpl;
+import org.kite9.diagram.logging.Table;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -22,18 +32,18 @@ import com.kite9.pipeline.adl.format.media.Format;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer, InitializingBean {
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(adlMessageWriter());
 	}
-
-	@Autowired
-	FormatSupplier fs;
 	
 	@Autowired
 	Cache cache;
+
+	@Autowired
+	FormatSupplier fs;
 	
 	@Autowired
 	ChangeBroadcaster changeBroadcaster;
@@ -47,7 +57,16 @@ public class WebConfig implements WebMvcConfigurer {
 	public ADLInputMessageReader adlMessageReader() {
 		return new ADLInputMessageReader(fs);
 	}
-	
+
+	@Value("${kite9.diagram-log:FILE}")
+	Kite9Log.Destination destination;
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		Kite9Log.Companion.setFactory(logable -> new Kite9LogImpl(logable));
+		Kite9LogImpl.setLogging(destination);
+	}
+
 	public class LoggingFilter extends CommonsRequestLoggingFilter {
 
 		public LoggingFilter() {

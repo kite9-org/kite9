@@ -9,12 +9,12 @@ class ReplaceStyle : AbstractReplaceCommand<String?, String?>() {
     @JvmField
     var name: String = ""
 
-    override fun getFromContent(context: ADLDom, ctx: CommandContext): String {
-        return from!!
+    override fun getFromContent(context: ADLDom, ctx: CommandContext): String? {
+        return from
     }
 
-    override fun getToContent(context: ADLDom, ctx: CommandContext): String {
-        return to!!
+    override fun getToContent(context: ADLDom, ctx: CommandContext): String? {
+        return to
     }
 
     override fun getExistingContent(o: ADLDom, ctx: CommandContext): String? {
@@ -28,9 +28,16 @@ class ReplaceStyle : AbstractReplaceCommand<String?, String?>() {
         toContent: String?,
         fromContent: String?,
         ctx: CommandContext
-    ) {
+    ) : Command.Mismatch? {
         val e = findFragmentElement(on.document, fragmentId, ctx)
+
+        if (e==null) {
+            return Command.Mismatch { "Couldn't find element with id "+fragmentId }
+        }
+
         ctx.setStyleValue(e, name, toContent)
+
+        return null
     }
 
     override fun checkProperties() {
@@ -38,9 +45,9 @@ class ReplaceStyle : AbstractReplaceCommand<String?, String?>() {
         super.checkProperties()
     }
 
-    override fun same(existing: String?, with: String?): Command.Mismatch? {
+    override fun same(existing: String?, with: String?, ctx: CommandContext): Command.Mismatch? {
         return if (isEmpty(existing) && isEmpty(with)) {
             null
-        } else super.same(existing, with)
+        } else super.same(existing, with, ctx)
     }
 }

@@ -2,12 +2,17 @@ package org.kite9.diagram.batik.bridge;
 
 import org.apache.batik.bridge.DocumentLoader;
 import org.apache.batik.bridge.UserAgent;
+import org.apache.batik.dom.util.DocumentDescriptor;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.w3c.dom.Document;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,59 +33,6 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 		this.cache = cache;
 	}
 
-////	/**
-////	 * Returns a given element from a url(file#id) url-string in CSS.
-////	 * Returns null if it can't be loaded for some reason
-////	 */
-////	public Element loadElementFromUrl(Value v, Element loadedBy) {
-////		if (v != ValueConstants.NONE_VALUE) {
-////			try {
-////				String resource = getUrlForDocument(v);
-////				String fragment = getIdentifierForElement(v);
-////
-////				Element out;
-////				ADLDocument templateDoc = (ADLDocument) loadDocument(resource);
-////
-////				if (fragment != null) {
-////					out = templateDoc.getElementById(fragment);
-////				} else {
-////					out = templateDoc.getRootElement();
-////				}
-////
-////				if (out == null) {
-////					throw new Kite9XMLProcessingException("Couldn't find ID: "+fragment, loadedBy);
-////				}
-////
-////				return out;
-////
-////			} catch (Exception e) {
-////				log.error("Couldn't load element: "+v, e);
-////				return null;
-////			}
-////		} else {
-////			return null;
-////		}
-////	}
-//
-//	public static String getIdentifierForElement(Value v) throws URISyntaxException {
-//		v = v instanceof ListValue ? v.item(0) : v;
-//		String uri = v.getStringValue();
-//		URI u2 = new URI(uri);
-//		String fragment = u2.getFragment();
-//		return fragment;
-//	}
-//
-//	public static String getUrlForDocument(Value v) throws URISyntaxException {
-//		v = v instanceof ListValue ? v.item(0) : v;
-//		String uri = v.getStringValue();
-//
-//		// identify the fragment referenced in the other document
-//		// and load it
-//		URI u = new URI(uri);
-//		String resource = u.getScheme() + ":" + u.getSchemeSpecificPart();
-//		return resource;
-//	}
- 
 	@Override
 	public String getPrefix() {
 		return "K9DL";
@@ -115,7 +67,30 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 		Document out = super.loadDocument(uri, is);
 		return out;
 	}
-	
+
+	public Document loadXMLDocument(String uri, InputStream is) throws IOException {
+		Document doc = cache.getDocument(uri);
+
+		if (doc != null) {
+			return doc;
+		}
+
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			dbf.setNamespaceAware(true);
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			doc = db.parse(is);
+			doc.getDocumentElement().normalize();
+		} catch (Exception e) {
+			throw new Kite9XMLProcessingException("Couldn't load document from "+uri, e);
+		}
+
+		synchronized (cacheMap) {
+			cacheMap.put(uri, doc);
+		}
+
+		return doc;
+	}
 	
 	
 }
