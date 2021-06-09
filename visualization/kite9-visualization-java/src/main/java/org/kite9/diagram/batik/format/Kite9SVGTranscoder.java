@@ -307,8 +307,9 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 
 		try {
 			String uri = input.getURI();
-
-			if (input.getInputStream() != null) {
+			if (input.getDocument() != null) {
+				document = input.getDocument();
+			} else if (input.getInputStream() != null) {
 				document = docFactory.createDocument(uri, input.getInputStream());
 			} else if (input.getReader() != null) {
 				document = docFactory.createDocument(uri, input.getReader());
