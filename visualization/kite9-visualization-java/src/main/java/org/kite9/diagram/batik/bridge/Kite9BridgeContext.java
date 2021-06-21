@@ -8,7 +8,6 @@ import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
-import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.InheritValue;
 import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.dom.util.SAXIOException;
@@ -22,13 +21,14 @@ import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
+import org.kite9.diagram.dom.processors.xpath.XPathAware;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.position.RectangleRenderingInformation;
-import org.kite9.diagram.model.style.Placement;
 import org.kite9.diagram.model.style.Measurement;
+import org.kite9.diagram.model.style.Placement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -185,7 +185,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public double getCssStyleDoubleProperty(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
-		return (v instanceof FloatValue) ? v.getFloatValue() : 0.0;
+		return v.getFloatValue();
 	}
 
 
@@ -362,4 +362,31 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		return f;
 	}
 
+	@NotNull
+	@Override
+	public XPathAware getDocumentReplacer() {
+		return new XPathAware() {
+			@Nullable
+			@Override
+			public String getXPathVariable(@NotNull String name) {
+				if ("width".equals(name)) {
+					return xmlToDiagram.values().stream()
+							.filter(d -> d instanceof Diagram)
+							.map( d -> d.getRenderingInformation().getPosition().x() + d.getRenderingInformation().getSize().x() )
+							.max(Double::compare)
+							.map(d -> Double.toString(d))
+							.orElse("0");
+				} else if ("height".equals(name)) {
+					return xmlToDiagram.values().stream()
+							.filter(d -> d instanceof Diagram)
+							.map( d -> d.getRenderingInformation().getPosition().y() + d.getRenderingInformation().getSize().y() )
+							.max(Double::compare)
+							.map(d -> Double.toString(d))
+							.orElse("0");
+				} else {
+					return "";
+				}
+			}
+		};
+	}
 }

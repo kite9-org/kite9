@@ -41,6 +41,7 @@ public class BasicFormatSupplier implements FormatSupplier {
 					Kite9MediaTypes.INSTANCE.getTEXT_XML(),
 					Kite9MediaTypes.INSTANCE.getAPPLICATION_XML())),
 			new StaticFormat("xslt", singletonList( Kite9MediaTypes.INSTANCE.getXSLT())),
+			new StaticFormat("xsl", singletonList( Kite9MediaTypes.INSTANCE.getXSLT())),
 			new StaticFormat("css", singletonList( Kite9MediaTypes.INSTANCE.getCSS())),
 			new StaticFormat("js", singletonList( Kite9MediaTypes.INSTANCE.getJS())),
 			new StaticFormat("jpeg", singletonList( Kite9MediaTypes.INSTANCE.getJPEG())),

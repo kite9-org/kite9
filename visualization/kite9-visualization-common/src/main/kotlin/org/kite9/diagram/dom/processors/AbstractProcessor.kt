@@ -4,12 +4,6 @@ import org.w3c.dom.*
 
 abstract class AbstractProcessor : XMLProcessor {
 
-    companion object {
-        val KITE9_NAMESPACE = "http://www.kite9.org/schema/adl"
-        val SVG_NAMESPACE = "http://www.w3.org/2000/svg"
-    }
-
-
     protected abstract val isAppending: Boolean
 
     fun processContents(n: Node, inside: Node?): Node? {

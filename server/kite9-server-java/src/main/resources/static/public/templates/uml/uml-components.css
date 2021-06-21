@@ -3,33 +3,33 @@
  */
 [k9-elem=actor],
 [k9-elem=interface] {
-  kite9-template: url('/public/templates/common/formats/formats-template.xml#portrait-text');
-  kite9-type: container;
-  kite9-layout: down;
-  kite9-margin: 10pt;
+  --kite9-template: url('/public/templates/common/formats/formats-template.xml#portrait-text');
+  --kite9-type: container;
+  --kite9-layout: down;
+  --kite9-margin: 10pt;
 }
 
 [k9-elem=use-case],
 [k9-elem=note] {
-  kite9-template: url('/public/templates/common/formats/formats-template.xml#inline-text');
-  kite9-type: container;
-  kite9-margin: 10pt;
+  --kite9-template: url('/public/templates/common/formats/formats-template.xml#inline-text');
+  --kite9-type: container;
+  --kite9-margin: 10pt;
 }
 
 [k9-elem=class] {
-  kite9-template: url('/public/templates/common/formats/formats-template.xml#inline-container');
-  kite9-type: container;
-  kite9-min-size: 50pt 40pt;
-  kite9-margin: 10pt;
+  --kite9-template: url('/public/templates/common/formats/formats-template.xml#inline-container');
+  --kite9-type: container;
+  --kite9-min-size: 50pt 40pt;
+  --kite9-margin: 10pt;
 }
 
 [k9-elem=package],
 [k9-elem=uml-container],
 [k9-elem=component] {
-	kite9-template: url('/public/templates/containers/containers-template.xml#container');
-  kite9-type: container;
-  kite9-min-size: 50pt 40pt;
-  kite9-margin: 10pt;
+	--kite9-template: url('/public/templates/containers/containers-template.xml#container');
+  --kite9-type: container;
+  --kite9-min-size: 50pt 40pt;
+  --kite9-margin: 10pt;
 }
 
 
@@ -38,49 +38,49 @@
  */
  
 [k9-elem=class] {
-  kite9-layout: down;
-  kite9-template: url('uml-template.xml#class');
-  kite9-padding: 5pt;
-  kite9-traversal: leaving;
-  kite9-traversal-top: none;
+  --kite9-layout: down;
+  --kite9-template: url('uml-template.xml#class');
+  --kite9-padding: 5pt;
+  --kite9-traversal: leaving;
+  --kite9-traversal-top: none;
 }
  
 [k9-elem=properties],
 [k9-elem=methods] {
-  kite9-type: container;  
-  kite9-layout: down;
+  --kite9-type: container;
+  --kite9-layout: down;
   horizontal-align: left;
-  kite9-sizing: maximize;
-  kite9-padding: 0pt;
+  --kite9-sizing: maximize;
+  --kite9-padding: 0pt;
 }
 
 [k9-elem=properties] {
-  kite9-template: url('uml-template.xml#properties');
+  --kite9-template: url('uml-template.xml#properties');
 }
 
 [k9-elem=methods] {
-  kite9-template: url('uml-template.xml#methods');
+  --kite9-template: url('uml-template.xml#methods');
 }
 
 [k9-elem=divider] {
-  kite9-type: container;
-  kite9-min-height: 15pt;
-  kite9-template: url('uml-template.xml#divider');
-  kite9-sizing: maximize;
+  --kite9-type: container;
+  --kite9-min-height: 15pt;
+  --kite9-template: url('uml-template.xml#divider');
+  --kite9-sizing: maximize;
 }
 
 [k9-elem=class-name],
 [k9-elem=stereotype] {
-  kite9-template: url('/public/templates/common/formats/formats-template.xml#textarea') '0pt' '0pt';
-  kite9-type: text;
-  kite9-vertical-align: middle;
+  --kite9-template: url('/public/templates/common/formats/formats-template.xml#textarea') '0pt' '0pt';
+  --kite9-type: text;
+  --kite9-vertical-align: middle;
 }
 
 [k9-elem=property],
 [k9-elem=method] {
-  kite9-template: url('uml-template.xml#entry') '0pt' '0pt';
-  kite9-type: text;
-  kite9-vertical-align: middle;
-  kite9-connection-align: 50%;
-  kite9-sizing: minimize;
+  --kite9-template: url('uml-template.xml#entry') '0pt' '0pt';
+  --kite9-type: text;
+  --kite9-vertical-align: middle;
+  --kite9-connection-align: 50%;
+  --kite9-sizing: minimize;
 }

@@ -1,32 +1,3 @@
-
-[k9-elem=back] {
-  kite9-usage: decal; 
-  kite9-type: svg;  
-  kite9-template: url('back-template.xml#round-rect') '5pt' '5pt' '';
-  fill: white;  /* allows hover events to work */
-  fill-opacity: 1;
-}
-
-/**
- * k9-shape is used to determine the shape of the background.
- */
-[k9-shape=rect] > [k9-elem=back] {
-  kite9-template: url('back-template.xml#rectangle') '';
-}
-
-[k9-shape=rect10pt] > [k9-elem=back] {
-  kite9-template: url('back-template.xml#round-rect') '10pt' '10pt' '';
-}
-
-[k9-shape=rect15pt] > [k9-elem=back] {
-  kite9-template: url('back-template.xml#round-rect') '15pt' '15pt' '';
-}
-
-[k9-shape=ellipse] > [k9-elem=back] {
-	kite9-template: url('back-template.xml#ellipse') '';
-}
-
-
 /**
  * k9-texture is used to determine the colour / fill / style etc of the background. 
  */

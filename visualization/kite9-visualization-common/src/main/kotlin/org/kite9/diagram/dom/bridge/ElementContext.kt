@@ -1,6 +1,7 @@
 package org.kite9.diagram.dom.bridge
 
 import org.kite9.diagram.common.range.IntegerRange
+import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
@@ -34,6 +35,7 @@ interface ElementContext {
 
     fun register(x: Element, out: DiagramElement)
     fun getRegisteredDiagramElement(x: Element): DiagramElement?
+    fun getDocumentReplacer() : XPathAware
 
     fun bounds(x: Element) : Rectangle2D?
 

@@ -12,8 +12,8 @@ import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.batik.format.Kite9TranscoderImpl;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
-import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -98,7 +98,7 @@ public class ADLFactoryImpl implements ADLFactory {
 	
 	public static Document createNewDocument(Kite9SVGTranscoder t) {
 		ADLExtensibleDOMImplementation dom = t.getDomImplementation();
-		return dom.createDocument(XMLHelper.KITE9_NAMESPACE, null, null);
+		return dom.createDocument(Kite9Namespaces.ADL_NAMESPACE, null, null);
 	}
 
 	private Kite9Transcoder createNewTranscoder(K9URI u) {

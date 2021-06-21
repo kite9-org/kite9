@@ -2,6 +2,7 @@ package org.kite9.diagram.dom.processors
 
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.model.HasSVGRepresentation
+import org.kite9.diagram.dom.ns.Kite9Namespaces
 import org.kite9.diagram.dom.processors.xpath.ValueReplacer
 import org.w3c.dom.Attr
 import org.w3c.dom.Element
@@ -43,8 +44,7 @@ open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueRepla
     }
 
     protected fun canValueReplace(n: Attr, e: Element): Boolean {
-        return n.namespaceURI == KITE9_NAMESPACE
-        //return n.localName.startsWith("k9-")
+        return n.namespaceURI == Kite9Namespaces.POSTPROCESSOR_NAMESPACE
     }
 
 

@@ -11,6 +11,7 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.util.ParsedURL;
+import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.apache.xml.utils.DefaultErrorHandler;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -22,6 +23,7 @@ import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
 import org.kite9.diagram.dom.processors.DiagramStructureProcessor;
 import org.kite9.diagram.dom.processors.TextWrapProcessor;
@@ -187,12 +189,13 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private Document outputDocument;
 
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
-		try {
-			// turn into SVG
-			outputDocument = handleTransformToAdl(input);
+		// turn into SVG
+		input.setDocumentURI(uri);
+		outputDocument = handleTransformToAdl(input);
 
+		try {
 			// prepare context + css
-			input.setDocumentURI(uri);
+			outputDocument.setDocumentURI(uri);
 			setupBridgeContext();
 			ensureCSSEngine((SVGOMDocument) outputDocument);
 
@@ -226,40 +229,54 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			postProcessor.processContents(outputDocument.getDocumentElement());
 			lastOutputDocument = outputDocument;
 		} catch (Exception e) {
-			String s = new XMLHelper().toXML(input);
+			String s = new XMLHelper().toXML(outputDocument);
 			log.error("Problem with XML: ",e);
 			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
 		}
 	}
 
-	private Document handleTransformToAdl(Document input) throws Exception {
-		String template = input.getDocumentElement().getAttribute("template");
+	private Document handleTransformToAdl(Document input)  {
+		Document out;
+
+		String template = input.getDocumentElement().getAttributeNS(Kite9Namespaces.XSLT_NAMESPACE, "template");
 
 		if ((template == null) || (template.length() == 0)) {
 			return input;
 		}
 
-		URI uri = new URI(template);
-		URI baseUri = uri.resolve("/");
-		URI templatePath = uri.resolve("");
+		try {
 
-		// load the transform document
-		Transformer trans = (Transformer) cache.get(template, TRANSFORMER);
-		if (trans == null) {
-			Source source = new StreamSource(new FileInputStream(template));
-			source.setSystemId(template);
-			trans = transFact.newTransformer(source);
-			trans.setParameter("base-uri", baseUri.toString());
-			trans.setParameter("template-uri", uri.toString());
-			trans.setParameter("template-path", templatePath.toString());
-			cache.set(template, TRANSFORMER, trans);
+			URI uri = new URI(input.getDocumentURI());
+			URI templateURI = uri.resolve(template);
+			URI baseUri = uri.resolve("/");
+			URI templatePath = uri.resolve("");
+
+			// load the transform document
+			Transformer trans = (Transformer) cache.get(template, TRANSFORMER);
+			if (trans == null) {
+				ParsedURL parsedTemplateUri = new ParsedURL(templateURI.toString());
+				Source source = new StreamSource(parsedTemplateUri.openStream());
+				source.setSystemId(templateURI.toString());
+				trans = transFact.newTransformer(source);
+				trans.setParameter("base-uri", baseUri.toString());
+				trans.setParameter("template-uri", uri.toString());
+				trans.setParameter("template-path", templatePath.toString());
+				cache.set(template, TRANSFORMER, trans);
+			}
+
+			SVG12OMDocument r = new SVG12OMDocument(null, domImpl);
+			Source inSource = new DOMSource(input);
+			DOMResult result = new DOMResult(r);
+			trans.transform(inSource, result);
+			out = (Document) result.getNode();
+		} catch (Exception e) {
+			throw new Kite9XMLProcessingException("Couldn't transform document with "+template, e, new XMLHelper().toXML(input), null);
 		}
 
-		SVG12OMDocument r = new SVG12OMDocument(null, domImpl);
-		Source inSource = new DOMSource(input);
-		DOMResult result = new DOMResult(r);
-		trans.transform(inSource, result);
-		Document out = (Document) result.getNode();
+		if (out.getDocumentElement() == null) {
+			throw new Kite9XMLProcessingException("Empty transformed document: "+input.getDocumentURI(), null, null, null);
+		}
+
 		return out;
 
 	}
@@ -325,7 +342,9 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		try {
 			transcode(document, input.getURI(), output);
 		} finally {
-			writeSVGToOutput(outputDocument, output);
+			if (outputDocument instanceof SVGOMDocument) {
+				writeSVGToOutput(outputDocument, output);
+			}
 		}
 	}
 

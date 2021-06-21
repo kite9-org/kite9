@@ -14,35 +14,35 @@
 	font-weight: 600;
 	margin: 40pt;
 	font-size: 15pt;
-	kite9-layout: down;
-	kite9-padding: 0;
+	--kite9-layout: down;
+	--kite9-padding: 0;
 }
 
 /* Containers */
 
 
 [k9-elem=container] {
-	kite9-connection-align: 50%;	
-	kite9-sizing: maximize;
+	--kite9-connection-align: 50%;
+	--kite9-sizing: maximize;
 }
 
 [k9-elem=container].main {
-	kite9-margin-top: 0pt;
-	kite9-layout: horizontal;
+	--kite9-margin-top: 0pt;
+	--kite9-layout: horizontal;
 }
 
 [k9-elem=container].trail {
-	kite9-padding: 0pt;
-	kite9-margin: 0;
+	--kite9-padding: 0pt;
+	--kite9-margin: 0;
 }
 
 [k9-elem=container].trail * {
-	kite9-margin: 0;
+	--kite9-margin: 0;
 }
 
 [k9-elem=container].grid {
-	kite9-layout: grid;
-	kite9-grid-columns: 4;
+	--kite9-layout: grid;
+	--kite9-grid-columns: 4;
 }
 
 [k9-elem=container] > [k9-elem=back] {
@@ -62,7 +62,7 @@
 }
 
 [k9-elem=label] {
-	kite9-sizing: minimize;
+	--kite9-sizing: minimize;
 }
 
 [k9-elem=label] > [k9-elem=front] {
@@ -70,32 +70,32 @@
 	font-style: normal;
 	font-size: 15pt;
 	font-weight: 200;
-	kite9-margin: 20pt;
+	--kite9-margin: 20pt;
 }
 
 /* Entities */
 
 [k9-elem=entity] {
-	kite9-type: container;
-	kite9-template: url(template.xml#entity) '15pt' '15pt';
-	kite9-layout: down;
-	kite9-min-size: 190pt 280pt;
-	kite9-sizing: minimize;
-	kite9-margin: 10pt;
-	kite9-padding: 15pt;
-	kite9-connection-align: 50%;	
+	--kite9-type: container;
+	--kite9-template: url(template.xml#entity) '15pt' '15pt';
+	--kite9-layout: down;
+	--kite9-min-size: 190pt 280pt;
+	--kite9-sizing: minimize;
+	--kite9-margin: 10pt;
+	--kite9-padding: 15pt;
+	--kite9-connection-align: 50%;
 }
 
 [k9-elem=pill] {
-	kite9-type: container;
-	kite9-template: url(template.xml#entity) '5pt' '5pt';
-	kite9-layout: right;
-	kite9-min-size: 80pt 30pt;
-	kite9-sizing: minimize;
-	kite9-margin: 0pt;
-	kite9-padding: 15pt;
-	kite9-connection-align: 50%;
-	kite9-horizontal-align: left;	
+	--kite9-type: container;
+	--kite9-template: url(template.xml#entity) '5pt' '5pt';
+	--kite9-layout: right;
+	--kite9-min-size: 80pt 30pt;
+	--kite9-sizing: minimize;
+	--kite9-margin: 0pt;
+	--kite9-padding: 15pt;
+	--kite9-connection-align: 50%;
+	--kite9-horizontal-align: left;
 }
 
 [k9-elem=entity] > [k9-elem=back],
@@ -106,39 +106,39 @@
 /* Attributes */
 
 [k9-elem=icon] {
-	kite9-type: container;
-	kite9-template: url(template.xml#icon) '100pt' '100pt';
-	kite9-horizontal-align: center;
-	kite9-vertical-align: top;
+	--kite9-type: container;
+	--kite9-template: url(template.xml#icon) '100pt' '100pt';
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: top;
 }
 
 [k9-elem=pill] > [k9-elem=icon],
 [k9-elem=container].trail > [k9-elem=icon] {
-	kite9-template: url(template.xml#icon) '40pt' '40pt';
-	kite9-vertical-align: middle;
-	kite9-horizontal-align: left;
-	kite9-margin: 0pt;
+	--kite9-template: url(template.xml#icon) '40pt' '40pt';
+	--kite9-vertical-align: middle;
+	--kite9-horizontal-align: left;
+	--kite9-margin: 0pt;
 }
 
 [k9-elem=pill] > [k9-elem=title] {
-	kite9-vertical-align: middle;
-	kite9-margin-left: 5pt;
+	--kite9-vertical-align: middle;
+	--kite9-margin-left: 5pt;
 }
 
 [k9-elem=title],
 [k9-elem=description] {
-	kite9-type: text;
+	--kite9-type: text;
 	fill: #686868;
 	stroke: #AAAA88;
 	font-size: 18pt;
-	kite9-margin: 15pt;
-	kite9-text-bounds: 300pt 240pt;
+	--kite9-margin: 15pt;
+	--kite9-text-bounds: 300pt 240pt;
 	text-align: middle;
 }
 
 [k9-elem=title] {
 	font-size: 22pt;
-	kite9-vertical-align: top;
+	--kite9-vertical-align: top;
 }
 
 [k9-elem=description] {
@@ -158,7 +158,7 @@
 }
 
 .panel {
-	kite9-layout: down;
+	--kite9-layout: down;
 }
 
 .grid-temporary {

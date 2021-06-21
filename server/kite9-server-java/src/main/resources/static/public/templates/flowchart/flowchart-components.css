@@ -18,6 +18,6 @@
 [k9-elem=start],
 [k9-elem=document],
 [k9-elem=off-page] {
-  kite9-type: container;
-  kite9-usage: connected;
+  --kite9-type: container;
+  --kite9-usage: connected;
 }

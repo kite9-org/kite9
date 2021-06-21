@@ -36,7 +36,7 @@
 	font-family: "metropolis";
 	text-align: start;
 	font-size: 8pt;	
-	kite9-margin-bottom: 5pt;
+	--kite9-margin-bottom: 5pt;
 }
  
 
@@ -56,8 +56,8 @@
 	text-align: start;
 	font-size: 8pt;
 	text-align: start;
-	kite9-horizontal-align: left;
-	kite9-margin-bottom: 2pt;
+	--kite9-horizontal-align: left;
+	--kite9-margin-bottom: 2pt;
 }
 
 [k9-shape=actor] > [k9-elem=back],
@@ -84,7 +84,7 @@
 }
 
 [k9-elem=caption] {
-	kite9-padding: 10pt;
+	--kite9-padding: 10pt;
 }
 
 [k9-elem=class] > [k9-elem=back],

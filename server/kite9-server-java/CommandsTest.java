@@ -50,7 +50,7 @@ public class CommandsTest {
 
 	public static final String END_SVG_DOCUMENT = "</svg:svg>";
 
-	public static final String NS = " xmlns=\"http://www.kite9.org/schema/adl\"\n  xmlns:svg='http://www.w3.org/2000/svg' ";
+	public static final String NS = " xmlns=\""+Kite9NamespacesTemp.\n  xmlns:svg='http://www.w3.org/2000/svg' ";
 
 	public static final String START_SVG_DOCUMENT = "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' " + NS + ">";
 	

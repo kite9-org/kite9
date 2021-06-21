@@ -1,20 +1,21 @@
-@params {
+/* @params {
 	align-template-uri:  url(common-links.adl#align);
 	link-template-uri:   url(common-links.adl#l1);
 }
 
 @defs url('common-links-template.xml');
+*/
 
 /**
  * This is needed to make sure reference handling works correctly.  i.e. deleting links which refer
  * to deleted elements 
  */
 link, align {
-	kite9-type: link;
+	--kite9-type: link;
 }
 
 from, to  {
-	kite9-type: link-end;
+	--kite9-type: link-end;
 }
 
 /** 
@@ -25,20 +26,20 @@ from, to  {
 [k9-elem=grab],
 [k9-elem=align-body],
 [k9-elem=link-body] {
-  kite9-usage: decal;
-  kite9-type: svg;  
+  --kite9-usage: decal;
+  --kite9-type: svg;
   fill: none;
 }
 
 [k9-elem=align] {
-	kite9-type: link;
-	kite9-template: url(common-links-template.xml#align);
+	--kite9-type: link;
+	--kite9-template: url(common-links-template.xml#align);
 }
 
 [k9-elem=align] > [k9-elem=from],
 [k9-elem=align] > [k9-elem=to] {
-	kite9-template: none;	
-	kite9-type: none;
+	--kite9-template: none;
+	--kite9-type: none;
 }
 
 
@@ -51,10 +52,10 @@ from, to  {
 /* Links */
 
 [k9-elem=link] {
-	kite9-type: link;
-	kite9-template: url(common-links-template.xml#basic-link);
-	kite9-margin: 20pt;
-	kite9-link-corner-radius: 6pt;
+	--kite9-type: link;
+	--kite9-template: url(common-links-template.xml#basic-link);
+	--kite9-margin: 20pt;
+	--kite9-link-corner-radius: 6pt;
 }
 
 [k9-elem=link-body] {
@@ -78,90 +79,90 @@ from, to  {
 /* Terminators */
 
 [k9-elem=from] {
-	kite9-link-end: from;
+	--kite9-link-end: from;
 }
 
 [k9-elem=to] {
-	kite9-link-end: to;
+	--kite9-link-end: to;
 }
 
 [k9-elem=from].gap,
 [k9-elem=to].gap {
-	kite9-marker-reserve: 20pt;
+	--kite9-marker-reserve: 20pt;
 }
 
 [k9-elem=from][shape=open-diamond],
 [k9-elem=to][shape=open-diamond] {
-	 kite9-marker-reserve: 8pt;
+	 --kite9-marker-reserve: 8pt;
 } 
 
 [k9-elem=from][shape=open-arrow],
 [k9-elem=to][shape=open-arrow] {
-   kite9-marker-reserve: 6pt;
+   --kite9-marker-reserve: 6pt;
 } 
 
 
 [k9-elem=from].null, 
 [k9-elem=to].null {
-  kite9-type: link-end;
-  kite9-template: url(common-links-template.xml#null-terminator);
-  kite9-padding: 8pt 8pt 8pt 8pt;
+  --kite9-type: link-end;
+  --kite9-template: url(common-links-template.xml#null-terminator);
+  --kite9-padding: 8pt 8pt 8pt 8pt;
 }
 
 [k9-elem=from], 
 [k9-elem=to] {
-	kite9-type: link-end;
-	kite9-template: url(common-links-template.xml#round-terminator);
-	kite9-padding: 8pt 8pt 8pt 8pt;
+	--kite9-type: link-end;
+	--kite9-template: url(common-links-template.xml#round-terminator);
+	--kite9-padding: 8pt 8pt 8pt 8pt;
 }
 
 [drawDirection=DOWN] [k9-elem=from],
 [drawDirection=UP] [k9-elem=to]  {
-	kite9-template: url(common-links-template.xml#up-terminator);
+	--kite9-template: url(common-links-template.xml#up-terminator);
 }
 
 [drawDirection=UP] [k9-elem=from],
 [drawDirection=DOWN] [k9-elem=to]  {
-	kite9-template: url(common-links-template.xml#down-terminator);
+	--kite9-template: url(common-links-template.xml#down-terminator);
 }
 
 [drawDirection=RIGHT] [k9-elem=from],
 [drawDirection=LEFT] [k9-elem=to] {
-	kite9-template: url(common-links-template.xml#left-terminator);
+	--kite9-template: url(common-links-template.xml#left-terminator);
 }
 
 [drawDirection=LEFT] [k9-elem=from],
 [drawDirection=RIGHT] [k9-elem=to]s  {
-	kite9-template: url(common-links-template.xml#right-terminator);
+	--kite9-template: url(common-links-template.xml#right-terminator);
 }
 
 [drawDirection=LEFT] {
-	kite9-direction: left;
+	--kite9-direction: left;
 }
 
 [drawDirection=RIGHT] {
-	kite9-direction: right;
+	--kite9-direction: right;
 }
 
 [drawDirection=UP] {
-	kite9-direction: up;
+	--kite9-direction: up;
 }
 
 [drawDirection=DOWN] {
-	kite9-direction: down;
+	--kite9-direction: down;
 }
 
 /**
  * For making palette look nice
  */
 [k9-elem=hub] {
-  kite9-template: url(common-links-template.xml#hub);
-  kite9-type: svg;
-  kite9-connection-align: 50%;
+  --kite9-template: url(common-links-template.xml#hub);
+  --kite9-type: svg;
+  --kite9-connection-align: 50%;
   fill: #FFFFFF;
 }
 
 [k9-elem=group] {
-  kite9-type: container;
-  kite9-margin: 20pt;
+  --kite9-type: container;
+  --kite9-margin: 20pt;
 }

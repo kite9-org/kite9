@@ -47,8 +47,8 @@ export const
 	contextMenu = new ContextMenu(),
 	
 	containment = new Containment(),
-  
-  palette =  new Palette("_palette", document.params['palettes']);
+
+    palette =  new Palette("_palette", document.params['palettes']);
 	
 
 function initCommon() {

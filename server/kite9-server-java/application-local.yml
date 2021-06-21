@@ -1,4 +1,7 @@
 spring:
+  devtools:
+    restart:
+      enabled: false
   mvc:
     log-request-details: true
   security:

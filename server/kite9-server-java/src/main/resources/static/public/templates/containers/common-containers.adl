@@ -1,18 +1,21 @@
-<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
-  <svg:defs>
-    <svg:style type="text/css">
-      @import url("/public/templates/common/common.css");
-      @import url("/public/templates/containers/common-containers.css");
-      
-      
-      [k9-elem=container], 
-      [k9-elem=group] {
-        kite9-min-size: 200pt 100pt;
-        kite9-margin: 15pt;
-      }
-    </svg:style>
-  </svg:defs>
- <diagram xmlns="http://www.kite9.org/schema/adl" style="kite9-layout: down; " class="indicators-on">
+<diagram xslt:template="/public/templates/containers/containers-template.xsl"
+        xmlns="http://www.kite9.org/schema/adl"
+        xmlns:xslt="http://www.kite9.org/schema/xslt"
+        style="kite9-layout: down; " class="indicators-on">
+
+    <svg:defs xmlns:svg='http://www.w3.org/2000/svg'>
+        <svg:style type="text/css">
+            @import url("/public/templates/common/common.css");
+            @import url("/public/templates/containers/common-containers.css");
+
+
+            [k9-elem=container],
+            [k9-elem=group] {
+                kite9-min-size: 200pt 100pt;
+                kite9-margin: 15pt;
+            }
+        </svg:style>
+    </svg:defs>
 
     <group style="kite9-layout: right; ">
 
@@ -25,7 +28,7 @@
         <container id="c3" layout="down" class="solid">
         </container>
     </group>
-    
+
     <group style="kite9-layout: right; ">
 
         <container id="c4" class="dotted">
@@ -39,22 +42,16 @@
     </group>
 
     <group style="kite9-layout: right; ">
-      <group id="g3">
+        <group id="g3">
 
-      </group>
+        </group>
 
-      <group id="g1" layout="right">
+        <group id="g1" layout="right">
 
-      </group>
+        </group>
 
-      <group id="g2" layout="down">
+        <group id="g2" layout="down">
 
-      </group>
-
-
+        </group>
     </group>
-
-
-
-  </diagram>
-</svg:svg>
+</diagram>

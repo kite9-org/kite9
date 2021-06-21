@@ -4,7 +4,7 @@ import javax.xml.XMLConstants;
 
 import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.util.SVGConstants;
-import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.dom.processors.AbstractProcessor;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Comment;
@@ -97,7 +97,7 @@ public class BasicCopier extends AbstractProcessor {
 	protected boolean shouldRemoveNamespace(String ns) {
 		return (ns != null) && (!ns.equals("")) 
 				&& (!ns.equals(SVGConstants.SVG_NAMESPACE_URI)) 
-				&& (!ns.equals(XMLHelper.KITE9_NAMESPACE))
+				&& (!ns.equals(Kite9Namespaces.ADL_NAMESPACE))
 				&& (!ns.equals(XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
 				&& (!ns.equals(SVGConstants.XLINK_NAMESPACE_URI))
 				&& (!ns.equals(XMLConstants.XML_NS_URI));

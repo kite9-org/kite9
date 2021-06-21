@@ -6,8 +6,9 @@ import java.io.StringWriter;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 
 public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	
@@ -186,11 +187,11 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String scalablePath() {
-		return "<svg:path k9:d=\"'M0 0 H $width V $height z'\" d='' />";
+		return "<svg:path pp:d=\"'M0 0 H $width V $height z'\" d='' />";
 	}
 
 	private String svgOpen() {
-		return "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='http://www.w3.org/2000/svg' xmlns:k9='http://www.kite9.org/schema/adl'>";
+		return "<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svg='"+Kite9Namespaces.SVG_NAMESPACE+"' xmlns:pp='"+Kite9Namespaces.POSTPROCESSOR_NAMESPACE+"'>";
 	}
 	
 	private String svgClose() {
@@ -202,7 +203,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 	}
 
 	private String diagramOpen() {
-		return "<svg:g xmlns='"+XMLHelper.KITE9_NAMESPACE+"' id='one' style='--kite9-type: diagram; --kite9-padding: 50px;'><svg:g style='fill: white; stroke: grey; stroke-width: 3px; '>";
+		return "<svg:g xmlns='"+ Kite9Namespaces.ADL_NAMESPACE +"' id='one' style='--kite9-type: diagram; --kite9-padding: 50px;'><svg:g style='fill: white; stroke: grey; stroke-width: 3px; '>";
 	}
 	
 

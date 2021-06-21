@@ -1,23 +1,23 @@
-@defs url(containers-template.xml);
+/* @defs url(containers-template.xml); */
 
 /* Groups: Invisible containers */
 
 [k9-elem=group] {
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-traversal: always;
-	kite9-template: url(containers-template.xml#group);
-	kite9-min-size: 40pt 40pt;
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-traversal: always;
+	--kite9-template: url(containers-template.xml#group);
+	--kite9-min-size: 40pt 40pt;
 }
 
 /* Containers: Have a border */
 
 [k9-elem=container] {
-	kite9-type: container;
-	kite9-padding: 15pt;
-	kite9-margin: 15pt;
-	kite9-template: url(containers-template.xml#container);
-	kite9-sizing: minimize;
+	--kite9-type: container;
+	--kite9-padding: 15pt;
+	--kite9-margin: 15pt;
+	--kite9-template: url(containers-template.xml#container);
+	--kite9-sizing: minimize;
 }
 
 [k9-elem=container] > [k9-elem=back] {
@@ -47,50 +47,50 @@
 /* Handle layout css */
 
 *[layout=right] {
-	kite9-layout: right;
+	--kite9-layout: right;
 }
 
 *[layout=right] > indicator {
-	kite9-template: url(containers-template.xml#indicator-right);
+	--kite9-template: url(containers-template.xml#indicator-right);
 }
 
 *[layout=down] {
-	kite9-layout: down;
+	--kite9-layout: down;
 }
 
 *[layout=down] > indicator {
-	kite9-template: url(containers-template.xml#indicator-down);
+	--kite9-template: url(containers-template.xml#indicator-down);
 }
 
 *[layout=up] {
-	kite9-layout: up;
+	--kite9-layout: up;
 }
 
 *[layout=up] > indicator {
-	kite9-template: url(containers-template.xml#indicator-up);
+	--kite9-template: url(containers-template.xml#indicator-up);
 }
 
 *[layout=left] {
-	kite9-layout: left;
+	--kite9-layout: left;
 }
 
 *[layout=left] > indicator {
-	kite9-template: url(containers-template.xml#indicator-left);
+	--kite9-template: url(containers-template.xml#indicator-left);
 }
 
 *[layout=horizontal] {
-	kite9-layout: horizontal;
+	--kite9-layout: horizontal;
 }
 
 *[layout=horizontal] > indicator {
-	kite9-template: url(containers-template.xml#indicator-horizontal);
+	--kite9-template: url(containers-template.xml#indicator-horizontal);
 }
 
 *[layout=vertical] {
-	kite9-layout: vertical;
+	--kite9-layout: vertical;
 }
 
 *[layout=vertical] > indicator {
-	kite9-template: url(containers-template.xml#indicator-vertical);
+	--kite9-template: url(containers-template.xml#indicator-vertical);
 }
 

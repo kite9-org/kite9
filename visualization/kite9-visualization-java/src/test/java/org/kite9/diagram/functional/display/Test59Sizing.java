@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.dom.processors.AbstractProcessor;
 
 import java.io.File;
@@ -201,9 +202,9 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String basicDiagram(String xml) throws Exception {
 		return "\n  <svg:svg style=\"--kite9-type: diagram; \" "+
 			//	"transform=\""+ DiagramKite9XMLElement.TRANSFORM+"\" "+
-				"xmlns:svg=\""+ AbstractProcessor.Companion.getSVG_NAMESPACE()+"\" "+
-				"xmlns:k9=\""+AbstractProcessor.Companion.getKITE9_NAMESPACE()+"\" "+
-				"k9:width=\"$width\" k9:height=\"$height\" "+
+				"xmlns:svg=\""+ Kite9Namespaces.SVG_NAMESPACE +"\" "+
+				"xmlns:pp=\""+Kite9Namespaces.POSTPROCESSOR_NAMESPACE+"\" "+
+				"pp:width=\"$width\" pp:height=\"$height\" "+
 				"id=\"The Diagram\">\n" +
 
 				"<svg:defs>"+
@@ -226,7 +227,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	
 	private String glyphContainer(String xml, String extraAtts) {
 		return "    <svg:g style=\"--kite9-type: container; " +extraAtts+" \">\n"+
-	           "      <svg:rect x='0' y='0' width='0' k9:width='$width' height='0' k9:height='$height' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" +
+	           "      <svg:rect x='0' y='0' width='0' pp:width='$width' height='0' pp:height='$height' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" +
 	           xml + 
 	           "    </svg:g>";
 	           
@@ -235,7 +236,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	private String glyphLeaf(String xml, String extraAtts) {
 		return "    <svg:g style=\"--kite9-type: svg; " +extraAtts+" \">\n"+
 	           "      <svg:g style='--kite9-usage: decal; --kite9-type: svg; '>\n" +
-	           "        <svg:rect x='0' y='0' width='0' k9:width='$width' k9:height='$height' height='0' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" +
+	           "        <svg:rect x='0' y='0' width='0' pp:width='$width' pp:height='$height' height='0' rx='8' ry='8' style='fill: url(#glyph-background); ' class=\"glyph-back\" />\n" +
 	           "      </svg:g>\n" +
 	           xml + 
 	           "    </svg:g>";
@@ -257,7 +258,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	
 	private String badgeDecal() {
 		return "      <svg:g style='--kite9-usage: decal; --kite9-type: svg; --kite9-transform: none; '>\n" +
-	           "        <svg:circle cx='0' k9:cx='$width - (5 * $px)' cy='5' r='15' fill='red' /> \n"+
+	           "        <svg:circle cx='0' pp:cx='$width - (5 * $px)' cy='5' r='15' fill='red' /> \n"+
 	           "      </svg:g>\n";
 	}
 	

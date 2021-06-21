@@ -1,26 +1,26 @@
+/*
+@params {
+	label-template-uri:  url(common-labels.adl#label);
+}*/
 
 /* Labels */
 
 label {
-	kite9-usage: label;
-	kite9-type: container; 
-	kite9-sizing: minimize;
-	kite9-template: url(common-labels-template.xml#label) '4pt';
-	kite9-padding: 4pt;
-	kite9-margin: 4pt;
-	kite9-sizing: minimize;
-	kite9-label-placement: bottom-left;
-}
-
-@params {
-	label-template-uri:  url(common-labels.adl#label);
+	--kite9-usage: label;
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-template: url(common-labels-template.xml#label) '4pt';
+	--kite9-padding: 4pt;
+	--kite9-margin: 4pt;
+	--kite9-sizing: minimize;
+	--kite9-label-placement: bottom-left;
 }
 
 label[end=to] {
-	kite9-link-end: to;
+	--kite9-link-end: to;
 }
 
 label[end=from] {
-	kite9-link-end: from;
+	--kite9-link-end: from;
 }
 

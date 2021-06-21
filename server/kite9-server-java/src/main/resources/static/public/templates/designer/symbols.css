@@ -1,15 +1,22 @@
 [k9-elem=symbol] {
-  kite9-template: url(template.xml#symbol);
-	kite9-type: container;
-  kite9-margin: 0 2pt 0 5pt;
-  kite9-sizing: minimize;
-  kite9-connection-align: 50%;
-  kite9-link-inset: 0pt;
+  --kite9-type: container;
+    --kite9-padding-top: 2pt;
+    --kite9-padding-right: 2pt;
+    --kite9-padding-bottom: 2pt;
+    --kite9-padding-left: 2pt;
+
+    --kite9-margin-top: 0pt;
+    --kite9-margin-right: 2pt;
+    --kite9-margin-left: 0pt;
+    --kite9-margin-bottom: 5pt;
+  --kite9-sizing: minimize;
+  --kite9-connection-align: 50%;
+  --kite9-link-inset: 0pt;
   font-size: 6pt;
-  kite9-min-size: 10pt 10pt;
-  kite9-padding: 2pt;
-  kite9-horizontal-align: right;
-  kite9-vertical-align: middle;
+  --kite9-min-width: 10pt;
+  --kite9-min-height: 10pt;
+  --kite9-horizontal-align: right;
+  --kite9-vertical-align: middle;
 }
 
 [k9-texture=symbol] > [k9-elem=back] {
@@ -21,25 +28,25 @@
 }
 
 [k9-elem=symbol][k9-shape=circle] > [k9-elem=back] {
-  kite9-template: url(designer-shapes-template.xml#circle);  
+  --kite9-template: url(designer-shapes-template.xml#circle);
   fill: #00A070;
   fill-opacity: 1;
 }
 
 [k9-elem=symbol][k9-shape=hexagon] > [k9-elem=back] {
-  kite9-template: url(designer-shapes-template.xml#hexagon);  
+  --kite9-template: url(designer-shapes-template.xml#hexagon);
   fill: #AA2030;
   fill-opacity: 1;
 }
 
 [k9-elem=symbol][k9-shape=diamond] > [k9-elem=back] {
-  kite9-template: url(designer-shapes-template.xml#diamond);  
+  --kite9-template: url(designer-shapes-template.xml#diamond);
   fill: #BB8040;
   fill-opacity: 1;
 }
 
 [k9-elem=symbol][k9-shape=square] > [k9-elem=back] {
-  kite9-template: url(designer-shapes-template.xml#square);  
+  --kite9-template: url(designer-shapes-template.xml#square);
   fill: #CC8050;
   fill-opacity: 1;
 }

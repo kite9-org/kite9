@@ -1,19 +1,20 @@
-@params {
+/* @params {
 	cell-template-uri: url(common-grid.adl#t1);
 	palettes: url(/public/templates/grid/common-grid) "cell table";
 }
 
 *[layout=grid] {
-	kite9-layout: grid;
+	--kite9-layout: grid;
 }
+*/
 
 /* tables */
 
 table {
-	kite9-layout: grid;
-	kite9-type: container;
-	kite9-template: url(common-grid-template.xml#table) "0pt";
-	kite9-padding: 10pt;
+	--kite9-layout: grid;
+	--kite9-type: container;
+	--kite9-template: url(common-grid-template.xml#table) "0pt";
+	--kite9-padding: 10pt;
 }
 
 [k9-elem=table] > [k9-elem=back] {
@@ -25,19 +26,19 @@ table {
 /* cells */
 
 cell {
-	kite9-template: url(common-grid-template.xml#cell) "0pt";
-	kite9-usage: regular;
-	kite9-type: container;
-	kite9-vertical-align: center;
-	kite9-horizontal-align: center;
-	kite9-sizing: minimize;
+	--kite9-template: url(common-grid-template.xml#cell) "0pt";
+	--kite9-usage: regular;
+	--kite9-type: container;
+	--kite9-vertical-align: center;
+	--kite9-horizontal-align: center;
+	--kite9-sizing: minimize;
 	text-align: middle;
-	kite9-min-size: 30pt 30pt;
-	kite9-traversal: always;
+	--kite9-min-size: 30pt 30pt;
+	--kite9-traversal: always;
 }
 
 cell.bordered {
-	 kite9-template: url(common-grid-template.xml#bordered-cell) "0pt";
+	 --kite9-template: url(common-grid-template.xml#bordered-cell) "0pt";
 }
 
 [k9-elem=_temporary],
@@ -59,19 +60,19 @@ cell.bordered {
 
 
 cell.left {
-	kite9-horizontal-align: left;
+	--kite9-horizontal-align: left;
 	text-align: start;
 }
 
 cell.right {
-	kite9-horizontal-align: right;
+	--kite9-horizontal-align: right;
 	text-align: end;
 }
 
 cell.bottom {
-	kite9-vertical-align: bottom;
+	--kite9-vertical-align: bottom;
 }
 
 cell.top {
-	kite9-vertical-align: top;
+	--kite9-vertical-align: top;
 }

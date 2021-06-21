@@ -17,6 +17,7 @@ import org.kite9.diagram.batik.text.ExtendedSVGGraphics2D;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.bridge.ElementContext;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.dom.processors.AbstractInlineProcessor;
 import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
 import org.kite9.diagram.dom.processors.xpath.PatternValueReplacer;
@@ -60,7 +61,7 @@ public class Kite9InliningProcessor extends DiagramPositionProcessor {
 			// text elements are getting replaced with glyphs.
 			Document d = from.getOwnerDocument();
 			Element groupElem = d.createElementNS(SVG_NAMESPACE_URI, SVG_G_TAG);
-			groupElem.setAttributeNS(DiagramPositionProcessor.Companion.getKITE9_NAMESPACE(), "rendered", "true");
+			groupElem.setAttribute("rendered", "true");
 			ExtendedSVGGeneratorContext genCtx = ExtendedSVGGeneratorContext.buildSVGGeneratorContext(d);
 			ExtendedSVGGraphics2D g2d = new ExtendedSVGGraphics2D(genCtx, groupElem);
 			GraphicsNode gn = bridge.getGraphicsNode(from);

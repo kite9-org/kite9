@@ -2,6 +2,7 @@ package org.kite9.diagram.dom.processors
 
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
+import org.kite9.diagram.dom.ns.Kite9Namespaces
 import org.kite9.diagram.model.position.Rectangle2D
 import org.w3c.dom.Element
 import org.w3c.dom.NodeList
@@ -26,7 +27,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     }
 
     override fun processTag(n: Element): Element {
-        if ((n.localName == "text") && (n.namespaceURI == SVG_NAMESPACE)) {
+        if ((n.localName == "text") && (n.namespaceURI == Kite9Namespaces.SVG_NAMESPACE)) {
             val width = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_WIDTH, n)
             val height = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, n)
             val align = ctx.getCssStyleStringProperty("text-align", n) ?: "start";
@@ -71,7 +72,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         val od = e.ownerDocument!!
 
         for ((lineNumber, t) in lines.withIndex()) {
-            val cspan = od.createElementNS(SVG_NAMESPACE, "tspan")
+            val cspan = od.createElementNS(Kite9Namespaces.SVG_NAMESPACE, "tspan")
             when (align) {
                 "end" -> cspan.setAttribute("x", "" + (maxLineWidth - t.second) + "px")
                 "middle" -> cspan.setAttribute("x", "" + ((maxLineWidth - t.second) / 2.0) + "px")

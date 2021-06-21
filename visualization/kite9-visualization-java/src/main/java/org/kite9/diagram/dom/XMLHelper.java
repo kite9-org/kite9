@@ -33,7 +33,6 @@ import java.io.*;
 public class XMLHelper {
 
 	public static final String XML_SCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
-	public static final String KITE9_NAMESPACE = "http://www.kite9.org/schema/adl";
 	public static final String DIAGRAM_ELEMENT = "diagram";
 	public static final String CONTENTS_ELEMENT = "contents";
 

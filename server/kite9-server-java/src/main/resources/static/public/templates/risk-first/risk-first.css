@@ -32,17 +32,17 @@
 /* Titles, generally */
 
 [k9-elem=title] {
-	kite9-horizontal-align: center;
-	kite9-vertical-align: bottom;
-	kite9-sizing: minimize;
-	kite9-type: text;
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: bottom;
+	--kite9-sizing: minimize;
+	--kite9-type: text;
 	font-size: 12pt;
 	font-family: "metropolis";
 	font-weight: 200;
 	fill: black;
 	text-align: middle;
-	kite9-text-bounds-width: 110pt;
-	kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
+	--kite9-text-bounds-width: 110pt;
+	--kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
 }
 
 /* Labels */
@@ -77,13 +77,13 @@
 }
 
 [k9-elem=description] {
-  kite9-usage: label;
-  kite9-type: container;
-  kite9-vertical-align: center;
-  kite9-horizontal-align: center;
-  kite9-template: url(/public/templates/labels/common-labels-template.xml#label);
-  kite9-padding: 10pt;
-  kite9-label-placement: bottom;
+  --kite9-usage: label;
+  --kite9-type: container;
+  --kite9-vertical-align: center;
+  --kite9-horizontal-align: center;
+  --kite9-template: url(/public/templates/labels/common-labels-template.xml#label);
+  --kite9-padding: 10pt;
+  --kite9-label-placement: bottom;
 }
 
 [k9-elem=description] > [k9-elem=front] {
@@ -92,27 +92,27 @@
 
 /* Context */
 [k9-elem=context] {
-  kite9-type: container;
-  kite9-padding: 15pt;
-  kite9-margin: 15pt;
-  kite9-template: url(/public/templates/containers/containers-template.xml#container);
-  kite9-sizing: minimize;
+  --kite9-type: container;
+  --kite9-padding: 15pt;
+  --kite9-margin: 15pt;
+  --kite9-template: url(/public/templates/containers/containers-template.xml#container);
+  --kite9-sizing: minimize;
 }
 
 
 /* Arrow */
 
 [k9-elem=arrow] {
-	kite9-padding: 8pt 5pt 8pt 5pt; 
-	kite9-type: container;
-	kite9-sizing: minimize;
-	kite9-template: url(/public/templates/common/formats/formats-template.xml#inline-text) '4pt' '4pt';
-	kite9-connections: separate;
-	kite9-connection-align: 50%;
+	--kite9-padding: 8pt 5pt 8pt 5pt;
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-template: url(/public/templates/common/formats/formats-template.xml#inline-text) '4pt' '4pt';
+	--kite9-connections: separate;
+	--kite9-connection-align: 50%;
 	font-size: 14pt;
 	font-family: "metropolis";
 	font-weight: 500;
-	kite9-link-inset: 3pt; 
+	--kite9-link-inset: 3pt;
 }
 
 [k9-elem=arrow][k9-texture=solid] > [k9-elem=back] {
@@ -127,15 +127,15 @@
 
 from,
 to {
-	kite9-marker-reserve: 8pt;
+	--kite9-marker-reserve: 8pt;
 }
 
 link {
-	kite9-link-minimum-length: 30pt;
+	--kite9-link-minimum-length: 30pt;
 }
 
 [k9-elem=image] {
-   kite9-template: url(/public/templates/common/formats/formats-template.xml#image-editable);
+   --kite9-template: url(/public/templates/common/formats/formats-template.xml#image-editable);
 }
 
 /* Fills */
@@ -155,5 +155,5 @@ link {
 
 /* Diagram */
 [k9-elem=diagram] {
-  kite9-padding: 20pt;  
+  --kite9-padding: 20pt;
 }

@@ -1,20 +1,31 @@
-<svg:svg xmlns:svg='http://www.w3.org/2000/svg'
-	xmlns='http://www.kite9.org/schema/adl'
-	xmlns:xlink="http://www.w3.org/1999/xlink">
+<xsl:stylesheet
+	xmlns="http://www.w3.org/2000/svg"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:adl="http://www.kite9.org/schema/adl"
+	xmlns:pp="http://www.kite9.org/schema/post-processor"
+	version="1.0">
 
+	<xsl:import href="/public/templates/common/back/back-template.xsl"/>
 
 	<!-- simple text area, can only be edited, not moved, deleted etc. -->
-	<template id="textarea" k9-ui="orphan edit"
-		k9-shape="pre:#{local-name()}" k9-format="textarea">
-		<back k9-indicator="pulse" />
-		<contents optional="true" />
-	</template>
+	<xsl:template name="textarea">
+		<g>
+			<xsl:attribute name="k9-ui">orphan edit</xsl:attribute>
+			<xsl:attribute name="k9-shape"><xsl:value-of select="local-name()" /></xsl:attribute>
+			<xsl:attribute name="k9-format">textarea</xsl:attribute>
+
+			<xsl:call-template name="back-round-rect" />
+
+			<xsl:apply-templates />
+		</g>
+	</xsl:template>
 
 
 	<!-- A basic on-screen image, params: @href, @width @height -->
 	<!-- batik hates it if you don't specify height & width -->
 
-	<template id="image-editable" k9-ui="image"
+<!--	<xsl:template name="image-editable" k9-ui="image"
 		k9-format="image-editable">
 		<decal style="kite9-type: svg; kite9-usage: decal;" k9-texture="solid">
 			<svg:image x="0" y="0" width="#{$width}"
@@ -24,12 +35,12 @@
 			<svg:rect x='0' y='0' width='pre:#{@width}'
 				height='pre:#{@height}' rx='2' ry='2' />
 		</front>
-	</template>
-
+	</xsl:template>
+-->
 	<!-- Inline text, where the k9-shape attribute defaults to the tag name, 
 		and the user can edit the text, drag it around etc. -->
-
-	<template id='inline-text'
+<!--
+	<xsl:template name='inline-text'
 		k9-ui="drag edit delete align connect insert autoconnect"
 		k9-palette="connected" k9-shape="pre:#{local-name()}"
 		k9-format="inline-text"
@@ -38,28 +49,28 @@
 		<textarea>
 			<contents optional="true" />
 		</textarea>
-	</template>
-
+	</xsl:template>
+-->
 	<!-- Main container template, where the shape is the tag of the container. 
 		Contents become the contents of the container. -->
-	<template id='inline-container'
+<!--	<xsl:template name='inline-container'
 		k9-ui="drag delete align connect insert autoconnect layout cascade"
 		k9-palette="connected" k9-shape="pre:#{local-name()}"
 		k9-format="inline-container" k9-texture="solid">
 		<back k9-indicator="pulse" />
 		<contents optional="true" />
-	</template>
+	</xsl:template> -->
 
 	<!-- Editable text object with an icon, where the icon has the k9-shape 
 		of the tag of the element. You can edit the text. Links connect to the icon. -->
 
-	<template id='captioned-text'
+<!--	<xsl:template name='captioned-text'
 		k9-ui="drag delete align edit cascade"
 		k9-palette="connected" k9-format="captioned-text" k9-texture="none">
 		<back />
 
 		<depiction k9-shape="pre:#{local-name()}"
-			k9-ui="connect autoconnect align delete" id="pre:#{@id}@dep"
+			k9-ui="connect autoconnect align delete" name="pre:#{@id}@dep"
 			k9-texture="solid">
 			<back k9-indicator="pulse" />
 		</depiction>
@@ -73,10 +84,10 @@
 			<from reference="pre:#{@id}@dep" />
 			<to reference="pre:#{@id}@caption" />
 		</shape-align>
-	</template>
+	</xsl:template> -->
 
 	<!-- Icon with text below it. k9-shape of the icon defaults to the tag used. -->
-	<template id='portrait-text'
+<!--	<xsl:template name='portrait-text'
 		k9-ui="drag delete edit align cascade connect autoconnect"
 		k9-palette="connected" k9-format="portrait-text">
 		<back />
@@ -90,6 +101,6 @@
 				<contents optional="true" />
 			</textarea>
 		</caption>
-	</template>
+	</xsl:template> -->
 
-</svg:svg>
+</xsl:stylesheet>

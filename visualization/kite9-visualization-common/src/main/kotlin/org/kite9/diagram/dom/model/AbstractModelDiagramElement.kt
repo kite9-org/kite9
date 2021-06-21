@@ -34,6 +34,7 @@ abstract class AbstractModelDiagramElement(
 	protected var padding = DoubleArray(4)
 
     override fun initialize() {
+
         initializeDirectionalCssValues(padding, CSSConstants.KITE9_CSS_PADDING_PROPERTY_PREFIX)
         initializeDirectionalCssValues(margin, CSSConstants.KITE9_CSS_MARGIN_PROPERTY_PREFIX)
     }

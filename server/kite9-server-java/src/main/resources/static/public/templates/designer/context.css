@@ -1,13 +1,19 @@
 [k9-elem=context] {
-	kite9-margin: 10pt;
-	kite9-link-inset: 10pt;
-	kite9-link-gutter: 10pt;
-	kite9-type: container;
-	kite9-type: container;
-	kite9-padding: 15pt;
-	kite9-margin: 15pt;
-	kite9-template: url(/public/templates/containers/containers-template.xml#container);
-	kite9-sizing: minimize;
+	--kite9-margin: 10pt;
+	--kite9-link-inset: 10pt;
+	--kite9-link-gutter: 10pt;
+	--kite9-type: container;
+	--kite9-type: container;
+      --kite9-padding-top: 15pt;
+      --kite9-padding-right: 15pt;
+      --kite9-padding-bottom: 15pt;
+      --kite9-padding-left: 15pt;
+
+      --kite9-margin-top: 15pt;
+      --kite9-margin-right: 15pt;
+      --kite9-margin-left: 15pt;
+      --kite9-margin-bottom: 15pt;
+	--kite9-sizing: minimize;
 }
 
 [k9-elem=context]>[k9-elem=back] {

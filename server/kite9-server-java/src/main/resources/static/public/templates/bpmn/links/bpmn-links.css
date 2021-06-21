@@ -10,16 +10,16 @@
 /* Links */
 
 [k9-elem=link].message {
-	kite9-type: link;
-	kite9-template: url(bpmn-links-template.xml#templated-link) 'none' '';
-	kite9-margin: 20pt;
-	kite9-link-corner-radius: 10pt;
+	--kite9-type: link;
+	--kite9-template: url(bpmn-links-template.xml#templated-link) 'none' '';
+	--kite9-margin: 20pt;
+	--kite9-link-corner-radius: 10pt;
 }
 
 [k9-elem=link].message {
-  kite9-type: link;
-  kite9-template: url(bpmn-links-template.xml#templated-link) '' '';
-  kite9-margin: 20pt;
-  kite9-link-corner-radius: 10pt;
+  --kite9-type: link;
+  --kite9-template: url(bpmn-links-template.xml#templated-link) '' '';
+  --kite9-margin: 20pt;
+  --kite9-link-corner-radius: 10pt;
 }
 
