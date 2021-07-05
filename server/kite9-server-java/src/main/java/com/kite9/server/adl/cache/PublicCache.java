@@ -18,7 +18,7 @@ import java.util.Map;
  * @author robmoffat
  *
  */
-public class PublicCache implements Cache {
+public class PublicCache implements Cache { 
 
     protected final Logger LOG = LoggerFactory.getLogger(PublicCache.class);
 

@@ -60,7 +60,7 @@
    stroke: black; 
 }
 
-/* Link Labels*/
+/* Link Labels */
 
 [k9-elem=link] > [k9-elem=label] {
   stroke-width: 0;

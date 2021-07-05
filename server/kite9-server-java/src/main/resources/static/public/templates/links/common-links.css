@@ -33,12 +33,10 @@ from, to  {
 
 [k9-elem=align] {
 	--kite9-type: link;
-	--kite9-template: url(common-links-template.xml#align);
 }
 
 [k9-elem=align] > [k9-elem=from],
 [k9-elem=align] > [k9-elem=to] {
-	--kite9-template: none;
 	--kite9-type: none;
 }
 
@@ -53,7 +51,6 @@ from, to  {
 
 [k9-elem=link] {
 	--kite9-type: link;
-	--kite9-template: url(common-links-template.xml#basic-link);
 	--kite9-margin: 20pt;
 	--kite9-link-corner-radius: 6pt;
 }

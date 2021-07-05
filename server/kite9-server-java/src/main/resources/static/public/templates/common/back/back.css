@@ -22,3 +22,7 @@
   fill-opacity: .01;
   stroke: black;
 }
+
+[k9-elem=back] {
+	 --kite9-usage: decal;
+}

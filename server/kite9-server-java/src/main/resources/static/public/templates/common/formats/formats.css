@@ -6,7 +6,6 @@
   --kite9-vertical-align: center;
   --kite9-connection-align: 50%;
   --kite9-horizontal-align: center;
-  --kite9-template: url(formats-template.xml#textarea);
 }
 
 /** image-editable format */
@@ -16,7 +15,6 @@
   --kite9-type: container;
   --kite9-horizontal-align: center;
   --kite9-vertical-align: center;
-  --kite9-template: url(formats-template.xml#image-editable);
 }
 
 [k9-format=image-editable] > [k9-elem=front] {
@@ -29,7 +27,6 @@
 [k9-elem=inline-text],
 [k9-format=inline-text] {
   --kite9-type: container;
-  --kite9-template: url(formats-template.xml#inline-text);
   --kite9-sizing: minimize;
   --kite9-margin: 15pt;
   --kite9-padding: 11pt;
@@ -54,7 +51,6 @@
 
 [k9-format=inline-container] {
 	--kite9-type: container;
-	--kite9-template: url(formats-template.xml#inline-container);
 	--kite9-sizing: minimize;
 	--kite9-margin: 15pt;
 	--kite9-padding: 11pt;
@@ -65,7 +61,6 @@
 [k9-elem=captioned-text],
 [k9-format=captioned-text] {
 	--kite9-type: container;
-	--kite9-template: url(formats-template.xml#captioned-text);
 	--kite9-sizing: minimize;
 	--kite9-margin: 16pt;
 }
@@ -99,7 +94,6 @@
 [k9-elem=portrait-text],
 [k9-format=portrait-text] {
 	--kite9-type: container;
-  --kite9-template: url(formats-template.xml#portrait-text);
   --kite9-sizing: minimize;
   --kite9-margin: 16pt;
   --kite9-layout: down;

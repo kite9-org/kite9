@@ -8,6 +8,7 @@
 
     <xsl:import href="/public/templates/containers/containers-template.xsl" />
     <xsl:import href="/public/templates/common/diagram/diagram-template.xsl" />
+    <xsl:import href="/public/templates/common/formats/formats-template.xsl" />
     <xsl:import href="/public/templates/common/common.xsl" />
 
     <xsl:template match="/">
@@ -21,14 +22,15 @@
                   'link-template-uri' : '/public/templates/links/common-links.adl#l1',
                   'cell-template-uri' : '/public/templates/grid/common-grid.adl#t1',
                   'palettes' : [
-                        '/public/templates/links/common-links.adl', 'link',
+              /*          '/public/templates/links/common-links.adl', 'link',
                         '/public/templates/links/common-ends.adl', 'end',
                         '/public/templates/designer/palette.adl', 'connected symbol',
                         '/public/templates/flowchart/palette-inline.adl', 'connected',
                         '/public/templates/flowchart/palette-captioned.adl', 'connected',
                         '/public/templates/uml/palette.adl', 'connected',
                         '/public/templates/containers/common-containers.adl', 'connected',
-                        '/public/templates/grid/common-grid.adl', 'cell table'
+                        '/public/templates/grid/common-grid.adl', 'cell table'*/
+
                   ] ,
                   'label-template-uri' : '/public/templates/labels/common-labels.adl#label'
               };
@@ -67,20 +69,22 @@
     </xsl:attribute-set>
 
     <xsl:template name="show-box">
-        <rect x="0" y="0"
-              pp:width="$width" pp:height="$height"
-              width="0"
-              height="0"
-              rx="8" ry="8" style="fill: url(#glyph-background); "
-              class="glyph-back"/>
+        <g k9-elem="back">
+            <rect x="0" y="0"
+                  pp:width="$width" pp:height="$height"
+                  width="0"
+                  height="0"
+                  rx="8" ry="8" />
+        </g>
     </xsl:template>
+
 
     <xsl:template match="adl:diagram">
         <xsl:call-template name="diagram" />
     </xsl:template>
 
     <xsl:template match="adl:glyph">
-        <g k9-elem="glyph">
+        <g k9-elem="glyph" k9-texture="solid">
             <xsl:copy-of select="@*" />
             <xsl:call-template name="show-box" />
             <xsl:apply-templates/>
@@ -88,11 +92,7 @@
     </xsl:template>
 
     <xsl:template match="adl:context">
-        <g k9-elem="context" class=".context-back">
-            <xsl:copy-of select="@*" />
-            <rect x='0' y='0' width="0" height="0" pp:width='$width' pp:height='$height' rx='12' ry='12' class="context-back" />
-            <xsl:apply-templates/>
-        </g>
+        <xsl:call-template name="container" />
     </xsl:template>
 
     <xsl:template match='adl:context/adl:label | adl:cell/adl:label'>
@@ -141,9 +141,7 @@
     </xsl:template>
 
     <xsl:template match="adl:glyph/adl:label">
-        <g class="glyph-label-text" k9-elem="text-label">
-            <text><xsl:apply-templates select="text()" /></text>
-        </g>
+        <xsl:call-template name="textarea" />
     </xsl:template>
 
     <xsl:template match="adl:glyph/adl:stereotype">

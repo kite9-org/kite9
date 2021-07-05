@@ -3,6 +3,7 @@ package org.kite9.diagram.js.bridge
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
+import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
@@ -50,6 +51,10 @@ class JSElementContext : ElementContext {
 
     override fun getRegisteredDiagramElement(x: Element) : DiagramElement? {
         return xmlToDiagram[x]
+    }
+
+    override fun getDocumentReplacer(): XPathAware {
+        TODO("Not yet implemented")
     }
 
     override fun getCssStyleDoubleProperty(prop: String, e: Element): Double {

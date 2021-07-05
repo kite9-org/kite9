@@ -14,7 +14,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
     }
 
     private fun isDocumentElement(at: Element) : Boolean {
-        return (at == at.ownerDocument.documentElement)
+        return (at == at.ownerDocument?.documentElement)
     }
 
     override fun getReplacementStringValue(v: String, at: Element) : String {

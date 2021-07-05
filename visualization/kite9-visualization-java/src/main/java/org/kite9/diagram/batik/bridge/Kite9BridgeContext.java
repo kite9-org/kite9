@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
@@ -184,8 +185,13 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@Override
 	public double getCssStyleDoubleProperty(String prop, Element e) {
-		Value v = getCSSValue(prop, e);
-		return v.getFloatValue();
+    	try {
+			Value v = getCSSValue(prop, e);
+			return v.getFloatValue();
+		} catch (Exception e2) {
+    		return 0.0;
+    		//throw new Kite9XMLProcessingException("Couldn't get property "+prop+" from "+new XMLHelper().toXML(e), e);
+		}
 	}
 
 
@@ -289,9 +295,13 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@Override
 	public String evaluateXPath(String x, Element e) {
-		SVGOMDocument ownerDocument = (SVGOMDocument) e.getOwnerDocument();
-		XPathResult result = (XPathResult) ownerDocument.evaluate(x, e, ownerDocument.createNSResolver(e), XPathResult.STRING_TYPE, null);
-		return result.getStringValue();
+		try {
+			SVGOMDocument ownerDocument = (SVGOMDocument) e.getOwnerDocument();
+			XPathResult result = (XPathResult) ownerDocument.evaluate(x, e, ownerDocument.createNSResolver(e), XPathResult.STRING_TYPE, null);
+			return result.getStringValue();
+		} catch (Exception e2) {
+			throw new Kite9XMLProcessingException("Problem with XPath '"+x+"' at "+new XMLHelper().toXML(e), e2);
+		}
 	}
 
 	@Override

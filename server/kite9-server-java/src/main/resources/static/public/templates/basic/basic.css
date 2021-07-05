@@ -11,19 +11,7 @@
 	font-family: metropolis;
 }
 
-@script url('basic.js');
-
-@params {
-	palettes: 
-	  url('palette.adl') "connected" 
-    url('/public/templates/links/common-links.adl') "link"
-    url('/public/templates/links/common-ends.adl') "end"
-    url('/public/templates/containers/common-containers.adl') "connected"
-    url('/public/templates/grid/common-grid.adl') "cell table";
-}
-
-[k9-elem=g].box {
-	--kite9-template: url(template.xml#box);
+[k9-elem=box] {
 	--kite9-padding: 10pt;
 	--kite9-sizing: minimize;
 	--kite9-type: container;
@@ -33,14 +21,14 @@
 	--kite9-connection-align: 50%;
 }
 
-[k9-elem=g].box > [k9-elem=back] {
+[k9-elem=box] > [k9-elem=back] {
 	fill: #CCCCAA;
 	fill-opacity: 1;
 	stroke: #AAAA88;
 	stroke-dasharray: none;
 }
 
-[k9-elem=g].clearbox {
+[k9-elem=clearbox] {
 	--kite9-padding: 10pt;
 	--kite9-sizing: maximize;
 	--kite9-type: container;
@@ -49,14 +37,12 @@
 	--kite9-connection-align: 50%;
 }
 
-[k9-elem=g].text {
-	--kite9-template: url('/public/templates/common/formats/formats-template.xml#textarea');
+[k9-elem=textarea] {
 	--kite9-type: text;
 	--kite9-margin: 4pt;
 	--kite9-vertical-align: center;
 	--kite9-connection-align: 50%;
 	--kite9-horizontal-align: center;
-	stroke: black;
 	fill: #333300;
 	font-family: "metropolis";
 	text-align: start;

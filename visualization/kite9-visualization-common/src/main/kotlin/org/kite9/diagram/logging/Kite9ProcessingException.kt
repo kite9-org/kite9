@@ -24,7 +24,7 @@ open class Kite9ProcessingException : RuntimeException
         }
 
         protected fun correctThrowable(arg1: Throwable?): Throwable? {
-            return if (arg1 is Kite9ProcessingException) arg1.cause else arg1
+            return if ((arg1 is Kite9ProcessingException) && (arg1.cause != null)) arg1.cause else arg1
         }
     }
 }
