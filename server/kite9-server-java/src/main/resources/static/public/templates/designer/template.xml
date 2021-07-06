@@ -30,7 +30,7 @@
 		k9-child="/public/templates/designer/template.xml#symbol-example"
 		k9-ui="delete orphan cascade edit drag" k9-texture="none"
 		k9-palette="designer-text">
-		<back k9-indicator="pulse" />
+		<back k9-highlight="pulse" />
 		<textarea k9-ui="text">
       <contents xpath="text()" />
 		</textarea>
@@ -53,7 +53,7 @@
     <contents optional="true" />
   </template>
 
-	<template id="key" k9-ui="delete cascade" k9-texture="none" k9-indicator="pulse">
+	<template id="key" k9-ui="delete cascade" k9-texture="none" k9-highlight="pulse">
     <back />
 		<key-body k9-texture="solid" >
 			<contents />
@@ -69,7 +69,7 @@
     k9-palette="symbol"
     k9-texture="symbol"
     k9-containers="designer-text">
-    <back k9-indicator="pulse" />
+    <back k9-highlight="pulse" />
     <textarea>
       <contents optional="true" />
     </textarea>
@@ -81,7 +81,7 @@
     k9-contains="designer-text"
     k9-child="/public/templates/designer/template.xml#text-example"
     k9-format="inline-container" k9-texture="solid">
-    <back k9-indicator="pulse" />
+    <back k9-highlight="pulse" />
     <contents optional="true" />
   </template>
 

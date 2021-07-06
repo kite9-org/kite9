@@ -13,7 +13,7 @@
     <xsl:param name="k9-texture">solid</xsl:param>
     <xsl:param name="k9-ui">delete link cascade drop</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-indicator">pulse</xsl:param>
+    <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-containers">*</xsl:param>
     <xsl:param name="k9-contains">end label</xsl:param>
     
@@ -27,7 +27,7 @@
       <xsl:attribute name="k9-contains"><xsl:value-of select="$k9-contains" /></xsl:attribute>
       <xsl:copy-of select="@*" />
       
-      <g k9-elem="link-grab" k9-indicator="bar stroke">
+      <g k9-elem="link-grab" k9-highlight="bar stroke">
         <path pp:d="$path" d="" k9-animate="link"/>
       </g>
       
@@ -55,13 +55,13 @@
       <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
       <xsl:copy-of select="@*" />
       
-      <g k9-elem="align-grab" k9-indicator="bar stroke">
+      <g k9-elem="align-grab" k9-highlight="bar stroke">
         <path k9-animate="link" pp:d="$path" d="" />
       </g>
       
       <xsl:apply-templates />
       
-      <g k9-elem="align-body" k9-indicator="stroke">
+      <g k9-elem="align-body" k9-highlight="stroke">
         <path k9-animate="link" pp:d="$path" d="" />
       </g>
     </g>

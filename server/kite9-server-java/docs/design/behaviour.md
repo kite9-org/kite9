@@ -40,9 +40,9 @@ _Implemented by **labels**_
 
 You can label it.  Value of this attribute is the template for the label.
 
-### k9-indicator
+### k9-highlight
 
-_Implemented by **indication**_.
+_Implemented by **highlight**_.
 
 Can be any / all of
 * **fill**: this is a permanently filled shape

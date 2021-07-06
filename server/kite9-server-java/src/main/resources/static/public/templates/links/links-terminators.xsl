@@ -7,7 +7,7 @@
 
 
  <xsl:attribute-set name="terminators">
-  <xsl:attribute name="k9-indicator">fill grab</xsl:attribute>
+  <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
   <xsl:attribute name="k9-palette">end</xsl:attribute>
   <xsl:attribute name="k9-containers">link</xsl:attribute>
   <xsl:attribute name="k9-ui">drag label</xsl:attribute>

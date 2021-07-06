@@ -1,7 +1,7 @@
 <svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl'>
 
   <template id="templated-link" k9-ui="delete link cascade drop" k9-palette="link" k9-containers="*" k9-contains="end label">
-    <link-grab k9-indicator="bar stroke">
+    <link-grab k9-highlight="bar stroke">
       <svg:path d="#{$path}" k9-animate="link"/>
     </link-grab>
     <contents optional="true" />

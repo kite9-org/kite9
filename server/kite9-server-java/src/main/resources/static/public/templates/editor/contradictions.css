@@ -1,15 +1,15 @@
 /**
  * This highlights contradicting elements
  */
-.indicators-on  *[k9-info~="contradicting:"] > [k9-indicator~=stroke],
-.indicators-on  *[k9-info~="contradicting:"] > [k9-indicator~=outline],
-.indicators-on  *[k9-info~="contradicting:"] > [k9-indicator~=bar] {
+.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight~=stroke],
+.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight~=outline],
+.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight~=bar] {
 	stroke: #ff5956;
 }
 
-.indicators-on  *[k9-info~="contradicting:"] > [k9-indicator=fill],
-.indicators-on  *[k9-info~="contradicting:"] > [k9-indicator=grab],
-.indicators-on  *[k9-info~="contradicting:"] > [k9-indicator=pulse] {
+.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight=fill],
+.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight=grab],
+.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight=pulse] {
 	fill: #ff5956;
 }
  

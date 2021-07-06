@@ -2,7 +2,7 @@
 	<svg:defs>
 		<svg:style type="text/css">
 			@import url("/public/templates/common/common.css");
-			@import url("/public/templates/indicators/indicators.css");
+			@import url("/public/templates/highlight/highlight.css");
 			@import url('/public/fonts/metropolis/metropolis.css');
 
 			[k9-elem=container] {

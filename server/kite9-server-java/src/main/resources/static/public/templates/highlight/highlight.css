@@ -2,7 +2,7 @@
  * Highlights invisible elements like "align" links,
  * direction indicators and layout groups.  So that you can see
  * where elements are in the diagram.
- * This is all controlled by the 'k9-indicator' attribute. 
+ * This is all controlled by the 'k9-highlight' attribute. 
  * Meanings:
  *
  * fill: this is a permanently filled shape
@@ -14,46 +14,46 @@
  * bar: makes the stroke wider so it can be grabbed 
  
  */
-[id] > [k9-indicator] {
+[id] > [k9-highlight] {
 	transition: fill 0.2s;	
 }
 
 /*
  * This includes CSS directives for making it easier to grab small elements in the diagram.
  */
-.indicators-on [k9-indicator~=grab] {
+.indicators-on [k9-highlight~=grab] {
   stroke-width: 10pt !important;
   fill-opacity: .5 !important;
 }
 
-.indicators-on [k9-indicator~=bar] {
+.indicators-on [k9-highlight~=bar] {
   stroke-width: 10pt !important;
   stroke-opacity: .1 !important;
 }
 
 /* Permanent effect: stroke and fill */ 
-.indicators-on [id] > [k9-indicator~=stroke] {
+.indicators-on [id] > [k9-highlight~=stroke] {
 	stroke: #b7c0fe;
 	stroke-opacity: .8;
 }
 
-.indicators-on [id] > [k9-indicator~=fill] {
+.indicators-on [id] > [k9-highlight~=fill] {
 	fill: #b7c0fe;
 	fill-opacity: .6;
 }
 
 /* Mouse-over effects: stroke, fill + outline and pulse */
 
-.mouseover > [k9-indicator~=stroke],
-.mouseover > [k9-indicator~=outline],
-.mouseover > [k9-indicator~=bar] {
+.mouseover > [k9-highlight~=stroke],
+.mouseover > [k9-highlight~=outline],
+.mouseover > [k9-highlight~=bar] {
 	stroke: #BBDDEE !important;
 	stroke-opacity: 1 !important;
 }
 
-.mouseover > [k9-indicator~=pulse],
-.mouseover > [k9-indicator~=fill],
-.mouseover > [k9-indicator~=grab],
+.mouseover > [k9-highlight~=pulse],
+.mouseover > [k9-highlight~=fill],
+.mouseover > [k9-highlight~=grab],
 .mouseover.grid-temporary {
 	fill: #CCEEFF !important;
 	fill-opacity: .8 !important;
@@ -61,16 +61,16 @@
 
 /* selected effect: stroke, fill, outline and pulse */
 
-.selected > [k9-indicator~=outline],
-.selected > [k9-indicator~=stroke],
-.selected > [k9-indicator~=bar] {
+.selected > [k9-highlight~=outline],
+.selected > [k9-highlight~=stroke],
+.selected > [k9-highlight~=bar] {
 	stroke: rgb(255, 204, 0) !important;
 	stroke-opacity: .8 !important;
 }
 
-.selected > [k9-indicator~=pulse],
-.selected > [k9-indicator~=fill],
-.selected > [k9-indicator~=grab] {
+.selected > [k9-highlight~=pulse],
+.selected > [k9-highlight~=fill],
+.selected > [k9-highlight~=grab] {
 	fill: rgb(255, 204, 0) !important;
 	fill-opacity: .8 !important;
 }
@@ -78,7 +78,7 @@
 /** 
  * Prevent diagram highlight / select
  */
-[k9-elem=diagram].selected > [k9-indicator] {
+[k9-elem=diagram].selected > [k9-highlight] {
 	fill-opacity: 0 !important;
 	fill: white !important;
 }
@@ -97,15 +97,15 @@
 
 /* inactive effect: dims the element */
 
-.inactive > [k9-indicator~=outline],
-.inactive > [k9-indicator~=stroke],
-.inactive > [k9-indicator~=bar] {
+.inactive > [k9-highlight~=outline],
+.inactive > [k9-highlight~=stroke],
+.inactive > [k9-highlight~=bar] {
   stroke-opacity: .2 !important;
 }
 
-.inactive > [k9-indicator~=pulse],
-.inactive > [k9-indicator~=fill],
-.inactive > [k9-indicator~=grab],
+.inactive > [k9-highlight~=pulse],
+.inactive > [k9-highlight~=fill],
+.inactive > [k9-highlight~=grab],
 .inactive > g > text {
   fill-opacity: .2 !important;
 }

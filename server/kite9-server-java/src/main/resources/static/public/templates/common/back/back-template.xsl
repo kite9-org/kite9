@@ -7,10 +7,10 @@
 
 	<xsl:template name="back-round-rect">
 		<xsl:param name="k9-rounding">0pt</xsl:param>
-		<xsl:param name="k9-indicator">pulse</xsl:param>
+		<xsl:param name="k9-highlight">pulse</xsl:param>
 		<g k9-elem="back">
 			<xsl:attribute name="k9-elem">back</xsl:attribute>
-			<xsl:attribute name="k9-indicator"><xsl:value-of select="$k9-indicator" /></xsl:attribute>
+			<xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
 			<rect x="0" y="0" width="0" height="0">
 				<xsl:attribute name="rx"><xsl:value-of select="$k9-rounding" /></xsl:attribute>
 				<xsl:attribute name="ry"><xsl:value-of select="$k9-rounding" /></xsl:attribute>
@@ -23,7 +23,7 @@
 	<xsl:template name="back-ellipse">
 		<g k9-elem="back">
 			<xsl:attribute name="k9-elem">back</xsl:attribute>
-			<xsl:attribute name="k9-indicator">pulse</xsl:attribute>
+			<xsl:attribute name="k9-highlight">pulse</xsl:attribute>
 			<ellipse pp:cx="$width div 2" pp:cy="$height div 2" pp:rx="$width div 2" pp:ry="$height div 2" />
 		</g>
 	</xsl:template>

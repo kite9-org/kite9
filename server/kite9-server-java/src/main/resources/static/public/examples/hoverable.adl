@@ -4,7 +4,7 @@
     <svg:style type="text/css"> 
        @import url("/public/templates/common/common.css");
        @import url("/public/templates/links/common-links.css");
-       @import url("/public/templates/indicators/indicators.css");
+       @import url("/public/templates/highlight/highlight.css");
     </svg:style>
     
     <svg:script type="module">

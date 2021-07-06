@@ -8,12 +8,12 @@
   </template>
   
   <template id="cell" k9-ui="drag delete cascade orphan layout grid" k9-palette="cell" k9-contains="connected">
-    <back k9-indicator="pulse stroke" />
+    <back k9-highlight="pulse stroke" />
     <contents optional="true" />
   </template>
   
   <template id="bordered-cell" k9-ui="drag delete cascade orphan layout grid" k9-palette="cell" k9-contains="connected">
-    <back k9-indicator="pulse" />
+    <back k9-highlight="pulse" />
     <contents optional="true" />
   </template>
 

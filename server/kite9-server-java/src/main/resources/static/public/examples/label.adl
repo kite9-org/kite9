@@ -9,7 +9,7 @@
        @import url("/public/templates/common/common.css");
        @import url("/public/templates/labels/common-labels.css");
        @import url('/public/fonts/metropolis/metropolis.css');
-       @import url("/public/templates/indicators/indicators.css");
+       @import url("/public/templates/highlight/highlight.css");
        
        [k9-elem=label] [k9-elem=front] {
          fill: black;

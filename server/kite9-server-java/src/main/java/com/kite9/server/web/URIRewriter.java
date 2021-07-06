@@ -5,12 +5,13 @@ import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.uri.URIWrapper;
 
 /**
  * Some functions for returning the URI for a given request.

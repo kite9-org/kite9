@@ -6,9 +6,6 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.server.adl.format.MediaTypeHelper;
-import com.kite9.server.adl.format.media.EditableSVGFormat;
-import com.kite9.server.topic.ChangeBroadcaster;
 import org.kite9.diagram.dom.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +24,9 @@ import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.server.adl.format.MediaTypeHelper;
+import com.kite9.server.adl.format.media.EditableSVGFormat;
+import com.kite9.server.topic.ChangeBroadcaster;
 
 public class ADLDomMessageWriter extends AbstractGenericHttpMessageConverter<ADLDom> {
 	
@@ -69,7 +69,6 @@ public class ADLDomMessageWriter extends AbstractGenericHttpMessageConverter<ADL
 		return super.getSupportedMediaTypes();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	protected void writeInternal(ADLDom t, Type type, HttpOutputMessage outputMessage) throws IOException, HttpMessageNotWritableException {
 		MediaType contentType = outputMessage.getHeaders().getContentType();	

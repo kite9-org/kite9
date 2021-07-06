@@ -145,11 +145,11 @@ public class Kite9ErrorController implements ErrorController {
 	}
 
 	protected void doXMLBasedException(StringBuilder sb, Throwable e, String css, String ctx) {
-		if (!StringUtils.isEmpty(ctx)) {
+		if (StringUtils.hasText(ctx)) {
 			doCard(sb, ctx, "fragment", "xml");
 		}
 		
-		if (!StringUtils.isEmpty(css)) {
+		if (StringUtils.hasText(css)) {
 			doCard(sb, css, "style", "css");
 			
 		}

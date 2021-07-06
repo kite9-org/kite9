@@ -18,7 +18,7 @@
   
   <!-- simple text area, can only be edited, not moved, deleted etc. -->
   <template id="vertical-textarea" k9-ui="orphan edit delete"
-    k9-format="textarea"  k9-shape="rect" k9-texture="solid" transform="rotate(-90)" k9-indicator="pulse">
+    k9-format="textarea"  k9-shape="rect" k9-texture="solid" transform="rotate(-90)" k9-highlight="pulse">
     <back />
     <contents />
   </template>

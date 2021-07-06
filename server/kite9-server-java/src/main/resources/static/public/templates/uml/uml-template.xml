@@ -33,7 +33,7 @@
 		k9-ui="drag contain delete align connect autoconnect copy replace-connected cascade"
 		k9-palette="connected"
 		k9-texture="solid">
-		<back k9-indicator="pulse" />
+		<back k9-highlight="pulse" />
 		<contents optional="true" />
 	</template>
 	

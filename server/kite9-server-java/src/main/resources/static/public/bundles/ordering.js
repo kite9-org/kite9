@@ -101,7 +101,7 @@ export function drawBar(fx, fy, tx, ty, container) {
 	if ((bar == null) || (bar.parentNode.parentNode == null)) {
 		var svg = container == undefined ? getMainSvg() : container;
 		bar = document.createElementNS("http://www.w3.org/2000/svg", "g");
-		bar.setAttributeNS(null, 'k9-indicator', 'bar outline');
+		bar.setAttributeNS(null, 'k9-highlight', 'bar outline');
 		bar.classList.add('selected');
 		bar.setAttributeNS(null, 'pointer-events', 'none');
 		

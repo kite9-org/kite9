@@ -23,7 +23,7 @@
   </template>
   
   <template id="action" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected " k9-texture="solid">
-    <shape k9-indicator="pulse">
+    <shape k9-highlight="pulse">
       <svg:polygon points='0 0, #{$width - (15 * $pt)} 0, #{$width} #{$height div 2}, #{$width - (15 * $pt) } #{$height}, 0 #{$height}'  />
     </shape>
     <votes count="pre:#{count(adl:vote)}" />
@@ -35,7 +35,7 @@
   </template>
   
   <template id="action-left" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected "  k9-texture="solid">
-    <shape style='kite9-usage: decal; kite9-type: svg; fill: url(#risk-background); ' k9-indicator="fill">
+    <shape style='kite9-usage: decal; kite9-type: svg; fill: url(#risk-background); ' k9-highlight="fill">
       <svg:polygon points='0 #{$height div 2}, #{15 * $pt} 0, #{$width} 0, #{$width} #{$height}, #{15 * $pt} #{$height} 0, #{$height div 2}' />
     </shape>
     <votes count="pre:#{count(adl:vote)}" />
@@ -82,7 +82,7 @@
   
  
  <template id="planner-cell" k9-ui="cascade orphan label delete" layout="right" k9-contains="connected" >
-    <back k9-indicator="pulse" />
+    <back k9-highlight="pulse" />
     <indicator />
     <contents optional="true" />
   </template> 

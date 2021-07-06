@@ -1,66 +1,6 @@
 package com.kite9.server.web;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.lang.reflect.Type;
-import java.net.URI;
-import java.nio.charset.Charset;
-
-import javax.xml.XMLConstants;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-
-import com.kite9.server.domain.RestEntity;
-import org.apache.xml.utils.DefaultErrorHandler;
-import org.codehaus.stax2.XMLStreamWriter2;
-import org.kite9.diagram.common.StreamHelp;
-import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.cache.Cache;
-import org.kite9.diagram.logging.Kite9Log;
-import org.kite9.diagram.logging.Kite9LogImpl;
-import org.kite9.diagram.logging.Kite9ProcessingException;
-import org.kite9.diagram.logging.Logable;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.hateoas.IanaLinkRelations;
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpInputMessage;
-import org.springframework.http.HttpOutputMessage;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.AbstractGenericHttpMessageConverter;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
-import com.ctc.wstx.stax.WstxOutputFactory;
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlFactory;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.fasterxml.jackson.dataformat.xml.util.DefaultXmlPrettyPrinter;
-import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.pipeline.adl.format.media.Format;
-import com.kite9.pipeline.adl.holder.ADLFactory;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 
 /**
  * Handles conversion of the Hateoas {@link ResourceSupport} objects to ADL, and therefore HTML, SVG etc..

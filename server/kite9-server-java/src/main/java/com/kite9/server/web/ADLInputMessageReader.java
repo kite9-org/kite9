@@ -6,10 +6,6 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.MediaTypeHelper;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,8 +17,12 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.MediaTypeHelper;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 
 public class ADLInputMessageReader extends AbstractGenericHttpMessageConverter<ADLBase> {
 	
@@ -54,7 +54,6 @@ public class ADLInputMessageReader extends AbstractGenericHttpMessageConverter<A
 
 	@Override
 	protected boolean canRead(org.springframework.http.MediaType mediaType) {
-		K9MediaType mt = MediaTypeHelper.getKite9MediaType(mediaType);
 		return MediaTypeHelper.includes(Kite9MediaTypes.INSTANCE.getSVG(), mediaType) ||
 				MediaTypeHelper.includes(Kite9MediaTypes.INSTANCE.getADL_SVG(), mediaType);
 	}

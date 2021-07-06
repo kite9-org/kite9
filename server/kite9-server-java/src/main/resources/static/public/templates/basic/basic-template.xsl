@@ -17,7 +17,7 @@
 	</xsl:template>
 
   <xsl:template match="adl:container">
-    <xsl:call-template name="editable-container">
+    <xsl:call-template name="container">
       <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -59,6 +59,7 @@
 			</xsl:with-param>
       <xsl:with-param name="defs">
         <xsl:copy-of select="$links-markers" />
+        <xsl:copy-of select="$container-indicators" />
       </xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>

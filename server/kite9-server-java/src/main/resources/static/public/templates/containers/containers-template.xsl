@@ -8,46 +8,79 @@
 
     <xsl:import href="/public/templates/common/back/back-template.xsl" />
 
-    <xsl:variable name="container-defs">
-        <svg:marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
+    <xsl:variable name="container-indicators">
+        <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
                     stroke="none" fill="none">
-            <svg:path k9-indicator="stroke" d="M0,0 L3,3 L0,6"/>
-        </svg:marker>
+            <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
+        </marker>
     </xsl:variable>
 
-    <xsl:template name="container">
-        <xsl:param name="rounding">15pt</xsl:param>
-        <g k9-texture="outline"
-           k9-palette="connected"
-           k9-contains="connected"
-           k9-ui="drag delete align connect layout label">
-            <xsl:copy-of select="@*" />
-            <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
-            <xsl:call-template name="back-round-rect">
-                <xsl:with-param name="k9-indicator">pulse</xsl:with-param>
-                <xsl:with-param name="rounding"><xsl:value-of select="$rounding"/></xsl:with-param>
-            </xsl:call-template>
-            <xsl:call-template name="indicator"/>  -->
-            <xsl:apply-templates />
-        </g>
-    </xsl:template>
+  <!-- Container template where the container contents is in a specific order -->
+  <xsl:template name='container'>
+    <xsl:param name="k9-format">container</xsl:param>
+    <xsl:param name="k9-palette">connected</xsl:param>
+    <xsl:param name="k9-contains">connected</xsl:param>
+    <xsl:param name="k9-texture">solid</xsl:param>
+    <xsl:param name="k9-ui">drag delete align connect insert autoconnect</xsl:param>
+    <xsl:param name="k9-rounding">5pt</xsl:param>
+    <xsl:param name="k9-highlight">pulse</xsl:param>
+    
+    <g>
+      <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
+      <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
+      <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
+      <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
+      <xsl:attribute name="k9-palette"><xsl:value-of select="$k9-palette" /></xsl:attribute>
+      <xsl:attribute name="k9-contains"><xsl:value-of select="$k9-contains" /></xsl:attribute>
+      <xsl:copy-of select="@*" />
+       
+      <xsl:call-template name="back-round-rect">
+        <xsl:with-param name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:with-param>
+        <xsl:with-param name="k9-rounding"><xsl:value-of select="$k9-rounding" /></xsl:with-param>
+       </xsl:call-template>
+       
+      <xsl:apply-templates />
+      
+       <xsl:if test="@layout">
+        <g id="hi" />
+        <xsl:call-template name="indicator">
+          <xsl:with-param name="layout"><xsl:value-of select="@layout" /></xsl:with-param>
+        </xsl:call-template>
+      </xsl:if>
+     </g>
+  </xsl:template>
 
     <xsl:template name="indicator">
         <xsl:param name="layout"></xsl:param>
-            <g k9-indicator="stroke">
+            <g k9-highlight="stroke">
+              <rect y="0" x="0" pp:x="$width - 25" pp:y="$height - 25" width="20" height="20" rx="4" ry="4" fill="none"/>
                    <xsl:choose>
                        <xsl:when test="$layout = 'right'">
-                           <svg:rect y="0" x="0" pp:x="$width - 25" pp:y="$height - 25" width="20" height="20" rx="4" ry="4"
-                                     fill="none"/>
-                           <svg:path d="" pp:d="'M' + ($width - 20) ($height - 15) l10 0" marker-end='url(#indicator-arrow)'/>
+                           <path d="" pp:d="concat('M', $width - 20,' ',$height - 15,' l10 0')" marker-end='url(#indicator-arrow)'/>
                        </xsl:when>
                        <xsl:when test="$layout = 'left'">
-                           ... some output ...
+                           <path d="" pp:d="concat('M ', $width - 10,' ', $height - 15,' l-10 0')" marker-end='url(#indicator-arrow)'/>
                        </xsl:when>
+                       <xsl:when test="$layout = 'up'">
+                           <path d="" pp:d="concat('M ',$width - 15,' ', $height - 10,'l0 -10')" marker-end='url(#indicator-arrow)'/>
+                       </xsl:when>
+                       <xsl:when test="$layout = 'down'">
+                           <path d="" pp:d="concat('M ', $width - 15,' ',$height - 20,' l0 10')" marker-end='url(#indicator-arrow)'/>
+                       </xsl:when>
+                       <xsl:when test="$layout = 'horizontal'">
+                        <path d="" pp:d="concat('M ', $width - 20,' ',$height - 15, ' l10 0')" />            
+                       </xsl:when>
+                       <xsl:when test="$layout = 'vertical'">
+                           <path d="" pp:d="concat('M ',$width - 15,' ',$height - 20,'l0 10')" />
+                       </xsl:when>
+                       
                        <xsl:otherwise>
                        </xsl:otherwise>
                    </xsl:choose>
                </g>
 
     </xsl:template>
+   
+
+    
 </xsl:stylesheet>
