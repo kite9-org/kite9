@@ -2,9 +2,9 @@
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
-   <box id="b1" ><textarea id="t1" roblo="fvsfgs" style="fill: red" >b1</textarea></box>
+   <box id="b1" ><textarea id="t1" style="fill: red" >b1</textarea></box>
    
-   <container id="bigbox" layout="left">
+   <container id="bigbox" layout="horizontal">
      <box id="b2" ><textarea id="t2">b2</textarea></box>
      <box id="b3" ><textarea id="t3">b3</textarea></box>
    </container>

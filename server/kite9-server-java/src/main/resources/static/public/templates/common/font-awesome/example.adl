@@ -4,7 +4,7 @@
     <svg:style type="text/css">
       @import url("/public/templates/common/back/back.css");
       @import url("/public/templates/common/font-awesome/font-awesome.css");
-      @import url("/public/templates/containers/containers.css");
+      @import url("/public/templates/common/diagram/diagram.css");
     </svg:style>
 
   </svg:defs>

@@ -138,7 +138,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 						return;
 					}
 		        	
-					if (!v.contains("file:")) {
+					if ((!v.contains("file:")) && (!v.startsWith("pp:"))) {
 						copyToErrors(output);	
 						Assert.fail("found a difference at "+comparison.getControlDetails().getXPath()+ ":  "+comparison);
 					}

@@ -19,7 +19,7 @@ spring:
         max-age: 0
 
 kite9:
-  diagram-log: FILE
+  diagram-log: STREAM
   caching: false
   
 management:

@@ -20,17 +20,10 @@
 			 <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
 			 <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
        <xsl:copy-of select="@*" />
-       
-			 <!-- <xsl:call-template name="back-round-rect">
-			   <xsl:with-param name="k9-highlight">fill</xsl:with-param>
-			   <xsl:with-param name="k9-rounding"><xsl:value-of select="$k9-rounding" /></xsl:with-param>
-		   </xsl:call-template> -->
-
+      
 			 <text>
 			 	 <xsl:value-of select="text()" />
 			 </text>
-			
-			<xsl:apply-templates />
 			
 		</g>
 	</xsl:template>

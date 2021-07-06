@@ -8,6 +8,11 @@
   --kite9-horizontal-align: center;
 }
 
+[k9-elem=textarea] text {
+	alignment-baseline: baseline;
+}
+
+
 /** image-editable format */
 
 [k9-elem=image-editable],

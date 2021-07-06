@@ -45,7 +45,6 @@
 	--kite9-horizontal-align: center;
 	fill: #333300;
 	font-family: "metropolis";
-	text-align: start;
 	font-size: 50pt;
 }
 
@@ -54,7 +53,6 @@
 [k9-elem=label] {
 	fill: gray;
 	font-family: "metropolis";
-	text-align: start;
 	font-size: 16pt;
 	--kite9-padding: 10pt;
 }

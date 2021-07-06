@@ -100,8 +100,8 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		renderDiagram(basicDiagram(glyphContainer(
 				text("<svg:text>hello something else</svg:text>", "font-size: 25px; line-height: 120%;")+
 				text("<svg:text>hello 2</svg:text>", "font-size: 25px;")+
-				text("<svg:text>bette\nmiddler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; text-align: middle;")+
-				text("<svg:text>hello\n bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; text-align: end;"),
+				text("<svg:text>bette\nmiddler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; alignment-baseline: middle;")+
+				text("<svg:text>hello\n bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; alignment-baseline: alphabetic;"),
 			"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-size: 150px 150px")));
 	}
 
@@ -120,16 +120,16 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		renderDiagram(basicDiagram(
 				glyphContainer(
 			glyphContainer(
-				text("<svg:text>hello 1</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
-				text("<svg:text>pello 2</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
+				text("<svg:text>hello 1</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: middle;")+
+				text("<svg:text>pello 2</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: middle;"),
 			"--kite9-padding: 0px; --kite9-layout: right; --kite9-min-size: 150px 150px") +
 			glyphContainer(
-					text(text1, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
+					text(text1, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: alphabetic; ")+
+					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: alphabetic; "),
 				"--kite9-padding: 0px; --kite9-layout: down; ")+
 			glyphContainer(
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px")+
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px"),
+					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: alphabetic; ")+
+					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: alphabetic; "),
 				"--kite9-padding: 00px; --kite9-layout: down;"), "--kite9-vertical-align: top")));
 	}
 	

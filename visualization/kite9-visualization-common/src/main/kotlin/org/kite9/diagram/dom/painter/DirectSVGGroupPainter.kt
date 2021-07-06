@@ -24,9 +24,5 @@ open class DirectSVGGroupPainter(protected var theElement: Element) : AbstractPa
         handleTemporaryElements(out!!, d!!, postProcessor)
         return out
     }
-//
-//    /**
-//     * Ensures that the element has the correct contents before the pre-processor is called.
-//     */
-//    protected fun setupElementXML(e: Element?) {}
+
 }
