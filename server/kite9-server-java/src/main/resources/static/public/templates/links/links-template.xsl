@@ -33,10 +33,14 @@
       
       <xsl:apply-templates />
       
+      <xsl:variable name="toShape"><xsl:value-of select="adl:to/@shape" /></xsl:variable>
+      <xsl:variable name="fromShape"></xsl:variable>
+      
       <g k9-elem="link-body">
-            <path k9-animate="link" d="" pp:d="$path"
-                  pp:marker-start="url(##{concat(adl:from/@shape,'-start-marker')})"
-                  pp:marker-end="url(##{concat(adl:to/@shape,'-end-marker')})" />
+       <path k9-animate="link" d="" pp:d="$path">
+         <xsl:attribute name="marker-start">url(#<xsl:value-of select="adl:from/@shape" />-start-marker)</xsl:attribute>
+         <xsl:attribute name="marker-end">url(#<xsl:value-of select="adl:to/@shape" />-end-marker)</xsl:attribute>
+       </path>     
       </g>
       
     </g>

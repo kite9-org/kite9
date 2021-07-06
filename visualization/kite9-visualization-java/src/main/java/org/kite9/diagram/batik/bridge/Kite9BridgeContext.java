@@ -300,7 +300,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 			XPathResult result = (XPathResult) ownerDocument.evaluate(x, e, ownerDocument.createNSResolver(e), XPathResult.STRING_TYPE, null);
 			return result.getStringValue();
 		} catch (Exception e2) {
-			throw new Kite9XMLProcessingException("Problem with XPath '"+x+"' at "+new XMLHelper().toXML(e), e2);
+			throw new Kite9XMLProcessingException("Problem with XPath '"+x+"'", e2, new XMLHelper().toXML(e), null);
 		}
 	}
 

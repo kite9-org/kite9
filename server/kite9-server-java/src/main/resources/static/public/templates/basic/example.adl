@@ -10,8 +10,8 @@
    </container>
    
    <link id="link1" r="r">
-    <from id="link1-from" reference="b1" class="arrow"></from>
-    <to id="link1-to" class="arrow" reference="b3"></to>
+    <from id="link1-from" reference="b1" shape="arrow"></from>
+    <to id="link1-to" shape="arrow" reference="b3"></to>
    </link>
    
    <link drawDirection="RIGHT" id="link2">

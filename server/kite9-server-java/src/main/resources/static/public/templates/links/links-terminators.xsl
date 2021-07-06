@@ -11,6 +11,8 @@
   <xsl:attribute name="k9-palette">end</xsl:attribute>
   <xsl:attribute name="k9-containers">link</xsl:attribute>
   <xsl:attribute name="k9-ui">drag label</xsl:attribute>
+  <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
+  
  </xsl:attribute-set>
 
 
