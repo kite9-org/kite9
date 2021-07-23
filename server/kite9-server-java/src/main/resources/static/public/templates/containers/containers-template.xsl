@@ -24,6 +24,7 @@
     <xsl:param name="k9-ui">drag delete align connect insert autoconnect</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
+    <xsl:param name="content"></xsl:param>
     
     <g>
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
@@ -39,10 +40,9 @@
         <xsl:with-param name="k9-rounding"><xsl:value-of select="$k9-rounding" /></xsl:with-param>
        </xsl:call-template>
        
-      <xsl:apply-templates />
+      <xsl:copy-of select="$content"/>
       
        <xsl:if test="@layout">
-        <g id="hi" />
         <xsl:call-template name="indicator">
           <xsl:with-param name="layout"><xsl:value-of select="@layout" /></xsl:with-param>
         </xsl:call-template>

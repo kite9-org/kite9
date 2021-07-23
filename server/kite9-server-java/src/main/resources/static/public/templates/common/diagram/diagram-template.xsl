@@ -37,7 +37,7 @@
     </xsl:template>
 
     <xsl:template name="diagram">
-        <xsl:param name="attributes"/>
+        <xsl:param name="content" />
         <g>
             <xsl:attribute name="k9-elem">diagram</xsl:attribute>
             <xsl:attribute name="k9-texture">background</xsl:attribute>
@@ -47,15 +47,13 @@
             <xsl:attribute name="k9-contains">connected</xsl:attribute>
             <xsl:attribute name="pp:width">$width</xsl:attribute>
             <xsl:attribute name="pp:height">$height</xsl:attribute>
-            <!--xsl:copy>
-                <xsl:value-of select="$attributes"/>
-            </xsl:copy -->
+            <xsl:copy-of select="@*" />
 
             <xsl:call-template name="back-round-rect">
                 <xsl:with-param name="rounding">0pt</xsl:with-param>
             </xsl:call-template>
             <!--indicator -->
-            <xsl:apply-templates/>
+            <xsl:copy-of select="$content" />
         </g>
     </xsl:template>
 

@@ -27,7 +27,11 @@
 	</xsl:template>
 
 	<xsl:template match="adl:diagram">
-		<xsl:call-template name="diagram" />
+		<xsl:call-template name="diagram">
+      <xsl:with-param name="content">
+        <xsl:apply-templates />
+      </xsl:with-param>
+    </xsl:call-template>
 	</xsl:template>
  
 	<xsl:template match="/">

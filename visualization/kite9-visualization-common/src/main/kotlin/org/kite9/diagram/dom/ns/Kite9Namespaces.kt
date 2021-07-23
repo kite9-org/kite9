@@ -35,5 +35,5 @@ object Kite9Namespaces {
      * This is used to prefix the template attribute, e.g. xslt:template="bob.xsl".  It is used on the
      * document element of some XML to indicate the xslt transformer to be used.
      */
-    const val XSLT_NAMESPACE = "http://www.kite9.org/schema/xslt"
+    const val XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt"
 }

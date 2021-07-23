@@ -4,8 +4,6 @@
 @import url('/public/templates/containers/common-containers.css');
 @import url('/public/fonts/Kanit/Kanit.css');
 
-@script url(admin.js);
-
 * {
 	font-family: Kanit;
 }

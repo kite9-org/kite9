@@ -8,7 +8,7 @@
   --kite9-horizontal-align: center;
 }
 
-[k9-elem=textarea] text {
+[k9-elem] text {
 	alignment-baseline: baseline;
 }
 

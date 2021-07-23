@@ -19,6 +19,7 @@
     <xsl:template match="adl:*">
         <g>
             <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
+            <xsl:copy-of select="@*" />
             <xsl:apply-templates />
         </g>
     </xsl:template>

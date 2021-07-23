@@ -7,6 +7,7 @@ import com.kite9.pipeline.adl.holder.pipeline.*;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.uri.URIWrapper;
 import com.kite9.server.web.URIRewriter;
+import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.batik.format.Kite9TranscoderImpl;
@@ -45,6 +46,12 @@ public class ADLFactoryImpl implements ADLFactory {
 	public ADLFactoryImpl(Cache cache) {
 		super();
 		this.cache = cache;
+	}
+
+	@NotNull
+	@Override
+	public ADLDom dom(@NotNull K9URI uri, @NotNull Document doc, @NotNull Map<String, ? extends List<String>> requestHeaders) {
+		return new ADLDomImpl(uri, requestHeaders, doc, new HashMap<>());
 	}
 
 	abstract class AbstractADLBase extends AbstractXMLBase implements ADLBase {
@@ -139,7 +146,7 @@ public class ADLFactoryImpl implements ADLFactory {
 			InputStream is = new ByteArrayInputStream(content.getBytes());
 			return l.loadXMLDocument(uri2 == null ? null : uri2.toString(), is);
 		} catch (Exception e) {
-			throw new Kite9XMLProcessingException("Couldn't load XML into DOM, URI: "+uri2, e, content, null);
+			throw new Kite9XMLProcessingException("Couldn't load XML into DOM, URI: "+uri2, e, content, null, null);
 		}
 	}
 	

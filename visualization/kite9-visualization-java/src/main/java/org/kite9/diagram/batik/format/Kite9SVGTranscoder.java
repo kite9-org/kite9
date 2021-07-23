@@ -11,7 +11,6 @@ import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.util.ParsedURL;
-import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.apache.xml.utils.DefaultErrorHandler;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
@@ -30,7 +29,6 @@ import org.kite9.diagram.dom.processors.TextWrapProcessor;
 import org.kite9.diagram.dom.processors.XMLProcessor;
 import org.kite9.diagram.dom.processors.post.Kite9InliningProcessor;
 import org.kite9.diagram.dom.processors.xpath.XPathValueReplacer;
-import org.kite9.diagram.format.Kite9Transcoder;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.model.Diagram;
@@ -231,14 +229,14 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		} catch (Exception e) {
 			String s = new XMLHelper().toXML(outputDocument);
 			log.error("Problem with XML: ",e);
-			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, s, null);
+			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, outputDocument);
 		}
 	}
 
 	private Document handleTransformToAdl(Document input)  {
 		Document out;
 
-		String template = input.getDocumentElement().getAttributeNS(Kite9Namespaces.XSLT_NAMESPACE, "template");
+		String template = input.getDocumentElement().getAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "template");
 
 		if ((template == null) || (template.length() == 0)) {
 			return input;
@@ -270,7 +268,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			trans.transform(inSource, result);
 			out = (Document) result.getNode();
 		} catch (Exception e) {
-			throw new Kite9XMLProcessingException("Couldn't transform document with "+template, e, new XMLHelper().toXML(input), null);
+			throw new Kite9XMLProcessingException("Couldn't transform document with "+template, e, input);
 		}
 
 		if (out.getDocumentElement() == null) {

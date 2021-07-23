@@ -95,41 +95,44 @@ public class Kite9ErrorController implements ErrorController {
 			sb.append("<h6 class=\"card-subtitle mb-2 text-muted\">");
 			sb.append(formatExceptionMessage(e));
 			sb.append("<div class=\"card-text\" style=\"padding: 20p; \">");
-			next = e.getCause();
-		}
-		if (e instanceof Kite9XMLProcessingException) {
-			String css = ((Kite9XMLProcessingException) e).getCss();
-			String ctx = ((Kite9XMLProcessingException) e).getContext();
-			doXMLBasedException(sb, e, css, ctx);
-			next = e.getCause();
-		} else if (e instanceof BridgeException) {
-			BridgeException be = (BridgeException) e;
-			String ctx = Kite9XMLProcessingException.toString(be.getElement());
-			String css = Kite9XMLProcessingException.debugCss(be.getElement());
-			doXMLBasedException(sb, e, css, ctx);
-			next = e.getCause();
-		} else if (e instanceof SAXParseException) {
-			SAXParseException pe = (SAXParseException) e;
-			String publicId = pe.getPublicId();
-			String systemId = pe.getSystemId();
-			int lineNumber = pe.getLineNumber();
-			int columnNumber = pe.getColumnNumber();
-			String saxInfo = String.format("publicId: %s\nsystemId: %s\nlineNumber: %s\ncolumnNumber: %s", publicId, systemId, lineNumber, columnNumber);
-			doCard(sb, saxInfo, "details", "plaintext");
-			next = pe.getException();
-		} else if (e instanceof SAXIOException) {
-			SAXIOException pe = (SAXIOException) e;
-			doStackTraceCard(sb, pe);
-			next = pe.getSAXException();
-		} else if (e instanceof TranscoderException) {
-			doStackTraceCard(sb, e);
-			next = ((TranscoderException) e).getException();
-		} else if ((e!=null) && (e.getCause() == null)) {
-			doStackTraceCard(sb, e);
-			next = null;
-		}
-		
-		if (e != null) {
+			
+			if (e instanceof Kite9XMLProcessingException) {
+				String css = ((Kite9XMLProcessingException) e).getCss();
+				String ctx = ((Kite9XMLProcessingException) e).getContext();
+				String doc = ((Kite9XMLProcessingException) e).getComplete();
+				doXMLBasedException(sb, e, css, ctx, doc);
+				next = e.getCause();
+			} else if (e instanceof BridgeException) {
+				BridgeException be = (BridgeException) e;
+				String ctx = Kite9XMLProcessingException.toString(be.getElement());
+				String css = Kite9XMLProcessingException.debugCss(be.getElement());
+				String doc = Kite9XMLProcessingException.toString(be.getElement().getOwnerDocument());
+				
+				doXMLBasedException(sb, e, css, ctx, doc);
+				next = e.getCause();
+			} else if (e instanceof SAXParseException) {
+				SAXParseException pe = (SAXParseException) e;
+				String publicId = pe.getPublicId();
+				String systemId = pe.getSystemId();
+				int lineNumber = pe.getLineNumber();
+				int columnNumber = pe.getColumnNumber();
+				String saxInfo = String.format("publicId: %s\nsystemId: %s\nlineNumber: %s\ncolumnNumber: %s", publicId, systemId, lineNumber, columnNumber);
+				doCard(sb, saxInfo, "details", "plaintext");
+				next = pe.getException();
+			} else if (e instanceof SAXIOException) {
+				SAXIOException pe = (SAXIOException) e;
+				doStackTraceCard(sb, pe);
+				next = pe.getSAXException();
+			} else if (e instanceof TranscoderException) {
+				doStackTraceCard(sb, e);
+				next = ((TranscoderException) e).getException();
+			} else if (e.getCause() == null) {
+				doStackTraceCard(sb, e);
+				next = null;
+			} else {
+				next = e.getCause();
+			}
+
 			sb.append("</div></div></div>");
 		}
 		
@@ -144,13 +147,19 @@ public class Kite9ErrorController implements ErrorController {
 		return "<ul><li>"+msg.replaceAll("\n", "</li><li>")+"</li></ul>";
 	}
 
-	protected void doXMLBasedException(StringBuilder sb, Throwable e, String css, String ctx) {
+	protected void doXMLBasedException(StringBuilder sb, Throwable e, String css, String ctx, String doc) {
 		if (StringUtils.hasText(ctx)) {
 			doCard(sb, ctx, "fragment", "xml");
 		}
 		
 		if (StringUtils.hasText(css)) {
 			doCard(sb, css, "style", "css");
+			
+		}
+		
+
+		if (StringUtils.hasText(css)) {
+			doCard(sb, doc, "document", "doc");
 			
 		}
 		
