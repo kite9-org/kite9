@@ -8,7 +8,7 @@
 
     <xsl:import href="/public/templates/common/back/back-template.xsl"/>
 
-    <xsl:template name="root-svg">
+    <xsl:template name="diagram-root-svg">
         <xsl:param name="css"/>
         <xsl:param name="script"/>
         <xsl:param name="constants"/>
@@ -36,8 +36,8 @@
         </svg>
     </xsl:template>
 
-    <xsl:template name="diagram">
-        <xsl:param name="content" />
+    <xsl:template name="diagram-basic">
+        <xsl:param name="content"><xsl:apply-templates /></xsl:param>
         <g>
             <xsl:attribute name="k9-elem">diagram</xsl:attribute>
             <xsl:attribute name="k9-texture">background</xsl:attribute>

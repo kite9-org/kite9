@@ -5,10 +5,10 @@
 	  xmlns:svg="http://www.w3.org/2000/svg"
 	  xslt:template="/public/templates/admin/admin-template.xsl"
     xmlns:xslt="http://www.kite9.org/schema/xslt" 
-	  style="kite9-layout: down; ">
+	  style="--kite9-layout: down; ">
 
 	<container class="title invis" id="/github" k9-ui="open">
-		<item style="kite9-layout: right; kite9-type: svg; ">
+		<item style="--kite9-layout: right; --kite9-type: svg; ">
 			<svg:g transform="scale(7)">
 				<svg:g transform="matrix(1.3333333,0,0,-1.3333333,0,40)"
 					id="g10">
@@ -27,7 +27,7 @@
 		</item>
 	</container>
 
-	<group style="kite9-layout: right; ">
+	<group style="--kite9-layout: right; ">
 
 		<container id="https://github.com/kite9-org/docs/wiki"
 			class="panel invis" k9-ui="open">

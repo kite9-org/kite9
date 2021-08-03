@@ -68,7 +68,7 @@
         <xsl:attribute name="filter">url(#dropshadow)</xsl:attribute>
     </xsl:attribute-set>
 
-    <xsl:template name="show-box">
+    <xsl:template name="designer-show-box">
         <g k9-elem="back">
             <rect x="0" y="0"
                   pp:width="$width" pp:height="$height"
@@ -92,7 +92,7 @@
     </xsl:template>
 
     <xsl:template match="adl:context">
-        <xsl:call-template name="container" />
+        <xsl:call-template name="containers-basic" />
     </xsl:template>
 
     <xsl:template match='adl:context/adl:label | adl:cell/adl:label'>

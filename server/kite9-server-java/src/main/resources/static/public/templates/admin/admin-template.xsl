@@ -12,7 +12,7 @@
   
   
   <xsl:template match="/">
-    <xsl:call-template name="root-svg">
+    <xsl:call-template name="diagram-root-svg">
       <xsl:with-param name="css">
         @import url('/public/templates/admin/admin.css');
       </xsl:with-param>
@@ -33,10 +33,15 @@
   </xsl:template>
   
   <xsl:template match="adl:diagram">
-    <xsl:call-template name="diagram">
-      <xsl:with-param name="contents">
+    <xsl:call-template name="diagram-basic">
+      <xsl:with-param name="content">
+         <xsl:apply-templates />
+      </xsl:with-param>
+    
+      
+      
         <!-- pill trail first -->
-        <g k9-elem="container" class="trail">
+        <!-- <g k9-elem="container" class="trail">
           <xsl:choose>
             <xsl:when test="count(adl:parents/*) > 0">
                 <xsl:for-each select="adl:parents">
@@ -50,7 +55,7 @@
   
           <xsl:call-template name="pill-box" />
         </g>
-      </xsl:with-param>
+      </xsl:with-param> -->
     </xsl:call-template>
   
   
@@ -121,7 +126,7 @@
 
 
 	<xsl:template name="entity-box">
-    <xsl:call-template name="container">
+    <xsl:call-template name="containers-basic">
     
     
     
@@ -158,10 +163,10 @@
 			<xsl:attribute name="k9-ui">
 				<xsl:value-of select="adl:commands" />
 			</xsl:attribute>
-      <xsl:call-template name="icon">
+      <xsl:call-template name="admin-icon">
         <xsl:with-param name="url"><xsl:value-of select="adl:icon" /></xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="inline-text">
+      <xsl:call-template name="formats-inline-text">
         <xsl:with-param name="text"><xsl:value-of select="adl:title" /></xsl:with-param>
         <xsl:with-param name="k9-elem">title</xsl:with-param>
       </xsl:call-template>
@@ -170,7 +175,7 @@
 	
 
   <!-- Basically a copy of common-image-template except for clip-path -->
-  <xsl:template name="icon">
+  <xsl:template name="admin-icon">
     <xsl:param name="size">100pt</xsl:param>
     <xsl:param name="url">/public/templates/admin/icons/adl.svg</xsl:param>
     <g>
@@ -183,8 +188,16 @@
     </g>
   </xsl:template>
 
-  <xsl:template name="title">
+  <xsl:template name="adl:title">
+    <xsl:call-template name="inline-text">
+      <xsl:with-param name="text"><xsl:value-of select="text()" /></xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
   
+  <xsl:template match="adl:icon">
+    <xsl:call-template name="admin-icon">
+      <xsl:with-param name="url"><xsl:value-of select="text()" /></xsl:with-param>
+    </xsl:call-template>
   </xsl:template>
 
 <!-- 	<xsl:template match="adl:diagram">

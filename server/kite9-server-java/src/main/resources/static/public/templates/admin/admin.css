@@ -105,14 +105,12 @@
 
 [k9-elem=icon] {
 	--kite9-type: container;
-	--kite9-template: url(template.xml#icon) '100pt' '100pt';
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: top;
 }
 
 [k9-elem=pill] > [k9-elem=icon],
 [k9-elem=container].trail > [k9-elem=icon] {
-	--kite9-template: url(template.xml#icon) '40pt' '40pt';
 	--kite9-vertical-align: middle;
 	--kite9-horizontal-align: left;
 	--kite9-margin: 0pt;

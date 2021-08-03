@@ -7,7 +7,7 @@
 	<xsl:import href="/public/templates/common/back/back-template.xsl" />
 
 	<!-- simple text area, can only be edited, not moved, deleted etc. -->
-	<xsl:template name="textarea">
+	<xsl:template name="formats-textarea">
 	  <xsl:param name="k9-format">textarea</xsl:param>
     <xsl:param name="k9-elem"><xsl:value-of select="local-name()" /></xsl:param>
     <xsl:param name="k9-texture">none</xsl:param>
@@ -37,7 +37,7 @@
   
   <!-- Inline text, where the k9-shape attribute defaults to the tag name, 
     and the user can edit the text, drag it around etc. -->
-  <xsl:template name='inline-text'>
+  <xsl:template name='formats-inline-text'>
     <xsl:param name="k9-format">inline-text</xsl:param>
     <xsl:param name="k9-elem"><xsl:value-of select="local-name()" /></xsl:param>
     <xsl:param name="k9-texture">solid</xsl:param>
@@ -45,7 +45,7 @@
     <xsl:param name="k9-rounding">0pt</xsl:param>
     <xsl:param name="text"><xsl:value-of select="text()" /></xsl:param>
     
-    <xsl:call-template name="textarea">
+    <xsl:call-template name="formats-textarea">
       <xsl:with-param name="k9-format"><xsl:value-of select="$k9-format" /></xsl:with-param>
       <xsl:with-param name="k9-elem"><xsl:value-of select="$k9-elem" /></xsl:with-param>
       <xsl:with-param name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:with-param>
@@ -74,7 +74,7 @@
 	
 
   <!-- Container template where the container contents is in a specific order -->
-  <xsl:template name='fixed-container'>
+  <xsl:template name='formats-fixed-container'>
     <xsl:param name="k9-format">fixed-container</xsl:param>
     <xsl:param name="k9-palette">connected</xsl:param>
     <xsl:param name="k9-texture">solid</xsl:param>
@@ -108,7 +108,7 @@
   <!-- Editable text object with an icon, where the icon has the k9-shape of the tag of the element. You can edit the text. 
     Links connect to the icon. -->
 
-  <xsl:template name="captioned-text">
+  <xsl:template name="formats-captioned-text">
    k9-ui="drag delete align edit cascade" k9-palette="connected"
     k9-format="captioned-text" k9-texture="none">
     <back/>

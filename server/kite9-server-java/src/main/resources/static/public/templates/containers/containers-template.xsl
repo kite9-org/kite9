@@ -16,7 +16,7 @@
     </xsl:variable>
 
   <!-- Container template where the container contents is in a specific order -->
-  <xsl:template name='container'>
+  <xsl:template name='containers-basic'>
     <xsl:param name="k9-format">container</xsl:param>
     <xsl:param name="k9-palette">connected</xsl:param>
     <xsl:param name="k9-contains">connected</xsl:param>
@@ -24,7 +24,7 @@
     <xsl:param name="k9-ui">drag delete align connect insert autoconnect</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="content"></xsl:param>
+    <xsl:param name="content"><xsl:apply-templates /></xsl:param>
     
     <g>
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
@@ -43,14 +43,14 @@
       <xsl:copy-of select="$content"/>
       
        <xsl:if test="@layout">
-        <xsl:call-template name="indicator">
+        <xsl:call-template name="containers-indicator">
           <xsl:with-param name="layout"><xsl:value-of select="@layout" /></xsl:with-param>
         </xsl:call-template>
       </xsl:if>
      </g>
   </xsl:template>
 
-    <xsl:template name="indicator">
+    <xsl:template name="containers-indicator">
         <xsl:param name="layout"></xsl:param>
             <g k9-highlight="stroke">
               <rect y="0" x="0" pp:x="$width - 25" pp:y="$height - 25" width="20" height="20" rx="4" ry="4" fill="none"/>

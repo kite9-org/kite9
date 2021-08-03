@@ -11,31 +11,28 @@
   <xsl:import href="/public/templates/links/common-links-template.xsl" />
 
 	<xsl:template match="adl:box">
-		<xsl:call-template name="fixed-container">
+		<xsl:call-template name="containers-basic">
 	     <xsl:with-param name="k9-rounding">5pt</xsl:with-param>	
 		</xsl:call-template>
 	</xsl:template>
 
   <xsl:template match="adl:container">
-    <xsl:call-template name="container">
+    <xsl:call-template name="containers-basic">
       <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
 	<xsl:template match="adl:textarea">
-		<xsl:call-template name="textarea" />
+		<xsl:call-template name="formats-textarea" />
 	</xsl:template>
 
 	<xsl:template match="adl:diagram">
-		<xsl:call-template name="diagram">
-      <xsl:with-param name="content">
-        <xsl:apply-templates />
-      </xsl:with-param>
+		<xsl:call-template name="diagram-basic">
     </xsl:call-template>
 	</xsl:template>
  
 	<xsl:template match="/">
-		<xsl:call-template name="root-svg">
+		<xsl:call-template name="diagram-root-svg">
 			<xsl:with-param name="css">
 				@import url('/public/templates/basic/basic.css');
 			</xsl:with-param>
