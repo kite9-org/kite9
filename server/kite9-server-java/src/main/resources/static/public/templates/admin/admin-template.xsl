@@ -124,6 +124,10 @@
  
   </xsl:template>
 
+  <xsl:template match="adl:container | adl:group | adl:item">
+    <xsl:call-template name="containers-basic" />
+  </xsl:template>
+
 
 	<xsl:template name="entity-box">
     <xsl:call-template name="containers-basic">
@@ -177,26 +181,25 @@
   <!-- Basically a copy of common-image-template except for clip-path -->
   <xsl:template name="admin-icon">
     <xsl:param name="size">100pt</xsl:param>
-    <xsl:param name="url">/public/templates/admin/icons/adl.svg</xsl:param>
+    <xsl:param name="content"><xsl:value-of select="text()" /></xsl:param>
     <g>
         <xsl:attribute name="k9-elem">icon</xsl:attribute>
         <xsl:attribute name="k9-texture">outline</xsl:attribute>
+        <xsl:attribute name="style">--kite9-min-size: <xsl:value-of select="$size" /><xsl:text>   </xsl:text><xsl:value-of select="$size" /></xsl:attribute>
         <rect x="0" y="0" width="{$size}" height="{$size}" fill="none" stroke="white" stroke-opacity=".01" />
         <g style="kite9-type: svg; kite9-usage: decal;">
-          <image x="0" y="0" width="{$size}" height="{$size}" xlink:href="{$url}" />
+          <image x="0" y="0" width="{$size}" height="{$size}" xlink:href="{$content}" />
         </g>
     </g>
   </xsl:template>
 
-  <xsl:template name="adl:title">
-    <xsl:call-template name="inline-text">
-      <xsl:with-param name="text"><xsl:value-of select="text()" /></xsl:with-param>
+  <xsl:template match="adl:title">
+    <xsl:call-template name="formats-textarea">
     </xsl:call-template>
   </xsl:template>
   
   <xsl:template match="adl:icon">
     <xsl:call-template name="admin-icon">
-      <xsl:with-param name="url"><xsl:value-of select="text()" /></xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 

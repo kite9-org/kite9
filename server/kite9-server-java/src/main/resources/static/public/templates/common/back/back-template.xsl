@@ -8,7 +8,7 @@
 	<xsl:template name="back-round-rect">
 		<xsl:param name="k9-rounding">0pt</xsl:param>
 		<xsl:param name="k9-highlight">pulse</xsl:param>
-		<g k9-elem="back">
+		<g>
 			<xsl:attribute name="k9-elem">back</xsl:attribute>
 			<xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
 			<rect x="0" y="0" width="0" height="0">

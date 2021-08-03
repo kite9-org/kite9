@@ -75,7 +75,6 @@
 
 [k9-elem=entity] {
 	--kite9-type: container;
-	--kite9-template: url(template.xml#entity) '15pt' '15pt';
 	--kite9-layout: down;
 	--kite9-min-size: 190pt 280pt;
 	--kite9-sizing: minimize;
@@ -86,7 +85,6 @@
 
 [k9-elem=pill] {
 	--kite9-type: container;
-	--kite9-template: url(template.xml#entity) '5pt' '5pt';
 	--kite9-layout: right;
 	--kite9-min-size: 80pt 30pt;
 	--kite9-sizing: minimize;
@@ -126,6 +124,7 @@
 	--kite9-type: text;
 	fill: #686868;
 	stroke: #AAAA88;
+	stroke-width: 0;
 	font-size: 18pt;
 	--kite9-margin: 15pt;
 	--kite9-text-bounds: 300pt 240pt;
@@ -133,6 +132,7 @@
 
 [k9-elem=title] {
 	font-size: 22pt;
+	font-weight: 500;
 	--kite9-vertical-align: top;
 }
 

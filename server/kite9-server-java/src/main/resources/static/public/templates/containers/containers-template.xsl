@@ -38,7 +38,7 @@
       <xsl:call-template name="back-round-rect">
         <xsl:with-param name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:with-param>
         <xsl:with-param name="k9-rounding"><xsl:value-of select="$k9-rounding" /></xsl:with-param>
-       </xsl:call-template>
+      </xsl:call-template>
        
       <xsl:copy-of select="$content"/>
       

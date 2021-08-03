@@ -13,7 +13,7 @@
     <xsl:param name="k9-texture">none</xsl:param>
     <xsl:param name="k9-ui">orphan edit</xsl:param>
     <xsl:param name="k9-rounding">0pt</xsl:param>
-    <xsl:param name="text"><xsl:value-of select="text()" /></xsl:param>
+    <xsl:param name="content"><xsl:value-of select="text()" /></xsl:param>
     
 		<g>
 			 <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
@@ -29,7 +29,7 @@
        </xsl:if>
       
 			 <text>
-			 	 <xsl:value-of select="$text" />
+			 	 <xsl:value-of select="$content" />
 			 </text>
 			
 		</g>
@@ -43,7 +43,7 @@
     <xsl:param name="k9-texture">solid</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
     <xsl:param name="k9-rounding">0pt</xsl:param>
-    <xsl:param name="text"><xsl:value-of select="text()" /></xsl:param>
+    <xsl:param name="content"><xsl:value-of select="text()" /></xsl:param>
     
     <xsl:call-template name="formats-textarea">
       <xsl:with-param name="k9-format"><xsl:value-of select="$k9-format" /></xsl:with-param>
@@ -51,7 +51,7 @@
       <xsl:with-param name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:with-param>
       <xsl:with-param name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:with-param>
       <xsl:with-param name="k9-rounding"><xsl:value-of select="$k9-rounding" /></xsl:with-param>
-      <xsl:with-param name="text"><xsl:value-of select="$text" /></xsl:with-param>
+      <xsl:with-param name="content"><xsl:value-of select="$content" /></xsl:with-param>
     
     </xsl:call-template>
   
