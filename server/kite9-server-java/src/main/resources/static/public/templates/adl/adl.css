@@ -1,5 +1,5 @@
 /**
- * Common provides a baseline set of primitives to work with.  It defines the following:
+ * Provides a baseline set of primitives to work with.  It defines the following:
  * <back /> : the background svg shape for an element or object
  * k9-shape: an attribute which will dictate the shape of <back />
  * k9-texture:  an attribute which will dictate the fill/opacity of <back />
@@ -9,7 +9,11 @@
  * type: "connected" - things that can go inside containers.
  */
 
-@import url(/public/templates/common/diagram/diagram.css);
-@import url(/public/templates/common/back/back.css);
-@import url(/public/templates/common/formats/formats.css);
-@import url(/public/templates/common/texture/texture.css);
+@import url(/public/templates/diagram/diagram.css);
+@import url(/public/templates/back/back.css);
+@import url(/public/templates/formats/formats.css);
+@import url(/public/templates/texture/texture.css);
+@import url(/public/templates/containers/containers.css);
+@import url(/public/templates/links/links.css);
+@import url(/public/templates/links/links.css);
+@import url(/public/templates/labels/labels.css);

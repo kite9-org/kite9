@@ -6,7 +6,7 @@
         xmlns:pp="http://www.kite9.org/schema/post-processor"
         version="1.0">
 
-    <xsl:import href="/public/templates/common/back/back-template.xsl" />
+    <xsl:import href="/public/templates/back/back-template.xsl" />
 
     <xsl:variable name="container-indicators">
         <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
@@ -17,6 +17,8 @@
 
   <!-- Container template where the container contents is in a specific order -->
   <xsl:template name='containers-basic'>
+    <xsl:param name="content"><xsl:apply-templates /></xsl:param>
+
     <xsl:param name="k9-format">container</xsl:param>
     <xsl:param name="k9-palette">connected</xsl:param>
     <xsl:param name="k9-contains">connected</xsl:param>
@@ -24,17 +26,26 @@
     <xsl:param name="k9-ui">drag delete align connect insert autoconnect</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="content"><xsl:apply-templates /></xsl:param>
+
+    <xsl:param name="class" select="@class"/>
+    <xsl:param name="attributes" select="@*" />
+    <xsl:param name="k9-elem" select="local-name()" />
+    <xsl:param name="k9-layout" select="@layout" />
     
     <g>
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
-      <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
+      <xsl:attribute name="k9-elem"><xsl:value-of select="$k9-elem" /></xsl:attribute>
       <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
       <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
       <xsl:attribute name="k9-palette"><xsl:value-of select="$k9-palette" /></xsl:attribute>
       <xsl:attribute name="k9-contains"><xsl:value-of select="$k9-contains" /></xsl:attribute>
-      <xsl:copy-of select="@*" />
-       
+      
+      <xsl:if test="$class">
+        <xsl:attribute name="class"><xsl:value-of select="$class" /></xsl:attribute>
+      </xsl:if>
+            
+      <xsl:copy-of select="$attributes" />      
+        
       <xsl:call-template name="back-round-rect">
         <xsl:with-param name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:with-param>
         <xsl:with-param name="k9-rounding"><xsl:value-of select="$k9-rounding" /></xsl:with-param>
@@ -42,7 +53,8 @@
        
       <xsl:copy-of select="$content"/>
       
-       <xsl:if test="@layout">
+      
+      <xsl:if test="$k9-layout">
         <xsl:call-template name="containers-indicator">
           <xsl:with-param name="layout"><xsl:value-of select="@layout" /></xsl:with-param>
         </xsl:call-template>

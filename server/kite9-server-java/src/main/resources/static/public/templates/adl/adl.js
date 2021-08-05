@@ -1,6 +1,5 @@
 /**
- * This contains basic kite9 classes that we can plug behaviours into.
- *  
+ * This contains basic kite9 classes that we can plug behaviours into, for manipulating ADL documents.
  */
 
 import { Instrumentation } from "/public/classes/instrumentation/instrumentation.js";

@@ -10,6 +10,7 @@ import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.*;
 import org.apache.batik.transcoder.keys.BooleanKey;
+import org.apache.batik.transcoder.keys.StringKey;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
 import org.apache.xml.utils.DefaultErrorHandler;
@@ -67,6 +68,12 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	 * not the usual way for editable diagrams, so is false by default.
 	 */
 	public static final TranscodingHints.Key KEY_ENCAPSULATING = new BooleanKey();
+
+	/**
+	 * This allows us to specify the name of the template used to transform the input document.
+	 */
+	public static final TranscodingHints.Key KEY_TEMPLATE = new StringKey();
+
 	public static final String TRANSFORMER = "transformer";
 
 	private final ADLExtensibleDOMImplementation domImpl;
@@ -83,7 +90,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	
 	public Kite9SVGTranscoder(Cache c) {
 		super();
-		this.hints.put(KEY_ENCAPSULATING, false);
 		this.cache = c;
 		this.domImpl = new ADLExtensibleDOMImplementation(c);
 		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
@@ -233,10 +239,26 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 	}
 
+	protected String getTemplateUri(Document input) {
+		String template = (String) hints.get(KEY_TEMPLATE);
+
+		if ((template == null) || (template.length() == 0)) {
+			template = input.getDocumentElement().getAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "template");
+		}
+
+		if ((template == null) || (template.length() == 0)) {
+			if (input.getDocumentElement().getNamespaceURI().equals(Kite9Namespaces.ADL_NAMESPACE)) {
+				// default to the basic template
+				return "/public/templates/basic/basic-template.xsl";
+			}
+		}
+		return template;
+	}
+
 	private Document handleTransformToAdl(Document input)  {
 		Document out;
 
-		String template = input.getDocumentElement().getAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "template");
+		String template = getTemplateUri(input);
 
 		if ((template == null) || (template.length() == 0)) {
 			return input;

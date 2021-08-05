@@ -4,7 +4,7 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-	<xsl:import href="/public/templates/common/back/back-template.xsl" />
+	<xsl:import href="/public/templates/back/back-template.xsl" />
 
 	<!-- simple text area, can only be edited, not moved, deleted etc. -->
 	<xsl:template name="formats-textarea">

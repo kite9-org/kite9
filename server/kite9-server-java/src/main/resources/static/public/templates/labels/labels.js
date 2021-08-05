@@ -1,6 +1,6 @@
 import { once } from '/public/bundles/ensure.js';
 import { initLabelContextMenuCallback } from '/public/behaviours/labels/label.js'; 
-import { command, metadata, contextMenu } from '/public/templates/common/common.js';
+import { command, metadata, contextMenu } from '/public/templates/adl/adl.js';
 
 function initLabels() {
 	

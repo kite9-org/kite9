@@ -1,9 +1,5 @@
-@import url('/public/templates/common/common.css');
+@import url('/public/templates/adl/adl.css');
 @import url('/public/templates/editor/editor.css');
-@import url('/public/templates/containers/common-containers.css');
-@import url('/public/templates/links/common-links.css');
-@import url('/public/templates/labels/common-labels.css');
-@import url('/public/templates/grid/common-grid.css');
 @import url('/public/fonts/metropolis/metropolis.css');
 
 [k9-elem=diagram] {

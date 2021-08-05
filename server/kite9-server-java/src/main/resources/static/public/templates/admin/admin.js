@@ -2,7 +2,7 @@
  * This composes the basic edit behaviour of the application
  */
 
-import { metadata, transition, contextMenu } from '/public/templates/common/common.js';
+import { metadata, transition, contextMenu } from '/public/templates/adl/adl.js';
 
 // navigation
 import { initFocusContextMenuCallback, initFocusMetadataCallback, initFocus } from "/public/behaviours/navigable/focus/focus.js";

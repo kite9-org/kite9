@@ -7,8 +7,8 @@
 	
   <xsl:import href="/public/templates/common/common.xsl" />
   <xsl:import href="/public/templates/containers/containers-template.xsl" />
-  <xsl:import href="/public/templates/common/diagram/diagram-template.xsl" />
-  <xsl:import href="/public/templates/common/formats/formats-template.xsl" />
+  <xsl:import href="/public/templates/diagram/diagram-template.xsl" />
+  <xsl:import href="/public/templates/formats/formats-template.xsl" />
   
   
   <xsl:template match="/">
@@ -35,30 +35,64 @@
   <xsl:template match="adl:diagram">
     <xsl:call-template name="diagram-basic">
       <xsl:with-param name="content">
-         <xsl:apply-templates />
+          <g k9-elem="container" class="trail">
+            <xsl:choose>
+              <xsl:when test="count(adl:parents/*) > 0">
+                  <xsl:for-each select="adl:parents">
+                    <xsl:call-template name="pill-box" />
+                  </xsl:for-each>
+              </xsl:when>
+              <xsl:otherwise>
+      
+              </xsl:otherwise>
+            </xsl:choose>
+    
+            <xsl:call-template name="pill-box" />
+          </g>
+         <g k9-elem="container" class="main">
+           <xsl:call-template name="back-round-rect" />
+           
+           
+           
+           <xsl:call-template name="containers-basic">
+              <xsl:with-param name="class">main</xsl:with-param>
+              <xsl:with-param name="k9-elem">bob</xsl:with-param>
+              <xsl:with-param name="content">
+                <xsl:choose>
+                  <xsl:when test="adl:type='repository'">
+                    <xsl:call-template name="repository" />
+                  </xsl:when> 
+                  <xsl:otherwise>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:with-param>
+           </xsl:call-template>
+         </g>  
+          
+          
       </xsl:with-param>
-    
-      
-      
-        <!-- pill trail first -->
-        <!-- <g k9-elem="container" class="trail">
-          <xsl:choose>
-            <xsl:when test="count(adl:parents/*) > 0">
-                <xsl:for-each select="adl:parents">
-                  <xsl:call-template name="pill-box" />
-                </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-    
-            </xsl:otherwise>
-          </xsl:choose>
-  
-          <xsl:call-template name="pill-box" />
-        </g>
-      </xsl:with-param> -->
     </xsl:call-template>
-  
-  
+   
+   
+   </xsl:template>  
+
+
+   <xsl:template name="repository">
+      <xsl:call-template name="containers-basic">
+        <xsl:with-param name="k9-elem">repositonry</xsl:with-param>
+        <xsl:with-param name="class">left</xsl:with-param>
+        <xsl:with-param name="content">
+          <xsl:apply-templates select="adl:documents" />
+        </xsl:with-param>
+      </xsl:call-template>
+      <!-- <xsl:call-template name="containers-basic">
+        <xsl:with-param name="content">
+          <xsl:apply-templates select="documents" />
+        </xsl:with-param>
+      </xsl:call-template> -->
+   </xsl:template>
+   
+
   
    <!-- <g>
       <xsl:attribute name="k9-elem">diagram</xsl:attribute>
@@ -122,18 +156,16 @@
       </g>  
     </g> -->
  
-  </xsl:template>
-
-  <xsl:template match="adl:container | adl:group | adl:item">
+  
+  <xsl:template match="adl:container | adl:group | adl:item | adl:entity">
     <xsl:call-template name="containers-basic" />
   </xsl:template>
 
 
 	<xsl:template name="entity-box">
+    <xsl:text>ENT</xsl:text>
     <xsl:call-template name="containers-basic">
-    
-    
-    
+      <xsl:with-param name="k9-elem">entity</xsl:with-param>
     </xsl:call-template>
 		<!-- <entity>
 			<xsl:attribute name="id">
@@ -168,10 +200,10 @@
 				<xsl:value-of select="adl:commands" />
 			</xsl:attribute>
       <xsl:call-template name="admin-icon">
-        <xsl:with-param name="url"><xsl:value-of select="adl:icon" /></xsl:with-param>
+        <xsl:with-param name="content"><xsl:value-of select="adl:icon" /></xsl:with-param>
       </xsl:call-template>
-      <xsl:call-template name="formats-inline-text">
-        <xsl:with-param name="text"><xsl:value-of select="adl:title" /></xsl:with-param>
+      <xsl:call-template name="formats-textarea">
+        <xsl:with-param name="content"><xsl:value-of select="adl:title/text()" /></xsl:with-param>
         <xsl:with-param name="k9-elem">title</xsl:with-param>
       </xsl:call-template>
 		</g>
@@ -202,15 +234,5 @@
     <xsl:call-template name="admin-icon">
     </xsl:call-template>
   </xsl:template>
-
-<!-- 	<xsl:template match="adl:diagram">
-		<xsl:call-template name="diagram">
-      <xsl:with-param name="contents">
-        <adl:main-page>
-          <adl:
-        </adl:main-screen>
-      </xsl:with-param>
-    </xsl:call-template>
-	</xsl:template> -->
-
+  
 </xsl:stylesheet>

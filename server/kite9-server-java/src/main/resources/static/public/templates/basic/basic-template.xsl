@@ -4,11 +4,7 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="/public/templates/common/common.xsl" />
-	<xsl:import	href="/public/templates/containers/containers-template.xsl" />
-	<xsl:import href="/public/templates/common/diagram/diagram-template.xsl" />
-	<xsl:import	href="/public/templates/common/formats/formats-template.xsl" />
-  <xsl:import href="/public/templates/links/common-links-template.xsl" />
+  <xsl:import href="/public/templates/adl/adl.xsl" />
 
 	<xsl:template match="adl:box">
 		<xsl:call-template name="containers-basic">
@@ -16,19 +12,8 @@
 		</xsl:call-template>
 	</xsl:template>
 
-  <xsl:template match="adl:container">
-    <xsl:call-template name="containers-basic">
-      <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
 	<xsl:template match="adl:textarea">
 		<xsl:call-template name="formats-textarea" />
-	</xsl:template>
-
-	<xsl:template match="adl:diagram">
-		<xsl:call-template name="diagram-basic">
-    </xsl:call-template>
 	</xsl:template>
  
 	<xsl:template match="/">
@@ -38,9 +23,10 @@
 			</xsl:with-param>
 			<xsl:with-param name="constants">
 				document.params = {
-				'align-template-uri' : '/public/templates/links/common-links.adl#align',
-				'link-template-uri' : '/public/templates/links/common-links.adl#l1',
-				'cell-template-uri' : '/public/templates/grid/common-grid.adl#t1',
+				'align-template-uri' : '/public/templates/links/links-palette.adl#align',
+				'link-template-uri' : '/public/templates/links/links-palette.adl#l1',
+				'cell-template-uri' : '/public/templates/grid/grid-palette.adl#t1',
+        'label-template-uri' : '/public/templates/labels/label-palette.adl#label',
 				'palettes' : [
 				/* '/public/templates/links/common-links.adl', 'link',
 				'/public/templates/links/common-ends.adl', 'end',
@@ -51,8 +37,7 @@
 				'/public/templates/containers/common-containers.adl', 'connected',
 				'/public/templates/grid/common-grid.adl', 'cell table'*/
 
-				] ,
-				'label-template-uri' : '/public/templates/labels/common-labels.adl#label'
+				]
 				};
 			</xsl:with-param>
 			<xsl:with-param name="script">
@@ -61,6 +46,7 @@
       <xsl:with-param name="defs">
         <xsl:copy-of select="$links-markers" />
         <xsl:copy-of select="$container-indicators" />
+        <xsl:copy-of select=".//svg:defs" />
       </xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
