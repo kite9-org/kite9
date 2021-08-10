@@ -5,7 +5,7 @@
 			@import url(/public/templates/links/common-links.css);
 		</svg:style>
 	</svg:defs>
-	<diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: right; kite9-type: diagram; " class="indicators-on">
+	<diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: right; kite9-type: diagram; ">
 
 		<group style="kite9-layout: down; kite9-margin-right: 30pt; ">
 			<group style="kite9-layout: right;">

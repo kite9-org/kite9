@@ -25,7 +25,7 @@
 				document.params = {
 				'align-template-uri' : '/public/templates/links/links-palette.adl#align',
 				'link-template-uri' : '/public/templates/links/links-palette.adl#l1',
-				'cell-template-uri' : '/public/templates/grid/grid-palette.adl#t1',
+				'cell-template-uri' : '/public/templates/grid/palette.adl#t1',
         'label-template-uri' : '/public/templates/labels/palette.adl#label',
 				'palettes' : [
 				/* '/public/templates/links/common-links.adl', 'link',

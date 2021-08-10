@@ -1,8 +1,7 @@
 <diagram xmlns="http://www.kite9.org/schema/adl"
          xmlns:svg="http://www.w3.org/2000/svg"
          id="dia"
-         style="--kite9-layout: down; " 
-         class="indicators-on">
+         style="--kite9-layout: down; ">
 
    <svg:defs>
         <svg:style type="text/css">

@@ -1,19 +1,9 @@
-/* @params {
-	cell-template-uri: url(common-grid.adl#t1);
-	palettes: url(/public/templates/grid/common-grid) "cell table";
-}
-
-*[layout=grid] {
-	--kite9-layout: grid;
-}
-*/
 
 /* tables */
 
-table {
+[k9-elem=table] {
 	--kite9-layout: grid;
 	--kite9-type: container;
-	--kite9-template: url(common-grid-template.xml#table) "0pt";
 	--kite9-padding: 10pt;
 }
 
@@ -25,8 +15,7 @@ table {
 
 /* cells */
 
-cell {
-	--kite9-template: url(common-grid-template.xml#cell) "0pt";
+[k9-elem=cell] {
 	--kite9-usage: regular;
 	--kite9-type: container;
 	--kite9-vertical-align: center;
@@ -35,10 +24,6 @@ cell {
 	text-align: middle;
 	--kite9-min-size: 30pt 30pt;
 	--kite9-traversal: always;
-}
-
-cell.bordered {
-	 --kite9-template: url(common-grid-template.xml#bordered-cell) "0pt";
 }
 
 [k9-elem=_temporary],
@@ -58,7 +43,7 @@ cell.bordered {
 	fill-opacity: 1;
 }
 
-
+/* 
 cell.left {
 	--kite9-horizontal-align: left;
 	text-align: start;
@@ -75,4 +60,4 @@ cell.bottom {
 
 cell.top {
 	--kite9-vertical-align: top;
-}
+} */

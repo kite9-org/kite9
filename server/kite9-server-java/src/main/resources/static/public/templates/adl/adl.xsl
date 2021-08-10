@@ -20,6 +20,7 @@
     <xsl:import href="/public/templates/formats/formats-template.xsl" />
     <xsl:import href="/public/templates/diagram/diagram-template.xsl" />
     <xsl:import href="/public/templates/labels/labels-template.xsl" />
+    <xsl:import href="/public/templates/grid/grid-template.xsl" />
     
     
 
@@ -60,6 +61,14 @@
   
   <xsl:template match="adl:label">
     <xsl:call-template name="labels-basic" />
+  </xsl:template>
+  
+  <xsl:template match="adl:table">
+    <xsl:call-template name="grid-table-basic" />
+  </xsl:template>
+  
+  <xsl:template match="adl:cell">
+    <xsl:call-template name="grid-cell-basic" />
   </xsl:template>
   
   <xsl:template match="adl:group">

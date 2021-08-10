@@ -20,7 +20,7 @@
               document.params = {
                   'align-template-uri' : '/public/templates/links/common-links.adl#align',
                   'link-template-uri' : '/public/templates/links/common-links.adl#l1',
-                  'cell-template-uri' : '/public/templates/grid/common-grid.adl#t1',
+                  'cell-template-uri' : '/public/templates/grid/palette.adl#t1',
                   'palettes' : [
               /*          '/public/templates/links/common-links.adl', 'link',
                         '/public/templates/links/common-ends.adl', 'end',
