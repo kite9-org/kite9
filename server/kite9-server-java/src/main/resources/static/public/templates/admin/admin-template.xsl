@@ -5,11 +5,7 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	version="1.0">
 	
-  <xsl:import href="/public/templates/common/common.xsl" />
-  <xsl:import href="/public/templates/containers/containers-template.xsl" />
-  <xsl:import href="/public/templates/diagram/diagram-template.xsl" />
-  <xsl:import href="/public/templates/formats/formats-template.xsl" />
-  
+  <xsl:import href="/public/templates/adl/adl.xsl" />
   
   <xsl:template match="/">
     <xsl:call-template name="diagram-root-svg">

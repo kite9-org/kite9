@@ -19,6 +19,7 @@
     <xsl:import href="/public/templates/back/back-template.xsl" />
     <xsl:import href="/public/templates/formats/formats-template.xsl" />
     <xsl:import href="/public/templates/diagram/diagram-template.xsl" />
+    <xsl:import href="/public/templates/labels/labels-template.xsl" />
     
     
 
@@ -55,6 +56,10 @@
     <xsl:call-template name="containers-basic">
       <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template match="adl:label">
+    <xsl:call-template name="labels-basic" />
   </xsl:template>
   
   <xsl:template match="adl:group">
