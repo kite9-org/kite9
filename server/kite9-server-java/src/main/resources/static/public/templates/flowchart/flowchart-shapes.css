@@ -1,128 +1,44 @@
-[k9-shape=delay],
-[k9-shape=direct],
-[k9-shape=stored],
-[k9-shape=predefined],
-[k9-shape=manual]	
-[k9-shape=decision],
-[k9-shape=internal],
-[k9-shape=database],
-[k9-shape=input],
-[k9-shape=document],
-[k9-shape=off-page] {
+[k9-elem=delay],
+[k9-elem=direct],
+[k9-elem=stored],
+[k9-elem=predefined],
+[k9-elem=manual]	
+[k9-elem=decision],
+[k9-elem=internal],
+[k9-elem=database],
+[k9-elem=input],
+[k9-elem=document],
+[k9-elem=off-page] {
 	--kite9-padding: 15pt;
 }
 
-[k9-shape=delay],
-[k9-shape=direct],
-[k9-shape=stored] {
+[k9-elem=delay],
+[k9-elem=direct],
+[k9-elem=stored] {
 	--kite9-padding-right: 25pt;
 }
 
-[k9-shape=predefined],
-[k9-shape=manual] {
+[k9-elem=predefined],
+[k9-elem=manual] {
 	--kite9-padding-left: 20pt;
 	--kite9-padding-right: 20pt;
 }
 
-[k9-shape=decision] {
+[k9-elem=decision] {
 	--kite9-padding: 25pt;
 }
 
-[k9-shape=internal] {
+[k9-elem=internal] {
 	--kite9-padding-top: 20pt;
 	--kite9-padding-left: 20pt;
 }
 
-[k9-shape=database],
-[k9-shape=input] {
+[k9-elem=database],
+[k9-elem=input] {
 	--kite9-padding-top: 25pt;
 }
 
-[k9-shape=document],
-[k9-shape=off-page] {
+[k9-elem=document],
+[k9-elem=off-page] {
 	--kite9-padding-bottom: 25pt;
-}
-
-[k9-shape=decision] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#decision');
-}
-
-[k9-shape=stored] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#stored');
-}
-
-[k9-shape=process] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#process');
-}
-
-[k9-shape=document] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#document');
-}
-
-[k9-shape=delay] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#delay');
-}
-
-[k9-shape=start] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#start');
-}
-
-[k9-shape=manual] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#manual');
-}
-
-[k9-shape=terminator] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#terminator');
-}
-
-[k9-shape=input] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#input');
-}
-
-[k9-shape=database] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#database');
-}
-
-[k9-shape=preparation] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#preparation');
-}
-
-[k9-shape=internal] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#internal');
-}
-
-[k9-shape=off-page] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#off-page');
-}
-
-[k9-shape=direct] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#direct');
-}
-
-[k9-shape=predefined] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#predefined');
-}
-
-[k9-shape=display] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#display');
-}
-
-[k9-shape=start] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#start');
-}
-
-[k9-shape=loop-limit] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#loop-limit');
-}
-
-[k9-shape=stored] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#stored');
-}
-
-[k9-shape=sequential] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#sequential');
-}
-
-[k9-shape=reference] > [k9-elem=back] {
-	--kite9-template: url('flowchart-shapes-template.xml#reference');
 }

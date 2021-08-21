@@ -5,27 +5,38 @@
 		xmlns:adl="http://www.kite9.org/schema/adl"
 		version="1.0">
 
-	<xsl:template name="back-round-rect">
-		<xsl:param name="k9-rounding">0pt</xsl:param>
-		<xsl:param name="k9-highlight">pulse</xsl:param>
+  <!--
+    Provides the background <g> for a user-defined element.  Defaults to a rounded rectangle 
+    unless the caller gives a shape, or one is defined by templates.
+  -->
+  
+	<xsl:template name="back-basic">
+		<xsl:param name="rounding">0pt</xsl:param>
+		<xsl:param name="highlight">pulse</xsl:param>
+    <xsl:param name="shape">
+      <xsl:apply-templates mode="back" select=".">
+        <xsl:with-param name="rounding" select="$rounding" />
+      </xsl:apply-templates>
+    </xsl:param>
+    
 		<g>
 			<xsl:attribute name="k9-elem">back</xsl:attribute>
-			<xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
-			<rect x="0" y="0" width="0" height="0">
-				<xsl:attribute name="rx"><xsl:value-of select="$k9-rounding" /></xsl:attribute>
-				<xsl:attribute name="ry"><xsl:value-of select="$k9-rounding" /></xsl:attribute>
-				<xsl:attribute name="pp:width">$width</xsl:attribute>
-				<xsl:attribute name="pp:height">$height</xsl:attribute>
-			</rect>
+			<xsl:attribute name="k9-highlight"><xsl:value-of select="$highlight" /></xsl:attribute>
+      <xsl:copy-of select="$shape" />
 		</g>
+    
 	</xsl:template>
-
-	<xsl:template name="back-ellipse">
-		<g k9-elem="back">
-			<xsl:attribute name="k9-elem">back</xsl:attribute>
-			<xsl:attribute name="k9-highlight">pulse</xsl:attribute>
-			<ellipse pp:cx="$width div 2" pp:cy="$height div 2" pp:rx="$width div 2" pp:ry="$height div 2" />
-		</g>
-	</xsl:template>
+  
+  <!-- default background is a rounded-rectangle -->
+  
+  <xsl:template match="*" mode="back">
+    <xsl:param name="rounding">0pt</xsl:param>
+    <rect x="0" y="0" width="0" height="0">
+      <xsl:attribute name="rx"><xsl:value-of select="$rounding" /></xsl:attribute>
+      <xsl:attribute name="ry"><xsl:value-of select="$rounding" /></xsl:attribute>
+      <xsl:attribute name="pp:width">$width</xsl:attribute>
+      <xsl:attribute name="pp:height">$height</xsl:attribute>
+    </rect>
+  </xsl:template>
 
 </xsl:stylesheet>

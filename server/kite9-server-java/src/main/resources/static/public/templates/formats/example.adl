@@ -1,0 +1,25 @@
+<diagram xmlns="http://www.kite9.org/schema/adl"
+         id="dia">
+
+   <item id="ta" k9-format="text-inline">Text Area</item>
+
+   <item id="tb" k9-format="text-inline-fixed">Inline text</item>
+   
+   <item id="c" k9-format="container">
+
+      <item id="td" k9-format="image-editable">some/url/here</item>
+      
+      <item id="te" k9-format="captioned-">Captioned</item> 
+   
+   </item>
+   
+   <item id="c2" k9-format="container-fixed">
+
+      <item id="td2" k9-format="image-editable">some/url/here</item>
+      
+      <item id="te2" k9-format="captioned-">Captioned </item>
+   
+   </item>
+ 
+
+</diagram>

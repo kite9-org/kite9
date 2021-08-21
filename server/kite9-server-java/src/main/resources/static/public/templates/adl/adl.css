@@ -9,7 +9,6 @@
  * type: "connected" - things that can go inside containers.
  */
 
-@import url(/public/templates/diagram/diagram.css);
 @import url(/public/templates/back/back.css);
 @import url(/public/templates/formats/formats.css);
 @import url(/public/templates/texture/texture.css);
@@ -17,3 +16,4 @@
 @import url(/public/templates/links/links.css);
 @import url(/public/templates/labels/labels.css);
 @import url(/public/templates/grid/grid.css);
+@import url(/public/templates/diagram/diagram.css);

@@ -4,16 +4,16 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="/public/templates/adl/adl.xsl" />
+  <xsl:import href="../adl/adl.xsl" />
 
 	<xsl:template match="adl:box">
-		<xsl:call-template name="containers-basic">
+		<xsl:call-template name="formats-container">
 	     <xsl:with-param name="k9-rounding">5pt</xsl:with-param>	
 		</xsl:call-template>
 	</xsl:template>
 
 	<xsl:template match="adl:textarea">
-		<xsl:call-template name="formats-textarea" />
+		<xsl:call-template name="formats-text-inline" />
 	</xsl:template>
  
 	<xsl:template match="/">

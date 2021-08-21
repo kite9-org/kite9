@@ -1,19 +1,15 @@
-<?xml version="1.0"?>
-<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
-  <svg:defs>
-    <svg:style type="text/css"> 
-       @import url("/public/templates/flowchart/flowchart.css");
-    </svg:style>
-    
-  </svg:defs>
-  <diagram xmlns="http://www.kite9.org/schema/adl" id="dia">
+<diagram xslt:template="/public/templates/flowchart/flowchart-template.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
-     <start k9-format="inline-text" id="1">Start</start>
+  <!--start k9-format="inline-text" id="1">Start</start -->
      
-	 <process k9-format="inline-text" id="2">Process</process>
+	<document k9-format="inline-text" id="2"><textarea id="t2">Document</textarea></document>
 
+  <decision k9-format="inline-text" id="3"><textarea id="t3">Decision</textarea></decision>
+  
+  <decision k9-format="captioned-text" id="4"><textarea id="t4">Decision</textarea></decision>
 	 
-	 <terminal k9-format="captioned" id="3">Terminal</terminal>
-	 
-  </diagram>
-</svg:svg>
+	<!-- terminal k9-format="captioned" id="3">Terminal</terminal -->
+ 
+</diagram>

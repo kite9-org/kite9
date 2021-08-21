@@ -1,7 +1,7 @@
-/** textarea format */
+/** text-inline format */
 
-[k9-elem=textarea],
-[k9-format=textarea] {
+[k9-format=text-inline],
+[k9-format=text-inline-fixed] {
   --kite9-type: text;
   --kite9-vertical-align: center;
   --kite9-connection-align: 50%;
@@ -11,6 +11,31 @@
 [k9-elem] text {
 	alignment-baseline: baseline;
 }
+
+/* inline-text format */
+
+[k9-elem=text-inline] {
+  --kite9-type: container;
+  --kite9-sizing: minimize;
+  --kite9-margin: 15pt;
+  --kite9-padding: 11pt;
+}
+
+[k9-format=inline-text] > [k9-elem=depiction] {
+  --kite9-type: container;
+  --kite9-min-size: 30pt 30pt;
+  --kite9-margin: 5pt;
+  --kite9-connection-align: 50%;
+  --kite9-sizing: minimize;
+  --kite9-horizontal-align: center;
+}
+
+[k9-format=inline-text] > [k9-elem=caption] {
+  --kite9-type: container;
+  --kite9-padding: 5pt;
+  --kite9-horizontal-align: center;
+}
+
 
 
 /** image-editable format */
@@ -27,34 +52,11 @@
   fill-opacity: .01;
 }
 
-/* inline-text format */
 
-[k9-elem=inline-text],
-[k9-format=inline-text] {
-  --kite9-type: container;
-  --kite9-sizing: minimize;
-  --kite9-margin: 15pt;
-  --kite9-padding: 11pt;
-}
-
-[k9-format=inline-text] > [k9-elem=depiction] {
-	--kite9-type: container;
-	--kite9-min-size: 30pt 30pt;
-	--kite9-margin: 5pt;
-	--kite9-connection-align: 50%;
-	--kite9-sizing: minimize;
-	--kite9-horizontal-align: center;
-}
-
-[k9-format=inline-text] > [k9-elem=caption] {
-	--kite9-type: container;
-	--kite9-padding: 5pt;
-  --kite9-horizontal-align: center;
-}
 
 /* inline-container format */
 
-[k9-format=inline-container] {
+[k9-format=container] {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-margin: 15pt;
