@@ -85,10 +85,18 @@ abstract class AbstractRectangular(
     }
 
     override fun getXPathVariable(name: String): String? {
-        if (("x0" == name || "x" == name) && (painter is LeafPainter)) {
-            return ""+ (painter as LeafPainter).bounds().x;
+        if ("x0" == name || "x" == name) {
+            if (painter is LeafPainter) {
+                return "" + (painter as LeafPainter).bounds().x;
+            } else {
+                return "0";
+            }
         } else if ("y0" == name || "y" == name) {
-            return "" + ""+ (painter as LeafPainter).bounds().y;
+            if (painter is LeafPainter) {
+                return "" + (painter as LeafPainter).bounds().y;
+            } else {
+                return "0";
+            }
         } else if ("y1" == name || "height" == name) {
             return "" + getRenderingInformation().size!!.h
         } else if ("x1" == name || "width" == name) {
@@ -104,6 +112,7 @@ abstract class AbstractRectangular(
                 return if (idx > -1) "" + getRenderingInformation().cellYPositions!![idx] else null
             }
         }
+
         return null
     }
 

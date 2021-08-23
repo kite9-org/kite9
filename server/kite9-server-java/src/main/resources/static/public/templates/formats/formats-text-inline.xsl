@@ -18,8 +18,10 @@
     <xsl:param name="k9-texture">solid</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
     <xsl:param name="k9-shape">
-      <rect x="10" y="10" width="15" height="15" 
-         pp:x="$x" pp:y="$y" pp:width="$width" pp:height="$height" />
+      <xsl:call-template name="back-basic">
+        <xsl:with-param name="highlight" select="$k9-highlight" /> 
+        <xsl:with-param name="rounding" select="$k9-rounding" />
+      </xsl:call-template>  
     </xsl:param>
     <xsl:param name="k9-decoration"><xsl:apply-templates mode="text-decoration" /></xsl:param>
 

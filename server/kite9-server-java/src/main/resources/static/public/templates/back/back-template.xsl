@@ -36,6 +36,9 @@
       <xsl:attribute name="ry"><xsl:value-of select="$rounding" /></xsl:attribute>
       <xsl:attribute name="pp:width">$width</xsl:attribute>
       <xsl:attribute name="pp:height">$height</xsl:attribute>
+      <xsl:attribute name="pp:x">$x</xsl:attribute>
+      <xsl:attribute name="pp:y">$y</xsl:attribute>
+      
     </rect>
   </xsl:template>
 
