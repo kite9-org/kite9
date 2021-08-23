@@ -44,15 +44,11 @@
   </xsl:template>
   
   <xsl:template match="adl:document | adl:decision">
-    <xsl:call-template name="containers-basic">
-       <xsl:with-param name="k9-shape">
-        <xsl:apply-templates select="." mode="flowchart-shape" />
-      </xsl:with-param>
-    </xsl:call-template>
+    <xsl:call-template name="formats-container" />
   </xsl:template>
   
   <xsl:template match="adl:textarea">
-    <xsl:call-template name="formats-textarea" />
+    <xsl:call-template name="formats-text-inline" />
   </xsl:template>
   
   

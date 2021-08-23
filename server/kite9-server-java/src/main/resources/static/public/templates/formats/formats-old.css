@@ -2,10 +2,15 @@
 
 [k9-format=text-inline],
 [k9-format=text-inline-fixed] {
-  --kite9-type: text;
+  --kite9-type: container;
   --kite9-vertical-align: center;
   --kite9-connection-align: 50%;
   --kite9-horizontal-align: center;
+}
+
+[k9-format=text-inline] text,
+[k9-format=text-inline-fixed] text {
+	alignment-baseline: baseline;
 }
 
 /* inline-text format */

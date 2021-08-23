@@ -2,11 +2,11 @@
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
-  <!--start k9-format="inline-text" id="1">Start</start -->
+  <!--start k9-format="text-inline" id="1">Start</start -->
      
-	<document k9-format="inline-text" id="2"><textarea id="t2">Document</textarea></document>
+	<document id="2"><textarea id="t2">Document</textarea></document>
 
-  <decision k9-format="inline-text" id="3"><textarea id="t3">Decision</textarea></decision>
+  <decision id="3"><textarea id="t3">Decision</textarea></decision>
   
   <decision k9-format="captioned-text" id="4"><textarea id="t4">Decision</textarea></decision>
 	 

@@ -14,7 +14,7 @@
 		<xsl:param name="rounding">0pt</xsl:param>
 		<xsl:param name="highlight">pulse</xsl:param>
     <xsl:param name="shape">
-      <xsl:apply-templates mode="back" select=".">
+      <xsl:apply-templates mode="shape" select=".">
         <xsl:with-param name="rounding" select="$rounding" />
       </xsl:apply-templates>
     </xsl:param>
@@ -29,7 +29,7 @@
   
   <!-- default background is a rounded-rectangle -->
   
-  <xsl:template match="*" mode="back">
+  <xsl:template name="back-round-rect" match="*" mode="shape">
     <xsl:param name="rounding">0pt</xsl:param>
     <rect x="0" y="0" width="0" height="0">
       <xsl:attribute name="rx"><xsl:value-of select="$rounding" /></xsl:attribute>

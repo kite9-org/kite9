@@ -4,12 +4,11 @@
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
 
-  <xsl:import href="text-formats-template.xsl" />
-  <xsl:import href="container-formats-template.xsl" />
-<!--   <xsl:import href="image-formats-template.xsl"/> -->  
-
-
-
-  <xsl:template match="*|text()" mode="decoration" />
-
+  <xsl:import href="formats-container.xsl" />
+  <xsl:import href="formats-container-fixed.xsl" />
+  <xsl:import href="formats-captioned.xsl" />
+  <xsl:import href="formats-text-inline.xsl" />
+  <xsl:import href="formats-text-inline-fixed.xsl" />
+  <xsl:import href="formats-image.xsl" />
+  
 </xsl:stylesheet>

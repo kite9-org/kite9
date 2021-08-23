@@ -1,5 +1,6 @@
 package org.kite9.diagram.batik.painter;
 
+import org.apache.batik.util.CSSConstants;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.processors.TextWrapProcessor;
 import org.kite9.diagram.model.position.Rectangle2D;
@@ -11,16 +12,24 @@ public class BatikTextPainter extends BatikLeafPainter {
         super(theElement, ctx);
     }
 
+    /**
+     * This works as long as we don't go messing with the baseline of the text - default only will do.
+     *
+     * @return
+     */
     @Override
     public Rectangle2D bounds() {
+        getGraphicsNode();
         double lineHeight = TextWrapProcessor.Companion.calculateLineHeight(getTheElement(), ctx);
+
         Rectangle2D ir = super.bounds();
         if (ir == null) {
             return null;
         }
         double height = ir.getHeight();
         double units = Math.ceil(height / lineHeight);
-        height = units * lineHeight;
-        return new Rectangle2D(ir.getX(), ir.getY(), ir.getWidth(), height);
+        double newHeight = units * lineHeight;
+        double ascent = 0 - ctx.getCssStyleDoubleProperty("font-size", getTheElement());
+        return new Rectangle2D(ir.getX(), ascent, ir.getWidth(), newHeight);
     }
 }

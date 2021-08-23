@@ -12,15 +12,15 @@
     ADL.
    -->    
   
-  <xsl:import href="../links/links-template.xsl" />
-  <xsl:import href="../links/links-markers.xsl" />
-  <xsl:import href="../links/links-terminators.xsl" />
-  <xsl:import href="../containers/containers-template.xsl"/>
   <xsl:import href="../back/back-template.xsl" />
   <xsl:import href="../formats/formats-template.xsl" />
   <xsl:import href="../diagram/diagram-template.xsl" />
+  <xsl:import href="../containers/containers-template.xsl"/>
   <xsl:import href="../labels/labels-template.xsl" />
   <xsl:import href="../grid/grid-template.xsl" />
+  <xsl:import href="../links/links-template.xsl" />
+  <xsl:import href="../links/links-markers.xsl" />
+  <xsl:import href="../links/links-terminators.xsl" />
 
   <!-- this rule matches and passes through any svg elements -->
   <xsl:template match="svg:*">

@@ -126,6 +126,8 @@ abstract class AbstractPainter : Painter {
             debug.append("temporary: true; ")
         }
 
+        debug.append("painter: "+this.toString()+"; ")
+
         out.setAttribute("k9-info", debug.toString())
     }
 

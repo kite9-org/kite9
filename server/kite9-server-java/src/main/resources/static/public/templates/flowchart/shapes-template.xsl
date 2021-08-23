@@ -5,23 +5,23 @@
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
   
   
-	<xsl:template mode="flowchart-shape" match="adl:card" >
+	<xsl:template mode="shape" match="adl:card" priority="2">
 		<path xmlns="http://www.w3.org/2000/svg"
 			d="M80,34.5H30c-0.1,0-0.3,0.1-0.4,0.1l-10,10c-0.1,0.1-0.1,0.2-0.1,0.4v20c0,0.3,0.2,0.5,0.5,0.5h60c0.3,0,0.5-0.2,0.5-0.5V35  C80.5,34.7,80.3,34.5,80,34.5z M79.5,64.5h-59V45.2l9.7-9.7h49.3V64.5z" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:data">
+	<xsl:template mode="shape" match="adl:data" priority="2">
 		<path xmlns="http://www.w3.org/2000/svg"
 			d="M90,29.5H30c-0.2,0-0.4,0.1-0.4,0.3l-20,40c-0.2,0.3,0.1,0.7,0.4,0.7h60c0.2,0,0.4-0.1,0.4-0.3l20-40  C90.6,29.9,90.4,29.5,90,29.5z M69.7,69.5H10.8l19.5-39h58.9L69.7,69.5z" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:process">
+	<xsl:template mode="shape" match="adl:process" priority="2">
     <g>
       <rect x="0" y="0" width="0" height="0" pp:width="$width" pp:height="$height" />
     </g>
 	</xsl:template>
  
-	<xsl:template mode="flowchart-shape" match="adl:document">
+	<xsl:template mode="shape" match="adl:document">
 		<path d=""
 			pp:d="
        concat(
@@ -34,7 +34,7 @@
 	</xsl:template>
   
   
-  <xsl:template mode="flowchart-shape" match="adl:decision">
+  <xsl:template mode="shape" match="adl:decision">
     <path d=""  pp:d="concat(
       ' M ',$width div 2,' 0',
       ' L ', $width,' ',$height div 2,
@@ -44,7 +44,7 @@
   </xsl:template>
   
 <!-- 
-	<xsl:template mode="flowchart-shape" match="adl:delay">
+	<xsl:template mode="shape" match="adl:delay">
 		<path
 			d="
 			M 0 0
@@ -58,7 +58,7 @@
 
 	
 
-	<xsl:template mode="flowchart-shape" match="adl:manual">
+	<xsl:template mode="shape" match="adl:manual">
 		<path d="
 			M 0 0
 			H #{$width}
@@ -67,7 +67,7 @@
 			z" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:terminator">
+	<xsl:template mode="shape" match="adl:terminator">
 		<path
 			d="
 			M 20 0
@@ -80,7 +80,7 @@
 		" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:input">
+	<xsl:template mode="shape" match="adl:input">
 		<path d="
 			M 0 10
 			L #{$width} 0
@@ -90,7 +90,7 @@
 	</xsl:template>
 
 
-	<xsl:template mode="flowchart-shape" match="adl:database">
+	<xsl:template mode="shape" match="adl:database">
 		<path d="
 			M 0 5
 			L 0 #{$height - 5}
@@ -101,7 +101,7 @@
 		<ellipse cx="#{$width div 2}" cy="5" rx="#{$width div 2}" ry="5" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:preparation">
+	<xsl:template mode="shape" match="adl:preparation">
 		<path d="
 			M 10 0
 			H #{$width - 10}
@@ -111,13 +111,13 @@
 			L 0 #{$height div 2}
 			z" />
 	</xsl:template>
-	<xsl:template mode="flowchart-shape" match="adl:internal">
+	<xsl:template mode="shape" match="adl:internal">
 		<rect x="0" y="0" width="#{$width}" height="#{$height}" />
 		<path d="M 0 5 H #{$width}" />
 		<path d="M 5 0 V #{$height}" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:off-page">
+	<xsl:template mode="shape" match="adl:off-page">
 		<path d="
 			M 0 0
 			H #{$width}
@@ -127,7 +127,7 @@
 			z" />
 	</xsl:template>
 
-	<xsl:template mode="flowchart-shape" match="adl:direct">
+	<xsl:template mode="shape" match="adl:direct">
 		<path d="
 			M 5 0
 			H #{$width - 5}
@@ -137,7 +137,7 @@
 			Q 0 0 5 0" />
 		<ellipse cx="#{$width - 5}" cy="#{$height div 2}" rx="5" ry="#{$height div 2}" />
 	</xsl:template>
-	<xsl:template mode="flowchart-shape" match="adl:display">
+	<xsl:template mode="shape" match="adl:display">
 		<path d="
 			M 0 #{$height div 2}
 			L 5 5
@@ -147,7 +147,7 @@
 			L 5 #{$height - 5}
 			z" />
 	</xsl:template>
-	<xsl:template mode="flowchart-shape" match="adl:loop-limit">
+	<xsl:template mode="shape" match="adl:loop-limit">
 		<path d="
 			M 5 0
 			H #{$width - 5}
@@ -158,11 +158,11 @@
 			z" />
 			
 	</xsl:template>
-	<xsl:template mode="flowchart-shape" match="adl:reference">
+	<xsl:template mode="shape" match="adl:reference">
 		<ellipse cx="#{$width div 2}" cy="#{$height div 2}"
 			rx="#{$width div 2}" ry="#{$height div 2}" />
 	</xsl:template>
-	<xsl:template mode="flowchart-shape" match="adl:sequential">
+	<xsl:template mode="shape" match="adl:sequential">
 		<path d="
 			M 0 #{$height div 2}
 			Q 0 #{$height} #{$width div 2} #{$height}
@@ -173,14 +173,14 @@
 			Q #{$width} 0 #{$width div 2} 0
 			Q 0 0 0 #{$height div 2}" />	
 	</xsl:template>
-	<xsl:template mode="flowchart-shape" match="adl:predefined">
+	<xsl:template mode="shape" match="adl:predefined">
 		<rect x="0" y="0" width="#{$width}" height="#{$height}" />
 		<path d="M 5 0 V #{$height} 
 			M #{$width - 5} 0 V #{$height}" />
 	</xsl:template>
 
 
-	<xsl:template mode="flowchart-shape" match="adl:stored">
+	<xsl:template mode="shape" match="adl:stored">
 		<path
 			d="
 			M 5 0

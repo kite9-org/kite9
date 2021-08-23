@@ -20,7 +20,9 @@
     <xsl:param name="k9-ui" />
 
     <xsl:param name="class" select="@class"/>
+    <xsl:param name="id" select="@id"/>
     <xsl:param name="attributes" select="@*" />
+    
   
     <g>      
       <xsl:copy-of select="$attributes" />      
@@ -35,6 +37,10 @@
       <xsl:if test="$class">
         <xsl:attribute name="class"><xsl:value-of select="$class" /></xsl:attribute>
       </xsl:if>
+      
+      <xsl:if test="$id">
+        <xsl:attribute name="id"><xsl:value-of select="$id" /></xsl:attribute>
+      </xsl:if>
    
       <xsl:comment>pre</xsl:comment> 
       <xsl:copy-of select="$pre" />
@@ -42,7 +48,7 @@
       <xsl:copy-of select="$content"/>
       <xsl:comment>post</xsl:comment> 
       <xsl:copy-of select="$post" />
-     </g>
+    </g>
   
   </xsl:template> 
 

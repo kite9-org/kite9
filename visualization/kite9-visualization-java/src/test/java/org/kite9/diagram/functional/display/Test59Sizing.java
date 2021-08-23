@@ -1,5 +1,6 @@
 package org.kite9.diagram.functional.display;
 
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
@@ -109,30 +110,49 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	public void test_59_16_ScaledLeaf() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(svgLeaf(scaled(ellipse()),""),"")));
 	}
+
+	private String textWithBaseline(String text) {
+		return text("<svg:text>"+text+"</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px;");
+	}
+
+	private String textWithHanging(String text) {
+		return text("<svg:text>"+text+"</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px;");
+	}
 	
 	@Test
 	public void test_59_17_TextDescenders() throws Exception {
-		String frs =  "<svg:rect width=\"70pt\" height=\"400pt\" />";
-		String text1 = "<svg:text>hello hello hello hello</svg:text>";
-		String text2 = "<svg:text>pello hello pello</svg:text>";
-		
-		
+		String text1 = "hello hello hello hello";
+		String text2 = "pello hello pello,";
+		String text3 = ",,,,,,,,";
+		String text4 = "pppp";
+		String text5 = "___";
+
+
 		renderDiagram(basicDiagram(
 				glyphContainer(
 			glyphContainer(
-				text("<svg:text>hello 1</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: baseline;")+
-				text("<svg:text>pello 2</svg:text>", "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: baseline;"),
+					textWithBaseline("hello 1")+
+					textWithHanging("pello 2"),
 			"--kite9-padding: 0px; --kite9-layout: right; --kite9-min-size: 150px 150px") +
+					glyphContainer(
+							textWithBaseline(text1) + textWithHanging(text2),
+						"--kite9-padding: 0px; --kite9-layout: down; ")+
+					glyphContainer(
+							textWithBaseline(text4)+ textWithHanging(text4),
+							"--kite9-padding: 0px; --kite9-layout: down; ")+
+					glyphContainer(
+							textWithBaseline(text5)+ textWithHanging(text5),
+							"--kite9-padding: 0px; --kite9-layout: down; ")+
+					glyphContainer(
+							textWithBaseline(text3)+ textWithHanging(text3),
+							"--kite9-padding: 0px; --kite9-layout: down; ")+
 			glyphContainer(
-					text(text1, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: baseline; ")+
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: baseline; "),
-				"--kite9-padding: 0px; --kite9-layout: down; ")+
-			glyphContainer(
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: baseline; ")+
-					text(text2, "font-size: 25px; --kite9-vertical-align: bottom; --kite9-padding: 0px; alignment-baseline: baseline; "),
-				"--kite9-padding: 00px; --kite9-layout: down;"), "--kite9-vertical-align: top")));
+					textWithBaseline(text2)+
+							textWithHanging(text2),
+				"--kite9-padding: 00px; --kite9-layout: down;"), "--kite9-vertical-align: top")
+				));
 	}
-	
+
 	@Test
 	public void test_59_18_TestTextBoundedSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(

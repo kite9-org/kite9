@@ -14,9 +14,11 @@ import org.w3c.dom.Element
 
 /**
  * This makes sure the content is positioned correctly inside it's container.
+ *
  * Content is all cropped between top-left and bottom right positions.
+ *
  */
-class CroppingTransformer(private val owner: Leaf) : AbstractRectangularTransformer(), LeafTransformer {
+open class CroppingTransformer(private val owner: Leaf) : AbstractRectangularTransformer(), LeafTransformer {
 
     override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element? {
         // work out translation
