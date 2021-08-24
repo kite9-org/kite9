@@ -18,27 +18,15 @@
       
       <item id="tb" k9-format="text-inline-fixed">Text Inline Fixed</item>
 
-<!--      <item id="tf" k9-format="text-captioned">Text Captioned</item>
       
-      <item id="tp" k9-format="text-portrait" k9-shape="circle">Text Portrait</item>
+       <item id="tp" k9-format="text-portrait" k9-shape="ellipse">Text Portrait</item>
       
-      <item id="td" k9-format="image" href="../admin/leaf.svg" />
+      <!-- <item id="td" k9-format="image" href="../admin/leaf.svg" />
+
+      <item id="tf" k9-format="text-captioned">Text Captioned</item>
       
       <item id="te" k9-format="image-fixed" href="../admin/leaf.svg">Captioned</item> -->
    
    </item>
-   
-<!--   <item id="c2" k9-format="container-fixed">
-   
-      <item id="tb" k9-format="text-inline-fixed">Text Inline Fixed</item>
-      
-      <item id="tf" k9-format="text-captioned-fixed">Text Captioned Fixed</item>
-      
-      <item id="td2" k9-format="image-fixed" href="../admin/leaf.svg" />
-      
-      <item id="te2" k9-format="image-captioned-fixed" href="../admin/leaf.svg">Captioned Fixed</item>
-   
-   </item> -->
- 
 
 </diagram>

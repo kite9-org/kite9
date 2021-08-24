@@ -85,12 +85,12 @@
 
 /* Selected text effect */
 
-[id].selected > text {
+[id][k9-highlight].selected > text {
 	fill: rgb(255, 204, 0) !important;
 	fill-opacity: .6 !important;	
 }
 
-.mouseover > text {
+[k9-highlight].mouseover > text {
 	fill: #CCEEFF !important;
 	fill-opacity: .6 !important;
 }

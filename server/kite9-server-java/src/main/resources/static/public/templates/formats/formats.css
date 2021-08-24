@@ -1,4 +1,5 @@
 /** text-inline format */
+/** text-inline-fixed format */
 
 [k9-format=text-inline],
 [k9-format=text-inline-fixed] {
@@ -6,15 +7,13 @@
   --kite9-vertical-align: center;
   --kite9-connection-align: 50%;
   --kite9-horizontal-align: center;
-}
-
-/* inline-text format */
-
-[k9-elem=text-inline] {
   --kite9-sizing: minimize;
   --kite9-margin: 15pt;
   --kite9-padding: 11pt;
 }
+
+
+
 
 [k9-format=inline-text] > [k9-elem=depiction] {
   --kite9-type: container;
@@ -91,26 +90,29 @@
   --kite9-type: none;
 }
 
-/* portrait-text format */
+/* text-portrait format */
 
-[k9-elem=portrait-text],
-[k9-format=portrait-text] {
+[k9-format=text-portrait] {
 	--kite9-type: container;
   --kite9-sizing: minimize;
   --kite9-margin: 16pt;
   --kite9-layout: down;
 }
 
-[k9-format=portrait-text] > [k9-elem=depiction] {
+[k9-format=text-portrait] > [k9-elem=depiction] {
   --kite9-type: container;
-  --kite9-min-size: 30pt 30pt;
-  --kite9-margin: 5pt;
+  --kite9-min-size: 50pt 50pt;
+  --kite9-margin: 15pt;
   --kite9-connection-align: 50%;
   --kite9-horizontal-align: center;
 }
 
-[k9-format=portrait-text] > [k9-elem=caption] {
-  --kite9-type: container;
+[k9-format=text-portrait] > [k9-elem=caption] {
+  --kite9-type: text;
   --kite9-padding: 5pt;
   --kite9-horizontal-align: center;
+  --kite9-vertical-align: center;
+  --kite9-sizing: minimize;
+  --kite9-margin: 15pt;
+  --kite9-padding: 11pt;
 }

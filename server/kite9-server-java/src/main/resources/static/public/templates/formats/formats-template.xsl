@@ -5,10 +5,13 @@
 
 
   <xsl:import href="formats-container.xsl" />
-  <xsl:import href="formats-container-fixed.xsl" />
-  <xsl:import href="formats-captioned.xsl" />
+  <xsl:import href="formats-text-captioned.xsl" />
+  <xsl:import href="formats-text-portrait.xsl" />
   <xsl:import href="formats-text-inline.xsl" />
   <xsl:import href="formats-text-inline-fixed.xsl" />
   <xsl:import href="formats-image.xsl" />
+  
+  
+  <xsl:template match="text()" mode="text-decoration" />
   
 </xsl:stylesheet>
