@@ -12,9 +12,6 @@
   --kite9-padding: 11pt;
 }
 
-
-
-
 [k9-format=inline-text] > [k9-elem=depiction] {
   --kite9-type: container;
   --kite9-min-size: 30pt 30pt;
@@ -30,18 +27,16 @@
   --kite9-horizontal-align: center;
 }
 
+/** image format */
 
-
-/** image-editable format */
-
-[k9-elem=image-editable],
-[k9-format=image-editable] {
-  --kite9-type: container;
+[k9-format=image],
+[k9-format=image-fixed] {
+  --kite9-type: svg;
   --kite9-horizontal-align: center;
   --kite9-vertical-align: center;
 }
 
-[k9-format=image-editable] > [k9-elem=front] {
+[k9-format=image] > [k9-elem=front] {
   fill: white;
   fill-opacity: .01;
 }
