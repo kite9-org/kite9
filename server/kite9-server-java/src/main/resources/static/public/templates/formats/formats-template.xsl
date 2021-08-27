@@ -10,6 +10,7 @@
   <xsl:import href="formats-text-inline.xsl" />
   <xsl:import href="formats-text-inline-fixed.xsl" />
   <xsl:import href="formats-image.xsl" />
+  <xsl:import href="formats-image-fixed.xsl" />
   
   
   <xsl:template match="text()" mode="text-decoration" />

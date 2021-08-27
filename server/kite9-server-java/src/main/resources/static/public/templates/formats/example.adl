@@ -4,7 +4,7 @@
          
    <svg:defs>
         <svg:style type="text/css">
-            [k9-elem=item] > [k9-elem=back] {
+            [k9-texture=solid] > [k9-elem=back] {
                 fill: white;
                 stroke: black;
             }
@@ -23,9 +23,9 @@
       
       <item id="td" k9-format="image" href="../admin/leaf.svg" />
 
-      <!-- <item id="tf" k9-format="text-captioned">Text Captioned</item>
+      <!-- <item id="tf" k9-format="text-captioned">Text Captioned</item> -->
       
-      <item id="te" k9-format="image-fixed" href="../admin/leaf.svg">Captioned</item> -->
+      <item id="te" k9-format="image-fixed" href="../admin/leaf.svg"></item> 
    
    </item>
 

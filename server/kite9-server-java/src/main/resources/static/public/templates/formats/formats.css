@@ -34,13 +34,14 @@
   --kite9-type: svg;
   --kite9-horizontal-align: center;
   --kite9-vertical-align: center;
+  --kite9-margin: 10pt;
 }
 
-[k9-format=image] > [k9-elem=front] {
+[k9-format=image] > [k9-elem=front],
+[k9-format=image-fixed] > [k9-elem=back]  {
   fill: white;
   fill-opacity: .01;
 }
-
 
 
 /* inline-container format */

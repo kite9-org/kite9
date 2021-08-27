@@ -21,7 +21,7 @@
     <xsl:param name="k9-elem" select="local-name()" />
     <xsl:param name="k9-format">image</xsl:param>
     <xsl:param name="k9-highlight">outline</xsl:param>
-    <xsl:param name="k9-rounding">0pt</xsl:param>
+    <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">solid</xsl:param>
     <xsl:param name="k9-ui">image</xsl:param>
     <xsl:param name="content">
@@ -72,7 +72,5 @@
       <xsl:comment>post</xsl:comment> 
       <xsl:copy-of select="$k9-decoration" />
     </g>
-    
   </xsl:template>
-  
 </xsl:stylesheet>
