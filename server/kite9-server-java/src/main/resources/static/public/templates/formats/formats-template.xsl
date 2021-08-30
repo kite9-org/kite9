@@ -9,6 +9,7 @@
   <xsl:import href="formats-text-portrait.xsl" />
   <xsl:import href="formats-text-inline.xsl" />
   <xsl:import href="formats-text-inline-fixed.xsl" />
+  <xsl:import href="formats-shape.xsl" />
   <xsl:import href="formats-image.xsl" />
   <xsl:import href="formats-image-fixed.xsl" />
   

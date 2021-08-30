@@ -8,7 +8,7 @@
   --kite9-horizontal-align: center;
   --kite9-sizing: minimize;
   --kite9-margin: 15pt;
-  --kite9-padding: 41pt;
+  --kite9-padding: 10pt;
 }
 
 /** image, image-fixed format */
@@ -27,6 +27,14 @@
   fill-opacity: .01;
 }
 
+/* shape */
+
+[k9-format=shape] {
+  --kite9-type: container;
+  --kite9-horizontal-align: center;
+  --kite9-vertical-align: center;
+  --kite9-margin: 10pt;
+}
 
 /* container format */
 
@@ -51,15 +59,19 @@
   --kite9-layout: down;
 }
 
+/* depiction:  a shape inside an object */
 
 [k9-format=text-captioned] > [k9-elem=depiction],
-[k9-format=text-portrait] > [k9-elem=depiction]  {
+[k9-format=text-portrait] > [k9-elem=depiction],
+[k9-format=shape] > [k9-elem=depiction] {
   --kite9-type: container;
   --kite9-min-size: 50pt 50pt;
   --kite9-margin: 15pt;
   --kite9-connection-align: 50%;
   --kite9-horizontal-align: center;
 }
+
+/* caption:  text inside the object */
 
 [k9-format=text-portrait] > [k9-elem=caption],
 [k9-format=text-captioned] > [k9-elem=caption]  {
@@ -71,6 +83,8 @@
   --kite9-margin: 15pt;
   --kite9-padding: 11pt;
 }
+
+/* align: aligns the contents of the object */
 
 [k9-format=text-captioned] > [k9-elem=shape-align] {
   --kite9-type: link;

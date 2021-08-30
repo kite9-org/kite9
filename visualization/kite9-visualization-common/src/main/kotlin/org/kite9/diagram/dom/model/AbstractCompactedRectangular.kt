@@ -101,8 +101,27 @@ abstract class AbstractCompactedRectangular(
         private get() {
             val p = painter
             return if (p is LeafPainter && transformer is LeafTransformer) {
-                (transformer as LeafTransformer).getBounds(p)
+                transformer.getBounds(p)
             } else CostedDimension2D.ZERO
         }
 
+    override fun getXPathVariable(name: String): String? {
+        if ("x0" == name || "x" == name) {
+            if (painter is LeafPainter) {
+                var out = (painter as LeafPainter).bounds().x - getPadding(Direction.LEFT)
+                return "" + out
+            } else {
+                return "0";
+            }
+        } else if ("y0" == name || "y" == name) {
+            if (painter is LeafPainter) {
+                var out = (painter as LeafPainter).bounds().y - getPadding(Direction.UP)
+                return "" + out;
+            } else {
+                return "0";
+            }
+        } else {
+            return super.getXPathVariable(name);
+        }
+    }
 }

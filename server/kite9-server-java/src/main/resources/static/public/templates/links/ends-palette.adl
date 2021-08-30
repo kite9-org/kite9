@@ -1,58 +1,54 @@
-<?xml version="1.0"?>
-<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
-	<svg:defs>
-		<svg:style type="text/css">
-			@import url(/public/templates/links/common-links.css);
-		</svg:style>
-	</svg:defs>
-	<diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: down; kite9-type: diagram; ">
+<diagram 
+  xmlns="http://www.kite9.org/schema/adl" 
+  xmlns:svg="http://www.w3.org/2000/svg"
+  id="dia" style="--kite9-layout: down; --kite9-type: diagram; ">
 
-		<group style="kite9-layout: right; kite9-margin-right: 30pt; ">
-			<group style="kite9-layout: right; kite9-min-width: 30pt; ">
+		<group style="--kite9-layout: right; --kite9-margin-right: 30pt; ">
+			<group style="--kite9-layout: right; --kite9-min-width: 30pt; ">
 				<hub id="from1"></hub>
 				<hub id="to1"></hub>
 			</group>
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from2"></hub>
 				<hub id="to2"></hub>
 			</group>
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from3"></hub>
 				<hub id="to3"></hub>
 			</group>
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from4"></hub>
 				<hub id="to4"></hub>
 			</group>
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from5"></hub>
 				<hub id="to5"></hub>
 			</group>
 		</group>
 		
 		
-    <group style="kite9-layout: right; kite9-margin-right: 30pt; ">
-			<group style="kite9-layout: right; ">
+    <group style="--kite9-layout: right; --kite9-margin-right: 30pt; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from6"></hub>
 				<hub id="to6"></hub>
 			</group>
 
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from7"></hub>
 				<hub id="to7"></hub>
 			</group>
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from8"></hub>
 				<hub id="to8"></hub>
 			</group>
 
-			<group style="kite9-layout: right; ">
+			<group style="--kite9-layout: right; ">
 				<hub id="from9"></hub>
 				<hub id="to9"></hub>
 			</group>
@@ -61,7 +57,7 @@
 		</group>
 		
 
-		<svg:g style="kite9-link-minimum-length: 1pt !important; ">
+		<svg:g style="--kite9-link-minimum-length: 1pt !important; ">
 
 			<link id="l1">
 				<from id="l1-f" reference="from1" class="null" />
@@ -111,4 +107,3 @@
 		</svg:g>
 
 	</diagram>
-</svg:svg>

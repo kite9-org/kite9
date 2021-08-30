@@ -49,6 +49,7 @@
     </xsl:param>
         
     <xsl:param name="alignment">
+      <!-- no idea why, but we need an extra param in here otherwise something goes haywire -->
       BOBO
     </xsl:param>
     

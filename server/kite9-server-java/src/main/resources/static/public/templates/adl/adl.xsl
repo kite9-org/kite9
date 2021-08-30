@@ -40,15 +40,19 @@
   </xsl:template>  -->
   
   <xsl:template match="adl:link">
-  <xsl:call-template name="links-basic" />
+    <xsl:call-template name="links-basic" />
+  </xsl:template>
+
+  <xsl:template match="adl:align">
+    <xsl:call-template name="links-align" />
   </xsl:template>
   
   <xsl:template match="adl:from|adl:to">
-   <xsl:call-template name="null-terminator" />
+    <xsl:call-template name="null-terminator" />
   </xsl:template>
   
   <xsl:template match="adl:diagram">
-   <xsl:call-template name="diagram-basic" />
+    <xsl:call-template name="diagram-basic" />
   </xsl:template>
 
   <xsl:template match="adl:container">
@@ -75,6 +79,10 @@
       <xsl:with-param name="k9-texture">none</xsl:with-param>
       <xsl:with-param name="k9-highlight">pulse stroke</xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+   
+  <xsl:template match="adl:hub">
+    <xsl:call-template name="links-hub" />
   </xsl:template>
 
 

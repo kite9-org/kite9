@@ -4,7 +4,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
  
- 
+ <xsl:import href="../formats/formats-template.xsl"/>
 
   <!-- Container template where the container contents is in a specific order -->
   <xsl:template name='links-basic'>
@@ -47,7 +47,7 @@
   </xsl:template>
    
    
-  <xsl:template name="align">
+  <xsl:template name="links-align">
     <xsl:param name="k9-ui">delete cascade</xsl:param>
     
     <g>
@@ -67,10 +67,12 @@
     </g>
   </xsl:template>
   
-  <xsl:template name="hub">
-    <g k9-elem="hub">
-      <circle r="16" cx="5" cy="5" />
-    </g>
+  <xsl:template name="links-hub">
+    <xsl:call-template name="formats-shape">
+      <xsl:with-param name="depiction">
+        <circle r="16" cx="5" cy="5" />
+      </xsl:with-param>
+    </xsl:call-template>
   </xsl:template> 
   
 </xsl:stylesheet>

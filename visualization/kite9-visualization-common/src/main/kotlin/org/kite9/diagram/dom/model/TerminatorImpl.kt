@@ -110,7 +110,12 @@ class TerminatorImpl(
      */
     override fun getConnection(): Connection {
         ensureInitialized()
-        return getParent() as Connection
+        val parent = getParent()
+        if (parent is Connection) {
+            return parent
+        } else {
+            throw ctx.contextualException("Parent is not link for terminator", theElement)
+        }
     }
 
     override fun getEnd(): End {
