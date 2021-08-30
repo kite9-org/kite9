@@ -51,5 +51,10 @@
       <xsl:attribute name="pp:ry">$height div 2</xsl:attribute>
     </ellipse>
   </xsl:template>
-
+  
+  <xsl:template name="back-image" match="*[@href]" mode="shape" priority="2">
+  
+  
+  </xsl:template>
+  
 </xsl:stylesheet>

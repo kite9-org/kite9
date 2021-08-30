@@ -6,6 +6,7 @@ import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.painter.RoutePainterImpl
 import org.kite9.diagram.dom.processors.xpath.XPathAware
+import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
@@ -173,12 +174,20 @@ class ConnectionImpl(
 
     override fun getFromDecoration(): Terminator {
         ensureInitialized()
-        return fromDecoration!!
+        if (fromDecoration is Terminator) {
+            return fromDecoration as Terminator
+        } else {
+            throw Kite9ProcessingException("No 'from' set for element $this")
+        }
     }
 
     override fun getToDecoration(): Terminator {
         ensureInitialized()
-        return toDecoration!!
+        if (toDecoration is Terminator) {
+            return toDecoration as Terminator
+        } else {
+            throw Kite9ProcessingException("No 'to' set for element $this")
+        }
     }
 
     override fun getFromLabel(): Label? {

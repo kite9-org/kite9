@@ -17,13 +17,12 @@
       <item id="ta" k9-format="text-inline">Text Inline</item>
       
       <item id="tb" k9-format="text-inline-fixed">Text Inline Fixed</item>
-
       
-       <item id="tp" k9-format="text-portrait" k9-shape="ellipse">Text Portrait</item>
+      <item id="tp" k9-format="text-portrait" k9-shape="ellipse">Text Portrait</item>
       
       <item id="td" k9-format="image" href="../admin/leaf.svg" />
 
-      <!-- <item id="tf" k9-format="text-captioned">Text Captioned</item> -->
+      <item id="tf" k9-format="text-captioned" k9-shape="ellipse">Text Captioned</item>
       
       <item id="te" k9-format="image-fixed" href="../admin/leaf.svg"></item> 
    

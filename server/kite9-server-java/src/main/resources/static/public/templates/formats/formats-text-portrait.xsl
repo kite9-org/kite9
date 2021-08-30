@@ -13,12 +13,20 @@
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">solid</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
-    <xsl:param name="k9-depiction">
+    
+    <xsl:param name="depiction">
       <xsl:call-template name="back-basic">
         <xsl:with-param name="k9-elem">depiction</xsl:with-param>
         <xsl:with-param name="highlight"></xsl:with-param>
       </xsl:call-template>
     </xsl:param>
+    
+    <xsl:param name="caption">
+      <g k9-elem="caption">
+        <xsl:copy-of select="$text"/>
+      </g>
+    </xsl:param>
+    
     <xsl:param name="k9-shape">
       <xsl:call-template name="back-basic">
         <xsl:with-param name="highlight" select="$k9-highlight" />
@@ -29,6 +37,7 @@
         </xsl:with-param> 
       </xsl:call-template>  
     </xsl:param>
+    
     <xsl:param name="k9-decoration"><xsl:apply-templates mode="text-decoration" /></xsl:param>
     <xsl:param name="class" select="@class"/>
     <xsl:param name="attributes" select="@*" />
@@ -53,10 +62,9 @@
       <xsl:comment>pre</xsl:comment> 
       <xsl:copy-of select="$k9-shape" />
       <xsl:comment>content</xsl:comment> 
-      <xsl:copy-of select="$k9-depiction" />
-      <g k9-elem="caption">
-        <xsl:copy-of select="$text"/>
-      </g>
+      <xsl:copy-of select="$depiction" />
+      <xsl:copy-of select="$caption" />
+      
       <xsl:comment>post</xsl:comment> 
       <xsl:copy-of select="$k9-decoration" />
     </g>
