@@ -9,10 +9,10 @@
     <xsl:import href="../formats/formats-template.xsl"/>
 
     <xsl:template name="diagram-root-svg">
-        <xsl:param name="css"/>
-        <xsl:param name="script"/>
-        <xsl:param name="constants"/>
-        <xsl:param name="defs"/>
+        <xsl:param name="css"></xsl:param>
+        <xsl:param name="script"></xsl:param>
+        <xsl:param name="constants"></xsl:param>
+        <xsl:param name="defs"></xsl:param>
         <xsl:param name="content"><xsl:apply-templates /></xsl:param>
         <svg>
             <xsl:attribute name="pp:width">$width</xsl:attribute>

@@ -4,7 +4,7 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../adl/adl.xsl" />
+  <xsl:import href="../adl/adl-template.xsl" />
 
 	<xsl:template match="adl:box">
 		<xsl:call-template name="formats-container">

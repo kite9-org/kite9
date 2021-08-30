@@ -3,10 +3,33 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
+  
+  <xsl:import href="../adl/adl-template.xsl"/>
 
-  <template id="font-awesome" k9-elem="font-awesome">
-    &#xf005;
-  </template>
-
+  <xsl:template match="adl:font-awesome" >
+    <xsl:call-template name="formats-text-inline">
+      <xsl:with-param name="content">
+        <text>&#xf005;</text>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template match="/">
+    <xsl:call-template name="diagram-root-svg">
+      <xsl:with-param name="css">
+        @import url('/public/templates/font-awesome/font-awesome.css');
+      </xsl:with-param>
+      <xsl:with-param name="constants">
+      </xsl:with-param>
+      <xsl:with-param name="script">
+        import '/public/templates/font-/basic.js';
+      </xsl:with-param>
+      <xsl:with-param name="defs">
+        <xsl:copy-of select="$links-markers" />
+        <xsl:copy-of select="$container-indicators" />
+        <xsl:copy-of select=".//svg:defs" />
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
 
 </xsl:stylesheet>
