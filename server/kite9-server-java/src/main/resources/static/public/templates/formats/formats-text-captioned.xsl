@@ -48,17 +48,20 @@
       </g>
     </xsl:param>
         
+    <xsl:param name="alignment">
+      BOBO
+    </xsl:param>
+    
     <xsl:param name="align">
-    <!--  <g k9-elem="shape-align">
+      <g k9-elem="shape-align">
         <g k9-elem="from">
           <xsl:attribute name="reference"><xsl:value-of select="$id" />@dep</xsl:attribute>
         </g> 
         <g k9-elem="to">
           <xsl:attribute name="reference"><xsl:value-of select="$id" />@caption</xsl:attribute>   
         </g>
-      </g>  -->
+      </g>  
     </xsl:param>
-    
     
     <xsl:param name="caption">
       <g k9-elem="caption">
@@ -93,14 +96,6 @@
       <xsl:copy-of select="$depiction" />
       <xsl:copy-of select="$caption" />
       <xsl:comment>align</xsl:comment> 
-      <g k9-elem="shape-align">
-        <g k9-elem="from">
-          <xsl:attribute name="reference"><xsl:value-of select="$id" />@dep</xsl:attribute>
-        </g> 
-        <g k9-elem="to">
-          <xsl:attribute name="reference"><xsl:value-of select="$id" />@caption</xsl:attribute>   
-        </g>
-      </g>
       <xsl:copy-of select="$align" />
       
       
