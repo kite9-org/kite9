@@ -19,16 +19,6 @@
       <xsl:with-param name="css">
         @import url('/public/templates/font-awesome/font-awesome.css');
       </xsl:with-param>
-      <xsl:with-param name="constants">
-      </xsl:with-param>
-      <xsl:with-param name="script">
-        import '/public/templates/font-/basic.js';
-      </xsl:with-param>
-      <xsl:with-param name="defs">
-        <xsl:copy-of select="$links-markers" />
-        <xsl:copy-of select="$container-indicators" />
-        <xsl:copy-of select=".//svg:defs" />
-      </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
