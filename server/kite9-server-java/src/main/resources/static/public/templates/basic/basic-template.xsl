@@ -13,8 +13,8 @@
 	</xsl:template>
 
 	<xsl:template match="adl:textarea">
-		<xsl:call-template name="formats-text-inline">
-      <xsl:with-param name="k9-texture">none</xsl:with-param>
+		<xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-texture">solid</xsl:with-param>
     </xsl:call-template>
 	</xsl:template>
  

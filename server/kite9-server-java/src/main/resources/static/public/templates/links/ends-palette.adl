@@ -59,7 +59,7 @@
 
 		<svg:g style="--kite9-link-minimum-length: 1pt !important; ">
 
-			<link id="l1">
+<!--			<link id="l1">
 				<from id="l1-f" reference="from1" class="null" />
 				<to id="l1-t" reference="to1" />
 			</link>
@@ -102,7 +102,7 @@
 			<link id="l9">
 				<from id="l9-f" reference="from9" class="null" />
 				<to id="l9-t" reference="to9" shape="square" />
-			</link>
+			</link> -->
 
 		</svg:g>
 

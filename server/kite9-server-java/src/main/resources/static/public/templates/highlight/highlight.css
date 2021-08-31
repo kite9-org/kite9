@@ -85,15 +85,17 @@
 
 /* Selected text effect */
 
-[id][k9-highlight].selected > text {
+[id].mouseover > [k9-highlight~=pulse] > text {
+  fill: #CCEEFF !important;
+  fill-opacity: .6 !important;
+}
+
+[id].selected > [k9-highlight~=pulse] > text {
 	fill: rgb(255, 204, 0) !important;
 	fill-opacity: .6 !important;	
 }
 
-[k9-highlight].mouseover > text {
-	fill: #CCEEFF !important;
-	fill-opacity: .6 !important;
-}
+
 
 /* inactive effect: dims the element */
 

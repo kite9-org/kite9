@@ -12,7 +12,6 @@
     ADL.
    -->    
   
-  <xsl:import href="../back/back-template.xsl" />
   <xsl:import href="../formats/formats-template.xsl" />
   <xsl:import href="../diagram/diagram-template.xsl" />
   <xsl:import href="../containers/containers-template.xsl"/>

@@ -5,43 +5,39 @@
 
   <xsl:import href="../texture/texture-template.xsl" />
 
-  <xsl:template name="formats-container" match="*[@k9-format='container']">
+  <xsl:template name="formats-text-fixed" match="*[@k9-format='text-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
     <xsl:param name="id" select="@id" />
-
-    <xsl:param name="content"><xsl:apply-templates /></xsl:param>
-    <xsl:param name="k9-contains">connected</xsl:param>
-    <xsl:param name="k9-elem" select="local-name()" />
-    <xsl:param name="k9-format">container</xsl:param>
-    <xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="k9-palette">connected</xsl:param>
-    <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">background</xsl:param>
-    <xsl:param name="k9-ui">drag delete align connect insert autoconnect</xsl:param>
     
-    <xsl:param name="k9-shape">
+    <xsl:param name="content"><text><xsl:value-of select="text()" /></text></xsl:param>
+    <xsl:param name="k9-elem" select="local-name()" />
+    <xsl:param name="k9-format">text-fixed</xsl:param>
+    <xsl:param name="k9-highlight">pulse</xsl:param>
+    <xsl:param name="k9-rounding">5pt</xsl:param>
+    <xsl:param name="k9-texture">solid</xsl:param>
+    <xsl:param name="k9-ui">orphan edit</xsl:param>
+    
+    <xsl:param name="k9-text">
       <xsl:call-template name="texture-basic">
-        <xsl:with-param name="k9-highlight" select="$k9-highlight" />
         <xsl:with-param name="k9-texture" select="$k9-texture" />
+        <xsl:with-param name="k9-highlight" select="$k9-highlight" />
         <xsl:with-param name="class" select="$class" />
         <xsl:with-param name="style" select="$style" />
-        <xsl:with-param name="rounding" select="$k9-rounding" />
-      </xsl:call-template>  
+        <xsl:with-param name="shape" select="$content" />
+      </xsl:call-template>
     </xsl:param>
     
-    <xsl:param name="k9-decoration"><xsl:apply-templates mode="container-decoration" select="." /></xsl:param>
+    <xsl:param name="k9-decoration"><xsl:apply-templates mode="text-decoration" select="." /></xsl:param>
     
     <g>      
       <xsl:copy-of select="$attributes" />      
 
-      <xsl:attribute name="k9-contains"><xsl:value-of select="$k9-contains" /></xsl:attribute>
       <xsl:attribute name="k9-elem"><xsl:value-of select="$k9-elem" /></xsl:attribute>
       <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
-      <xsl:attribute name="k9-palette"><xsl:value-of select="$k9-palette" /></xsl:attribute>
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
-
+      
       <xsl:if test="$class">
         <xsl:attribute name="class"><xsl:value-of select="$class" /></xsl:attribute>
       </xsl:if>
@@ -54,17 +50,10 @@
         <xsl:attribute name="id"><xsl:value-of select="$id" /></xsl:attribute>
       </xsl:if>
    
-      <xsl:comment>pre</xsl:comment> 
-      <xsl:copy-of select="$k9-shape" />
-      <xsl:comment>content</xsl:comment> 
-      <xsl:copy-of select="$content"/>
-      <xsl:comment>post</xsl:comment> 
+      <xsl:comment>text</xsl:comment> 
+      <xsl:copy-of select="$k9-text"/>
+      <xsl:comment>decoration</xsl:comment> 
       <xsl:copy-of select="$k9-decoration" />
     </g>
   </xsl:template>
-  
-  
-  <xsl:template match="text()" mode="container-decoration" />
-  
-  
 </xsl:stylesheet>

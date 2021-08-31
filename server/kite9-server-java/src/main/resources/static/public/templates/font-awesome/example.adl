@@ -4,6 +4,6 @@
   xslt:template="/public/templates/font-awesome/font-awesome-template.xsl"
   xmlns:xslt="http://www.kite9.org/schema/xslt">
   <container>
-    <font-awesome>&#xf005;</font-awesome>
+    <font-awesome id="bob">&#xf005;</font-awesome>
   </container>
 </diagram>

@@ -5,7 +5,7 @@
 
 /* Labels */
 
-label {
+[k9-elem=label] {
 	--kite9-usage: label;
 	--kite9-type: container;
 	--kite9-sizing: minimize;
@@ -15,11 +15,11 @@ label {
 	--kite9-label-placement: bottom-left;
 }
 
-label[end=to] {
+[k9-elem=label][end=to] {
 	--kite9-link-end: to;
 }
 
-label[end=from] {
+[k9-elem=label][end=from] {
 	--kite9-link-end: from;
 }
 

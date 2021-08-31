@@ -1,31 +1,34 @@
 /**
  * Provides some default fill options which can be used to 
- * colour the <back /> element.  Users are encouraged to adopt the k9-texture attribute
- * and add their own options.  See designer template for an example 
+ * colour svg elements.  Users are encouraged to adopt the k9-texture attribute
+ * and add their own options.  
+ * See designer template and formats/example.adl for an example. 
  */
-[k9-texture=none] > [k9-elem=back] {
-	/** This allows the element to still be selected */
+ 
+/** This allows the element to still be selected, but have no real colour */
+[k9-texture=none] {
 	fill: white;
   fill-opacity: .01;
 }
 
-[k9-texture=background] > [k9-elem=back] {
+/** Use this for when the shape is part of the background, and will have other elements on top */
+[k9-texture=background] {
 	fill: white;
 	fill-opacity: 1;
 }
 
-[k9-texture=solid] > [k9-elem=back] {
+[k9-texture=solid] {
 	fill: white;
 	fill-opacity: 1;
 }
 
-[k9-texture=outline] > [k9-elem=back] {
+[k9-texture=outline] {
   fill: white;
   fill-opacity: .01;
   stroke: black;
 }
 
-[k9-texture=foreground] > [k9-elem=back] {
+[k9-texture=foreground] {
   fill: black;
   fill-opacity: 1;
 }

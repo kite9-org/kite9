@@ -10,8 +10,7 @@
   <xsl:import href="../formats/formats-template.xsl"/>  
   
   <xsl:template name="labels-basic">
-    <xsl:call-template name="formats-text-inline">
-      <xsl:with-param name="k9-texture">background</xsl:with-param>
+    <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">layout label</xsl:with-param>
       <xsl:with-param name="k9-rounding">0</xsl:with-param>
       <xsl:with-param name="k9-texture">background</xsl:with-param>

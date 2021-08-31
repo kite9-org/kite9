@@ -17,7 +17,7 @@
 	--kite9-connection-align: 50%;
 }
 
-[k9-elem=box] > [k9-elem=back] {
+[k9-elem=box] > [k9-texture=solid] {
 	fill: #CCCCAA;
 	fill-opacity: 1;
 	stroke: #AAAA88;
@@ -39,6 +39,9 @@
 	--kite9-vertical-align: center;
 	--kite9-connection-align: 50%;
 	--kite9-horizontal-align: center;
+}
+
+[k9-elem=textarea] > [k9-texture=solid] {
 	fill: #333300;
 	font-family: "metropolis";
 	font-size: 50pt;

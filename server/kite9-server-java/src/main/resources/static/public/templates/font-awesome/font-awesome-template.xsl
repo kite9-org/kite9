@@ -7,7 +7,7 @@
   <xsl:import href="../adl/adl-template.xsl"/>
 
   <xsl:template match="adl:font-awesome" >
-    <xsl:call-template name="formats-text-inline">
+    <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="content">
         <text>&#xf005;</text>
       </xsl:with-param>
