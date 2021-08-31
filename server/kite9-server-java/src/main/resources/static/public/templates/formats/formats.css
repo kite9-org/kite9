@@ -34,6 +34,7 @@
   --kite9-horizontal-align: center;
   --kite9-vertical-align: center;
   --kite9-margin: 10pt;
+  --kite9-min-size: 50pt 50pt;
 }
 
 /* container format */
@@ -62,8 +63,7 @@
 /* depiction:  a shape inside an object */
 
 [k9-format=text-shape-captioned] > [k9-elem=depiction],
-[k9-format=text-shape-portrait] > [k9-elem=depiction],
-[k9-format=shape] > [k9-elem=depiction] {
+[k9-format=text-shape-portrait] > [k9-elem=depiction] {
   --kite9-type: container;
   --kite9-min-size: 50pt 50pt;
   --kite9-margin: 15pt;

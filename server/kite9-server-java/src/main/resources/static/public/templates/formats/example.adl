@@ -35,12 +35,10 @@
       
       <item id="te" k9-format="image-fixed" href="../admin/leaf.svg"></item> 
    
-    <!--  <item id="s1" k9-format="shape" k9-shape="ellipse"></item> 
+      <item id="s1" k9-format="shape" k9-shape="ellipse"></item> 
       
       <item id="s" k9-format="shape" k9-shape="ellipse"></item> 
-      
-      <item id="s" k9-format="shape-text-portrait" k9-shape="ellipse"></item>  -->
-   
+         
    </item>
 
 </diagram>

@@ -36,7 +36,7 @@
       <g k9-elem="depiction">
         <xsl:call-template name="texture-basic">
           <xsl:with-param name="k9-highlight" select="$k9-highlight" />
-          <xsl:with-param name="k9-texture">background</xsl:with-param>
+          <xsl:with-param name="k9-texture">foreground</xsl:with-param>
           <xsl:with-param name="rounding" select="$k9-rounding" />
         </xsl:call-template>  
       </g>
