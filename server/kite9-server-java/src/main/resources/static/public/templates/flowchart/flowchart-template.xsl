@@ -4,7 +4,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../adl/adl.xsl" />
+  <xsl:import href="../adl/adl-template.xsl" />
   <xsl:import href="shapes-template.xsl" />
 
   
@@ -43,12 +43,18 @@
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template match="adl:document | adl:decision">
-    <xsl:call-template name="formats-container" />
+  <xsl:template match="adl:document | adl:decision | adl:terminal | 
+  adl:terminator | adl:process | adl:delay | 
+  adl:direct | adl:display | adl:stored | 
+  adl:predefined | adl:preparation | adl:manual | 
+  adl:decision | adl:loop-limit | adl:internal | 
+  adl:database | adl:reference | adl:sequential | 
+  adl:input | adl:start | adl:document | adl:off-page" priority=".5">    
+    <xsl:call-template name="formats-text-shape-inline" />
   </xsl:template>
   
   <xsl:template match="adl:textarea">
-    <xsl:call-template name="formats-text-inline" />
+    <xsl:call-template name="formats-text-shape-inline" />
   </xsl:template>
   
   

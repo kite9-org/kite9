@@ -54,7 +54,7 @@
         <xsl:attribute name="id"><xsl:value-of select="$id" /></xsl:attribute>
       </xsl:if>
    
-      <xsl:comment>pre</xsl:comment> 
+      <xsl:comment>shape</xsl:comment> 
       <xsl:copy-of select="$k9-shape" />
       <xsl:comment>content</xsl:comment> 
       <xsl:copy-of select="$content"/>

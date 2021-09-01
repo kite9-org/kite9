@@ -84,7 +84,7 @@
     </xsl:template>
 
     <xsl:template match="adl:glyph">
-        <g k9-elem="glyph" k9-texture="solid">
+        <g k9-elem="glyph" k9-texture="background">
             <xsl:copy-of select="@*" />
             <xsl:call-template name="show-box" />
             <xsl:apply-templates/>

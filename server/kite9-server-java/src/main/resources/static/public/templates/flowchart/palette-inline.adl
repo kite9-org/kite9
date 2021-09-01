@@ -1,78 +1,73 @@
-<?xml version="1.0"?>
-<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
-  <svg:defs>
-    <svg:style type="text/css">
-       @import url("/public/templates/flowchart/flowchart.css");
-    </svg:style>
-  </svg:defs>
-  <diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: vertical; ">
+<diagram xslt:template="/public/templates/flowchart/flowchart-template.xsl"
+  xmlns="http://www.kite9.org/schema/adl"
+  xmlns:xslt="http://www.kite9.org/schema/xslt" 
+  id="dia"
+  style="--kite9-layout: vertical; ">
 
-	<table style="kite9-grid-size: 4 4; ">
+	<table style="--kite9-grid-size: 4 4; ">
 		<cell>
-			<stored k9-format="inline-text" id="1">Stored</stored>
+			<stored k9-format="text-shape-inline" id="1">Stored</stored>
 		</cell>
 		<cell>
-			<decision k9-format="inline-text" id="2">Decision</decision>
+			<decision k9-format="text-shape-inline" id="2">Decision</decision>
 		</cell>
 		<cell>
-			<start k9-format="inline-text" id="3">Start</start>
+			<start k9-format="text-shape-inline" id="3">Start</start>
 		</cell>
 		<cell>
-			<process k9-format="inline-text" id="4">Process</process>
+			<process k9-format="text-shape-inline" id="4">Process</process>
 		</cell>
 		<cell>
-			<document k9-format="inline-text" id="5">Document</document>
+			<document k9-format="text-shape-inline" id="5">Document</document>
 		</cell>
 		<cell>
-			<delay k9-format="inline-text" id="6">Delay</delay>
+			<delay k9-format="text-shape-inline" id="6">Delay</delay>
 		</cell>
 	 	<cell>
-			<manual k9-format="inline-text" id="7">Manual 
+			<manual k9-format="text-shape-inline" id="7">Manual 
 			Operation</manual>
 		</cell>
 		<cell>
-			<terminator k9-format="inline-text" id="8">Terminator</terminator>
+			<terminator k9-format="text-shape-inline" id="8">Terminator</terminator>
 		</cell>
 		<cell>
-			<input k9-format="inline-text" id="9">Manual 
+			<input k9-format="text-shape-inline" id="9">Manual 
 			Input</input>
 		</cell>
 		<cell>
-			<database k9-format="inline-text" id="10">Database</database>
+			<database k9-format="text-shape-inline" id="10">Database</database>
 		</cell>
 		<cell>
-			<preparation k9-format="inline-text" id="11">Preparation</preparation>
+			<preparation k9-format="text-shape-inline" id="11">Preparation</preparation>
 		</cell>
 		<cell>
-			<internal k9-format="inline-text" id="12">Internal</internal>
+			<internal k9-format="text-shape-inline" id="12">Internal</internal>
 		</cell>
 		<cell>
-			<off-page k9-format="inline-text" id="13">Off-Page
+			<off-page k9-format="text-shape-inline" id="13">Off-Page
 			Connector</off-page>
 		</cell>
 		<cell>
-			<direct k9-format="inline-text" id="14">Direct</direct>
+			<direct k9-format="text-shape-inline" id="14">Direct</direct>
 		</cell>
 		<cell>
-			<predefined k9-format="inline-text" id="15">Predefined</predefined>
+			<predefined k9-format="text-shape-inline" id="15">Predefined</predefined>
 		</cell>
 		<cell>
-			<display k9-format="inline-text" id="16">Display</display>
+			<display k9-format="text-shape-inline" id="16">Display</display>
 		</cell>
 		<cell>
-			<loop-limit k9-format="inline-text" id="7">Loop Limit</loop-limit>
+			<loop-limit k9-format="text-shape-inline" id="7">Loop Limit</loop-limit>
 		</cell>
 		<cell>
-			<reference k9-format="inline-text" id="18">Reference</reference>
+			<reference k9-format="text-shape-inline" id="18">Reference</reference>
 		</cell>
 		<cell>
-			<stored k9-format="inline-text" id="19">Stored Data</stored>
+			<stored k9-format="text-shape-inline" id="19">Stored Data</stored>
 		</cell>
 		<cell>
-			<sequential k9-format="inline-text" id="20">Sequential</sequential>
+			<sequential k9-format="text-shape-inline" id="20">Sequential</sequential>
 		</cell>
 	</table>
 
-
-  </diagram>
-</svg:svg>
+</diagram>

@@ -16,7 +16,7 @@
     <xsl:param name="k9-format">text-shape-inline</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">solid</xsl:param>
+    <xsl:param name="k9-texture">foreground</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
     
     <xsl:param name="k9-shape">
@@ -57,7 +57,7 @@
       <xsl:if test="$id">
         <xsl:attribute name="id"><xsl:value-of select="$id" /></xsl:attribute>
       </xsl:if>
-   
+
       <xsl:comment>shape</xsl:comment> 
       <xsl:copy-of select="$k9-shape" />
       <xsl:comment>text</xsl:comment> 

@@ -1,12 +1,9 @@
-<?xml version="1.0"?>
-<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
-  <svg:defs>
-    <svg:style type="text/css">
-       @import url("/public/templates/flowchart/flowchart.css");
-    </svg:style>
-  </svg:defs>
-  <diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="kite9-layout: vertical; ">
-
+<diagram xslt:template="/public/templates/flowchart/flowchart-template.xsl"
+  xmlns="http://www.kite9.org/schema/adl"
+  xmlns:xslt="http://www.kite9.org/schema/xslt" 
+  id="dia"
+  style="--kite9-layout: vertical; ">
+  
 	<table style="kite9-grid-size: 4 4; ">
 		<cell>
 			<stored k9-format="captioned-text" id="1">Stored</stored>
@@ -72,7 +69,4 @@
 			<sequential k9-format="captioned-text" id="20">Sequential</sequential>
 		</cell>
 	</table>
-
-
-  </diagram>
-</svg:svg>
+</diagram>

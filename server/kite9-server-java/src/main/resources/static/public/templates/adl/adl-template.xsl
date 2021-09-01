@@ -29,21 +29,12 @@
       </xsl:element>
   </xsl:template>
   
-  <!-- this rule is the default for adl elements -->
-  <!-- <xsl:template match="adl:*">
-      <g>
-          <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
-          <xsl:copy-of select="@*" />
-          <xsl:apply-templates />
-      </g>
-  </xsl:template>  -->
-  
   <xsl:template match="adl:link">
-    <xsl:call-template name="links-basic" />
+    <xsl:call-template name="links-link-basic" />
   </xsl:template>
 
   <xsl:template match="adl:align">
-    <xsl:call-template name="links-align" />
+    <xsl:call-template name="links-link-align" />
   </xsl:template>
   
   <xsl:template match="adl:from|adl:to">

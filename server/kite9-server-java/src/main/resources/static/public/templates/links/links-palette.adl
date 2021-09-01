@@ -1,8 +1,7 @@
-
-	<diagram 
+<diagram 
 	  xmlns="http://www.kite9.org/schema/adl" id="dia"
 	  xmlns:svg="http://www.w3.org/2000/svg"
-	  style="--kite9-layout: right; --kite9-type: diagram; ">
+	  style="--kite9-layout: right; ">
 
 		<group style="--kite9-layout: down; --kite9-margin-right: 30pt; ">
 			<group style="--kite9-layout: right;">

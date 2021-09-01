@@ -2,18 +2,30 @@
 @import url('/public/templates/editor/editor.css');
 @import url('/public/fonts/metropolis/metropolis.css');
 @import url(flowchart-shapes.css);
-@import url(flowchart-components.css);
+/*@import url(flowchart-components.css);*/
 
-[k9-elem=textarea],
-[k9-elem=label] {
-	fill: #333300;
-	font-family: "metropolis";
-	text-align: start;
-	font-size: 10pt;
-}
-
-[k9-format=inline-text] > [k9-elem=back],
-[k9-elem=depiction] > [k9-elem=back]  {
+[k9-format=text-shape-inline] > [k9-texture=background] {
 	fill: #BBBBBB;
 	stroke: black;
+}
+
+[k9-format=container] > [k9-texture=background] {
+  fill: #BBBBBB;
+  stroke: black;
+}
+
+[k9-elem=diagram] > [k9-texture] {
+	fill: white;
+}
+
+text {
+  font-family: "metropolis";
+  text-align: start;
+  font-size: 10pt;	
+}
+
+[k9-elem=textarea] > [k9-texture=background],
+[k9-elem=label] > [k9-texture=background] { 
+  fill: none;
+  stroke: none;
 }

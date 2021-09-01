@@ -129,6 +129,9 @@
 [k9-elem=hub] {
   --kite9-type: svg;
   --kite9-connection-align: 50%;
+}
+
+[k9-elem=hub] > [k9-texture=foreground] {
   fill: #FFFFFF;
 }
 

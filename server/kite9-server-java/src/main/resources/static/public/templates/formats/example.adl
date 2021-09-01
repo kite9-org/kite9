@@ -2,22 +2,6 @@
          xmlns:svg="http://www.w3.org/2000/svg"
          id="dia" style="--kite9-layout: down; ">
          
-   <svg:defs>
-        <svg:style type="text/css">
-            [k9-texture=background] {
-                fill: white;
-                stroke: black;
-            }
-            
-            [k9-texture=solid] text {
-              fill: black;
-              stroke: none;
-            }
-            
-        </svg:style>
-    </svg:defs>
-         
-
    <item id="c" k9-format="container">
      <item id="t1" k9-format="text-shape-inline">Text Shape Inline</item>
       

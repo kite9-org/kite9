@@ -8,8 +8,3 @@
   --kite9-min-width: 50pt;
   --kite9-min-height: 50pt;
 }
-
-[k9-elem=indicator] {
-  --kite9-usage: decal;
-  --kite9-type: svg;
-}

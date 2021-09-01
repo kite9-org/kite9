@@ -16,7 +16,7 @@
     <xsl:param name="k9-format">text-fixed</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">solid</xsl:param>
+    <xsl:param name="k9-texture">foreground</xsl:param>
     <xsl:param name="k9-ui">orphan edit</xsl:param>
     
     <xsl:param name="k9-text">

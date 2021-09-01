@@ -17,7 +17,7 @@
     <xsl:param name="k9-format">text-shape-portrait</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">solid</xsl:param>
+    <xsl:param name="k9-texture">foreground</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
     
     <xsl:param name="background">

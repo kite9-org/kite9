@@ -15,7 +15,7 @@
 	<xsl:template name="texture-basic">
 		<xsl:param name="rounding">0pt</xsl:param>
 		<xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="k9-texture">solid</xsl:param>
+    <xsl:param name="k9-texture">default</xsl:param>
     <xsl:param name="style"></xsl:param>
     <xsl:param name="class"></xsl:param>
 

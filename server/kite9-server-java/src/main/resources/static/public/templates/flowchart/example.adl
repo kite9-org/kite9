@@ -4,11 +4,11 @@
 
   <!--start k9-format="text-inline" id="1">Start</start -->
      
-	<document id="2"><textarea id="t2">Document</textarea></document>
+	<document id="2">Document</document>
 
-  <decision id="3"><textarea id="t3">Decision</textarea></decision>
+  <decision id="3">Decision</decision>
   
-  <decision k9-format="captioned-text" id="4"><textarea id="t4">Decision</textarea></decision>
+  <decision k9-format="text-shape-captioned" id="4">Decision</decision>
 	 
 	<!-- terminal k9-format="captioned" id="3">Terminal</terminal -->
  

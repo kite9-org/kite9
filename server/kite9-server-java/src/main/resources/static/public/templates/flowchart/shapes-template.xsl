@@ -17,184 +17,200 @@
 
 	<xsl:template mode="shape" match="adl:process" priority="2">
     <g>
-      <rect x="0" y="0" width="0" height="0" pp:width="$width" pp:height="$height" />
+      <rect x="0" y="0" pp:x="$x" pp:y="$y" width="0" height="0" pp:width="$width" pp:height="$height" />
     </g>
 	</xsl:template>
  
-	<xsl:template mode="shape" match="adl:document">
+	<xsl:template mode="shape" match="adl:document" priority="2">
 		<path d=""
 			pp:d="
        concat(
-			   ' M 0 0',
-         ' V ', ($height - 3),
+			   ' M ',$x,' ',$y,' ',
+         ' v ', ($height - 3),
 			   ' q ',($width div 4), ' -6 ',($width div 2), ' 0',
          ' q ',($width div 4), ' 6 ', ($width div 2), ' 0',
-			   ' V 0',
-			   ' H 0')" />
+			   ' V ',$y,
+			   ' H ',$x)" />
 	</xsl:template>
   
   
-  <xsl:template mode="shape" match="adl:decision">
+  <xsl:template mode="shape" match="adl:decision" priority="2">
     <path d=""  pp:d="concat(
-      ' M ',$width div 2,' 0',
-      ' L ', $width,' ',$height div 2,
-      ' L ', $width div 2,' ',$height,
-      ' L 0 ',$height div 2,
+      ' M ',$x + $width div 2,' ',$y,
+      ' l ', $width div 2,' ',$height div 2,
+      ' l -', $width div 2,' ',$height div 2,
+      ' l -',$width div 2,' -',$height div 2,
       ' z')" />
   </xsl:template>
   
-<!-- 
-	<xsl:template mode="shape" match="adl:delay">
+	<xsl:template mode="shape" match="adl:delay" priority="2">
 		<path
-			d="
-			M 0 0
-			V #{$height}
-			H #{$width - 20}
-			Q #{$width} #{$height} #{$width} #{$height div 2}
-			Q #{$width} 0 #{$width - 20} 0
-			H 0
+			d=""
+      pp:d="
+        concat(
+         ' M 0 0 ',
+         ' V ',$height,
+         ' H ',$width - 20,
+         ' Q ',$width,' ',$height,' ',$width,' ',$height div 2,
+         ' Q ',$width,' 0 ',$width - 20,' 0 ',
+         ' H 0')
 		" />
 	</xsl:template>
 
-	
-
-	<xsl:template mode="shape" match="adl:manual">
-		<path d="
-			M 0 0
-			H #{$width}
-			L #{$width -5} #{$height}
-			H 5
-			z" />
+	<xsl:template mode="shape" match="adl:manual" priority="2">
+		<path d=""
+      pp:d="concat(
+			 ' M 0 0 ',
+			 ' H ',$width,
+			 ' L ',$width -5,' ',$height,
+			 ' H 5 z')" />
 	</xsl:template>
 
-	<xsl:template mode="shape" match="adl:terminator">
+	<xsl:template mode="shape" match="adl:terminator" priority="2">
 		<path
-			d="
-			M 20 0
-			Q 0 0 0 #{$height div 2}
-			Q 0 #{$height} 20 #{$height} 
-			H #{$width - 20}
-			Q #{$width} #{$height} #{$width} #{$height div 2}
-			Q #{$width} 0 #{$width - 20} 0
-			z
-		" />
+			d=""
+      pp:d="concat(
+			' M 20 0 ',
+			' Q 0 0 0 ',$height div 2,
+			' Q 0 ',$height,' 20 ',$height, 
+			' H ',$width - 20,
+			' Q ',$width,' ',$height,' ',$width,' ',$height div 2,
+			' Q ',$width,' 0 ',$width - 20,' 0z')" />
 	</xsl:template>
 
-	<xsl:template mode="shape" match="adl:input">
-		<path d="
-			M 0 10
-			L #{$width} 0
-			V #{$height}
-			H 0
-			z" />
+	<xsl:template mode="shape" match="adl:input" priority="2">
+    <g>
+      <xsl:attribute name="pp:transform">concat('translate(',$x,'px,',$y,'px)')</xsl:attribute>
+      <path d=""
+        pp:d="concat(
+        ' M 0 10 ',
+        ' L ',$width,' 0',
+        ' V ',$height,
+        ' H 0z')">
+      </path>
+    
+    </g>
 	</xsl:template>
 
-
-	<xsl:template mode="shape" match="adl:database">
-		<path d="
-			M 0 5
-			L 0 #{$height - 5}
-			Q 0 #{$height} #{$width div 2} #{$height}
-			Q #{$width} #{$height} #{$width} #{$height - 5}
-			L #{$width} #{$height - 5}
-			L #{$width} 5" />
-		<ellipse cx="#{$width div 2}" cy="5" rx="#{$width div 2}" ry="5" />
-	</xsl:template>
-
-	<xsl:template mode="shape" match="adl:preparation">
-		<path d="
-			M 10 0
-			H #{$width - 10}
-			L #{$width} #{$height div 2}
-			L #{$width - 10} #{$height}
-			H 10
-			L 0 #{$height div 2}
-			z" />
-	</xsl:template>
-	<xsl:template mode="shape" match="adl:internal">
-		<rect x="0" y="0" width="#{$width}" height="#{$height}" />
-		<path d="M 0 5 H #{$width}" />
-		<path d="M 5 0 V #{$height}" />
-	</xsl:template>
-
-	<xsl:template mode="shape" match="adl:off-page">
-		<path d="
-			M 0 0
-			H #{$width}
-			V #{$height - 10}
-			L #{$width div 2} #{$height}
-			L 0 #{$height - 10}
-			z" />
-	</xsl:template>
-
-	<xsl:template mode="shape" match="adl:direct">
-		<path d="
-			M 5 0
-			H #{$width - 5}
-			M #{$width - 5} #{$height}
-			H 5
-			Q 0 #{$height} 0 #{$height div 2}
-			Q 0 0 5 0" />
-		<ellipse cx="#{$width - 5}" cy="#{$height div 2}" rx="5" ry="#{$height div 2}" />
-	</xsl:template>
-	<xsl:template mode="shape" match="adl:display">
-		<path d="
-			M 0 #{$height div 2}
-			L 5 5
-			L #{$width - 10} 0
-			Q #{$width} 0 #{$width} #{$height div 2}
-			Q #{$width} #{$height} #{$width - 10} #{$height}
-			L 5 #{$height - 5}
-			z" />
-	</xsl:template>
-	<xsl:template mode="shape" match="adl:loop-limit">
-		<path d="
-			M 5 0
-			H #{$width - 5}
-			L #{$width} 5
-			V #{$height}
-			H 0
-			V 5
-			z" />
-			
-	</xsl:template>
-	<xsl:template mode="shape" match="adl:reference">
-		<ellipse cx="#{$width div 2}" cy="#{$height div 2}"
-			rx="#{$width div 2}" ry="#{$height div 2}" />
-	</xsl:template>
-	<xsl:template mode="shape" match="adl:sequential">
-		<path d="
-			M 0 #{$height div 2}
-			Q 0 #{$height} #{$width div 2} #{$height}
-			L #{$width} #{$height}
-			v -10
-			h -4 
-			Q #{$width} #{$height - 10} #{$width} #{$height div 2}
-			Q #{$width} 0 #{$width div 2} 0
-			Q 0 0 0 #{$height div 2}" />	
-	</xsl:template>
-	<xsl:template mode="shape" match="adl:predefined">
-		<rect x="0" y="0" width="#{$width}" height="#{$height}" />
-		<path d="M 5 0 V #{$height} 
-			M #{$width - 5} 0 V #{$height}" />
+	<xsl:template mode="shape" match="adl:database" priority="2">
+		<path d=""
+      pp:d="concat(
+			' M 0 5',
+			' L 0 ',$height - 5,
+			' Q 0 ',$height,' ',$width div 2,' ',$height,
+			' Q ',$width,' ',$height,' ',$width,' ',$height - 5,
+			' L ',$width,' ',$height - 5,
+			' L ',$width,' 5')" />
+		<ellipse cx="0" cy="0" rx="0" pp:cx="$width div 2" pp:cy="5" pp:rx="$width div 2" ry="5" />
 	</xsl:template>
 
 
-	<xsl:template mode="shape" match="adl:stored">
-		<path
-			d="
-			M 5 0
-			H #{$width} 
-			Q #{$width - 5} 0 #{$width - 5} #{$height div 2} 
-			Q #{$width - 5} #{$height} #{$width} #{$height}
-			H 5
-			Q 0 #{$height} 0 #{$height div 2} 
-			Q 0 0 5 0" />
+	<xsl:template mode="shape" match="adl:preparation" priority="2">
+		<path d=""
+      pp:d="concat(
+			' M 10 0',
+			' H ',$width - 10,
+			' L ',$width,' ',$height div 2,
+			' L ',$width - 10,' ',$height,
+			' H 10',
+			' L 0 ',$height div 2,
+			'z')" />
 	</xsl:template>
 
-	<shape id="start">
-		<ellipse cx="#{$width div 2}" cy="#{$height div 2}"
-			rx="#{$width div 2}" ry="#{$height div 2}" />
-	</shape> -->
+	<xsl:template mode="shape" match="adl:internal" priority="2">
+		<rect x="0" y="0" width="0" height="0" pp:x="$x" pp:y="$y" pp:width="$width" pp:height="$height" />
+		<path d="" pp:d="concat('M ',$x,' ',$y + 5,' h ',$width)" />
+		<path d="" pp:d="concat('M ',$x + 5,' ',$y,' v ',$height)" />
+	</xsl:template>
+
+	<xsl:template mode="shape" match="adl:off-page" priority="2">
+		<path d=""
+      pp:d="concat(
+			' M 0 0 ',
+			' H ',$width,
+			' V ',$height - 10,
+			' L ',$width div 2,' ',$height,
+			' L 0 ',$height - 10,
+			'z')" />
+	</xsl:template>
+
+	<xsl:template mode="shape" match="adl:direct" priority="2">
+		<path d=""
+      pp:d="concat(
+			' M 5 0 ',
+			' H ',$width - 5,
+			' M ',$width - 5,' ',$height,
+			' H 5 ',
+			' Q 0 ',$height,' 0 ',$height div 2,
+			' Q 0 0 5 0')" />
+		<ellipse cx="0" pp:cx="$width - 5" cy="0" pp:cy="$height div 2" rx="5" ry="0" pp:ry="$height div 2" />
+	</xsl:template>
+  
+	<xsl:template mode="shape" match="adl:display" priority="2">
+		<path d=""
+      pp:d="concat(
+			' M 0 ',$height div 2,
+			' L 5 5',
+			' L ',$width - 10,' 0',
+			' Q ',$width,' 0 ',$width,' ',$height div 2,
+			' Q ',$width,' ',$height,' ',$width - 10,' ',$height,
+			' L 5 ',$height - 5,
+			' z')" />
+	</xsl:template>
+  
+	<xsl:template mode="shape" match="adl:loop-limit" priority="2">
+		<path d="" 
+      pp:d="concat(
+			' M 5 0',
+			' H ',$width - 5,
+			' L ',$width,' 5',
+			' V ',$height,
+			' H 0',
+			' V 5',
+			'z')" />			
+	</xsl:template>
+  
+  
+	<xsl:template mode="shape" match="adl:reference" priority="2">
+		<ellipse cx="0" pp:cx="$width div 2" cy="0" pp:cy="$height div 2"
+			rx="0" pp:rx="$width div 2" ry="0" pp:ry="$height div 2" />
+	</xsl:template>
+  
+	<xsl:template mode="shape" match="adl:sequential" priority="2">
+		<path d=""
+      pp:d="concat(
+			' M 0 ',$height div 2,
+			' Q 0 ',$height,' ',$width div 2,' ',$height,
+			' L ',$width,' ',$height,
+			' v -10',
+			' h -4',
+			' Q ',$width,' ',$height - 10,' ',$width,' ',$height div 2,
+			' Q ',$width,' 0 ',$width div 2,' 0',
+			' Q 0 0 0 ',$height div 2)" />	
+	</xsl:template>
+
+	<xsl:template mode="shape" match="adl:predefined" priority="2">
+		<rect x="0" y="0" width="0" height="0" pp:width="$width" pp:height="$height" />
+		<path d="" pp:d="concat(
+      ' M 5 0 V ',$height, 
+			' M ',$width - 5,' 0 V ',$height)" />
+	</xsl:template>
+
+	<xsl:template mode="shape" match="adl:stored" priority="2">
+		<path d=""
+			pp:d="concat(
+			' M 5 0',
+			' H ',$width,
+			' Q ',$width - 5,' 0 ',$width - 5,' ',$height div 2,
+			' Q ',$width - 5,' ',$height,' ',$width,' ',$height,
+			' H 5 ',
+			' Q 0 ',$height,' 0 ',$height div 2, 
+			' Q 0 0 5 0')" />
+	</xsl:template>
+
+  <xsl:template mode="shape" match="adl:start" priority="2">
+		<ellipse cx="0" pp:cx="$width div 2" pp:cy="$height div 2"
+			pp:rx="$width div 2" pp:ry="$height div 2" rx="10" ry="0" />
+  </xsl:template>
 
 </xsl:stylesheet>
