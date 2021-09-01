@@ -2,7 +2,6 @@
 @import url('/public/templates/editor/editor.css');
 @import url('/public/fonts/metropolis/metropolis.css');
 @import url(flowchart-shapes.css);
-/*@import url(flowchart-components.css);*/
 
 [k9-format=text-shape-inline] > [k9-texture=background] {
 	fill: #BBBBBB;
