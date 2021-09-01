@@ -39,6 +39,8 @@
 
     <xsl:template name="diagram-basic">
       <xsl:call-template name="formats-container">
+        <xsl:with-param name="k9-highlight"></xsl:with-param>
+        <xsl:with-param name="k9-texture">none</xsl:with-param>
         <xsl:with-param name="k9-ui">layout label</xsl:with-param>
         <xsl:with-param name="k9-rounding">0</xsl:with-param>
       </xsl:call-template>

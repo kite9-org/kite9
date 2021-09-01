@@ -9,11 +9,6 @@
 	stroke: black;
 }
 
-[k9-format=container] > [k9-texture=background] {
-  fill: #BBBBBB;
-  stroke: black;
-}
-
 [k9-elem=diagram] > [k9-texture] {
 	fill: white;
 }
