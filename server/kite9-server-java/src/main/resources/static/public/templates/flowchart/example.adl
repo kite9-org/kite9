@@ -2,7 +2,7 @@
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
-  <!--start k9-format="text-inline" id="1">Start</start -->
+  <start k9-format="text-inline" id="1">Start</start>
      
 	<document id="2">Document</document>
 
@@ -10,6 +10,11 @@
   
   <decision k9-format="text-shape-captioned" id="4">Decision</decision>
 	 
-	<!-- terminal k9-format="captioned" id="3">Terminal</terminal -->
+	<terminal k9-format="captioned" id="3">Terminal</terminal>
+  
+  <link id="l1">
+    <from id="f1" reference="1" />
+    <to id="f2" reference="4@dep" shape="arrow" />
+  </link>
  
 </diagram>

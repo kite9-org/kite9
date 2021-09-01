@@ -43,103 +43,29 @@
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template match="adl:document | adl:decision | adl:terminal | 
+<xsl:template match="adl:document | adl:decision | adl:terminal | 
   adl:terminator | adl:process | adl:delay | 
   adl:direct | adl:display | adl:stored | 
   adl:predefined | adl:preparation | adl:manual | 
   adl:decision | adl:loop-limit | adl:internal | 
   adl:database | adl:reference | adl:sequential | 
-  adl:input | adl:start | adl:document | adl:off-page" priority=".5">    
-    <xsl:call-template name="formats-text-shape-inline" />
+  adl:input | adl:start | adl:document | adl:off-page" priority=".3"> 
+    <xsl:choose>
+      <xsl:when test="@k9-format='text-shape-captioned'">
+        <xsl:call-template name="formats-text-shape-captioned">
+           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+         </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:call-template name="formats-text-shape-inline">
+           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+         </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose> when=
   </xsl:template>
   
   <xsl:template match="adl:textarea">
     <xsl:call-template name="formats-text-shape-inline" />
   </xsl:template>
-  
-  
-  
-<!-- 
-
-[k9-elem=stored] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#stored');
-}
-
-[k9-elem=process] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#process');
-}
-
-[k9-elem=document] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#document');
-}
-
-[k9-elem=delay] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#delay');
-}
-
-[k9-elem=start] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#start');
-}
-
-[k9-elem=manual] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#manual');
-}
-
-[k9-elem=terminator] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#terminator');
-}
-
-[k9-elem=input] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#input');
-}
-
-[k9-elem=database] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#database');
-}
-
-[k9-elem=preparation] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#preparation');
-}
-
-[k9-elem=internal] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#internal');
-}
-
-[k9-elem=off-page] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#off-page');
-}
-
-[k9-elem=direct] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#direct');
-}
-
-[k9-elem=predefined] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#predefined');
-}
-
-[k9-elem=display] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#display');
-}
-
-[k9-elem=start] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#start');
-}
-
-[k9-elem=loop-limit] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#loop-limit');
-}
-
-[k9-elem=stored] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#stored');
-}
-
-[k9-elem=sequential] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#sequential');
-}
-
-[k9-elem=reference] > [k9-elem=back] {
-  kite9-template: url('flowchart-shapes-template.xml#reference');
-}
-  -->
   
 </xsl:stylesheet>  

@@ -16,20 +16,21 @@
     <xsl:param name="k9-format">text-shape-inline</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">foreground</xsl:param>
+    <xsl:param name="k9-texture-shape">background</xsl:param>
+    <xsl:param name="k9-texture-text">foreground</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
     
     <xsl:param name="k9-shape">
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-highlight" select="$k9-highlight" />
-        <xsl:with-param name="k9-texture">background</xsl:with-param>
+        <xsl:with-param name="k9-texture" select="$k9-texture-shape" />
         <xsl:with-param name="rounding" select="$k9-rounding" />
       </xsl:call-template>  
     </xsl:param>
      
     <xsl:param name="k9-text">
       <xsl:call-template name="texture-basic">
-        <xsl:with-param name="k9-texture" select="$k9-texture" />
+        <xsl:with-param name="k9-texture" select="$k9-texture-text" />
         <xsl:with-param name="k9-highlight"></xsl:with-param>
         <xsl:with-param name="class" select="$class" />
         <xsl:with-param name="style" select="$style" />

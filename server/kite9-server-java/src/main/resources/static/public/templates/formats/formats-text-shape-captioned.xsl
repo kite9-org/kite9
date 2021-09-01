@@ -17,13 +17,15 @@
     <xsl:param name="k9-format">text-shape-captioned</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">foreground</xsl:param>
+    <xsl:param name="k9-texture-back">background</xsl:param>
+    <xsl:param name="k9-texture-shape">foreground</xsl:param>
+    <xsl:param name="k9-texture-text">foreground</xsl:param>
     <xsl:param name="k9-ui">drag delete</xsl:param>
     
      <xsl:param name="background">
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-highlight" select="$k9-highlight" />
-        <xsl:with-param name="k9-texture">background</xsl:with-param>
+        <xsl:with-param name="k9-texture" select="$k9-texture-back" />
         <xsl:with-param name="shape">
           <xsl:call-template name="shape-round-rect">
             <xsl:with-param name="rounding" select="$k9-rounding" />
@@ -38,7 +40,7 @@
         <xsl:attribute name="id"><xsl:value-of select="$id" />@dep</xsl:attribute>
         <xsl:call-template name="texture-basic">
           <xsl:with-param name="k9-highlight" select="$k9-highlight" />
-          <xsl:with-param name="k9-texture" select="$k9-texture" />
+          <xsl:with-param name="k9-texture" select="$k9-texture-shape" />
           <xsl:with-param name="rounding" select="$k9-rounding" />
         </xsl:call-template>  
       </g>
@@ -49,7 +51,7 @@
         <xsl:attribute name="id"><xsl:value-of select="$id" />@caption</xsl:attribute>   
         <xsl:attribute name="k9-ui">edit</xsl:attribute>
         <xsl:call-template name="texture-basic">
-          <xsl:with-param name="k9-texture" select="$k9-texture" />
+          <xsl:with-param name="k9-texture" select="$k9-texture-text" />
           <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
           <xsl:with-param name="class" select="$class" />
           <xsl:with-param name="style" select="$style" />

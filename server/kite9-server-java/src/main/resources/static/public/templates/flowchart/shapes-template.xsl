@@ -244,13 +244,19 @@
 	</xsl:template>
 
   <xsl:template mode="shape" match="adl:start" priority="2">
-		<ellipse cx="0" pp:cx="$width div 2" pp:cy="$height div 2"
-			pp:rx="$width div 2" pp:ry="$height div 2" rx="10" ry="0" />
+    <g>
+      <xsl:attribute name="pp:style">concat('transform: translate(', $x,'px,',$y,'px);')</xsl:attribute>
+      <ellipse cx="0" pp:cx="$width div 2" cy="0" pp:cy="$height div 2"
+        rx="0" pp:rx="$width div 2" ry="0" pp:ry="$height div 2" />
+    </g>
   </xsl:template>
 
   <xsl:template mode="shape" match="adl:reference" priority="2">
-    <ellipse cx="0" pp:cx="$width div 2" cy="0" pp:cy="$height div 2"
-      rx="0" pp:rx="$width div 2" ry="0" pp:ry="$height div 2" />
+    <g>
+      <xsl:attribute name="pp:style">concat('transform: translate(', $x,'px,',$y,'px);')</xsl:attribute>
+      <ellipse cx="0" pp:cx="$width div 2" cy="0" pp:cy="$height div 2"
+        rx="0" pp:rx="$width div 2" ry="0" pp:ry="$height div 2" />
+    </g>
   </xsl:template>
   
 
