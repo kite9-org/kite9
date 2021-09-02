@@ -23,6 +23,7 @@
 	text-align: middle;
 	--kite9-text-bounds-width: 110pt;
 	--kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
+	--kite9-padding: 0pt;
 }
 
 /* Labels */

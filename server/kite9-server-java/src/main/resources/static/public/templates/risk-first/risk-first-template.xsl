@@ -20,23 +20,23 @@
         @import url('/public/templates/risk-first/risk-first.css');
       </xsl:with-param>
       <xsl:with-param name="constants">
-        <!-- document.params = {
+        document.params = {
         'align-template-uri' : '/public/templates/links/links-palette.adl#align',
         'link-template-uri' : '/public/templates/links/links-palette.adl#l1',
         'cell-template-uri' : '/public/templates/grid/palette.adl#t1',
         'label-template-uri' : '/public/templates/labels/palette.adl#label',
         'palettes' : [
-        /* '/public/templates/links/common-links.adl', 'link',
-        '/public/templates/links/common-ends.adl', 'end',
+       /* '/public/templates/links/links-palette.adl', 'link',
+        '/public/templates/links/ends-palette.adl', 'end',
         '/public/templates/designer/palette.adl', 'connected symbol',
         '/public/templates/flowchart/palette-inline.adl', 'connected',
         '/public/templates/flowchart/palette-captioned.adl', 'connected',
         '/public/templates/uml/palette.adl', 'connected',
-        '/public/templates/containers/common-containers.adl', 'connected',
-        '/public/templates/grid/common-grid.adl', 'cell table'*/
+        '/public/templates/containers/palette.adl', 'connected',
+        '/public/templates/grid/palette.adl', 'cell table' */
 
         ]
-        }; -->
+        }; 
 <!--         
 @params {
   palettes: 
@@ -64,7 +64,9 @@
   <!-- standard stuff that goes inside a risk-box -->
   <xsl:template name="risk-content">
     <xsl:apply-templates select="adl:code" />
-    <xsl:call-template name="formats-image" />
+    <xsl:call-template name="formats-image">
+      <xsl:with-param name="k9-elem">image</xsl:with-param>
+    </xsl:call-template>
     <xsl:call-template name="votes" />
     <xsl:apply-templates select="adl:title" />
   </xsl:template>

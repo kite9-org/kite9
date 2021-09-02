@@ -4,7 +4,6 @@
  * Allows for a count of votes to be added to an element
  */
 [k9-elem=votes] {
-	--kite9-template: url(template.xml#votes);
   --kite9-type: svg;
   --kite9-usage: decal;
 }
