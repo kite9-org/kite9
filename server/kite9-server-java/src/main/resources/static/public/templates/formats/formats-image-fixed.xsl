@@ -4,7 +4,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
           
-  <xsl:template name="formats-image" match="*[@k9-format='image-fixed']">
+  <xsl:template name="formats-image-fixed" match="*[@k9-format='image-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />

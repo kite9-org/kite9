@@ -1,8 +1,4 @@
-@import url('/public/templates/common/common.css');
-@import url('/public/templates/containers/common-containers.css');
-@import url('/public/templates/links/common-links.css');
-@import url("/public/templates/grid/common-grid.css");
-@import url('/public/templates/labels/common-labels.css');
+@import url('/public/templates/adl/adl.css');
 @import url('/public/fonts/metropolis/metropolis.css');
 @import url('/public/templates/risk-first/risks.css');
 @import url('/public/templates/risk-first/artifacts.css');
@@ -12,22 +8,6 @@
 @import url('/public/templates/risk-first/matrix.css');
 @import url('/public/templates/editor/editor.css');
 @import url('/public/templates/votes/votes.css');
-
-
-@script url('risk-first.js');
-
-@defs url('template.xml');
-
-@params {
-  palettes: 
-	  url('/public/templates/links/common-links.adl') "link"
-	  url('/public/templates/links/common-ends.adl') "end"
-    url('/public/templates/risk-first/artifact-palette.adl') "connected risk"
-    url('/public/templates/risk-first/risk-palette.adl') "connected risk"  
-    url('/public/templates/containers/common-containers.adl') "connected"
-    url('/public/templates/grid/common-grid.adl') "cell table";
-  link-template-uri:   url('/public/templates/links/common-links.adl#l6');
-}
 
 /* Titles, generally */
 
@@ -139,8 +119,8 @@ link {
 }
 
 /* Fills */
-[k9-elem=risk][k9-texture=solid] > [k9-elem=back],
-[k9-elem=action][k9-texture=solid] > [k9-elem=shape] {
+[k9-elem=risk] [k9-texture=background],
+[k9-elem=action] [k9-texture=background] {
 	 fill: url(#risk-background);
    stroke: black; 
 }

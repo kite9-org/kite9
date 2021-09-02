@@ -21,11 +21,6 @@
     </ellipse>
   </xsl:template>
   
-  <xsl:template name="back-image" match="*[@href]" mode="shape" priority="2">
-  
-  
-  </xsl:template>
-  
   <!-- default background is a rounded-rectangle -->
   
   <xsl:template name="shape-round-rect" match="*" mode="shape">

@@ -200,7 +200,6 @@
 	fill: black;
 	text-align: middle;
 	--kite9-margin-bottom: 15pt;
-  --kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
 }
 
 [k9-elem=risk] > [k9-elem=image] {
