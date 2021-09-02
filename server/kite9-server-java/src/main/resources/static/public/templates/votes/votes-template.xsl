@@ -6,7 +6,7 @@
   <xsl:import href="../formats/formats-shape.xsl"/>
 
   <xsl:template name="votes">
-    <xsl:param name="count" select="@count"/>
+    <xsl:param name="count" select="count(adl:vote)"/>
     <xsl:if test="$count">
       <xsl:call-template name="formats-shape">
         <xsl:with-param name="k9-shape">

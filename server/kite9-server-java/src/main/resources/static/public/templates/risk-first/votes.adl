@@ -1,17 +1,9 @@
-<?xml version="1.0"?>
-<svg:svg xmlns:xlink='http://www.w3.org/1999/xlink' zoomAndPan="magnify" preserveAspectRatio="xMidYMid" xmlns:svg='http://www.w3.org/2000/svg'>
-  <svg:defs>
-    <svg:style type="text/css"> 
-    @import url("/public/templates/risk-first/risk-first.css");
-    </svg:style>
-    
-  </svg:defs>
+<diagram xslt:template="/public/templates/risk-first/risk-first-template.xsl"
+  xmlns="http://www.kite9.org/schema/adl" xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia" name="Pattern Language">
 
-  <diagram xmlns="http://www.kite9.org/schema/adl" id="diagram-129" name="Pattern Language">
-     <risk class="generic" id="id_0" href="/public/templates/risk-first/redesign/risks/security_risk_v2.svg">
-      <code id="c">Method</code>
-      <title id="d">Software Methodology</title>
-      <vote from="robmoffat" />
-     </risk>
-  </diagram>
-</svg:svg>
+  <risk class="generic" id="id_0" href="/public/templates/risk-first/redesign/risks/security_risk_v2.svg">
+    <code id="c">Method</code>
+    <title id="d">Software Methodology</title>
+    <vote from="robmoffat"/>
+  </risk>
+</diagram>
