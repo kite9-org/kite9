@@ -7,6 +7,7 @@ import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StackHelp;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.logging.LogicException;
@@ -20,6 +21,7 @@ import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.ArrangementPipeline;
 import org.w3c.dom.*;
 
+import javax.xml.XMLConstants;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -148,7 +150,8 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		XMLHelper xmlHelper = new XMLHelper();
 		Document dxe = xmlHelper.fromXML(s);
 		convertOldStructure(dxe.getDocumentElement());
-		dxe.getDocumentElement().setAttribute("template", AbstractMutableXMLElement.TRANSFORM);
+		dxe.getDocumentElement().setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xslt", Kite9Namespaces.XSL_TEMPLATE_NAMESPACE);
+		dxe.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", AbstractMutableXMLElement.TRANSFORM);
 		
 		// fix for old-style <allLinks> tag
 		String theXML = xmlHelper.toXML(dxe);

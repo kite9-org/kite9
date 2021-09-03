@@ -1,4 +1,4 @@
-<diagram xslt:template="/public/templates/risk-first/flowchart-template.xsl"
+<diagram xslt:template="/public/templates/risk-first/risk-first-template.xsl"
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia"
          name="Pattern Language">
@@ -54,6 +54,7 @@
     <from id="e9" reference="id_8" class="space"/>
     <to id="e10" reference="id_9"/>
   </link>
+  
   <link id="id_17" drawDirection="RIGHT">
     <from id="e11" reference="id_9"/>
     <to id="e12" reference="id_10" shape="arrow" class="space"/>

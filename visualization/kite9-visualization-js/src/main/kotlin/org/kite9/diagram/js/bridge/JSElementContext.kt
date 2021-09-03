@@ -53,7 +53,7 @@ class JSElementContext : ElementContext {
         return xmlToDiagram[x]
     }
 
-    override fun getDocumentReplacer(): XPathAware {
+    override fun getDocumentReplacer(at: Element): XPathAware {
         TODO("Not yet implemented")
     }
 

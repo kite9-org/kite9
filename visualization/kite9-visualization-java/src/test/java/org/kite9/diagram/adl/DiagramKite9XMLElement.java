@@ -1,10 +1,12 @@
 package org.kite9.diagram.adl;
 
+import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.model.position.Layout;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
+import javax.xml.XMLConstants;
 import java.util.List;
 
 
@@ -71,8 +73,8 @@ public class DiagramKite9XMLElement extends AbstractXMLContainerElement {
 				}
 			}
 		}
-
-		setAttribute("template", AbstractMutableXMLElement.TRANSFORM);
+		setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xslt", Kite9Namespaces.XSL_TEMPLATE_NAMESPACE);
+		setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", AbstractMutableXMLElement.TRANSFORM);
 	}
 	
 	public DiagramKite9XMLElement(String id, List<Element> contents) {

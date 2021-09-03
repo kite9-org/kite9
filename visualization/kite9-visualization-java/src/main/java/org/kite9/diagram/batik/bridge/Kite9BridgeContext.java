@@ -81,15 +81,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	public boolean isDynamic() {
 		return true;
 	}
-
-	public void registerDiagramRenderedSize(Diagram d) {
-		RectangleRenderingInformation rri = d.getRenderingInformation();
-		double width = rri.getPosition().x()+rri.getSize().getW();
-		double height = rri.getPosition().y()+rri.getSize().getH();
-		double oldWidth = getDocumentSize().getWidth();
-		double oldHeight = getDocumentSize().getHeight();
-		setDocumentSize(new Dimension2DDouble(Math.max(width,  oldWidth), Math.max(height, oldHeight)));
-	}
 	
 	private ParsedURL resourceURL;
 	
@@ -374,7 +365,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@NotNull
 	@Override
-	public XPathAware getDocumentReplacer() {
+	public XPathAware getDocumentReplacer(@NotNull Element at) {
 		return new XPathAware() {
 			@Nullable
 			@Override
@@ -389,10 +380,12 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 				} else if ("height".equals(name)) {
 					return xmlToDiagram.values().stream()
 							.filter(d -> d instanceof Diagram)
-							.map( d -> d.getRenderingInformation().getPosition().y() + d.getRenderingInformation().getSize().y() )
+							.map(d -> d.getRenderingInformation().getPosition().y() + d.getRenderingInformation().getSize().y())
 							.max(Double::compare)
 							.map(d -> Double.toString(d))
 							.orElse("0");
+				} else if (ElementContext.Companion.getUNITS().contains(name)) {
+						return "" + getCssUnitSizeInPixels(name, at);
 				} else {
 					return "";
 				}

@@ -165,22 +165,7 @@ public class Test54SVGPrimitives extends AbstractDisplayFunctionalTest {
 			svgClose();
 		transcodeSVG(someXML);
 	}
-	
-	private String gTemplatedElement(String id, String inside) {
-		return "<svg:g id=\""+id+"\" item=\"bob\" style=\"--kite9-template: url(template.svg#simple) 'template-arg'; \">"+inside+"</svg:g>";
-	}
-	
-	private String myTemplatedElement(String inside) {
-		return "<svg:g item=\"bob\" style=\"--kite9-template: url(template.svg#simple) 'template-arg'; --kite9-type: svg; \">"+inside+"</svg:g>";
-	}
-	
-	private String nestedTemplatedElement(String inside) {
-		return "<svg:g item=\"bob\" style=\"--kite9-template: url(template.svg#double) 'template-arg'; --kite9-type: container; \">"+inside+"</svg:g>";
-	}
-	
-	private String templatedDecalElement(String inside) {
-		return "<svg:g item=\"bob\" style=\"--kite9-template: url(template.svg#templated-decal) 'template-arg'; --kite9-type: container; \">"+inside+"</svg:g>";
-	}
+
 	
 	private String containerDecalElement(String inside) {
 		return "<svg:g item=\"bob\" style=\"--kite9-usage: decal; --kite9-type: container; \">"+inside+"</svg:g>";

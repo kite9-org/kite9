@@ -17,7 +17,7 @@ public class TestHierarchy extends AbstractPerformanceTest {
 	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int size, Direction dir) {
 		Map<Metrics, String> out = new LinkedHashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
-			Metrics m = new Metrics("hi" + i+" s "+size);
+			Metrics m = new Metrics("hi" + i+"s"+size);
 			m.connecteds = i;
 			String d = generateDiagram(m, size, dir);
 			out.put(m, d);

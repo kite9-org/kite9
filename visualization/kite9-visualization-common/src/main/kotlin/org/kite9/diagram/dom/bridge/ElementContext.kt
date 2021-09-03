@@ -11,6 +11,10 @@ import kotlin.reflect.KClass
 
 interface ElementContext {
 
+    companion object {
+        val UNITS: Set<String> = setOf("pt", "cm", "em", "in", "ex", "px")
+    }
+
     /**
      * For returning a pixel amount
      */
@@ -35,7 +39,7 @@ interface ElementContext {
 
     fun register(x: Element, out: DiagramElement)
     fun getRegisteredDiagramElement(x: Element): DiagramElement?
-    fun getDocumentReplacer() : XPathAware
+    fun getDocumentReplacer(at: Element): XPathAware
 
     fun bounds(x: Element) : Rectangle2D?
 

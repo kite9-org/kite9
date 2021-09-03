@@ -1,8 +1,7 @@
 <xsl:stylesheet
         xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        xmlns:k9="http://www.kite9.org/schema/adl"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+        xmlns:pp="http://www.kite9.org/schema/post-processor"
         version="1.0">
 
     <xsl:param name="base-uri"/>
@@ -11,7 +10,7 @@
 
     <xsl:template name="show-box">
         <rect x="0" y="0"
-              k9:width="$width" k9:height="$height"
+              pp:width="$width" pp:height="$height"
               width="0"
               height="0"
               rx="8" ry="8" style="fill: url(#glyph-background); "
@@ -26,13 +25,13 @@
              version="1.0"
              k9-elem="diagram">
             <xsl:copy-of select="@*" />
-            <xsl:attribute name="k9:width">$width</xsl:attribute>
-            <xsl:attribute name="k9:height">$height</xsl:attribute>
+            <xsl:attribute name="pp:width">$width</xsl:attribute>
+            <xsl:attribute name="pp:height">$height</xsl:attribute>
 
 
             <defs>
                 <style type="text/css">
-                    @import url("<xsl:value-of select="$template-path"/>designer.css");
+                    @import url("<xsl:value-of select="$template-path"/>tester.css");
                 </style>
             </defs>
 
@@ -138,7 +137,7 @@
     <xsl:template match="context">
         <g k9-elem="context" class=".context-back">
             <xsl:copy-of select="@*" />
-            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='12' ry='12' class="context-back" />
+            <rect x='0' y='0' width="0" height="0" pp:width='$width' pp:height='$height' rx='12' ry='12' class="context-back" />
             <xsl:apply-templates/>
         </g>
     </xsl:template>
@@ -146,7 +145,7 @@
     <xsl:template match='context/label | cell/label'>
         <g k9-elem="label" class="container-label">
             <xsl:copy-of select="@*" />
-            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="container-label-back" />
+            <rect x='0' y='0' width="0" height="0" pp:width='$width' pp:height='$height' rx='4' ry='4' class="container-label-back" />
             <g k9-elem="text-label" class="container-label-front">
                 <text><xsl:value-of select="string(.)" /></text>
             </g>
@@ -156,7 +155,7 @@
     <xsl:template match='link-body | arrow'>
         <g k9-elem="link-body">
             <xsl:copy-of select="@*" />
-            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="link-body-back" />
+            <rect x='0' y='0' width="0" height="0" pp:width='$width' pp:height='$height' rx='4' ry='4' class="link-body-back" />
             <g k9-elem="text-label" class="link-body-label-text">
                 <text><xsl:value-of select="@label" /><xsl:value-of select="string(.)" /></text>
             </g>
@@ -169,7 +168,7 @@
             <xsl:apply-templates/>
             <g k9-elem="link-body">
                 <path class="link">
-                    <xsl:attribute name="k9:d">$path</xsl:attribute>
+                    <xsl:attribute name="pp:d">$path</xsl:attribute>
                     <xsl:attribute name="marker-start">url(#<xsl:value-of select="concat(from/@class,'-start-marker')" />)</xsl:attribute>
                     <xsl:attribute name="marker-end">url(#<xsl:value-of select="concat(to/@class,'-end-marker')" />)</xsl:attribute>
                 </path>
@@ -181,7 +180,7 @@
         <g>
             <xsl:copy-of select="@*" />
             <xsl:attribute name="k9-elem"><xsl:value-of select="name(.)" /></xsl:attribute>
-            <rect x='0' y='0' width="0" height="0" k9:width='$width' k9:height='$height' rx='4' ry='4' class="connection-label-back" />
+            <rect x='0' y='0' width="0" height="0" pp:width='$width' pp:height='$height' rx='4' ry='4' class="connection-label-back" />
             <g k9-elem="text-label" class="connection-label-front">
                 <text><xsl:value-of select="string(.)" /></text>
             </g>
@@ -248,7 +247,7 @@
         <g k9-elem="key">
             <xsl:copy-of select="@*" />
             <g k9-elem="body">
-                <rect x="0" y="0" k9:width="$width" k9:height="$height" width="0" height="0" style="fill: url(#glyph-background); " class="key-back"/>
+                <rect x="0" y="0" pp:width="$width" pp:height="$height" width="0" height="0" style="fill: url(#glyph-background); " class="key-back"/>
                 <xsl:apply-templates/>
             </g>
         </g>
@@ -272,7 +271,7 @@
     <xsl:template match='grid'>
         <g k9-elem="grid">
             <xsl:copy-of select="@*" />
-            <rect x="0" y="0" k9:width="$width" k9:height="$height" width="0" height="0" class="grid-back"/>
+            <rect x="0" y="0" pp:width="$width" pp:height="$height" width="0" height="0" class="grid-back"/>
             <xsl:apply-templates/>
         </g>
     </xsl:template>
@@ -280,7 +279,7 @@
     <xsl:template match='cell'>
         <g k9-elem="cell">
             <xsl:copy-of select="@*" />
-            <rect x="0" y="0" k9:width="$width" k9:height="$height" width="0" height="0" class="cell-edge"/>
+            <rect x="0" y="0" pp:width="$width" pp:height="$height" width="0" height="0" class="cell-edge"/>
             <xsl:apply-templates/>
         </g>
     </xsl:template>

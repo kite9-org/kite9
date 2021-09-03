@@ -247,7 +247,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 
 		if ((template == null) || (template.length() == 0)) {
-			if (input.getDocumentElement().getNamespaceURI().equals(Kite9Namespaces.ADL_NAMESPACE)) {
+			if (Kite9Namespaces.ADL_NAMESPACE.equals(input.getDocumentElement().getNamespaceURI())) {
 				// default to the basic template
 				return "/public/templates/basic/basic-template.xsl";
 			}
@@ -269,7 +269,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			URI uri = new URI(input.getDocumentURI());
 			URI templateURI = uri.resolve(template);
 			URI baseUri = uri.resolve("/");
-			URI templatePath = uri.resolve("");
+			URI templatePath = templateURI.resolve("");
 
 			// load the transform document
 			Transformer trans = (Transformer) cache.get(template, TRANSFORMER);

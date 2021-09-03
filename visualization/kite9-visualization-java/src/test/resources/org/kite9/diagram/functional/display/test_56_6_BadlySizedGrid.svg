@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="diagram" xmlns:k9="http://www.kite9.org/schema/adl" version="1.0" width="251" k9:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" template="/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.xslt" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=251.0, h=180.0); " xmlns="http://www.w3.org/2000/svg" k9:height="$height"
+<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="diagram" version="1.0" width="251" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=251.0, h=180.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@11c7eb2; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
-                    @import url("/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/designer.css");
+                    @import url("/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");
                 </style
   ></defs
   ><g filter="url(#dropshadow)"
   >
-  <g k9-elem="grid" id="outer" style="--kite9-layout: grid; --kite9-grid-size: 2 2; " transform="translate(15.0,15.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [2, 2]; cell-xs: [, 0, 67, 167]; cell-ys: [, 0, 50, 150]; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=167.0, h=150.0); " rank="0"
-    ><rect x="0" y="0" k9:width="$width" width="167" k9:height="$height" class="grid-back" height="150"
+  <g k9-elem="grid" id="outer" style="--kite9-layout: grid; --kite9-grid-size: 2 2; " transform="translate(15.0,15.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [2, 2]; cell-xs: [, 0, 67, 167]; cell-ys: [, 0, 50, 150]; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=167.0, h=150.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@f5d2b0d; " rank="0"
+    ><rect x="0" y="0" width="167" pp:height="$height" class="grid-back" height="150" pp:width="$width"
       />
-    <g k9-elem="cell" id="tl" style="--kite9-occupies: 0 0; " k9-info="position: [0,0,0,0]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; grid-x: [0,1]; grid-y: [0,1]; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=67.0, h=50.0); "
-      ><rect x="0" y="0" k9:width="$width" width="67" k9:height="$height" class="cell-edge" height="50"
+    <g k9-elem="cell" id="tl" style="--kite9-occupies: 0 0; " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=67.0, h=50.0); position: [0,0,0,0]; grid-x: [0,1]; grid-y: [0,1]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@29a9ea3f; "
+      ><rect x="0" y="0" width="67" pp:height="$height" class="cell-edge" height="50" pp:width="$width"
         />
-      <g k9-elem="glyph" id="one" transform="translate(10.0,10.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=45.0, h=30.0); "
-        ><rect x="0" y="0" k9:width="$width" width="45" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="30"
+      <g k9-elem="glyph" id="one" transform="translate(10.0,10.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=45.0, h=30.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@1052844d; "
+        ><rect x="0" y="0" width="45" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="30" pp:width="$width"
           />
-        <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.2,14.2)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=35.0, h=31.0); rect-size: BasicDimension2D(w=25.0, h=18.0); "
+        <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.2,21.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=35.0, h=31.0); rect-size: BasicDimension2D(w=25.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@1ab35c93; "
           ><text
             >one</text
           ></g
@@ -28,32 +28,32 @@
           >
     </g
           >
-    <g k9-elem="cell" id="br" style="--kite9-occupies: 1 1; --kite9-min-size: 100px 100px;" transform="translate(67.0,50.0)" k9-info="position: [1,1,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; grid-x: [1,2]; grid-y: [1,2]; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=65.0); rect-size: BasicDimension2D(w=100.0, h=100.0); "
-          ><rect x="0" y="0" k9:width="$width" width="100" k9:height="$height" class="cell-edge" height="100"
+    <g k9-elem="cell" id="br" style="--kite9-occupies: 1 1; --kite9-min-size: 100px 100px;" transform="translate(67.0,50.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=65.0); rect-size: BasicDimension2D(w=100.0, h=100.0); position: [1,1,1,1]; grid-x: [1,2]; grid-y: [1,2]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@6695986b; "
+          ><rect x="0" y="0" width="100" pp:height="$height" class="cell-edge" height="100" pp:width="$width"
           /></g
           >
-  <rect x="67.0px" y="0.0px" width="100.0px" k9-info="position: [1,1,0,0]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; layout: null; grid-x: [1,2]; grid-y: [0,1]; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=15.0); rect-size: BasicDimension2D(w=100.0, h=50.0); temporary: true; " class="grid-temporary" id="outer-g-1-0" height="50.0px" k9-elem="_temporary"
-          /><rect x="0.0px" y="50.0px" width="67.0px" k9-info="position: [0,0,1,1]; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; layout: null; grid-x: [0,1]; grid-y: [1,2]; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=65.0); rect-size: BasicDimension2D(w=67.0, h=100.0); temporary: true; " class="grid-temporary" id="outer-g-0-1" height="100.0px" k9-elem="_temporary"
+  <rect x="67.0px" y="0.0px" width="100.0px" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=82.0, h=15.0); rect-size: BasicDimension2D(w=100.0, h=50.0); position: [1,1,0,0]; grid-x: [1,2]; grid-y: [0,1]; temporary: true; painter: org.kite9.diagram.dom.painter.SVGRectPainter@73b68e88; " class="grid-temporary" id="outer-g-1-0" height="50.0px" k9-elem="_temporary"
+          /><rect x="0.0px" y="50.0px" width="67.0px" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=65.0); rect-size: BasicDimension2D(w=67.0, h=100.0); position: [0,0,1,1]; grid-x: [0,1]; grid-y: [1,2]; temporary: true; painter: org.kite9.diagram.dom.painter.SVGRectPainter@c356848; " class="grid-temporary" id="outer-g-0-1" height="100.0px" k9-elem="_temporary"
         /></g
         >
-  <g k9-elem="glyph" id="two" transform="translate(192.0,25.0)" k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=192.0, h=25.0); rect-size: BasicDimension2D(w=44.0, h=30.0); " rank="1"
-        ><rect x="0" y="0" k9:width="$width" width="44" style="fill: url(#glyph-background); " k9:height="$height" rx="8" class="glyph-back" ry="8" height="30"
+  <g k9-elem="glyph" id="two" transform="translate(192.0,25.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=192.0, h=25.0); rect-size: BasicDimension2D(w=44.0, h=30.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@237657a7; " rank="1"
+        ><rect x="0" y="0" width="44" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="30" pp:width="$width"
           />
-    <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.8,15.9)" k9-info="position: none; margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=202.0, h=31.0); rect-size: BasicDimension2D(w=24.0, h=18.0); "
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.8,21.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=202.0, h=31.0); rect-size: BasicDimension2D(w=24.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@7918805; "
           ><text
             >two </text
           ></g
           >
   </g
           >
-  <g k9-elem="link" id="two-one" drawDirection="LEFT" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['two','one']; direction: LEFT; " rank="2"
+  <g k9-elem="link" id="two-one" drawDirection="LEFT" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['two','one']; direction: LEFT; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@26099db7; " rank="2"
           >
-    <g k9-elem="from" reference="two" transform="translate(192.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; terminates: two-one; terminates-at: two; end: from; rectangular: terminator; rect-pos: BasicDimension2D(w=192.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
+    <g k9-elem="from" reference="two" transform="translate(192.0,40.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; sizing: MINIMIZE MINIMIZE; rectangular: terminator; rect-pos: BasicDimension2D(w=192.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: two-one; terminates-at: two; end: from; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@c050e2d; "
             />
-    <g k9-elem="to" id="0" reference="one" class="diamond" transform="translate(70.0,40.0)" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 5.0 12.0 5.0 1.0; sizing: MINIMIZE MINIMIZE; terminates: two-one; terminates-at: one; end: to; rectangular: terminator; rect-pos: BasicDimension2D(w=70.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); "
+    <g k9-elem="to" id="0" reference="one" class="diamond" transform="translate(70.0,40.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 12.0 5.0 1.0; sizing: MINIMIZE MINIMIZE; rectangular: terminator; rect-pos: BasicDimension2D(w=70.0, h=40.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: two-one; terminates-at: one; end: to; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@34f267d0; "
             />
-  <g k9-info="position: none; margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: null; rect-size: null; " k9-elem="link-body"
-            ><path marker-start="url(#-start-marker)" d="M192 40 L70 40 " marker-end="url(#diamond-end-marker)" class="link" k9:d="$path"
+  <g k9-info="margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: null; rect-size: null; position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@3fa810eb; " k9-elem="link-body"
+            ><path marker-start="url(#-start-marker)" d="M192 40 L70 40 " marker-end="url(#diamond-end-marker)" pp:d="$path" class="link"
             /></g
           ></g
           >

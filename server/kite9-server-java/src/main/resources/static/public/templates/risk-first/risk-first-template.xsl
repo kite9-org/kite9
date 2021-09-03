@@ -67,7 +67,6 @@
     <xsl:call-template name="formats-image">
       <xsl:with-param name="k9-elem">image</xsl:with-param>
     </xsl:call-template>
-    <xsl:call-template name="votes" />
     <xsl:apply-templates select="adl:title" />
   </xsl:template>
   
@@ -100,11 +99,21 @@
       <image width="50pt" height="50pt" href="pre:#{$template-2}" />
       <votes count="pre:#{count(adl:vote)}" />
       <title k9-ui="text">#{$template-3}</title>
-  </template>
+  </template> -->
   
-  <template id="action" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected " k9-texture="solid">
+  <!-- <xsl:template name="risk-action">
+    <xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
+      <xsl:with-param name="k9-shape">
+        <g>
+          <svg:polygon points='0 0, #{$width - (15 * $pt)} 0, #{$width} #{$height div 2}, #{$width - (15 * $pt) } #{$height}, 0 #{$height}'  />
+        </g>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template> -->
+    
+ <!--  
     <shape k9-highlight="pulse">
-      <svg:polygon points='0 0, #{$width - (15 * $pt)} 0, #{$width} #{$height div 2}, #{$width - (15 * $pt) } #{$height}, 0 #{$height}'  />
     </shape>
     <votes count="pre:#{count(adl:vote)}" />
     <front style="kite9-usage: regular; kite9-type: container; kite9-layout: down; 	kite9-padding: 10pt; kite9-padding-right: 40pt; ">

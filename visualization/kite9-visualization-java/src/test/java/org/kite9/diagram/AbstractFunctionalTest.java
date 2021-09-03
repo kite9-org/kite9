@@ -18,6 +18,8 @@ import org.kite9.diagram.logging.Kite9Log.Destination;
 import org.kite9.diagram.logging.Kite9LogImpl;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class AbstractFunctionalTest extends HelpMethods {
 
@@ -37,7 +39,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	@Before
 	public void setupTestXMLDocument() {
-		AbstractMutableXMLElement.TRANSFORM = AbstractFunctionalTest.class.getResource("/stylesheets/designer.xslt").getFile();
+		AbstractMutableXMLElement.TRANSFORM = AbstractFunctionalTest.class.getResource("/stylesheets/tester.xslt").getFile();
 		AbstractMutableXMLElement.TESTING_DOCUMENT = AbstractMutableXMLElement.newDocument();
 	}
 

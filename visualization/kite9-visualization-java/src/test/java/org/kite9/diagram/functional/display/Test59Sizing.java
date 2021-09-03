@@ -83,12 +83,12 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	 */
 	@Test
 	public void test_59_10_TextAndBadge() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("<svg:text style=\"alignment-baseline: baseline; \">hello something</svg:text>", "font-size: 33px;")+badgeDecal(),"--kite9-padding: 10px;")));
+		renderDiagram(basicDiagram(glyphContainer(text("<svg:text>hello something</svg:text>", "font-size: 33px;")+badgeDecal(),"--kite9-padding: 10px;")));
 	}
 	
 	@Test
 	public void test_59_11_TextAndScaledDecal() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(text("<svg:text style=\"alignment-baseline: baseline; \">hello something else</svg:text>", "font-size: 25px;")+polyDecal(),"--kite9-padding: 10px;")));
+		renderDiagram(basicDiagram(glyphContainer(text("<svg:text>hello something else</svg:text>", "font-size: 25px;")+polyDecal(),"--kite9-padding: 10px;")));
 	}
 	
 	@Test
@@ -101,8 +101,8 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		renderDiagram(basicDiagram(glyphContainer(
 				text("<svg:text>hello something else</svg:text>", "font-size: 25px; line-height: 120%;")+
 				text("<svg:text>hello 2</svg:text>", "font-size: 25px;")+
-				text("<svg:text>bette\nmiddler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; alignment-baseline: baseline;")+
-				text("<svg:text>hello\n bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; alignment-baseline: baseline;"),
+				text("<svg:text>bette\nmiddler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center;")+
+				text("<svg:text>hello\n bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right;"),
 			"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-size: 150px 150px")));
 	}
 
@@ -208,7 +208,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 	
 	private String textWithTransform(String xml, String extraAtts, String transform) {
-		return    "      <svg:g style=\"--kite9-type: text; font-family:  opensans-light-webfont; "+extraAtts+"\"><svg:g transform=\""+transform+"\">\n"
+		return    "      <svg:g style=\"--kite9-type: svg; font-family:  opensans-light-webfont; "+extraAtts+"\"><svg:g transform=\""+transform+"\">\n"
 				+ "        "+xml+"\n"
 				+ "      </svg:g></svg:g>\n";
 	}
@@ -228,7 +228,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				"id=\"The Diagram\">\n" +
 
 				"<svg:defs>"+
-				"<svg:style> @import url(\""+Test59Sizing.class.getResource("/stylesheets/designer.css").toURI().toString()+"\");</svg:style>"+
+				"<svg:style> @import url(\""+Test59Sizing.class.getResource("/stylesheets/tester.css").toURI().toString()+"\");</svg:style>"+
                 "<svg:linearGradient id='glyph-background' x1='0%' x2='0%' y1='0%' y2='100%'>"+
                     "<svg:stop offset='0%' stop-color='#FFF'/>"+
                     "<svg:stop offset='100%' stop-color='#DDD'/>"+
