@@ -12,7 +12,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
      *  - If not, then it assumes the entire input is an xpath.
      */
     override fun performValueReplace(input: String, at: Element): String {
-        if (EMBEDDED_EXPRESSION.matches(input)) {
+        if (input.contains(EMBEDDED_EXPRESSION)) {
             return performEmbeddedValueReplace(input, at)
         } else {
             return performCompleteValueReplace(input, at)
@@ -70,7 +70,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
     }
 
     companion object {
-        private val EMBEDDED_EXPRESSION = Regex("#\\{(.*?)}")
+        private val EMBEDDED_EXPRESSION = Regex("\\[\\[(.*?)\\]\\]")        // matches [[thing]]
     }
 
 

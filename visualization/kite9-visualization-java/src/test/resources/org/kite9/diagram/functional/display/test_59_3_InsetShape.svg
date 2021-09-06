@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg:svg xmlns:pp="http://www.kite9.org/schema/post-processor" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" style="--kite9-type: diagram; " version="1.0" width="71" pp:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=71.0, h=71.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@d8305c2; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" pp:height="$height"
+<svg:svg xmlns:pp="http://www.kite9.org/schema/post-processor" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" style="--kite9-type: diagram; " version="1.0" width="71" pp:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=71.0, h=71.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@56bca85b; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" pp:height="$height"
 >
 <svg:defs
   ><svg:style xml:space="preserve"
@@ -11,11 +11,11 @@
       /><svg:stop stop-color="#DDD" offset="100%"
     /></svg:linearGradient
   ></svg:defs
-  >    <svg:g style="--kite9-type: svg;  " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=41.0, h=41.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@78aea4b9; " transform="translate(15.5,15.5)"
+  >    <svg:g style="--kite9-type: svg;  " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=41.0, h=41.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@2a65bb85; " transform="translate(15.5,15.5)"
   >
-      <svg:g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="painter: org.kite9.diagram.batik.painter.BatikLeafPainter@2b58f754; "
+      <svg:g style="--kite9-usage: decal; --kite9-type: svg; " k9-info="painter: org.kite9.diagram.batik.painter.BatikLeafPainter@3ebff828; "
     >
-        <svg:rect x="0" y="0" width="41" style="fill: url(#glyph-background); " pp:height="$height" class="glyph-back" rx="8" ry="8" height="41" pp:width="#{$width}"
+        <svg:rect x="0" y="0" width="41" style="fill: url(#glyph-background); " pp:height="$height" class="glyph-back" rx="8" ry="8" height="41" pp:width="[[$width]]"
       />
       </svg:g
       >

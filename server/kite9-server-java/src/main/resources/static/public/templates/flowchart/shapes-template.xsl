@@ -23,12 +23,12 @@
  
 	<xsl:template mode="shape" match="adl:document" priority="2">
 		<path d=""
-			pp:d="M #{$x} #{$y}
-            v #{$height - 3}
-			      q #{$width div 4} -6 #{$width div 2} 0
-            q #{$width div 4} 6 #{$width div 2} 0
-			      V #{$y}
-			      H #{$x}" />
+			pp:d="M [[$x]] [[$y]]
+            v [[$height - 3]]
+			      q [[$width div 4]] -6 [[$width div 2]] 0
+            q [[$width div 4]] 6 [[$width div 2]] 0
+			      V [[$y]]
+			      H [[$x]]" />
 	</xsl:template>
   
   
