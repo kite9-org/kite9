@@ -53,7 +53,7 @@ public class XMLCompare {
 		        		}
 		        		
 						
-						Assertions.fail("found a difference: " + comparison);
+						Assertions.fail("found a difference: " + comparison+" between \n"+a+"\n -- and -- \n"+b);
 						
 					}
 				}
