@@ -137,6 +137,11 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		        		// this will always be relative
 						return;
 					}
+
+		        	if (v.contains("tester.xslt")) {
+		        		// position of stylesheet, often relative so ignore
+						return;
+					}
 		        	
 					if ((!v.contains("file:")) && (!v.startsWith("pp:"))) {
 						copyToErrors(output);	
