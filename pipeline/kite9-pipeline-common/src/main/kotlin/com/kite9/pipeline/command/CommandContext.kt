@@ -28,6 +28,7 @@ interface CommandContext {
 
     fun getStyleValue(e: Element?, name: String): String?
 
+    @Deprecated("Involves comprehension of the underlying xml, not possible")
     fun getStyleRangeValue(el: Element, name: String): IntegerRange?
 
     /**

@@ -59,7 +59,7 @@ public class CommandsTest {
 	public void testReplaceXMLCommand1() throws Exception {
 		ReplaceXML replace = new ReplaceXML();
 		replace.fragmentId = "The Diagram";
-		replace.from= Base64.getEncoder().encodeToString(("<diagram  id=\"The Diagram\">\n" + 
+		replace.from= Base64.getEncoder().encodeToString(("<diagram  id=\"The Diagram\">\n" +
 				"    <glyph id=\"one\">\n" + 
 				"      <label id=\"one-label\">One</label>\n" + 
 				"    </glyph>\n" + 

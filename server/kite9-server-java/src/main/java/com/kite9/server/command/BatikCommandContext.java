@@ -15,6 +15,7 @@ import org.apache.commons.io.Charsets;
 import org.apache.xpath.jaxp.XPathImpl;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.css.Kite9CSSParser;
 import org.kite9.diagram.dom.managers.IntegerRangeManager;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
@@ -65,6 +66,9 @@ public class BatikCommandContext implements CommandContext {
     }
 
     public Command.Mismatch twoElementsAreIdentical(Element existing, Element with) {
+        System.out.println("A" + new XMLHelper().toXML(existing));
+        System.out.println("B" + new XMLHelper().toXML(with));
+
         List<Comparison> out = new ArrayList<>();
         DiffBuilder
                 .compare(Input.fromNode(existing).build())
