@@ -42,6 +42,8 @@
 
 /* text-captioned, text-portrait format */
 
+[k9-format=text-image-portrait],
+[k9-format=text-image-captioned],
 [k9-format=text-shape-captioned],
 [k9-format=text-shape-portrait] {
 	--kite9-type: container;
@@ -49,14 +51,15 @@
 	--kite9-margin: 16pt;
 }
 
-
- [k9-format=text-shape-portrait] {
+[k9-format=text-image-portrait],
+[k9-format=text-shape-portrait] {
   --kite9-layout: down;
 }
 
 /* depiction:  a shape inside an object */
 
 [k9-format=text-shape-captioned] > [k9-elem=depiction],
+[k9-format=text-image-portrait] > [k9-elem=depiction],
 [k9-format=text-shape-portrait] > [k9-elem=depiction] {
   --kite9-type: container;
   --kite9-min-size: 50pt 50pt;
@@ -67,6 +70,7 @@
 
 /* caption:  text inside the object */
 
+[k9-format=text-image-portrait] > [k9-elem=caption],
 [k9-format=text-shape-portrait] > [k9-elem=caption],
 [k9-format=text-shape-captioned] > [k9-elem=caption]  {
   --kite9-type: text;

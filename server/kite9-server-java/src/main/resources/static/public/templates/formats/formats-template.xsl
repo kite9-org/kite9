@@ -10,6 +10,7 @@
   <xsl:import href="formats-text-shape-captioned.xsl"/>
   <xsl:import href="formats-image.xsl"/>
   <xsl:import href="formats-image-fixed.xsl"/>
+  <xsl:import href="formats-text-image-portrait.xsl"/>
 
   <xsl:template match="text()" mode="text-decoration"/>
 

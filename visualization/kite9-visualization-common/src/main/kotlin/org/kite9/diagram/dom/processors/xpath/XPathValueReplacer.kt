@@ -30,7 +30,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
     private fun performCompleteValueReplace(input: String, at: Element): String {
         val p = Regex("\\$([a-z\\-]+)")
         val done = replacePattern(p, input, at) { s, a -> getReplacementStringValue(s.groupValues[1].toLowerCase(), a) }
-        val result = evaluateXPath(done, at)
+        val result = if (done.trim().length > 0) evaluateXPath(done, at) else ""
         return result ?: ""
     }
 

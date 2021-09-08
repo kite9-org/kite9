@@ -66,6 +66,7 @@
     <xsl:apply-templates select="adl:code" />
     <xsl:call-template name="formats-image">
       <xsl:with-param name="k9-elem">image</xsl:with-param>
+      <xsl:with-param name="id"><xsl:value-of select="@id" />@image</xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates select="adl:title" />
   </xsl:template>
@@ -84,16 +85,7 @@
     </xsl:call-template>
   </xsl:template>
   
-      
-<!--   
-      <back /> 
-      <contents xpath="adl:code" />
-      <image width="50pt" height="50pt" href="pre:#{@href}" id="pre:#{@id}@image"/>
-      <votes count="pre:#{count(adl:vote)}" />
-      <contents xpath="adl:title" />
-  </template>
-  
-  <template id="fixed" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected risk " k9-texture="solid">
+  <!-- <template id="fixed" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected risk " k9-texture="solid">
       <back />
       <code>#{$template-1}</code>
       <image width="50pt" height="50pt" href="pre:#{$template-2}" />
@@ -101,16 +93,111 @@
       <title k9-ui="text">#{$template-3}</title>
   </template> -->
   
-  <!-- <xsl:template name="risk-action">
+  <xsl:template name="risk-action" match="adl:action">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
       <xsl:with-param name="k9-shape">
-        <g>
-          <svg:polygon points='0 0, #{$width - (15 * $pt)} 0, #{$width} #{$height div 2}, #{$width - (15 * $pt) } #{$height}, 0 #{$height}'  />
+        <g k9-texture="background" k9-highlight="pulse" >
+          <xsl:attribute name="pp:style">transform: translate([[$x]]px,[[$y]]px)</xsl:attribute>
+          <polygon points="" pp:points="
+            0 0, 
+            [[$width - (15 * $pt)]] 0,
+            [[$width]] [[$height div 2]],
+            [[$width - (15 * $pt)]] [[$height]],
+            0 [[$height]]"  />
         </g>
       </xsl:with-param>
     </xsl:call-template>
-  </xsl:template> -->
+  </xsl:template>
+  
+  <xsl:template name="risk-action-left" match="adl:action[contains(@class, 'left')]" priority="5">
+    <xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
+      <xsl:with-param name="k9-shape">
+        <g k9-texture="background" k9-highlight="pulse" >
+          <xsl:attribute name="pp:style">transform: translate([[$x]]px,[[$y]]px)</xsl:attribute>
+          <polygon points="" pp:points="
+            0 [[$height div 2]], 
+            [[15 * $pt]] 0, 
+            [[$width]] 0, 
+            [[$width]] [[$height]], 
+            [[15 * $pt]] [[$height]],
+            0 [[$height div 2]]" />
+        </g>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template name="risk-arrow" match="adl:arrow">
+    <xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template name="artifact" match="adl:artifact |  
+    adl:document |
+    adl:users |
+    adl:computer | 
+    adl:interface |
+    adl:component |
+    adl:channel-artifact |
+    adl:internal-model-artifact |
+    adl:protocol-artifact |
+    adl:agent-artifact |
+    adl:image-artifact">
+    <xsl:call-template name="formats-text-image-portrait">
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
+      <xsl:with-param name="k9-texture-text">artifact</xsl:with-param>
+      <xsl:with-param name="k9-texture-back">none</xsl:with-param>
+      <xsl:with-param name="k9-ui-depiction"></xsl:with-param>
+      <xsl:with-param name="href">
+        <xsl:choose>
+          <xsl:when test="name() = 'agent-artifact'">
+            redesign/risks/agency_risk_v2.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'document'">
+            redesign/artifacts/document_v2.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'users'">
+            redesign/artifacts/users_v2.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'interface'">
+            redesign/artifacts/interface_v2.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'protocol-artifact'">
+            redesign/risks/protocol_risk_v2.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'internal-model-artifact'">
+            redesign/risks/internal_model_risk.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'channel-artifact'">
+            redesign/risks/channel_risk_v2.svg
+          </xsl:when>
+          
+          <xsl:when test="name() = 'component'">
+            redesign/artifacts/component_v2.svg
+          </xsl:when>
+          <xsl:otherwise>
+            redesign/artifacts/document_v2.svg
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:with-param>
+    </xsl:call-template>  
+  </xsl:template>
+    
+  <xsl:template name="generic-artifact" match="adl:generic-artifact">
+    <xsl:call-template name="formats-text-image-portrait">
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
+      <xsl:with-param name="k9-texture-text">artifact</xsl:with-param>
+      <xsl:with-param name="k9-texture-back">none</xsl:with-param>
+    </xsl:call-template>  
+  </xsl:template>  
     
  <!--  
     <shape k9-highlight="pulse">
@@ -123,17 +210,6 @@
     </front>
   </template>
   
-  <template id="action-left" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected "  k9-texture="solid">
-    <shape style='kite9-usage: decal; kite9-type: svg; fill: url(#risk-background); ' k9-highlight="fill">
-      <svg:polygon points='0 #{$height div 2}, #{15 * $pt} 0, #{$width} 0, #{$width} #{$height}, #{15 * $pt} #{$height} 0, #{$height div 2}' />
-    </shape>
-    <votes count="pre:#{count(adl:vote)}" />
-    <front style="kite9-usage: regular; kite9-type: container; kite9-layout: down; 	kite9-padding: 10pt; kite9-padding-left: 40pt; ">
-      <title k9-ui="text">
-      	<contents optional="true" />
-      </title>
-    </front>
-  </template>
   
   <template id="artifact" k9-ui="drag delete align connect autoconnect edit" k9-palette="connected " k9-texture="none" >
     <back />
