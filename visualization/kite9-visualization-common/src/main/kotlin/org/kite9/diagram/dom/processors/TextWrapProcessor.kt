@@ -38,7 +38,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                 val lines = buildLines(n, spans, replaceZero(width))
                 var lineHeight = calculateLineHeight(n, ctx)
                 removeAllChildren(n)
-                replaceWithCSpans(n, lines, lineHeight, align, lines.map { it.second }.maxOf { it }, replaceZero(height))
+                replaceWithCSpans(n, lines, lineHeight, align, lines.map { it.second }.maxOfOrNull { it } ?: 0.0, replaceZero(height))
             }
 
             return n

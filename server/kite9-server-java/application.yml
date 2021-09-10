@@ -16,6 +16,7 @@ spring:
 kite9:
   diagram-log: OFF
   caching: true
+  transformer-factory: net.sf.saxon.TransformerFactoryImpl
     
 server:
   use-forward-headers: true

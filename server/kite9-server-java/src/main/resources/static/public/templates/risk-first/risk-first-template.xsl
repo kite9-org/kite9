@@ -7,6 +7,10 @@
   <xsl:import href="../adl/adl-template.xsl" />
   <xsl:import href="../votes/votes-template.xsl" />
   
+  <xsl:template name="fixed-risk-details">
+    <g href="redesign/risks/hidden_risk_v2.svg" name="Hidden Risk" code="?" />
+  </xsl:template>
+  
   <xsl:variable name="risk-background">
     <linearGradient id='risk-background' x1='0%' x2='0%' y1='0%' y2='100%'>
       <stop offset='0%' stop-color='#FFF' />
@@ -80,20 +84,41 @@
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect vote</xsl:with-param>
       <xsl:with-param name="k9-palette">connected risk</xsl:with-param>
       <xsl:with-param name="content">
-        <xsl:call-template name="risk-content" />
+        <xsl:call-template name="risk-content"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+
+  <xsl:template name="risk-fixed" match="adl:risk">
+    <xsl:param name="details">
+      <g href="redesign/risks/hidden_risk_v2.svg" name="Hidden Risk" code="?" />
+    </xsl:param>
+    <xsl:call-template name="formats-container">
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect vote</xsl:with-param>
+      <xsl:with-param name="k9-palette">connected risk</xsl:with-param>
+      <xsl:with-param name="content">
+       <xsl:call-template name="formats-text-fixed">
+          <xsl:with-param name="k9-elem">code</xsl:with-param>
+          <xsl:with-param name="content"><text>kjhdskjf</text></xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="formats-image">
+          <xsl:with-param name="href">redesign/risks/hidden_risk_v2.svg</xsl:with-param>
+          <xsl:with-param name="k9-elem">image</xsl:with-param>
+          <xsl:with-param name="id"><xsl:value-of select="@id" />@image</xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="formats-text-fixed">
+          <xsl:with-param name="k9-elem">title</xsl:with-param>
+          <xsl:with-param name="content">
+            <xsl:copy-of select="$details" />
+            <text></text></xsl:with-param>
+        </xsl:call-template>  
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+ 
   
-  <!-- <template id="fixed" k9-ui="drag delete align connect autoconnect edit vote" k9-palette="connected risk " k9-texture="solid">
-      <back />
-      <code>#{$template-1}</code>
-      <image width="50pt" height="50pt" href="pre:#{$template-2}" />
-      <votes count="pre:#{count(adl:vote)}" />
-      <title k9-ui="text">#{$template-3}</title>
-  </template> -->
-  
-  <xsl:template name="risk-action" match="adl:action">
+  <xsl:template name="action" match="adl:action">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
       <xsl:with-param name="k9-shape">
@@ -128,7 +153,7 @@
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template name="risk-arrow" match="adl:arrow">
+  <xsl:template name="arrow" match="adl:arrow">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
     </xsl:call-template>
@@ -211,17 +236,6 @@
   </template>
   
   
-  <template id="artifact" k9-ui="drag delete align connect autoconnect edit" k9-palette="connected " k9-texture="none" >
-    <back />
-    <image width="80pt" height="80pt" href="#{$template-1}" />
-    <title><contents optional="true" /></title>
-  </template>
-  
-  <template id="generic-artifact" k9-ui="drag delete align connect autoconnect edit" k9-palette="connected " k9-texture="none">
-    <back />
-    <image width="80pt" height="80pt" href="pre:#{@href}" id="pre:#{@id}@image" />
-    <title><contents optional="true" /></title>
-  </template>
   
   <template id='mitigated' k9-ui="drag delete align connect autoconnect edit" k9-palette="connected " k9-texture="none" k9-contains="risk">
     <back />

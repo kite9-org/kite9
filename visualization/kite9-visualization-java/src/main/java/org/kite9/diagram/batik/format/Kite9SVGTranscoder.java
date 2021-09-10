@@ -42,9 +42,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.XMLFilter;
 
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
@@ -68,6 +66,8 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	 * not the usual way for editable diagrams, so is false by default.
 	 */
 	public static final TranscodingHints.Key KEY_ENCAPSULATING = new BooleanKey();
+	public static final TranscodingHints.Key KEY_TRANSFORMER_FACTORY = new StringKey();
+
 
 	/**
 	 * This allows us to specify the name of the template used to transform the input document.
@@ -82,7 +82,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentLoader docLoader;
 	private final Cache cache;
 	private final BatikDiagramElementFactory def;
-	private final TransformerFactory transFact;
+	private TransformerFactory transFact;
 
 	public Kite9SVGTranscoder() {
 		this(Cache.NO_CACHE);
@@ -90,14 +90,13 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	
 	public Kite9SVGTranscoder(Cache c) {
 		super();
+		this.handler = new LoggingErrorListener(log);
 		this.cache = c;
 		this.domImpl = new ADLExtensibleDOMImplementation(c);
 		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
 	    this.docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
 		this.ctx = new Kite9BridgeContext(userAgent, docLoader, false);
 		this.def = new BatikDiagramElementFactory((Kite9BridgeContext) ctx);
-		this.transFact = TransformerFactory.newInstance();
-		this.transFact.setErrorListener(new DefaultErrorHandler(true));
 		setTranscodingHints(initTranscodingHints());
 	}
 
@@ -106,9 +105,20 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
+		hints.put(KEY_TRANSFORMER_FACTORY, "net.sf.saxon.TransformerFactoryImpl");
 		return hints;
 	}
 
+
+	public TransformerFactory getTransformerFactory() throws Exception {
+		if (transFact == null) {
+			Class<?> tfClass = Class.forName((String ) hints.get(KEY_TRANSFORMER_FACTORY));
+			transFact = (TransformerFactory) tfClass.getConstructor().newInstance();
+			transFact.setErrorListener((ErrorListener) this.handler);
+		}
+
+		return transFact;
+	}
 
 	public Kite9DocumentFactory getDocFactory() {
 		return docFactory;
@@ -193,11 +203,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private Document outputDocument;
 
 	protected void transcode(Document input, String uri, TranscoderOutput output) throws TranscoderException {
-		// turn into SVG
-		input.setDocumentURI(uri);
-		outputDocument = handleTransformToAdl(input);
-
 		try {
+			// turn into SVG
+			input.setDocumentURI(uri);
+			outputDocument = handleTransformToAdl(input);
+
 			// prepare context + css
 			outputDocument.setDocumentURI(uri);
 			setupBridgeContext();
@@ -233,9 +243,8 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			postProcessor.processContents(outputDocument.getDocumentElement());
 			lastOutputDocument = outputDocument;
 		} catch (Exception e) {
-			String s = new XMLHelper().toXML(outputDocument);
 			log.error("Problem with XML: ",e);
-			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, outputDocument);
+			throw new Kite9XMLProcessingException("Transcoder problem: "+e.getMessage(), e, outputDocument == null ? input : outputDocument);
 		}
 	}
 
@@ -265,7 +274,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 
 		try {
-
 			URI uri = new URI(input.getDocumentURI());
 			URI templateURI = uri.resolve(template);
 			URI baseUri = uri.resolve("/");
@@ -277,10 +285,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 				ParsedURL parsedTemplateUri = new ParsedURL(templateURI.toString());
 				Source source = new StreamSource(parsedTemplateUri.openStream());
 				source.setSystemId(templateURI.toString());
-				trans = transFact.newTransformer(source);
+				trans = getTransformerFactory().newTransformer(source);
 				trans.setParameter("base-uri", baseUri.toString());
 				trans.setParameter("template-uri", uri.toString());
 				trans.setParameter("template-path", templatePath.toString());
+
 				cache.set(template, TRANSFORMER, trans);
 			}
 
@@ -298,9 +307,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 
 		return out;
-
 	}
-
 
 	protected XMLProcessor buildOutputProcessor(Document input) {
 		Kite9BridgeContext ctx = createBridgeContext();
@@ -314,9 +321,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		}
 	}
 
-
-
-	
 	protected void setupBridgeContext() {
 		Kite9BridgeContext ctx = createBridgeContext();
 		if (Boolean.TRUE == hints.get(KEY_ENCAPSULATING)) {
