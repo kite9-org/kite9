@@ -90,11 +90,11 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 			if (putMediaType.contains(api.getMediaType())) {
 				return unconvertedOutput(rewrittenURI, headers, authentication, api);
 			} else {
-				try {
+//				try {
 					return convertDiagram(rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication, api);
-				} catch (Exception e) {
-					LOG.debug("Couldn't convert diagram to "+putMediaType+ " from "+ api.getMediaType());
-				}
+//				} catch (Exception e) {
+//					LOG.debug("Couldn't convert diagram to "+putMediaType+ " from "+ api.getMediaType());
+//				}
 			}
 		}
 			

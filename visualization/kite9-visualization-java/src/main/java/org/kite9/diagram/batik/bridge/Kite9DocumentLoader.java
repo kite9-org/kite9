@@ -9,6 +9,7 @@ import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.w3c.dom.Document;
+import org.xml.sax.ErrorHandler;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,12 +26,14 @@ import java.io.InputStream;
 public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 	
 	private final Cache cache;
+	private final ErrorHandler eh;
 	private final Kite9Log log = Kite9Log.Companion.instance(this);
 
-	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, Cache cache) {
+	public Kite9DocumentLoader(UserAgent userAgent, Kite9DocumentFactory dbf, Cache cache, ErrorHandler eh) {
 		super(userAgent);
 		this.documentFactory = dbf;
 		this.cache = cache;
+		this.eh = eh;
 	}
 
 	@Override
@@ -79,6 +82,7 @@ public class Kite9DocumentLoader extends DocumentLoader implements Logable {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setNamespaceAware(true);
 			DocumentBuilder db = dbf.newDocumentBuilder();
+			db.setErrorHandler(eh);
 			doc = db.parse(is);
 			doc.getDocumentElement().normalize();
 		} catch (Exception e) {

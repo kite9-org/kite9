@@ -332,11 +332,13 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 			Mark start = tp.getMark(tn, idx, true);
 			Mark end = tp.getMark(tn, idx + s.length() - 1, false);
 			Shape shape = tp.getHighlightShape(start, end);
-			java.awt.geom.Rectangle2D sb = shape.getBounds();
-			return sb.getWidth();
-		} else {
-			return 0;
+			if (shape != null) {
+				java.awt.geom.Rectangle2D sb = shape.getBounds();
+				return sb.getWidth();
+			}
 		}
+
+		return 0;
 	}
 
 	@Override

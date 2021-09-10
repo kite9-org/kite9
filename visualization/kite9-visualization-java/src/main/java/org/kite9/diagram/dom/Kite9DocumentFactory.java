@@ -12,6 +12,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
@@ -92,17 +93,9 @@ public class Kite9DocumentFactory
      * Creates a new SVGDocumentFactory object.
      * @param parser The SAX2 parser classname.
      */
-    public Kite9DocumentFactory(DOMImplementation domImpl, String parser) {
+    public Kite9DocumentFactory(DOMImplementation domImpl, String parser, ErrorHandler errorHandler) {
         super(domImpl, parser, true);
-    }
-
-    /**
-     * Creates a new SVGDocumentFactory object.
-     * @param parser The SAX2 parser classname.
-     * @param dd Whether a document descriptor must be generated.
-     */
-    public Kite9DocumentFactory(DOMImplementation domImpl, String parser, boolean dd) {
-        super(domImpl, parser, dd);
+        setErrorHandler(errorHandler);
     }
 
     public SVGDocument createSVGDocument(String uri) throws IOException {
@@ -329,24 +322,6 @@ public class Kite9DocumentFactory
         // Let the SAX parser find the entity.
         return null;
     }
-
-	@Override
-	public void fatalError(SAXParseException ex) throws SAXException {
-		// TODO Auto-generated method stub
-		super.fatalError(ex);
-	}
-
-	@Override
-	public void error(SAXParseException ex) throws SAXException {
-		// TODO Auto-generated method stub
-		super.error(ex);
-	}
-
-	@Override
-	public void warning(SAXParseException ex) throws SAXException {
-		// TODO Auto-generated method stub
-		super.warning(ex);
-	}
 
     protected Document createDocument(String ns, String root, String uri,
                                       InputSource is)

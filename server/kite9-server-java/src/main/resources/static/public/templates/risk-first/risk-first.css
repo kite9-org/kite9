@@ -1,11 +1,11 @@
 @import url('/public/templates/adl/adl.css');
 @import url('/public/fonts/metropolis/metropolis.css');
-@import url('/public/templates/risk-first/risks.css');
-@import url('/public/templates/risk-first/artifacts.css');
+@import url('/public/templates/risk-first/risks/risks.css');
+@import url('/public/templates/risk-first/artifacts/artifacts.css');
 @import url('/public/templates/risk-first/actions.css');
-@import url('/public/templates/risk-first/planner.css');
-@import url('/public/templates/risk-first/site.css');
-@import url('/public/templates/risk-first/matrix.css');
+@import url('/public/templates/risk-first/planner/planner.css');
+@import url('/public/templates/risk-first/site/site.css');
+@import url('/public/templates/risk-first/planner/matrix.css');
 @import url('/public/templates/editor/editor.css');
 @import url('/public/templates/votes/votes.css');
 

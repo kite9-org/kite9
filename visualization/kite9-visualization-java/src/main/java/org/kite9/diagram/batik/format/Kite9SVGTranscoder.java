@@ -13,7 +13,6 @@ import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.transcoder.keys.StringKey;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.apache.xml.utils.DefaultErrorHandler;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.model.BatikDiagramElementFactory;
@@ -21,7 +20,6 @@ import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
-import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
@@ -40,6 +38,7 @@ import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.svg.SVGDocument;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.XMLFilter;
 
 import javax.xml.transform.*;
@@ -90,11 +89,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	
 	public Kite9SVGTranscoder(Cache c) {
 		super();
-		this.handler = new LoggingErrorListener(log);
+		this.handler = new ConsolidatedErrorHandler(log);
 		this.cache = c;
 		this.domImpl = new ADLExtensibleDOMImplementation(c);
-		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName());
-	    this.docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache);
+		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName(), (ErrorHandler) this.handler);
+	    this.docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache, (ErrorHandler) this.handler);
 		this.ctx = new Kite9BridgeContext(userAgent, docLoader, false);
 		this.def = new BatikDiagramElementFactory((Kite9BridgeContext) ctx);
 		setTranscodingHints(initTranscodingHints());

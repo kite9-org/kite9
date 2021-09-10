@@ -98,12 +98,12 @@ abstract class AbstractPainter : Painter {
                 val parent = c.getParent() as Container?
                 val prri = parent!!.getRenderingInformation()
                 val l = parent.getLayout()
-                if (l === Layout.GRID) {
-                    val scaledX = scale(rri.gridXPosition(), prri.gridXSize())
-                    val scaledY = scale(rri.gridYPosition(), prri.gridYSize())
-                    debug.append("grid-x: $scaledX; ")
-                    debug.append("grid-y: $scaledY; ")
-                }
+//                if (l === Layout.GRID) {
+//                    val scaledX = scale(rri.gridXPosition(), prri.gridXSize())
+//                    val scaledY = scale(rri.gridYPosition(), prri.gridYSize())
+//                    debug.append("grid-x: $scaledX; ")
+//                    debug.append("grid-y: $scaledY; ")
+//                }
             }
         }
         if (r is Terminator) {
