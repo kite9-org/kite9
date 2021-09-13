@@ -27,18 +27,24 @@ public class ConsolidatedErrorHandler implements
     }
 
     @Override
+    public void warning(TranscoderException ex) throws TranscoderException {
+        log.send("Batik Warning: "+ ex.getMessage());
+    }
+
+    @Override
+    public void warning(SAXParseException exception) throws SAXException {
+        log.error("SAX Warning", exception);
+    }
+
+
+
+
+    @Override
     public void error(TransformerException exception) throws TransformerException {
         log.error("Transform error", exception);
         throw exception;
     }
 
-    @Override
-    public void fatalError(TransformerException exception) throws TransformerException {
-        log.error("Transform fatal", exception);
-        throw exception;
-    }
-
-    /* Batik Error Handler */
     @Override
     public void error(TranscoderException ex) throws TranscoderException{
         log.error("Batik error", ex);
@@ -46,26 +52,25 @@ public class ConsolidatedErrorHandler implements
     }
 
     @Override
-    public void fatalError(TranscoderException ex) throws TranscoderException {
-        log.error("Batik Fatal", ex);
-        throw ex;
-    }
-
-    @Override
-    public void warning(TranscoderException ex) throws TranscoderException {
-        log.send("Transform Warning: "+ ex.getMessage());
-    }
-
-    /* SAX Error Handler */
-    @Override
-    public void warning(SAXParseException exception) throws SAXException {
-        log.error("SAX Warning", exception);
-    }
-
-    @Override
     public void error(SAXParseException exception) throws SAXException {
         log.error("SAX Error", exception);
         throw exception;
+    }
+
+
+
+
+
+    @Override
+    public void fatalError(TransformerException exception) throws TransformerException {
+        log.error("Transform fatal", exception);
+        throw exception;
+    }
+
+    @Override
+    public void fatalError(TranscoderException ex) throws TranscoderException {
+        log.error("Batik Fatal", ex);
+        throw ex;
     }
 
     @Override

@@ -28,7 +28,7 @@
     <xsl:call-template name="formats-text-fixed" />
   </xsl:template>
  
-  <xsl:template name="risks-generic" match="adl:risk[@class='generic']">
+  <xsl:template name="risks-generic" match="adl:risk">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect vote edit</xsl:with-param>
       <xsl:with-param name="k9-palette">connected risk</xsl:with-param>

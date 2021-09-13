@@ -44,8 +44,7 @@
           Integrity Risk
         </risk>
         <label>
-          <text>Fit</text>
-          <symbols/>
+        Fit
         </label>
       </container>
 
@@ -54,8 +53,7 @@
         <risk class="feature-access" id="feature-access">Feature Access Risk</risk>
 
         <label>
-          <text>Audience</text>
-          <symbols/>
+          Audience
         </label>
       </container>
 
@@ -65,8 +63,8 @@
         <risk class="feature-drift" id="feature-drift">Feature Drift Risk</risk>
 
         <label>
-          <text>Evolution</text>
-          <symbols/>
+          Evolution
+          
         </label>
       </container>
     </cell>
@@ -78,8 +76,7 @@
           <risk class="internal-model" id="internal-model">Internal Model Risk</risk>
           <risk class="learning-curve" id="learning-curve">Learning Curve Risk</risk>
           <label>
-            <text>Internal Model</text>
-            <symbols/>
+            Internal Model
           </label>
         </container>
 
@@ -87,16 +84,14 @@
           <risk class="message" id="message">Message Risk</risk>
           <risk class="invisibility" id="invisibility">Invisibility Risk</risk>
           <label>
-            <text>Message</text>
-            <symbols/>
+            Message
           </label>
         </container>
 
         <container layout="down" style="--kite9-sizing: maximize; ">
           <risk class="protocol" id="protocol">Protocol Risk</risk>
           <label>
-            <text>Protocol</text>
-            <symbols/>
+            Protocol
           </label>
         </container>
         <container layout="down" style="--kite9-sizing: maximize; ">
@@ -104,8 +99,7 @@
           <risk class="channel" id="channel">Channel Risk</risk>
 
           <label>
-            <text>Channel</text>
-            <symbols/>
+            Channel
           </label>
 
         </container>
@@ -139,8 +133,7 @@
           <risk class="red-queen" id="red-queen">Red Queen Risk</risk>
         </group>
         <label>
-          <text>Scarcity</text>
-          <symbols/>
+          Scarcity
         </label>
       </container>
 

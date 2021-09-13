@@ -1,3 +1,11 @@
+/**
+ * Main identifier of links
+ */
+[k9-format=link-align],
+[k9-format=link-basic] {
+  --kite9-type: link;
+}
+
 /** 
  * Link bodies of various types
  */
@@ -11,10 +19,6 @@
   fill: none;
 }
 
-[k9-elem=align] {
-	--kite9-type: link;
-}
-
 [k9-elem=from],
 [k9-elem=to] {
 	fill: #FFFFFF;	/* allows hover events to work */
@@ -24,7 +28,6 @@
 /* Links */
 
 [k9-elem=link] {
-	--kite9-type: link;
 	--kite9-margin: 20pt;
 	--kite9-link-corner-radius: 6pt;
 }

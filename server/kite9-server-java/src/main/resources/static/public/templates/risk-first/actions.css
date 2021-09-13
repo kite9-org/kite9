@@ -1,7 +1,6 @@
 /* Actions */
 
 [k9-elem=action] {
-	--kite9-type: text;
 	--kite9-sizing: minimize;
 	--kite9-margin: 10pt;
 	--kite9-padding: 12pt;

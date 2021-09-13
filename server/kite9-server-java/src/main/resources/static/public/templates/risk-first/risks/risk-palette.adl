@@ -4,53 +4,53 @@
          xmlns:xslt="http://www.kite9.org/schema/xslt" 
          k9-ui="label"
 
-		id="The Diagram" style="kite9-layout: down; kite9-padding: 0;">
+		id="The Diagram" style="--kite9-layout: down; --kite9-padding: 0;">
 
 		<table
-			style="kite9-grid-size: 2 10; kite9-margin: 0; kite9-padding: 0">
-			<cell style="kite9-occupies: 0 0; " class="shaded">
+			style="--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0">
+			<cell style="--kite9-occupies: 0 0; " class="shaded">
 				<risk id="coordination" href="/public/templates/risk-first/redesign/risks/coordination_risk_v2.svg">
 					<code id="s">Cr</code>
 					<title id="s">Coordination Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 1;  ">
+			<cell style="--kite9-occupies: 0 1;  ">
 				<risk id="feature" href="/public/templates/risk-first/redesign/risks/feature_risk_v2.svg">
 					<code id="code">F</code>
 					<title id="title">Feature Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 2; " class="shaded">
+			<cell style="--kite9-occupies: 0 2; " class="shaded">
 				<risk id="map-and-territory" href="/public/templates/risk-first/redesign/risks/map_and_territory_risk_v2.svg">
 					<code id="code">MT</code>
 					<title id="title">Map And Territory Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 3; " class="shaded">
+			<cell style="--kite9-occupies: 0 3; " class="shaded">
 				<risk id="communication" href="/public/templates/risk-first/redesign/risks/communication_risk_v2.svg">
 					<code id="code">Co</code>
 					<title id="title">Communication Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 4; ">
+			<cell style="--kite9-occupies: 0 4; ">
 				<risk id="agency" href="/public/templates/risk-first/redesign/risks/agency_risk_v2.svg">
 					<code id="code">A</code>
 					<title id="title">Agency Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 5; " class="shaded">
+			<cell style="--kite9-occupies: 0 5; " class="shaded">
 				<risk id="complexity" href="/public/templates/risk-first/redesign/risks/complexity_risk_v2.svg">
 					<code id="code">Cx</code>
 					<title id="title">Complexity Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 6; " class="shaded">
+			<cell style="--kite9-occupies: 0 6; " class="shaded">
 				<risk id="boundary" href="/public/templates/risk-first/redesign/risks/boundary_risk_v2.svg">
 					<code id="code">B</code>
 					<title id="title">Boundary Risk</title>
 				</risk>
 			</cell>
-			<cell style="kite9-occupies: 0 7; kite9-layout: down; ">
+			<cell style="--kite9-occupies: 0 7; --kite9-layout: down; ">
 				<risk id="dependency" href="/public/templates/risk-first/redesign/risks/dependency_risk_v2.svg">
 					<code id="code">D</code>
 					<title id="title">Dependency Risk</title>
@@ -61,10 +61,10 @@
 				</risk>
 			</cell>
 
-			<cell style="kite9-occupies: 1 1 0 1; kite9-layout: right; ">
+			<cell style="--kite9-occupies: 1 1 0 1; --kite9-layout: right; ">
 				<container
-					style="kite9-layout: down; kite9-sizing: maximize;">
-					<group style="kite9-layout: right; ">
+					style="--kite9-layout: down; --kite9-sizing: maximize;">
+					<group style="--kite9-layout: right; ">
 						<risk id="feature-fit" href="/public/templates/risk-first/redesign/risks/feature_fit_risk_v2.svg">
 							<code id="code">F-F</code>
 							<title id="title">Feature Fit Risk</title>
@@ -79,13 +79,13 @@
 						<title id="title">Conceptual Integrity Risk</title>
 					</risk>
 					<label>
-						<text>Fit</text>
-						<symbols />
+						Fit
+						
 					</label>
 				</container>
 
 				<container
-					style="kite9-layout: down; kite9-sizing: maximize; ">
+					style="--kite9-layout: down; --kite9-sizing: maximize; ">
 					<risk id="market" href="/public/templates/risk-first/redesign/risks/feature_market_risk_v2.svg">
 					  <code id="code">F-Ma</code>
             <title id="title">Market Risk</title>
@@ -96,14 +96,13 @@
 					</risk>
 
 					<label>
-						<text>Audience</text>
-						<symbols />
+						Audience
 					</label>
 				</container>
 
 
 				<container
-					style="kite9-layout: down; kite9-sizing: maximize; ">
+					style="--kite9-layout: down; --kite9-sizing: maximize; ">
 					<risk id="regression" href="/public/templates/risk-first/redesign/risks/feature_regression_risk_v2.svg">
 						<code id="code">F-R</code>
 						<title id="title">Regression Risk</title>
@@ -114,15 +113,15 @@
 					</risk>
 
 					<label>
-						<text>Evolution</text>
-						<symbols />
+						Evolution
+						
 					</label>
 				</container>
 			</cell>
 
 
-			<cell style="kite9-occupies: 1 1 2 3; " class="shaded">
-				<group style="kite9-layout: right; ">
+			<cell style="--kite9-occupies: 1 1 2 3; " class="shaded">
+				<group style="--kite9-layout: right; ">
 					<container layout="down">
 						<risk id="internal-model" href="/public/templates/risk-first/redesign/risks/internal_model_risk_v2.svg">
 							<code id="code">Im</code>
@@ -135,12 +134,12 @@
 
 						</risk>
 						<label>
-							<text>Internal Model</text>
-							<symbols />
+							Internal Model
+							
 						</label>
 					</container>
 
-					<container layout="down" style="kite9-sizing: maximize; ">
+					<container layout="down" style="--kite9-sizing: maximize; ">
 						<risk id="message" href="/public/templates/risk-first/redesign/risks/message_risk_v2.svg">
 							<code id="code">M</code>
 							<title id="title">Message Risk</title>
@@ -152,23 +151,23 @@
 
 						</risk>
 						<label>
-							<text>Message</text>
-							<symbols />
+							Message
+							
 						</label>
 					</container>
 
-					<container layout="down" style="kite9-sizing: maximize; ">
+					<container layout="down" style="--kite9-sizing: maximize; ">
 						<risk id="protocol" href="/public/templates/risk-first/redesign/risks/protocol_risk_v2.svg">
 							<code id="code">Pr</code>
 							<title id="title">Protocol Risk</title>
 
 						</risk>
 						<label>
-							<text>Protocol</text>
-							<symbols />
+							Protocol
+							
 						</label>
 					</container>
-					<container layout="down" style="kite9-sizing: maximize; ">
+					<container layout="down" style="--kite9-sizing: maximize; ">
 
 						<risk id="channel" href="/public/templates/risk-first/redesign/risks/channel_risk_v2.svg">
 							<code id="code">Ch</code>
@@ -177,8 +176,8 @@
 						</risk>
 
 						<label>
-							<text>Channel</text>
-							<symbols />
+							Channel
+							
 						</label>
 
 					</container>
@@ -186,7 +185,7 @@
 
 			</cell>
 
-			<cell style="kite9-occupies: 1 1 4 4">
+			<cell style="--kite9-occupies: 1 1 4 4">
 				<risk id="trust" href="/public/templates/risk-first/redesign/risks/trust_belief_risk_v2.svg">
 					<code id="code">T</code>
 					<title id="title">Trust &amp; Belief Risk</title>
@@ -198,7 +197,7 @@
 				</risk>
 			</cell>
 
-			<cell style="kite9-occupies: 1 1 5 5; kite9-layout: right; "
+			<cell style="--kite9-occupies: 1 1 5 5; --kite9-layout: right; "
 				class="shaded">
 				<risk id="codebase" href="/public/templates/risk-first/redesign/risks/codebase_risk_v2.svg">
 					<code id="code">Cb</code>
@@ -213,10 +212,10 @@
 			</cell>
 
 
-			<cell style="kite9-occupies: 1 1 6 7; kite9-layout: right; ">
+			<cell style="--kite9-occupies: 1 1 6 7; --kite9-layout: right; ">
 				<container
-					style="kite9-layout: right; kite9-sizing: maximize;  ">
-					<group style="kite9-layout: down; ">
+					style="--kite9-layout: right; --kite9-sizing: maximize;  ">
+					<group style="--kite9-layout: down; ">
 						<risk id="scarcity" href="/public/templates/risk-first/redesign/risks/dependency_scarcity_risk_v2.svg">
 							<code id="code">D-Sc</code>
 							<title id="title">Scarcity Risk</title>
@@ -233,7 +232,7 @@
 
 						</risk>
 					</group>
-					<group style="kite9-layout: down; ">
+					<group style="--kite9-layout: down; ">
 						<risk id="opportunity" href="/public/templates/risk-first/redesign/risks/dependency_opportunity_risk_v2.svg">
 							<code id="code">D-Opp</code>
 							<title id="title">Opportunity Risk</title>
@@ -251,12 +250,12 @@
 						</risk>
 					</group>
 					<label>
-						<text>Scarcity</text>
-						<symbols />
+						Scarcity
+						
 					</label>
 				</container>
 
-				<group style="kite9-layout: down; ">
+				<group style="--kite9-layout: down; ">
 					<risk id="deadline" href="/public/templates/risk-first/redesign/risks/dependency_deadline_risk_v2.svg">
 						<code id="code">D-Dl</code>
 						<title id="title">Deadline Risk</title>
@@ -268,7 +267,7 @@
 
 					</risk>
 				</group>
-				<group style="kite9-layout: down; ">
+				<group style="--kite9-layout: down; ">
 					<risk id="software-dependency" href="/public/templates/risk-first/redesign/risks/dependency_software_risk_v2.svg">
 						<code id="code">D-Sw</code>
 						<title id="title">Software Dependency Risk</title>
@@ -284,5 +283,3 @@
 
 		</table>
 	</diagram>
-
-</svg:svg>

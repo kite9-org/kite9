@@ -32,7 +32,7 @@ Allows hover/select to work.  Without an id, you can’t hover/select.  Ids must
 
 _Implemented by **containers/child**_
 
-You can add a child element. Value of this attribute is the template for the new element.
+You can add a child element. Value of this attribute is the palette#id of the new element.
 
 ### k9-label
 
@@ -106,7 +106,7 @@ Define a token to define the type of the object.  Then use **k9-palette** to mar
 
 - **k9-contains**: Indicates the types of things that this object can contain.
 - **k9-palette**:  So far: **link**, **end**, **cell**, **connected**, **grid**. Define others.  Defines the types of thing this object is.
-- **k9-containers**: Defines the types of things this object can contain.
+- **k9-containers**: Defines the types of things this object can be contained in.
 
 When declaring palettes, you need to tell Kite9 which types each palette contains:
 

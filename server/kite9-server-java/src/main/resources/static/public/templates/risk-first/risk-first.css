@@ -27,7 +27,7 @@
 
 /* Labels */
 
-[k9-elem=label] > [k9-elem=front],
+[k9-elem=label] > [k9-texture=foreground],
 [k9-elem=description]  {
 	text-align: middle;
 	fill: black;
@@ -37,22 +37,22 @@
   font-style: italic;
 }
 
-[k9-elem=container] > [k9-elem=label] > [k9-elem=front] {
+[k9-elem=container] > [k9-elem=label] [k9-texture=foreground] {
 	font-weight: 600;
   font-size: 12pt;
   font-style: normal;
 }
 
-[k9-elem=label] [k9-elem=back] {
+[k9-elem=label] [k9-texture=foreground] {
 	fill: #FFFFFF;
 	fill-opacity: 0.01;
 }
 
-[k9-elem=container] > [k9-elem=back] {
+[k9-elem=container] > [k9-texture=background] {
 	stroke-width: 1pt;
 }
 
-[k9-elem=label].title > [k9-elem=front] {
+[k9-elem=label].title [k9-texture=foreground] {
 	font-size: 25pt;
 }
 
@@ -65,7 +65,7 @@
   --kite9-label-placement: bottom;
 }
 
-[k9-elem=description] > [k9-elem=front] {
+[k9-elem=description] [k9-texture=foreground] {
   fill: black;
 }
 

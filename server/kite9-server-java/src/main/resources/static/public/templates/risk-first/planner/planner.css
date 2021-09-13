@@ -1,13 +1,11 @@
 [k9-elem=planner] {
   --kite9-layout: grid;
-  --kite9-type: container;
   --kite9-padding: 10pt;
 }
 
 [k9-elem=planner-cell],
 [k9-elem=planner-header]  {
   --kite9-usage: regular;
-  --kite9-type: container;
   --kite9-vertical-align: center;
   --kite9-horizontal-align: center;
   --kite9-sizing: minimize;

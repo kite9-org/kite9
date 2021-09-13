@@ -12,11 +12,9 @@
 [k9-elem=agent-artifact],
 [k9-elem=image-artifact],
 [k9-elem=generic-artifact] {
-	--kite9-type: container;
 	--kite9-margin: 10pt;
 	--kite9-link-inset: 10pt;
 	--kite9-link-gutter: 10pt;
-	--kite9-type: container;
 	--kite9-layout: vertical;
 	--kite9-padding: 10pt;
 	--kite9-connection-align: 50%;
