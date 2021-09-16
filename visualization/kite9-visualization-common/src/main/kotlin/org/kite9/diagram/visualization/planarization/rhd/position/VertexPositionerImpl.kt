@@ -248,6 +248,7 @@ class VertexPositionerImpl(
 
     override fun setPerimeterVertexPositions(
         before: Connected?,
+        after: Connected?,
         c: DiagramElement,
         cvs: CornerVertices,
         out: MutableList<Vertex>
@@ -287,31 +288,23 @@ class VertexPositionerImpl(
         for (cv in cvs.getVerticesAtThisLevel()) {
             setCornerVertexRoutingAndMerge(c, cvs, cv, bx, by, out, fracMapX, fracMapY)
         }
-
-        addSideVertices(before, c, out)
     }
 
-    private fun addSideVertices(
-        before: Connected?,
-        c: DiagramElement,
-        out: MutableList<Vertex>,
-    ) {
-        val l = if (c.getParent() == null) null else (c.getParent() as Container?)!!.getLayout()
-        if (c is Connected) {
+    override fun addFacingVertices(from: Connected, to: Connected, out: MutableList<Vertex>) {
+        val l = if (from.getParent() == null) null else (from.getParent() as Container?)!!.getLayout()
 
-            // add extra vertices for connections to keep the layout
-            if (l != null) {
-                val d = when (l) {
-                    Layout.UP, Layout.DOWN, Layout.VERTICAL -> Direction.DOWN
-                    Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> Direction.RIGHT
-                    else -> return
-                }
-                if (before != null) {
-                    if (cmp(c, before) == 1) {
-                        addFacingVertices(before, d, c, out)
-                    } else {
-                        addFacingVertices(c, d, before, out)
-                    }
+        // add extra vertices for connections to keep the layout
+        if (l != null) {
+            val d = when (l) {
+                Layout.UP, Layout.DOWN, Layout.VERTICAL -> Direction.DOWN
+                Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> Direction.RIGHT
+                else -> return
+            }
+            if (from != null) {
+                if (cmp(to, from) == 1) {
+                    addFacingVertices(from, d, to, out)
+                } else {
+                    addFacingVertices(to, d, from, out)
                 }
             }
         }

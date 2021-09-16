@@ -23,8 +23,8 @@
   </uml-container> -->
 
   <actor id="a1">The Actor</actor>
-
   <use-case id="uc1">Hungry</use-case>
+
 
  <!--  <link id="l1">
     <from reference="a1@dep" id="l1-from"/>

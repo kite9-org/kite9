@@ -12,6 +12,7 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.model.position.Layout.Companion.needsLayoutEdge
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.PlanarizationBuilder
@@ -137,6 +138,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             instantiateContainerVertices(c)
             buildVertexList(null, c, null, out, sortedContainerContents)
             addStraightConnectionVertices(out, connections)
+            addLayoutVertices(out, c)
             LAST_PLANARIZATION_DEBUG = out.toList()
             sortContents(out, routableReader.getTopLevelBounds(true), routableReader.getTopLevelBounds(false))
             run = PlanarizationRun.DONE
@@ -151,6 +153,26 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
         connections
             .filterIsInstance<Connection>()
             .forEach { vp.setFacingVerticesForStraightEdges(it, out) }
+    }
+
+    private fun addLayoutVertices(out: MutableList<Vertex>, d: DiagramElement) {
+        if (d is Container) {
+            val connectedContents = getConnectedRectangularContainerContents(d.getContents())
+            var sortedContents = connectedContents
+                .filter { routableReader.getPlacedPosition(it) != null}
+                .sortedWith { a, b -> compareDiagramElements(a, b) }
+
+            val needsLayout = needsLayoutEdge(d.getLayout())
+            for (i in 0..sortedContents.size-1) {
+                val current = sortedContents[i]
+                addLayoutVertices(out, current)
+
+                if (needsLayout && (i > 0)) {
+                    val before = sortedContents[i-1]
+                    vp.addFacingVertices(before, current, out)
+                }
+            }
+        }
     }
 
     private fun newVertexPositioner() = VertexPositionerImpl(em, routableReader) { a, b -> compareDiagramElements(a, b) }
@@ -341,7 +363,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             val cvs: CornerVertices = em.getOuterCornerVertices(c)
             val bounds: RoutingInfo? = routableReader.getPlacedPosition(c)
             log.send("Placed position of container: $c is $bounds")
-            vp.setPerimeterVertexPositions(before, c, cvs, out)
+            vp.setPerimeterVertexPositions(before, after, c, cvs, out)
             if (c is Container) {
                 buildVertexListForContainerContents(out, c, sortedContainerContents)
             }
@@ -573,7 +595,6 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
     companion object {
 
 		var LAST_PLANARIZATION_DEBUG: List<Vertex>? = null
-        val CHANGE_CONTAINER_ORDER: Boolean = true
     }
 
     init {

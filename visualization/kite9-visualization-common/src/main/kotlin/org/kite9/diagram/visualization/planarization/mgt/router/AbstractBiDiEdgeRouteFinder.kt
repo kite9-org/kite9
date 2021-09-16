@@ -251,8 +251,8 @@ abstract class AbstractBiDiEdgeRouteFinder(
             )
             generatePaths(null, p.getBelowForwardLinks(from), pq, from, Going.FORWARDS, PlanarizationSide.ENDING_BELOW)
         } catch (e: RuntimeException) {
-            // TODO Auto-generated catch block
-            e.printStackTrace()
+            log.error("Problem with route-finder: ", e);
+            throw e;
         }
     }
 

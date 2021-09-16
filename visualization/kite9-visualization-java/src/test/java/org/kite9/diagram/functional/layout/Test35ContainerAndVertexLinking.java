@@ -252,7 +252,7 @@ public class Test35ContainerAndVertexLinking extends AbstractLayoutFunctionalTes
 	public void test_35_9_WithoutLinks() throws Exception {
 		Glyph g0 = new Glyph("g0", "", "g0", null, null);
 		Glyph g2 = new Glyph("g2", "", "g2", null, null);
-		Context con1 = new Context("inside", HelpMethods.listOf(g0, g2), true, new TextLine("inside"), null);
+		Context con1 = new Context("inside", HelpMethods.listOf(g0, g2), true, null, null);
 		new Link(g0, g2, null, null, null, null, Direction.DOWN);
 
 		Glyph g1 = new Glyph("g1", "", "g1", null, null);

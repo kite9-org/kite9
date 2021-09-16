@@ -10,6 +10,13 @@ enum class Layout {
 
     companion object {
 
+        fun needsLayoutEdge(d: Layout?) : Boolean {
+            return if (d == null) false else when (d) {
+                HORIZONTAL,  VERTICAL ,LEFT,RIGHT,UP, DOWN -> true
+                else -> false
+            }
+        }
+
 		fun reverse(d: Layout?): Layout? {
             return if (d == null) null else when (d) {
                 HORIZONTAL -> HORIZONTAL
