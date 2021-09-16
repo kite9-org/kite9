@@ -8,8 +8,7 @@
 	--kite9-label-placement: bottom-left;
 }
 
-[k9-elem=label=inner] {
-  --kite9-usage: label;
+[k9-elem=label-inner] {
   --kite9-sizing: minimize;
   --kite9-padding: 4pt;
   --kite9-margin: 4pt;	

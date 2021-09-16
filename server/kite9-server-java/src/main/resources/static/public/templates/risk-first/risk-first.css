@@ -32,7 +32,6 @@
 	text-align: middle;
 	fill: black;
 	font-weight: 100;
-	font-family: metropolis;
 	font-size: 12pt;
   font-style: italic;
 }
@@ -41,12 +40,17 @@
 	font-weight: 600;
   font-size: 12pt;
   font-style: normal;
+  font-family: metropolis;
 }
 
 [k9-elem=label] [k9-texture=foreground] {
-	fill: #FFFFFF;
-	fill-opacity: 0.01;
+	fill: #333333;
 }
+
+[k9-elem=label] [k9-texture=background] {
+  fill: #EEEEEE;
+}
+
 
 [k9-elem=container] > [k9-texture=background] {
 	stroke-width: 1pt;

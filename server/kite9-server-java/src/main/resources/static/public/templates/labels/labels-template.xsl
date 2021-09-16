@@ -10,16 +10,19 @@
   <xsl:import href="../formats/formats-template.xsl"/>  
   
   <xsl:template name="labels-basic">
+    <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-texture">none</xsl:with-param>
+      <xsl:with-param name="k9-highlight"></xsl:with-param>
+      
       <xsl:with-param name="id" />
       <xsl:with-param name="k9-ui">delete label</xsl:with-param>
       
       <xsl:with-param name="content">
         <xsl:call-template name="formats-text-shape-inline">
           <xsl:with-param name="k9-elem">label-inner</xsl:with-param>
-          <xsl:with-param name="k9-rounding">0</xsl:with-param>
-          <xsl:with-param name="k9-texture-background">none</xsl:with-param>
+          <xsl:with-param name="k9-rounding" select="$k9-rounding" />
+          <xsl:with-param name="k9-texture-background">background</xsl:with-param>
         </xsl:call-template>    
       </xsl:with-param>
     </xsl:call-template>

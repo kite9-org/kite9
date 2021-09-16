@@ -23,7 +23,7 @@
 		<cell>
 			<note id="6">Note</note>
 		</cell>
-	  	<cell>
+	  <cell>
 			<class k9-type="small" id="7">
 				<class-name id="7c">Class</class-name>
 			</class>
@@ -32,14 +32,10 @@
 			<class k9-type="large" id="8">
 				<stereotype id="8.1">Stereotype</stereotype>
 				<class-name id="8.2">Class</class-name>
-				<properties id="8.3">
-					<property id="8.4">property1</property>
-					<property id="8.5">property2</property>
-				</properties>
-				<methods id="8.6">
-					<method id="8.7">method1</method>
-					<method id="8.8">method2</method>
-				</methods>
+				<property id="8.4">property1</property>
+				<property id="8.5">property2</property>
+				<method id="8.7">method1</method>
+				<method id="8.8">method2</method>
 			</class>
 		</cell>
 		<cell>

@@ -25,8 +25,6 @@
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-highlight" select="$k9-highlight" />
         <xsl:with-param name="k9-texture" select="$k9-texture" />
-        <xsl:with-param name="class" select="$class" />
-        <xsl:with-param name="style" select="$style" />
         <xsl:with-param name="rounding" select="$k9-rounding" />
       </xsl:call-template>  
     </xsl:param>

@@ -132,9 +132,7 @@
           <risk class="schedule" id="schedule">Schedule Risk</risk>
           <risk class="red-queen" id="red-queen">Red Queen Risk</risk>
         </group>
-        <label>
-          Scarcity
-        </label>
+        <label>Scarcity </label>
       </container>
 
       <group style="--kite9-layout: down; ">
