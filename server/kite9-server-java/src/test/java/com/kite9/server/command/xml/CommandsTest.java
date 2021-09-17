@@ -1,5 +1,7 @@
 package com.kite9.server.command.xml;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.command.Command;
@@ -14,11 +16,13 @@ import com.kite9.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.XMLCompare;
 import com.kite9.server.controllers.CommandController;
+import com.kite9.server.update.AbstractUpdateHandler;
 import com.kite9.server.update.Update;
 import com.kite9.server.uri.URIWrapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kite9.diagram.testing.TestingHelp;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -53,6 +57,8 @@ public class CommandsTest {
 	@BeforeEach
 	public void setupUrl() {
 		sourceURI = "http://localhost:"+port+SETUP_XML;
+		Logger l = (Logger) LoggerFactory.getLogger(AbstractUpdateHandler.class);
+		l.setLevel(Level.ALL);
 	}
 	
 	@Test

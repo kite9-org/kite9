@@ -59,7 +59,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				Collections.reverse(commands);
 				for (Command command : commands) {
 					Command.Mismatch status = command.undoCommand(dom, ctx);
-					LOG.debug("Completed {} with status {}", command, status);
+					LOG.info("Completed {} with status {}", command, status);
 					if (status != null) {
 						errors.add(status);
 					}
@@ -67,7 +67,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			} else {
 				for (Command command : commands) {
 					Command.Mismatch status = command.applyCommand(dom, ctx);
-					LOG.debug("Completed {} with status {}", command, status);
+					LOG.info("Completed {} with status {}", command, status);
 					if (status != null) {
 						errors.add(status);
 					}
@@ -87,9 +87,9 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			api.addMeta(dom);
 			ADLOutput output = dom.process(update.getUri(), f);
 		
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));
-			}
+			//if (LOG.isDebugEnabled()) {
+				LOG.info("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));
+			//}
 
 			// this must come after processing, to make sure it renders correctly.
 			if (api.getType(authentication) != ModifiableAPI.Type.VIEWONLY) {
