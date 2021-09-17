@@ -20,12 +20,7 @@
         <repository>
           <id>github</id>
           <name>GitHub Kite9-org Apache Maven Packages</name>
-          <url>https://maven.pkg.github.com/kite9-org/xmlgraphics-batik</url>
-        </repository>
-        <repository>
-          <id>github</id>
-          <name>GitHub Kite9-org Apache Maven Packages</name>
-          <url>https://maven.pkg.github.com/kite9-org/kite9-visualization</url>
+          <url>https://maven.pkg.github.com/kite9-org/kite9</url>
         </repository>
       </repositories>
       <properties> 
