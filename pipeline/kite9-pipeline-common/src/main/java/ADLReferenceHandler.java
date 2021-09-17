@@ -1,10 +1,8 @@
-package com.kite9.server.update;
-
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.command.CommandContext;
 import org.kite9.diagram.model.style.DiagramElementType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,7 +17,7 @@ import java.util.*;
  */
 public class ADLReferenceHandler {
 	
-	private static final Logger LOG = LoggerFactory.getLogger(ADLReferenceHandler.class);
+	//private static final Logger LOG = LoggerFactory.getLogger(ADLReferenceHandler.class);
 	
 	private final Set<String> existingIDs = new HashSet<String>();
 	private final Map<String, List<Element>> duplicates = new HashMap<>();
@@ -66,7 +64,7 @@ public class ADLReferenceHandler {
 		for (String oldId : duplicates.keySet()) {
 			for (Element e : duplicates.get(oldId)) {
 				String newId = ctx.uniqueId(doc);
-				LOG.info("Renaming duplicate of {} to {} in {}", oldId, newId, url);	
+				//LOG.info("Renaming duplicate of {} to {} in {}", oldId, newId, url);
 				e.setAttribute("id", newId);
 			}
 		}
@@ -80,7 +78,7 @@ public class ADLReferenceHandler {
 					List<Element> dups = duplicates.getOrDefault(id, new ArrayList<>());
 					dups.add((Element) n);
 					duplicates.put(id, dups);
-					LOG.info("Discovered duplicate for {} in {}", id, url);
+					//LOG.info("Discovered duplicate for {} in {}", id, url);
 				} else {
 					existingIDs.add(id);
 				}

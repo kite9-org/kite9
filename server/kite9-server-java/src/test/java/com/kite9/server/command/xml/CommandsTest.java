@@ -278,10 +278,12 @@ public class CommandsTest {
 		headers.set(HttpHeaders.ACCEPT, Kite9MediaTypes.ADL_SVG_VALUE);
 		ADLOutput out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
 		String modified = performSaveAndCheck(out, name, "/commands/after_"+name+".xml");
+		System.out.println("After command "+name+" do(): \n"+modified+"\n adl: \n"+new String(out.getAsBytes()));
 		String modifiedBase64 = Base64.getEncoder().encodeToString(modified.getBytes());
 		ADLOutput out2 = commandController.applyCommandOnStatic(buildUndoRequestEntity(c, modifiedBase64, new URI(sourceURI), headers), sourceURI);
 		String resource = sourceURI.substring(sourceURI.indexOf("/public"));
-		performSaveAndCheck(out2, name+ "-2", "/static"+resource);
+		String back = performSaveAndCheck(out2, name+ "-2", "/static"+resource);
+		System.out.println("After command "+name+" undo(): \n"+back+"\n adl: \n"+new String(out2.getAsBytes()));
 	}
 	
 	
@@ -301,7 +303,7 @@ public class CommandsTest {
 
 	public String performSaveAndCheck(ADLOutput out, String name, String resource) throws Exception {
 		
-		System.out.println(out.getMetaData());
+		System.out.println("Metadata: \n" + out.getMetaData());
 		
 		byte[] result = out.getAsBytes();
 		TestingHelp.writeOutput(this.getClass(), null, name+".xml", result);
