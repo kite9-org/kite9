@@ -98,9 +98,9 @@ public class BatikCommandContext implements CommandContext {
 
     public Element decodeElement(String base64xml, ADLDom adl) {
         String xml = new String(Base64.getDecoder().decode(base64xml), Charsets.UTF_8);
-        Document nDoc = (Document) adl.parseDocument(xml, null);
+        Document nDoc = adl.parseDocument(xml, null);
         Element n = nDoc.getDocumentElement();
-//        System.out.println("Converting: "+xml+" with id "+n.getAttribute("id")+" into " + new XMLHelper().toXML(n));
+        System.out.println("Converting: "+xml+" with id "+n.getAttribute("id")); //+" into " + new XMLHelper().toXML(n));
         return n;
     }
 
