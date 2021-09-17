@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg:svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" zoomAndPan="magnify" contentStyleType="text/css" xmlns:pp="http://www.kite9.org/schema/post-processor" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+><svg:g id="one" style="--kite9-type: diagram; --kite9-padding: 50px;" xmlns="http://www.kite9.org/schema/adl" xml:id="one" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=324.0, h=324.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@2a46b429; "
+  ><svg:g style="fill: white; stroke: grey; stroke-width: 3px; "
+    ><svg:g id="container1" style="--kite9-type: container; --kite9-sizing: minimize; --kite9-padding: 10px; --kite9-margin: 10px;  " transform="translate(50.0,50.0)" xml:id="container1" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=50.0, h=50.0); rect-size: BasicDimension2D(w=224.0, h=224.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@6c34afa1; "
+      ><svg:g style="fill: red; "
+        ><svg:g id="adap" style="--kite9-type: svg; --kite9-usage: decal; " xml:id="adap" k9-info="painter: org.kite9.diagram.batik.painter.BatikLeafPainter@430c061e; "
+          ><svg:path pp:d="'M0 0 H $width V $height z'" d="M0 0 H 224.0 V 224.0 z"
+          /></svg:g
+          ><svg:g id="someelement" style="--kite9-type: svg; " transform="translate(-87.6,-88.5)" xml:id="someelement" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=60.0, h=60.0); rect-size: BasicDimension2D(w=204.0, h=204.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@44976111; "
+          ><svg:path fill="red" stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" stroke="blue"
+          /></svg:g
+        ></svg:g
+      ></svg:g
+    ></svg:g
+  ></svg:g
+></svg:svg
+>

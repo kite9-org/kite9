@@ -1,0 +1,23 @@
+[k9-elem=terminal],
+[k9-elem=terminator],
+[k9-elem=process],
+[k9-elem=delay],
+[k9-elem=direct],
+[k9-elem=display],
+[k9-elem=stored],
+[k9-elem=predefined],
+[k9-elem=preparation],
+[k9-elem=manual],
+[k9-elem=decision],
+[k9-elem=loop-limit],
+[k9-elem=internal],
+[k9-elem=database],
+[k9-elem=reference],
+[k9-elem=sequential],
+[k9-elem=input],
+[k9-elem=start],
+[k9-elem=document],
+[k9-elem=off-page] {
+  --kite9-type: container;
+  --kite9-usage: connected;
+}

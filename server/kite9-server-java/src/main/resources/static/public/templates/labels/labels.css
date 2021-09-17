@@ -1,0 +1,27 @@
+
+/* Labels */
+
+[k9-elem=label] {
+	--kite9-usage: label;
+	--kite9-sizing: minimize;
+	--kite9-sizing: minimize;
+	--kite9-label-placement: bottom-left;
+}
+
+[k9-elem=label-inner] {
+  --kite9-sizing: minimize;
+  --kite9-padding: 4pt;
+  --kite9-margin: 4pt;	
+}
+
+[k9-elem=label][end=to] {
+	--kite9-link-end: to;
+}
+
+[k9-elem=label][end=from] {
+	--kite9-link-end: from;
+}
+
+[k9-elem=label] [k9-texture=background] {
+	 stroke: none;
+}

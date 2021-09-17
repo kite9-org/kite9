@@ -1,0 +1,19 @@
+[k9-elem=start],
+[k9-elem=end],
+[k9-elem=intermediate],
+[k9-elem=gateway] {
+  --kite9-template: url('/public/templates/common/formats/formats-template.xml#portrait-text');
+  --kite9-type: container;
+  --kite9-layout: down;
+  --kite9-margin: 10pt;
+}
+
+[k9-elem=activity] {
+  --kite9-template: url('/public/templates/common/formats/formats-template.xml#inline-text');
+  --kite9-type: container;
+  --kite9-margin: 10pt;
+}
+
+[k9-elem=end] {
+	stroke-width: 3pt;
+}

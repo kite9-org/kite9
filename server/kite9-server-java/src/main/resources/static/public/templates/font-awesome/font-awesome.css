@@ -1,0 +1,12 @@
+@import url('/public/fonts/fontawesome/fontawesome.css');
+@import url('/public/templates/adl/adl.css');
+
+/**
+ * Displays a font-awesome symbol on the screen
+ */
+[k9-elem=font-awesome] {
+	--kite9-type: text;
+  font-size: 12pt;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+}

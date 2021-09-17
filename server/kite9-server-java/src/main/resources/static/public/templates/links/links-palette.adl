@@ -1,0 +1,260 @@
+<diagram 
+	  xmlns="http://www.kite9.org/schema/adl" id="dia"
+	  xmlns:svg="http://www.w3.org/2000/svg"
+	  style="--kite9-layout: right; ">
+
+		<group style="--kite9-layout: down; --kite9-margin-right: 30pt; ">
+			<group style="--kite9-layout: right;">
+				<hub id="from1"></hub>
+				<hub id="to1"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from2"></hub>
+				<hub id="to2"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from3"></hub>
+				<hub id="to3"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from4"></hub>
+				<hub id="to4"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from5"></hub>
+				<hub id="to5"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from6"></hub>
+				<hub id="to6"></hub>
+			</group>
+
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from7"></hub>
+				<hub id="to7"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from8"></hub>
+				<hub id="to8"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from9"></hub>
+				<hub id="to9"></hub>
+			</group>
+
+
+		</group>
+		<group style="--kite9-layout: down;">
+
+			<group style="--kite9-layout: right; --kite9-min-with: 300pt; ">
+				<hub id="from11"></hub>
+				<hub id="to11"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from12"></hub>
+				<hub id="to12"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from13"></hub>
+				<hub id="to13"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from14"></hub>
+				<hub id="to14"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from15"></hub>
+				<hub id="to15"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from16"></hub>
+				<hub id="to16"></hub>
+			</group>
+
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from17"></hub>
+				<hub id="to17"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from18"></hub>
+				<hub id="to18"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from19"></hub>
+				<hub id="to19"></hub>
+			</group>
+
+	
+		</group>
+
+		<group style="--kite9-layout: down; --kite9-margin-right: 30pt; ">
+			<group style="--kite9-layout: right; --kite9-min-with: 300pt; ">
+				<hub id="from21"></hub>
+				<hub id="to21"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from22"></hub>
+				<hub id="to22"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from23"></hub>
+				<hub id="to23"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from24"></hub>
+				<hub id="to24"></hub>
+			</group>
+
+			<group style="--kite9-layout: right; ">
+				<hub id="from25"></hub>
+				<hub id="to25"></hub>
+			</group>
+		</group>
+
+		<svg:g style="--kite9-link-minimum-length: 100pt !important; ">
+
+			<link id="l1">
+				<from id="l1-f" reference="from1" />
+				<to id="l1-t" reference="to1" />
+			</link>
+
+			<link id="l2">
+				<from id="l2-f" reference="from2" />
+				<to id="l2-t" reference="to2" shape="arrow" />
+			</link>
+
+			<link id="l3">
+				<from id="l3-f" reference="from3" />
+				<to id="l3-t" reference="to3" shape="circle" />
+			</link>
+
+			<link id="l4">
+				<from id="l4-f" reference="from4" />
+				<to id="l4-t" reference="to4" shape="diamond" />
+			</link>
+
+			<link id="l5">
+				<from id="l5-f" reference="from5" />
+				<to id="l5-t" reference="to5" shape="open-diamond" />
+			</link>
+
+			<link id="l6">
+				<from id="l6-f" reference="from6" />
+				<to id="l6-t" reference="to6" shape="barbed-arrow" />
+			</link>
+
+			<link id="l7">
+				<from id="l7-f" reference="from7" />
+				<to id="l7-t" reference="to7" shape="open-arrow" />
+			</link>
+
+			<link id="l8">
+				<from id="l8-f" reference="from8" />
+				<to id="l8-t" reference="to8" shape="crow" />
+			</link>
+
+			<link id="l9">
+				<from id="l9-f" reference="from9" />
+				<to id="l9-t" reference="to9" shape="square" />
+			</link>
+
+		</svg:g>
+
+		<svg:g style="--kite9-link-minimum-length: 100pt !important; ">
+
+			<link id="l11">
+				<from id="l11-f" reference="from11" shape="strike" />
+				<to id="l11-t" reference="to11" shape="arrow" />
+			</link>
+
+			<link id="l12">
+				<from id="l12-f" reference="from12" shape="arrow" />
+				<to id="l12-t" reference="to12" shape="arrow" />
+			</link>
+
+			<link id="l13">
+				<from id="l13-f" reference="from13" shape="circle" />
+				<to id="l13-t" reference="to13" shape="circle" />
+			</link>
+
+			<link id="l14">
+				<from id="l14-f" reference="from14" shape="diamond" />
+				<to id="l14-t" reference="to14" shape="diamond" />
+			</link>
+
+			<link id="l15">
+				<from id="l15-f" reference="from15" shape="open-diamond" />
+				<to id="l15-t" reference="to15" shape="open-diamond" />
+			</link>
+
+			<link id="l16">
+				<from id="l16-f" reference="from16" shape="barbed-arrow" />
+				<to id="l16-t" reference="to16" shape="barbed-arrow" />
+			</link>
+
+			<link id="l17">
+				<from id="l17-f" reference="from17" shape="open-arrow" />
+				<to id="l17-t" reference="to17" shape="open-arrow" />
+			</link>
+
+			<link id="l18">
+				<from id="l18-f" reference="from18" shape="crow" />
+				<to id="l18-t" reference="to18" shape="crow" />
+			</link>
+
+
+      <link id="l19">
+        <from id="l19-f" reference="from19" shape="square"/>
+        <to id="l19-t" reference="to19" shape="square" />
+      </link>
+
+		</svg:g>
+		<svg:g style="--kite9-link-minimum-length: 100pt !important; ">
+
+
+			<link id="l19" class="dotted">
+				<from id="l19-f" reference="from21" />
+				<to id="l19-t" reference="to21" />
+			</link>
+
+			<align id="align">
+				<from id="align-f" reference="from22" />
+				<to id="align-t" reference="to22" />
+			</align>
+
+      <link id="thick" class="thick">
+        <from id="thick-f" reference="from23" />
+        <to id="thick-t" reference="to23" />
+      </link>
+			
+			<link id="gap" class="gap">
+        <from id="align-f" reference="from24" />
+        <to id="align-t" reference="to24" />
+      </link>
+      
+      <link id="grey" class="grey">
+        <from id="grey-f" reference="from25" />
+        <to id="grey-t" reference="to25" />
+      </link>
+
+    </svg:g>
+  </diagram>

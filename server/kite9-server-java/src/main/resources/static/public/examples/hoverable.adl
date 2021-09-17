@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css"> 
+       @import url("/public/templates/common/common.css");
+       @import url("/public/templates/links/common-links.css");
+       @import url("/public/templates/highlight/highlight.css");
+    </svg:style>
+    
+    <svg:script type="module">
+      import {contextMenu} from '/public/templates/common/common.js';
+      
+      import { once } from '/public/bundles/ensure.js';
+      
+      once(function() { 
+      	contextMenu.add(function(event, cm) {
+          alert('Selected and clicked');
+       	});
+      });
+       
+    
+    </svg:script>
+    
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" style="kite9-layout: right; " id="thediagram">
+
+     <container id="b1" class="box" />
+     
+     <container id="bigbox" layout="horizontal">
+       <container id="b2" class="box" />
+       
+       <container id="b3" class="box" />
+     </container>
+     
+     <link id="link2">
+      <from id="link2-from" reference="b1" class="arrow"></from>
+      <to id="link2-to" class="arrow" reference="b3"></to>
+     </link>
+     
+  </diagram>
+</svg:svg>

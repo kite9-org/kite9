@@ -1,0 +1,48 @@
+[k9-elem=pool] {
+  --kite9-template: url(template.xml#pool);
+  --kite9-type: container;
+  --kite9-padding: 0pt;
+  --kite9-margin: 15pt;
+  --kite9-sizing: maximize;
+  --kite9-layout: grid;
+  --kite9-grid-size: 1 10;
+  --kite9-traversal-top: leaving;
+  --kite9-traversal-left: none;
+  --kite9-traversal-bottom: leaving;
+  --kite9-traversal-right: none;
+}
+
+[k9-elem=pool] > [k9-elem],
+[k9-elem=lane] > [k9-elem] {
+	--kite9-horizontal-align: left;
+}
+
+[k9-elem=pool] > [k9-elem=label],
+[k9-elem=lane] > [k9-elem=label] {
+  --kite9-usage: label;
+  --kite9-type: text;
+  --kite9-label-placement: left;
+  --kite9-template: url(template.xml#vertical-textarea);
+  --kite9-type: text;
+  --kite9-vertical-align: center;
+  --kite9-connection-align: 50%;
+  --kite9-horizontal-align: center;
+  --kite9-padding: 15pt;
+}
+
+[k9-elem=lane] {
+  --kite9-template: url(template.xml#lane);
+  --kite9-type: container;
+  --kite9-padding: 0pt;
+  --kite9-margin: 0pt;
+  --kite9-sizing: maximize;
+  --kite9-layout: right;
+  --kite9-traversal-top: always;
+  --kite9-traversal-left: none;
+  --kite9-traversal-bottom: always;
+  --kite9-traversal-right: none;
+}
+
+[k9-elem=pool] > [k9-elem=label] {
+	font-weight: 700;
+}

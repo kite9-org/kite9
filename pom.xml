@@ -3,18 +3,21 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.kite9.visualization</groupId>
-	<artifactId>k9parent</artifactId>
-	<version>0.6-SNAPSHOT</version>
+	<groupId>org.kite9</groupId>
+	<artifactId>kite9-parent</artifactId>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Kite9 Diagram Visualization</name>
-	<url>http://www.kite9.com</url>
+	<name>Kite9</name>
+	<description>Automatic Software Diagrams</description>
+	<url>https://www.kite9.org</url>
 
 	<modules>
-		<module>k9layout</module>
-		<module>k9browser</module>
-		<module>k9batik</module>
+		<module>visualization/kite9-visualization-common</module>
+		<module>visualization/kite9-visualization-js</module>
+		<module>visualization/kite9-visualization-java</module>
+		<module>pipeline/kite9-pipeline-common</module>
+		<module>server/kite9-server-java</module>
 	</modules>
 
 	<properties>
@@ -22,6 +25,8 @@
 		<java.version>1.8</java.version>
 		<kotlin.version>1.4.30</kotlin.version>
 		<kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+		<batik.version>1.14</batik.version>
+		<xmlunit.version>2.1.0</xmlunit.version>
 	</properties>
 
 	<build>
@@ -62,5 +67,21 @@
 			<url>https://maven.pkg.github.com/kite9-org/kite9-visualization</url>
 		</repository>
 	</distributionManagement>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>2.4.2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+
+
+	</dependencyManagement>
+
 
 </project>

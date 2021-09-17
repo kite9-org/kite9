@@ -1,0 +1,1553 @@
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="text/ecmascript" width="212.0px" zoomAndPan="magnify" contentStyleType="text/css" height="265.0px" preserveAspectRatio="xMidYMid" version="1.0"><metadata xmlns:md="http://www.kite9.org/schema/adl-metadata"><md:self>http://localhost:39000/api/renderer</md:self></metadata>
+  <defs>
+    <style xml:space="preserve">@defs url(http://localhost:39000/public/templates/common/diagram/diagram-template.xml);
+diagram, *[k9-elem="diagram"] {
+kite9-type: DIAGRAM;
+kite9-padding-top: 15pt;
+kite9-padding-right: 15pt;
+kite9-padding-bottom: 15pt;
+kite9-padding-left: 15pt;
+kite9-traversal-bottom: NONE;
+kite9-traversal-left: NONE;
+kite9-traversal-right: NONE;
+kite9-traversal-top: NONE;
+kite9-template: url(diagram-template.xml#diagram);
+}
+
+*[k9-elem="indicator"] {
+kite9-usage: DECAL;
+kite9-type: SVG;
+}
+
+*[k9-elem="back"] {
+kite9-usage: DECAL;
+kite9-type: SVG;
+kite9-template: url(back-template.xml#round-rect),"5pt","5pt","";
+fill: white;
+fill-opacity: 1;
+}
+
+*[k9-shape="rect"] &gt; *[k9-elem="back"] {
+kite9-template: url(back-template.xml#rectangle),"";
+}
+
+*[k9-shape="rect10pt"] &gt; *[k9-elem="back"] {
+kite9-template: url(back-template.xml#round-rect),"10pt","10pt","";
+}
+
+*[k9-shape="rect15pt"] &gt; *[k9-elem="back"] {
+kite9-template: url(back-template.xml#round-rect),"15pt","15pt","";
+}
+
+*[k9-shape="ellipse"] &gt; *[k9-elem="back"] {
+kite9-template: url(back-template.xml#ellipse),"";
+}
+
+*[k9-texture="none"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 0.01;
+}
+
+*[k9-texture="background"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 1;
+}
+
+*[k9-texture="solid"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 1;
+}
+
+*[k9-texture="outline"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 0.01;
+stroke: black;
+}
+
+*[k9-elem="textarea"], *[k9-format="textarea"] {
+kite9-type: TEXT;
+kite9-vertical-align: CENTER;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-horizontal-align: CENTER;
+kite9-template: url(formats-template.xml#textarea);
+}
+
+*[k9-elem="image-editable"], *[k9-format="image-editable"] {
+kite9-type: CONTAINER;
+kite9-horizontal-align: CENTER;
+kite9-vertical-align: CENTER;
+kite9-template: url(formats-template.xml#image-editable);
+}
+
+*[k9-format="image-editable"] &gt; *[k9-elem="front"] {
+fill: white;
+fill-opacity: 0.01;
+}
+
+*[k9-elem="inline-text"], *[k9-format="inline-text"] {
+kite9-type: CONTAINER;
+kite9-template: url(formats-template.xml#inline-text);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-margin-top: 15pt;
+kite9-margin-right: 15pt;
+kite9-margin-bottom: 15pt;
+kite9-margin-left: 15pt;
+kite9-padding-top: 11pt;
+kite9-padding-right: 11pt;
+kite9-padding-bottom: 11pt;
+kite9-padding-left: 11pt;
+}
+
+*[k9-format="inline-text"] &gt; *[k9-elem="depiction"] {
+kite9-type: CONTAINER;
+kite9-min-width: 30pt;
+kite9-min-height: 30pt;
+kite9-margin-top: 5pt;
+kite9-margin-right: 5pt;
+kite9-margin-bottom: 5pt;
+kite9-margin-left: 5pt;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-format="inline-text"] &gt; *[k9-elem="caption"] {
+kite9-type: CONTAINER;
+kite9-padding-top: 5pt;
+kite9-padding-right: 5pt;
+kite9-padding-bottom: 5pt;
+kite9-padding-left: 5pt;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-format="inline-container"] {
+kite9-type: CONTAINER;
+kite9-template: url(formats-template.xml#inline-container);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-margin-top: 15pt;
+kite9-margin-right: 15pt;
+kite9-margin-bottom: 15pt;
+kite9-margin-left: 15pt;
+kite9-padding-top: 11pt;
+kite9-padding-right: 11pt;
+kite9-padding-bottom: 11pt;
+kite9-padding-left: 11pt;
+}
+
+*[k9-elem="captioned-text"], *[k9-format="captioned-text"] {
+kite9-type: CONTAINER;
+kite9-template: url(formats-template.xml#captioned-text);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-margin-top: 16pt;
+kite9-margin-right: 16pt;
+kite9-margin-bottom: 16pt;
+kite9-margin-left: 16pt;
+}
+
+*[k9-format="captioned-text"] &gt; *[k9-elem="depiction"] {
+kite9-type: CONTAINER;
+kite9-min-width: 30pt;
+kite9-min-height: 30pt;
+kite9-margin-top: 5pt;
+kite9-margin-right: 5pt;
+kite9-margin-bottom: 5pt;
+kite9-margin-left: 5pt;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-format="captioned-text"] &gt; *[k9-elem="caption"] {
+kite9-type: CONTAINER;
+kite9-padding-top: 5pt;
+kite9-padding-right: 5pt;
+kite9-padding-bottom: 5pt;
+kite9-padding-left: 5pt;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-format="captioned-text"] &gt; *[k9-elem="shape-align"] {
+kite9-type: LINK;
+}
+
+*[k9-format="captioned-text"] &gt; *[k9-elem="shape-align"] &gt; *[k9-elem="from"], *[k9-format="captioned-text"] &gt; *[k9-elem="shape-align"] &gt; *[k9-elem="to"] {
+kite9-template: none;
+kite9-type: NONE;
+}
+
+*[k9-elem="portrait-text"], *[k9-format="portrait-text"] {
+kite9-type: CONTAINER;
+kite9-template: url(formats-template.xml#portrait-text);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-margin-top: 16pt;
+kite9-margin-right: 16pt;
+kite9-margin-bottom: 16pt;
+kite9-margin-left: 16pt;
+kite9-layout: DOWN;
+}
+
+*[k9-format="portrait-text"] &gt; *[k9-elem="depiction"] {
+kite9-type: CONTAINER;
+kite9-min-width: 30pt;
+kite9-min-height: 30pt;
+kite9-margin-top: 5pt;
+kite9-margin-right: 5pt;
+kite9-margin-bottom: 5pt;
+kite9-margin-left: 5pt;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-format="portrait-text"] &gt; *[k9-elem="caption"] {
+kite9-type: CONTAINER;
+kite9-padding-top: 5pt;
+kite9-padding-right: 5pt;
+kite9-padding-bottom: 5pt;
+kite9-padding-left: 5pt;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-texture="none"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 0.01;
+}
+
+*[k9-texture="background"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 1;
+}
+
+*[k9-texture="solid"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 1;
+}
+
+*[k9-texture="outline"] &gt; *[k9-elem="back"] {
+fill: white;
+fill-opacity: 0.01;
+stroke: black;
+}
+
+*[k9-texture="foreground"] &gt; *[k9-elem="back"] {
+fill: black;
+fill-opacity: 1;
+}
+
+@defs url(http://localhost:39000/public/templates/containers/containers-template.xml);
+*[k9-elem="group"] {
+kite9-type: CONTAINER;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-traversal-bottom: ALWAYS;
+kite9-traversal-left: ALWAYS;
+kite9-traversal-right: ALWAYS;
+kite9-traversal-top: ALWAYS;
+kite9-template: url(containers-template.xml#group);
+kite9-min-width: 40pt;
+kite9-min-height: 40pt;
+}
+
+*[k9-elem="container"] {
+kite9-type: CONTAINER;
+kite9-padding-top: 15pt;
+kite9-padding-right: 15pt;
+kite9-padding-bottom: 15pt;
+kite9-padding-left: 15pt;
+kite9-margin-top: 15pt;
+kite9-margin-right: 15pt;
+kite9-margin-bottom: 15pt;
+kite9-margin-left: 15pt;
+kite9-template: url(containers-template.xml#container);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+}
+
+*[k9-elem="container"] &gt; *[k9-elem="back"] {
+stroke: black;
+stroke-width: 2pt;
+}
+
+*[k9-elem="container"] &gt; *[k9-elem="indicator"], *[k9-elem="group"] &gt; *[k9-elem="indicator"], *[k9-elem="diagram"] &gt; *[k9-elem="indicator"] {
+fill: none;
+stroke: none;
+}
+
+*[k9-elem="container"].solid &gt; *[k9-elem="back"] * {
+stroke: black;
+stroke-width: 1pt;
+stroke-dasharray: none;
+}
+
+*[k9-elem="container"].dotted &gt; *[k9-elem="back"] * {
+stroke: black;
+stroke-width: 1pt;
+stroke-dasharray: 4 4;
+}
+
+*[layout="right"] {
+kite9-layout: RIGHT;
+}
+
+*[layout="right"] &gt; indicator {
+kite9-template: url(containers-template.xml#indicator-right);
+}
+
+*[layout="down"] {
+kite9-layout: DOWN;
+}
+
+*[layout="down"] &gt; indicator {
+kite9-template: url(containers-template.xml#indicator-down);
+}
+
+*[layout="up"] {
+kite9-layout: UP;
+}
+
+*[layout="up"] &gt; indicator {
+kite9-template: url(containers-template.xml#indicator-up);
+}
+
+*[layout="left"] {
+kite9-layout: LEFT;
+}
+
+*[layout="left"] &gt; indicator {
+kite9-template: url(containers-template.xml#indicator-left);
+}
+
+*[layout="horizontal"] {
+kite9-layout: HORIZONTAL;
+}
+
+*[layout="horizontal"] &gt; indicator {
+kite9-template: url(containers-template.xml#indicator-horizontal);
+}
+
+*[layout="vertical"] {
+kite9-layout: VERTICAL;
+}
+
+*[layout="vertical"] &gt; indicator {
+kite9-template: url(containers-template.xml#indicator-vertical);
+}
+
+@params { align-template-uri: http://localhost:39000/public/templates/links/common-links.adl#align; }
+@params { link-template-uri: http://localhost:39000/public/templates/links/common-links.adl#l1; }
+@defs url(http://localhost:39000/public/templates/links/common-links-template.xml);
+link, align {
+kite9-type: LINK;
+}
+
+from, to {
+kite9-type: LINK_END;
+}
+
+*[k9-elem="link-grab"], *[k9-elem="align-grab"], *[k9-elem="grab"], *[k9-elem="align-body"], *[k9-elem="link-body"] {
+kite9-usage: DECAL;
+kite9-type: SVG;
+fill: none;
+}
+
+*[k9-elem="align"] {
+kite9-type: LINK;
+kite9-template: url(common-links-template.xml#align);
+}
+
+*[k9-elem="align"] &gt; *[k9-elem="from"], *[k9-elem="align"] &gt; *[k9-elem="to"] {
+kite9-template: none;
+kite9-type: NONE;
+}
+
+*[k9-elem="from"], *[k9-elem="to"] {
+fill: rgb(255, 255, 255);
+fill-opacity: 0.01;
+}
+
+*[k9-elem="link"] {
+kite9-type: LINK;
+kite9-template: url(common-links-template.xml#basic-link);
+kite9-margin-top: 20pt;
+kite9-margin-right: 20pt;
+kite9-margin-bottom: 20pt;
+kite9-margin-left: 20pt;
+kite9-link-corner-radius: 6pt;
+}
+
+*[k9-elem="link-body"] {
+stroke: black;
+stroke-width: 2pt;
+fill: none;
+}
+
+*[k9-elem="link"].dotted *[k9-elem="link-body"] {
+stroke-dasharray: 8;
+}
+
+*[k9-elem="link"].thick *[k9-elem="link-body"] {
+stroke-width: 4pt;
+}
+
+*[k9-elem="link"].grey *[k9-elem="link-body"] {
+stroke: rgb(204, 204, 204);
+}
+
+*[k9-elem="from"] {
+kite9-link-end: FROM;
+}
+
+*[k9-elem="to"] {
+kite9-link-end: TO;
+}
+
+*[k9-elem="from"].gap, *[k9-elem="to"].gap {
+kite9-marker-reserve: 20pt;
+}
+
+*[k9-elem="from"][shape="open-diamond"], *[k9-elem="to"][shape="open-diamond"] {
+kite9-marker-reserve: 8pt;
+}
+
+*[k9-elem="from"][shape="open-arrow"], *[k9-elem="to"][shape="open-arrow"] {
+kite9-marker-reserve: 6pt;
+}
+
+*[k9-elem="from"].null, *[k9-elem="to"].null {
+kite9-type: LINK_END;
+kite9-template: url(common-links-template.xml#null-terminator);
+kite9-padding-top: 8pt;
+kite9-padding-right: 8pt;
+kite9-padding-bottom: 8pt;
+kite9-padding-left: 8pt;
+}
+
+*[k9-elem="from"], *[k9-elem="to"] {
+kite9-type: LINK_END;
+kite9-template: url(common-links-template.xml#round-terminator);
+kite9-padding-top: 8pt;
+kite9-padding-right: 8pt;
+kite9-padding-bottom: 8pt;
+kite9-padding-left: 8pt;
+}
+
+*[drawDirection="DOWN"] *[k9-elem="from"], *[drawDirection="UP"] *[k9-elem="to"] {
+kite9-template: url(common-links-template.xml#up-terminator);
+}
+
+*[drawDirection="UP"] *[k9-elem="from"], *[drawDirection="DOWN"] *[k9-elem="to"] {
+kite9-template: url(common-links-template.xml#down-terminator);
+}
+
+*[drawDirection="RIGHT"] *[k9-elem="from"], *[drawDirection="LEFT"] *[k9-elem="to"] {
+kite9-template: url(common-links-template.xml#left-terminator);
+}
+
+*[drawDirection="LEFT"] *[k9-elem="from"], *[drawDirection="RIGHT"] *[k9-elem="to"] s {
+kite9-template: url(common-links-template.xml#right-terminator);
+}
+
+*[drawDirection="LEFT"] {
+kite9-direction: LEFT;
+}
+
+*[drawDirection="RIGHT"] {
+kite9-direction: RIGHT;
+}
+
+*[drawDirection="UP"] {
+kite9-direction: UP;
+}
+
+*[drawDirection="DOWN"] {
+kite9-direction: DOWN;
+}
+
+*[k9-elem="hub"] {
+kite9-template: url(common-links-template.xml#hub);
+kite9-type: SVG;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+fill: rgb(255, 255, 255);
+}
+
+*[k9-elem="group"] {
+kite9-type: CONTAINER;
+kite9-margin-top: 20pt;
+kite9-margin-right: 20pt;
+kite9-margin-bottom: 20pt;
+kite9-margin-left: 20pt;
+}
+
+@params { cell-template-uri: http://localhost:39000/public/templates/grid/common-grid.adl#t1; }
+@params { palettes: [http://localhost:39000/public/templates/grid/common-grid, cell table]; }
+*[layout="grid"] {
+kite9-layout: GRID;
+}
+
+table {
+kite9-layout: GRID;
+kite9-type: CONTAINER;
+kite9-template: url(common-grid-template.xml#table),"0pt";
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+}
+
+*[k9-elem="table"] &gt; *[k9-elem="back"] {
+stroke: black;
+stroke-width: 1pt;
+fill: white;
+}
+
+cell {
+kite9-template: url(common-grid-template.xml#cell),"0pt";
+kite9-usage: REGULAR;
+kite9-type: CONTAINER;
+kite9-vertical-align: CENTER;
+kite9-horizontal-align: CENTER;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+text-align: middle;
+kite9-min-width: 30pt;
+kite9-min-height: 30pt;
+kite9-traversal-bottom: ALWAYS;
+kite9-traversal-left: ALWAYS;
+kite9-traversal-right: ALWAYS;
+kite9-traversal-top: ALWAYS;
+}
+
+cell.bordered {
+kite9-template: url(common-grid-template.xml#bordered-cell),"0pt";
+}
+
+*[k9-elem="_temporary"], *[k9-elem="cell"] &gt; *[k9-elem="back"] {
+fill: rgb(255, 255, 255);
+fill-opacity: 0.01;
+}
+
+*[k9-elem="cell"].bordered &gt; *[k9-elem="back"] {
+stroke: black;
+stroke-width: 2pt;
+}
+
+*[k9-elem="cell"].shaded &gt; *[k9-elem="back"] {
+fill: rgb(206, 206, 206);
+fill-opacity: 1;
+}
+
+cell.left {
+kite9-horizontal-align: LEFT;
+text-align: full;
+}
+
+cell.right {
+kite9-horizontal-align: RIGHT;
+text-align: end;
+}
+
+cell.bottom {
+kite9-vertical-align: BOTTOM;
+}
+
+cell.top {
+kite9-vertical-align: TOP;
+}
+
+label {
+kite9-usage: LABEL;
+kite9-type: CONTAINER;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-template: url(common-labels-template.xml#label),"4pt";
+kite9-padding-top: 4pt;
+kite9-padding-right: 4pt;
+kite9-padding-bottom: 4pt;
+kite9-padding-left: 4pt;
+kite9-margin-top: 4pt;
+kite9-margin-right: 4pt;
+kite9-margin-bottom: 4pt;
+kite9-margin-left: 4pt;
+kite9-label-placement: BOTTOM_LEFT;
+}
+
+@params { label-template-uri: http://localhost:39000/public/templates/labels/common-labels.adl#label; }
+label[end="to"] {
+kite9-link-end: TO;
+}
+
+label[end="from"] {
+kite9-link-end: FROM;
+}
+
+*[k9-elem="mitigated"] {
+kite9-type: CONTAINER;
+kite9-template: url(template.xml#mitigated);
+kite9-min-width: 120pt;
+kite9-min-height: 160pt;
+}
+
+*[k9-elem="hidden"] {
+kite9-type: CONTAINER;
+kite9-template: url(template.xml#hidden);
+kite9-min-width: 120pt;
+kite9-min-height: 160pt;
+}
+
+*[k9-elem="hidden"] &gt; *[k9-elem="back"], *[k9-elem="mitigated"] &gt; *[k9-elem="back"] {
+fill: white;
+}
+
+*[k9-elem="risk"] {
+kite9-template: url(template.xml#generic);
+}
+
+*[k9-elem="risk"].hidden {
+kite9-template: url(template.xml#fixed),"?",url(redesign/risks/hidden_risk_v2.svg),"Hidden Risk";
+}
+
+*[k9-elem="risk"].invisibility {
+kite9-template: url(template.xml#fixed),"I",url(redesign/risks/invisibility_risk_v2.svg),"Invisibility Risk";
+}
+
+*[k9-elem="risk"].feature {
+kite9-template: url(template.xml#fixed),"F",url(redesign/risks/feature_risk_v2.svg),"Feature Risk";
+}
+
+*[k9-elem="risk"].market {
+kite9-template: url(template.xml#fixed),"F-Ma",url(redesign/risks/feature_market_risk_v2.svg),"Market Risk";
+}
+
+*[k9-elem="risk"].communication {
+kite9-template: url(template.xml#fixed),"Co",url(redesign/risks/communication_risk_v2.svg),"Communication Risk";
+}
+
+*[k9-elem="risk"].coordination {
+kite9-template: url(template.xml#fixed),"Cr",url(redesign/risks/coordination_risk_v2.svg),"Coordination Risk";
+}
+
+*[k9-elem="risk"].complexity {
+kite9-template: url(template.xml#fixed),"Cx",url(redesign/risks/complexity_risk_v2.svg),"Complexity Risk";
+}
+
+*[k9-elem="risk"].boundary {
+kite9-template: url(template.xml#fixed),"B",url(redesign/risks/boundary_risk_v2.svg),"Boundary Risk";
+}
+
+*[k9-elem="risk"].agency {
+kite9-template: url(template.xml#fixed),"A",url(redesign/risks/agency_risk_v2.svg),"Agency Risk";
+}
+
+*[k9-elem="risk"].channel {
+kite9-template: url(template.xml#fixed),"Ch",url(redesign/risks/channel_risk_v2.svg),"Channel Risk";
+}
+
+*[k9-elem="risk"].protocol {
+kite9-template: url(template.xml#fixed),"Pr",url(redesign/risks/protocol_risk_v2.svg),"Protocol Risk";
+}
+
+*[k9-elem="risk"].trust {
+kite9-template: url(template.xml#fixed),"T",url(redesign/risks/trust_belief_risk_v2.svg),"Trust &amp; Belief Risk";
+}
+
+*[k9-elem="risk"].learning-curve {
+kite9-template: url(template.xml#fixed),"Lc",url(redesign/risks/learning_curve_risk_v2.svg),"Learning Curve Risk";
+}
+
+*[k9-elem="risk"].message {
+kite9-template: url(template.xml#fixed),"M",url(redesign/risks/message_risk_v2.svg),"Message Risk";
+}
+
+*[k9-elem="risk"].internal-model {
+kite9-template: url(template.xml#fixed),"IM",url(redesign/risks/internal_model_risk_v2.svg),"Internal Model Risk";
+}
+
+*[k9-elem="risk"].feature-fit {
+kite9-template: url(template.xml#fixed),"FF",url(redesign/risks/feature_fit_risk_v2.svg),"Feature Fit Risk";
+}
+
+*[k9-elem="risk"].implementation {
+kite9-template: url(template.xml#fixed),"F-Im",url(redesign/risks/feature_implementation_risk_v2.svg),"Implementation Risk";
+}
+
+*[k9-elem="risk"].feature-drift {
+kite9-template: url(template.xml#fixed),"F-D",url(redesign/risks/feature_drift_risk_v2.svg),"Feature Drift Risk";
+}
+
+*[k9-elem="risk"].feature-access {
+kite9-template: url(template.xml#fixed),"F-A",url(redesign/risks/feature_access_risk_v2.svg),"Feature Access Risk";
+}
+
+*[k9-elem="risk"].regression {
+kite9-template: url(template.xml#fixed),"F-R",url(redesign/risks/feature_regression_risk_v2.svg),"Regression Risk";
+}
+
+*[k9-elem="risk"].conceptual-integrity {
+kite9-template: url(template.xml#fixed),"F-Ci",url(redesign/risks/conceptual_integrity_risk_v2.svg),"Conceptual Integrity Risk";
+}
+
+*[k9-elem="risk"].codebase {
+kite9-template: url(template.xml#fixed),"Cb",url(redesign/risks/codebase_risk_v2.svg),"Codebase Risk";
+}
+
+*[k9-elem="risk"].dependency {
+kite9-template: url(template.xml#fixed),"D",url(redesign/risks/dependency_risk_v2.svg),"Dependency Risk";
+}
+
+*[k9-elem="risk"].dead-end {
+kite9-template: url(template.xml#fixed),"De",url(redesign/risks/dead_end_risk_v2.svg),"Dead-End Risk";
+}
+
+*[k9-elem="risk"].reliability {
+kite9-template: url(template.xml#fixed),"D-R",url(redesign/risks/dependency_reliability_risk_v2.svg),"Reliability Risk";
+}
+
+*[k9-elem="risk"].scarcity {
+kite9-template: url(template.xml#fixed),"D-Sc",url(redesign/risks/dependency_scarcity_risk_v2.svg),"Scarcity Risk";
+}
+
+*[k9-elem="risk"].operational {
+kite9-template: url(template.xml#fixed),"Op",url(redesign/risks/operational_risk_v2.svg),"Operational Risk";
+}
+
+*[k9-elem="risk"].schedule {
+kite9-template: url(template.xml#fixed),"D-Sh",url(redesign/risks/dependency_schedule_risk_v2.svg),"Schedule Risk";
+}
+
+*[k9-elem="risk"].opportunity {
+kite9-template: url(template.xml#fixed),"D-Opp",url(redesign/risks/dependency_opportunity_risk_v2.svg),"Opportunity Risk";
+}
+
+*[k9-elem="risk"].deadline {
+kite9-template: url(template.xml#fixed),"D-Dl",url(redesign/risks/dependency_deadline_risk_v2.svg),"Deadline Risk";
+}
+
+*[k9-elem="risk"].funding {
+kite9-template: url(template.xml#fixed),"D-Fu",url(redesign/risks/dependency_funding_risk_v2.svg),"Funding Risk";
+}
+
+*[k9-elem="risk"].red-queen {
+kite9-template: url(template.xml#fixed),"D-Rq",url(redesign/risks/dependency_red_queen_risk_v2.svg),"Red Queen Risk";
+}
+
+*[k9-elem="risk"].staff {
+kite9-template: url(template.xml#fixed),"D-St",url(redesign/risks/staff_risk_v2.svg),"Staff Risk";
+}
+
+*[k9-elem="risk"].process {
+kite9-template: url(template.xml#fixed),"D-Pr",url(redesign/risks/dependency_process_risk_v2.svg),"Process Risk";
+}
+
+*[k9-elem="risk"].map-and-territory {
+kite9-template: url(template.xml#fixed),"MT",url(redesign/risks/map_and_territory_risk_v2.svg),"Map And Territory Risk";
+}
+
+*[k9-elem="risk"].software-dependency {
+kite9-template: url(template.xml#fixed),"D-Sw",url(redesign/risks/dependency_software_risk_v2.svg),"Software Dependency Risk";
+}
+
+*[k9-elem="risk"].security {
+kite9-template: url(template.xml#fixed),"S",url(redesign/risks/security_risk_v2.svg),"Security Risk";
+}
+
+*[k9-elem="risk"] {
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-type: CONTAINER;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-layout: DOWN;
+kite9-margin-top: 10pt;
+kite9-margin-right: 10pt;
+kite9-margin-bottom: 10pt;
+kite9-margin-left: 10pt;
+kite9-link-inset: 10pt;
+kite9-link-gutter: 10pt;
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+kite9-min-width: 120pt;
+kite9-min-height: 160pt;
+}
+
+*[k9-elem="risk"] &gt; *[k9-elem="code"] {
+kite9-horizontal-align: CENTER;
+kite9-vertical-align: TOP;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-type: TEXT;
+font-size: 22pt;
+font-family: "metropolis";
+font-weight: 300;
+fill: black;
+text-align: middle;
+kite9-margin-bottom: 15pt;
+kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
+}
+
+*[k9-elem="risk"] &gt; *[k9-elem="image"] {
+kite9-vertical-align: TOP;
+kite9-horizontal-align: CENTER;
+}
+
+*[k9-elem="artifact"], *[k9-elem="document"], *[k9-elem="users"], *[k9-elem="computer"], *[k9-elem="interface"], *[k9-elem="component"], *[k9-elem="channel-artifact"], *[k9-elem="internal-model-artifact"], *[k9-elem="protocol-artifact"], *[k9-elem="agent-artifact"], *[k9-elem="image-artifact"], *[k9-elem="generic-artifact"] {
+kite9-type: CONTAINER;
+kite9-margin-top: 10pt;
+kite9-margin-right: 10pt;
+kite9-margin-bottom: 10pt;
+kite9-margin-left: 10pt;
+kite9-link-inset: 10pt;
+kite9-link-gutter: 10pt;
+kite9-layout: VERTICAL;
+kite9-template: url(template.xml#generic-artifact);
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-min-width: 110pt;
+kite9-min-height: 140pt;
+}
+
+*[k9-elem="agent-artifact"] {
+kite9-template: url(template.xml#artifact),url(redesign/risks/agency_risk_v2.svg);
+}
+
+*[k9-elem="document"] {
+kite9-template: url(template.xml#artifact),url(redesign/artifacts/document_v2.svg);
+}
+
+*[k9-elem="users"] {
+kite9-template: url(template.xml#artifact),url(redesign/artifacts/users_v2.svg);
+}
+
+*[k9-elem="interface"] {
+kite9-template: url(template.xml#artifact),url(redesign/artifacts/interface_v2.svg);
+}
+
+*[k9-elem="protocol-artifact"] {
+kite9-template: url(template.xml#artifact),url(redesign/risks/protocol_risk_v2.svg);
+}
+
+*[k9-elem="internal-model-artifact"] {
+kite9-template: url(template.xml#artifact),url(redesign/risks/internal_model_risk.svg);
+}
+
+*[k9-elem="channel-artifact"] {
+kite9-template: url(template.xml#artifact),url(redesign/risks/channel_risk_v2.svg);
+}
+
+*[k9-elem="component"] {
+kite9-template: url(template.xml#artifact),url(redesign/artifacts/component_v2.svg);
+}
+
+*[k9-elem="generic-artifact"] {
+kite9-template: url(template.xml#generic-artifact);
+}
+
+*[k9-elem="action"] {
+kite9-type: CONTAINER;
+kite9-template: url(template.xml#action);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-margin-top: 10pt;
+kite9-margin-right: 10pt;
+kite9-margin-bottom: 10pt;
+kite9-margin-left: 10pt;
+}
+
+*[k9-elem="action"].left {
+kite9-template: url(template.xml#action-left);
+}
+
+*[k9-elem="action"] &gt; *[k9-elem="shape"] {
+kite9-usage: DECAL;
+kite9-type: SVG;
+}
+
+*[k9-elem="planner"] {
+kite9-layout: GRID;
+kite9-type: CONTAINER;
+kite9-template: url(template.xml#planner);
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+}
+
+*[k9-elem="planner-cell"], *[k9-elem="planner-header"] {
+kite9-template: url(template.xml#planner-cell),"0pt";
+kite9-usage: REGULAR;
+kite9-type: CONTAINER;
+kite9-vertical-align: CENTER;
+kite9-horizontal-align: CENTER;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+text-align: middle;
+kite9-min-width: 230pt;
+kite9-min-height: 30pt;
+kite9-traversal-bottom: ALWAYS;
+kite9-traversal-left: ALWAYS;
+kite9-traversal-right: ALWAYS;
+kite9-traversal-top: ALWAYS;
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+kite9-layout: RIGHT;
+}
+
+*[k9-elem="planner-header"] {
+kite9-min-width: 60pt;
+kite9-min-height: 30pt;
+}
+
+*[k9-elem="planner-cell"] &gt; *[k9-elem="back"] {
+stroke: rgb(174, 174, 174);
+stroke-width: 1pt;
+}
+
+@defs url(http://localhost:39000/public/templates/risk-first/site-template.xml);
+*[k9-elem="diagram"].bg1 {
+kite9-template: url(site-template.xml#diagram-image),"/public/templates/risk-first/backgrounds/vecteezy-5.jpg";
+}
+
+*[k9-elem="diagram"].bg2 {
+kite9-template: url(site-template.xml#diagram-image),"/public/templates/risk-first/backgrounds/vecteezy-1.jpg";
+}
+
+*[k9-elem="diagram"].bg3 {
+kite9-template: url(site-template.xml#diagram-image),"/public/templates/risk-first/backgrounds/vecteezy-3.jpg";
+}
+
+*[k9-elem="image-artifact"] {
+kite9-template: url(site-template.xml#image-artifact);
+}
+
+*[k9-elem="celltext"] {
+kite9-usage: REGULAR;
+kite9-type: CONTAINER;
+kite9-template: url(site-template.xml#celltext);
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+kite9-vertical-align: CENTER;
+kite9-horizontal-align: LEFT;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+font-size: 40pt;
+fill: black;
+font-family: "gothic";
+stroke: none;
+}
+
+*[k9-elem="celltext"] *[k9-elem="text-label"] {
+kite9-horizontal-align: LEFT;
+}
+
+*[k9-elem="bulleted"] {
+kite9-usage: REGULAR;
+kite9-type: CONTAINER;
+kite9-template: url(site-template.xml#bulleted);
+kite9-vertical-align: TOP;
+kite9-horizontal-align: LEFT;
+font-size: 40pt;
+fill: black;
+font-family: "gothic";
+stroke: none;
+}
+
+*[k9-elem="ctext"] {
+kite9-usage: REGULAR;
+kite9-vertical-align: TOP;
+kite9-horizontal-align: LEFT;
+font-size: 40pt;
+fill: black;
+font-family: "gothic";
+stroke: none;
+kite9-type: TEXT;
+}
+
+*[k9-elem="btext"] {
+kite9-usage: REGULAR;
+kite9-vertical-align: TOP;
+kite9-horizontal-align: LEFT;
+font-size: 40pt;
+fill: black;
+font-family: "gothic-bold";
+stroke: none;
+kite9-type: TEXT;
+}
+
+*[k9-elem="tick"] {
+kite9-usage: REGULAR;
+kite9-type: CONTAINER;
+kite9-template: url(site-template.xml#tick);
+}
+
+*[k9-elem="table"] *[k9-elem="risk"], *[k9-elem="table"] *[k9-elem="tick"] {
+kite9-horizontal-align: CENTER;
+kite9-margin-top: 20pt;
+kite9-margin-right: 20pt;
+kite9-margin-bottom: 20pt;
+kite9-margin-left: 20pt;
+}
+
+*[k9-elem="table"] *[k9-elem="celltext"].bottom {
+kite9-vertical-align: BOTTOM;
+}
+
+*[k9-elem="table"] *[k9-elem="celltext"].top {
+kite9-vertical-align: TOP;
+}
+
+*[k9-elem="description"], *[k9-elem="long-description"], *.description {
+kite9-type: CONTAINER;
+kite9-template: url(site-template.xml#description);
+font-size: 14pt;
+font-family: "gothic-italic";
+font-style: italic;
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+}
+
+*[k9-elem="long-description"] {
+kite9-template: url(site-template.xml#long-description);
+}
+
+*[k9-elem="leg"] {
+kite9-type: CONTAINER;
+kite9-template: url(site-template.xml#leg);
+kite9-layout: DOWN;
+kite9-min-height: 110pt;
+kite9-min-width: 70pt;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-margin-top: 0px;
+kite9-margin-right: 0px;
+kite9-margin-bottom: 0px;
+kite9-margin-left: 0px;
+kite9-vertical-align: BOTTOM;
+}
+
+*[k9-elem="plinth"] {
+kite9-template: url(site-template.xml#plinth);
+kite9-type: CONTAINER;
+kite9-horizontal-sizing: MAXIMIZE;
+kite9-vertical-sizing: MAXIMIZE;
+}
+
+*[k9-elem="big-image"] {
+kite9-margin-top: 10pt;
+kite9-margin-right: 10pt;
+kite9-margin-bottom: 10pt;
+kite9-margin-left: 10pt;
+kite9-link-inset: 10pt;
+kite9-link-gutter: 10pt;
+kite9-type: CONTAINER;
+kite9-layout: VERTICAL;
+kite9-template: url(site-template.xml#big-image);
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+kite9-min-width: 110pt;
+kite9-min-height: 140pt;
+}
+
+symbol {
+kite9-type: SVG;
+kite9-margin-top: 0;
+kite9-margin-right: 2pt;
+kite9-margin-bottom: 0;
+kite9-margin-left: 2pt;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-link-inset: 0px;
+kite9-template: url(template.svg#symbol);
+}
+
+symbol.decal {
+kite9-usage: DECAL;
+kite9-transform: NONE;
+}
+
+box {
+kite9-type: CONTAINER;
+kite9-template: url(template.svg#box);
+kite9-horizontal-sizing: MAXIMIZE;
+kite9-vertical-sizing: MAXIMIZE;
+}
+
+keyitem {
+kite9-type: CONTAINER;
+kite9-layout: RIGHT;
+}
+
+keyitem &gt; * {
+kite9-vertical-align: CENTER;
+}
+
+keydesc {
+kite9-type: CONTAINER;
+kite9-template: url(template.svg#description);
+font-size: 12pt;
+font-family: "gothic";
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+}
+
+*#_moveLayer *[k9-highlight~="fill"], *#_moveLayer *[k9-highlight~="pulse"] {
+fill: rgb(183, 192, 254);
+fill-opacity: 0.7;
+}
+
+*#_moveLayer *[k9-highlight~="stroke"], *#_moveLayer *[k9-highlight~="outline"] {
+stroke: rgb(183, 192, 254);
+stroke-opacity: 0.7;
+}
+
+*[id] &gt; *[k9-highlight] {
+}
+
+*.indicators-on *[k9-highlight~="grab"] {
+stroke-width: 10pt;
+fill-opacity: 0.5;
+}
+
+*.indicators-on *[k9-highlight~="bar"] {
+stroke-width: 10pt;
+stroke-opacity: 0.1;
+}
+
+*.indicators-on *[id] &gt; *[k9-highlight~="stroke"] {
+stroke: rgb(183, 192, 254);
+stroke-opacity: 0.8;
+}
+
+*.indicators-on *[id] &gt; *[k9-highlight~="fill"] {
+fill: rgb(183, 192, 254);
+fill-opacity: 0.6;
+}
+
+*.mouseover &gt; *[k9-highlight~="stroke"], *.mouseover &gt; *[k9-highlight~="outline"], *.mouseover &gt; *[k9-highlight~="bar"] {
+stroke: rgb(187, 221, 238);
+stroke-opacity: 1;
+}
+
+*.mouseover &gt; *[k9-highlight~="pulse"], *.mouseover &gt; *[k9-highlight~="fill"], *.mouseover &gt; *[k9-highlight~="grab"], *.mouseover.grid-temporary {
+fill: rgb(204, 238, 255);
+fill-opacity: 0.8;
+}
+
+*.selected &gt; *[k9-highlight~="outline"], *.selected &gt; *[k9-highlight~="stroke"], *.selected &gt; *[k9-highlight~="bar"] {
+stroke: rgb(255, 204, 0);
+stroke-opacity: 0.8;
+}
+
+*.selected &gt; *[k9-highlight~="pulse"], *.selected &gt; *[k9-highlight~="fill"], *.selected &gt; *[k9-highlight~="grab"] {
+fill: rgb(255, 204, 0);
+fill-opacity: 0.8;
+}
+
+*[k9-elem="diagram"].selected &gt; *[k9-highlight] {
+fill-opacity: 0;
+fill: white;
+}
+
+*[id].selected &gt; g &gt; text {
+fill: rgb(255, 204, 0);
+fill-opacity: 0.6;
+}
+
+*.mouseover &gt; g &gt; text {
+fill: rgb(204, 238, 255);
+fill-opacity: 0.6;
+}
+
+*.inactive &gt; *[k9-highlight~="outline"], *.inactive &gt; *[k9-highlight~="stroke"], *.inactive &gt; *[k9-highlight~="bar"] {
+stroke-opacity: 0.2;
+}
+
+*.inactive &gt; *[k9-highlight~="pulse"], *.inactive &gt; *[k9-highlight~="fill"], *.inactive &gt; *[k9-highlight~="grab"], *.inactive &gt; g &gt; text {
+fill-opacity: 0.2;
+}
+
+*.indicators-on *.grid-temporary {
+fill-opacity: 0.3;
+stroke: none;
+}
+
+*.indicators-on *[k9-info~="contradicting:"] &gt; *[k9-highlight~="stroke"], *.indicators-on *[k9-info~="contradicting:"] &gt; *[k9-highlight~="outline"], *.indicators-on *[k9-info~="contradicting:"] &gt; *[k9-highlight~="bar"] {
+stroke: rgb(255, 89, 86);
+}
+
+*.indicators-on *[k9-info~="contradicting:"] &gt; *[k9-highlight="fill"], *.indicators-on *[k9-info~="contradicting:"] &gt; *[k9-highlight="grab"], *.indicators-on *[k9-info~="contradicting:"] &gt; *[k9-highlight="pulse"] {
+fill: rgb(255, 89, 86);
+}
+
+@media editor {
+*[k9-elem="diagram"] {
+kite9-padding-top: 200pt;
+kite9-padding-right: 200pt;
+kite9-padding-bottom: 200pt;
+kite9-padding-left: 200pt;
+}
+}
+
+svg {
+cursor: pointer;
+}
+
+*[k9-elem="votes"] {
+kite9-template: url(template.xml#votes);
+kite9-type: SVG;
+kite9-usage: DECAL;
+}
+
+*[k9-elem="votes"] &gt; rect.back {
+fill: rgb(122, 164, 127);
+fill-opacity: 0.9;
+}
+
+*[k9-elem="votes"] &gt; text.count {
+font-size: 16pt;
+fill: white;
+fill-opacity: 1;
+text-anchor: middle;
+dominant-baseline: middle;
+}
+
+*[k9-elem="votes"] &gt; text.font-awesome {
+font-size: 16pt;
+font-family: "Font Awesome 5 Free";
+font-weight: 400;
+fill: white;
+fill-opacity: 1;
+text-anchor: middle;
+dominant-baseline: middle;
+}
+
+*[k9-elem="votes"][count="0"] &gt; rect.back, *[k9-elem="votes"][count="0"] &gt; text.count, *[k9-elem="votes"][count="0"] &gt; text.font-awesome {
+fill-opacity: 0;
+stroke-opacity: 0;
+}
+
+@script url(http://localhost:39000/public/templates/risk-first/risk-first.js);
+@defs url(http://localhost:39000/public/templates/risk-first/template.xml);
+@params { palettes: [http://localhost:39000/public/templates/links/common-links.adl, link, http://localhost:39000/public/templates/links/common-ends.adl, end, http://localhost:39000/public/templates/risk-first/artifact-palette.adl, connected risk, http://localhost:39000/public/templates/risk-first/risk-palette.adl, connected risk, http://localhost:39000/public/templates/containers/common-containers.adl, connected, http://localhost:39000/public/templates/grid/common-grid.adl, cell table]; }
+@params { link-template-uri: http://localhost:39000/public/templates/links/common-links.adl#l6; }
+*[k9-elem="title"] {
+kite9-horizontal-align: CENTER;
+kite9-vertical-align: BOTTOM;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-type: TEXT;
+font-size: 12pt;
+font-family: "metropolis";
+font-weight: 200;
+fill: black;
+text-align: middle;
+kite9-text-bounds-width: 110pt;
+kite9-template: url(/public/templates/common/formats/formats-template.xml#textarea);
+}
+
+*[k9-elem="label"] &gt; *[k9-elem="front"], *[k9-elem="description"] {
+text-align: middle;
+fill: black;
+font-weight: 100;
+font-family: "metropolis";
+font-size: 12pt;
+font-style: italic;
+}
+
+*[k9-elem="container"] &gt; *[k9-elem="label"] &gt; *[k9-elem="front"] {
+font-weight: 600;
+font-size: 12pt;
+font-style: normal;
+}
+
+*[k9-elem="label"] *[k9-elem="back"] {
+fill: rgb(255, 255, 255);
+fill-opacity: 0.01;
+}
+
+*[k9-elem="container"] &gt; *[k9-elem="back"] {
+stroke-width: 1pt;
+}
+
+*[k9-elem="label"].title &gt; *[k9-elem="front"] {
+font-size: 25pt;
+}
+
+*[k9-elem="description"] {
+kite9-usage: LABEL;
+kite9-type: CONTAINER;
+kite9-vertical-align: CENTER;
+kite9-horizontal-align: CENTER;
+kite9-template: url(/public/templates/labels/common-labels-template.xml#label);
+kite9-padding-top: 10pt;
+kite9-padding-right: 10pt;
+kite9-padding-bottom: 10pt;
+kite9-padding-left: 10pt;
+kite9-label-placement: BOTTOM;
+}
+
+*[k9-elem="description"] &gt; *[k9-elem="front"] {
+fill: black;
+}
+
+*[k9-elem="context"] {
+kite9-type: CONTAINER;
+kite9-padding-top: 15pt;
+kite9-padding-right: 15pt;
+kite9-padding-bottom: 15pt;
+kite9-padding-left: 15pt;
+kite9-margin-top: 15pt;
+kite9-margin-right: 15pt;
+kite9-margin-bottom: 15pt;
+kite9-margin-left: 15pt;
+kite9-template: url(/public/templates/containers/containers-template.xml#container);
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+}
+
+*[k9-elem="arrow"] {
+kite9-padding-top: 8pt;
+kite9-padding-right: 5pt;
+kite9-padding-bottom: 8pt;
+kite9-padding-left: 5pt;
+kite9-type: CONTAINER;
+kite9-horizontal-sizing: MINIMIZE;
+kite9-vertical-sizing: MINIMIZE;
+kite9-template: url(/public/templates/common/formats/formats-template.xml#inline-text),"4pt","4pt";
+kite9-connections: SEPARATE;
+kite9-connection-align-top: 50%;
+kite9-connection-align-right: 50%;
+kite9-connection-align-bottom: 50%;
+kite9-connection-align-left: 50%;
+font-size: 14pt;
+font-family: "metropolis";
+font-weight: 500;
+kite9-link-inset: 3pt;
+}
+
+*[k9-elem="arrow"][k9-texture="solid"] &gt; *[k9-elem="back"] {
+fill: black;
+fill-opacity: 1;
+}
+
+*[k9-elem="arrow"] &gt; *[k9-elem="textarea"] {
+fill: white;
+fill-opacity: 1;
+}
+
+from, to {
+kite9-marker-reserve: 8pt;
+}
+
+link {
+kite9-link-minimum-length: 30pt;
+}
+
+*[k9-elem="image"] {
+kite9-template: url(/public/templates/common/formats/formats-template.xml#image-editable);
+}
+
+*[k9-elem="risk"][k9-texture="solid"] &gt; *[k9-elem="back"], *[k9-elem="action"][k9-texture="solid"] &gt; *[k9-elem="shape"] {
+fill: url(#risk-background);
+stroke: black;
+}
+
+*[k9-texture="solid"] &gt; *[k9-elem="shape"] {
+stroke: black;
+}
+
+*[k9-elem="votes"] *.count {
+font-family: "metropolis";
+}
+
+*[k9-elem="diagram"] {
+kite9-padding-top: 20pt;
+kite9-padding-right: 20pt;
+kite9-padding-bottom: 20pt;
+kite9-padding-left: 20pt;
+}
+
+ 
+    @import url("/public/templates/risk-first/risk-first.css");
+    </style>
+    
+  <script xlink:actuate="onLoad" xlink:type="simple" id="adl:markup" xlink:show="other" type="text/adl-svg+xml;base64" xmlns:xlink="http://www.w3.org/1999/xlink">PHN2ZzpzdmcgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgY29udGVudFNjcmlwdFR5cGU9InRleHQvZWNtYXNjcmlwdCIgem9vbUFuZFBhbj0ibWFnbmlmeSIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB2ZXJzaW9uPSIxLjAiPgogIDxzdmc6ZGVmcz4KICAgIDxzdmc6c3R5bGUgdHlwZT0idGV4dC9jc3MiIHhtbDpzcGFjZT0icHJlc2VydmUiPiAKICAgIEBpbXBvcnQgdXJsKCIvcHVibGljL3RlbXBsYXRlcy9yaXNrLWZpcnN0L3Jpc2stZmlyc3QuY3NzIik7CiAgICA8L3N2ZzpzdHlsZT4KICAgIAogIDwvc3ZnOmRlZnM+CgogIDxkaWFncmFtIHhtbG5zPSJodHRwOi8vd3d3LmtpdGU5Lm9yZy9zY2hlbWEvYWRsIiBuYW1lPSJQYXR0ZXJuIExhbmd1YWdlIiBpZD0iZGlhZ3JhbS0xMjkiPgogICAgPHJpc2sgY2xhc3M9ImdlbmVyaWMiIGlkPSJpZF8wIiBocmVmPSIvcHVibGljL3RlbXBsYXRlcy9yaXNrLWZpcnN0L3JlZGVzaWduL2FydGlmYWN0cy9tZXRob2RvbG9neV92Mi5zdmciPgogICAgICA8Y29kZSBpZD0iYyI+TWV0aG9kPC9jb2RlPgogICAgICA8dGl0bGUgaWQ9ImQiPlNvZnR3YXJlIE1ldGhvZG9sb2d5PC90aXRsZT4KICAgIDwvcmlzaz4KICA8L2RpYWdyYW0+Cjwvc3ZnOnN2Zz4=</script></defs>
+
+  <g k9-contains="connected" k9-rounding="0pt" k9-shape="rect" k9-texture="background" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 26.666667938232422 26.666667938232422 26.666667938232422 26.666667938232422; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: [0.0,0.0]; rect-size: [212.0,265.0]; " id="diagram-129" k9-ui="layout label" name="Pattern Language" k9-elem="diagram">
+    <g k9-info="" k9-highlight="pulse" k9-elem="back">
+		<rect x="0" width="212.0" height="265.0" y="0"/>
+	</g>
+    <g k9-info="" k9-elem="indicator"/>
+    
+    <g href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(26.0,26.0)" k9-palette="connected risk " k9-texture="solid" k9-info="position: none; margin: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; padding: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: [26.0,26.0]; rect-size: [160.0,213.0]; " class="generic" id="id_0" k9-ui="drag delete align connect autoconnect vote" k9-elem="risk">
+      <g k9-info="" k9-highlight="pulse" k9-elem="back">
+		<rect rx="5pt" ry="5pt" x="0" width="160.0" height="213.0" y="0"/>
+	</g> 
+      <g transform="translate(-4919.8,8.7)" k9-shape="code" k9-info="position: none; margin: 0.0 0.0 20.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: [55.0,39.0]; rect-size: [102.0,20.0]; " id="c" k9-format="textarea" k9-ui="orphan edit" k9-elem="code"><g><path d="M4948.7842 4.6347 L4951.0723 4.6347 L4958.5522 18.6853 L4966.0322 4.6347 L4968.3203 4.6347 L4968.3203 24.7867 L4966.0322 24.7867 L4966.0322 9.5627 L4958.5522 23.6133 L4951.0723 9.5627 L4951.0723 24.7867 L4948.7842 24.7867 ZM4980.1411 23.1733 Q4981.4907 23.1733 4982.8545 22.6453 Q4984.2183 22.1173 4984.9224 21.3547 L4986.272 22.792 Q4985.3037 23.848 4983.5586 24.4933 Q4981.813 25.1387 4980.1704 25.1387 Q4978.1465 25.1387 4976.3867 24.112 Q4974.6265 23.0853 4973.5557 21.252 Q4972.4854 19.4187 4972.4854 17.16 Q4972.4854 14.96 4973.4971 13.1413 Q4974.5093 11.3227 4976.2251 10.296 Q4977.9409 9.2693 4979.9653 9.2693 Q4983.3677 9.2693 4985.2598 11.6453 Q4987.1519 14.0213 4987.1519 18.04 L4974.7437 18.04 Q4974.9785 20.2987 4976.46 21.736 Q4977.9409 23.1733 4980.1411 23.1733 ZM4980.0532 11.2347 Q4978 11.2347 4976.5332 12.5693 Q4975.0664 13.904 4974.7729 16.0747 L4984.981 16.0747 Q4984.7466 13.904 4983.4854 12.5693 Q4982.2236 11.2347 4980.0532 11.2347 ZM4998.5039 24.1707 Q4997.272 25.1387 4995.688 25.1387 Q4994.0747 25.1387 4993.0332 24.0533 Q4991.9922 22.968 4991.9922 21.2667 L4991.9922 11.5867 L4989.6162 11.5867 L4989.6162 9.6213 L4991.9922 9.6213 L4991.9922 5.456 L4994.1919 5.456 L4994.1919 9.6213 L4997.9175 9.6213 L4997.9175 11.5867 L4994.1919 11.5867 L4994.1919 21.2667 Q4994.1919 22.088 4994.6763 22.6307 Q4995.1602 23.1733 4995.835 23.1733 Q4996.3335 23.1733 4996.7441 22.9973 Q4997.1548 22.8213 4997.4189 22.5573 ZM5008.8291 9.2693 Q5010.4717 9.2693 5011.7773 10.0173 Q5013.0825 10.7653 5013.8013 12.1 Q5014.52 13.4347 5014.52 15.136 L5014.52 24.7867 L5012.3198 24.7867 L5012.3198 15.4293 Q5012.3198 13.5813 5011.2637 12.408 Q5010.208 11.2347 5008.5356 11.2347 Q5007.2744 11.2347 5006.2036 11.7627 Q5005.1333 12.2907 5004.4878 13.2 Q5003.8423 14.1093 5003.8423 15.136 L5003.8423 24.7867 L5001.6426 24.7867 L5001.6426 4.2827 L5003.8423 4.2827 L5003.8423 12.056 Q5004.5171 10.824 5005.8813 10.0467 Q5007.2451 9.2693 5008.8291 9.2693 ZM5026.019 25.1387 Q5023.936 25.1387 5022.1177 24.0533 Q5020.2988 22.968 5019.228 21.1347 Q5018.1577 19.3013 5018.1577 17.1893 Q5018.1577 15.0773 5019.228 13.2587 Q5020.2988 11.44 5022.1177 10.3547 Q5023.936 9.2693 5026.019 9.2693 Q5028.1016 9.2693 5029.9053 10.3547 Q5031.7095 11.44 5032.7803 13.2587 Q5033.8511 15.0773 5033.8511 17.1893 Q5033.8511 19.3013 5032.7803 21.1347 Q5031.7095 22.968 5029.9053 24.0533 Q5028.1016 25.1387 5026.019 25.1387 ZM5026.019 23.1733 Q5027.4854 23.1733 5028.7617 22.352 Q5030.0376 21.5307 5030.7856 20.1667 Q5031.5337 18.8027 5031.5337 17.1893 Q5031.5337 15.6053 5030.7856 14.2267 Q5030.0376 12.848 5028.7617 12.0413 Q5027.4854 11.2347 5026.019 11.2347 Q5024.5229 11.2347 5023.2471 12.0413 Q5021.9707 12.848 5021.2227 14.2267 Q5020.4746 15.6053 5020.4746 17.1893 Q5020.4746 18.8027 5021.2227 20.1667 Q5021.9707 21.5307 5023.2471 22.352 Q5024.5229 23.1733 5026.019 23.1733 ZM5051.5386 4.2827 L5051.5386 24.7867 L5049.3389 24.7867 L5049.3389 21.9413 Q5048.459 23.4667 5047.0361 24.3027 Q5045.6133 25.1387 5043.8242 25.1387 Q5041.8589 25.1387 5040.2603 24.1267 Q5038.6616 23.1147 5037.752 21.296 Q5036.8428 19.4773 5036.8428 17.1893 Q5036.8428 14.9013 5037.752 13.0973 Q5038.6616 11.2933 5040.2603 10.2813 Q5041.8589 9.2693 5043.8242 9.2693 Q5045.6133 9.2693 5047.0361 10.1053 Q5048.459 10.9413 5049.3389 12.4667 L5049.3389 4.2827 ZM5044.2349 23.1733 Q5045.7017 23.1733 5046.875 22.4107 Q5048.0483 21.648 5048.6934 20.284 Q5049.3389 18.92 5049.3389 17.1893 Q5049.3389 15.4587 5048.6934 14.1093 Q5048.0483 12.76 5046.875 11.9973 Q5045.7017 11.2347 5044.2349 11.2347 Q5042.7681 11.2347 5041.6094 11.9973 Q5040.4507 12.76 5039.8057 14.1093 Q5039.1602 15.4587 5039.1602 17.1893 Q5039.1602 18.92 5039.8057 20.284 Q5040.4507 21.648 5041.6094 22.4107 Q5042.7681 23.1733 5044.2349 23.1733 Z" stroke="none"/></g></g>
+      <g href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(47.0,53.0)" width="50pt" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; layout: null; rectangular: connected; rect-pos: [73.0,79.0]; rect-size: [66.0,66.0]; " id="id_0@image" height="50pt" k9-format="image-editable" k9-ui="image" k9-elem="image">
+		<g k9-elem="decal" k9-texture="solid" style="kite9-type: svg; kite9-usage: decal;" k9-info="">
+			<image x="0" y="0" width="66.0" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5l&#10;cmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjEuMCwgU1ZHIEV4cG9ydCBQbHVn&#10;LUluIC4gU1ZHIFZlcnNpb246IAoJNi4wMCBCdWlsZCAwKSAtLT4KPHN2ZyB2ZXJz&#10;aW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv&#10;MjAwMC9zdmciCgl4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94&#10;bGluayIgeD0iMHB0IiB5PSIwcHQiCgl2aWV3Qm94PSIwIDAgODUgODUiIHN0eWxl&#10;PSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDg1IDg1OyIKCXhtbDpzcGFjZT0i&#10;cHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHsKCQlmaWxs&#10;Om5vbmU7CgkJc3Ryb2tlOiMxQTE3MUI7CgkJc3Ryb2tlLXdpZHRoOjM7CgkJc3Ry&#10;b2tlLWxpbmVjYXA6cm91bmQ7CgkJc3Ryb2tlLW1pdGVybGltaXQ6MTA7Cgl9Cjwv&#10;c3R5bGU+CjxnPgoJPHBhdGggY2xhc3M9InN0MCIKCWQ9Ik0yNS42LDIyLjVoNTBj&#10;MC4yLDAsMC4zLDAuMSwwLjMsMC4zdjE5LjNjMCwwLjItMC4yLDAuNC0wLjQsMC40&#10;aC0xNiIgLz4KCTxwYXRoIGNsYXNzPSJzdDAiCglkPSJNNjIuNyw0NmwtMy4zLTMu&#10;MmMtMC4yLTAuMi0wLjItMC40LDAtMC42bDMuMy0zLjIiIC8+CjwvZz4KPGc+Cgk8&#10;cGF0aCBjbGFzcz0ic3QwIgoJZD0iTTI1LjcsNDIuNWgtMTZjLTAuMiwwLTAuMyww&#10;LjEtMC4zLDAuM3YxOS4zYzAsMC4yLDAuMiwwLjQsMC40LDAuNGg0OSIgLz4KCTxw&#10;YXRoIGNsYXNzPSJzdDAiCglkPSJNNTUuNiw2NmwzLjMtMy4yYzAuMi0wLjIsMC4y&#10;LTAuNCwwLTAuNmwtMy4zLTMuMiIgLz4KPC9nPgo8Y2lyY2xlIGNsYXNzPSJzdDAi&#10;IGN4PSI0Mi41IiBjeT0iNDIuNSIgcj0iNi45IiAvPgo8cGF0aCBjbGFzcz0ic3Qw&#10;IgoJZD0iTTE1LjQsMjkuMkgyLjhjLTAuMywwLTAuNS0wLjItMC41LTAuNVYxNi4y&#10;YzAtMC4zLDAuMi0wLjUsMC41LTAuNWgxMi42YzAuMywwLDAuNSwwLjIsMC41LDAu&#10;NXYxMi42CglDMTUuOSwyOSwxNS42LDI5LjIsMTUuNCwyOS4yeiIgLz4KPHBhdGgg&#10;Y2xhc3M9InN0MCIKCWQ9Ik03NC44LDU1LjVsLTYuMiwxM2MtMC4xLDAuMywwLjEs&#10;MC43LDAuNCwwLjdIODJjMC40LDAsMC42LTAuNCwwLjQtMC43bC02LjctMTNDNzUu&#10;NSw1NS4yLDc1LDU1LjIsNzQuOCw1NS41eiIgLz4KPC9zdmc+Cg==" xlink:type="simple" xlink:actuate="onLoad" height="66.0" preserveAspectRatio="xMidYMid meet" xlink:show="embed"/>
+		</g>
+		<g k9-elem="front" k9-texture="none" style="kite9-type: svg; " k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: [73.0,79.0]; rect-size: [66.0,66.0]; " k9-highlight="stroke pulse">
+			<rect rx="2" ry="2" x="0" width="50pt" height="50pt" y="0"/>
+		</g>
+	</g>
+      <g k9-info="" count="0" k9-elem="votes">
+    <rect x="-5pt" y="-5pt" width="52pt" rx="8pt" class="back" ry="8pt" height="26pt"/>
+    <text class="font-awesome" x="8pt" y="9pt"></text> 
+    <text class="count" x="30pt" y="9pt">0</text>
+  </g>
+      <g transform="translate(6.3,166.0)" k9-shape="title" k9-info="position: none; margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: [56.0,194.0]; rect-size: [100.0,32.0]; " id="d" k9-format="textarea" k9-ui="orphan edit" k9-elem="title"><g><path d="M43.5893 13.696 Q41.0293 13.696 39.2533 11.952 L40.0373 10.976 Q40.7893 11.728 41.6693 12.144 Q42.5493 12.56 43.6373 12.56 Q44.4533 12.56 45.0293 12.296 Q45.6053 12.032 45.9013 11.592 Q46.1973 11.152 46.1973 10.64 Q46.1973 9.808 45.5013 9.368 Q44.8053 8.928 43.2373 8.56 Q42.0373 8.272 41.2613 7.92 Q40.4853 7.568 40.0613 6.968 Q39.6373 6.368 39.6373 5.456 Q39.6373 4.592 40.1173 3.872 Q40.5973 3.152 41.4373 2.736 Q42.2773 2.32 43.3173 2.32 Q44.4853 2.32 45.4213 2.728 Q46.3573 3.136 47.1733 3.888 L46.4053 4.864 Q45.7013 4.192 44.9013 3.824 Q44.1013 3.456 43.2533 3.456 Q42.5973 3.456 42.0533 3.72 Q41.5093 3.984 41.2053 4.424 Q40.9013 4.864 40.9013 5.36 Q40.9013 6.144 41.5893 6.552 Q42.2773 6.96 43.8613 7.344 Q45.6213 7.76 46.5413 8.472 Q47.4613 9.184 47.4613 10.528 Q47.4613 11.424 47.0213 12.144 Q46.5813 12.864 45.7013 13.28 Q44.8213 13.696 43.5893 13.696 ZM53.3813 13.712 Q52.2453 13.712 51.2533 13.12 Q50.2613 12.528 49.6773 11.528 Q49.0933 10.528 49.0933 9.376 Q49.0933 8.224 49.6773 7.232 Q50.2613 6.24 51.2533 5.648 Q52.2453 5.056 53.3813 5.056 Q54.5173 5.056 55.5013 5.648 Q56.4853 6.24 57.0693 7.232 Q57.6533 8.224 57.6533 9.376 Q57.6533 10.528 57.0693 11.528 Q56.4853 12.528 55.5013 13.12 Q54.5173 13.712 53.3813 13.712 ZM53.3813 12.64 Q54.1813 12.64 54.8773 12.192 Q55.5733 11.744 55.9813 11 Q56.3893 10.256 56.3893 9.376 Q56.3893 8.512 55.9813 7.76 Q55.5733 7.008 54.8773 6.568 Q54.1813 6.128 53.3813 6.128 Q52.5653 6.128 51.8693 6.568 Q51.1733 7.008 50.7653 7.76 Q50.3573 8.512 50.3573 9.376 Q50.3573 10.256 50.7653 11 Q51.1733 11.744 51.8693 12.192 Q52.5653 12.64 53.3813 12.64 ZM61.5093 5.248 L63.5413 5.248 L63.5413 6.32 L61.5093 6.32 L61.5093 13.52 L60.3093 13.52 L60.3093 6.32 L59.0133 6.32 L59.0133 5.248 L60.3093 5.248 L60.3093 4.112 Q60.3093 3.184 60.8773 2.592 Q61.4453 2 62.3253 2 Q63.1893 2 63.8613 2.528 L63.2693 3.408 Q63.1253 3.264 62.9013 3.168 Q62.6773 3.072 62.4053 3.072 Q62.0373 3.072 61.7733 3.368 Q61.5093 3.664 61.5093 4.112 ZM69.4773 13.184 Q68.8053 13.712 67.9413 13.712 Q67.0613 13.712 66.4933 13.12 Q65.9253 12.528 65.9253 11.6 L65.9253 6.32 L64.6293 6.32 L64.6293 5.248 L65.9253 5.248 L65.9253 2.976 L67.1253 2.976 L67.1253 5.248 L69.1573 5.248 L69.1573 6.32 L67.1253 6.32 L67.1253 11.6 Q67.1253 12.048 67.3893 12.344 Q67.6533 12.64 68.0213 12.64 Q68.2933 12.64 68.5173 12.544 Q68.7413 12.448 68.8853 12.304 ZM70.5173 5.248 L71.7973 5.248 L73.8613 11.92 L76.1173 5.248 L77.1573 5.248 L79.4133 11.92 L81.4773 5.248 L82.7573 5.248 L79.9733 13.52 L78.8373 13.52 L76.6453 6.912 L74.4213 13.52 L73.2853 13.52 ZM87.8613 5.056 Q89.5093 5.056 90.3653 5.992 Q91.2213 6.928 91.2213 8.48 L91.2213 13.52 L90.0213 13.52 L90.0213 12.224 Q89.5893 12.928 88.7813 13.32 Q87.9733 13.712 87.1093 13.712 Q85.7813 13.712 84.9333 12.992 Q84.0853 12.272 84.0853 11.072 Q84.0853 10.272 84.5253 9.64 Q84.9653 9.008 85.7093 8.664 Q86.4533 8.32 87.3333 8.32 Q88.5813 8.32 90.0213 8.784 L90.0213 8.48 Q90.0213 7.472 89.5093 6.776 Q88.9973 6.08 87.7813 6.08 Q87.2213 6.08 86.6373 6.28 Q86.0533 6.48 85.3653 6.832 L84.8853 5.856 Q86.4853 5.056 87.8613 5.056 ZM87.3173 12.656 Q88.2133 12.656 89.0053 12.2 Q89.7973 11.744 90.0213 10.928 L90.0213 9.664 Q88.8053 9.328 87.5253 9.328 Q86.5813 9.328 85.9173 9.808 Q85.2533 10.288 85.2533 11.024 Q85.2533 11.776 85.8373 12.216 Q86.4213 12.656 87.3173 12.656 ZM94.9813 6.864 Q95.3493 6.032 96.1973 5.544 Q97.0453 5.056 98.1813 5.056 L98.1813 6.128 Q97.2533 6.128 96.5253 6.48 Q95.7973 6.832 95.3893 7.464 Q94.9813 8.096 94.9813 8.896 L94.9813 13.52 L93.7813 13.52 L93.7813 5.248 L94.9813 5.248 ZM103.5733 12.64 Q104.3093 12.64 105.0533 12.352 Q105.7973 12.064 106.1813 11.648 L106.9173 12.432 Q106.3893 13.008 105.4373 13.36 Q104.4853 13.712 103.5893 13.712 Q102.4853 13.712 101.5253 13.152 Q100.5653 12.592 99.9813 11.592 Q99.3973 10.592 99.3973 9.36 Q99.3973 8.16 99.9493 7.168 Q100.5013 6.176 101.4373 5.616 Q102.3733 5.056 103.4773 5.056 Q105.3333 5.056 106.3653 6.352 Q107.3973 7.648 107.3973 9.84 L100.6293 9.84 Q100.7573 11.072 101.5653 11.856 Q102.3733 12.64 103.5733 12.64 ZM103.5253 6.128 Q102.4053 6.128 101.6053 6.856 Q100.8053 7.584 100.6453 8.768 L106.2133 8.768 Q106.0853 7.584 105.3973 6.856 Q104.7093 6.128 103.5253 6.128 ZM23.6533 20.128 L24.9013 20.128 L28.9813 27.792 L33.0613 20.128 L34.3093 20.128 L34.3093 31.12 L33.0613 31.12 L33.0613 22.816 L28.9813 30.48 L24.9013 22.816 L24.9013 31.12 L23.6533 31.12 ZM40.7573 30.24 Q41.4933 30.24 42.2373 29.952 Q42.9813 29.664 43.3653 29.248 L44.1013 30.032 Q43.5733 30.608 42.6213 30.96 Q41.6693 31.312 40.7733 31.312 Q39.6693 31.312 38.7093 30.752 Q37.7493 30.192 37.1653 29.192 Q36.5813 28.192 36.5813 26.96 Q36.5813 25.76 37.1333 24.768 Q37.6853 23.776 38.6213 23.216 Q39.5573 22.656 40.6613 22.656 Q42.5173 22.656 43.5493 23.952 Q44.5813 25.248 44.5813 27.44 L37.8133 27.44 Q37.9413 28.672 38.7493 29.456 Q39.5573 30.24 40.7573 30.24 ZM40.7093 23.728 Q39.5893 23.728 38.7893 24.456 Q37.9893 25.184 37.8293 26.368 L43.3973 26.368 Q43.2693 25.184 42.5813 24.456 Q41.8933 23.728 40.7093 23.728 ZM50.7733 30.784 Q50.1013 31.312 49.2373 31.312 Q48.3573 31.312 47.7893 30.72 Q47.2213 30.128 47.2213 29.2 L47.2213 23.92 L45.9253 23.92 L45.9253 22.848 L47.2213 22.848 L47.2213 20.576 L48.4213 20.576 L48.4213 22.848 L50.4533 22.848 L50.4533 23.92 L48.4213 23.92 L48.4213 29.2 Q48.4213 29.648 48.6853 29.944 Q48.9493 30.24 49.3173 30.24 Q49.5893 30.24 49.8133 30.144 Q50.0373 30.048 50.1813 29.904 ZM56.4053 22.656 Q57.3013 22.656 58.0133 23.064 Q58.7253 23.472 59.1173 24.2 Q59.5093 24.928 59.5093 25.856 L59.5093 31.12 L58.3093 31.12 L58.3093 26.016 Q58.3093 25.008 57.7333 24.368 Q57.1573 23.728 56.2453 23.728 Q55.5573 23.728 54.9733 24.016 Q54.3893 24.304 54.0373 24.8 Q53.6853 25.296 53.6853 25.856 L53.6853 31.12 L52.4853 31.12 L52.4853 19.936 L53.6853 19.936 L53.6853 24.176 Q54.0533 23.504 54.7973 23.08 Q55.5413 22.656 56.4053 22.656 ZM65.7813 31.312 Q64.6453 31.312 63.6533 30.72 Q62.6613 30.128 62.0773 29.128 Q61.4933 28.128 61.4933 26.976 Q61.4933 25.824 62.0773 24.832 Q62.6613 23.84 63.6533 23.248 Q64.6453 22.656 65.7813 22.656 Q66.9173 22.656 67.9013 23.248 Q68.8853 23.84 69.4693 24.832 Q70.0533 25.824 70.0533 26.976 Q70.0533 28.128 69.4693 29.128 Q68.8853 30.128 67.9013 30.72 Q66.9173 31.312 65.7813 31.312 ZM65.7813 30.24 Q66.5813 30.24 67.2773 29.792 Q67.9733 29.344 68.3813 28.6 Q68.7893 27.856 68.7893 26.976 Q68.7893 26.112 68.3813 25.36 Q67.9733 24.608 67.2773 24.168 Q66.5813 23.728 65.7813 23.728 Q64.9653 23.728 64.2693 24.168 Q63.5733 24.608 63.1653 25.36 Q62.7573 26.112 62.7573 26.976 Q62.7573 27.856 63.1653 28.6 Q63.5733 29.344 64.2693 29.792 Q64.9653 30.24 65.7813 30.24 ZM79.7014 19.936 L79.7014 31.12 L78.5014 31.12 L78.5014 29.568 Q78.0214 30.4 77.2454 30.856 Q76.4694 31.312 75.4933 31.312 Q74.4213 31.312 73.5493 30.76 Q72.6773 30.208 72.1813 29.216 Q71.6854 28.224 71.6854 26.976 Q71.6854 25.728 72.1813 24.744 Q72.6773 23.76 73.5493 23.208 Q74.4213 22.656 75.4933 22.656 Q76.4694 22.656 77.2454 23.112 Q78.0214 23.568 78.5014 24.4 L78.5014 19.936 ZM75.7173 30.24 Q76.5174 30.24 77.1573 29.824 Q77.7974 29.408 78.1494 28.664 Q78.5014 27.92 78.5014 26.976 Q78.5014 26.032 78.1494 25.296 Q77.7974 24.56 77.1573 24.144 Q76.5174 23.728 75.7173 23.728 Q74.9174 23.728 74.2853 24.144 Q73.6534 24.56 73.3014 25.296 Q72.9493 26.032 72.9493 26.976 Q72.9493 27.92 73.3014 28.664 Q73.6534 29.408 74.2853 29.824 Q74.9174 30.24 75.7173 30.24 ZM86.0853 31.312 Q84.9493 31.312 83.9573 30.72 Q82.9653 30.128 82.3813 29.128 Q81.7973 28.128 81.7973 26.976 Q81.7973 25.824 82.3813 24.832 Q82.9653 23.84 83.9573 23.248 Q84.9493 22.656 86.0853 22.656 Q87.2213 22.656 88.2053 23.248 Q89.1893 23.84 89.7733 24.832 Q90.3573 25.824 90.3573 26.976 Q90.3573 28.128 89.7733 29.128 Q89.1893 30.128 88.2053 30.72 Q87.2213 31.312 86.0853 31.312 ZM86.0853 30.24 Q86.8853 30.24 87.5813 29.792 Q88.2773 29.344 88.6853 28.6 Q89.0933 27.856 89.0933 26.976 Q89.0933 26.112 88.6853 25.36 Q88.2773 24.608 87.5813 24.168 Q86.8853 23.728 86.0853 23.728 Q85.2693 23.728 84.5733 24.168 Q83.8773 24.608 83.4693 25.36 Q83.0613 26.112 83.0613 26.976 Q83.0613 27.856 83.4693 28.6 Q83.8773 29.344 84.5733 29.792 Q85.2693 30.24 86.0853 30.24 ZM92.3413 19.936 L93.5413 19.936 L93.5413 31.12 L92.3413 31.12 ZM99.8133 31.312 Q98.6773 31.312 97.6853 30.72 Q96.6933 30.128 96.1093 29.128 Q95.5253 28.128 95.5253 26.976 Q95.5253 25.824 96.1093 24.832 Q96.6933 23.84 97.6853 23.248 Q98.6773 22.656 99.8133 22.656 Q100.9493 22.656 101.9333 23.248 Q102.9173 23.84 103.5013 24.832 Q104.0853 25.824 104.0853 26.976 Q104.0853 28.128 103.5013 29.128 Q102.9173 30.128 101.9333 30.72 Q100.9493 31.312 99.8133 31.312 ZM99.8133 30.24 Q100.6133 30.24 101.3093 29.792 Q102.0053 29.344 102.4133 28.6 Q102.8213 27.856 102.8213 26.976 Q102.8213 26.112 102.4133 25.36 Q102.0053 24.608 101.3093 24.168 Q100.6133 23.728 99.8133 23.728 Q98.9973 23.728 98.3013 24.168 Q97.6053 24.608 97.1973 25.36 Q96.7893 26.112 96.7893 26.976 Q96.7893 27.856 97.1973 28.6 Q97.6053 29.344 98.3013 29.792 Q98.9973 30.24 99.8133 30.24 ZM113.7013 22.848 L113.7013 30.24 Q113.7013 31.296 113.1813 32.12 Q112.6613 32.944 111.7413 33.408 Q110.8213 33.872 109.6373 33.872 Q108.6613 33.872 107.7653 33.568 Q106.8693 33.264 106.2933 32.768 L106.8213 31.824 Q107.3013 32.288 108.0053 32.544 Q108.7093 32.8 109.4773 32.8 Q110.9013 32.8 111.7013 32.128 Q112.5013 31.456 112.5013 30.24 L112.5013 28.896 Q112.0213 29.664 111.2453 30.088 Q110.4693 30.512 109.4933 30.512 Q108.3893 30.512 107.5253 30.008 Q106.6613 29.504 106.1733 28.608 Q105.6853 27.712 105.6853 26.576 Q105.6853 25.44 106.1733 24.544 Q106.6613 23.648 107.5253 23.152 Q108.3893 22.656 109.4933 22.656 Q110.4693 22.656 111.2453 23.08 Q112.0213 23.504 112.5013 24.272 L112.5013 22.848 ZM109.7173 29.44 Q110.5173 29.44 111.1573 29.072 Q111.7973 28.704 112.1493 28.056 Q112.5013 27.408 112.5013 26.576 Q112.5013 25.76 112.1493 25.112 Q111.7973 24.464 111.1573 24.096 Q110.5173 23.728 109.7173 23.728 Q108.9173 23.728 108.2853 24.096 Q107.6533 24.464 107.3013 25.112 Q106.9493 25.76 106.9493 26.576 Q106.9493 27.408 107.3013 28.056 Q107.6533 28.704 108.2853 29.072 Q108.9173 29.44 109.7173 29.44 ZM117.4773 34 Q116.7573 34 116.1653 33.728 L116.4533 32.704 Q116.8693 32.912 117.4293 32.912 Q117.8453 32.912 118.1173 32.752 Q118.3893 32.592 118.6293 32.176 L119.1093 31.152 L115.5093 22.848 L116.8373 22.848 L119.7333 29.728 L122.4693 22.848 L123.7653 22.848 L119.9893 32.048 Q119.5733 33.072 118.9653 33.528 Q118.3573 33.984 117.4773 34 Z" stroke="none"/></g></g>
+  </g>
+  
+  </g>
+<defs>
+    <marker refX="3" refY="3" fill="none" orient="auto" markerHeight="15" id="indicator-arrow" preserveAspectRatio="xMidYMid meet" stroke="none" markerWidth="15">
+        <path d="M0,0 L3,3 L0,6" k9-highlight="stroke"/>
+    </marker>
+  </defs><defs>
+
+    <!-- Link Ends -->
+    
+    <marker id="-start-marker" preserveAspectRatio="xMidYMid meet">
+    </marker>
+
+    <marker id="-end-marker" preserveAspectRatio="xMidYMid meet">
+    </marker>
+    
+     <marker refX="1" refY="3" orient="auto" markerHeight="6" id="strike-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+      <path class="strike-marker" d="         M7,0 L5,6 h-1 L6,0z"/>
+    </marker>
+
+    <marker refX="7" refY="3" orient="auto" markerHeight="6" id="strike-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+      <path class="strike-marker" d="         M3,0 L1,6 h-1 L2,0z"/>
+    </marker>
+
+    <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-start-marker" markerWidth="6" refX="3">
+      <circle r="2" cx="3" class="circle-marker" cy="3"/>
+    </marker>
+
+    <marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-end-marker" markerWidth="6" refX="3">
+      <circle r="2" cx="3" class="circle-marker" cy="3"/>
+    </marker>
+
+    <marker refX="2" refY="3" orient="auto" markerHeight="6" id="diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/>
+    </marker>
+
+    <marker refX="6" refY="3" orient="auto" markerHeight="6" id="diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+      <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/>
+    </marker>
+
+    <marker refX="5" refY="3" orient="auto" markerHeight="6" id="open-diamond-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+      <path class="open-diamond-marker" d="         M0,3 L3,1 L6,3 L5,3 L3,1.66 L1,3             L3,4.33 L5,3 L6,3 L3,5 L0,3"/>
+    </marker>
+
+    <marker refX="1" refY="3" orient="auto" markerHeight="6" id="open-diamond-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+      <path class="open-diamond-marker" d="         M6,3 L3,1 L0,3 L1,3 L3,1.66 L5,3             L3,4.33 L1,3 L0,3 L3,5 L6,3"/>
+    </marker>
+
+    <marker refX="4" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+      <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6 L4,4 L2,2"/>
+    </marker>
+
+    <marker refX="4" refY="4" orient="auto" markerHeight="7" id="barbed-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+      <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6 L4,4 L6,2"/>
+    </marker>
+
+    <marker refX="1" refY="4" orient="auto" markerHeight="7" id="open-arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+       <path class="open-arrow-marker" d="         M6,4 L1,2 L1,3 L4,4 L1,5 L1,6 L6,4         M2,3 h-1 v2 h1z"/>
+    </marker>
+
+    <marker refX="6" refY="4" orient="auto" markerHeight="7" id="open-arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+      <path class="open-arrow-marker" d="         M1,4 L6,2 L6,3 L3,4 L6,5 L6,6 L1,4         M5,3 h1 v2 h-1z"/>
+    </marker>
+
+    <marker refX="4" refY="4" orient="auto" markerHeight="7" id="arrow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+      <polygon class="arrow-marker" points="2,4 6,2 6,6"/>
+    </marker>
+
+    <marker refX="4" refY="4" orient="auto" markerHeight="7" id="arrow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+      <polygon class="arrow-marker" points="6,4 2,2 2,6"/>
+    </marker>
+    
+    <marker refX="5" refY="4" orient="auto" markerHeight="7" id="crow-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+       <path class="crow-marker" d="          M1,4 L4,1 l0.66 0.66 L2.3,4z          M1,4 L4,7 l0.66 -0.66 L2.3,4z"/>       
+    </marker>
+    
+    <marker refX="1" refY="4" orient="auto" markerHeight="7" id="crow-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+       <path class="crow-marker" d="          M5,4 L2,1 l-0.66 0.66 L3.66,4z          M5,4 L2,7 l-0.66 -0.66 L3.66,4z"/>       
+    </marker>
+    
+    <marker refX="2" refY="2" orient="auto" markerHeight="7" id="square-end-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+       <rect x="0" width="4" y="0" height="4" class="square-marker"/>       
+    </marker>
+    
+    <marker refX="2" refY="2" orient="auto" markerHeight="7" id="square-start-marker" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+       <rect x="0" width="4" y="0" height="4" class="square-marker"/>       
+    </marker>
+
+  </defs><defs>
+    <filter xlink:actuate="onLoad" xlink:type="simple" height="130%" id="dropshadow" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <feGaussianBlur stdDeviation="4" in="SourceAlpha"/>
+      <feOffset dx="6" dy="6"/>
+      <feColorMatrix values="             0 0 0 0 0                 0 0 0 0 0                 0 0 0 0 0                 0 0 0 .4 0" type="matrix"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs><defs>
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="risk-background" xlink:show="other">
+      <stop stop-color="#FFF" offset="0%"/>
+      <stop stop-color="#DDD" offset="100%"/>
+    </linearGradient>
+  <script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink">document.params = { 'align-template-uri' : 'http://localhost:39000/public/templates/links/common-links.adl#align', 
+ 'link-template-uri' : 'http://localhost:39000/public/templates/links/common-links.adl#l6', 
+ 'cell-template-uri' : 'http://localhost:39000/public/templates/grid/common-grid.adl#t1', 
+ 'palettes' : ['http://localhost:39000/public/templates/links/common-links.adl', 'link', 'http://localhost:39000/public/templates/links/common-ends.adl', 'end', 'http://localhost:39000/public/templates/risk-first/artifact-palette.adl', 'connected risk', 'http://localhost:39000/public/templates/risk-first/risk-palette.adl', 'connected risk', 'http://localhost:39000/public/templates/containers/common-containers.adl', 'connected', 'http://localhost:39000/public/templates/grid/common-grid.adl', 'cell table'] , 
+ 'label-template-uri' : 'http://localhost:39000/public/templates/labels/common-labels.adl#label'
+ } 
+</script><script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink">
+import "http://localhost:39000/public/templates/risk-first/risk-first.js";
+</script></defs></svg>

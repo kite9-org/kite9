@@ -1,0 +1,35 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            clientId: 3431b25b7f45bea01ca8
+            clientSecret: a571cd018941b7cb88c5f7c63563adbf7a580b69
+            scope: repo
+  resources:
+    cache: 
+      cachecontrol:
+        cache-public: true
+        max-age: 604800
+            
+kite9:
+  diagram-log: OFF
+  caching: true
+  transformer-factory: net.sf.saxon.TransformerFactoryImpl
+    
+server:
+  use-forward-headers: true
+  
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics
+  metrics: 
+    export:
+     azuremonitor:
+       instrumentation-key: 44f571e1-016f-45f6-a2a1-303608eb9e75
+
+debug: false
+  

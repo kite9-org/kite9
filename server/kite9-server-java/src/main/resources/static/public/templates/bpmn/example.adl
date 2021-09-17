@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+	<svg:defs>
+		<svg:style type="text/css">
+			@import url("/public/templates/bpmn/bpmn.css");
+		</svg:style>
+
+	</svg:defs>
+	<diagram xmlns="http://www.kite9.org/schema/adl" id="The Diagram" style="kite9-layout: down; ">
+		
+		<pool id="p1" layout="right">
+		  <label id="n1">Kitchen Staff</label>
+		  <lane style="kite9-occupies-y: 0">
+		    <label id="wu">Washer-Upper</label>
+	      <start id="s1">Dinner Finished</start>
+	      <activity id="a1">Wash Up</activity>
+	      <intermediate id="i1">Something</intermediate>
+	      <gateway id="g1"></gateway>
+	      <end id="e1">Finished</end>
+		  </lane>
+		</pool>
+		
+		<pool id="p2" layout="right">
+		  <label id="resto">Restaurant</label>
+		  <lane id="l2" style="kite9-occupies-y: 0">
+	      <label id="n2">Kitchen Staff</label>
+	      <start id="s2">Dinner Finished</start>
+	      <activity id="a2">Wash Up</activity>
+		  </lane>
+		  <lane id="l3" style="kite9-occupies-y: 1">
+        <label id="n3">Waiter</label>
+        <intermediate id="i3">Something</intermediate>
+        <gateway id="g3"></gateway>
+        <end id="e3">Finished</end>
+		  </lane>
+    </pool>
+		
+	</diagram>
+</svg:svg>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
+  <svg:defs>
+    <svg:style type="text/css"> 
+       @import url("/public/templates/example/example.css");
+       @import url("/public/templates/highlight/highlight.css");
+    </svg:style>
+    
+    <svg:script type="module">
+  		import { dragger, command, contextMenu } from '/public/templates/common/common.js';
+      import { initDragable, initCompleteDragable, initDragableDragLocator } from '/public/behaviours/dragable/dragable.js' 
+      import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
+     
+			dragger.moveWith(() => contextMenu.destroy());
+		  dragger.dropWith(initCompleteDragable(command));
+		
+		  dragger.dragLocator(initDragableDragLocator());
+		
+    </svg:script>
+    
+  </svg:defs>
+  <diagram xmlns="http://www.kite9.org/schema/adl" id="d" drag="target">
+
+     <g id="b1" class="box"><textarea id="fs1">A</textarea></g>
+     
+     <group class="group"  id="bigbox" style="kite9-layout: horizontal; ">
+       <g id="b2" class="box"><textarea id="fs2" class="text">B</textarea></g>
+       
+       <g id="b3" class="box"><textarea id="fs3" class="text">Don't Drag</textarea></g>
+     </group>
+     
+     <link id="link2" drop="rect">
+      <from id="link2-from" reference="b1" class="arrow"></from>
+      <to id="link2-to" class="arrow" reference="b3"></to>
+     </link>
+     
+     
+     <link id="link2" drop="rect">
+      <from drag="yes from" id="link2-from" reference="b1" class="hoverable"></from>
+      <to drag="yes to" id="link2-to" class="hoverable" reference="b2"></to>
+     </link>
+
+  </diagram>
+</svg:svg>

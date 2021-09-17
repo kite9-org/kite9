@@ -1,0 +1,22 @@
+<diagram xslt:template="/public/templates/basic/basic-template.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
+
+   <box id="b1" ><textarea id="t1" style="fill: red" >y</textarea></box>
+   
+   <container id="bigbox" layout="horizontal">
+     <box id="b2" ><textarea id="t2">,</textarea></box>
+     <box id="b3" ><textarea id="t3">b3 line</textarea></box>
+   </container>
+   
+   <link id="link1" r="r">
+    <from id="link1-from" reference="b1" shape="arrow"></from>
+    <to id="link1-to" shape="arrow" reference="b3"></to>
+   </link>
+   
+   <link drawDirection="RIGHT" id="link2">
+    <from id="link2-from" reference="b1"></from>
+    <to id="link2-to" reference="b2"></to>
+   </link> 
+
+</diagram>

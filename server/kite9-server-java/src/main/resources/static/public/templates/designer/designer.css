@@ -1,0 +1,75 @@
+@import url('/public/templates/common/common.css');
+@import url('/public/templates/containers/common-containers.css');
+@import url('/public/templates/links/common-links.css');
+@import url("/public/templates/grid/common-grid.css");
+@import url('/public/templates/labels/common-labels.css');
+@import url('/public/fonts/opensans/opensans.css');
+
+@import url('/public/templates/designer/glyph.css');
+@import url('/public/templates/designer/arrow.css');
+@import url('/public/templates/designer/symbols.css');
+@import url('/public/templates/designer/context.css');
+
+@import url('/public/templates/flowchart/flowchart-shapes.css');
+@import url('/public/templates/flowchart/flowchart-components.css');
+@import url('/public/templates/uml/uml-shapes.css');
+@import url('/public/templates/uml/uml-components.css');
+
+@import url('/public/templates/editor/editor.css');
+
+
+
+/* Definitions of Kite9 Elements */
+
+[k9-elem=diagram] {
+  --kite9-padding-top: 15pt;
+  --kite9-padding-right: 15pt;
+  --kite9-padding-bottom: 15pt;
+  --kite9-padding-left: 15pt;
+
+  --kite9-margin-top: 10pt;
+  --kite9-margin-right: 10pt;
+  --kite9-margin-left: 10pt;
+  --kite9-margin-bottom: 10pt;
+
+	--kite9-link-inset: 10pt;
+	--kite9-link-gutter: 10pt;
+	--kite9-type: diagram;
+	--kite9-traversal: none;
+
+  font-family: opensans;
+  font-weight: 400;
+  font-size: 10pt;
+}
+
+/** Drop-shadow really slows down editing at the moment, 
+ * so don't show it when in editor mode
+ */
+@media editor {
+  [k9-elem=diagram] {
+    --kite9-template: url(template.xml#diagram-noshadow);
+  }  
+}
+
+
+/* Fills */
+
+[k9-texture=solid] > [k9-elem=back],
+[k9-texture=solid] > [k9-elem=shape] {
+   fill: url(#glyph-background); 
+   stroke: black; 
+}
+
+/* Link Labels */
+
+[k9-elem=link] > [k9-elem=label] {
+  stroke-width: 0;
+  font-size: 11pt;
+  font-weight: 300;
+  fill: white;
+}
+
+[k9-elem=link] > [k9-elem=label] > [k9-elem=back] {
+  fill: #777;
+  fill-opacity: 1;
+}

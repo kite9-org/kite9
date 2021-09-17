@@ -1,0 +1,18 @@
+/**
+ * Provides a baseline set of primitives to work with.  It defines the following:
+ * <back /> : the background svg shape for an element or object
+ * k9-shape: an attribute which will dictate the shape of <back />
+ * k9-texture:  an attribute which will dictate the fill/opacity of <back />
+ * k9-format: a selection of example templates to use, which represent common things like icons, text, labelled images etc.
+ * diagram, container, group: three different types of container.
+ * k9-rounding: attribute to say how much to round a rectangle corner.
+ * type: "connected" - things that can go inside containers.
+ */
+
+@import url(/public/templates/formats/formats.css);
+@import url(/public/templates/texture/texture.css);
+@import url(/public/templates/containers/containers.css);
+@import url(/public/templates/links/links.css);
+@import url(/public/templates/labels/labels.css);
+@import url(/public/templates/grid/grid.css);
+@import url(/public/templates/diagram/diagram.css);

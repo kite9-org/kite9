@@ -1,0 +1,44 @@
+[k9-elem=delay],
+[k9-elem=direct],
+[k9-elem=stored],
+[k9-elem=predefined],
+[k9-elem=manual]	
+[k9-elem=decision],
+[k9-elem=internal],
+[k9-elem=database],
+[k9-elem=input],
+[k9-elem=document],
+[k9-elem=off-page] {
+	--kite9-padding: 15pt;
+}
+
+[k9-elem=delay],
+[k9-elem=direct],
+[k9-elem=stored] {
+	--kite9-padding-right: 25pt;
+}
+
+[k9-elem=predefined],
+[k9-elem=manual] {
+	--kite9-padding-left: 20pt;
+	--kite9-padding-right: 20pt;
+}
+
+[k9-elem=decision] {
+	--kite9-padding: 25pt;
+}
+
+[k9-elem=internal] {
+	--kite9-padding-top: 20pt;
+	--kite9-padding-left: 20pt;
+}
+
+[k9-elem=database],
+[k9-elem=input] {
+	--kite9-padding-top: 25pt;
+}
+
+[k9-elem=document],
+[k9-elem=off-page] {
+	--kite9-padding-bottom: 25pt;
+}

@@ -1,0 +1,45 @@
+<diagram xslt:template="/public/templates/uml/uml-template.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" 
+         id="dia" 
+         style="--kite9-layout: vertical; " name="UML">
+
+	<table style="--kite9-grid-size: 4 4; ">
+		<cell>
+			<actor id="1">Actor</actor>
+		</cell>
+		<cell>
+			<use-case id="2">Use Case</use-case>
+		</cell>
+		<cell>
+			<component id="3"><label id="3l">Component</label></component>
+		</cell>
+		<cell>
+			<package id="4"><label id="4l">Package</label></package>
+		</cell>
+		<cell>
+			<interface id="5">Interface</interface>
+		</cell>
+		<cell>
+			<note id="6">Note</note>
+		</cell>
+	  <cell>
+			<class k9-type="small" id="7">
+				<class-name id="7c">Class</class-name>
+			</class>
+		</cell>
+		<cell>
+			<class k9-type="large" id="8">
+				<stereotype id="8.1">Stereotype</stereotype>
+				<class-name id="8.2">Class</class-name>
+				<property id="8.4">property1</property>
+				<property id="8.5">property2</property>
+				<method id="8.7">method1</method>
+				<method id="8.8">method2</method>
+			</class>
+		</cell>
+		<cell>
+			<uml-container id="9"><label id="9l">Container</label></uml-container>
+		</cell>
+	</table>
+</diagram>

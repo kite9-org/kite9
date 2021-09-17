@@ -1,0 +1,72 @@
+<diagram xslt:template="/public/templates/flowchart/flowchart-template.xsl"
+  xmlns="http://www.kite9.org/schema/adl"
+  xmlns:xslt="http://www.kite9.org/schema/xslt" 
+  id="dia"
+  style="--kite9-layout: vertical; ">
+  
+	<table style="--kite9-grid-size: 4 4; ">
+		<cell>
+			<stored k9-format="text-shape-captioned" id="1">Stored</stored>
+		</cell>
+		<cell>
+			<decision k9-format="text-shape-captioned" id="2">Decision</decision>
+		</cell>
+		<cell>
+			<start k9-format="text-shape-captioned" id="3">Start</start>
+		</cell>
+		<cell>
+			<process k9-format="text-shape-captioned" id="4">Process</process>
+		</cell>
+		<cell>
+			<document k9-format="text-shape-captioned" id="5">Document</document>
+		</cell>
+		<cell>
+			<delay k9-format="text-shape-captioned" id="6">Delay</delay>
+		</cell>
+	 	<cell>
+			<manual k9-format="text-shape-captioned" id="7">Manual 
+			Operation</manual>
+		</cell>
+		<cell>
+			<terminator k9-format="text-shape-captioned" id="8">Terminator</terminator>
+		</cell>
+		<cell>
+			<input k9-format="text-shape-captioned" id="9">Manual 
+			Input</input>
+		</cell>
+		<cell>
+			<database k9-format="text-shape-captioned" id="10">Database</database>
+		</cell>
+		<cell>
+			<preparation k9-format="text-shape-captioned" id="11">Preparation</preparation>
+		</cell>
+		<cell>
+			<internal k9-format="text-shape-captioned" id="12">Internal</internal>
+		</cell>
+		<cell>
+			<off-page k9-format="text-shape-captioned" id="13">Off-Page
+			Connector</off-page>
+		</cell>
+		<cell>
+			<direct k9-format="text-shape-captioned" id="14">Direct</direct>
+		</cell>
+		<cell>
+			<predefined k9-format="text-shape-captioned" id="15">Predefined</predefined>
+		</cell>
+		<cell>
+			<display k9-format="text-shape-captioned" id="16">Display</display>
+		</cell>
+		<cell>
+			<loop-limit k9-format="text-shape-captioned" id="7">Loop Limit</loop-limit>
+		</cell>
+		<cell>
+			<reference k9-format="text-shape-captioned" id="18">Reference</reference>
+		</cell>
+		<cell>
+			<stored k9-format="text-shape-captioned" id="19">Stored Data</stored>
+		</cell>
+		<cell>
+			<sequential k9-format="text-shape-captioned" id="20">Sequential</sequential>
+		</cell>
+	</table>
+</diagram>

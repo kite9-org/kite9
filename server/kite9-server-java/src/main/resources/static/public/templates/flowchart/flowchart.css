@@ -1,0 +1,27 @@
+@import url('/public/templates/adl/adl.css');
+@import url('/public/templates/editor/editor.css');
+@import url('/public/fonts/metropolis/metropolis.css');
+@import url(flowchart-shapes.css);
+
+[k9-texture=flowchart-symbol] {
+	fill: #BBBBBB;
+	stroke: black;
+}
+
+[k9-elem=diagram] > [k9-texture] {
+	fill: white;
+}
+
+[k9-texture=foreground] > text {
+  font-family: "metropolis";
+  text-align: start;
+  font-size: 10pt;
+  stroke: none;
+  fill:  black;	
+}
+
+[k9-elem=textarea] > [k9-texture=background],
+[k9-elem=label] > [k9-texture=background] { 
+  fill: none;
+  stroke: none;
+}

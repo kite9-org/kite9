@@ -1,0 +1,13 @@
+<diagram xmlns="http://www.kite9.org/schema/adl"
+         style="kite9-layout: vertical; " id="pal">
+
+    <box id="b1">
+      <textarea id="fs1">Box</textarea>
+    </box>
+
+    <box id="b2" style="fill: #AA5500; " >
+      <textarea id="fs1" style="fill: #990055; ">Box 2</textarea>
+    </box>
+
+  
+</diagram>

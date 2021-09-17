@@ -1,0 +1,15 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl'>
+
+  <template id="templated-link" k9-ui="delete link cascade drop" k9-palette="link" k9-containers="*" k9-contains="end label">
+    <link-grab k9-highlight="bar stroke">
+      <svg:path d="#{$path}" k9-animate="link"/>
+    </link-grab>
+    <contents optional="true" />
+    <link-body>
+      <svg:path k9-animate="link" d="#{$path}"
+        marker-start="pre:#{$template-1}-start-marker"
+        marker-end="pre:#{$template-2}-end-marker" />
+    </link-body>
+  </template>
+
+</svg:svg>

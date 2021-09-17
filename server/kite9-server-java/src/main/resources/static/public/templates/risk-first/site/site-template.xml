@@ -1,0 +1,120 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl' xmlns:xlink="http://www.w3.org/1999/xlink">
+  
+  <svg:defs>
+    <svg:filter id="dropshadow" height="130%">
+      <svg:feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <svg:feOffset dx="6" dy="6" />
+      <svg:feColorMatrix type="matrix" values="
+            0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 .4 0" />
+      <svg:feMerge>
+        <svg:feMergeNode />
+        <svg:feMergeNode in="SourceGraphic" />
+      </svg:feMerge>
+    </svg:filter>
+  </svg:defs>
+  
+  <template id="big-image">
+    <image width="280pt" height="280pt" href="pre:#{@imgsrc}" />
+    <title><contents optional="true"/></title>
+  </template>
+  
+ 
+  <template id="image-artifact">
+    <image href="pre:#{@imgsrc}" width="80pt" height="80pt" style="kite9-vertical-align: center; kite9-min-size: 80pt 80pt;" />
+    <title><contents /></title>
+  </template>
+ 
+  
+  <template id="celltext">
+    <text-label style="kite9-type: text;">
+      <svg:flowRegion>
+        <svg:rect width="950pt" height="400pt" />
+      </svg:flowRegion>
+      <contents />
+    </text-label>
+  </template>
+  
+  <template id="bulleted" style="kite9-type: container; kite9-layout: right;" >
+   	<text-label style="kite9-type: text; kite9-vertical-align: top; kite9-padding-right: 15pt;">
+   	  &#8226; 
+   	</text-label> 
+    <text-label style="kite9-type: text; kite9-vertical-align: top;">
+      <svg:flowRegion>
+        <svg:rect width="950pt" height="400pt" />
+      </svg:flowRegion>
+      <contents />
+    </text-label>
+  </template>
+  
+  <template id="description" class="description"> 
+    <text-label style="kite9-type: text; kite9-padding: 0; " >
+      <svg:flowRegion>
+        <svg:rect width="250pt" height="400pt" />
+      </svg:flowRegion>
+      <contents />
+    </text-label>
+  </template>
+
+  <template id="long-description" class="description"> 
+    <text-label style="kite9-type: text; kite9-padding: 0; " >
+      <contents />
+    </text-label>
+  </template>
+    
+  <!-- Steve McConnell Stuff -->
+
+ 
+   <template id="leg">
+   <back style='kite9-usage: decal; kite9-type: svg; '>
+     <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' style='fill: url(#risk-background); ' class="glyph-back" />
+   </back>     
+   <leg-text style="kite9-type: text; kite9-padding: 10pt; kite9-padding-top: 50pt; text-align: middle; ">
+     <contents />
+   </leg-text>
+  </template>
+ 
+ <plinth id="plinth" style="kite9-type: container;">
+   <back style='kite9-usage: decal; kite9-type: svg; '>
+     <svg:polygon points="0, #{$height} #{$width div 2},0 #{$width}, #{$height}" style='fill: url(#risk-background); ' class="glyph-back" />
+   </back>
+   <plinth-text style="kite9-type: text; kite9-padding: 10pt; kite9-padding-top: 15pt; "><contents /></plinth-text>
+ </plinth>
+ 
+ <!-- risk matrix -->
+ 
+ <template id="symbol">
+   <svg:g transform="translate(#{../@ox * $pt }, #{../@oy * $pt})">
+    <svg:circle style="fill: #A0A0A0;  stroke: none" cx="6pt" cy="6pt" r="8pt" />
+    <svg:text x=".35pt" y="1pt" class="symbol-text"><contents xpath="substring(@theChar,1, 1)" type="string"/></svg:text>
+   </svg:g>
+  </template>
+  
+  <template id="box">
+  	<back style='kite9-usage: decal; kite9-type: svg; '>
+      <svg:rect x='0' y='0' width='#{$width}' height='#{$height}' class="glyph-back" />
+    </back>   
+    <contents />
+  </template>
+  
+  <template id='connection-label'>
+    <svg:g class="container-label-front">
+      <front style="kite9-type: text; ">
+        <contents />
+      </front>
+    </svg:g>
+  </template>
+  
+  <template id="diagram-image" k9-texture="background" k9-ui="layout label" k9-shape="rect" k9-rounding="0pt" k9-contains="connected">
+    <decal style='kite9-usage: decal; kite9-type: svg; '>
+      <svg:image x="0" y="0" width='#{$width}' height='#{$height}' xlink:href="pre:#{$template-1}" />
+    </decal>
+    <indicator />
+    <svg:g filter="url(#dropshadow)">
+      <contents optional="true" />
+    </svg:g>
+  </template>  
+  
+</svg:svg>

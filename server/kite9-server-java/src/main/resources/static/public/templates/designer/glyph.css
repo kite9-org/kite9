@@ -1,0 +1,87 @@
+[k9-elem=glyph] {
+  --kite9-type: container;
+  --kite9-layout: down;
+  --kite9-padding-top: 6pt;
+  --kite9-padding-right: 10pt;
+  --kite9-padding-bottom: 6pt;
+  --kite9-padding-left: 10pt;
+
+  --kite9-margin-top: 10pt;
+  --kite9-margin-right: 10pt;
+  --kite9-margin-left: 10pt;
+  --kite9-margin-bottom: 10pt;
+  --kite9-connection-align: 50%;
+}
+
+[k9-elem=glyph][k9-texture=solid] > [k9-elem=back] {
+  fill: url('#glyph-background'); 
+  fill-opacity: 1;
+  stroke: black;
+}
+
+[k9-elem=glyph] > [k9-elem=stereotype] {
+  --kite9-type: container;
+  --kite9-horizontal-align: center;
+  --kite9-sizing: minimize;
+  text-align: middle;
+  font-weight: 700;
+  font-size: 12pt;
+  fill: black;
+  stroke: none;
+    --kite9-padding-top: 2pt;
+    --kite9-padding-right: 2pt;
+    --kite9-padding-bottom: 2pt;
+    --kite9-padding-left: 2pt;
+
+    --kite9-margin-top: 5pt;
+    --kite9-margin-right: 5pt;
+    --kite9-margin-left: 5pt;
+    --kite9-margin-bottom: 5pt;
+}
+
+[k9-elem=glyph] > [k9-elem=label] {
+	--kite9-usage: connected;
+  --kite9-type: container;
+  --kite9-sizing: maximize;
+    --kite9-padding-top: 2pt;
+    --kite9-padding-right: 2pt;
+    --kite9-padding-bottom: 2pt;
+    --kite9-padding-left: 2pt;
+
+    --kite9-margin-top: 5pt;
+    --kite9-margin-right: 5pt;
+    --kite9-margin-left: 5pt;
+    --kite9-margin-bottom: 5pt;
+  font-size: 15pt;
+  fill: black;
+  font-weight: 400;
+  stroke: none;
+}
+
+[k9-elem=glyph] > [k9-elem=text-line] {
+  --kite9-type: container;
+  --kite9-sizing: maximize;
+  --kite9-layout: right;
+  --kite9-padding-top: 2pt;
+  --kite9-padding-bottom: 2pt;
+  --kite9-padding-left: 0pt;
+  --kite9-padding-right: 0pt;
+  --kite9-vertical-align: top;
+  --kite9-connection-align: 50%;
+  --kite9-horizontal-align: left;
+  stroke: none;
+  fill: black;
+  font-weight: 400;
+  text-align: start;  
+  font-size: 10pt;
+}
+
+[k9-elem=glyph] > [k9-elem=text-line] > [k9-elem=textarea] {
+	--kite9-horizontal-align: left;
+	--kite9-margin-right: 15pt;
+}
+
+
+[k9-elem=glyph] > [k9-elem=stereotype][symbols=true] > [k9-elem=textarea] {
+  --kite9-horizontal-align: left;
+}

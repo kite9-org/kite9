@@ -1,0 +1,26 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'
+	xmlns='http://www.kite9.org/schema/adl'>
+
+	<!-- Icon with text below it. k9-shape of the icon defaults to the tag used. -->
+	<template id='pool'
+		k9-ui="drag delete edit align cascade connect"
+		k9-palette="connected" k9-shape="rect" k9-texture="outline">
+		<back />
+		<contents />
+	</template>
+	
+	<template id='lane'
+	  k9-ui="drag delete edit cascade"
+    k9-palette="lane" k9-contains="" k9-shape="rect" k9-texture="outline" >
+    <back />
+    <contents />
+  </template>
+  
+  <!-- simple text area, can only be edited, not moved, deleted etc. -->
+  <template id="vertical-textarea" k9-ui="orphan edit delete"
+    k9-format="textarea"  k9-shape="rect" k9-texture="solid" transform="rotate(-90)" k9-highlight="pulse">
+    <back />
+    <contents />
+  </template>
+
+</svg:svg>

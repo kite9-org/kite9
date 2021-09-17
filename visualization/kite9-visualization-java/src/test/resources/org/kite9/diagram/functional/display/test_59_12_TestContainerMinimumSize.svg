@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg:svg xmlns:pp="http://www.kite9.org/schema/post-processor" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" style="--kite9-type: diagram; " version="1.0" width="277" pp:width="$width" preserveAspectRatio="xMidYMid meet" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=277.0, h=150.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@292158f8; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" pp:height="$height"
+>
+<svg:defs
+  ><svg:style xml:space="preserve"
+    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");</svg:style
+    ><svg:linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+    ><svg:stop stop-color="#FFF" offset="0%"
+      /><svg:stop stop-color="#DDD" offset="100%"
+    /></svg:linearGradient
+  ></svg:defs
+  >    <svg:g style="--kite9-type: container; --kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=247.0, h=120.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@38bb9d7a; " transform="translate(15.0,15.0)"
+  >
+      <svg:rect x="0" y="0" width="247" style="fill: url(#glyph-background); " pp:height="$height" class="glyph-back" rx="8" ry="8" height="120" pp:width="$width"
+    />
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px;" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=60.0); rect-size: BasicDimension2D(w=227.0, h=30.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@761e788f; " transform="translate(7.8,70.0)"
+    >
+        <svg:text
+      >hello something else</svg:text
+      >
+      </svg:g
+      >
+      <svg:g style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; --kite9-vertical-align: bottom;" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=139.0, h=125.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@5b3a7ef5; "
+      >
+        hello b
+      </svg:g
+      >
+    </svg:g
+      >
+  </svg:svg
+    >

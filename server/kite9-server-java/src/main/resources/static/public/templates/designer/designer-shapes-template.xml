@@ -1,0 +1,23 @@
+<svg:svg xmlns:svg='http://www.w3.org/2000/svg'
+	xmlns:xlink='http://www.w3.org/1999/xlink'
+	xmlns='http://www.kite9.org/schema/adl'>
+
+
+	<template id="circle">
+		<svg:circle style="fill: #00A070;  stroke: none" cx="#{$width div 2}"
+			cy="#{$height div 2}" r="#{$width div 2}" />
+	</template>
+
+	<template id="hexagon">
+		<svg:polygon points="0,#{$height div 4} #{$width div 2},0 #{$width},#{$height div 4} #{$width},#{3 * $height div 4} #{$width div 2},#{$height} 0,#{3 * $height div 4}" />
+	</template>
+
+	<template id="diamond">
+		<svg:polygon points="#{$width div 2},0 #{$width},#{$height div 2} #{$width div 2},#{$height} 0,#{$height div 2}"  />
+	</template>
+
+	<template id="square">
+		<svg:rect width="#{$width}" height="#{$height}" x="0" y="0" />
+	</template>
+
+</svg:svg>

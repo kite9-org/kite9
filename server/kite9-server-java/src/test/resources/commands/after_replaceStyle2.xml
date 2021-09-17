@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram id="The Diagram">
+<glyph id="one">
+  <label id="one-label">One</label>
+</glyph>
+<glyph id="two" style="stroke: single back() border 1.5em; ">
+  <label id="two-label">Two</label>
+</glyph>
+<link id="link" rank="4">
+  <from id="link-from" reference="one"/>
+  <to class="arrow" id="link-to" reference="two"/>
+</link>
+</diagram>

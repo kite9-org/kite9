@@ -1,0 +1,144 @@
+/**
+ * Styles for background images of icons on website
+ */
+
+[k9-elem=diagram].bg1 {
+  --kite9-template: url(site-template.xml#diagram-image) '/public/templates/risk-first/backgrounds/vecteezy-5.jpg';
+}
+
+[k9-elem=diagram].bg2 {
+  --kite9-template: url(site-template.xml#diagram-image) '/public/templates/risk-first/backgrounds/vecteezy-1.jpg';
+}
+
+[k9-elem=diagram].bg3 {
+  --kite9-template: url(site-template.xml#diagram-image) '/public/templates/risk-first/backgrounds/vecteezy-3.jpg';
+}
+
+[k9-elem=image-artifact] {
+  --kite9-template: url(site-template.xml#image-artifact);
+}
+
+[k9-elem=celltext] {
+  --kite9-usage: regular;
+  --kite9-type: container;
+  --kite9-template: url(site-template.xml#celltext);
+  --kite9-minimum-height: 250pt;
+  --kite9-padding: 10pt;
+  --kite9-vertical-align: center;
+  --kite9-horizontal-align: left;
+  --kite9-sizing: minimize;
+  font-size: 40pt;
+  fill: black;
+  font-family: "gothic";
+  stroke: none;
+}
+
+[k9-elem=celltext] [k9-elem=text-label] {
+  --kite9-horizontal-align: left;
+}
+
+[k9-elem=bulleted] {
+  --kite9-usage: regular;
+  --kite9-type: container;
+  --kite9-template: url(site-template.xml#bulleted);
+  --kite9-vertical-align: top;
+  --kite9-horizontal-align: left;
+  font-size: 40pt;
+  fill: black;
+  font-family: "gothic";
+  stroke: none;
+}
+
+[k9-elem=ctext] {
+  --kite9-usage: regular;
+  --kite9-vertical-align: top;
+  --kite9-horizontal-align: left;
+  font-size: 40pt;
+  fill: black;
+  font-family: "gothic";
+  stroke: none;
+  --kite9-type: text;
+}
+
+[k9-elem=btext] {
+  --kite9-usage: regular;
+  --kite9-vertical-align: top;
+  --kite9-horizontal-align: left;
+  font-size: 40pt;
+  fill: black;
+  font-family: "gothic-bold";
+  stroke: none;
+  --kite9-type: text;
+}
+
+[k9-elem=tick] {
+  --kite9-usage: regular;
+  --kite9-type:  container;
+  --kite9-template: url(site-template.xml#tick);
+}
+
+[k9-elem=table] [k9-elem=risk],
+[k9-elem=table] [k9-elem=tick] {
+  --kite9-horizontal-align: center;
+  --kite9-margin: 20pt;
+}
+
+[k9-elem=table] [k9-elem=celltext].bottom {
+  --kite9-vertical-align: bottom;
+}
+
+[k9-elem=table] [k9-elem=celltext].top {
+  --kite9-vertical-align: top;
+}
+
+/* Risk Descriptions */
+
+[k9-elem=description],
+[k9-elem=long-description],
+.description {
+  --kite9-type: container;
+  --kite9-template: url(site-template.xml#description);
+  font-size: 14pt;
+  font-family: "gothic-italic";
+  font-style: italic;
+  --kite9-padding: 10pt;
+}
+
+[k9-elem=long-description] {
+  --kite9-template: url(site-template.xml#long-description);
+}
+
+
+/* Steve McConnell Stuff */
+
+[k9-elem=leg] {
+  --kite9-type: container;
+  --kite9-template: url(site-template.xml#leg);
+  --kite9-layout: down;
+  --kite9-min-height: 110pt;
+  --kite9-min-width: 70pt;
+  --kite9-sizing: minimize;
+  --kite9-margin: 0px;
+  --kite9-vertical-align: bottom;
+}
+
+
+[k9-elem=plinth] {
+  --kite9-template: url(site-template.xml#plinth);
+  --kite9-type: container;
+  --kite9-sizing: maximize;
+}
+
+/** Book Icon */
+
+[k9-elem=big-image] {
+  --kite9-margin: 10pt;
+  --kite9-link-inset: 10pt;
+  --kite9-link-gutter: 10pt;
+  --kite9-type: container;
+  --kite9-layout: vertical;
+  --kite9-template: url(site-template.xml#big-image);
+  --kite9-padding: 10pt;
+  --kite9-connection-align: 50%;
+  --kite9-min-size: 110pt 140pt;
+}
