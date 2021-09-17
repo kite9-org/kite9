@@ -59,7 +59,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				Collections.reverse(commands);
 				for (Command command : commands) {
 					Command.Mismatch status = command.undoCommand(dom, ctx);
-					LOG.info("Completed {} with status {}", command, status);
+					LOG.debug("Completed {} with status {}", command, status);
 					if (status != null) {
 						errors.add(status);
 					}
@@ -67,7 +67,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			} else {
 				for (Command command : commands) {
 					Command.Mismatch status = command.applyCommand(dom, ctx);
-					LOG.info("Completed {} with status {}", command, status);
+					LOG.debug("Completed {} with status {}", command, status);
 					if (status != null) {
 						errors.add(status);
 					}
@@ -78,18 +78,13 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				dom.setError(errors.stream().map(s -> s.explain()).reduce("", (x, y) -> x + "\n" +y));
 			}
 
-			// we need to use Schema to ensure consistency - either the diagram
-			// is consistent and is returned, or it is rolled back.  You can't just change stuff
-			// as that breaks undo/redo
-			//new ADLReferenceHandler(dom, ctx).ensureConsistency();
-
 			MetaHelper.setAuthorAndNotification(authentication, dom);
 			api.addMeta(dom);
 			ADLOutput output = dom.process(update.getUri(), f);
 		
-			//if (LOG.isDebugEnabled()) {
-				LOG.info("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));
-			//}
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));
+			}
 
 			// this must come after processing, to make sure it renders correctly.
 			if (api.getType(authentication) != ModifiableAPI.Type.VIEWONLY) {
