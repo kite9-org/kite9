@@ -17,7 +17,7 @@
 
   <xsl:template name="uml-actor" match="adl:actor" mode="shape">
     <g>
-      <rect x="0" y="0" width="20pt" height="20pt" />
+      <xsl:attribute name="pp:style">transform: scale([[$width div 50]],[[$height div 50]]);</xsl:attribute>
       <ellipse cx="25" cy="10" rx="10" ry="10"/>
       <path
         d="M 10 20 
