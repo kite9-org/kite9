@@ -1,5 +1,3 @@
-/* @defs url(containers-template.xml); */
-
 /* Groups: Invisible containers */
 
 [k9-elem=group] {
@@ -16,7 +14,7 @@
 	--kite9-sizing: minimize;
 }
 
-[k9-elem=container] > [k9-texture=background] {
+[k9-elem=container] > [texture=background] {
 	stroke: black;
 	stroke-width: 2pt;
 }
@@ -28,13 +26,13 @@
 	stroke: none;
 }
 
-[k9-elem=container].solid > [k9-texture=background] * {
+[k9-elem=container].solid > [texture=background] * {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: none;
 }
 
-[k9-elem=container].dotted > [k9-texture=background] * {
+[k9-elem=container].dotted > [texture=background] * {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: 4 4;	

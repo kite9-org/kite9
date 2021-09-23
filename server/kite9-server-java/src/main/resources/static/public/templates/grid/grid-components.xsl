@@ -4,14 +4,14 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
   
-  <xsl:import href="../formats/formats-template.xsl"/>  
+  <xsl:import href="../formats/formats-components.xsl"/>  
 
 
   <!-- tables -->
   
   <xsl:template name="grid-table-basic">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
+      <xsl:with-param name="rounding">0pt</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete layout</xsl:with-param>
       <xsl:with-param name="k9-palette">connected table</xsl:with-param>
     </xsl:call-template>
@@ -19,11 +19,20 @@
 
   <xsl:template name="grid-cell-basic">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
+      <xsl:with-param name="rounding">0pt</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete cascade orphan layout grid</xsl:with-param>
-      <xsl:with-param name="k9-highlight">pulse stroke</xsl:with-param>
+      <xsl:with-param name="highlight">pulse stroke</xsl:with-param>
       <xsl:with-param name="k9-palette">cell</xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+  
+  
+  <xsl:template match="adl:table">
+    <xsl:call-template name="grid-table-basic" />
+  </xsl:template>
+  
+  <xsl:template match="adl:cell">
+    <xsl:call-template name="grid-cell-basic" />
   </xsl:template>
 
 </xsl:stylesheet>

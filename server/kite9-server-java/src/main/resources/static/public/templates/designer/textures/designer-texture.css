@@ -1,17 +1,7 @@
-@import url('/public/templates/adl/adl.css');
-@import url('/public/fonts/opensans/opensans.css');
-
-@import url('/public/templates/designer/glyph.css');
-@import url('/public/templates/designer/arrow.css');
-@import url('/public/templates/designer/symbols.css');
-@import url('/public/templates/designer/context.css');
-
-@import url('/public/templates/flowchart/flowchart-shapes.css');
-@import url('/public/templates/uml/uml.css');
-
-@import url('/public/templates/editor/editor.css');
-
-
+@import url('glyph.css');
+@import url('arrow.css');
+@import url('symbols.css');
+@import url('context.css');
 
 /* Definitions of Kite9 Elements */
 

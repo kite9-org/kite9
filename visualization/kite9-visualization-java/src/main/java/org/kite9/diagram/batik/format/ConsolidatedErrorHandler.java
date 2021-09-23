@@ -2,7 +2,9 @@ package org.kite9.diagram.batik.format;
 
 import org.apache.batik.transcoder.ErrorHandler;
 import org.apache.batik.transcoder.TranscoderException;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9Log;
+import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
@@ -42,7 +44,15 @@ public class ConsolidatedErrorHandler implements
     @Override
     public void error(TransformerException exception) throws TransformerException {
         log.error("Transform error", exception);
-        throw exception;
+        wrapTransformerException(exception);
+    }
+
+    private void wrapTransformerException(TransformerException exception) {
+        if (exception.getLocator() instanceof Node) {
+            throw new Kite9XMLProcessingException("Transform Exception", exception, (Node) exception.getLocator());
+        } else {
+            throw new Kite9XMLProcessingException("Transform Exception", exception);
+        }
     }
 
     @Override
@@ -62,9 +72,9 @@ public class ConsolidatedErrorHandler implements
 
 
     @Override
-    public void fatalError(TransformerException exception) throws TransformerException {
+    public void fatalError(TransformerException exception) {
         log.error("Transform fatal", exception);
-        throw exception;
+        wrapTransformerException(exception);
     }
 
     @Override

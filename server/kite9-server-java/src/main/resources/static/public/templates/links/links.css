@@ -1,8 +1,8 @@
 /**
  * Main identifier of links
  */
-[k9-format=link-align],
-[k9-format=link-basic] {
+[format=link-align],
+[format=link-basic] {
   --kite9-type: link;
 }
 
@@ -134,7 +134,7 @@
   --kite9-connection-align: 50%;
 }
 
-[k9-elem=hub] > [k9-texture=foreground] {
+[k9-elem=hub] > [texture=foreground] {
   fill: #FFFFFF;
 }
 

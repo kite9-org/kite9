@@ -5,7 +5,7 @@
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
   <xsl:import href="../adl/adl-template.xsl" />
-  <xsl:import href="shapes-template.xsl" />
+  <xsl:import href="flowchart-components.xsl" />
 
   
   <xsl:template match="/">
@@ -51,14 +51,14 @@
   adl:database | adl:reference | adl:sequential | 
   adl:input | adl:start | adl:document | adl:off-page" priority=".3"> 
     <xsl:choose>
-      <xsl:when test="@k9-format='text-shape-captioned'">
+      <xsl:when test="@format='text-shape-captioned'">
         <xsl:call-template name="formats-text-shape-captioned">
-           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+           <xsl:with-param name="texture-shape">flowchart-symbol</xsl:with-param>
          </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
          <xsl:call-template name="formats-text-shape-inline">
-           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+           <xsl:with-param name="texture-shape">flowchart-symbol</xsl:with-param>
          </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose> when=

@@ -1,6 +1,3 @@
-@import url('/public/templates/adl/adl.css');
-@import url('/public/templates/editor/editor.css');
-@import url('/public/fonts/metropolis/metropolis.css');
 
 [k9-elem=diagram] {
 	font-size: 50pt;

@@ -2,7 +2,7 @@
  * Provides some _default_ fill options which can be used to 
  * colour svg elements.  
  *
- * Users are encouraged to adopt the k9-texture attribute
+ * Users are encouraged to adopt the texture attribute
  * and then override for their own colour schemes.
  *   
  * See designer template and formats/example.adl for an example. 
@@ -11,7 +11,7 @@
 /** 
  * This allows the element to still be selected, but have no real colour 
  */
-[k9-texture=none] {
+[texture=none] {
 	fill: white;
   fill-opacity: .01;
 }
@@ -20,13 +20,13 @@
  * Use this for when the shape is part of the background, and will have other elements on top.
  * You should be able to see the shapes, but they shouldn't block out everything else.
  */
-[k9-texture=background] {
+[texture=background] {
 	fill: white;
 	fill-opacity: 1;
   stroke: black;
 }
 
-[k9-texture=background] text {
+[texture=background] text {
   fill: black;
   stroke: none;
 }  
@@ -35,12 +35,12 @@
  * This texture is used when none is provided.  It basically defaults to the same thing as
  * background.
  */
-[k9-texture~=default] {
+[texture~=default] {
 	fill: white;
 	fill-opacity: 1;
 }
 
-[k9-texture~=default] text {
+[texture~=default] text {
   fill: black;
   stroke: none;
 }  
@@ -48,7 +48,7 @@
 /**
  * Use when the object is see-through, but should still be visible.  Use to replace background.
  */
-[k9-texture~=outline] {
+[texture~=outline] {
   fill: white;
   fill-opacity: .01;
   stroke: black;
@@ -58,7 +58,7 @@
  * Use when the object is in the foreground, and won't have content on
  * top of it.  
  */
-[k9-texture~=foreground] {
+[texture~=foreground] {
   fill: black;
   fill-opacity: 1;
 }

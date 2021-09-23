@@ -6,7 +6,8 @@
  
  <xsl:import href="links-basic-template.xsl"/>
  <xsl:import href="links-align-template.xsl"/>
-
+ <xsl:import href="links-terminators.xsl"/>
+ <xsl:import href="links-markers.xsl"/>
   
   <xsl:template name="links-hub">
     <xsl:call-template name="formats-shape">
@@ -15,5 +16,10 @@
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template> 
+  
+  <xsl:template match="adl:hub">
+    <xsl:call-template name="links-hub" />
+  </xsl:template>
+  
   
 </xsl:stylesheet>

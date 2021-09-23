@@ -20,7 +20,6 @@
 
 [k9-elem=celltext] {
   --kite9-usage: regular;
-  --kite9-type: container;
   --kite9-template: url(site-template.xml#celltext);
   --kite9-minimum-height: 250pt;
   --kite9-padding: 10pt;

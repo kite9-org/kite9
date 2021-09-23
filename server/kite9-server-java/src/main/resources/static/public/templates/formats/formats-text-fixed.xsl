@@ -5,7 +5,7 @@
 
   <xsl:import href="../texture/texture-template.xsl" />
 
-  <xsl:template name="formats-text-fixed" match="*[@k9-format='text-fixed']">
+  <xsl:template name="formats-text-fixed" match="*[@format='text-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
@@ -13,16 +13,16 @@
     
     <xsl:param name="content"><text><xsl:value-of select="text()" /></text></xsl:param>
     <xsl:param name="k9-elem" select="local-name()" />
-    <xsl:param name="k9-format">text-fixed</xsl:param>
-    <xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="k9-rounding">5pt</xsl:param>
-    <xsl:param name="k9-texture">foreground</xsl:param>
+    <xsl:param name="format">text-fixed</xsl:param>
+    <xsl:param name="highlight">pulse</xsl:param>
+    <xsl:param name="rounding">5pt</xsl:param>
+    <xsl:param name="texture">foreground</xsl:param>
     <xsl:param name="k9-ui">orphan edit</xsl:param>
     
     <xsl:param name="k9-text">
       <xsl:call-template name="texture-basic">
-        <xsl:with-param name="k9-texture" select="$k9-texture" />
-        <xsl:with-param name="k9-highlight" select="$k9-highlight" />
+        <xsl:with-param name="texture" select="$texture" />
+        <xsl:with-param name="highlight" select="$highlight" />
         <xsl:with-param name="class" select="$class" />
         <xsl:with-param name="style" select="$style" />
         <xsl:with-param name="shape" select="$content" />
@@ -35,7 +35,7 @@
       <xsl:copy-of select="$attributes" />      
 
       <xsl:attribute name="k9-elem"><xsl:value-of select="$k9-elem" /></xsl:attribute>
-      <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
+      <xsl:attribute name="format"><xsl:value-of select="$format" /></xsl:attribute>
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
       
       <xsl:if test="$class">

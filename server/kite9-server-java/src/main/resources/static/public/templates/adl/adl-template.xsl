@@ -12,14 +12,12 @@
     ADL.
    -->    
   
-  <xsl:import href="../formats/formats-template.xsl" />
-  <xsl:import href="../diagram/diagram-template.xsl" />
-  <xsl:import href="../containers/containers-template.xsl"/>
-  <xsl:import href="../labels/labels-template.xsl" />
-  <xsl:import href="../grid/grid-template.xsl" />
-  <xsl:import href="../links/links-template.xsl" />
-  <xsl:import href="../links/links-markers.xsl" />
-  <xsl:import href="../links/links-terminators.xsl" />
+  <xsl:import href="../formats/formats-components.xsl" />
+  <xsl:import href="../diagram/diagram-components.xsl" />
+  <xsl:import href="../containers/containers-components.xsl"/>
+  <xsl:import href="../labels/labels-components.xsl" />
+  <xsl:import href="../grid/grid-components.xsl" />
+  <xsl:import href="../links/links-components.xsl" />
 
   <!-- this rule matches and passes through any svg elements -->
   <xsl:template match="svg:*">
@@ -29,51 +27,6 @@
       </xsl:element>
   </xsl:template>
   
-  <xsl:template match="adl:link">
-    <xsl:call-template name="links-link-basic" />
-  </xsl:template>
-
-  <xsl:template match="adl:align">
-    <xsl:call-template name="links-link-align" />
-  </xsl:template>
   
-  <xsl:template match="adl:from|adl:to">
-    <xsl:call-template name="null-terminator" />
-  </xsl:template>
-  
-  <xsl:template match="adl:diagram">
-    <xsl:call-template name="diagram-basic" />
-  </xsl:template>
-
-  <xsl:template match="adl:container">
-    <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template match="adl:label">
-    <xsl:call-template name="labels-basic" />
-  </xsl:template>
-  
-  <xsl:template match="adl:table">
-    <xsl:call-template name="grid-table-basic" />
-  </xsl:template>
-  
-  <xsl:template match="adl:cell">
-    <xsl:call-template name="grid-cell-basic" />
-  </xsl:template>
-  
-  <xsl:template match="adl:group">
-    <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
-      <xsl:with-param name="k9-texture">none</xsl:with-param>
-      <xsl:with-param name="k9-highlight">pulse stroke</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-   
-  <xsl:template match="adl:hub">
-    <xsl:call-template name="links-hub" />
-  </xsl:template>
-
 
 </xsl:stylesheet>

@@ -2,13 +2,11 @@
 /* Risks */
 
 [k9-elem=mitigated] {
-	--kite9-type: container;
 	--kite9-min-size: 120pt 160pt;
 }
 
 
 [k9-elem=hidden] {
-	--kite9-type: container;
 	--kite9-min-size: 120pt 160pt;
 }
 
@@ -20,8 +18,6 @@
 
 [k9-elem=risk] {
 	--kite9-connection-align: 50%;
-	--kite9-type: container;
-	--kite9-sizing: minimize;
 	--kite9-layout: down;
 	--kite9-margin: 10pt;
 	--kite9-link-inset: 10pt;
@@ -34,7 +30,6 @@
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: top;
 	--kite9-sizing: minimize;
-	--kite9-type: text;
 	font-size: 22pt;
 	font-family: "metropolis";
 	font-weight: 300;
@@ -45,7 +40,7 @@
 	--kite9-margin-bottom: 15pt;
 }
 
-[k9-elem=risk] > [k9-format=image] {
+[k9-elem=risk] > [format=image] {
 	--kite9-vertical-align: top;
 	--kite9-horizontal-align: middle;
 }

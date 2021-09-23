@@ -3,16 +3,16 @@
 @import url('/public/fonts/metropolis/metropolis.css');
 @import url(flowchart-shapes.css);
 
-[k9-texture=flowchart-symbol] {
+[texture=flowchart-symbol] {
 	fill: #BBBBBB;
 	stroke: black;
 }
 
-[k9-elem=diagram] > [k9-texture] {
+[k9-elem=diagram] > [texture] {
 	fill: white;
 }
 
-[k9-texture=foreground] > text {
+[texture=foreground] > text {
   font-family: "metropolis";
   text-align: start;
   font-size: 10pt;
@@ -20,8 +20,8 @@
   fill:  black;	
 }
 
-[k9-elem=textarea] > [k9-texture=background],
-[k9-elem=label] > [k9-texture=background] { 
+[k9-elem=textarea] > [texture=background],
+[k9-elem=label] > [texture=background] { 
   fill: none;
   stroke: none;
 }

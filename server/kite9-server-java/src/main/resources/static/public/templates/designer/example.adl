@@ -26,12 +26,12 @@
         <arrow id="greets" rank="2">greets</arrow>
         <label id="l1">Some Grouping</label>
     </context>
-  <!--  <link id="meets-auto:0-one" rank="3">
+    <link id="meets-auto:0-one" rank="3">
         <from id="e1" reference="meets"/>
         <to id="e2" reference="auto:0-one"/>
     </link>
     <link id="meets-auto:1-two" rank="4">
         <from id="e3" reference="meets"/>
         <to class="arrow" reference="auto:1-two" id="auto:3"/>
-    </link> -->
+    </link> 
 </diagram>

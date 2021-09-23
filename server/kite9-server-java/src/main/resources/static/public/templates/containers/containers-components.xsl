@@ -4,24 +4,27 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:pp="http://www.kite9.org/schema/post-processor"
-        version="1.0">
+        version="2.0">
+
+  <xsl:import href="../formats/formats-components.xsl" />
 
   
   <!-- this decorates the formats-template for a container, so that the container has a 
        layout direction indicator
   -->  
 
-  <xsl:variable name="container-indicators">
+  <xsl:template name="container-indicators" mode="diagram-defs" match="/">
       <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
                   stroke="none" fill="none">
-          <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
+          <path highlight="stroke" d="M0,0 L3,3 L0,6"/>
       </marker>
-  </xsl:variable>
+      <xsl:next-match />
+  </xsl:template>
 
 
   <xsl:template name="containers-indicator" match="*[@layout]" mode="container-decoration" priority="1">
     <xsl:param name="layout" select="@layout" />
-    <g k9-highlight="stroke">
+    <g highlight="stroke">
       <rect y="0" x="0" pp:x="$width - 25" pp:y="$height - 25" width="20" height="20" rx="4" ry="4" fill="none"/>
       <xsl:choose>
         <xsl:when test="$layout = 'right'">
@@ -51,6 +54,21 @@
 
   </xsl:template>
    
-
+      
+  <xsl:template match="adl:container">
+    <xsl:call-template name="formats-container">
+      <xsl:with-param name="rounding">10pt</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  
+  <xsl:template match="adl:group">
+    <xsl:call-template name="formats-container">
+      <xsl:with-param name="rounding">10pt</xsl:with-param>
+      <xsl:with-param name="texture">none</xsl:with-param>
+      <xsl:with-param name="highlight">pulse stroke</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+   
     
 </xsl:stylesheet>

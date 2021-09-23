@@ -21,7 +21,7 @@
 	--kite9-min-size: 110pt 140pt;
 }
 
-[k9-texture=artifact] {
+[texture=artifact] {
   font-size: 12pt;
   font-family: "metropolis";
   font-weight: 200;

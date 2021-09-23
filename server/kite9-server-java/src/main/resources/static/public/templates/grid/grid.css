@@ -6,7 +6,7 @@
 	--kite9-padding: 10pt;
 }
 
-[k9-elem=table] > [k9-texture=background] {
+[k9-elem=table] > [texture=background] {
 	stroke: black;
 	stroke-width: 1pt;
 	fill: white;
@@ -25,18 +25,18 @@
 }
 
 [k9-elem=_temporary],
-[k9-elem=cell] > [k9-texture=background] {
+[k9-elem=cell] > [texture=background] {
 	fill: #FFFFFF;
 	fill-opacity: 0.01;	
 }
 
 
-[k9-elem=cell].bordered > [k9-texture=background] {
+[k9-elem=cell].bordered > [texture=background] {
 	stroke: black;
 	stroke-width: 2pt;
 }
 
-[k9-elem=cell].shaded > [k9-texture=background] {
+[k9-elem=cell].shaded > [texture=background] {
 	fill: #CECECE;
 	fill-opacity: 1;
 }

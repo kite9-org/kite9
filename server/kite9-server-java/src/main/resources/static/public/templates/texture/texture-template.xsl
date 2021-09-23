@@ -14,8 +14,8 @@
   
 	<xsl:template name="texture-basic">
 		<xsl:param name="rounding">0pt</xsl:param>
-		<xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="k9-texture">default</xsl:param>
+		<xsl:param name="highlight">pulse</xsl:param>
+    <xsl:param name="texture">default</xsl:param>
     <xsl:param name="style"></xsl:param>
     <xsl:param name="class"></xsl:param>
 
@@ -26,11 +26,11 @@
     </xsl:param>
     
 		<g>
-      <xsl:if test="$k9-highlight">
-        <xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
+      <xsl:if test="$highlight">
+        <xsl:attribute name="highlight"><xsl:value-of select="$highlight" /></xsl:attribute>
       </xsl:if>
-      <xsl:if test="$k9-texture">
- 			  <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
+      <xsl:if test="$texture">
+ 			  <xsl:attribute name="texture"><xsl:value-of select="$texture" /></xsl:attribute>
       </xsl:if>
       <xsl:if test="$class">
         <xsl:attribute name="class"><xsl:value-of select="$class"/></xsl:attribute>

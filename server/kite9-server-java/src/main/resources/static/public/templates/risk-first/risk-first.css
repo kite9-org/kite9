@@ -27,7 +27,7 @@
 
 /* Labels */
 
-[k9-elem=label] > [k9-texture=foreground],
+[k9-elem=label] > [texture=foreground],
 [k9-elem=description]  {
 	text-align: middle;
 	fill: black;
@@ -36,27 +36,27 @@
   font-style: italic;
 }
 
-[k9-elem=container] > [k9-elem=label] [k9-texture=foreground] {
+[k9-elem=container] > [k9-elem=label] [texture=foreground] {
 	font-weight: 600;
   font-size: 12pt;
   font-style: normal;
   font-family: metropolis;
 }
 
-[k9-elem=label] [k9-texture=foreground] {
+[k9-elem=label] [texture=foreground] {
 	fill: #333333;
 }
 
-[k9-elem=label] [k9-texture=background] {
+[k9-elem=label] [texture=background] {
   fill: #EEEEEE;
 }
 
 
-[k9-elem=container] > [k9-texture=background] {
+[k9-elem=container] > [texture=background] {
 	stroke-width: 1pt;
 }
 
-[k9-elem=label].title [k9-texture=foreground] {
+[k9-elem=label].title [texture=foreground] {
 	font-size: 25pt;
 }
 
@@ -69,7 +69,7 @@
   --kite9-label-placement: bottom;
 }
 
-[k9-elem=description] [k9-texture=foreground] {
+[k9-elem=description] [texture=foreground] {
   fill: black;
 }
 
@@ -96,12 +96,12 @@
 	--kite9-link-inset: 3pt;
 }
 
-[k9-elem=arrow] > [k9-texture=background] {
+[k9-elem=arrow] > [texture=background] {
 	fill: black;	
 	fill-opacity: 1; 
 }
 
-[k9-elem=arrow] > [k9-texture=foreground] {
+[k9-elem=arrow] > [texture=foreground] {
 	fill: white;
 	fill-opacity: 1; 
 }
@@ -116,8 +116,8 @@
 }
 
 /* Fills */
-[k9-elem=risk] [k9-texture=background],
-[k9-elem=action] [k9-texture=background] {
+[k9-elem=risk] [texture=background],
+[k9-elem=action] [texture=background] {
 	 fill: url(#risk-background);
    stroke: black; 
 }
