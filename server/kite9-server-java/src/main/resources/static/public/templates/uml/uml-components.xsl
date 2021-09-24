@@ -4,11 +4,12 @@
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
   <xsl:import href="../texture/texture-template.xsl" />
-
+  <xsl:import href="../formats/formats-components.xsl" />
+  
 
   <xsl:template name="uml-divider">
     <xsl:call-template name="texture-basic">
-      <xsl:with-param name="k9-texture">outline</xsl:with-param>
+      <xsl:with-param name="k9-texture">background</xsl:with-param>
       <xsl:with-param name="shape">
         <path d="" pp:d="M 0 0 H [[$width]]" />      
       </xsl:with-param> 
@@ -127,6 +128,68 @@
   			M [[$width -5]] 5
   			l 5 -5" />
     </g>
+  </xsl:template>
+  
+  
+  
+ <xsl:template match="
+    adl:property | 
+    adl:method">
+    <xsl:call-template name="formats-text-fixed" />
+  </xsl:template>
+   
+  <xsl:template match="
+    adl:use-case | 
+    adl:note">
+    <xsl:call-template name="formats-text-shape-inline" />
+  </xsl:template>
+
+  <xsl:template match="
+    adl:interface | 
+    adl:actor">
+    <xsl:call-template name="formats-text-shape-captioned">
+      <xsl:with-param name="k9-texture-shape">background</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="adl:uml-container | 
+    adl:component |
+    adl:package |
+    adl:properties |
+    adl:methods">
+    <xsl:call-template name="formats-container" />
+  </xsl:template>
+  
+  <xsl:template match="adl:class-name | adl:stereotype">
+    <xsl:call-template name="formats-text-fixed" />
+  </xsl:template>
+
+  <xsl:template match="adl:class">
+    <xsl:call-template name="formats-container">
+      <xsl:with-param name="content">
+        <xsl:apply-templates select="adl:stereotype" />
+        <xsl:apply-templates select="adl:class-name" />
+        <xsl:call-template name="formats-container">
+          <xsl:with-param name="k9-elem">properties</xsl:with-param>
+          <xsl:with-param name="content">
+            <xsl:apply-templates select="adl:property" />
+          </xsl:with-param>
+          <xsl:with-param name="k9-shape">
+            <xsl:call-template name="uml-divider" />
+          </xsl:with-param>
+        </xsl:call-template>
+        <xsl:call-template name="formats-container">
+          <xsl:with-param name="k9-elem">methods</xsl:with-param>
+          <xsl:with-param name="content">
+            <xsl:apply-templates select="adl:method" />
+          </xsl:with-param>
+          <xsl:with-param name="k9-shape">
+            <xsl:call-template name="uml-divider" />
+          </xsl:with-param>
+        </xsl:call-template> 
+      </xsl:with-param>
+    </xsl:call-template>
+  
   </xsl:template>
 
 </xsl:stylesheet>

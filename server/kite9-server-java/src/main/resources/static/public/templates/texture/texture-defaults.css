@@ -35,12 +35,12 @@
  * This texture is used when none is provided.  It basically defaults to the same thing as
  * background.
  */
-[texture~=default] {
+[k9-texture~=default] {
 	fill: white;
 	fill-opacity: 1;
 }
 
-[texture~=default] text {
+[k9-texture~=default] text {
   fill: black;
   stroke: none;
 }  
@@ -48,7 +48,7 @@
 /**
  * Use when the object is see-through, but should still be visible.  Use to replace background.
  */
-[texture~=outline] {
+[k9-texture~=outline] {
   fill: white;
   fill-opacity: .01;
   stroke: black;
@@ -58,7 +58,7 @@
  * Use when the object is in the foreground, and won't have content on
  * top of it.  
  */
-[texture~=foreground] {
+[k9-texture~=foreground] {
   fill: black;
   fill-opacity: 1;
 }

@@ -8,7 +8,7 @@
 	stroke: black;
 }
 
-[k9-elem=diagram] > [texture] {
+[k9-elem=diagram] > [k9-texture] {
 	fill: white;
 }
 
