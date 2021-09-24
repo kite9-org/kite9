@@ -16,7 +16,7 @@
 	--kite9-connection-align: 50%;
 }
 
-[k9-elem=box] > [texture=background] {
+[k9-elem=box] > [k9-texture=background] {
 	fill: #CCCCAA;
 	fill-opacity: 1;
 	stroke: #AAAA88;
@@ -38,7 +38,7 @@
 	--kite9-horizontal-align: center;
 }
 
-[k9-elem=textarea] > [texture=foreground] {
+[k9-elem=textarea] > [k9-texture=foreground] {
 	fill: rgb(36, 51, 20);
 	font-family: "metropolis";
 	font-size: 50pt;
@@ -50,7 +50,7 @@
   --kite9-padding: 10pt;
 }
 
-[k9-elem=label] > [texture=foreground]	{
+[k9-elem=label] > [k9-texture=foreground]	{
   fill: black;
 	font-family: "metropolis";
 	font-size: 16pt;

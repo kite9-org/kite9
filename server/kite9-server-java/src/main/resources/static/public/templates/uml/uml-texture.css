@@ -57,14 +57,14 @@
 /**
  * Fonts and colours 
  */
-[k9-elem=class-name] [texture=foreground] {
+[k9-elem=class-name] [k9-texture=foreground] {
 	fill: #333300;
 	text-align: start;
 	font-size: 10pt;	
 }
 
 
-[k9-elem=stereotype] [texture=foreground] {
+[k9-elem=stereotype] [k9-texture=foreground] {
 	fill: #666666;
 	text-align: start;
 	font-size: 8pt;	
@@ -72,7 +72,7 @@
 }
  
 
-[k9-elem=label] [texture=foreground] {
+[k9-elem=label] [k9-texture=foreground] {
 	fill: #333300;
 	text-align: start;
 	font-size: 10pt;
@@ -90,7 +90,7 @@
 	
 }
 
-[texture=background],
+[k9-texture=background],
 [k9-shape=divider],
 [k9-elem=depiction] {
 	fill: rgb(231, 230, 232);
@@ -101,13 +101,13 @@
 	--kite9-padding: 10pt;
 }
 
-[k9-elem=class] > [texture=background],
-[k9-elem=caption] > [texture=background] {
+[k9-elem=class] > [k9-texture=background],
+[k9-elem=caption] > [k9-texture=background] {
   fill: rgb(231, 230, 232);
 	stroke: black;
 }
 
-[k9-elem=label] > [texture=background] {
+[k9-elem=label] > [k9-texture=background] {
   fill: rgb(231, 230, 232);
   fill-opacity: 0.01;
 }

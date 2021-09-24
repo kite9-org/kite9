@@ -8,12 +8,13 @@
  <xsl:import href="links-align-template.xsl"/>
  <xsl:import href="links-terminators.xsl"/>
  <xsl:import href="links-markers.xsl"/>
+ <xsl:import href="../formats/formats-components.xsl" />
   
   <xsl:template name="links-hub">
     <xsl:call-template name="formats-shape">
-      <xsl:with-param name="depiction">
-        <circle r="16" cx="5" cy="5" />
-      </xsl:with-param>
+      <!-- xsl:with-param name="k9-shape">
+        <circle r="16" cx="5" cy="5" pp:r="$width div 2" pp:cx="$width div 2" pp:cy="$width div 2"/>
+      </xsl:with-param> -->
     </xsl:call-template>
   </xsl:template> 
   

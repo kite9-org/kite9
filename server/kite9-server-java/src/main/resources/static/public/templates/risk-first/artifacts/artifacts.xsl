@@ -10,7 +10,7 @@
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
       <xsl:with-param name="k9-shape">
-        <g texture="background" highlight="pulse" >
+        <g k9-texture="background" k9-highlight="pulse" >
           <xsl:attribute name="pp:style">transform: translate([[$x]]px,[[$y]]px)</xsl:attribute>
           <polygon points="" pp:points="
             0 0, 
@@ -27,7 +27,7 @@
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
       <xsl:with-param name="k9-shape">
-        <g texture="background" highlight="pulse" >
+        <g k9-texture="background" k9-highlight="pulse" >
           <xsl:attribute name="pp:style">transform: translate([[$x]]px,[[$y]]px)</xsl:attribute>
           <polygon points="" pp:points="
             0 [[$height div 2]], 
@@ -60,8 +60,8 @@
     adl:image-artifact">
     <xsl:call-template name="formats-text-image-portrait">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
-      <xsl:with-param name="texture-text">artifact</xsl:with-param>
-      <xsl:with-param name="texture-back">none</xsl:with-param>
+      <xsl:with-param name="k9-texture-text">artifact</xsl:with-param>
+      <xsl:with-param name="k9-texture-back">none</xsl:with-param>
       <xsl:with-param name="k9-ui-depiction"></xsl:with-param>
       <xsl:with-param name="href">
         <xsl:choose>

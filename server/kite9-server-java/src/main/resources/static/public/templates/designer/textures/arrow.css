@@ -17,13 +17,13 @@
   
 }
 
-[k9-elem=arrow] > [texture=background] {
+[k9-elem=arrow] > [k9-texture=background] {
 	fill: black;
 	fill-opacity: 1;
 }
 
 
-[k9-elem=arrow] > [texture=foreground] {
+[k9-elem=arrow] > [k9-texture=foreground] {
   fill: white;
   stroke: none;
   font-size: 12pt;

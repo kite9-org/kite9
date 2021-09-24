@@ -7,7 +7,7 @@
 
 
  <xsl:attribute-set name="terminators">
-  <xsl:attribute name="highlight">fill grab</xsl:attribute>
+  <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
   <xsl:attribute name="k9-palette">end</xsl:attribute>
   <xsl:attribute name="k9-containers">link</xsl:attribute>
   <xsl:attribute name="k9-ui">drag label</xsl:attribute>
@@ -66,9 +66,52 @@
   </g>
  </xsl:template>
 
-  <xsl:template match="adl:from|adl:to">
-    <xsl:call-template name="null-terminator" />
+  <xsl:template match="adl:from">
+    <xsl:choose>
+      <xsl:when test="parent::adl:link[@drawDirection='UP']">
+        <xsl:call-template name="down-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[@drawDirection='DOWN']">
+        <xsl:call-template name="up-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[@drawDirection='LEFT']">
+        <xsl:call-template name="right-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[@drawDirection='RIGHT']">
+        <xsl:call-template name="left-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[contains(@class,'null')]">
+        <xsl:call-template name="null-terminator" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="round-terminator" />
+      </xsl:otherwise>
+    </xsl:choose>
+  
   </xsl:template>
   
+   <xsl:template match="adl:to">
+    <xsl:choose>
+      <xsl:when test="parent::adl:link[@drawDirection='UP']">
+        <xsl:call-template name="up-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[@drawDirection='DOWN']">
+        <xsl:call-template name="down-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[@drawDirection='LEFT']">
+        <xsl:call-template name="left-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[@drawDirection='RIGHT']">
+        <xsl:call-template name="right-terminator" />
+      </xsl:when>
+      <xsl:when test="parent::adl:link[contains(@class,'null')]">
+        <xsl:call-template name="null-terminator" />
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="round-terminator" />
+      </xsl:otherwise>
+    </xsl:choose>
+  
+  </xsl:template>
 
 </xsl:stylesheet>

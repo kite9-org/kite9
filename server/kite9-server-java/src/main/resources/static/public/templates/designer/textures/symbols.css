@@ -18,11 +18,11 @@
   --kite9-vertical-align: middle;
 }
 
-[texture=symbol] > [k9-elem=back] {
+[k9-texture=symbol] > [k9-elem=back] {
 	stroke: none;
 }
 
-[texture=symbol] > [k9-elem=textarea] {
+[k9-texture=symbol] > [k9-elem=textarea] {
 	fill: white;
 }
 

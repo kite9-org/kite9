@@ -4,6 +4,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
   
+  <xsl:import href="../formats/formats-components.xsl" />
   
 	<xsl:template mode="shape" match="adl:card" priority="2">
 		<path xmlns="http://www.w3.org/2000/svg"
@@ -257,5 +258,26 @@
     </g>
   </xsl:template>
   
+  
+  <xsl:template match="adl:document | adl:decision | adl:terminal | 
+    adl:terminator | adl:process | adl:delay | 
+    adl:direct | adl:display | adl:stored | 
+    adl:predefined | adl:preparation | adl:manual | 
+    adl:decision | adl:loop-limit | adl:internal | 
+    adl:database | adl:reference | adl:sequential | 
+    adl:input | adl:start | adl:document | adl:off-page"> 
+    <xsl:choose>
+      <xsl:when test="@k9-format='text-shape-captioned'">
+        <xsl:call-template name="formats-text-shape-captioned">
+           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+         </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+         <xsl:call-template name="formats-text-shape-inline">
+           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+         </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose> when=
+  </xsl:template>
 
 </xsl:stylesheet>

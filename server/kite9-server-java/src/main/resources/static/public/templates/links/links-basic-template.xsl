@@ -3,7 +3,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
  
-  <xsl:template name='links-link-basic' match="*[@format='link-basic']">
+  <xsl:template name='links-link-basic' match="*[@k9-format='link-basic']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
@@ -11,22 +11,22 @@
 
     <xsl:param name="content"><xsl:apply-templates /></xsl:param>
     <xsl:param name="k9-elem" select="local-name()" />
-    <xsl:param name="format">link-basic</xsl:param>
+    <xsl:param name="k9-format">link-basic</xsl:param>
     <xsl:param name="k9-palette">link</xsl:param>
-    <xsl:param name="highlight">bar stroke</xsl:param>
-    <xsl:param name="texture">foreground</xsl:param>
+    <xsl:param name="k9-highlight">bar stroke</xsl:param>
+    <xsl:param name="k9-texture">foreground</xsl:param>
     <xsl:param name="k9-ui">delete link cascade drop</xsl:param>
     
     <xsl:param name="k9-shape">
    		<g k9-elem="link-grab">
-        <xsl:attribute name="highlight"><xsl:value-of select="$highlight" /></xsl:attribute>
+        <xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
         <path pp:d="$path" d="" k9-animate="link"/>
       </g>
     </xsl:param>
     
     <xsl:param name="body">
       <g k9-elem="link-body">
-        <xsl:attribute name="texture"><xsl:value-of select="$texture" /></xsl:attribute>
+        <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
         <path k9-animate="link" d="" pp:d="$path">
           <xsl:attribute name="marker-start">url(#<xsl:value-of select="adl:from/@shape" />-start-marker)</xsl:attribute>
           <xsl:attribute name="marker-end">url(#<xsl:value-of select="adl:to/@shape" />-end-marker)</xsl:attribute>
@@ -38,9 +38,10 @@
     
     
     <g>
+      <xsl:copy-of select="$attributes" />      
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
       <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
-      <xsl:attribute name="format"><xsl:value-of select="$format" /></xsl:attribute>
+      <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
       <xsl:attribute name="k9-palette"><xsl:value-of select="$k9-palette" /></xsl:attribute>
       
       <xsl:if test="$class">

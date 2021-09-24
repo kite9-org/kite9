@@ -14,7 +14,7 @@
 	--kite9-sizing: minimize;
 }
 
-[k9-elem=container] > [texture=background] {
+[k9-elem=container] > [k9-texture=background] {
 	stroke: black;
 	stroke-width: 2pt;
 }
@@ -26,13 +26,13 @@
 	stroke: none;
 }
 
-[k9-elem=container].solid > [texture=background] * {
+[k9-elem=container].solid > [k9-texture=background] * {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: none;
 }
 
-[k9-elem=container].dotted > [texture=background] * {
+[k9-elem=container].dotted > [k9-texture=background] * {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: 4 4;	

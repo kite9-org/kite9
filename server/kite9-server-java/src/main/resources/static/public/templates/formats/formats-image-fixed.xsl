@@ -4,7 +4,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
           
-  <xsl:template name="formats-image-fixed" match="*[@format='image-fixed']">
+  <xsl:template name="formats-image-fixed" match="*[@k9-format='image-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
@@ -27,8 +27,8 @@
     </xsl:param>
     
     <xsl:param name="k9-elem" select="local-name()" />
-    <xsl:param name="format">image-fixed</xsl:param>
-    <xsl:param name="texture">none</xsl:param>
+    <xsl:param name="k9-format">image-fixed</xsl:param>
+    <xsl:param name="k9-texture">none</xsl:param>
     <xsl:param name="k9-ui"></xsl:param>
     
     <xsl:param name="image">
@@ -41,7 +41,7 @@
     
     <xsl:param name="back">
       <g>
-        <xsl:attribute name="texture"><xsl:value-of select="$texture" /></xsl:attribute>
+        <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
         <rect x='0' y='0'>
           <xsl:attribute name="width"><xsl:value-of select="$width" /></xsl:attribute>
           <xsl:attribute name="height"><xsl:value-of select="$height" /></xsl:attribute>
@@ -55,7 +55,7 @@
       <xsl:copy-of select="$attributes" />      
 
       <xsl:attribute name="k9-elem"><xsl:value-of select="$k9-elem" /></xsl:attribute>
-      <xsl:attribute name="format"><xsl:value-of select="$format" /></xsl:attribute>
+      <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
 
       <xsl:if test="$class">

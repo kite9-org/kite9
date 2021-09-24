@@ -12,7 +12,7 @@
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">
-    @import url('/public/templates/basic/basic.js');
+    import '/public/templates/basic/basic.js';
   </xsl:template>
 
 </xsl:stylesheet>

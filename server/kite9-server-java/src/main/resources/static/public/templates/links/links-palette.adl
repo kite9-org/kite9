@@ -2,6 +2,14 @@
 	  xmlns="http://www.kite9.org/schema/adl" id="dia"
 	  xmlns:svg="http://www.w3.org/2000/svg"
 	  style="--kite9-layout: right; ">
+    
+    <svg:defs>
+      <svg:style>
+        [k9-elem=group] {
+          --kite9-margin: 0pt;
+        }
+      </svg:style>
+    </svg:defs>
 
 		<group style="--kite9-layout: down; --kite9-margin-right: 30pt; ">
 			<group style="--kite9-layout: right;">
@@ -236,7 +244,7 @@
 				<to id="l19-t" reference="to21" />
 			</link>
 
-			<align id="align">
+    	<align id="align">
 				<from id="align-f" reference="from22" />
 				<to id="align-t" reference="to22" />
 			</align>

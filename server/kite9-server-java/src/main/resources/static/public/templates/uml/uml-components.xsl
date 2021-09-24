@@ -8,7 +8,7 @@
 
   <xsl:template name="uml-divider">
     <xsl:call-template name="texture-basic">
-      <xsl:with-param name="texture">outline</xsl:with-param>
+      <xsl:with-param name="k9-texture">outline</xsl:with-param>
       <xsl:with-param name="shape">
         <path d="" pp:d="M 0 0 H [[$width]]" />      
       </xsl:with-param> 

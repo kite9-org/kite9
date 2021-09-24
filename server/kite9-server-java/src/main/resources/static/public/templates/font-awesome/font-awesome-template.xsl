@@ -5,21 +5,10 @@
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
   
   <xsl:import href="../adl/adl-template.xsl"/>
+  <xsl:import href="font-awesome-components.xsl" />
 
-  <xsl:template match="adl:font-awesome" >
-    <xsl:call-template name="formats-text-shape-inline">
-      <xsl:with-param name="content">
-        <text>&#xf005;</text>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template match="/">
-    <xsl:call-template name="diagram-root-svg">
-      <xsl:with-param name="css">
-        @import url('/public/templates/font-awesome/font-awesome.css');
-      </xsl:with-param>
-    </xsl:call-template>
+  <xsl:template match="/" mode="diagram-css">
+    @import url('/public/templates/font-awesome/font-awesome.css');
   </xsl:template>
 
 </xsl:stylesheet>

@@ -14,17 +14,19 @@
   -->  
 
   <xsl:template name="container-indicators" mode="diagram-defs" match="/">
-      <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
-                  stroke="none" fill="none">
-          <path highlight="stroke" d="M0,0 L3,3 L0,6"/>
-      </marker>
+      <defs id="container-indicators">
+        <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
+                    stroke="none" fill="none">
+            <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
+        </marker>
+      </defs>
       <xsl:next-match />
   </xsl:template>
 
 
   <xsl:template name="containers-indicator" match="*[@layout]" mode="container-decoration" priority="1">
     <xsl:param name="layout" select="@layout" />
-    <g highlight="stroke">
+    <g k9-highlight="stroke">
       <rect y="0" x="0" pp:x="$width - 25" pp:y="$height - 25" width="20" height="20" rx="4" ry="4" fill="none"/>
       <xsl:choose>
         <xsl:when test="$layout = 'right'">
@@ -57,16 +59,16 @@
       
   <xsl:template match="adl:container">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="rounding">10pt</xsl:with-param>
+      <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
   
   <xsl:template match="adl:group">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="rounding">10pt</xsl:with-param>
-      <xsl:with-param name="texture">none</xsl:with-param>
-      <xsl:with-param name="highlight">pulse stroke</xsl:with-param>
+      <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
+      <xsl:with-param name="k9-texture">none</xsl:with-param>
+      <xsl:with-param name="k9-highlight">pulse stroke</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
    

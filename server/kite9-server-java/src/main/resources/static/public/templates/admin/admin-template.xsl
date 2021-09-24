@@ -93,7 +93,7 @@
    <!-- <g>
       <xsl:attribute name="k9-elem">diagram</xsl:attribute>
       <xsl:attribute name="k9-ui">open</xsl:attribute>
-      <xsl:attribute name="texture">outline</xsl:attribute>
+      <xsl:attribute name="k9-texture">outline</xsl:attribute>
         
       
       
@@ -106,11 +106,11 @@
       
      <!--    <xsl:attribute name="k9-elem">container</xsl:attribute>
         <xsl:attribute name="k9-ui">open</xsl:attribute>
-        <xsl:attribute name="texture">outline</xsl:attribute>
+        <xsl:attribute name="k9-texture">outline</xsl:attribute>
         
         <xsl:call-template name="back-round-rect">
-          <xsl:with-param name="highlight">pulse</xsl:with-param>
-          <xsl:with-param name="rounding">15pt</xsl:with-param>
+          <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
+          <xsl:with-param name="k9-rounding">15pt</xsl:with-param>
         </xsl:call-template>
          -->
        <!--  <xsl:if test="adl:type='user' or adl:type='organisation'">
@@ -212,7 +212,7 @@
     <xsl:param name="content"><xsl:value-of select="text()" /></xsl:param>
     <g>
         <xsl:attribute name="k9-elem">icon</xsl:attribute>
-        <xsl:attribute name="texture">outline</xsl:attribute>
+        <xsl:attribute name="k9-texture">outline</xsl:attribute>
         <xsl:attribute name="style">--kite9-min-size: <xsl:value-of select="$size" /><xsl:text>   </xsl:text><xsl:value-of select="$size" /></xsl:attribute>
         <rect x="0" y="0" width="{$size}" height="{$size}" fill="none" stroke="white" stroke-opacity=".01" />
         <g style="kite9-type: svg; kite9-usage: decal;">

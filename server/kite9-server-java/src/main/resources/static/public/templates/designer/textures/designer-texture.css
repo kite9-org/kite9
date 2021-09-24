@@ -37,14 +37,14 @@
 
 /* Link Labels */
 
-[k9-elem=label] > [texture=background] {
+[k9-elem=label] > [k9-texture=background] {
   stroke-width: 0;
   font-size: 11pt;
   font-weight: 300;
   fill: white;
 }
 
-[k9-elem=link] > [k9-elem=label] > [texture=background] {
+[k9-elem=link] > [k9-elem=label] > [k9-texture=background] {
   fill: #777;
   fill-opacity: 1;
 }

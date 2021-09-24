@@ -24,10 +24,10 @@
   <!-- default background is a rounded-rectangle -->
   
   <xsl:template name="shape-round-rect" match="*" mode="shape">
-    <xsl:param name="rounding">0pt</xsl:param>
+    <xsl:param name="k9-rounding">0pt</xsl:param>
     <rect x="0" y="10" width="0" height="0">
-      <xsl:attribute name="rx"><xsl:value-of select="$rounding" /></xsl:attribute>
-      <xsl:attribute name="ry"><xsl:value-of select="$rounding" /></xsl:attribute>
+      <xsl:attribute name="rx"><xsl:value-of select="$k9-rounding" /></xsl:attribute>
+      <xsl:attribute name="ry"><xsl:value-of select="$k9-rounding" /></xsl:attribute>
       <xsl:attribute name="pp:width">$width</xsl:attribute>
       <xsl:attribute name="pp:height">$height</xsl:attribute>
       <xsl:attribute name="pp:x">$x</xsl:attribute>

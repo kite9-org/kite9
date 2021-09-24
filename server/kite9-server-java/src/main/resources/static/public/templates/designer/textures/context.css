@@ -14,7 +14,7 @@
 	--kite9-sizing: minimize;
 }
 
-[k9-elem=context] > [texture=background] {
+[k9-elem=context] > [k9-texture=background] {
 	fill: white;
 	stroke: black;
 	stroke-width: 1pt;
@@ -27,7 +27,7 @@
 	fill: white;
 }
 
-[k9-elem=context] > [k9-elem=label] > [texture=background] {
+[k9-elem=context] > [k9-elem=label] > [k9-texture=background] {
 	fill: #777;
 	fill-opacity: 1;
 }

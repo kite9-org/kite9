@@ -1,8 +1,8 @@
 /**
  * Main identifier of links
  */
-[format=link-align],
-[format=link-basic] {
+[k9-format=link-align],
+[k9-format=link-basic] {
   --kite9-type: link;
 }
 
@@ -75,54 +75,26 @@
    --kite9-marker-reserve: 6pt;
 } 
 
-
-[k9-elem=from].null, 
-[k9-elem=to].null {
-  --kite9-type: link-end;
-  --kite9-template: url(common-links-template.xml#null-terminator);
-  --kite9-padding: 8pt 8pt 8pt 8pt;
-}
-
 [k9-elem=from], 
 [k9-elem=to] {
 	--kite9-type: link-end;
-	--kite9-template: url(common-links-template.xml#round-terminator);
 	--kite9-padding: 8pt 8pt 8pt 8pt;
 }
 
-[drawDirection=DOWN] [k9-elem=from],
-[drawDirection=UP] [k9-elem=to]  {
-	--kite9-template: url(common-links-template.xml#up-terminator);
-}
 
-[drawDirection=UP] [k9-elem=from],
-[drawDirection=DOWN] [k9-elem=to]  {
-	--kite9-template: url(common-links-template.xml#down-terminator);
-}
-
-[drawDirection=RIGHT] [k9-elem=from],
-[drawDirection=LEFT] [k9-elem=to] {
-	--kite9-template: url(common-links-template.xml#left-terminator);
-}
-
-[drawDirection=LEFT] [k9-elem=from],
-[drawDirection=RIGHT] [k9-elem=to]s  {
-	--kite9-template: url(common-links-template.xml#right-terminator);
-}
-
-[drawDirection=LEFT] {
+[k9-elem=link][drawDirection=LEFT] {
 	--kite9-direction: left;
 }
 
-[drawDirection=RIGHT] {
+[k9-elem=link][drawDirection=RIGHT] {
 	--kite9-direction: right;
 }
 
-[drawDirection=UP] {
+[k9-elem=link][drawDirection=UP] {
 	--kite9-direction: up;
 }
 
-[drawDirection=DOWN] {
+[k9-elem=link][drawDirection=DOWN] {
 	--kite9-direction: down;
 }
 
@@ -132,9 +104,11 @@
 [k9-elem=hub] {
   --kite9-type: svg;
   --kite9-connection-align: 50%;
+  --kite9-margin: 0;
+  --kite9-min-size: 10pt 10pt;
 }
 
-[k9-elem=hub] > [texture=foreground] {
+[k9-elem=hub] > [k9-texture=foreground] {
   fill: #FFFFFF;
 }
 

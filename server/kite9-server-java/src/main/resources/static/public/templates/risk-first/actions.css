@@ -12,7 +12,7 @@
   --kite9-padding-right: 12pt;
 }
 
-[k9-elem=action] > [texture=foreground] {
+[k9-elem=action] > [k9-texture=foreground] {
   fill-opacity: 1; 
   font-size: 12pt;
   font-family: "metropolis";

@@ -7,17 +7,9 @@
   <xsl:import href="../formats/formats-components.xsl"/>
 
   <xsl:template match="adl:font-awesome" >
-    <xsl:call-template name="formats-text-shape-inline">
+    <xsl:call-template name="formats-text-fixed">
       <xsl:with-param name="content">
         <text>&#xf005;</text>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template match="/" mode="diagram-css">
-    <xsl:call-template name="diagram-root-svg">
-      <xsl:with-param name="css">
-        @import url('/public/templates/font-awesome/font-awesome.css');
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>

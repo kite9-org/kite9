@@ -126,7 +126,8 @@ Indicates the shape used by the background.  "shapes" behaviour defines some of 
 
 ### k9-texture
 
- - **solid**: 
+ - **background**: 
+ - **foreground**: 
  - **none**: makes it transparent, but you can still click it.
  
 Can be solid, transparent, or something else defined by your stylesheet.  e.g. designer specifies "gradient".

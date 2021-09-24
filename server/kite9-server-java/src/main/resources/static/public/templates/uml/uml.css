@@ -3,7 +3,7 @@
 @import url('/public/fonts/metropolis/metropolis.css');
 @import url('/public/templates/editor/editor.css');
 
-[texture=foreground] {
+[k9-texture=foreground] {
   font-family: "metropolis";  
   font-size: 10pt;
 }

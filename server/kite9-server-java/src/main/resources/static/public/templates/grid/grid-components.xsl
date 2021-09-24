@@ -19,9 +19,9 @@
 
   <xsl:template name="grid-cell-basic">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="rounding">0pt</xsl:with-param>
+      <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete cascade orphan layout grid</xsl:with-param>
-      <xsl:with-param name="highlight">pulse stroke</xsl:with-param>
+      <xsl:with-param name="k9-highlight">pulse stroke</xsl:with-param>
       <xsl:with-param name="k9-palette">cell</xsl:with-param>
     </xsl:call-template>
   </xsl:template>

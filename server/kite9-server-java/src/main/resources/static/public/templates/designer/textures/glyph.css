@@ -12,7 +12,7 @@
   --kite9-connection-align: 50%;
 }
 
-[k9-elem=glyph] > [texture=background] {
+[k9-elem=glyph] > [k9-texture=background] {
   fill: url('#glyph-background'); 
   fill-opacity: 1;
   stroke: black;
@@ -31,7 +31,7 @@
   --kite9-margin-bottom: 5pt;*/
 }
 
-[k9-elem=glyph] > [k9-elem=stereotype] > [texture=foreground] {
+[k9-elem=glyph] > [k9-elem=stereotype] > [k9-texture=foreground] {
   text-align: middle;
   font-weight: 700;
   font-family: opensans;

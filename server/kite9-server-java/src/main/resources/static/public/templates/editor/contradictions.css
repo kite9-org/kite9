@@ -1,9 +1,9 @@
 /**
  * This highlights contradicting elements
  */
-.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight~=stroke],
-.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight~=outline],
-.indicators-on  *[k9-info~="contradicting:"] > [k9-highlight~=bar] {
+.indicators-on  *[k9-info~="contradicting:"] > [highlight~=stroke],
+.indicators-on  *[k9-info~="contradicting:"] > [highlight~=outline],
+.indicators-on  *[k9-info~="contradicting:"] > [highlight~=bar] {
 	stroke: #ff5956;
 }
 
