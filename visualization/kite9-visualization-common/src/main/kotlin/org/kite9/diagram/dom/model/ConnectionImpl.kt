@@ -237,15 +237,8 @@ class ConnectionImpl(
 
             return "'$gp'"
 
-        } else if ("markerstart" == name) {
-            if (fromDecoration is TerminatorImpl) {
-                return (fromDecoration as TerminatorImpl).markerUrl
-            }
-        } else if ("markerend" == name) {
-            if (toDecoration is TerminatorImpl) {
-                return (toDecoration as TerminatorImpl).markerUrl
-            }
         }
+
         return null
     }
 

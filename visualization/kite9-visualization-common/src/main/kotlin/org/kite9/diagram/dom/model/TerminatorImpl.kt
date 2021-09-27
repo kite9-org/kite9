@@ -27,7 +27,6 @@ class TerminatorImpl(
     el, parent, ctx, rp, t
 ), Terminator {
 
-    private var reference: String? = null
     private var markerReserve = 0.0
     private var arrivalSide: Direction? = null
     private var end: End? = null
@@ -37,10 +36,6 @@ class TerminatorImpl(
         arrivalSide = ctx.getCSSStyleEnumProperty(CSSConstants.ARRIVAL_SIDE, theElement, Direction::class)
         end = ctx.getCSSStyleEnumProperty(CSSConstants.LINK_END, theElement, End::class)
         val from = end === End.FROM
-        reference =
-            if (from) ctx.getCssStyleStringProperty(CSSConstants.MARKER_START_REFERENCE, theElement) else ctx.getCssStyleStringProperty(
-                CSSConstants.MARKER_END_REFERENCE, theElement
-            )
         markerReserve = ctx.getCssStyleDoubleProperty(CSSConstants.MARKER_RESERVE, theElement)
     }
 
@@ -59,16 +54,6 @@ class TerminatorImpl(
         ensureInitialized()
         return getPadding(Direction.RIGHT) + getMargin(Direction.RIGHT)
     }
-
-    val markerUrl: String?
-        get() {
-            ensureInitialized()
-            return if (reference != null) {
-                "url(#$reference)"
-            } else {
-                null
-            }
-        }
 
     override fun getMarkerReserve(): Double {
         ensureInitialized()

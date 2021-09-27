@@ -102,8 +102,6 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.LINK_END, End.class, null, false));
 		
 		// TERMINATORS
-		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_START_REFERENCE));
-		registerCustomCSSValueManager(new MarkerManager(CSSConstants.MARKER_END_REFERENCE));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.MARKER_RESERVE, 0f));
 
 		// RECTANGLE SIZING

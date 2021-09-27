@@ -102,8 +102,6 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.LINK_END,syntax<End>()+" | none", "none", false))
 
     // TERMINATORS
-    css.registerProperty( CSSProperty(CSSConstants.MARKER_START_REFERENCE, "<url> | none ", "none", true))
-    css.registerProperty( CSSProperty(CSSConstants.MARKER_END_REFERENCE, "<url> | none ", "none", true))
     css.registerProperty( CSSProperty(CSSConstants.MARKER_RESERVE, "<length>", "0", false))
 
     // RECTANGLE SIZING

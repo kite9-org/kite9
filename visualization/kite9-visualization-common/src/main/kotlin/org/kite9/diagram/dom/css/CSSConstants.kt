@@ -54,17 +54,15 @@ interface CSSConstants {
         const val TRAVERSAL_RIGHT_PROPERTY = KITE9_CSS_TRAVERSAL_PROPERTY_PREFIX + RIGHT
         const val TRAVERSAL_LEFT_PROPERTY = KITE9_CSS_TRAVERSAL_PROPERTY_PREFIX + LEFT
 
-        // for referencing <defs> within CSS
-        const val MARKER_START_REFERENCE = KITE9_CSS_PROPERTY_PREFIX + "marker-start-reference"
-        const val MARKER_END_REFERENCE = KITE9_CSS_PROPERTY_PREFIX + "marker-end-reference"
-        const val MARKER_RESERVE = KITE9_CSS_PROPERTY_PREFIX + "marker-reserve"
-
         // controls which side connections will go into a connected
         const val CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "connections"
         const val ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX + "arrival-side"
 
         // direction a connection goes in
         const val CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"
+
+        // distance between edge of connection and terminator it joins to (space for marker)
+        const val MARKER_RESERVE = KITE9_CSS_PROPERTY_PREFIX + "marker-reserve"
 
         // controls whether we try and align connections along the mid-point of the connected.
         const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
