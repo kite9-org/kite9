@@ -35,6 +35,7 @@
 .indicators-on [id] > [k9-highlight~=stroke] {
 	stroke: #b7c0fe;
 	stroke-opacity: .8;
+	stroke-width: 1pt;
 }
 
 .indicators-on [id] > [k9-highlight~=fill] {

@@ -14,7 +14,7 @@
 [k9-texture=none] {
 	fill: white;
   fill-opacity: .01;
-  stroke-width: 0;
+  stroke-opacity: .01;
 }
 
 /** 
@@ -25,7 +25,7 @@
 	fill: white;
 	fill-opacity: 1;
   stroke: black;
-  stroke-width: 1pt;
+  stroke-opacity: 1;
 }
 
 [k9-texture=background] > g > text {
@@ -39,7 +39,6 @@
 [k9-texture~=default] {
 	fill: white;
 	fill-opacity: 1;
-  stroke-width: 1pt;
 }
 
 /**
@@ -49,7 +48,6 @@
   fill: white;
   fill-opacity: .01;
   stroke: black;
-  stroke-width: 1pt;
 }
 
 /**
@@ -60,7 +58,6 @@
   fill: black;
   fill-opacity: 1;
   stroke: none;
-  stroke-width: 0;
 }
 
 text {
