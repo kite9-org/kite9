@@ -56,12 +56,10 @@
     </xsl:param>
     
     <xsl:param name="highlight">
-      <g>
-        <rect x='0' y='0'>
-          <xsl:attribute name="width"><xsl:value-of select="$width" /></xsl:attribute>
-          <xsl:attribute name="height"><xsl:value-of select="$height" /></xsl:attribute>
-        </rect>
-      </g>
+      <rect x='0' y='0'>
+        <xsl:attribute name="width"><xsl:value-of select="$width" /></xsl:attribute>
+        <xsl:attribute name="height"><xsl:value-of select="$height" /></xsl:attribute>
+      </rect>
     </xsl:param>
     
     <xsl:param name="depiction">
@@ -71,10 +69,9 @@
         <xsl:with-param name="k9-texture">none</xsl:with-param>
         <xsl:with-param name="k9-ui">image</xsl:with-param>
         <xsl:with-param name="id"><xsl:value-of select="$id" />@dep</xsl:with-param>
-        <xsl:with-param name="shape">
-          <xsl:copy-of select="$image" />
-        </xsl:with-param>
+        <xsl:with-param name="shape"></xsl:with-param>
         <xsl:with-param name="content">
+          <xsl:copy-of select="$image" />
           <xsl:copy-of select="$highlight" />
         </xsl:with-param>
       </xsl:call-template>

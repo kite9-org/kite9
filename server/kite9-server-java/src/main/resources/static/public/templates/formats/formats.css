@@ -58,9 +58,9 @@
 
 /* depiction:  a shape inside an object */
 
-[k9-format=text-shape-captioned] > [k9-elem=depiction],
-[k9-format=text-image-portrait] > [k9-elem=depiction],
-[k9-format=text-shape-portrait] > [k9-elem=depiction] {
+[k9-format=text-shape-captioned] > g > [k9-elem=depiction],
+[k9-format=text-image-portrait] > g > [k9-elem=depiction],
+[k9-format=text-shape-portrait] > g > [k9-elem=depiction] {
   --kite9-type: container;
   --kite9-min-size: 50pt 50pt;
   --kite9-margin: 15pt;
@@ -71,9 +71,9 @@
 
 /* caption:  text inside the object */
 
-[k9-format=text-image-portrait] > [k9-elem=caption],
-[k9-format=text-shape-portrait] > [k9-elem=caption],
-[k9-format=text-shape-captioned] > [k9-elem=caption]  {
+[k9-format=text-image-portrait] > g >[k9-elem=caption],
+[k9-format=text-shape-portrait] > g > [k9-elem=caption],
+[k9-format=text-shape-captioned] > g > [k9-elem=caption]  {
   --kite9-type: text;
   --kite9-padding: 5pt;
   --kite9-horizontal-align: center;
@@ -85,12 +85,12 @@
 
 /* align: aligns the contents of the object */
 
-[k9-format=text-shape-captioned] > [k9-elem=shape-align] {
+[k9-format=text-shape-captioned] > g > [k9-elem=shape-align] {
   --kite9-type: link;
 }
 
-[k9-format=text-shape-captioned] > [k9-elem=shape-align] > [k9-elem=from],
-[k9-format=text-shape-captioned] > [k9-elem=shape-align] > [k9-elem=to] {
+[k9-format=text-shape-captioned] > g > [k9-elem=shape-align] > g > [k9-elem=from],
+[k9-format=text-shape-captioned] > g > [k9-elem=shape-align] > g > [k9-elem=to] {
   --kite9-type: link-end;
 }
 

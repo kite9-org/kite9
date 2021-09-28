@@ -10,7 +10,7 @@
      
      <item id="t3" k9-format="text-shape-portrait" k9-shape="ellipse">Text Portrait</item>
      
-     <item id="t4" k9-format="text-shape-captioned" k9-shape="ellipse">Text Captioned</item> 
+     <!-- <item id="t4" k9-format="text-shape-captioned" k9-shape="ellipse">Text Captioned</item>  -->
     </item>
     
    <item id="cp" k9-format="container" style="fill: #B3B3B3; ">
@@ -18,9 +18,9 @@
       
       <item id="t2p" k9-format="text-fixed" style="fill: #602060; ">Text Fixed</item>
       
-     <item id="t3p" k9-format="text-shape-portrait" k9-shape="ellipse" style="fill: #602060; ">Text Portrait</item>
+     <item id="t3p" k9-format="text-shape-portrait" k9-shape="ellipse" style="fill: #602060; fill-opacity: 1; ">Text Portrait</item>
      
-     <item id="t4p" k9-format="text-shape-captioned" k9-shape="ellipse" style="fill: #602060; ">Text Captioned</item> 
+    <!--  <item id="t4p" k9-format="text-shape-captioned" k9-shape="ellipse" style="fill: #602060; ">Text Captioned</item>  -->
  
     </item>
     
