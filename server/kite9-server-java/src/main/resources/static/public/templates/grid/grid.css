@@ -6,12 +6,6 @@
 	--kite9-padding: 10pt;
 }
 
-[k9-elem=table] > [k9-texture=background] {
-	stroke: black;
-	stroke-width: 1pt;
-	fill: white;
-}
-
 /* cells */
 
 [k9-elem=cell] {
@@ -31,12 +25,12 @@
 }
 
 
-[k9-elem=cell].bordered > [k9-texture=background] {
+[k9-elem=cell].bordered {
 	stroke: black;
 	stroke-width: 2pt;
 }
 
-[k9-elem=cell].shaded > [k9-texture=background] {
+[k9-elem=cell].shaded {
 	fill: #CECECE;
 	fill-opacity: 1;
 }
