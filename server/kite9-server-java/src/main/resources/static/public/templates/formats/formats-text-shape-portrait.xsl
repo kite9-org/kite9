@@ -29,7 +29,6 @@
     </xsl:param>
 
     <xsl:param name="text"><text><xsl:value-of select="text()" /></text></xsl:param>
-
     
     <xsl:param name="background">
       <xsl:call-template name="shape-round-rect">

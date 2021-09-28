@@ -22,13 +22,7 @@
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">none</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
-    
-    <xsl:param name="shape">
-      <xsl:apply-templates mode="shape" select=".">
-        <xsl:with-param name="k9-rounding" select="$k9-rounding" />
-      </xsl:apply-templates>
-    </xsl:param>
-    
+
     <xsl:param name="href"><xsl:value-of select="@href" /></xsl:param>
     
     <xsl:param name="width">
@@ -43,6 +37,12 @@
         <xsl:when test="@height"><xsl:value-of select="@height" /></xsl:when>
         <xsl:otherwise>50pt</xsl:otherwise>
       </xsl:choose>
+    </xsl:param>
+        
+    <xsl:param name="shape">
+      <xsl:apply-templates mode="shape" select=".">
+        <xsl:with-param name="k9-rounding" select="$k9-rounding" />
+      </xsl:apply-templates>
     </xsl:param>
 
     <xsl:param name="text"><text><xsl:value-of select="text()" /></text></xsl:param>
