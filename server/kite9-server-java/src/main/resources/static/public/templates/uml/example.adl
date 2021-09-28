@@ -1,7 +1,7 @@
 <diagram xslt:template="/public/templates/uml/uml-template.xsl" 
   xmlns="http://www.kite9.org/schema/adl"
   xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia" 
-  style="--kite9-layout: vertical; " name="UML">
+  name="UML">
 
   <interface id="i1">Listener</interface> 
 

@@ -66,6 +66,7 @@
   --kite9-margin: 15pt;
   --kite9-connection-align: 50%;
   --kite9-horizontal-align: center;
+  --kite9-connections: separate;
 }
 
 /* caption:  text inside the object */

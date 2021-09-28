@@ -26,11 +26,6 @@
   stroke: black;
 }
 
-[k9-texture=background] text {
-  fill: black;
-  stroke: none;
-}  
-
 /**
  * This texture is used when none is provided.  It basically defaults to the same thing as
  * background.
@@ -39,11 +34,6 @@
 	fill: white;
 	fill-opacity: 1;
 }
-
-[k9-texture~=default] text {
-  fill: black;
-  stroke: none;
-}  
 
 /**
  * Use when the object is see-through, but should still be visible.  Use to replace background.
@@ -56,9 +46,14 @@
 
 /**
  * Use when the object is in the foreground, and won't have content on
- * top of it.  
+ * top of it.  This is used for text, generally.
  */
 [k9-texture~=foreground] {
   fill: black;
   fill-opacity: 1;
+  stroke: none;
+}
+
+text {
+	stroke-width: 0;
 }

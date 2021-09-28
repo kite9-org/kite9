@@ -35,5 +35,7 @@
     </rect>
   </xsl:template>
   
+  <xsl:template match="text()" mode="shape" />
+  
   
 </xsl:stylesheet>
