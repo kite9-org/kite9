@@ -138,7 +138,7 @@
 			</group>
 		</group>
 
-		<svg:g style="--kite9-link-minimum-length: 100pt !important; ">
+    <svg:g style="--kite9-link-minimum-length: 100pt !important; ">
 
 			<link id="l1">
 				<from id="l1-f" reference="from1" />

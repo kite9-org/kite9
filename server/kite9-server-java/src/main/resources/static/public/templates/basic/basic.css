@@ -16,7 +16,7 @@
 	--kite9-connection-align: 50%;
 }
 
-[k9-elem=box] > [k9-texture=background] {
+[k9-elem=box][k9-texture=background] {
 	fill: #CCCCAA;
 	fill-opacity: 1;
 	stroke: #AAAA88;
