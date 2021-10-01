@@ -4,7 +4,7 @@
   id="dia"
   style="--kite9-layout: vertical; ">
 
-	<table style="--kite9-grid-size: 4 4; ">
+	<table style="--kite9-grid-size: 4 4; " class="invisible">
 		<cell>
 			<stored k9-format="text-shape-inline" id="1">Stored</stored>
 		</cell>

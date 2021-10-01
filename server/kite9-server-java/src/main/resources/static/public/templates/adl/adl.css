@@ -16,3 +16,11 @@
 @import url(/public/templates/labels/labels.css);
 @import url(/public/templates/grid/grid.css);
 @import url(/public/templates/diagram/diagram.css);
+
+
+[k9-elem=textarea] {
+  --kite9-margin: 4pt;
+  --kite9-vertical-align: center;
+  --kite9-connection-align: 50%;
+  --kite9-horizontal-align: center;
+}

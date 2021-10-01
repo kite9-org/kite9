@@ -4,7 +4,7 @@
          id="dia" 
          style="--kite9-layout: vertical; " name="UML">
 
-	<table style="--kite9-grid-size: 4 4; ">
+	<table style="--kite9-grid-size: 4 4; " class="invisible">
 		<cell>
 			<actor id="1">Actor</actor>
 		</cell>

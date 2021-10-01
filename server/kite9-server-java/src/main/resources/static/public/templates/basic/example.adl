@@ -2,7 +2,7 @@
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
-   <!--  <box id="b1" ><textarea id="t1" style="fill: red" >y</textarea></box>
+   <box id="b1" ><textarea id="t1" style="fill: red" >y</textarea></box>
    
    <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; ">
      <box id="b2" ><textarea id="t2">,</textarea></box>
@@ -17,6 +17,6 @@
    <link drawDirection="RIGHT" id="link2">
     <from id="link2-from" reference="b1"></from>
     <to id="link2-to" reference="b2"></to>
-   </link> --> 
+   </link> 
 
 </diagram>

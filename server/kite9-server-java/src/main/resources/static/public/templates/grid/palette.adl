@@ -16,6 +16,8 @@
   <table id="table1" style="--kite9-grid-size: 2 2; ">
     <cell id="t1"></cell>
     <cell id="t2" class="shaded"></cell>
+    <cell id="t2" class="invisible"></cell>
+    <cell id="t2" class="shaded invisible"></cell>
     <cell id="t3" class="bordered"></cell>
     <cell id="t4" class="shaded bordered"></cell>
   </table>

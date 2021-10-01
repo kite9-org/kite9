@@ -35,7 +35,15 @@
 	fill-opacity: 1;
 }
 
-/* 
+[k9-elem=table].invisible [k9-elem=cell],
+[k9-elem=table].invisible [k9-elem=_temporary],
+[k9-elem=cell].invisible,
+[k9-elem=table].invisible {
+  stroke: none;
+  fill: none;
+}
+
+
 cell.left {
 	--kite9-horizontal-align: left;
 	text-align: start;
@@ -52,4 +60,4 @@ cell.bottom {
 
 cell.top {
 	--kite9-vertical-align: top;
-} */
+} 

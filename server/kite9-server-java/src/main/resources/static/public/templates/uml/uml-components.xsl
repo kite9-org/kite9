@@ -8,12 +8,7 @@
   
 
   <xsl:template name="uml-divider">
-    <xsl:call-template name="texture-basic">
-      <xsl:with-param name="k9-texture">background</xsl:with-param>
-      <xsl:with-param name="shape">
-        <path d="" pp:d="M 0 0 H [[$width]]" />      
-      </xsl:with-param> 
-    </xsl:call-template>
+    <path d="" pp:d="M 0 0 H [[$width]]" />      
   </xsl:template>
 
   <xsl:template name="uml-actor" match="adl:actor" mode="shape">
@@ -172,18 +167,18 @@
         <xsl:call-template name="formats-container">
           <xsl:with-param name="k9-elem">properties</xsl:with-param>
           <xsl:with-param name="content">
-            <xsl:apply-templates select="adl:property" />
+            <xsl:apply-templates select="./adl:property" />
           </xsl:with-param>
-          <xsl:with-param name="k9-shape">
+          <xsl:with-param name="shape">
             <xsl:call-template name="uml-divider" />
           </xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="formats-container">
           <xsl:with-param name="k9-elem">methods</xsl:with-param>
           <xsl:with-param name="content">
-            <xsl:apply-templates select="adl:method" />
+            <xsl:apply-templates select="./adl:method" />
           </xsl:with-param>
-          <xsl:with-param name="k9-shape">
+          <xsl:with-param name="shape">
             <xsl:call-template name="uml-divider" />
           </xsl:with-param>
         </xsl:call-template> 

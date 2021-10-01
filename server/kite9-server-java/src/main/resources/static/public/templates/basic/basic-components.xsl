@@ -11,12 +11,6 @@
 	     <xsl:with-param name="k9-rounding">5pt</xsl:with-param>	
 		</xsl:call-template>
 	</xsl:template>
-
-	<xsl:template match="adl:textarea">
-		<xsl:call-template name="formats-text-fixed">
-      <xsl:with-param name="k9-texture">foreground</xsl:with-param>
-    </xsl:call-template>
-	</xsl:template>
  
 </xsl:stylesheet>
         

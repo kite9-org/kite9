@@ -26,7 +26,7 @@
         <xsl:with-param name="k9-rounding" select="$k9-rounding" />
       </xsl:apply-templates>
     </xsl:param>
-    <xsl:param name="content"><xsl:apply-templates /></xsl:param>
+    <xsl:param name="content"><xsl:apply-templates select="*" /></xsl:param>
     <xsl:param name="decoration"><xsl:apply-templates mode="container-decoration" select="." /></xsl:param>
     
     <xsl:call-template name="texture-basic">

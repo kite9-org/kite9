@@ -21,8 +21,4 @@
     <xsl:next-match/>
   </xsl:template>
   
-  <xsl:template match="adl:textarea">
-    <xsl:call-template name="formats-text-shape-inline" />
-  </xsl:template>
-  
 </xsl:stylesheet>  

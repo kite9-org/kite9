@@ -269,12 +269,12 @@
     <xsl:choose>
       <xsl:when test="@k9-format='text-shape-captioned'">
         <xsl:call-template name="formats-text-shape-captioned">
-           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+           <xsl:with-param name="k9-texture">flowchart-outline</xsl:with-param>
          </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
          <xsl:call-template name="formats-text-shape-inline">
-           <xsl:with-param name="k9-texture-shape">flowchart-symbol</xsl:with-param>
+           <xsl:with-param name="k9-texture">flowchart-symbol</xsl:with-param>
          </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose> when=
