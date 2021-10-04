@@ -9,12 +9,13 @@
 }
 
 
-[k9-elem=votes] > rect.back {
+[k9-elem=votes] > g > rect.back {
   fill: #7aa47f;
   fill-opacity: .9;	
+  stroke: none;
 }
 
-[k9-elem=votes] > text.count {
+[k9-elem=votes] > g > text.count {
   font-size: 16pt;
   fill: white !important;
   fill-opacity: 1;
@@ -25,7 +26,7 @@
 /**
  * Displays a font-awesome symbol on the screen
  */
-[k9-elem=votes] > text.font-awesome {
+[k9-elem=votes] > g > text.font-awesome {
   font-size: 16pt;
   font-family: "Font Awesome 5 Free";
   font-weight: 400;
@@ -38,9 +39,9 @@
 /** 
  * If the count is zero, hide the vote block
  */
-[k9-elem=votes][count="0"] > rect.back,
-[k9-elem=votes][count="0"] > text.count,
-[k9-elem=votes][count="0"] > text.font-awesome {
+[k9-elem=votes][count="0"] > g > rect.back,
+[k9-elem=votes][count="0"] > g > text.count,
+[k9-elem=votes][count="0"] > g > text.font-awesome {
   fill-opacity: 0 !important;
   stroke-opacity: 0 !important;
 }

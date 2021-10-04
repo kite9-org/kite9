@@ -5,7 +5,7 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
      
-  <xsl:import href="../../formats/formats-template.xsl" />
+  <xsl:import href="../../formats/formats-components.xsl" />
      
   <xsl:template match="adl:planner">
     <xsl:call-template name="formats-container">

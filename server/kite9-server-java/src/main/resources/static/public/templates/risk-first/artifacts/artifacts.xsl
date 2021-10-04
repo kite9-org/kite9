@@ -4,43 +4,8 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../../formats/formats-template.xsl" />
-  
-  <xsl:template name="action" match="adl:action">
-    <xsl:call-template name="formats-text-shape-inline">
-      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
-      <xsl:with-param name="k9-shape">
-        <g k9-texture="background" k9-highlight="pulse" >
-          <xsl:attribute name="pp:style">transform: translate([[$x]]px,[[$y]]px)</xsl:attribute>
-          <polygon points="" pp:points="
-            0 0, 
-            [[$width - (15 * $pt)]] 0,
-            [[$width]] [[$height div 2]],
-            [[$width - (15 * $pt)]] [[$height]],
-            0 [[$height]]"  />
-        </g>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template name="risk-action-left" match="adl:action[contains(@class, 'left')]" priority="5">
-    <xsl:call-template name="formats-text-shape-inline">
-      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
-      <xsl:with-param name="k9-shape">
-        <g k9-texture="background" k9-highlight="pulse" >
-          <xsl:attribute name="pp:style">transform: translate([[$x]]px,[[$y]]px)</xsl:attribute>
-          <polygon points="" pp:points="
-            0 [[$height div 2]], 
-            [[15 * $pt]] 0, 
-            [[$width]] 0, 
-            [[$width]] [[$height]], 
-            [[15 * $pt]] [[$height]],
-            0 [[$height div 2]]" />
-        </g>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
+  <xsl:import href="../../formats/formats-components.xsl" />
+
   <xsl:template name="arrow" match="adl:arrow">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
@@ -60,9 +25,7 @@
     adl:image-artifact">
     <xsl:call-template name="formats-text-image-portrait">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
-      <xsl:with-param name="k9-texture-text">artifact</xsl:with-param>
-      <xsl:with-param name="k9-texture-back">none</xsl:with-param>
-      <xsl:with-param name="k9-ui-depiction"></xsl:with-param>
+      <xsl:with-param name="k9-texture">artifact</xsl:with-param>
       <xsl:with-param name="href">
         <xsl:choose>
           <xsl:when test="name() = 'agent-artifact'">

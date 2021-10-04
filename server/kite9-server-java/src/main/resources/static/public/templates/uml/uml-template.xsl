@@ -7,7 +7,7 @@
   <xsl:import href="../adl/adl-template.xsl" />
   <xsl:import href="uml-components.xsl" />
   
-   <xsl:template match="/" mode="diagram-script">
+  <xsl:template match="/" mode="diagram-script">
      import '/public/templates/uml/uml.js';
   </xsl:template>
   

@@ -24,7 +24,7 @@
   </xsl:template>
 
 
-  <xsl:template name="containers-indicator" match="*[@layout]" mode="container-decoration" priority="1">
+  <xsl:template name="containers-indicator" match="*[@layout and @id]" mode="container-decoration" priority="1">
     <xsl:param name="layout" select="@layout" />
     <g k9-highlight="stroke">
       <rect y="0" x="0" pp:x="$width - 25" pp:y="$height - 25" width="20" height="20" rx="4" ry="4" fill="none"/>

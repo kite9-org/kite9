@@ -3,16 +3,17 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
 
   <xsl:import href="../../adl/adl-template.xsl" />
   
-  <xsl:variable name="risk-background">
+  <xsl:template name="risk-background" match="/" mode="diagram-defs">
     <linearGradient id='risk-background' x1='0%' x2='0%' y1='0%' y2='100%'>
       <stop offset='0%' stop-color='#FFF' />
       <stop offset='100%' stop-color='#DDD' />
-    </linearGradient>    
-  </xsl:variable>
+    </linearGradient>   
+    <xsl:next-match />
+  </xsl:template>
   
   <!-- standard stuff that goes inside a risk-box -->
   <xsl:template name="risks-content">
@@ -374,15 +375,11 @@
   <xsl:template match="adl:hidden">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-contains">risk</xsl:with-param>
-      <xsl:with-param name="k9-decoration">
+      <xsl:with-param name="decoration">
         <xsl:apply-templates mode="container-decoration" select="." />
-        <xsl:call-template name="texture-basic">
-          <xsl:with-param name="shape">
-            <g pp:transform="scale([[$width div 230]]) translate(140,-20)">
-              <image xlink:href="/public/templates/risk-first/redesign/decals/hidden_risk_v2.svg" width="100px" height="100px"/>
-            </g>
-          </xsl:with-param>
-        </xsl:call-template>
+          <g pp:transform="scale([[$width div 230]]) translate(140,-20)">
+            <image xlink:href="/public/templates/risk-first/redesign/decals/hidden_risk_v2.svg" width="100px" height="100px"/>
+          </g>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -390,13 +387,8 @@
   <xsl:template match="adl:mitigated">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-contains">risk</xsl:with-param>
-      <xsl:with-param name="k9-decoration">
-        <xsl:apply-templates mode="container-decoration" select="." />
-        <xsl:call-template name="texture-basic">
-          <xsl:with-param name="shape">
-            <line x1="0" y1="0" pp:y1="$height" x2="0" pp:x2="$width" y2="0" stroke="black" stroke-width="10pt" stroke-opacity="0.2"/>
-          </xsl:with-param>
-        </xsl:call-template>
+      <xsl:with-param name="decoration">
+        <line x1="0" y1="0" pp:y1="$height" x2="0" pp:x2="$width" y2="0" stroke="black" stroke-width="10pt" stroke-opacity="0.2"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>

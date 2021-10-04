@@ -58,6 +58,6 @@
   <link id="id_17" drawDirection="RIGHT">
     <from id="e11" reference="id_9"/>
     <to id="e12" reference="id_10" shape="arrow" class="space"/>
-  </link>-->
+  </link>
 
 </diagram>

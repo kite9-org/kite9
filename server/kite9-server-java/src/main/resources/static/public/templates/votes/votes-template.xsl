@@ -9,7 +9,7 @@
     <xsl:param name="count" select="count(./adl:vote)"/>
     <xsl:if test="$count">
       <xsl:call-template name="formats-shape">
-        <xsl:with-param name="k9-shape">
+        <xsl:with-param name="shape">
           <rect x="-5pt" y="-5pt" width="52pt" height="26pt" rx="8pt" ry="8pt" class="back"/>
           <text x="8pt" y="9pt" class="font-awesome">&#xf005;</text>
           <text x="30pt" y="9pt" class="count"><xsl:value-of select="$count" /></text>

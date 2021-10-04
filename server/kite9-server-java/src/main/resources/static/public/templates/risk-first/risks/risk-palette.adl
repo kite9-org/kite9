@@ -6,7 +6,7 @@
 
 		id="The Diagram" style="--kite9-layout: down; --kite9-padding: 0;">
 
-		<table
+		<table class="invisible"
 			style="--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0">
 			<cell style="--kite9-occupies: 0 0; " class="shaded">
 				<risk id="coordination" href="/public/templates/risk-first/redesign/risks/coordination_risk_v2.svg">
