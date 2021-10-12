@@ -1,21 +1,8 @@
 
-/* tables */
-
-[k9-elem=table] {
-	--kite9-layout: grid;
-	--kite9-padding: 10pt;
-}
-
 /* cells */
 
 [k9-elem=cell] {
-	--kite9-usage: regular;
-	--kite9-vertical-align: center;
-	--kite9-horizontal-align: center;
-	--kite9-sizing: minimize;
 	text-align: middle;
-	--kite9-min-size: 30pt 30pt;
-	--kite9-traversal: always;
 }
 
 [k9-elem=_temporary],
@@ -43,20 +30,20 @@
 }
 
 
-cell.left {
+[k9-elem=cell].left {
 	--kite9-horizontal-align: left;
 	text-align: start;
 }
 
-cell.right {
+[k9-elem=cell].right {
 	--kite9-horizontal-align: right;
 	text-align: end;
 }
 
-cell.bottom {
+[k9-elem=cell].bottom {
 	--kite9-vertical-align: bottom;
 }
 
-cell.top {
+[k9-elem=cell].top {
 	--kite9-vertical-align: top;
 } 

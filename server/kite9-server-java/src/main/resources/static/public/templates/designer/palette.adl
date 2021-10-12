@@ -1,57 +1,56 @@
+<diagram 
+  xslt:template="/public/templates/designer/designer-template.xsl"
+  xmlns="http://www.kite9.org/schema/adl" 
+  xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia"
+  style="--kite9-layout: vertical; ">
 
-	<diagram xmlns="http://www.kite9.org/schema/adl" id="dia"
-		style="kite9-layout: vertical; ">
+  <table style="--kite9-grid-size: 3 2; ">
+    <cell>
+      <glyph id="2">
+        <stereotype id="1-2">Type</stereotype>
+        <label id="1-3">Part</label>
+      </glyph>
+    </cell>
+    <cell>
+      <glyph id="g">
+        <stereotype id="g-1">
+          Stereo
+        </stereotype>
+        <label id="g-2">One</label>
+        <text-line id="g-4">Some text</text-line>
+      </glyph>
+    </cell>
+    <cell>
+      <glyph id="auto:0-one">
+        <stereotype id="auto:0-one-stereo">
+          Stereo
+          <symbol id="s2" k9-shape="square">x</symbol>
+          <symbol id="s3" k9-shape="circle">y</symbol>
+          <symbol id="s4" k9-shape="diamond">z</symbol>
+        </stereotype>
 
-		<table style="kite9-grid-size: 3 2; ">
-			<cell>
-				<glyph id="2">
-					<stereotype id="1-2">Type</stereotype>
-					<label id="1-3">Part</label>
-				</glyph>
-			</cell>
-			<cell>
-				<glyph id="g">
-					<stereotype id="g-1">
-						Stereo
-					</stereotype>
-					<label id="g-2">One</label>
-					<text-line id="g-4">Some text</text-line>
-				</glyph>
-			</cell>
-			<cell>
-				<glyph id="auto:0-one">
-					<stereotype id="auto:0-one-stereo">
-						Stereo
-							<symbol id="s2" k9-shape="square">x</symbol>
-							<symbol id="s3" k9-shape="circle">y</symbol>
-							<symbol id="s4" k9-shape="diamond">z</symbol>
-					</stereotype>
+        <label id="auto:0-one-label">One</label>
 
-					<label id="auto:0-one-label">One</label>
-
-					<text-line id="s6">Some text</text-line>
-					<text-line id="s7">
-						Some text
-							<symbol id="s9" k9-shape="hexagon">A</symbol>
-					</text-line>
-				</glyph>
-			</cell>
-			<cell>
-				<glyph id="1">
-					<label id="1-1">Part</label>
-				</glyph>
-			</cell>
-			<cell>
-				<symbol id="5" k9-shape="circle">C</symbol>
-				<symbol id="8" k9-shape="diamond">D</symbol>
-				<symbol id="6" k9-shape="hexagon">H</symbol>
-				<symbol id="7" k9-shape="square">S</symbol>
-			</cell>
-			<cell>
-				<arrow id="3">Connection Body</arrow>
-			</cell>
-		</table>
-
-
-	</diagram>
-</svg:svg>
+        <text-line id="s6">Some text</text-line>
+        <text-line id="s7">
+          Some text
+          <symbol id="s9" k9-shape="hexagon">A</symbol>
+        </text-line>
+      </glyph>
+    </cell>
+    <cell>
+      <glyph id="1">
+        <label id="1-1">Part</label>
+      </glyph>
+    </cell>
+    <cell>
+      <symbol id="5" k9-shape="circle">C</symbol>
+      <symbol id="8" k9-shape="diamond">D</symbol>
+      <symbol id="6" k9-shape="hexagon">H</symbol>
+      <symbol id="7" k9-shape="square">S</symbol>
+    </cell>
+    <cell>
+      <arrow id="3">Connection Body</arrow>
+    </cell>
+  </table>
+</diagram>

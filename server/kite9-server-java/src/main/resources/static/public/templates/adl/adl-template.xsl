@@ -4,7 +4,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:pp="http://www.kite9.org/schema/post-processor"
-        version="1.0">
+        version="2.0">
         
         
   <!-- 
@@ -33,6 +33,10 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:template match="/" mode="diagram-element-css">
+    @import url('/public/templates/adl/adl-elements.css');
+    <xsl:next-match />
+  </xsl:template>
   
 
 </xsl:stylesheet>

@@ -72,5 +72,9 @@
     </xsl:call-template>
   </xsl:template>
    
+  <xsl:template match="/" mode="diagram-element-css">
+    @import url('/public/templates/containers/containers-elements.css');
+    <xsl:next-match />
+  </xsl:template>
     
 </xsl:stylesheet>

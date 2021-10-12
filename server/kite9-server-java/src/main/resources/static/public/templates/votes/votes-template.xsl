@@ -19,4 +19,9 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="/" mode="diagram-element-css">
+    @import url('/public/templates/votes/votes-elements.css');
+    <xsl:next-match />
+  </xsl:template>
+
 </xsl:stylesheet>

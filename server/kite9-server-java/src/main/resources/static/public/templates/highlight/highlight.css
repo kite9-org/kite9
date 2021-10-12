@@ -36,6 +36,7 @@
 	stroke: #b7c0fe;
 	stroke-opacity: .8;
 	stroke-width: 1pt;
+	stroke-dasharray: none;
 }
 
 .indicators-on [id] > [k9-highlight~=fill] {

@@ -10,12 +10,21 @@
   <xsl:template match="adl:planner">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-contains">planner</xsl:with-param>
+      <xsl:with-param name="k9-child">/public/templates/risk-first/planner/palette.adl#cell</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
   <xsl:template match="adl:planner-cell">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-containers">planner</xsl:with-param>
+      <xsl:with-param name="k9-rounding">0</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
+  <xsl:template match="adl:planner-header">
+    <xsl:call-template name="formats-container">
+      <xsl:with-param name="k9-containers">planner</xsl:with-param>
+      <xsl:with-param name="k9-rounding">0</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   

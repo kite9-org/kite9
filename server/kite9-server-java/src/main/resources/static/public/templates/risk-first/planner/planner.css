@@ -20,7 +20,8 @@
 	--kite9-min-size: 60pt 30pt;
 }
 
-[k9-elem=planner-cell] > [k9-elem=back] {
+[k9-elem=planner-cell],
+[k9-elem=planner-header] {
   stroke: #aeaeae;
   stroke-width: 1pt;
 }

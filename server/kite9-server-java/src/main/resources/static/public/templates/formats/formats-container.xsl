@@ -11,6 +11,7 @@
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
     <xsl:param name="id" select="@id" />
 
+    <xsl:param name="k9-child"></xsl:param>
     <xsl:param name="k9-containers"></xsl:param>
     <xsl:param name="k9-contains">connected</xsl:param>
     <xsl:param name="k9-elem" select="local-name()" />
@@ -30,6 +31,7 @@
     <xsl:param name="decoration"><xsl:apply-templates mode="container-decoration" select="." /></xsl:param>
     
     <xsl:call-template name="texture-basic">
+      <xsl:with-param name="k9-child" select="$k9-child" />
       <xsl:with-param name="k9-containers" select="$k9-containers"  />
       <xsl:with-param name="k9-contains" select="$k9-contains"  />
       <xsl:with-param name="k9-elem" select="$k9-elem"  />

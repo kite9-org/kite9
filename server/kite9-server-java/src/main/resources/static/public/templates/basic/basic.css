@@ -1,4 +1,5 @@
 @import url('/public/templates/adl/adl.css');
 @import url('/public/templates/editor/editor.css');
 @import url('/public/fonts/metropolis/metropolis.css');
+@Import url('basic-elements.css');
 @Import url('basic-textures.css');

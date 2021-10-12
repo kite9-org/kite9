@@ -31,6 +31,7 @@
     <xsl:param name="k9-format"></xsl:param>
     <xsl:param name="k9-palette"></xsl:param>
     <xsl:param name="k9-ui"></xsl:param>
+    <xsl:param name="k9-child"></xsl:param>
 
     <!--  these specify the content of the element -->
     <xsl:param name="shape"></xsl:param>
@@ -75,6 +76,10 @@
 
         <xsl:if test="$k9-ui">
           <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
+        </xsl:if>
+        
+        <xsl:if test="$k9-child">
+          <xsl:attribute name="k9-child"><xsl:value-of select="$k9-child" /></xsl:attribute>
         </xsl:if>
       </xsl:if>
       
