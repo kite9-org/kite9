@@ -1,0 +1,20 @@
+@import url('/public/templates/basic/basic-textures.css');
+
+[k9-texture=flowchart-symbol],
+[k9-texture=flowchart-outline] > g > [k9-texture=background] {
+	fill: #DDDDDD;
+	stroke: black;
+}
+
+[k9-texture=flowchart-symbol] text {
+	fill: black;
+}
+
+
+[k9-texture] {
+  font-family: "metropolis";
+  text-align: start;
+  font-size: 10pt;
+}
+
+	

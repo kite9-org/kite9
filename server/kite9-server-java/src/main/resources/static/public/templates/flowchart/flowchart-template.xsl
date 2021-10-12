@@ -11,8 +11,13 @@
     import '/public/templates/flowchart/flowchart.js';
   </xsl:template>
   
-  <xsl:template match="/" mode="diagram-css">
-    @import url('/public/templates/flowchart/flowchart.css');
+  <xsl:template match="/" mode="diagram-element-css">
+    <xsl:next-match />
+    @import url('/public/templates/flowchart/flowchart-elements.css');
+  </xsl:template>
+  
+  <xsl:template match="/" mode="diagram-texture-css">
+    @import url('/public/templates/flowchart/flowchart-textures.css');
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">
