@@ -2,6 +2,8 @@
 @import url(/public/templates/containers/containers-textures.css);
 @import url(/public/templates/links/links-textures.css);
 @import url(/public/templates/grid/grid-textures.css);
+@import url(/public/templates/labels/labels-textures.css);
+@import url(/public/templates/links/links-textures.css);
 @import url(/public/templates/highlight/highlight.css);
 
 [k9-elem=box] > [k9-texture=background] {

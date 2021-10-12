@@ -33,6 +33,7 @@
 	stroke: #CCCCCC;
 }
 
-[k9-elem=hub] > [k9-texture=foreground] {
+[k9-elem=hub][k9-texture=background] {
   fill: #FFFFFF;
+  stroke: none;
 }

@@ -7,7 +7,7 @@
   <xsl:import href="../adl/adl-template.xsl"/>
   <xsl:import href="font-awesome-components.xsl" />
 
-  <xsl:template match="/" mode="diagram-css">
+  <xsl:template match="/" mode="diagram-texture-css">
     @import url('/public/templates/font-awesome/font-awesome.css');
   </xsl:template>
 

@@ -21,6 +21,3 @@
 	--kite9-link-end: from;
 }
 
-[k9-elem=label] [k9-texture=background] {
-	 stroke: none;
-}

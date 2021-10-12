@@ -5,7 +5,7 @@
         xmlns="http://www.kite9.org/schema/adl"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:k9="http://www.kite9.org/schema/macros"
-        version="1.0">
+        version="2.0">
 
   <xsl:import href="../formats/formats-components.xsl"/>  
   
@@ -22,17 +22,19 @@
         <xsl:call-template name="formats-text-shape-inline">
           <xsl:with-param name="k9-elem">label-inner</xsl:with-param>
           <xsl:with-param name="k9-rounding" select="$k9-rounding" />
-          <xsl:with-param name="k9-texture-background">background</xsl:with-param>
         </xsl:call-template>    
       </xsl:with-param>
     </xsl:call-template>
     
   </xsl:template> 
   
-  
-  
   <xsl:template match="adl:label">
     <xsl:call-template name="labels-basic" />
+  </xsl:template>
+  
+  <xsl:template match="/" mode="diagram-element-css">
+    @import url('/public/templates/labels/labels-elements.css');
+    <xsl:next-match />
   </xsl:template>
   
 </xsl:stylesheet>
