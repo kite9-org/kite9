@@ -158,7 +158,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
                 return ref;
             }
         } catch (SAXIOException ex) {
-        	// to be consistent with safari and chome, if an element reference is on a stylesheet, then 
+        	// to be consistent with safari and chrome, if an element reference is on a stylesheet, then
         	// we should take the reference from the current document.
         	try {
         		ParsedURL pUrl = new ParsedURL(uri);

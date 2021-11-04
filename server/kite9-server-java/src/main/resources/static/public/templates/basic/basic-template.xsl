@@ -7,7 +7,7 @@
   <xsl:import href="../adl/adl-template.xsl" />
   <xsl:import href="basic-components.xsl" />
 
-	<xsl:template match="/" mode="diagram-element-css">
+  <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
     @import url('/public/templates/basic/basic-elements.css');
   </xsl:template>
