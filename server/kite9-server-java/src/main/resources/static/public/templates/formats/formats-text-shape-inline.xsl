@@ -4,7 +4,8 @@
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
 
   <xsl:import href="../texture/texture-template.xsl" />
-
+  <xsl:import href="../shape/shape-template.xsl" />
+  
   <xsl:template name="formats-text-shape-inline" match="*[@k9-format='text-shape-inline']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
@@ -26,7 +27,23 @@
         <xsl:with-param name="k9-rounding" select="$k9-rounding" />
       </xsl:apply-templates>
     </xsl:param>
-    <xsl:param name="content"><text><xsl:value-of select="text()" /></text></xsl:param>
+    
+    <xsl:param name="text"><text><xsl:value-of select="text()" /></text></xsl:param>
+    
+    <xsl:param name="caption">
+      <xsl:call-template name="texture-basic">
+        <xsl:with-param name="k9-elem">caption</xsl:with-param>
+        <xsl:with-param name="k9-texture">foreground</xsl:with-param>
+        <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
+        <xsl:with-param name="k9-format">text-fixed</xsl:with-param>
+        <xsl:with-param name="content" select="$text" />
+      </xsl:call-template>
+    </xsl:param>  
+    
+    <xsl:param name="content">
+    	<xsl:copy-of select="$caption" />
+	</xsl:param>
+	
     <xsl:param name="decoration"><xsl:apply-templates mode="text-decoration" select="." /></xsl:param>
     
     <xsl:call-template name="texture-basic">

@@ -11,8 +11,8 @@
      import '/public/templates/uml/uml.js';
   </xsl:template>
   
-  <xsl:template match="/" mode="diagram-element-css">
-    @import url('/public/templates/uml/uml.css');
+  <xsl:template match="/" mode="diagram-texture-css">
+    @import url('/public/templates/uml/uml-textures.css');
     <xsl:next-match />
   </xsl:template>
 

@@ -1,6 +1,6 @@
-/** text-inline, text-inline-fixed format */
 
-[k9-format=text-shape-inline],
+/** text-fixed format */
+
 [k9-format=text-fixed] {
   --kite9-type: text;
   --kite9-vertical-align: center;
@@ -40,12 +40,13 @@
 	--kite9-padding: 11pt;
 }
 
-/* text-captioned, text-portrait format */
+/* text-captioned, text-portrait, text-shape-inline format */
 
 [k9-format=text-image-portrait],
 [k9-format=text-image-captioned],
 [k9-format=text-shape-captioned],
-[k9-format=text-shape-portrait] {
+[k9-format=text-shape-portrait],
+[k9-format=text-shape-inline] {
 	--kite9-type: container;
 	--kite9-sizing: minimize;
 	--kite9-margin: 16pt;
@@ -71,6 +72,7 @@
 
 /* caption:  text inside the object */
 
+[k9-format=text-shape-inline] > g >[k9-elem=caption],
 [k9-format=text-image-portrait] > g >[k9-elem=caption],
 [k9-format=text-shape-portrait] > g > [k9-elem=caption],
 [k9-format=text-shape-captioned] > g > [k9-elem=caption]  {

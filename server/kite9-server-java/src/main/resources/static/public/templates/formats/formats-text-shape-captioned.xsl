@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
 
   <xsl:import href="../texture/texture-template.xsl" />
   <xsl:import href="../shape/shape-template.xsl" />
@@ -83,6 +83,7 @@
     	<xsl:copy-of select="$caption" />
     	<xsl:copy-of select="$align" />
     </xsl:param>
+    
     <xsl:param name="decoration"><xsl:apply-templates mode="text-decoration" select="." /></xsl:param>
     
     <xsl:call-template name="texture-basic">
