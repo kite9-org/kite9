@@ -4,6 +4,8 @@
 [k9-texture=flowchart-outline] > g > [k9-texture=background] {
 	fill: #DDDDDD;
 	stroke: black;
+	fill-opacity: 1;
+	stroke-opacity: 1;
 }
 
 [k9-texture=flowchart-symbol] text {
