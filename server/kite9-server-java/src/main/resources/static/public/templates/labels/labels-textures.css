@@ -2,3 +2,10 @@
 [k9-elem=label] [k9-texture=background] {
 	 stroke: none;
 }
+
+[k9-elem=label-inner],
+[k9-elem=label] {
+	--kite9-margin: 0;
+	--kite9-padding: 0;
+}
+

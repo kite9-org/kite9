@@ -50,63 +50,6 @@
 }
 
 
-/**
- * Fonts and colours 
- */
-[k9-elem=class-name] [k9-texture=foreground] {
-	fill: #333300;
-	text-align: start;
-	font-size: 10pt;	
-}
-
-
-[k9-elem=stereotype] [k9-texture=foreground] {
-	fill: #666666;
-	text-align: start;
-	font-size: 8pt;	
-	--kite9-margin-bottom: 5pt;
-}
- 
-
-[k9-elem=label] [k9-texture=foreground] {
-	fill: #333300;
-	text-align: start;
-	font-size: 10pt;
-}
-
-[k9-elem=property],
-[k9-elem=method] {
-	fill: #333300;
-	font-family: "metropolis";
-	text-align: start;
-	font-size: 8pt;
-	text-align: start;
-	--kite9-horizontal-align: left;
-	--kite9-margin-bottom: 2pt;
-	
-}
-
-[k9-texture=background],
-[k9-shape=divider],
-[k9-elem=depiction] {
-	fill: rgb(231, 230, 232);
-	stroke: black;
-}
-
-[k9-elem=caption] {
-	--kite9-padding: 10pt;
-}
-
-[k9-elem=class] > [k9-texture=background],
-[k9-elem=caption] > [k9-texture=background] {
-  fill: rgb(231, 230, 232);
-	stroke: black;
-}
-
-[k9-elem=label] > [k9-texture=background] {
-  fill: rgb(231, 230, 232);
-  fill-opacity: 0.01;
-}
 
 /*
  * Connected Components 

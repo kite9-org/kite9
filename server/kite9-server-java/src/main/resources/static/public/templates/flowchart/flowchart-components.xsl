@@ -277,7 +277,12 @@
            <xsl:with-param name="k9-texture">flowchart-symbol</xsl:with-param>
          </xsl:call-template>
       </xsl:otherwise>
-    </xsl:choose> when=
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template match="/" mode="diagram-element-css">
+    <xsl:next-match />
+    @import url('/public/templates/flowchart/flowchart-elements.css');
   </xsl:template>
 
 </xsl:stylesheet>

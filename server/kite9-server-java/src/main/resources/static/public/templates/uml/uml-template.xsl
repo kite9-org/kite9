@@ -13,7 +13,6 @@
   
   <xsl:template match="/" mode="diagram-texture-css">
     @import url('/public/templates/uml/uml-textures.css');
-    <xsl:next-match />
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">

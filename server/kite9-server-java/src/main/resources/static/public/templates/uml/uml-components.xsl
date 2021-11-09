@@ -3,7 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
 
-  <xsl:import href="../texture/texture-template.xsl" />
   <xsl:import href="../formats/formats-components.xsl" />
   
 
@@ -143,7 +142,7 @@
     adl:interface | 
     adl:actor">
     <xsl:call-template name="formats-text-shape-captioned">
-      <xsl:with-param name="k9-texture-shape">background</xsl:with-param>
+      <xsl:with-param name="k9-texture">none</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -187,7 +186,7 @@
   
   </xsl:template>
 
-  <xsl:template match="/" mode="diagram-elements-css">
+  <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
     @import url('/public/templates/uml/uml-elements.css');
   </xsl:template>

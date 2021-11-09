@@ -22,6 +22,7 @@
         <xsl:call-template name="formats-text-shape-inline">
           <xsl:with-param name="k9-elem">label-inner</xsl:with-param>
           <xsl:with-param name="k9-rounding" select="$k9-rounding" />
+          <xsl:with-param name="k9-texture">none</xsl:with-param>
         </xsl:call-template>    
       </xsl:with-param>
     </xsl:call-template>
