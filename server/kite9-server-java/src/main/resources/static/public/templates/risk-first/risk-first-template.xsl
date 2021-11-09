@@ -6,7 +6,7 @@
 
   <xsl:import href="../adl/adl-template.xsl" />
   <xsl:import href="../votes/votes-template.xsl" />
-  <xsl:import href="risks/risks.xsl" />
+  <xsl:import href="risks/risk-components.xsl" />
   <xsl:import href="artifacts/artifact-components.xsl" />
   <xsl:import href="planner/planner.xsl" />
   <xsl:import href="actions/action-components.xsl" />

@@ -27,7 +27,7 @@
 }
 
 
-[k9-elem=title] {
+[k9-elem=title][k9-format=text-fixed] {
   --kite9-horizontal-align: center;
   --kite9-vertical-align: bottom;
   --kite9-sizing: minimize;
@@ -41,7 +41,7 @@
 }
 
 
-[k9-elem=code] {
+[k9-elem=code][k9-format=text-fixed] {
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: top;
 	--kite9-sizing: minimize;
@@ -63,3 +63,9 @@
    fill: url(#risk-background);
    stroke: black; 
 }
+
+[k9-elem=title] > g > [k9-elem=caption] {
+	--kite9-margin: 0pt;	
+	--kite9-padding: 0pt;
+}
+
