@@ -28,4 +28,9 @@
     </xsl:call-template>
   </xsl:template>
   
+   <xsl:template match="/" mode="diagram-element-css">
+    <xsl:next-match />
+    @import url('/public/templates/risk-first/planner/planner-elements.css');
+  </xsl:template>
+  
 </xsl:stylesheet>

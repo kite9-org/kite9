@@ -5,10 +5,10 @@
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
 
   <xsl:import href="../adl/adl-template.xsl" />
-  <xsl:import href="../votes/votes-template.xsl" />
+  <xsl:import href="../votes/votes-components.xsl" />
   <xsl:import href="risks/risk-components.xsl" />
   <xsl:import href="artifacts/artifact-components.xsl" />
-  <xsl:import href="planner/planner.xsl" />
+  <xsl:import href="planner/planner-components.xsl" />
   <xsl:import href="actions/action-components.xsl" />
    
   <xsl:template match="/" mode="diagram-script">
