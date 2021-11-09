@@ -53,26 +53,27 @@ export const
 function initCommon() {
 	
 	metadata.add(identityMetadataCallback);
-	
+
 	instrumentation.add(initIdentityInstrumentationCallback());
 	instrumentation.add(zoomableInstrumentationCallback);
-	
+
 	transition.document(initMetadataTransitionCallback(metadata));
 	transition.document(initCommandTransitionCallback(command));
-  
-  transition.animation(zoomableTransitionCallback);
-  transition.animation(initTransitionAnimationCallback());
-	
+
+	transition.animation(zoomableTransitionCallback);
+	transition.animation(initTransitionAnimationCallback());
+
 	command.add((update) => transition.update(update));
-		
+
 	dragger.moveWith(() => contextMenu.destroy());
 
-	
-	initDragable(dragger); 
+
+	initDragable(dragger);
 	initActionable(contextMenu);
 
 	initHoverable(undefined, initMainHoverableAllowed());		// init for main svg area
-  initHoverable(() => palette.get().querySelectorAll("[k9-elem][id]"), initPaletteHoverableAllowed(palette)); // init for palette
+
+	initHoverable(() => palette.get().querySelectorAll("[k9-elem][id]"), initPaletteHoverableAllowed(palette)); // init for palette
 
 	initZoomable();
 

@@ -15,4 +15,11 @@
   <xsl:template match="text()" mode="text-decoration"/>
   <xsl:template match="text()" mode="image-decoration"/>
 
+
+  <xsl:template match="/" mode="diagram-element-css">
+    @import url('/public/templates/formats/formats.css');
+    <xsl:next-match />
+  </xsl:template>
+  
+
 </xsl:stylesheet>

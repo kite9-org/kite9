@@ -18,6 +18,7 @@
   <xsl:import href="../labels/labels-components.xsl" />
   <xsl:import href="../grid/grid-components.xsl" />
   <xsl:import href="../links/links-components.xsl" />
+  <xsl:import href="../textarea/textarea-components.xsl" />
 
   <!-- this rule matches and passes through any svg elements -->
   <xsl:template match="svg:*">
@@ -25,18 +26,6 @@
           <xsl:copy-of select="@*" />
           <xsl:apply-templates />
       </xsl:element>
-  </xsl:template>
-  
-  <xsl:template match="adl:textarea">
-    <xsl:call-template name="formats-text-fixed">
-      <xsl:with-param name="k9-texture">foreground</xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template match="/" mode="diagram-element-css">
-    @import url('/public/templates/adl/adl-elements.css');
-    <xsl:next-match />
-  </xsl:template>
-  
+  </xsl:template> 
 
 </xsl:stylesheet>
