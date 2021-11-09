@@ -10,12 +10,6 @@
 	--kite9-min-size: 120pt 160pt;
 }
 
-[k9-elem=hidden] > [k9-elem=back],
-[k9-elem=mitigated] > [k9-elem=back] {
-	fill: white;
-}
-
-
 [k9-elem=risk] {
 	--kite9-connection-align: 50%;
 	--kite9-layout: down;
@@ -32,10 +26,6 @@
   --kite9-vertical-align: bottom;
   --kite9-sizing: minimize;
   --kite9-type: text;
-  font-size: 12pt;
-  font-weight: 200;
-  fill: black;
-  text-align: middle;
   --kite9-text-bounds-width: 110pt;
   --kite9-padding: 0pt;
 }
@@ -45,10 +35,6 @@
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: top;
 	--kite9-sizing: minimize;
-	font-size: 22pt;
-	font-weight: 300;
-	fill: black;
-	text-align: middle;
 	--kite9-padding: 0pt;
 	--kite9-margin: 0pt;
 	--kite9-margin-bottom: 15pt;
@@ -58,14 +44,3 @@
 	--kite9-vertical-align: top;
 	--kite9-horizontal-align: center;
 }
-
-[k9-elem=risk][k9-texture=background] {
-   fill: url(#risk-background);
-   stroke: black; 
-}
-
-[k9-elem=title] > g > [k9-elem=caption] {
-	--kite9-margin: 0pt;	
-	--kite9-padding: 0pt;
-}
-

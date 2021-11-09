@@ -5,7 +5,7 @@
   id="The Diagram" 
   style="--kite9-layout: down; --kite9-padding: 0;">
 
-  <table style="--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0">
+  <table class="invisible" style="--kite9-grid-size: 2 10; --kite9-margin: 0; --kite9-padding: 0">
     <cell style="--kite9-occupies: 0 0; " class="shaded">
       <risk class="coordination" id="coordination">Coordination Risk</risk>
     </cell>
