@@ -12,15 +12,7 @@
   --kite9-padding-right: 12pt;
 }
 
-[k9-elem=action] text {
-  fill-opacity: 1; 
-  font-size: 12pt;
-  font-weight: 200;
-  fill: white;
-  text-align: middle;
-}
-
-[k9-elem=action] [k9-texture=background] {
-   fill: url(#risk-background);
-   stroke: black; 
+[k9-elem=action] > g > [k9-elem=caption] {
+	--kite9-margin: 0pt;	
+	--kite9-padding: 0pt;
 }

@@ -7,16 +7,16 @@
   <xsl:import href="../adl/adl-template.xsl" />
   <xsl:import href="../votes/votes-template.xsl" />
   <xsl:import href="risks/risks.xsl" />
-  <xsl:import href="artifacts/artifacts.xsl" />
+  <xsl:import href="artifacts/artifact-components.xsl" />
   <xsl:import href="planner/planner.xsl" />
-  <xsl:import href="actions/actions.xsl" />
+  <xsl:import href="actions/action-components.xsl" />
    
   <xsl:template match="/" mode="diagram-script">
      import '/public/templates/risk-first/risk-first.js';
   </xsl:template>
   
-  <xsl:template match="/" mode="diagram-css">
-    @import url('/public/templates/risk-first/risk-first.css');
+  <xsl:template match="/" mode="diagram-texture-css">
+    @import url('/public/templates/risk-first/risk-first-textures.css');
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">

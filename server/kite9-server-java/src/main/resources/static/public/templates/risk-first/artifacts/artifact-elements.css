@@ -21,10 +21,18 @@
 	--kite9-min-size: 110pt 140pt;
 }
 
-[k9-texture=artifact] text {
-  font-size: 12pt;
-  font-weight: 200;
-  fill: black;
-  text-align: middle;
-  --kite9-text-bounds-width: 100pt;
+
+[k9-elem=arrow] {
+  --kite9-padding: 8pt 5pt 8pt 5pt;
+  --kite9-sizing: minimize;
+  --kite9-connections: separate;
+  --kite9-connection-align: 50%;
+  font-size: 14pt;
+  font-weight: 500;
+  --kite9-link-inset: 3pt;
+}
+
+[k9-elem=arrow] > g > [k9-elem=caption] {
+	--kite9-margin: 0pt;	
+	--kite9-padding: 0pt;
 }
