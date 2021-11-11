@@ -10,11 +10,6 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.holder.meta.MetaHelper;
-import com.kite9.server.update.AbstractUpdateHandler;
-import com.kite9.server.update.Update;
-import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.dom.XMLHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,21 +27,26 @@ import org.w3c.dom.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.adl.format.media.EditableSVGFormat;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.meta.BasicMeta;
 import com.kite9.pipeline.adl.holder.meta.MetaRead;
-import com.kite9.server.adl.holder.meta.Payload;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.EditableSVGFormat;
+import com.kite9.server.adl.holder.meta.MetaHelper;
+import com.kite9.server.adl.holder.meta.Payload;
 import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
 import com.kite9.server.persistence.queue.ChangeQueue.ChangeEvent;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.update.AbstractUpdateHandler;
+import com.kite9.server.update.Update;
 import com.kite9.server.update.UpdateHandler;
+import com.kite9.server.uri.URIWrapper;
 
 /**
  * This keeps track of which users have subscribed to events via websockets.
@@ -87,7 +87,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		topics.put(session, topic);
 		
 		if (sessionList.size() > 1) {
-			BasicMeta out = new BasicMeta(new HashMap<>());
+			BasicMeta out = new BasicMeta(new HashMap<>(), null);
 			UserMeta joiner = getUserFromSession(session);
 			out.setNotification(joiner.getDisplayName()+" has joined");
 			out.setCollaborators(getCurrentSubscribers(topic));
@@ -136,7 +136,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		existingSessions.remove(session);
 		
 		if (existingSessions.size() > 0) {
-			BasicMeta out = new BasicMeta(new HashMap<>());
+			BasicMeta out = new BasicMeta(new HashMap<>(), null);
 			UserMeta leaver = getUserFromSession(session);
 			out.setNotification(leaver.getDisplayName()+" has left");
 			out.setCollaborators(getCurrentSubscribers(topic));
@@ -238,7 +238,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	}
 
 	private MetaRead createMetaFromChange(ChangeEvent x) {
-		BasicMeta bm = new BasicMeta(new HashMap<>());
+		BasicMeta bm = new BasicMeta(new HashMap<>(), null);
 		if (x.errorMessage != null) {
 			bm.setError(x.errorMessage);
 		}

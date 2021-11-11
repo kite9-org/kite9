@@ -7,7 +7,7 @@ import com.kite9.pipeline.uri.K9URI
  */
 interface XMLBase {
 
-    val uri: K9URI
+    val uri: K9URI?
 
     /**
      * Returns the HTTPHeaders that were responsible for loading this

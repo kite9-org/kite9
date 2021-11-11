@@ -17,16 +17,6 @@ public class URIWrapper {
 
             @NotNull
             @Override
-            public K9URI toFileUri() {
-                try {
-                    return wrap(new java.net.URI(javaNetURI.getScheme(), javaNetURI.getAuthority(), javaNetURI.getPath(), null, null));
-                } catch (URISyntaxException e) {
-                    throw new IllegalArgumentException("Couldn't create uri: ", e);
-                }
-            }
-
-            @NotNull
-            @Override
             public K9URI withoutQueryParameters() {
                 try {
                     return wrap(new java.net.URI(javaNetURI.getScheme(), javaNetURI.getAuthority(), javaNetURI.getPath(), null, null));

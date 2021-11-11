@@ -71,7 +71,7 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 	
 	@Override
 	public SourceAPI createAPI(Update update, Authentication a) throws Exception {
-		K9URI sourceUri = convertToFileURI(update);
+		K9URI sourceUri = update.getUri();
 		if (update.getBase64adl()!=null) {
 			// update contains the ADL we're going to use
 			Decoder d = Base64.getDecoder();
@@ -127,11 +127,6 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 		
 		return new StaticRegularFileAPI(mt, bytes, uri);
 		
-	}
-
-	protected K9URI convertToFileURI(Update update) {
-		K9URI u = update.getUri();
-		return u.toFileUri();
 	}
 	
 	public static MultiValueMap<String, String> createCachingHeaders() {

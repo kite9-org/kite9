@@ -4,7 +4,9 @@ import com.kite9.pipeline.adl.holder.meta.BasicMeta
 import com.kite9.pipeline.uri.K9URI
 
 abstract class AbstractXMLBase (
-    override val uri: K9URI,
+    uri: K9URI?,
     override val requestHeaders: Map<String, List<String>>,
     meta: MutableMap<String, Any>
-) : BasicMeta(meta), XMLBase
+) : BasicMeta(meta, uri), XMLBase  {
+
+}

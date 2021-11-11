@@ -21,7 +21,7 @@ open class InsertUrl : AbstractInsertCommand() {
     }
 
     override fun getContents(d: ADLDom, ctx:CommandContext): Element? {
-        val out = getForeignElementCopy(d.document, d.uri, uriStr!!, true, d, ctx)
+        val out = getForeignElementCopy(d.document, d.uri!!, uriStr!!, true, d, ctx)
         replaceIds(out, newId!!)
         return out
     }

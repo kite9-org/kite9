@@ -8,7 +8,7 @@ import com.kite9.pipeline.uri.K9URI
  *
  * @author robmoffat
  */
-open class BasicMeta(metadata: MutableMap<String, Any>) : MetaReadWrite {
+open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadWrite {
 
     protected var metadata: MutableMap<String, Any> = HashMap()
 
@@ -73,5 +73,8 @@ open class BasicMeta(metadata: MutableMap<String, Any>) : MetaReadWrite {
 
     init {
         this.metadata = metadata
+        if (uri != null) {
+            setUri(uri)
+        }
     }
 }

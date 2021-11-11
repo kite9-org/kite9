@@ -4,9 +4,10 @@ package com.kite9.server.adl.holder.meta;
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map.Entry;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -17,9 +18,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import com.kite9.pipeline.adl.holder.meta.MetaRead;
-import com.kite9.pipeline.adl.holder.meta.UserMeta;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.w3c.dom.Document;
@@ -28,6 +26,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.meta.MetaRead;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.XMLBase;
 
 /**
@@ -70,9 +71,12 @@ public class Payload {
     }
 
     protected static void addMetadata(MetaRead adl, Document doc, Element inside) {
-        for (Entry<String, Object> e : adl.getMetaData().entrySet()) {
-            if (e.getValue() != null) {
-                Element entry = createContent(doc, e.getKey(), e.getValue());
+    	List<String> keys = new ArrayList<>(adl.getMetaData().keySet());
+    	Collections.sort(keys);
+        for (String k : keys) {
+        	Object v = adl.getMetaData().get(k);
+            if (v != null) {
+                Element entry = createContent(doc, k, v);
                 inside.appendChild(entry);
             }
         }

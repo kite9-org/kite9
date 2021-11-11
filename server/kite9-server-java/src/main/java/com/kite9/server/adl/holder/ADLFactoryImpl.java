@@ -97,6 +97,13 @@ public class ADLFactoryImpl implements ADLFactory {
 			public String getAsString() {
 				return xml;
 			}
+
+			@Override
+			public K9URI getUri() {
+				return super.getUri();
+			}
+			
+			
 			
 		};
 		return out;
@@ -211,32 +218,6 @@ public class ADLFactoryImpl implements ADLFactory {
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't serialize XML:", e, null, null);
 		}
-	}
-	
-
-	
-	abstract class XMLDomImpl extends AbstractXMLBase implements XMLDom {
-		
-		private Document doc;
-		
-		public XMLDomImpl(K9URI uri, Map<String, ? extends List<String>> requestHeaders, Document doc, Map<String, Object> meta) {
-			super(uri, requestHeaders, meta);
-			this.doc = doc;
-		}
-
-		public Document getDocument() {
-			return doc;
-		}
-	
-		/**
-		 * Since the dom is often in a state of change, we will compute the ADL 
-		 * string from scratch when needed.
-		 */
-		@Override
-		public String getAsString() {
-			return toXMLString(getDocument(), true);
-		}
-		
 	}
 
 	class ADLDomImpl extends AbstractXMLBase implements ADLDom {
