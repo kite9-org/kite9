@@ -18,6 +18,8 @@ import com.kite9.server.XMLCompare;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 
 public class PublicRenderingIT extends AbstractRestIT {
+	
+	public static final String MINIMAL = "/public/templates/risk-first/examples/minimal.adl";
 
 	protected byte[] loadStaticHtml(String page) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
@@ -62,7 +64,7 @@ public class PublicRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleHTML() throws Exception {
-		byte[] html = loadStaticHtml("/public/templates/risk-first/minimal.adl?format=html");
+		byte[] html = loadStaticHtml(MINIMAL + "?format=html");
 		persistInAFile(html, "testExampleHTML", "diagram.html");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/public/testExampleHTML/diagram.html"), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(expected, new String(html));
@@ -70,15 +72,15 @@ public class PublicRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleADL() throws Exception {
-		byte[] svg = loadStaticADL("/public/templates/risk-first/minimal.adl");
+		byte[] svg = loadStaticADL(MINIMAL);
 		persistInAFile(svg, "testExampleADL", "diagram.adl");
-		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/static/public/templates/risk-first/minimal.adl"), Charset.forName("UTF-8"));
+		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/static/"+MINIMAL), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(new String(svg), expected);
 	}
 	
 	@Test
 	public void testExampleSVG() throws Exception {
-		byte[] svg = loadStaticSVG("/public/templates/risk-first/minimal.adl?format=svg");
+		byte[] svg = loadStaticSVG(MINIMAL+"?format=svg");
 		persistInAFile(svg, "testExampleSVG", "diagram.svg");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/public/testExampleSVG/diagram.svg"), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(new String(svg), expected);
@@ -86,7 +88,7 @@ public class PublicRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleESVG() throws Exception {
-		byte[] svg = loadStaticESVG("/public/templates/risk-first/minimal.adl?format=esvg");
+		byte[] svg = loadStaticESVG(MINIMAL + "?format=esvg");
 		persistInAFile(svg, "testExampleESVG", "diagram.svg");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/public/testExampleESVG/diagram.svg"), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(new String(svg), expected);
@@ -94,7 +96,7 @@ public class PublicRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testExamplePNG() throws Exception {
-		byte[] png = loadStaticPNG("/public/templates/risk-first/minimal.adl?width=500&format=png");
+		byte[] png = loadStaticPNG(MINIMAL + "?width=500&format=png");
 		persistInAFile(png, "testExamplePNG", "diagram.png");
 		byte[] expected = StreamUtils.copyToByteArray(this.getClass().getResourceAsStream("/rendering/public/testExamplePNG/diagram.png"));
 		Assertions.assertEquals(expected.length, png.length);

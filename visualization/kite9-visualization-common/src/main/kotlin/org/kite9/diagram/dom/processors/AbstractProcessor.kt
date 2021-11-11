@@ -48,7 +48,9 @@ abstract class AbstractProcessor : XMLProcessor {
     protected open fun processNodeList(contents: NodeList, inside: Node?) {
         for (i in 0 until contents.length) {
             val n = contents.item(i)
-            processContents(n!!, inside)
+            if (n != null) {
+                processContents(n, inside)
+            }
         }
     }
 

@@ -43,20 +43,40 @@ public class XMLCompare {
 							}
 						} 
 						
-						if (comparison.getControlDetails().getXPath().endsWith("@d")) {
-		        			if ((((String) comparison.getControlDetails().getValue()).length() > 20) &&
-		        					(((String) comparison.getTestDetails().getValue()).length() > 20)) {
-								// in this case, we are likely looking at fonts being rendered into paths.
-								// these never seem to be consistent between machines.
-		        				return;
-		        			}
-		        		}
-		        		
+					 	if (comparison.getType() == ComparisonType.ATTR_VALUE) {
+			        		if (comparison.getControlDetails().getXPath().contains("@k9-")) {
+			        			// ignore the info
+			        			return;
+			        		}
+
+			        		if (attEndsWith(comparison, "template") || 
+		        				attEndsWith(comparison, "transform") ||
+		        				attEndsWith(comparison, "x") ||
+		        				attEndsWith(comparison, "y")) {
+			        			// ignore template location, these are often slightly off between platforms.
+								return;
+							}
+			        		
+			        		if (attEndsWith(comparison, "d")) {
+			        			if ((((String) comparison.getControlDetails().getValue()).length() > 20) &&
+			        					(((String) comparison.getTestDetails().getValue()).length() > 20)) {
+									// in this case, we are likely looking at fonts being rendered into paths.
+									// these never seem to be consistent between machines.
+			        				return;
+			        			}
+			        		}
+			        		
+			        	}
 						
 						Assertions.fail("found a difference: " + comparison+" between \n"+a+"\n -- and -- \n"+b);
 						
 					}
 				}
+
+				private boolean attEndsWith(Comparison comparison, String name) {
+					return comparison.getControlDetails().getXPath().endsWith("@"+name);
+				}
+				
 			}).build().hasDifferences();
 	}
 

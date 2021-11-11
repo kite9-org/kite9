@@ -96,6 +96,10 @@ interface K9MediaType {
                     get() = parameters
 
                 override fun toString() = mimeType
+
+                override fun equals(other: Any?): Boolean {
+                    return toString().equals(other.toString())
+                }
             }
         }
 
