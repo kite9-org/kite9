@@ -45,7 +45,7 @@ public class TemplateRenderingIT extends AbstractRestIT {
 	
 	
 	public void testExampleSVG(String name) throws Exception {
-		byte[] svg = loadStaticSVG("/public/templates/risk-first/minimal.adl?format=svg");
+		byte[] svg = loadStaticSVG(name+"?format=svg");
 		persistInAFile(svg, "testExampleSVG", name+".svg");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/public/testExampleSVG/"+name+".svg"), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(new String(svg), expected);

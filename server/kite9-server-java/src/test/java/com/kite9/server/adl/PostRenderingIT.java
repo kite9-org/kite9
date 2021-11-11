@@ -39,6 +39,9 @@ import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
  */
 public class PostRenderingIT extends AbstractRestIT {
 	
+	public static final String VOTES_FILE = "/static/public/templates/risk-first/examples/votes.adl";
+	public static final String MINIMAL_FILE = "/static/public/templates/risk-first/examples/minimal.adl";
+
 	protected byte[] withBytesInFormat(MediaType output, String xml) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(output));
@@ -61,7 +64,7 @@ public class PostRenderingIT extends AbstractRestIT {
 	public void testADLAndSVGRender() throws Exception {
 		byte[] back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.ADL_SVG_VALUE), createDiagramXML1());
 		persistInAFile(back, "testADLRender", "diagram.adl");
-		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream("/static/public/templates/risk-first/minimal.adl"), Charset.forName("UTF-8")), new String(back));
+		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream(MINIMAL_FILE), Charset.forName("UTF-8")), new String(back));
 	}
 	
 	@Test
@@ -109,14 +112,14 @@ public class PostRenderingIT extends AbstractRestIT {
 	
 	public String createDiagramXML1() throws IOException {
 		StringWriter sw = new StringWriter();
-		StreamHelp.streamCopy(new InputStreamReader(this.getClass().getResourceAsStream("/static/public/templates/risk-first/minimal.adl")), sw, true);
+		StreamHelp.streamCopy(new InputStreamReader(this.getClass().getResourceAsStream(MINIMAL_FILE)), sw, true);
 		String theDiagram = sw.toString();
 		return theDiagram;
 	}
 	
 	public String createDiagramXML2() throws IOException {
 		StringWriter sw = new StringWriter();
-		StreamHelp.streamCopy(new InputStreamReader(this.getClass().getResourceAsStream("/static/public/templates/risk-first/votes.adl")), sw, true);
+		StreamHelp.streamCopy(new InputStreamReader(this.getClass().getResourceAsStream(VOTES_FILE)), sw, true);
 		String theDiagram = sw.toString();
 		return theDiagram;
 	}
