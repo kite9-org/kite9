@@ -63,21 +63,18 @@ public class Kite9ErrorController implements ErrorController {
 	@RequestMapping(path = "/error", produces = { MediaType.ALL_VALUE })
 	@ResponseBody
 	public Map<String, Object> handleErrorJson(HttpServletRequest request, HttpServletResponse response) {
-		Integer statusCode = getStatusCode(request);
-		String uri = getRequestURI(request);
-		Exception exception = getException(request);
 		Map<String, Object> out = new HashMap<String, Object>();
+		Integer statusCode = getStatusCode(request);
 		out.put("status", ""+statusCode);
+		String uri = getRequestURI(request);
+		out.put("uri", uri);
 		response.setStatus(statusCode);
+		
+		Exception exception = getException(request);
 		if (exception != null) {
-			out.put("message", exception.getMessage());
-			StringWriter sw = new StringWriter();
-			exception.printStackTrace(new PrintWriter(sw));
-			out.put("trace", sw.toString());
 			processException(out, exception, 0);
 		}
 		
-		out.put("uri", uri);
 		return out;
 	}
 
@@ -217,7 +214,10 @@ public class Kite9ErrorController implements ErrorController {
 			PrintWriter pw = new PrintWriter(sw);
 			e.printStackTrace(pw); 
 			out.put("trace", sw.toString());
+			out.put("message", e.getMessage());
 		}
+		
+		
 		
 		return out;
 	}
