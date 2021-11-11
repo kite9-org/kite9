@@ -62,11 +62,11 @@ public class Kite9ErrorController implements ErrorController {
 	 */
 	@RequestMapping(path = "/error", produces = { MediaType.ALL_VALUE })
 	@ResponseBody
-	public Map<String, String> handleErrorJson(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> handleErrorJson(HttpServletRequest request, HttpServletResponse response) {
 		Integer statusCode = getStatusCode(request);
 		String uri = getRequestURI(request);
 		Exception exception = getException(request);
-		Map<String, String> out = new HashMap<String, String>();
+		Map<String, Object> out = new HashMap<String, Object>();
 		out.put("status", ""+statusCode);
 		response.setStatus(statusCode);
 		if (exception != null) {
@@ -74,6 +74,7 @@ public class Kite9ErrorController implements ErrorController {
 			StringWriter sw = new StringWriter();
 			exception.printStackTrace(new PrintWriter(sw));
 			out.put("trace", sw.toString());
+			processException(out, exception, 0);
 		}
 		
 		out.put("uri", uri);
@@ -85,6 +86,54 @@ public class Kite9ErrorController implements ErrorController {
 		sb.append("</div></body></html>");
 	}
 
+
+	private void processException(Map<String, Object> out, Throwable e, int level) {
+		Throwable next = null;
+		if (e != null) {
+			if (e instanceof Kite9XMLProcessingException) {
+				String css = ((Kite9XMLProcessingException) e).getCss();
+				String ctx = ((Kite9XMLProcessingException) e).getContext();
+				String doc = ((Kite9XMLProcessingException) e).getComplete();
+				out.put(""+level, doJsonBasedException(e, css, ctx, doc));
+				next = e.getCause();
+			} else if (e instanceof BridgeException) {
+				BridgeException be = (BridgeException) e;
+				String ctx = Kite9XMLProcessingException.toString(be.getElement());
+				String css = Kite9XMLProcessingException.debugCss(be.getElement());
+				String doc = Kite9XMLProcessingException.toString(be.getElement().getOwnerDocument());
+				out.put(""+level, doJsonBasedException(e, css, ctx, doc));
+				next = e.getCause();
+			} else if (e instanceof SAXParseException) {
+				SAXParseException pe = (SAXParseException) e;
+				String publicId = pe.getPublicId();
+				String systemId = pe.getSystemId();
+				int lineNumber = pe.getLineNumber();
+				int columnNumber = pe.getColumnNumber();
+				String saxInfo = String.format("publicId: %s\nsystemId: %s\nlineNumber: %s\ncolumnNumber: %s", publicId, systemId, lineNumber, columnNumber);
+				out.put(""+level, doJsonBasedException(e, null,saxInfo,null));
+				next = pe.getException();
+			} else if (e instanceof SAXIOException) {
+				SAXIOException pe = (SAXIOException) e;
+				out.put(""+level, doJsonBasedException(e, null,null,null));
+				next = pe.getSAXException();
+			} else if (e instanceof TranscoderException) {
+				out.put(""+level, doJsonBasedException(e, null,null,null));
+				next = ((TranscoderException) e).getException();
+			} else if (e.getCause() == null) {
+				out.put(""+level, doJsonBasedException(e, null,null,null));
+				next = null;
+			} else {
+				next = e.getCause();
+			}
+
+		}
+		
+		if (next != null) {
+			processException(out, next, level+1);
+		}
+	}	
+	
+	
 	private void processException(StringBuilder sb, Throwable e, int level) {
 		Throwable next = null;
 		if (e != null) {
@@ -146,6 +195,32 @@ public class Kite9ErrorController implements ErrorController {
 		msg = msg == null ? "" : msg;
 		return "<ul><li>"+msg.replaceAll("\n", "</li><li>")+"</li></ul>";
 	}
+	
+	protected Map<String, Object> doJsonBasedException(Throwable e, String css, String ctx, String doc) {
+		Map<String, Object> out = new HashMap<String, Object>();
+		
+		if (StringUtils.hasText(ctx)) {
+			out.put("fragment", ctx);
+		}
+		
+		if (StringUtils.hasText(css)) {
+			out.put("style", css);
+		}
+
+		if (StringUtils.hasText(doc)) {
+			out.put("doc", doc);
+			
+		}
+		
+		if (e != null) {
+			StringWriter sw = new StringWriter();
+			PrintWriter pw = new PrintWriter(sw);
+			e.printStackTrace(pw); 
+			out.put("trace", sw.toString());
+		}
+		
+		return out;
+	}
 
 	protected void doXMLBasedException(StringBuilder sb, Throwable e, String css, String ctx, String doc) {
 		if (StringUtils.hasText(ctx)) {
@@ -156,9 +231,8 @@ public class Kite9ErrorController implements ErrorController {
 			doCard(sb, css, "style", "css");
 			
 		}
-		
 
-		if (StringUtils.hasText(css)) {
+		if (StringUtils.hasText(doc)) {
 			doCard(sb, doc, "document", "doc");
 			
 		}

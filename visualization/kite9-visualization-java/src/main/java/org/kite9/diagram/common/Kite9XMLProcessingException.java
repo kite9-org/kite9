@@ -33,7 +33,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 	}
 	
 	private static String correctCss(Throwable arg1, String css2) {
-		if (arg1 instanceof Kite9XMLProcessingException) {
+		if ((arg1 instanceof Kite9XMLProcessingException) && (((Kite9XMLProcessingException) arg1).getCss() != null)) {
 			return ((Kite9XMLProcessingException) arg1).getCss();
 		} else {
 			return css2;
@@ -41,7 +41,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 	}
 
 	private static String correctContext(Throwable arg1, String xml2) {
-		if (arg1 instanceof Kite9XMLProcessingException) {
+		if ((arg1 instanceof Kite9XMLProcessingException) && (((Kite9XMLProcessingException) arg1).getContext() != null)) {
 			return ((Kite9XMLProcessingException) arg1).getContext();
 		} else {
 			return xml2;
@@ -49,7 +49,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 	}
 
 	private static String correctComplete(Throwable arg1, String xml2) {
-		if (arg1 instanceof Kite9XMLProcessingException) {
+		if ((arg1 instanceof Kite9XMLProcessingException)  && (((Kite9XMLProcessingException) arg1).getComplete() != null)) {
 			return ((Kite9XMLProcessingException) arg1).getComplete();
 		} else {
 			return xml2;
