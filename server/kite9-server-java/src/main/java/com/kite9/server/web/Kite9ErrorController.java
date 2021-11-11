@@ -1,5 +1,6 @@
 package com.kite9.server.web;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.HashMap;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 import org.xml.sax.SAXParseException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class Kite9ErrorController implements ErrorController {
@@ -61,21 +65,26 @@ public class Kite9ErrorController implements ErrorController {
 	 * Non-html error handler.  Returns JSON irrespective of the media type.
 	 */
 	@RequestMapping(path = "/error", produces = { MediaType.ALL_VALUE })
-	@ResponseBody
-	public Map<String, Object> handleErrorJson(HttpServletRequest request, HttpServletResponse response) {
+	public void handleErrorJson(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> out = new HashMap<String, Object>();
 		Integer statusCode = getStatusCode(request);
 		out.put("status", ""+statusCode);
 		String uri = getRequestURI(request);
 		out.put("uri", uri);
 		response.setStatus(statusCode);
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		
 		Exception exception = getException(request);
 		if (exception != null) {
 			processException(out, exception, 0);
 		}
 		
-		return out;
+		try {
+			String outStr = new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(out);
+			response.getWriter().write(outStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void addFooter(StringBuilder sb) {
