@@ -1,5 +1,4 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
-  xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
@@ -60,7 +59,7 @@
             /public/templates/risk-first/redesign/artifacts/component_v2.svg
           </xsl:when>
           <xsl:otherwise>
-            /public/templates/risk-first/redesign/artifacts/document_v2.svg
+            <xsl:value-of select="@imgsrc"></xsl:value-of>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:with-param>

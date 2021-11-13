@@ -7,7 +7,7 @@
  */
 @media editor {
   [k9-elem=diagram] {
-    --kite9-padding: 200pt !important;
+    --kite9-margin: 200pt !important;
   }  
 }
 

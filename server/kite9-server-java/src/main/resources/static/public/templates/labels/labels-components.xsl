@@ -1,8 +1,7 @@
 <xsl:stylesheet
-        xmlns:svg="http://www.w3.org/2000/svg"
+        xmlns="http://www.w3.org/2000/svg"
         xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-        xmlns="http://www.kite9.org/schema/adl"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:k9="http://www.kite9.org/schema/macros"
         version="2.0">
