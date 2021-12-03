@@ -1,6 +1,10 @@
 @import url('/public/templates/basic/basic-textures.css');
 @import url('/public/templates/votes/votes-textures.css');
 
+[k9-elem=diagram][k9-texture=none] {
+	fill: white;
+	fill-opacity: 1;
+}
 
 [k9-texture] {
 	font-family: metropolis;
@@ -17,9 +21,21 @@
   --kite9-text-bounds-width: 100pt;
 }
 
+[k9-elem=description] text {
+  font-style: italic;
+  font-size: 10pt;
+  font-weight: 100;
+  --kite9-label-placement: right;
+}
+
 /* Labels */
 
+[k9-elem=label-inner] > g > [k9-elem=caption] {
+	--kite9-padding: 0;
+}
+
 [k9-elem=label-inner] {
+	stroke: none;
 	font-size: 12pt;
 	
 }
@@ -80,7 +96,8 @@
 	text-align: middle;
 }
 
-[k9-elem=risk][k9-texture=background] {
+[k9-elem=risk][k9-texture=background],
+[k9-elem=block][k9-texture=background] {
    fill: url(#risk-background);
    stroke: black; 
 }

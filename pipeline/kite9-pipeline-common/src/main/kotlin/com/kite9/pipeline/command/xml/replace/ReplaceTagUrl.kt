@@ -12,6 +12,6 @@ import org.w3c.dom.Element
 class ReplaceTagUrl : ReplaceTag() {
 
     override fun getToContent(adl: ADLDom, ctx: CommandContext): Element {
-        return getForeignElementCopy(adl.document, adl.uri!!, to!!, false, adl, ctx)
+        return getForeignElementCopy(adl.document, adl.getUri()!!, to!!, false, adl, ctx)
     }
 }

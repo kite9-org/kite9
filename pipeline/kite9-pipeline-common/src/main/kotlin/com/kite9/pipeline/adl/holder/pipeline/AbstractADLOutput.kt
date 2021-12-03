@@ -6,6 +6,6 @@ abstract class AbstractADLOutput(
     override val format: DiagramWriteFormat,
     override val originatingADLDom: ADLDom
 ) : AbstractXMLBase(
-    originatingADLDom.uri,
+    originatingADLDom.getUri(),
     originatingADLDom.requestHeaders,
     originatingADLDom.metaData.toMutableMap()), ADLOutput

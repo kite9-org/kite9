@@ -1,0 +1,55 @@
+
+[k9-elem=diagram] {
+	--kite9-layout: down;
+	--kite9-padding: 0;
+}
+
+/* Containers */
+
+
+[k9-elem=container] {
+	--kite9-connection-align: 50%;
+	--kite9-sizing: maximize;
+}
+
+/* Entities */
+
+[k9-elem=entity] {
+	--kite9-type: container;
+	--kite9-layout: down;
+	--kite9-min-size: 190pt 280pt;
+	--kite9-sizing: minimize;
+	--kite9-margin: 10pt;
+	--kite9-padding: 15pt;
+	--kite9-connection-align: 50%;
+}
+
+[k9-elem=pill] {
+	--kite9-type: container;
+	--kite9-layout: right;
+	--kite9-min-size: 80pt 30pt;
+	--kite9-sizing: minimize;
+	--kite9-margin: 0pt;
+	--kite9-padding: 15pt;
+	--kite9-connection-align: 50%;
+	--kite9-horizontal-align: left;
+}
+
+[k9-elem=entity] > [k9-elem=back],
+[k9-elem=pill] > [k9-elem=back] {
+	fill: white;
+}
+
+/* Attributes */
+
+[k9-elem=icon] {
+	--kite9-type: container;
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: top;
+}
+
+[k9-elem=title],
+[k9-elem=description] {
+	--kite9-type: text;
+}
+

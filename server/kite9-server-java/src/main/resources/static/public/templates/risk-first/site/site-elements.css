@@ -74,11 +74,11 @@
 [k9-elem=description],
 [k9-elem=long-description],
 .description {
-  --kite9-type: container;
   font-size: 14pt;
   font-family: "gothic-italic";
   font-style: italic;
   --kite9-padding: 10pt;
+  --kite9-text-bounds-width: 250pt;
 }
 
 /* Steve McConnell Stuff */
@@ -110,4 +110,103 @@
   --kite9-padding: 10pt;
   --kite9-connection-align: 50%;
   --kite9-min-size: 110pt 140pt;
+}
+
+
+[k9-elem=diagram].principle {
+	fill-opacity: 1; 
+	fill: white; 
+	--kite9-layout: vertical; 
+	--kite9-padding-left: 0pt; 
+	--kite9-padding-right: 0pt; 
+	--kite9-padding-top: 0pt; 
+	--kite9-padding-bottom: 0pt; 
+}
+
+[k9-elem=page-title].number {
+	font-family: Metropolis; 
+	font-size: 140pt; 
+	fill: rgb(245, 62, 121); 
+	indent:0;   
+	font-weight: 600;
+	--kite9-horizontal-align: middle;
+	--kite9-vertical-align: middle; 
+}
+
+[k9-elem=page-title].principle {
+  --kite9-text-bounds-width: 720pt; 
+  font-family: Metropolis; 
+  font-size: 70pt; 
+  font-weight: 500;
+  fill: rgb(0,0,0); 
+  text-align: start;
+  --kite9-horizontal-align: left; 
+  --kite9-vertical-align: bottom;
+}
+
+[k9-elem=page-summary].principle {
+   font-family: Metropolis; font-size: 40pt; 
+   --kite9-padding: 20pt;
+   --kite9-horizontal-align: left;
+   --kite9-vertical-align: bottom;
+   fill: #61a2a1; 
+   indent: 0; 
+   font-weight: 300; 
+   font-style: italic; 
+}
+
+[k9-elem=container].principle-top {
+	--kite9-layout: grid;
+	--kite9-grid-size: 2 2;
+	--kite9-padding: 0pt;
+	--kite9-margin: 0pt;
+	stroke: #f5f5f5;
+	stroke-width: 7pt;
+	--kite9-sizing: maximize;
+}
+
+[k9-elem=group].principle-body-left {
+	--kite9-layout: vertical;
+	--kite9-padding: 0;
+	--kite9-margin: 0pt;
+	--kite9-vertical-align: bottom;
+	--kite9-horizontal-align: left;
+	--kite9-min-width: 180pt;
+}
+
+[k9-elem=group].principle-left {
+	--kite9-horizontal-sizing: minimize;
+	--kite9-vertical-sizing: maximize;
+	--kite9-layout: down;
+	--kite9-padding: 0;
+	--kite9-margin: 0pt;
+}
+
+[k9-elem=group].principle-right {
+	--kite9-horizontal-sizing: maximize;
+	--kite9-vertcical-sizing: maximize;
+	--kite9-layout: down;
+	--kite9-padding: 0;
+	--kite9-margin: 0pt;
+	--kite9-padding-left: 30pt;
+}
+
+
+[k9-elem=risk-first-logo].principle {
+	--kite9-horizontal-align: middle;
+	--kite9-vertical-align: bottom;
+	--kite9-padding: 0;
+	--kite9-margin: 0; 
+	--kite9-margin-bottom: 0;
+}
+
+[k9-elem=page-title].principle-site {
+	font-family: Metropolis; 
+	font-size: 14pt; 
+	fill: #61a2a1; 
+	letter-spacing: 1.4;
+	font-weight: 600;
+	text-align: middle;
+	--kite9-margin-top: 0;
+	--kite9-horizontal-align: middle;  
 }

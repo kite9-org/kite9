@@ -55,23 +55,8 @@
       </svg:flowRegion>
       <contents />
     </text-label>
-  </template>
-  
-  <template id="description" class="description"> 
-    <text-label style="kite9-type: text; kite9-padding: 0; " >
-      <svg:flowRegion>
-        <svg:rect width="250pt" height="400pt" />
-      </svg:flowRegion>
-      <contents />
-    </text-label>
-  </template>
-
-  <template id="long-description" class="description"> 
-    <text-label style="kite9-type: text; kite9-padding: 0; " >
-      <contents />
-    </text-label>
-  </template>  -->
-    
+  </template> -->
+ 
   <!-- Steve McConnell Stuff -->
 
 
@@ -124,7 +109,7 @@
   
   <!-- singles for website article icons-->
 
-  <xsl:template match="adl:diagram[@class]">
+  <xsl:template match="adl:diagram[contains(@class,'bg')]">
   	<xsl:param name="imageurl">
   		<xsl:choose>
   			<xsl:when test="@class = 'bg1'">/public/templates/risk-first/backgrounds/vecteezy-5.jpg</xsl:when>
@@ -160,6 +145,8 @@
   
    <xsl:template match="adl:page-title | adl:page-summary">
      <xsl:call-template name="formats-text-fixed" />
-  </xsl:template> 
+  </xsl:template>
+  
+   
   
 </xsl:stylesheet>

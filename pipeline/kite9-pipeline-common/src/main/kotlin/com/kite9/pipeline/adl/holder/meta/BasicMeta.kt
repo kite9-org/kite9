@@ -27,7 +27,6 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
         metadata["topic"] = topic
     }
 
-    override val topicUri = metadata["topic"] as K9URI?
 
     override fun setCloseUri(close: K9URI) {
         metadata["close"] = close
@@ -37,15 +36,15 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
         metadata["title"] = title
     }
 
-    override val title: String = metadata.getOrDefault("title", "Unnamed") as String
+    override fun getTopicUri() = metadata["topic"] as K9URI?
+    override fun getTitle() = metadata.getOrDefault("title", "Unnamed") as String
+    override fun getUri() = metadata["self"] as K9URI?
 
     override fun setUri(u: K9URI) {
         if (u != null) {
             metadata["self"] = u
         }
     }
-
-    override val uri = metadata["self"] as K9URI?
 
     override fun setCollaborators(collaborators: List<UserMeta>) {
         metadata["collaborators"] = collaborators

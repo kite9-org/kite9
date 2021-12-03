@@ -1,10 +1,7 @@
 package com.kite9.server.persistence.github;
 
-import java.net.URI;
-
 import javax.servlet.http.HttpServletRequest;
 
-import com.kite9.pipeline.uri.K9URI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.controllers.AbstractContentController;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.SourceAPI;

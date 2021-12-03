@@ -5,9 +5,9 @@ import com.kite9.pipeline.uri.K9URI
 
 interface MetaRead {
 
-    val title: String
-    val topicUri: K9URI?
-    val uri: K9URI?
+    fun getTitle(): String
+    fun getTopicUri(): K9URI?
+    fun getUri(): K9URI?
 
     /**
      * Information about the editing, creation etc. of the document.

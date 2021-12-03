@@ -10,6 +10,7 @@
   
   <xsl:template name="labels-basic">
     <xsl:param name="k9-rounding">5pt</xsl:param>
+    <xsl:param name="text"><text><xsl:value-of select="text()" /></text></xsl:param>
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-texture">none</xsl:with-param>
       <xsl:with-param name="k9-highlight"></xsl:with-param>
@@ -22,6 +23,7 @@
           <xsl:with-param name="k9-elem">label-inner</xsl:with-param>
           <xsl:with-param name="k9-rounding" select="$k9-rounding" />
           <xsl:with-param name="k9-texture">none</xsl:with-param>
+          <xsl:with-param name="text" select="$text" />
         </xsl:call-template>    
       </xsl:with-param>
     </xsl:call-template>

@@ -5,10 +5,14 @@
 
   <xsl:import href="../../formats/formats-components.xsl" />
 
-  <xsl:template name="arrow" match="adl:arrow">
+  <xsl:template name="arrow" match="adl:arrow | adl:block">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
     </xsl:call-template>
+  </xsl:template>
+  
+   <xsl:template match="adl:description | adl:long-description ">
+     <xsl:call-template name="formats-text-fixed" />
   </xsl:template>
   
   <xsl:template name="artifact" match="adl:artifact |  

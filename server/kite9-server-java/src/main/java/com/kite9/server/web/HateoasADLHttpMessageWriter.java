@@ -171,7 +171,7 @@ public class HateoasADLHttpMessageWriter extends AbstractADLDomMessageWriter<Rep
 	}
 
 	private void handleTemplateNaming(Document out) {
-		out.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "template", "/public/templates/admin/admin-template.xsl");
+		out.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", "/public/templates/admin/admin-template.xsl");
 	}
 
 	/**
