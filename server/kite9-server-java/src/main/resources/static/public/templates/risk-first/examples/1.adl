@@ -6,22 +6,22 @@
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	class="principle">
 	
-	<container class="principle-top">
-		<group class="principle-left">
+	
+		<container class="principle-top">
+		<group class="principle-left-top">
 			<page-title class="number">
 				#1
 			</page-title>
 		</group>
 
-		<group class="principle-right">
+		<group class="principle-right-top">
 			<page-title class="principle">
-				All Work is 
-				Managing Risk
+				Meet Reality
 			</page-title>
 		</group>
 			
-		<group  class="principle-left">
-			<risk-first-logo width="100pt" height="100pt" class="principle"
+		<group  class="principle-left-bottom">
+			<risk-first-logo width="150pt" height="150pt" class="principle"
 					href="/public/templates/risk-first/logo/R1_logo_grue.svg" />
 			
 				<page-title class="principle-site">
@@ -31,13 +31,17 @@ DEVELOPMENT
 				</page-title>
 		</group>
 		
-		<group class="principle-right">
+		<group class="principle-right-bottom">
 			<page-summary class="principle">
-Coding,
-Testing,
-Research,
-Raising Funds.
-Everything.
+Everything you know is a model of reality.
+			</page-summary>
+			<page-summary class="principle">
+Since you don't know everything, 
+there are always hidden risks.
+			</page-summary>
+			<page-summary class="principle">
+Seek signals from the real world
+to build your model.
 			</page-summary>
 			
 		</group>

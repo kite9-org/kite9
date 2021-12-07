@@ -179,7 +179,7 @@ public class ADLFactoryImpl implements ADLFactory {
 			ClientResponse cr = webClient
 				.get()
 				.header(HttpHeaders.ACCEPT,
-						Kite9MediaTypes.ADL_SVG_VALUE,
+						Kite9MediaTypes.ADL_XML_VALUE,
 						Kite9MediaTypes.SVG_VALUE,
 						Kite9MediaTypes.TEXT_PLAIN_VALUE,
 						Kite9MediaTypes.TEXT_XML_VALUE,

@@ -45,7 +45,7 @@ public class PostRenderingIT extends AbstractRestIT {
 	protected byte[] withBytesInFormat(MediaType output, String xml) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(output));
-		headers.setContentType(MediaType.parseMediaType(Kite9MediaTypes.ADL_SVG_VALUE));
+		headers.setContentType(MediaType.parseMediaType(Kite9MediaTypes.ADL_XML_VALUE));
 		HttpEntity<byte[]> postBody = new HttpEntity<byte[]>(xml.getBytes(), headers);
 		
 		ResponseEntity<byte[]> back = getRestTemplate().exchange(new URI(getUrlBase()+"/api/renderer"), HttpMethod.POST, postBody, byte[].class);
@@ -62,7 +62,7 @@ public class PostRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testADLAndSVGRender() throws Exception {
-		byte[] back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.ADL_SVG_VALUE), createDiagramXML1());
+		byte[] back = withBytesInFormat(MediaType.parseMediaType(Kite9MediaTypes.ADL_XML_VALUE), createDiagramXML1());
 		persistInAFile(back, "testADLRender", "diagram.adl");
 		XMLCompare.compareXML(StreamUtils.copyToString(this.getClass().getResourceAsStream(MINIMAL_FILE), Charset.forName("UTF-8")), new String(back));
 	}

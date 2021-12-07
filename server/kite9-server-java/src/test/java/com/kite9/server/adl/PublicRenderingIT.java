@@ -4,7 +4,6 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import com.kite9.server.adl.format.MediaTypeHelper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpEntity;
@@ -56,7 +55,7 @@ public class PublicRenderingIT extends AbstractRestIT {
 	
 	protected byte[] loadStaticADL(String page) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
-		headers.setAccept(Arrays.asList(MediaType.parseMediaType(Kite9MediaTypes.ADL_SVG_VALUE)));
+		headers.setAccept(Arrays.asList(MediaType.parseMediaType(Kite9MediaTypes.ADL_XML_VALUE)));
 		HttpEntity<Void> ent = new HttpEntity<>(headers);
 		ResponseEntity<byte[]> back = getRestTemplate().exchange(new URI(getUrlBase()+page), HttpMethod.GET, ent, byte[].class);
 		return back.getBody();

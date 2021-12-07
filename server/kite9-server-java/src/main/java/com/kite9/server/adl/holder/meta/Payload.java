@@ -171,7 +171,7 @@ public class Payload {
 
         // add the script tag
         Element scriptTag = svgDocument.createElementNS(SVG_NAMESPACE_URI, "script");
-        scriptTag.setAttribute("type", Kite9MediaTypes.ADL_SVG_VALUE+";base64");
+        scriptTag.setAttribute("type", Kite9MediaTypes.ADL_XML_VALUE +";base64");
         scriptTag.setAttribute("id", ADL_MARKUP_ID);
 
         firstDef.appendChild(scriptTag);

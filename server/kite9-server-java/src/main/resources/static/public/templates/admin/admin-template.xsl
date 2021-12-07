@@ -40,7 +40,7 @@
 		    	<xsl:with-param name="class">trail</xsl:with-param>
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
 		    	<xsl:with-param name="content">
-		      		<xsl:apply-templates select="adl:parents" mode="pill" />
+		      		<xsl:apply-templates select="adl:parents[adl:link]" mode="pill" />
 		      		<xsl:apply-templates select="." mode="pill" />
 		      	</xsl:with-param>
 		     </xsl:call-template>
@@ -60,7 +60,7 @@
 		   				<xsl:with-param name="content">
 		   					<xsl:apply-templates select="adl:repositories" mode="entity" />
 		   					<xsl:call-template name="labels-basic">
-		   						<xsl:with-param name="text">Repositories</xsl:with-param>
+		   						<xsl:with-param name="text"><text>Repositories</text></xsl:with-param>
 		   					</xsl:call-template>
 		   				</xsl:with-param>
 					  </xsl:call-template>
@@ -92,9 +92,6 @@
 		   				</xsl:with-param>
 					  </xsl:call-template>
 			        </xsl:if> 
-
-
-
 				</xsl:with-param> 	 	
 		     </xsl:call-template>
    		</xsl:with-param>

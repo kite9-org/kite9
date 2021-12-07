@@ -171,9 +171,8 @@
 
 
 [k9-elem=risk-first-logo].principle {
-/* 	--kite9-horizontal-align: middle;
 	--kite9-vertical-align: bottom;
- */	--kite9-padding: 0;
+ 	--kite9-padding: 0;
 	--kite9-margin: 0; 
 	--kite9-margin-bottom: 0;
 }
@@ -186,30 +185,25 @@
 	font-weight: 600;
 	text-align: middle;
 	--kite9-margin-top: 0;
-/* 	--kite9-horizontal-align: middle;  
- */}
+}
 
 [k9-elem=page-title].number {
 	font-family: Metropolis; 
-	font-size: 70pt; 
+	font-size: 60pt; 
 	fill: rgb(245, 62, 121); 
 	indent:0;   
 	font-weight: 600;
-/* 	--kite9-horizontal-align: middle;
-	--kite9-vertical-align: top; 
- */    --kite9-padding-bottom: 0;
+    --kite9-padding-bottom: 0;
     --kite9-margin-bottom: 0;
 }
 
 [k9-elem=page-title].principle {
   font-family: Metropolis; 
-  font-size: 60pt; 
+  font-size: 50pt; 
   font-weight: 500;
   fill: rgb(0,0,0); 
   text-align: start;
-/*   --kite9-horizontal-align: left; 
-  --kite9-vertical-align: middle;
- */  --kite9-padding-bottom: 0;
+  --kite9-padding-bottom: 0;
   --kite9-margin-bottom: 0;
   --kite9-margin-right: 30pt;
 }
@@ -217,12 +211,12 @@
 
 [k9-elem=page-summary].principle {
    font-family: Metropolis; 
-   font-size: 40pt; 
-   --kite9-padding: 20pt;
-/*    --kite9-horizontal-align: left;
-   --kite9-vertical-align: middle;
- */   fill: #61a2a1; 
+   font-size: 25pt;
+   --kite9-text-bounds-width: 600pt; 
+   --kite9-padding: 0pt;
+   fill: #61a2a1; 
    indent: 0; 
+   text-align: middle;
    font-weight: 300; 
    font-style: italic; 
 }

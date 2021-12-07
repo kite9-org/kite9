@@ -122,7 +122,7 @@ public class PathContentController extends AbstractContentController {
 	 */
 	@GetMapping(path = "/", 
 		produces = { 
-				Kite9MediaTypes.ADL_SVG_VALUE, 
+				Kite9MediaTypes.ADL_XML_VALUE,
 				Kite9MediaTypes.APPLICATION_XML_VALUE,
 				Kite9MediaTypes.TEXT_XML_VALUE,
 				Kite9MediaTypes.PNG_VALUE,

@@ -47,7 +47,7 @@ public class RenderingController extends AbstractNegotiatingController {
 		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getSVG()), null);
 	}
 	
-	@GetMapping(path= {"/api/renderer", "api/renderer.adl"}, produces= {ADL_SVG_VALUE})
+	@GetMapping(path= {"/api/renderer", "api/renderer.adl"}, produces= {ADL_XML_VALUE})
 	public ResponseEntity<?> renderADL(
 			RequestEntity<?> request,
 			@RequestParam("uri") String uri, 
@@ -63,8 +63,8 @@ public class RenderingController extends AbstractNegotiatingController {
 		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getPNG()), null);
 	}
 
-	@PostMapping(path="/api/renderer", consumes= {ADL_SVG_VALUE}, 
-		produces= {SVG_VALUE, EDITABLE_SVG_VALUE, IMAGE_PNG_VALUE, ADL_SVG_VALUE, TEXT_HTML_VALUE})
+	@PostMapping(path="/api/renderer", consumes= {ADL_XML_VALUE},
+		produces= {SVG_VALUE, EDITABLE_SVG_VALUE, IMAGE_PNG_VALUE, ADL_XML_VALUE, TEXT_HTML_VALUE})
 	public ResponseEntity<?> postEcho(
 			@RequestBody byte[] adlSvg, 
 			RequestEntity<?> request,

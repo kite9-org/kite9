@@ -280,8 +280,8 @@ public class CommandsTest {
 
 	private void testDoAndUndo(Command c, String name) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
-		headers.set(HttpHeaders.CONTENT_TYPE, Kite9MediaTypes.ADL_SVG_VALUE);
-		headers.set(HttpHeaders.ACCEPT, Kite9MediaTypes.ADL_SVG_VALUE);
+		headers.set(HttpHeaders.CONTENT_TYPE, Kite9MediaTypes.ADL_XML_VALUE);
+		headers.set(HttpHeaders.ACCEPT, Kite9MediaTypes.ADL_XML_VALUE);
 		ADLOutput out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
 		String modified = performSaveAndCheck(out, name, "/commands/after_"+name+".xml");
 		System.out.println("After command "+name+" do(): \n"+modified+"\n adl: \n"+new String(out.getAsBytes()));

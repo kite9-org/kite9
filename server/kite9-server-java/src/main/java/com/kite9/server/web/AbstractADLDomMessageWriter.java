@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.kite9.diagram.dom.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -64,7 +65,7 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 						if ((df instanceof EditableSVGFormat) && (changeBroadcaster != null)) {
 							changeBroadcaster.broadcast(t.getTopicUri(), out);
 						}
-			
+						outputMessage.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType.toString());
 						StreamUtils.copy(out.getAsBytes(), outputMessage.getBody());
 					} else {
 						throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Can't write diagram as "+f.getExtension());
