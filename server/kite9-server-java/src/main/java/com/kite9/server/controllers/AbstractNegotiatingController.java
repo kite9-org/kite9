@@ -1,16 +1,9 @@
 package com.kite9.server.controllers;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.pipeline.adl.format.media.*;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
-import com.kite9.server.domain.RestEntity;
-import com.kite9.server.update.AbstractUpdateHandler;
-import com.kite9.server.update.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -25,9 +18,17 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.DiagramFileAPI;
 import com.kite9.server.sources.DirectoryAPI;
 import com.kite9.server.sources.FileAPI;
@@ -35,6 +36,8 @@ import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.update.AbstractUpdateHandler;
+import com.kite9.server.update.Update;
 
 /**
  * Handles conversion of source format into ADL.

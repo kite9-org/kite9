@@ -31,6 +31,10 @@
 	--kite9-margin: 0;
 }
 
+[k9-elem=container].trail > g > rect {
+	stroke: none;
+}
+ 
 [k9-elem=container].trail * {
 	--kite9-margin: 0;
 }

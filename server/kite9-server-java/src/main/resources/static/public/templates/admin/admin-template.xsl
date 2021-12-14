@@ -33,7 +33,8 @@
    
    <xsl:template match="adl:diagram">
    	<xsl:call-template name="formats-container">
-   		<xsl:with-param name="k9-elem">diagram</xsl:with-param>
+   		<xsl:with-param name="k9-elem">admin</xsl:with-param>
+   		<xsl:with-param name="k9-texture">none</xsl:with-param>
    		<xsl:with-param name="content">
 		   	<!--  trail -->
 		    <xsl:call-template name="formats-container">
@@ -41,7 +42,9 @@
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
 		    	<xsl:with-param name="content">
 		      		<xsl:apply-templates select="./adl:parents[adl:links]" mode="pill" />
-		      		<xsl:apply-templates select="." mode="pill" />
+		      		<xsl:apply-templates select="." mode="pill">
+		      			<xsl:with-param name="chevron"></xsl:with-param>
+		      		</xsl:apply-templates>
 		      	</xsl:with-param>
 		     </xsl:call-template>
 		        
@@ -121,11 +124,11 @@
    	 	<xsl:with-param name="k9-elem">entity</xsl:with-param>
 		<xsl:with-param name="id" select="adl:links[adl:rel='self']/adl:href" />
 		<xsl:with-param name="k9-ui" select="adl:commands" />
+		<xsl:with-param name="depiction-id"></xsl:with-param>
 		<xsl:with-param name="href" select="adl:icon/text()" />
 		<xsl:with-param name="width">100pt</xsl:with-param>
 		<xsl:with-param name="height">100pt</xsl:with-param>
  		<xsl:with-param name="caption">
- 		
  		 
 	      <xsl:call-template name="texture-basic">
 	      	<xsl:with-param name="class">description</xsl:with-param>
@@ -152,13 +155,24 @@
    </xsl:template>
   
   	<xsl:template match="*" mode="pill">
+  		<xsl:param name="chevron">true</xsl:param>
   		<xsl:call-template name="formats-text-image-portrait">
   			<xsl:with-param name="k9-elem">pill</xsl:with-param>
   			<xsl:with-param name="id" select="adl:links[adl:rel='self']/adl:href" />
+  			<xsl:with-param name="depiction-id"></xsl:with-param>
   			<xsl:with-param name="k9-ui" select="adl:commands" />
   			<xsl:with-param name="href" select="adl:icon/text()" />
   			<xsl:with-param name="text"><text><xsl:value-of select="adl:title/text()" /></text></xsl:with-param>
   		</xsl:call-template>
+  		
+  		
+  		<xsl:if test="$chevron">
+  			<xsl:call-template name="formats-image-fixed">
+  				<xsl:with-param name="k9-elem">chevron</xsl:with-param>
+   				<xsl:with-param name="href">/public/templates/admin/icons/chevron.svg</xsl:with-param>
+   			</xsl:call-template>
+  		</xsl:if>
+  		
 	</xsl:template>
   
   

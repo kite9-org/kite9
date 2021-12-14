@@ -274,10 +274,16 @@ public abstract class AbstractGithubEntityConverter {
 			
 			@Override
 			public String getIcon() {
+				return getIconUrl(l, c);
+			}
+
+			private String getIconUrl(Link l, GHContent c) {
 				if (fs.getFormatFor(c.getName()) instanceof DiagramFileFormat) {
 					return l.getHref();	
-				} else {
+				} else if (hasIcon(c.getName())) {
 					return "/public/templates/admin/icons/"+getExtension(c.getName())+".svg";
+				} else {
+					return "/public/templates/admin/icons/unknown.svg";
 				}
 			}
 

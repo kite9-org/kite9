@@ -119,7 +119,11 @@ public abstract class AbstractPublicEntityConverter {
 					
 					@Override
 					public String getIcon() {
-						return "/public/templates/admin/icons/"+getExtension(d.getFilename())+".svg";
+						if (hasIcon(d.getFilename())) {
+							return "/public/templates/admin/icons/"+getExtension(d.getFilename())+".svg";
+						} else {
+							return "/public/templates/admin/icons/unknown.svg";
+						}
 					}
 					
 					@Override

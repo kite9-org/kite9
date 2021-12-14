@@ -126,7 +126,8 @@ public class BasicFormatSupplier implements FormatSupplier {
 				return out;
 			}
 		} else {
-			return null;
+			// assume renderable directory?
+			return Kite9MediaTypes.INSTANCE.getHTML();
 		}
 	}
 

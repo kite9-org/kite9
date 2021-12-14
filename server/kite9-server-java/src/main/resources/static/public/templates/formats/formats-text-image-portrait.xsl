@@ -62,13 +62,15 @@
       </rect>
     </xsl:param>
     
+    <xsl:param name="depiction-id"><xsl:value-of select="$id" />@dep</xsl:param>
+    
     <xsl:param name="depiction">
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-elem">depiction</xsl:with-param>
         <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
         <xsl:with-param name="k9-texture">none</xsl:with-param>
         <xsl:with-param name="k9-ui">image</xsl:with-param>
-        <xsl:with-param name="id"><xsl:value-of select="$id" />@dep</xsl:with-param>
+        <xsl:with-param name="id" select="$depiction-id"></xsl:with-param>
         <xsl:with-param name="shape"></xsl:with-param>
         <xsl:with-param name="content">
           <xsl:copy-of select="$image" />

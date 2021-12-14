@@ -36,12 +36,15 @@
       </xsl:call-template>
     </xsl:param>
     
+    <xsl:param name="depiction-id"><xsl:value-of select="$id" />@dep</xsl:param>
+    
+    
     <xsl:param name="depiction">
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-elem">depiction</xsl:with-param>
         <xsl:with-param name="k9-texture">background</xsl:with-param>
 		    <xsl:with-param name="k9-ui">connect autoconnect align</xsl:with-param>
-        <xsl:with-param name="id"><xsl:value-of select="$id" />@dep</xsl:with-param>
+        <xsl:with-param name="id" select="$depiction-id" />
         <xsl:with-param name="shape">
           <xsl:copy-of select="$shape" />
         </xsl:with-param>

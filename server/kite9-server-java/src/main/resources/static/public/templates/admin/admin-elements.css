@@ -1,7 +1,15 @@
 
-[k9-elem=diagram] {
-	--kite9-layout: down;
-	--kite9-padding: 0;
+[k9-elem=admin] {
+  --kite9-type: diagram;
+  --kite9-padding-top: 15pt;
+  --kite9-padding-bottom: 15pt;
+  --kite9-padding-left: 15pt;
+  --kite9-padding-right: 15pt;
+  --kite9-traversal: none;
+  --kite9-min-width: 50pt;
+  --kite9-min-height: 50pt;
+  --kite9-layout: down;
+  --kite9-padding: 0;
 }
 
 /* Containers */
