@@ -62,7 +62,7 @@
 [k9-format=text-shape-captioned] > g > [k9-elem=depiction],
 [k9-format=text-image-portrait] > g > [k9-elem=depiction],
 [k9-format=text-shape-portrait] > g > [k9-elem=depiction] {
-  --kite9-type: container;
+  --kite9-type: svg;
   --kite9-min-size: 50pt 50pt;
   --kite9-margin: 15pt;
   --kite9-connection-align: 50%;

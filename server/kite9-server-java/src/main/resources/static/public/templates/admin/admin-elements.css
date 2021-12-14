@@ -42,8 +42,7 @@
 
 /* Attributes */
 
-[k9-elem=icon] {
-	--kite9-type: container;
+[k9-elem=depiction] {
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: top;
 }

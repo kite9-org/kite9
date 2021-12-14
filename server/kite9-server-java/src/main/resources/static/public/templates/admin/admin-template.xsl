@@ -122,6 +122,8 @@
 		<xsl:with-param name="id" select="adl:links[adl:rel='self']/adl:href" />
 		<xsl:with-param name="k9-ui" select="adl:commands" />
 		<xsl:with-param name="href" select="adl:icon/text()" />
+		<xsl:with-param name="width">100pt</xsl:with-param>
+		<xsl:with-param name="height">100pt</xsl:with-param>
  		<xsl:with-param name="caption">
  		
  		 

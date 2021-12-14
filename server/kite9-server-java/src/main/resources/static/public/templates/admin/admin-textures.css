@@ -100,7 +100,11 @@
 	stroke-width: 0;
 	font-size: 18pt;
 	--kite9-margin: 15pt;
-	--kite9-text-bounds: 300pt 240pt;
+	--kite9-text-bounds: 200pt 240pt;
+}
+
+[k9-elem=entity] [k9-elem=caption].title {
+	--kite9-vertical-align: bottom;
 }
 
 [k9-texture=foreground] > g > text {
