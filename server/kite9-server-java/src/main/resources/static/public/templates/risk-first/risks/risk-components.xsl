@@ -394,7 +394,7 @@
 
  
   <xsl:template match="/" mode="diagram-element-css">
-    @import url('/public/templates/risk-first/risks/risk-elements.css');
+    <adl:css>@import url('/public/templates/risk-first/risks/risk-elements.css');</adl:css>
     <xsl:next-match />
   </xsl:template>
   

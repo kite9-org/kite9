@@ -8,11 +8,11 @@
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
-    @import url('/public/templates/basic/basic-elements.css');
+    <adl:css>@import url('/public/templates/basic/basic-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">
-    @import url('/public/templates/basic/basic-textures.css');
+    <adl:css>@import url('/public/templates/basic/basic-textures.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">

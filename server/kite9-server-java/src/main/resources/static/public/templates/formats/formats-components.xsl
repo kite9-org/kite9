@@ -17,7 +17,7 @@
 
 
   <xsl:template match="/" mode="diagram-element-css">
-    @import url('/public/templates/formats/formats.css');
+    <adl:css>@import url('/public/templates/formats/formats.css');</adl:css>
     <xsl:next-match />
   </xsl:template>
   

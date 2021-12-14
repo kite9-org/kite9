@@ -7,12 +7,27 @@
         version="2.0">
 
   <xsl:import href="../formats/formats-components.xsl"/>
+  
+  <xsl:template name="unique">
+  	<xsl:param name="tags"/>
+	  	
+  	 <xsl:for-each-group select="$tags/*" group-by="text()">
+		     <xsl:text>
+		     </xsl:text><xsl:value-of select="current-grouping-key()"/>
+	 </xsl:for-each-group>
+  </xsl:template>
 
   <xsl:template name="diagram-root-svg" match="/">
+     
       <xsl:param name="css">
-        <xsl:apply-templates select="/" mode="diagram-element-css" />
-        <xsl:apply-templates select="/" mode="diagram-texture-css" />
+      	<xsl:call-template name="unique">
+      		<xsl:with-param name="tags">
+	      		<xsl:apply-templates select="/" mode="diagram-element-css" />
+	        	<xsl:apply-templates select="/" mode="diagram-texture-css" />
+        	</xsl:with-param>
+        </xsl:call-template>
       </xsl:param>
+      
       <xsl:param name="script"><xsl:apply-templates select="/" mode="diagram-script" /></xsl:param>
       <xsl:param name="constants"><xsl:apply-templates select="/" mode="diagram-constants" /></xsl:param>
       <xsl:param name="palettes"><xsl:apply-templates select="/" mode="diagram-palettes" /></xsl:param>
@@ -60,7 +75,7 @@
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
-    @import url('/public/templates/diagram/diagram-elements.css');
+    <adl:css>@import url('/public/templates/diagram/diagram-elements.css');</adl:css>
   </xsl:template>
 
   <xsl:template match="adl:diagram">

@@ -47,9 +47,3 @@
 	--kite9-horizontal-align: center;
 	--kite9-vertical-align: top;
 }
-
-[k9-elem=title],
-[k9-elem=description] {
-	--kite9-type: text;
-}
-

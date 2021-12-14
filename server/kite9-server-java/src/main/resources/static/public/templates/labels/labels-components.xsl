@@ -3,7 +3,6 @@
         xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
-        xmlns:k9="http://www.kite9.org/schema/macros"
         version="2.0">
 
   <xsl:import href="../formats/formats-components.xsl"/>  
@@ -36,7 +35,7 @@
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-element-css">
-    @import url('/public/templates/labels/labels-elements.css');
+    <adl:css>@import url('/public/templates/labels/labels-elements.css');</adl:css>
     <xsl:next-match />
   </xsl:template>
   

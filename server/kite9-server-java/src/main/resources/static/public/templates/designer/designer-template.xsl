@@ -10,7 +10,7 @@
 
 
   <xsl:template match="/" mode="diagram-css">
-    @import url('/public/templates/designer/designer.css');
+    <adl:css>@import url('/public/templates/designer/designer.css');</adl:css>
   </xsl:template>
   
    <xsl:template match="/" mode="diagram-script">

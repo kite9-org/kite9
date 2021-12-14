@@ -29,7 +29,7 @@
   
    <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
-    @import url('/public/templates/risk-first/planner/planner-elements.css');
+    <adl:css>@import url('/public/templates/risk-first/planner/planner-elements.css');</adl:css>
   </xsl:template>
   
 </xsl:stylesheet>

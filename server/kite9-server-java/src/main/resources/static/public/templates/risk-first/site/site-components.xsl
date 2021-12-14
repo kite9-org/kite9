@@ -136,7 +136,7 @@
   
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
-    @import url('/public/templates/risk-first/site/site-elements.css');
+    <adl:css>@import url('/public/templates/risk-first/site/site-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="adl:risk-first-logo">

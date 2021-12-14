@@ -42,6 +42,6 @@
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
-    @import url('/public/templates/risk-first/actions/action-elements.css');
+    <adl:css>@import url('/public/templates/risk-first/actions/action-elements.css');</adl:css>
   </xsl:template>
 </xsl:stylesheet>

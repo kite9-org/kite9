@@ -36,7 +36,7 @@
   
   
   <xsl:template match="/" mode="diagram-element-css">
-    @import url('/public/templates/grid/grid-elements.css');
+    <adl:css>@import url('/public/templates/grid/grid-elements.css');</adl:css>
     <xsl:next-match />
   </xsl:template>
     

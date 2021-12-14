@@ -20,14 +20,14 @@
    
    <xsl:template match="/" mode="diagram-element-css">
      <xsl:next-match />
-     @import url('/public/templates/admin/admin-elements.css');     
+     <adl:css>@import url('/public/templates/admin/admin-elements.css');</adl:css>     
    </xsl:template>
   
    <xsl:template match="/" mode="diagram-palettes">
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-texture-css">
-     @import url('/public/templates/admin/admin-textures.css');
+     <adl:css>@import url('/public/templates/admin/admin-textures.css');</adl:css>
    </xsl:template>
    
    
@@ -40,7 +40,7 @@
 		    	<xsl:with-param name="class">trail</xsl:with-param>
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
 		    	<xsl:with-param name="content">
-		      		<xsl:apply-templates select="adl:parents[adl:link]" mode="pill" />
+		      		<xsl:apply-templates select="./adl:parents[adl:links]" mode="pill" />
 		      		<xsl:apply-templates select="." mode="pill" />
 		      	</xsl:with-param>
 		     </xsl:call-template>
@@ -74,7 +74,9 @@
 			   				<xsl:with-param name="k9-ui"></xsl:with-param>
 			   				<xsl:with-param name="content">
 			   					<xsl:apply-templates select="adl:organisations" mode="entity" />
-			   					<!--  label -->
+			   					<xsl:call-template name="labels-basic">
+			   						<xsl:with-param name="text"><text>Organisations</text></xsl:with-param>
+			   					</xsl:call-template>
 			   				</xsl:with-param>
 						</xsl:call-template>
 					</xsl:if>
@@ -88,7 +90,22 @@
 		   				<xsl:with-param name="k9-ui">NewDocument</xsl:with-param>
 		   				<xsl:with-param name="content">
 		   					<xsl:apply-templates select="adl:documents" mode="entity" />
-		   					<!--  label -->
+		   					<xsl:call-template name="labels-basic">
+		   						<xsl:with-param name="text"><text>Documents</text></xsl:with-param>
+		   					</xsl:call-template>
+		   				</xsl:with-param>
+					  </xsl:call-template>
+					  
+					  <xsl:call-template name="formats-container">
+					  	<xsl:with-param name="class">grid</xsl:with-param>
+		   				<xsl:with-param name="k9-elem">container</xsl:with-param>
+		   				<xsl:with-param name="id">sub-directories</xsl:with-param>
+		   				<xsl:with-param name="k9-ui"></xsl:with-param>
+		   				<xsl:with-param name="content">
+		   					<xsl:apply-templates select="adl:directory" mode="entity" />
+		   					<xsl:call-template name="labels-basic">
+		   						<xsl:with-param name="text"><text>Sub-Directories</text></xsl:with-param>
+		   					</xsl:call-template>
 		   				</xsl:with-param>
 					  </xsl:call-template>
 			        </xsl:if> 
@@ -105,7 +122,30 @@
 		<xsl:with-param name="id" select="adl:links[adl:rel='self']/adl:href" />
 		<xsl:with-param name="k9-ui" select="adl:commands" />
 		<xsl:with-param name="href" select="adl:icon/text()" />
- 		<xsl:with-param name="text"><text><xsl:value-of select="adl:title/text()" /></text></xsl:with-param>
+ 		<xsl:with-param name="caption">
+ 		
+ 		 
+	      <xsl:call-template name="texture-basic">
+	      	<xsl:with-param name="class">description</xsl:with-param>
+	        <xsl:with-param name="k9-elem">caption</xsl:with-param>
+	        <xsl:with-param name="k9-texture">foreground</xsl:with-param>
+	        <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
+	        <xsl:with-param name="k9-format">text-fixed</xsl:with-param>
+	        <xsl:with-param name="shape"></xsl:with-param>
+	        <xsl:with-param name="content"><text><xsl:value-of select="adl:description/text()" /></text></xsl:with-param>
+	      </xsl:call-template>
+	      
+	      <xsl:call-template name="texture-basic">
+	      	<xsl:with-param name="class">title</xsl:with-param>
+	        <xsl:with-param name="k9-elem">caption</xsl:with-param>
+	        <xsl:with-param name="k9-texture">foreground</xsl:with-param>
+	        <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
+	        <xsl:with-param name="k9-format">text-fixed</xsl:with-param>
+	        <xsl:with-param name="shape"></xsl:with-param>
+	        <xsl:with-param name="content"><text><xsl:value-of select="adl:title/text()" /></text></xsl:with-param>
+	      </xsl:call-template>
+	    </xsl:with-param>
+ 		
    	</xsl:call-template>
    </xsl:template>
   

@@ -11,7 +11,7 @@
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">
-    @import url('/public/templates/uml/uml-textures.css');
+    <adl:css>@import url('/public/templates/uml/uml-textures.css');</adl:css>
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">

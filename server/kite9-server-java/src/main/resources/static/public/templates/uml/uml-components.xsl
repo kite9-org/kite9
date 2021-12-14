@@ -188,7 +188,7 @@
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:next-match />
-    @import url('/public/templates/uml/uml-elements.css');
+    <adl:css>@import url('/public/templates/uml/uml-elements.css');</adl:css>
   </xsl:template>
 
 </xsl:stylesheet>
