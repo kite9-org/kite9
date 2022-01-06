@@ -389,7 +389,7 @@ public abstract class AbstractGithubEntityConverter {
 			List<Directory> childDirectories = templateChildDirectories(lbRelative, contents);
 			List<Document> childDiagrams = templateChildDiagrams(contentRelative, contents);
 			
-			if (StringUtils.isEmpty(path)) {
+			if (!StringUtils.hasText(path)) {
 				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
 				return templateRepo(lbRelative.withSelfRel(), repo, childDiagrams, childDirectories, parents);
 			} else {

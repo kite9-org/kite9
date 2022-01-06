@@ -203,7 +203,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	@Override
 	public List<UserMeta> getCurrentSubscribers(K9URI topicUri) {
 		if (topicUri == null) {
-			return null;
+			return Collections.emptyList();
 		}
 		
 		String t = getTopicFromUri(topicUri);
@@ -212,7 +212,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 
 	protected List<UserMeta> getCurrentSubscribers(String topic) {
 		List<WebSocketSession> list = sessions.get(topic);
-		return list == null ? null : list.stream()
+		return list == null ? Collections.emptyList() : list.stream()
 			.map(session -> getUserFromSession(session))
 			.filter(Objects::nonNull)
 			.collect(Collectors.toList());

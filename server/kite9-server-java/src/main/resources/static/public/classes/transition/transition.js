@@ -1,4 +1,4 @@
-import '/webjars/animejs/3.0.1/lib/anime.es.js'
+import * as anime from '/webjars/animejs/3.0.1/lib/anime.es.js'
 
 /*
  * This class handles the loading of new versions of the document from
@@ -51,7 +51,7 @@ export class Transition {
 	
 
 		// create the animation timeline
-		var tl = anime.timeline({
+		var tl = anime.default.timeline({
 			easing: 'easeOutExpo',
 			duration: 10000,
 			autoplay: false,

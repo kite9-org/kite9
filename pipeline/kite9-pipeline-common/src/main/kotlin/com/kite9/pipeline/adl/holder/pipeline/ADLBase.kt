@@ -11,4 +11,9 @@ interface ADLBase : XMLBase {
      * Parses the contents and returns the ADL in DOM format.
      */
     fun parse(): ADLDom
+
+    /**
+     * Returns the XML.
+     */
+    val asString: String?
 }

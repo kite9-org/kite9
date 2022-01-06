@@ -6,6 +6,7 @@ import com.kite9.pipeline.uri.K9URI;
 import org.springframework.http.HttpHeaders;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kite9.pipeline.command.Command;
 
 /**
@@ -46,6 +47,10 @@ public class Update {
 	
 	private List<Command> commands;
 	private String base64adl;
+	
+	
+	
+	@JsonDeserialize(using = K9URIDeserializer.class)
 	private K9URI uri;
 	private Type type = Type.NEW;
 

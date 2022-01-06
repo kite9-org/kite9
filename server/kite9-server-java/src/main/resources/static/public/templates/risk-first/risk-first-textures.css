@@ -13,6 +13,11 @@
 
 /* Artifacts */
 
+[k9-texture=artifact] {
+	fill: white;
+	fill-opacity: 0.01;
+}
+
 [k9-texture=artifact] text {
   font-size: 12pt;
   font-weight: 200;

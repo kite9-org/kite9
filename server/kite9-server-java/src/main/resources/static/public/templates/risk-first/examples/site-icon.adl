@@ -4,6 +4,7 @@
          xmlns:svg="http://www.w3.org/2000/svg"
          style="--kite9-layout: vertical; 
          --kite9-padding: 40pt; --kite9-min-width: 250pt; --kite9-min-height: 250pt; " class="b2" >
-    <image-artifact imgsrc="/public/templates/risk-first/posts/8bit-heart.svg">Health</image-artifact>
+    <big-image imgsrc="/public/templates/risk-first/posts/book-grey.png" />
+
 </diagram>
   

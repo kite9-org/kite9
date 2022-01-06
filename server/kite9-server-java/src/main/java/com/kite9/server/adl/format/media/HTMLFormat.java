@@ -60,7 +60,7 @@ public class HTMLFormat extends AbstractSVGFormat implements EditableDiagramForm
 			ADLOutput o1 = super.handleWrite(adl, t);
 			baos.write(o1.getAsBytes());
 			baos.write(format.get(3));
-			return new ADLOutputImpl(this, adl, baos.toByteArray(), null, o1.getAsDocument());
+			return new ADLOutputImpl(this, adl, baos.toByteArray(), o1.getAsDocument());
 		} catch (IOException e) {
 			throw new Kite9XMLProcessingException("Couldn't create output stream", e);
 		}

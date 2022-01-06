@@ -151,7 +151,7 @@ public class Payload {
         }
     }
 
-    public static String createBase64ADLString(XMLBase adl) {
+    public static String createBase64ADLString(ADLDom adl) {
         byte[] bytes = adl.getAsString().getBytes();
         String base64Encoded = new String(Base64.getEncoder().encode(bytes));
         return base64Encoded;

@@ -49,7 +49,7 @@ public class ADLFormat implements DiagramFileFormat {
 	public ADLOutput handleWrite(ADLDom toWrite, Kite9Transcoder t) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ADLFactoryImpl.duplicate(toWrite.getDocument(), isOmitDeclaration(), new StreamResult(baos));
-		return new ADLOutputImpl(this, toWrite, baos.toByteArray(), null, toWrite.getDocument());
+		return new ADLOutputImpl(this, toWrite, baos.toByteArray(), toWrite.getDocument());
 	}
 
 	private boolean isOmitDeclaration() {

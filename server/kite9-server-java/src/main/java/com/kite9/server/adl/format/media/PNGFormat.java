@@ -71,7 +71,7 @@ public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 		TranscoderOutput out = new TranscoderOutput(baos);
 		try {
 			png.transcode(in, out);
-			return new ADLOutputImpl(this, toWrite, baos.toByteArray(), null, doc);
+			return new ADLOutputImpl(this, toWrite, baos.toByteArray(), doc);
 		} catch (TranscoderException e) {
 			throw new Kite9XMLProcessingException("Couldn't convert to png", e);
 		}

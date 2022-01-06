@@ -417,7 +417,7 @@ export function onlyUnique(value, index, self) {
 }
 
 export function encodeADLElement(text) {
-	return btoa("<svg:svg xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.kite9.org/schema/adl' >"+text+"</svg:svg>");
+	return btoa(text);
 }
 
 

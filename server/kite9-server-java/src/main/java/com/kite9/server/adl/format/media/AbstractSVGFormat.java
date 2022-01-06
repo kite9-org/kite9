@@ -27,7 +27,7 @@ public abstract class AbstractSVGFormat implements DiagramWriteFormat {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(baos);
         ADLFactoryImpl.duplicate(d, isOmitDeclaration(), sr);
-        return new ADLOutputImpl(this, toWrite, baos.toByteArray(), null, d);
+        return new ADLOutputImpl(this, toWrite, baos.toByteArray(), d);
     }
 
     protected boolean isOmitDeclaration() {

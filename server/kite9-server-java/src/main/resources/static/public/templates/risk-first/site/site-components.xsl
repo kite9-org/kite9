@@ -23,12 +23,15 @@
 	<xsl:next-match />
   </xsl:template>
   
-  <!-- 
-  <template id="big-image">
-    <image width="280pt" height="280pt" href="pre:#{@imgsrc}" />
-    <title><contents optional="true"/></title>
-  </template>
+  <xsl:template match="adl:big-image">
+  	<xsl:call-template name="formats-image">
+  		<xsl:with-param name="href" select="@imgsrc" />
+  		<xsl:with-param name="width">200pt</xsl:with-param>
+  		<xsl:with-param name="height">200pt</xsl:with-param>
+  	</xsl:call-template>
+  </xsl:template>
   
+  <!-- 
  
   <template id="image-artifact">
     <image href="pre:#{@imgsrc}" width="80pt" height="80pt" style="kite9-vertical-align: center; kite9-min-size: 80pt 80pt;" />

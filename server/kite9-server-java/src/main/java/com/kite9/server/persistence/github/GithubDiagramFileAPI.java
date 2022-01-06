@@ -36,11 +36,7 @@ public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileA
 	@Override
 	public void commitRevision(String message, Authentication by, ADLDom dom) {
 		ADLOutput out = dom.process(sourceURI, dff);
-		if (dff.isBinaryFormat()) {
-			commitRevision(message, tb -> tb.add(filepath, out.getAsBytes(), false), by);
-		} else {
-			commitRevision(message, tb -> tb.add(filepath, out.getAsString(), false), by);
-		}
+		commitRevision(message, tb -> tb.add(filepath, out.getAsBytes(), false), by);
 	}
 	
 

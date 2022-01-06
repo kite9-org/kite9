@@ -25,4 +25,9 @@ interface XMLDom : XMLBase, MetaReadWrite {
      * For loading up a referenced document.
      */
     fun parseDocument(uri: K9URI): Document?
+
+    /**
+     * Returns the XML.
+     */
+    val asString: String
 }

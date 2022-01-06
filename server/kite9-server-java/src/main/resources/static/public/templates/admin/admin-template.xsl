@@ -40,6 +40,7 @@
 		    <xsl:call-template name="formats-container">
 		    	<xsl:with-param name="class">trail</xsl:with-param>
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
+		   		<xsl:with-param name="k9-texture">none</xsl:with-param>
 		    	<xsl:with-param name="content">
 		      		<xsl:apply-templates select="./adl:parents[adl:links]" mode="pill" />
 		      		<xsl:apply-templates select="." mode="pill">
@@ -52,12 +53,14 @@
 		     <xsl:call-template name="formats-container">
 		     	<xsl:with-param name="class">main</xsl:with-param>
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
+		   		<xsl:with-param name="k9-texture">outline</xsl:with-param>
 		        <xsl:with-param name="content">
 		        
 		        	<xsl:if test="adl:type='user' or adl:type='organisation'">
 					  <xsl:call-template name="formats-container">
 					  	<xsl:with-param name="class">grid</xsl:with-param>
 		   				<xsl:with-param name="k9-elem">container</xsl:with-param>
+				   		<xsl:with-param name="k9-texture">outline</xsl:with-param>
 		   				<xsl:with-param name="id">repositories</xsl:with-param>
 		   				<xsl:with-param name="k9-ui">NewDocument</xsl:with-param>
 		   				<xsl:with-param name="content">
@@ -73,6 +76,7 @@
 	    		    	<xsl:call-template name="formats-container">
 						  	<xsl:with-param name="class">grid</xsl:with-param>
 			   				<xsl:with-param name="k9-elem">container</xsl:with-param>
+			 		   		<xsl:with-param name="k9-texture">outline</xsl:with-param>
 			   				<xsl:with-param name="id">organisations</xsl:with-param>
 			   				<xsl:with-param name="k9-ui"></xsl:with-param>
 			   				<xsl:with-param name="content">
@@ -89,6 +93,7 @@
 					  <xsl:call-template name="formats-container">
 					  	<xsl:with-param name="class">grid</xsl:with-param>
 		   				<xsl:with-param name="k9-elem">container</xsl:with-param>
+		   		   		<xsl:with-param name="k9-texture">outline</xsl:with-param>
 		   				<xsl:with-param name="id">documents</xsl:with-param>
 		   				<xsl:with-param name="k9-ui">NewDocument</xsl:with-param>
 		   				<xsl:with-param name="content">
@@ -101,11 +106,12 @@
 					  
 					  <xsl:call-template name="formats-container">
 					  	<xsl:with-param name="class">grid</xsl:with-param>
+		   		   		<xsl:with-param name="k9-texture">outline</xsl:with-param>
 		   				<xsl:with-param name="k9-elem">container</xsl:with-param>
 		   				<xsl:with-param name="id">sub-directories</xsl:with-param>
 		   				<xsl:with-param name="k9-ui"></xsl:with-param>
 		   				<xsl:with-param name="content">
-		   					<xsl:apply-templates select="adl:directory" mode="entity" />
+		   					<xsl:apply-templates select="adl:directory | adl:subDirectories" mode="entity" />
 		   					<xsl:call-template name="labels-basic">
 		   						<xsl:with-param name="text"><text>Sub-Directories</text></xsl:with-param>
 		   					</xsl:call-template>

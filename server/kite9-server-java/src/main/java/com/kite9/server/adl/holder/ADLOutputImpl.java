@@ -9,17 +9,14 @@ import org.w3c.dom.Document;
 public class ADLOutputImpl extends AbstractADLOutput {
 
     private byte[] bytes;
-    private String string;
     private Document document;
 
     public ADLOutputImpl(DiagramWriteFormat format,
                          ADLDom orig,
                          byte[] bytes,
-                         String string,
                          Document document) {
         super(format, orig);
         this.bytes = bytes;
-        this.string = string;
         this.document = document;
     }
 
@@ -32,11 +29,5 @@ public class ADLOutputImpl extends AbstractADLOutput {
     public Document getAsDocument() {
         return document;
     }
-
-    @Override
-    public String getAsString() {
-        return string;
-    }
-
 
 }

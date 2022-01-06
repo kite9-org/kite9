@@ -15,8 +15,4 @@ interface XMLBase {
      */
     val requestHeaders: Map<String, List<String>>
 
-    /**
-     * Returns the XML.
-     */
-    val asString: String?
 }
