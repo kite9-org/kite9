@@ -1,4 +1,42 @@
-import * as anime from '/webjars/animejs/3.0.1/lib/anime.es.js'
+import * as anime from '/webjars/animejs/3.0.1/lib/anime.es.js';
+import { ensureJs, once } from '/public/bundles/ensure.js';
+
+/**
+ * Replace with ES6 module as soon as possible
+ */
+once(function() {
+	ensureJs('/webjars/kotlin/1.4.30/kotlin.js');	
+	setTimeout(() => {
+		ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
+	}, 20)
+	ensureJs('/public/external/saxon-js/SaxonJS2.js');
+})
+
+const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
+const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
+
+function getTemplateUri(doc) {
+
+	const template = doc.documentElement.getAttributeNS(XSL_TEMPLATE_NAMESPACE, "template");
+	
+	if ((template == null) || (template.length() == 0)) {
+		if (ADL_NAMESPACE == doc.documentElement.namespaceURI) {
+			// default to the basic template
+			return "/public/templates/basic/basic-template.xsl";
+		}
+	}
+	
+	return template;
+}
+ 
+
+function transformToSVG(doc) {
+	return SaxonJS.transform({
+	    stylesheetLocation: getTemplateUri(doc),
+	    sourceNode: doc,
+	    destination: 'document'
+	  }, "sync");	
+}
 
 /*
  * This class handles the loading of new versions of the document from
@@ -18,11 +56,18 @@ export class Transition {
 				console.log("command Websocket established");
 			}
 			this.socket.onmessage = (m) => {
+			    // here, the message is in ADL format and needs to be
+			    // transformed
 				var parser = new DOMParser();
-				var doc = parser.parseFromString(m.data, "image/svg+xml");
+				var doc = parser.parseFromString(m.data, "text/xml");
+
+				// convert contents of websocket into SVG
+				var doc = transformToSVG(doc)
+
 				if (doc.documentElement.tagName == 'svg') {
 					this.change(doc.documentElement);
 				}
+				
 				this.documentCallbacks.forEach(cb => cb(doc));
 			};
 			this.socket.onerror = (e) => {

@@ -145,7 +145,18 @@
             <artifactId>hint.css</artifactId>
             <version>2.3.2</version>
         </dependency>
+        
+        <dependency>
+		    <groupId>org.webjars.npm</groupId>
+		    <artifactId>kotlin</artifactId>
+		    <version>1.4.30</version>
+		</dependency>
 
+        <dependency>
+            <groupId>org.kite9</groupId>
+            <artifactId>kite9-visualization-js</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

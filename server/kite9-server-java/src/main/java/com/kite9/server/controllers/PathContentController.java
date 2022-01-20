@@ -92,7 +92,8 @@ public class PathContentController extends AbstractContentController {
 		try {
 			update.setUri(uri);
 			update.addHeaders(headers);
-			ADLOutput adl = performDiagramUpdate(update, authentication, format);
+			ADLOutput adl = performDiagramUpdate(update, authentication, format)
+				.process(update.getUri(), format);
 			return adl;
 		} catch (Exception e) {
 			String properCause = getProperCause(e);

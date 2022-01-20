@@ -51,6 +51,7 @@
 								<sourceDir>${project.basedir}/../kite9-visualization-common/src/main/kotlin</sourceDir>
 								<sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
 							</sourceDirs>
+							<moduleKind>plain</moduleKind>
 						</configuration>
 					</execution>
 				</executions>

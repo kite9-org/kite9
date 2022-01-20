@@ -24,6 +24,7 @@ import java.util.List;
 import static com.kite9.pipeline.adl.format.media.Kite9MediaTypes.*;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;;
 
 /**
  * Handles rendering of Kite9 ADL content.  A bit like a simpler version of the CommandController, 
@@ -61,6 +62,14 @@ public class RenderingController extends AbstractNegotiatingController {
 			@RequestParam("uri") String uri, 
 			@RequestHeader HttpHeaders headers) throws Exception {
 		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getPNG()), null);
+	}
+	
+	@GetMapping(path= {"/api/renderer", "api/renderer.sef"}, produces= {"application/xslt+json"})
+	public ResponseEntity<?> renderSEF(
+			RequestEntity<?> request,
+			@RequestParam("uri") String uri, 
+			@RequestHeader HttpHeaders headers) throws Exception {
+		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getSEF()), null);
 	}
 
 	@PostMapping(path="/api/renderer", consumes= {ADL_XML_VALUE},

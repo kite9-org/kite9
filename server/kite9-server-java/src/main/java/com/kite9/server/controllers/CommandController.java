@@ -45,7 +45,8 @@ public class CommandController extends AbstractNegotiatingController implements 
 		update.setUri(URIWrapper.wrap(uri));
 		update.addHeaders(req.getHeaders());
 		
-		return performDiagramUpdate(update, null, df);
+		return performDiagramUpdate(update, null, df)
+			.process(update.getUri(), df);
 	}
 
 }

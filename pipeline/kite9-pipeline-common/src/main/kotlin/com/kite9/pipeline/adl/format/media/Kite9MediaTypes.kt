@@ -32,7 +32,9 @@ object Kite9MediaTypes {
     const val JAVASCRIPT_VALUE = "text/javascript" // JS
     const val CSS_VALUE = "text/css" // CSS
     const val XSLT_VALUE = "application/xslt+xml"
+    const val SEF_VALUE = "application/xslt+json"
     const val JPEG_VALUE = "image/jpeg"
+
 
     // fonts
     const val WOFF_VALUE = "font/woff"
@@ -44,6 +46,7 @@ object Kite9MediaTypes {
 
     val SVG: K9MediaType = K9MediaType.parseMediaType(SVG_VALUE)
     val XSLT: K9MediaType = K9MediaType.parseMediaType(XSLT_VALUE)
+    val SEF: K9MediaType = K9MediaType.parseMediaType(SEF_VALUE)
     val ESVG: K9MediaType = K9MediaType.parseMediaType(EDITABLE_SVG_VALUE)
     val PNG: K9MediaType = K9MediaType.parseMediaType(PNG_VALUE)
     val JPEG: K9MediaType  = K9MediaType.parseMediaType(JPEG_VALUE)

@@ -42,7 +42,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 	}
 	
 	@Override
-	public ADLOutput performDiagramUpdate(Update update, Authentication authentication, DiagramWriteFormat f) throws Exception {
+	public ADLDom performDiagramUpdate(Update update, Authentication authentication, DiagramWriteFormat f) throws Exception {
 		ModifiableAPI a = getModifiableAPI(update, authentication);
 		
 		if (a instanceof ModifiableDiagramAPI) {
@@ -80,7 +80,6 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 
 			MetaHelper.setAuthorAndNotification(authentication, dom);
 			api.addMeta(dom);
-			ADLOutput output = dom.process(update.getUri(), f);
 		
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));
@@ -91,7 +90,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				api.commitRevision("Changed "+update.getUri()+" in Kite9 Editor", authentication, dom);
 			}
 
-			return output;
+			return dom;
 		} else {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Not a diagram: "+update.getUri());
 		}

@@ -62,8 +62,8 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 							cache.set(uriStr, df.getFormatIdentifier(), out.getAsBytes());
 						} 
 						
-						if ((df instanceof EditableSVGFormat) && (changeBroadcaster != null)) {
-							changeBroadcaster.broadcast(t.getTopicUri(), out);
+						if (changeBroadcaster != null) {
+							changeBroadcaster.broadcast(t.getTopicUri(), t);
 						}
 						outputMessage.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType.toString());
 						StreamUtils.copy(out.getAsBytes(), outputMessage.getBody());

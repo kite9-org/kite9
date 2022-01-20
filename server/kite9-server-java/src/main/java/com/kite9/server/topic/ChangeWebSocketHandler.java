@@ -1,6 +1,7 @@
 package com.kite9.server.topic;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,15 +28,15 @@ import org.w3c.dom.Document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.meta.BasicMeta;
 import com.kite9.pipeline.adl.holder.meta.MetaRead;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.EditableSVGFormat;
+import com.kite9.server.adl.format.media.ADLFormat;
 import com.kite9.server.adl.holder.meta.MetaHelper;
 import com.kite9.server.adl.holder.meta.Payload;
 import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
@@ -76,7 +77,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	
 	protected UpdateHandler updateHandler;
 	
-	protected EditableSVGFormat updateFormat;
+	protected DiagramWriteFormat updateFormat;
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -106,8 +107,8 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		Authentication principal = (Authentication) session.getPrincipal();
 
 		try {
-			ADLOutput out = updateHandler.performDiagramUpdate(u, principal, updateFormat);
-			broadcastToTopic(out.getAsBytes(), topic);
+			ADLDom out = updateHandler.performDiagramUpdate(u, principal, updateFormat);
+			broadcastToTopic(out.getAsString().getBytes(StandardCharsets.UTF_8), topic);
 		} catch (Exception e) {
 			LOG.error("Problem with command", e);
 			respondWithError(session, u, principal, e);
@@ -120,8 +121,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		String cause = updateHandler.getProperCause(e);
 		ADLDom dom = base.parse();
 		dom.setError(cause);
-		ADLOutput svg = dom.process(u.getUri(), updateFormat);
-		session.sendMessage(new TextMessage(svg.getAsBytes()));
+		session.sendMessage(new TextMessage(dom.getAsString()));
 	}
 
 	@Override
@@ -170,9 +170,9 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	}
 
 	@Override
-	public void broadcast(K9URI topicUri, ADLOutput adl) {
+	public void broadcast(K9URI topicUri, ADLDom adl) {
 		String topic = getTopicFromUri(topicUri);
-		broadcastToTopic(adl.getAsBytes(), topic);
+		broadcastToTopic(adl.getAsString().getBytes(StandardCharsets.UTF_8), topic);
 	}
 	
 	protected void metaUpdate(MetaRead meta, String topic) {
@@ -256,7 +256,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 				return apiFactory.createAPI(u, a);
 			}
 		};
-		updateFormat = (EditableSVGFormat) formatSupplier.getFormatFor(Kite9MediaTypes.INSTANCE.getESVG());
+		updateFormat = (ADLFormat) formatSupplier.getFormatFor(Kite9MediaTypes.INSTANCE.getADL_SVG());
 	}
 
 }

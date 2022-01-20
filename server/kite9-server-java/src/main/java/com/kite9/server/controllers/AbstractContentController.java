@@ -60,7 +60,7 @@ public abstract class AbstractContentController extends AbstractNegotiatingContr
 													   ModifiableDiagramAPI api, List<K9MediaType> putMediaType, HttpHeaders headers) throws Exception {
 		MultiValueMap<String, String> params = UriComponentsBuilder.fromUri(URIWrapper.from(uri)).build().getQueryParams();
 		String template = params.getFirst("templateUri");
-		if (StringUtils.isEmpty(template)) {
+		if (!StringUtils.hasText(template)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File doesn't exist and templateUri parameter not supplied");
 		} else {
 			// creating a new document
