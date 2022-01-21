@@ -30,9 +30,7 @@ public class BasicFormatSupplier implements FormatSupplier {
 			new SVGFormat(adlFactory),
 			new PNGFormat(adlFactory),
 			new EditableSVGFormat(),
-			
-			// xslt transform for Saxon
-			new SEFFormat(),
+
 			
 			// entities
 			new EntityFormat("hal", singletonList(Kite9MediaTypes.INSTANCE.getHAL_JSON())),

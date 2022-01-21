@@ -2,6 +2,8 @@ package com.kite9.server.controllers;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,6 +48,7 @@ import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
 import com.kite9.server.update.AbstractUpdateHandler;
 import com.kite9.server.update.Update;
+import com.kite9.server.uri.URIWrapper;
 
 import net.sf.saxon.s9api.Processor;
 import net.sf.saxon.s9api.XsltCompiler;
@@ -99,66 +102,24 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 		if ((s instanceof ModifiableDiagramAPI) && (((ModifiableAPI) s).getType(authentication) == ModifiableAPI.Type.CREATABLE)) {
 			return handleCreatableContent(req, authentication, rewrittenURI, (ModifiableDiagramAPI) s, putMediaType, headers);
 		}
-		
+	
 		if (s instanceof DiagramFileAPI) {
 			DiagramFileAPI api = (DiagramFileAPI) s;
 			if (putMediaType.contains(api.getMediaType())) {
 				return unconvertedOutput(rewrittenURI, headers, authentication, api);
 			} else {
-//				try {
-					return convertDiagram(rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication, api);
-//				} catch (Exception e) {
-//					LOG.debug("Couldn't convert diagram to "+putMediaType+ " from "+ api.getMediaType());
-//				}
+				return convertDiagram(rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication, api);
 			}
 		}
 		
 		if (s instanceof FileAPI) {
-			FileAPI api = (FileAPI) s;
-			if (putMediaType.contains(Kite9MediaTypes.INSTANCE.getSEF())) {
-				return convertXSLTToSef(rewrittenURI, headers, authentication, api);
-			} else {
-				return unconvertedOutput(rewrittenURI, headers, authentication, api);
-			}
+			return unconvertedOutput(rewrittenURI, headers, authentication, (FileAPI) s);
 		}
 		
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		
 	}
 	
-	protected ResponseEntity<String> convertXSLTToSef(K9URI rewrittenURI, HttpHeaders headers,
-			Authentication authentication, FileAPI api) throws Exception {
-		try {
-			Format inFormat = fs.getFormatFor(api.getMediaType());
-			if (inFormat instanceof StaticFormat) {
-				InputStream is = api.getCurrentRevisionContentStream(authentication);
-				ByteArrayOutputStream destination = new ByteArrayOutputStream();
-				Processor processor = new Processor(true);
-			    XsltCompiler compiler = processor.newXsltCompiler();
-			    compiler.setURIResolver(getUriResolver());
-			    StreamSource source = new StreamSource(is);
-				XsltExecutable stylesheet = compiler.compile(source);
-			    stylesheet.export(destination);
-				return new ResponseEntity<String>(destination.toString(), createResponseHeaders(rewrittenURI, headers, Kite9MediaTypes.INSTANCE.getSEF(), true), HttpStatus.OK);
-			} else {
-				throw new NotKite9DiagramException("Format for "+rewrittenURI+" was "+inFormat.getClass());
-			}
-		} catch (WebClientResponseException e) {
-			throw convertToResponseStatusException(e);
-		}
-	}
-
-	private URIResolver getUriResolver() {
-		return new URIResolver() {
-			
-			@Override
-			public Source resolve(String href, String base) throws TransformerException {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-	}
-
 	protected K9MediaType getBestDiagramMediaType(List<K9MediaType> putMediaType) {
 		return putMediaType.stream()
 			.filter(mt -> fs.getFormatFor(mt) instanceof DiagramWriteFormat)
@@ -259,5 +220,13 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 		return types;
 	}
 
+
+
+	protected K9URI resolveAndWrap(RequestEntity<?> req, String sourceUri) throws URISyntaxException {
+		URI uri = new URI(sourceUri);
+		URI base = req.getUrl();
+		uri = base.resolve(uri);
+		return URIWrapper.wrap(uri);
+	}
 
 }

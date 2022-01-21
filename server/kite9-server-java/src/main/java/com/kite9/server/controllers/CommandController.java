@@ -1,6 +1,7 @@
 package com.kite9.server.controllers;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import com.kite9.server.update.Update;
 import com.kite9.server.uri.URIWrapper;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.SourceAPIFactory;
 
 /**
@@ -38,11 +40,8 @@ public class CommandController extends AbstractNegotiatingController implements 
 			RequestEntity<Update> req,
 			@RequestParam(required=true, name="on") String sourceUri) throws Exception {
 		DiagramWriteFormat df = getOutputFormat(req);
-		URI uri = new URI(sourceUri);
-		URI base = req.getUrl();
-		uri = base.resolve(uri);
 		Update update = req.getBody();
-		update.setUri(URIWrapper.wrap(uri));
+		update.setUri(resolveAndWrap(req, sourceUri));
 		update.addHeaders(req.getHeaders());
 		
 		return performDiagramUpdate(update, null, df)

@@ -45,7 +45,7 @@ public class RenderingController extends AbstractNegotiatingController {
 			RequestEntity<?> request,
 			@RequestParam("uri") String uri, 
 			@RequestHeader HttpHeaders headers) throws Exception {
-		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getSVG()), null);
+		return contentNegotiation(request, resolveAndWrap(request, uri), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getSVG()), null);
 	}
 	
 	@GetMapping(path= {"/api/renderer", "api/renderer.adl"}, produces= {ADL_XML_VALUE})
@@ -53,7 +53,7 @@ public class RenderingController extends AbstractNegotiatingController {
 			RequestEntity<?> request,
 			@RequestParam("uri") String uri, 
 			@RequestHeader HttpHeaders headers) throws Exception {
-		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getADL_SVG()), null);
+		return contentNegotiation(request, resolveAndWrap(request, uri), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getADL_SVG()), null);
 	}
 	
 	@GetMapping(path= {"/api/renderer", "api/renderer.png"}, produces= {IMAGE_PNG_VALUE})
@@ -61,15 +61,7 @@ public class RenderingController extends AbstractNegotiatingController {
 			RequestEntity<?> request,
 			@RequestParam("uri") String uri, 
 			@RequestHeader HttpHeaders headers) throws Exception {
-		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getPNG()), null);
-	}
-	
-	@GetMapping(path= {"/api/renderer", "api/renderer.sef"}, produces= {"application/xslt+json"})
-	public ResponseEntity<?> renderSEF(
-			RequestEntity<?> request,
-			@RequestParam("uri") String uri, 
-			@RequestHeader HttpHeaders headers) throws Exception {
-		return contentNegotiation(request, URIWrapper.wrap(new URI(uri)), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getSEF()), null);
+		return contentNegotiation(request, resolveAndWrap(request, uri), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getPNG()), null);
 	}
 
 	@PostMapping(path="/api/renderer", consumes= {ADL_XML_VALUE},

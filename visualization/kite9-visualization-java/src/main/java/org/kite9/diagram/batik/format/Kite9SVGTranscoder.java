@@ -205,7 +205,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		try {
 			// turn into SVG
 			input.setDocumentURI(uri);
-			outputDocument = handleTransformToAdl(input);
+			outputDocument = handleTransformToSvg(input);
 
 			// prepare context + css
 			outputDocument.setDocumentURI(uri);
@@ -263,7 +263,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return template;
 	}
 
-	private Document handleTransformToAdl(Document input)  {
+	private Document handleTransformToSvg(Document input)  {
 		Document out;
 
 		String template = getTemplateUri(input);
