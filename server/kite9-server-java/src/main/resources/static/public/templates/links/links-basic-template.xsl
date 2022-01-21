@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
  
   <xsl:template name='links-link-basic' match="*[@k9-format='link-basic']">
     <xsl:param name="class" select="@class"/>
@@ -58,17 +58,6 @@
       <xsl:with-param name="content" select="$content" />
       <xsl:with-param name="decoration" select="$decoration" />
     </xsl:call-template>
-  </xsl:template>
-  
-  <xsl:template match="/" mode="diagram-constants">
-     <adl:constant name="link-template-uri" url="/public/templates/links/common-links.adl#l1" />
-     <xsl:next-match />
-  </xsl:template>
-  
-  <xsl:template match="/" mode="diagram-palettes">
-     <adl:palette contains="link" url="/public/templates/links/links-palette.adl" />
-     <adl:palette contains="end" url="/public/templates/links/ends-palette.adl" />
-     <xsl:next-match />
   </xsl:template>
   
   <xsl:template match="adl:link">

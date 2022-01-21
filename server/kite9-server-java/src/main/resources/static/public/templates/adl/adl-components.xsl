@@ -27,5 +27,30 @@
           <xsl:apply-templates />
       </xsl:element>
   </xsl:template> 
+  
+  <xsl:template name="adl-diagram-element-css">
+  	<xsl:call-template name="formats-diagram-element-css" />
+  	<xsl:call-template name="diagram-diagram-element-css" />
+  	<xsl:call-template name="containers-diagram-element-css" />
+  	<xsl:call-template name="labels-diagram-element-css" />
+  	<xsl:call-template name="grid-diagram-element-css" />
+  	<xsl:call-template name="links-diagram-element-css" />
+  	<xsl:call-template name="textarea-diagram-element-css" />
+  </xsl:template>
+  
+  <xsl:template name="adl-diagram-constants">
+  	<xsl:call-template name="links-diagram-constants" />
+  </xsl:template>
+  
+  <xsl:template name="adl-diagram-palettes">
+  	<xsl:call-template name="links-diagram-palettes" />
+  	<xsl:call-template name="containers-diagram-palettes" />
+  	<xsl:call-template name="grid-diagram-palettes" />
+  </xsl:template>
+  
+  <xsl:template name="adl-diagram-defs">
+  	<xsl:call-template name="links-diagram-defs" />
+  	<xsl:call-template name="containers-diagram-defs" />
+  </xsl:template>
 
 </xsl:stylesheet>

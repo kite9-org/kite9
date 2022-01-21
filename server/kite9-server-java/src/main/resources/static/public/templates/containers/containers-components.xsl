@@ -3,7 +3,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:pp="http://www.kite9.org/schema/post-processor"
-        version="2.0">
+        version="1.0">
 
   <xsl:import href="../formats/formats-components.xsl" />
 
@@ -11,17 +11,6 @@
   <!-- this decorates the formats-template for a container, so that the container has a 
        layout direction indicator
   -->  
-
-  <xsl:template name="container-indicators" mode="diagram-defs" match="/">
-      <defs id="container-indicators">
-        <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
-                    stroke="none" fill="none">
-            <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
-        </marker>
-      </defs>
-      <xsl:next-match />
-  </xsl:template>
-
 
   <xsl:template name="containers-indicator" match="*[@layout and @id]" mode="container-decoration" priority="1">
     <xsl:param name="layout" select="@layout" />
@@ -62,7 +51,6 @@
     </xsl:call-template>
   </xsl:template>
   
-  
   <xsl:template match="adl:group">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
@@ -71,9 +59,21 @@
     </xsl:call-template>
   </xsl:template>
    
-  <xsl:template match="/" mode="diagram-element-css">
+  <xsl:template name="containers-diagram-element-css">
     <adl:css>@import url('/public/templates/containers/containers-elements.css');</adl:css>
-    <xsl:next-match />
+  </xsl:template>
+  
+  <xsl:template name="containers-diagram-palettes">
+     <adl:palette contains="link" url="/public/templates/containers/palette.adl" />
+  </xsl:template>
+  
+   <xsl:template name="containers-diagram-defs">
+      <defs id="container-indicators">
+        <marker id="indicator-arrow" markerWidth="15" markerHeight="15" refX="3" refY="3" orient="auto"
+                    stroke="none" fill="none">
+            <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
+        </marker>
+      </defs>
   </xsl:template>
     
 </xsl:stylesheet>

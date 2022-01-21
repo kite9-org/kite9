@@ -19,9 +19,8 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="/" mode="diagram-element-css">
+  <xsl:template name="votes-diagram-element-css">
     <adl:css>@import url('/public/templates/votes/votes-elements.css');</adl:css>
-    <xsl:next-match />
   </xsl:template>
 
 </xsl:stylesheet>

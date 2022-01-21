@@ -53,8 +53,7 @@
     </xsl:call-template>  
   </xsl:template>  
   
-  <xsl:template match="/" mode="diagram-element-css">
-    <xsl:next-match />
+  <xsl:template name="artifacts-risk-first-diagram-element-css">
     <adl:css>@import url('/public/templates/risk-first/artifacts/artifact-elements.css');</adl:css>
   </xsl:template>
   

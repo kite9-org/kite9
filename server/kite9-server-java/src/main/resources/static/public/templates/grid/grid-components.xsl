@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
   
   <xsl:import href="../formats/formats-components.xsl"/>  
 
@@ -35,10 +35,12 @@
   </xsl:template>
   
   
-  <xsl:template match="/" mode="diagram-element-css">
+  <xsl:template name="grid-diagram-element-css">
     <adl:css>@import url('/public/templates/grid/grid-elements.css');</adl:css>
-    <xsl:next-match />
   </xsl:template>
     
+  <xsl:template name="grid-diagram-palettes">
+     <adl:palette contains="connected cell table" url="/public/templates/grid/palette.adl" />
+  </xsl:template>  
 
 </xsl:stylesheet>

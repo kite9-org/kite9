@@ -5,10 +5,10 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	version="1.0">
 	
-  <xsl:import href="../adl/adl-template.xsl" />
+  <xsl:import href="../adl/adl-components.xsl" />
   
   <xsl:template match="/" mode="diagram-defs">
-   	<xsl:next-match />
+   	<xsl:call-template name="adl-diagram-defs" />
     <clipPath id="iconCircle-100pt">
       <circle r="50pt" cx="50pt" cy="50pt" />
     </clipPath>
@@ -19,7 +19,7 @@
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-element-css">
-     <xsl:next-match />
+     <xsl:call-template name="adl-diagram-element-css" />
      <adl:css>@import url('/public/templates/admin/admin-elements.css');</adl:css>     
    </xsl:template>
   

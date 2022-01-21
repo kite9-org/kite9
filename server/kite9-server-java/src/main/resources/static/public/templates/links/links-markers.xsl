@@ -2,10 +2,10 @@
  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
  xmlns:adl="http://www.kite9.org/schema/adl" 
  xmlns:pp="http://www.kite9.org/schema/post-processor" 
- version="2.0">
+ version="1.0">
 
 
- <xsl:template name="links-markers" match="/" mode="diagram-defs">
+ <xsl:template name="links-markers">
   <defs id="links-markers">
 
    <!-- Link Ends -->
@@ -109,6 +109,5 @@
    </marker>
 
   </defs>
-  <xsl:next-match />
  </xsl:template>
 </xsl:stylesheet>

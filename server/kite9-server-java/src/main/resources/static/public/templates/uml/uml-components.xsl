@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
   <xsl:import href="../formats/formats-components.xsl" />
   
@@ -186,8 +186,7 @@
   
   </xsl:template>
 
-  <xsl:template match="/" mode="diagram-element-css">
-    <xsl:next-match />
+  <xsl:template match="/" mode="diagram-element-css" name="uml-diagram-element-css">
     <adl:css>@import url('/public/templates/uml/uml-elements.css');</adl:css>
   </xsl:template>
 

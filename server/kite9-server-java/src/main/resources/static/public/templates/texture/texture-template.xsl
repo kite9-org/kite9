@@ -3,7 +3,7 @@
 		xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:pp="http://www.kite9.org/schema/post-processor"
 		xmlns:adl="http://www.kite9.org/schema/adl"
-		version="2.0">
+		version="1.0">
 
   <!--
     Provides the <g> for a user-defined element which will have a

@@ -27,8 +27,7 @@
     </xsl:call-template>
   </xsl:template>
   
-   <xsl:template match="/" mode="diagram-element-css">
-    <xsl:next-match />
+   <xsl:template name="planner-risk-first-diagram-element-css">
     <adl:css>@import url('/public/templates/risk-first/planner/planner-elements.css');</adl:css>
   </xsl:template>
   

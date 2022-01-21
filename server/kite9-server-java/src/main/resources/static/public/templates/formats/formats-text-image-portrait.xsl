@@ -2,7 +2,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
   <xsl:import href="../texture/texture-template.xsl" />
   <xsl:import href="../shape/shape-template.xsl" />

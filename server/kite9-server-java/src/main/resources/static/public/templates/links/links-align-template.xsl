@@ -1,7 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
  
   <xsl:template name='links-link-align' match="*[@k9-format='link-align']">
     <xsl:param name="id" select="@id" />
@@ -43,11 +43,6 @@
       <xsl:comment>body</xsl:comment> 
       <xsl:copy-of select="$body"/>
     </g>    
-  </xsl:template>
-  
-  <xsl:template match="/" mode="diagram-constants">
-     <adl:constant name="align-template-uri" url="/public/templates/links/common-links.adl#align" />
-     <xsl:next-match />
   </xsl:template>
   
   <xsl:template match="adl:align">

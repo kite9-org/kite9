@@ -2,16 +2,15 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../../adl/adl-template.xsl" />
+  <xsl:import href="../../adl/adl-components.xsl" />
   
-  <xsl:template name="risk-background" match="/" mode="diagram-defs">
+  <xsl:template name="background-risk-first-diagram-defs">
     <linearGradient id='risk-background' x1='0%' x2='0%' y1='0%' y2='100%'>
       <stop offset='0%' stop-color='#FFF' />
       <stop offset='100%' stop-color='#DDD' />
     </linearGradient>   
-    <xsl:next-match />
   </xsl:template>
   
   <!-- standard stuff that goes inside a risk-box -->
@@ -393,9 +392,8 @@
   </xsl:template>
 
  
-  <xsl:template match="/" mode="diagram-element-css">
+  <xsl:template name="risks-risk-first-diagram-element-css">
     <adl:css>@import url('/public/templates/risk-first/risks/risk-elements.css');</adl:css>
-    <xsl:next-match />
   </xsl:template>
   
 

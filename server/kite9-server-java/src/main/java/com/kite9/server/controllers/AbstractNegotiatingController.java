@@ -1,17 +1,10 @@
-package com.kite9.server.controllers;
+ package com.kite9.server.controllers;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.URIResolver;
-import javax.xml.transform.stream.StreamSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
@@ -32,7 +25,6 @@ import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
-import com.kite9.pipeline.adl.format.media.StaticFormat;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
@@ -49,10 +41,6 @@ import com.kite9.server.sources.SourceAPIFactory;
 import com.kite9.server.update.AbstractUpdateHandler;
 import com.kite9.server.update.Update;
 import com.kite9.server.uri.URIWrapper;
-
-import net.sf.saxon.s9api.Processor;
-import net.sf.saxon.s9api.XsltCompiler;
-import net.sf.saxon.s9api.XsltExecutable;
 
 /**
  * Handles conversion of source format into ADL.

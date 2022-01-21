@@ -1,5 +1,5 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:adl="http://www.kite9.org/schema/adl" xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:adl="http://www.kite9.org/schema/adl" xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
   <xsl:import href="../shape/shape-template.xsl"/>
   <xsl:import href="formats-container.xsl"/>
@@ -16,9 +16,8 @@
   <xsl:template match="text()" mode="image-decoration"/>
 
 
-  <xsl:template match="/" mode="diagram-element-css">
+  <xsl:template name="formats-diagram-element-css">
     <adl:css>@import url('/public/templates/formats/formats.css');</adl:css>
-    <xsl:next-match />
   </xsl:template>
   
 

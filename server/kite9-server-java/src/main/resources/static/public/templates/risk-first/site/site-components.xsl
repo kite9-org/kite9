@@ -2,11 +2,11 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink" 
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="2.0">
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
   <xsl:import href="../../formats/formats-components.xsl" />
   
-  <xsl:template match="/" mode="diagram-defs">
+  <xsl:template name="site-risk-first-diagram-defs">
     <filter id="dropshadow" height="130%">
       <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
       <feOffset dx="6" dy="6" />
@@ -137,7 +137,7 @@
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template match="/" mode="diagram-element-css">
+  <xsl:template name="site-risk-first-diagram-element-css">
     <xsl:next-match />
     <adl:css>@import url('/public/templates/risk-first/site/site-elements.css');</adl:css>
   </xsl:template>

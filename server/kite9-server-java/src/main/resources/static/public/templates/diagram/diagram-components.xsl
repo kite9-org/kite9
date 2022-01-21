@@ -4,28 +4,15 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:pp="http://www.kite9.org/schema/post-processor"
-        version="2.0">
+        version="1.0">
 
   <xsl:import href="../formats/formats-components.xsl"/>
-  
-  <xsl:template name="unique">
-  	<xsl:param name="tags"/>
-	  	
-  	 <xsl:for-each-group select="$tags/*" group-by="text()">
-		     <xsl:text>
-		     </xsl:text><xsl:value-of select="current-grouping-key()"/>
-	 </xsl:for-each-group>
-  </xsl:template>
 
   <xsl:template name="diagram-root-svg" match="/">
      
       <xsl:param name="css">
-      	<xsl:call-template name="unique">
-      		<xsl:with-param name="tags">
-	      		<xsl:apply-templates select="/" mode="diagram-element-css" />
-	        	<xsl:apply-templates select="/" mode="diagram-texture-css" />
-        	</xsl:with-param>
-        </xsl:call-template>
+      	<xsl:apply-templates select="/" mode="diagram-element-css" />
+	    <xsl:apply-templates select="/" mode="diagram-texture-css" />
       </xsl:param>
       
       <xsl:param name="script"><xsl:apply-templates select="/" mode="diagram-script" /></xsl:param>
@@ -38,7 +25,11 @@
           <xsl:attribute name="pp:height">$height</xsl:attribute>
           <defs>
               <style type="text/css">
-                  <xsl:copy-of select="$css"/>
+             	 <xsl:for-each select="$css/*">
+                 	<xsl:text>
+		     		</xsl:text>
+                 	<xsl:copy-of select="text()" />
+                 </xsl:for-each>
               </style>
               <xsl:copy-of select="$defs"/>
           </defs>
@@ -73,11 +64,6 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template match="/" mode="diagram-element-css">
-    <xsl:next-match />
-    <adl:css>@import url('/public/templates/diagram/diagram-elements.css');</adl:css>
-  </xsl:template>
-
   <xsl:template match="adl:diagram">
     <xsl:call-template name="diagram-basic" />
   </xsl:template>
@@ -88,6 +74,9 @@
   <xsl:template match="text()" mode="diagram-texture-css" />
   <xsl:template match="text()" mode="diagram-constants" />
   <xsl:template match="text()" mode="diagram-palettes" />
-   
+
+  <xsl:template name="diagram-diagram-element-css">
+  	<adl:css>@import url('/public/templates/diagram/diagram-elements.css');</adl:css>
+  </xsl:template>   
 
 </xsl:stylesheet>

@@ -279,8 +279,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="/" mode="diagram-element-css">
-    <xsl:next-match />
+  <xsl:template name="flowchart-diagram-element-css">
     <adl:css>@import url('/public/templates/flowchart/flowchart-elements.css');</adl:css>
   </xsl:template>
 
