@@ -3,8 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
-
-  <xsl:import href="../../adl/adl-components.xsl" />
   
   <xsl:template name="background-risk-first-diagram-defs">
     <linearGradient id='risk-background' x1='0%' x2='0%' y1='0%' y2='100%'>
@@ -370,6 +368,14 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:template match="adl:risk[@class='attendant']">
+    <xsl:call-template name="risks-fixed">
+      <xsl:with-param name="code">Risk</xsl:with-param>
+      <xsl:with-param name="image">/public/templates/risk-first/redesign/risks/attendant_risk_v2.svg</xsl:with-param>
+      <xsl:with-param name="dtitle">Attendant Risk</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
   <xsl:template match="adl:hidden">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-contains">risk</xsl:with-param>
@@ -385,6 +391,7 @@
   <xsl:template match="adl:mitigated">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-contains">risk</xsl:with-param>
+      <xsl:with-param name="k9-texture">none</xsl:with-param>
       <xsl:with-param name="decoration">
         <line x1="0" y1="0" pp:y1="$height" x2="0" pp:x2="$width" y2="0" stroke="black" stroke-width="10pt" stroke-opacity="0.2"/>
       </xsl:with-param>

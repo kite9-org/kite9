@@ -3,8 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl" 
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../formats/formats-shape.xsl"/>
-
   <xsl:template name="votes" mode="container-decoration" match="*">
     <xsl:param name="count" select="count(./adl:vote)"/>
     <xsl:if test="$count">

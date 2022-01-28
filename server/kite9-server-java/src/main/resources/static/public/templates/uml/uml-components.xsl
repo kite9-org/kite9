@@ -1,10 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
-  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
-
-  <xsl:import href="../formats/formats-components.xsl" />
-  
+  xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">  
 
   <xsl:template name="uml-divider">
     <path d="" pp:d="M 0 0 H [[$width]]" />      

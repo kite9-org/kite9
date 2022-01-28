@@ -11,7 +11,7 @@
 
      <g id="b1" class="box"><textarea>Link Me</textarea></g>
      
-     <container id="bigbox" style="kite9-layout: vertical; ">
+     <container id="bigbox" style="--kite9-layout: vertical; ">
        <g id="b2" class="box"><textarea>B</textarea></g>
        <g id="b3" class="box"><textarea>Can't Drag</textarea></g>
      </container>

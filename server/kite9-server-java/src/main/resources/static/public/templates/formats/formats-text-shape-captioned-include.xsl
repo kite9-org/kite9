@@ -2,9 +2,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
-
-  <xsl:import href="../texture/texture-template.xsl" />
-  <xsl:import href="../shape/shape-template.xsl" />
   
   <xsl:template name="formats-text-shape-captioned" match="*[@k9-format='text-shape-captioned']">
     <xsl:param name="class" select="@class"/>

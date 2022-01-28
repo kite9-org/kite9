@@ -9,12 +9,15 @@ once(function() {
 	setTimeout(() => {
 		ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
 	}, 20)
-	ensureJs('/public/external/saxon-js/SaxonJS2.js');
+//	ensureJs('/public/external/SaxonJS2.js');
 })
 
 const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
 
+/**
+ * Resolves the URL for the template, contained in the template attribute of the doc.
+ */
 function getTemplateUri(doc) {
 
 	const template = doc.documentElement.getAttributeNS(XSL_TEMPLATE_NAMESPACE, "template");
@@ -22,20 +25,11 @@ function getTemplateUri(doc) {
 	if ((template == null) || (template.length() == 0)) {
 		if (ADL_NAMESPACE == doc.documentElement.namespaceURI) {
 			// default to the basic template
-			return "/public/templates/basic/basic-template.xsl";
+			return new URL("/public/templates/basic/basic-template.xsl", document.location.href).href;
 		}
 	}
 	
-	return template;
-}
- 
-
-function transformToSVG(doc) {
-	return SaxonJS.transform({
-	    stylesheetLocation: getTemplateUri(doc),
-	    sourceNode: doc,
-	    destination: 'document'
-	  }, "sync");	
+	return new URL(template, document.location.href).href;
 }
 
 /*
@@ -49,6 +43,7 @@ export class Transition {
 		this.loadCallbacks = [];
 		this.animationCallbacks = [];
 		this.documentCallbacks = [];
+		this.transformer = null;
 		const topicName = topic ? topic() : undefined;
 		if (topicName) {
 			this.socket = new WebSocket(topicName);
@@ -61,14 +56,21 @@ export class Transition {
 				var parser = new DOMParser();
 				var doc = parser.parseFromString(m.data, "text/xml");
 
-				// convert contents of websocket into SVG
-				var doc = transformToSVG(doc)
 
 				if (doc.documentElement.tagName == 'svg') {
+					// old way - doc contains svg
 					this.change(doc.documentElement);
+					this.documentCallbacks.forEach(cb => cb(doc));
+				} else if (doc.documentElement.namespaceURI == ADL_NAMESPACE) {
+					// adl returned - do transform first
+					this.xslt(doc, getTemplateUri(doc), result => {
+						this.change(result.documentElement);
+						this.documentCallbacks.forEach(cb => cb(result));	
+					});				
+				} else {
+					// probably just metadata
+					this.documentCallbacks.forEach(cb => cb(doc));
 				}
-				
-				this.documentCallbacks.forEach(cb => cb(doc));
 			};
 			this.socket.onerror = (e) => {
 				alert("Problem with websocket: "+ JSON.stringify(e));
@@ -146,6 +148,30 @@ export class Transition {
 				this.documentCallbacks.forEach(cb => cb(doc));
 			})
 	}
+	
+	xslt(doc, uri, callback) {
+		if (this.transformer == null) {
+			// using this to make sure document location is correct.
+			var xhr = new XMLHttpRequest;
+			xhr.open('GET', uri);
+			xhr.responseType = 'document';
+			xhr.overrideMimeType('text/xml');
+			xhr.onload = function () {
+			  	if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+					this.transformer = new XSLTProcessor();
+					this.transformer.importStylesheet(xhr.responseXML);	
+					const result = this.transformer.transformToDocument(doc);
+					callback(result);
+				} else {
+					// error
+				}
+			};
+				
+			xhr.send();		
+		} else {
+			return callback(this.transformer.transformToDocument(doc));
+		}
+  	}
 
 	get(uri) {
 		return this.mainHandler(fetch(uri, {

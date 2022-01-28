@@ -32,14 +32,14 @@
 		</svg:script>
 	</svg:defs>
 	<diagram xmlns="http://www.kite9.org/schema/adl" id="dia"
-		style="kite9-layout: down; ">
+		style="--kite9-layout: down; ">
 
 
-		<textarea id="1" style="kite9-text-bounds-width: 55pt; " k9-format="textarea"> Just Text</textarea>
+		<textarea id="1" style="--kite9-text-bounds-width: 55pt; " k9-format="textarea"> Just Text</textarea>
 
 		<connectedtext id="2" k9-format="inline-text">Connected</connectedtext>
 
-		<connectedtext k9-format="inline-text" style="kite9-text-bounds: 155pt 400pt; "
+		<connectedtext k9-format="inline-text" style="--kite9-text-bounds: 155pt 400pt; "
 			id="3">Connected with a very low width</connectedtext>
 
 	</diagram>

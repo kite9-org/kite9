@@ -29,7 +29,7 @@
 
 	<group style="--kite9-layout: right; ">
 
-		<container id="https://github.com/kite9-org/docs/wiki"
+		<container id="https://github.com/--kite9-org/docs/wiki"
 			class="panel invis" k9-ui="open">
 			<icon>/public/templates/admin/books.svg</icon>
 			<title>Documentation</title>
@@ -40,7 +40,7 @@
 			<title>GitHub Login</title>
 		</container>
 
-		<container id="/github/kite9-org/examples"
+		<container id="/github/--kite9-org/examples"
 			class="panel invis" k9-ui="open">
 			<icon>/public/templates/admin/leaf.svg</icon>
 			<title>Examples</title>

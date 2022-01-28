@@ -3,8 +3,6 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../formats/formats-components.xsl" />
-
 	<xsl:template match="adl:box">
 		<xsl:call-template name="formats-container">
 	     <xsl:with-param name="k9-rounding">5pt</xsl:with-param>	

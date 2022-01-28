@@ -4,8 +4,6 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
         version="1.0">
-
-  <xsl:import href="../formats/formats-components.xsl"/>  
   
   <xsl:template name="labels-basic">
     <xsl:param name="k9-rounding" >5pt</xsl:param>

@@ -3,8 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
   
-  <xsl:import href="../formats/formats-components.xsl"/>
-
   <xsl:template match="adl:font-awesome" >
     <xsl:call-template name="formats-text-fixed">
       <xsl:with-param name="content">

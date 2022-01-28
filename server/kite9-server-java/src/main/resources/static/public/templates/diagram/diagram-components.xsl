@@ -6,8 +6,6 @@
         xmlns:pp="http://www.kite9.org/schema/post-processor"
         version="1.0">
 
-  <xsl:import href="../formats/formats-components.xsl"/>
-
   <xsl:template name="diagram-root-svg" match="/">
      
       <xsl:param name="css">

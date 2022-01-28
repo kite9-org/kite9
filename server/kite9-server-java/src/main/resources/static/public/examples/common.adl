@@ -6,8 +6,8 @@
 			@import url('/public/fonts/metropolis/metropolis.css');
 
 			[k9-elem=container] {
-			  kite9-min-size: 200pt 100pt;
-			  kite9-margin: 15pt;
+			  --kite9-min-size: 200pt 100pt;
+			  --kite9-margin: 15pt;
 			}
 
 			[k9-format] {
@@ -51,7 +51,7 @@
 
 		</container>
 
-		<group id="g1" style="kite9-layout: right; ">
+		<group id="g1" style="--kite9-layout: right; ">
 
 
 			<image k9-format="image-editable" id="1" href="cat.png"

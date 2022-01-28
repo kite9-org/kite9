@@ -4,9 +4,6 @@
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:pp="http://www.kite9.org/schema/post-processor"
         version="1.0">
-
-  <xsl:import href="../formats/formats-components.xsl" />
-
   
   <!-- this decorates the formats-template for a container, so that the container has a 
        layout direction indicator

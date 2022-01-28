@@ -3,8 +3,10 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../adl/adl-components.xsl" />
+  <xsl:import href="../adl/adl-all-components.xsl" />
   <xsl:import href="uml-components.xsl" />
+  <xsl:import href="../formats/formats-components.xsl" />
+  
   
   <xsl:template match="/" mode="diagram-script">
      import '/public/templates/uml/uml.js';

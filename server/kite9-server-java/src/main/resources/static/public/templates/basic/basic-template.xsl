@@ -3,8 +3,8 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../adl/adl-components.xsl" />
-  <xsl:import href="basic-components.xsl" />
+  <xsl:import href="../adl/adl-all-components.xsl" />
+  <xsl:import href="basic-components.xsl" /> 
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:call-template name="adl-diagram-element-css" />
@@ -25,8 +25,8 @@
 
   <xsl:template match="/" mode="diagram-defs">
   	<xsl:call-template name="adl-diagram-defs" />
-  </xsl:template>
-
+  </xsl:template> 
+  
 </xsl:stylesheet>
         
         

@@ -3,7 +3,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../adl/adl-components.xsl" />
+  <xsl:import href="../adl/adl-all-components.xsl" />
   <xsl:import href="../votes/votes-components.xsl" />
   <xsl:import href="risks/risk-components.xsl" />
   <xsl:import href="artifacts/artifact-components.xsl" />

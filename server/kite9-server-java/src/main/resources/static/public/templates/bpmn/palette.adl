@@ -5,14 +5,14 @@
       
       [k9-elem=container], 
       [k9-elem=group] {
-        kite9-min-size: 200pt 100pt;
-        kite9-margin: 15pt;
+        --kite9-min-size: 200pt 100pt;
+        --kite9-margin: 15pt;
       }
     </svg:style>
   </svg:defs>
- <diagram xmlns="http://www.kite9.org/schema/adl" style="kite9-layout: down; ">
+ <diagram xmlns="http://www.kite9.org/schema/adl" style="--kite9-layout: down; ">
 
-    <group style="kite9-layout: right; ">
+    <group style="--kite9-layout: right; ">
 
         <container id="c1" class="solid">
         </container>
@@ -24,7 +24,7 @@
         </container>
     </group>
     
-    <group style="kite9-layout: right; ">
+    <group style="--kite9-layout: right; ">
 
         <container id="c4" class="dotted">
         </container>
@@ -36,7 +36,7 @@
         </container>
     </group>
 
-    <group style="kite9-layout: right; ">
+    <group style="--kite9-layout: right; ">
       <group id="g3">
 
       </group>

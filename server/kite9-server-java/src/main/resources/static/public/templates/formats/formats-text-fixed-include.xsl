@@ -3,8 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../texture/texture-template.xsl" />
-
   <xsl:template name="formats-text-fixed" match="*[@k9-format='text-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>

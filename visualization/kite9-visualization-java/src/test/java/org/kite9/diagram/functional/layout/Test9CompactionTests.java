@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.LinkEndStyle;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.model.position.Layout;
 import org.w3c.dom.Element;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.Connection;
@@ -103,6 +104,28 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram",createList(con3), null);
 		renderDiagram(d);
     }
+
+	@Test
+	public void test_9_5_HierarchicalContainersWithAlignment() throws Exception {
+		Element one = new Glyph("Stereo", "one", null, null);
+		one.setAttribute("style", "--kite9-horizontal-align: left; ");
+		Element two = new Glyph("Stereo", "two two two two", null, null);
+		Element three = new Glyph("Stereo", "three", null, null);
+		three.setAttribute("style", "--kite9-horizontal-align: right; ");
+		Element four = new Glyph("Stereo", "four four", null, null);
+
+		Element con1 = new Context("b1", createList(one), true, null, null);
+		con1.setAttribute("style", "--kite9-sizing: minimize; --kite9-layout: down; --kite9-horizontal-align: center; --kite9-min-width: 200px;  ");
+		Element con11 = new Context("b1", createList(con1, two), true, null, null);
+		con11.setAttribute("style", "--kite9-sizing: minimize; --kite9-layout: down; --kite9-min-width: 300px; ");
+		Element con2 = new Context("b2", createList(three, four), true, null,null);
+		con2.setAttribute("style", "--kite9-sizing: minimize; --kite9-layout: down; ");
+
+		Element outer = new Context("hfh", createList(con11, con2), true, null,null);
+		outer.setAttribute("style", "--kite9-min-width: 1000px; ");
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram",createList(outer), null);
+		renderDiagram(d);
+	}
 	
 	@Test
 	@Ignore("This worked by chance before - CenteringAligner doesn't work properly without layout.")
@@ -171,4 +194,6 @@ public class Test9CompactionTests extends AbstractLayoutFunctionalTest {
 			}
 		});
 	}
+
+
 }

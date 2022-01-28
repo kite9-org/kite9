@@ -2,9 +2,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
-  
-  <xsl:import href="../formats/formats-components.xsl" />
-  
+    
 	<xsl:template mode="shape" match="adl:card" priority="2">
 		<path xmlns="http://www.w3.org/2000/svg"
 			d="M80,34.5H30c-0.1,0-0.3,0.1-0.4,0.1l-10,10c-0.1,0.1-0.1,0.2-0.1,0.4v20c0,0.3,0.2,0.5,0.5,0.5h60c0.3,0,0.5-0.2,0.5-0.5V35  C80.5,34.7,80.3,34.5,80,34.5z M79.5,64.5h-59V45.2l9.7-9.7h49.3V64.5z" />

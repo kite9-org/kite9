@@ -3,11 +3,10 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
  
- <xsl:import href="links-basic-template.xsl"/>
- <xsl:import href="links-align-template.xsl"/>
- <xsl:import href="links-terminators.xsl"/>
- <xsl:import href="links-markers.xsl"/>
- <xsl:import href="../formats/formats-components.xsl" />
+ <xsl:import href="links-basic-include.xsl"/>
+ <xsl:import href="links-align-include.xsl"/>
+ <xsl:import href="links-terminators-include.xsl"/>
+ <xsl:import href="links-markers-include.xsl"/>
   
   <xsl:template name="links-hub">
     <xsl:call-template name="formats-shape" />

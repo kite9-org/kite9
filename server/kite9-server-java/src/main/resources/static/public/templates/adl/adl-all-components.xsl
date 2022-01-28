@@ -13,6 +13,8 @@
    -->    
   
   <xsl:import href="../formats/formats-components.xsl" />
+  <xsl:import href="../shape/shape-components.xsl" />
+  <xsl:import href="../texture/texture-components.xsl" />
   <xsl:import href="../diagram/diagram-components.xsl" />
   <xsl:import href="../containers/containers-components.xsl"/>
   <xsl:import href="../labels/labels-components.xsl" />

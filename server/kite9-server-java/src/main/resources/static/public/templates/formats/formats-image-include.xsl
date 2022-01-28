@@ -3,9 +3,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
-          
-  <xsl:import href="../texture/texture-template.xsl" />
-          
+                    
   <xsl:template name="formats-image" match="*[@k9-format='image']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>

@@ -5,7 +5,7 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	version="1.0">
 	
-  <xsl:import href="../adl/adl-components.xsl" />
+  <xsl:import href="../adl/adl-all-components.xsl" />
   
   <xsl:template match="/" mode="diagram-defs">
    	<xsl:call-template name="adl-diagram-defs" />

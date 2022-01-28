@@ -3,8 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:xlink="http://www.w3.org/1999/xlink" 
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
-
-  <xsl:import href="../../formats/formats-components.xsl" />
   
   <xsl:template name="site-risk-first-diagram-defs">
     <filter id="dropshadow" height="130%">

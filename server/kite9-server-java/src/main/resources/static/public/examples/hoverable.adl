@@ -22,7 +22,7 @@
     </svg:script>
     
   </svg:defs>
-  <diagram xmlns="http://www.kite9.org/schema/adl" style="kite9-layout: right; " id="thediagram">
+  <diagram xmlns="http://www.kite9.org/schema/adl" style="--kite9-layout: right; " id="thediagram">
 
      <container id="b1" class="box" />
      

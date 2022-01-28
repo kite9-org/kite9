@@ -3,8 +3,6 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../../formats/formats-components.xsl" />
-
   <xsl:template name="arrow" match="adl:arrow | adl:block">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>

@@ -1,6 +1,6 @@
  <diagram xmlns="http://www.kite9.org/schema/adl" 
    id="dia" 
-   style="kite9-layout: down; " >
+   style="--kite9-layout: down; " >
 
   <svg:defs xmlns:svg='http://www.w3.org/2000/svg'>
     <svg:style type="text/css">

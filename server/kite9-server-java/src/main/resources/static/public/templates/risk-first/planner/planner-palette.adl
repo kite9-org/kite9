@@ -8,7 +8,7 @@
   <svg:defs>
     <svg:style type="text/css">
       [k9-elem=planner-cell] {
-        kite9-min-size: 500pt 70pt;
+        --kite9-min-size: 500pt 70pt;
       }
     </svg:style>
 
