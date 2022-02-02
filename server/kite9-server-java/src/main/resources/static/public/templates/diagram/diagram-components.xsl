@@ -22,8 +22,9 @@
           <xsl:attribute name="pp:width">$width</xsl:attribute>
           <xsl:attribute name="pp:height">$height</xsl:attribute>
           <defs>
-              <style type="text/css">
-             	 <xsl:for-each select="$css/*">
+             <style type="text/css">
+             	<!-- breaks on client -->
+             	<xsl:for-each select="$css/*">
                  	<xsl:text>
 		     		</xsl:text>
                  	<xsl:copy-of select="text()" />
@@ -38,9 +39,10 @@
               <script>
                  document.params = {
                  "palettes" : [
-                    <xsl:for-each select="$palettes/*">
+	                 <!-- breaks on client -->
+                 	<xsl:for-each select="$palettes/*">
                         "<xsl:value-of select="@url"/>",  "<xsl:value-of select="@contains"/>",                  
-                    </xsl:for-each>
+                    </xsl:for-each> -->
                    ],
                  <xsl:for-each select="$constants/*">
                   "<xsl:value-of select="@name" />": "<xsl:value-of select="@url"/>",

@@ -1,16 +1,3 @@
-import * as anime from '/webjars/animejs/3.0.1/lib/anime.es.js';
-import { ensureJs, once } from '/public/bundles/ensure.js';
-
-/**
- * Replace with ES6 module as soon as possible
- */
-once(function() {
-	ensureJs('/webjars/kotlin/1.4.30/kotlin.js');	
-	setTimeout(() => {
-		ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
-	}, 20)
-//	ensureJs('/public/external/SaxonJS2.js');
-})
 
 const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
@@ -146,7 +133,6 @@ export class Transition {
 			.then(doc => {
 				this.change(doc.documentElement);
 				this.documentCallbacks.forEach(cb => cb(doc));
-				return doc;
 			})
 	}
 	

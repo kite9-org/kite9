@@ -104,7 +104,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
-		hints.put(KEY_TRANSFORMER_FACTORY, "net.sf.saxon.TransformerFactoryImpl");
+		//hints.put(KEY_TRANSFORMER_FACTORY, "net.sf.saxon.TransformerFactoryImpl");
 		return hints;
 	}
 

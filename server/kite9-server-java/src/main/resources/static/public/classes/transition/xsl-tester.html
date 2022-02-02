@@ -1,0 +1,29 @@
+<html>
+
+	<head>
+	
+			<title>yo</title>
+	<script type="module">
+			import { Transition } from '/public/classes/transition/transition.js';
+			
+			const transition = new Transition('/public/templates/basic/example.adl');
+	
+			transition.get('/public/templates/basic/example.adl').then(doc => {
+
+				transition.xslt(doc, '/public/templates/basic/basic-template.xsl', cb => {
+					alert("done: "+cb);
+				});
+
+
+			});
+
+		</script>
+	
+	</head>
+
+
+	<body>
+	
+		<p>Hi</p>
+	</body>
+</html>

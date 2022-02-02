@@ -18,7 +18,6 @@
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">none</xsl:param>
     <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect</xsl:param>
-    
     <xsl:param name="shape">
       <xsl:apply-templates mode="shape" select=".">
         <xsl:with-param name="k9-rounding" select="$k9-rounding" />
@@ -32,6 +31,7 @@
         <xsl:with-param name="k9-rounding" select="$k9-rounding" />
       </xsl:call-template>
     </xsl:param>
+    
     
     <xsl:param name="depiction">
       <xsl:call-template name="texture-basic">
@@ -77,7 +77,7 @@
       <xsl:with-param name="shape" select="$background" />
       <xsl:with-param name="content" select="$content" />
       <xsl:with-param name="decoration" select="$decoration" />
-    </xsl:call-template>
+    </xsl:call-template> 
   </xsl:template>
 
 </xsl:stylesheet>

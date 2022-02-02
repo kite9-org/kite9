@@ -12,15 +12,15 @@
     ADL.
    -->    
   
-  <xsl:import href="../formats/formats-components.xsl" />
-  <xsl:import href="../shape/shape-components.xsl" />
   <xsl:import href="../texture/texture-components.xsl" />
-  <xsl:import href="../diagram/diagram-components.xsl" />
+  <xsl:import href="../shape/shape-components.xsl" />
+  <xsl:import href="../formats/formats-components.xsl" />
   <xsl:import href="../containers/containers-components.xsl"/>
   <xsl:import href="../labels/labels-components.xsl" />
   <xsl:import href="../grid/grid-components.xsl" />
   <xsl:import href="../links/links-components.xsl" />
-  <xsl:import href="../textarea/textarea-components.xsl" />
+  <xsl:import href="../textarea/textarea-components.xsl" /> 
+  <xsl:import href="../diagram/diagram-components.xsl" />
 
   <!-- this rule matches and passes through any svg elements -->
   <xsl:template match="svg:*">
@@ -29,7 +29,7 @@
           <xsl:apply-templates />
       </xsl:element>
   </xsl:template> 
-  
+   
   <xsl:template name="adl-diagram-element-css">
   	<xsl:call-template name="formats-diagram-element-css" />
   	<xsl:call-template name="diagram-diagram-element-css" />
@@ -54,5 +54,5 @@
   	<xsl:call-template name="links-diagram-defs" />
   	<xsl:call-template name="containers-diagram-defs" />
   </xsl:template>
-
+ 
 </xsl:stylesheet>

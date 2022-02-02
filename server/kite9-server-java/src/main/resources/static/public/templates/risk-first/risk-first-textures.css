@@ -42,7 +42,10 @@
 [k9-elem=label-inner] {
 	stroke: none;
 	font-size: 12pt;
-	
+}
+
+[k9-elem=caption] text {
+	text-align: middle;
 }
 
 /* Arrow, Links */
