@@ -18,8 +18,6 @@ import java.io.ByteArrayOutputStream;
 
 public abstract class AbstractSVGFormat implements DiagramWriteFormat {
 
-
-
     public ADLOutput handleWrite(ADLDom toWrite, Kite9Transcoder t) {
         setupTranscoder(t, toWrite);
         Document d = transformADL(toWrite.getDocument(), toWrite.getUri(), t, toWrite);

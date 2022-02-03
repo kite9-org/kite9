@@ -104,15 +104,19 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT, "svg");
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
-		//hints.put(KEY_TRANSFORMER_FACTORY, "net.sf.saxon.TransformerFactoryImpl");
 		return hints;
 	}
 
 
 	public TransformerFactory getTransformerFactory() throws Exception {
 		if (transFact == null) {
-			Class<?> tfClass = Class.forName((String ) hints.get(KEY_TRANSFORMER_FACTORY));
-			transFact = (TransformerFactory) tfClass.getConstructor().newInstance();
+			if (hints.getOrDefault(KEY_TRANSFORMER_FACTORY, "").toString().trim().length() > 0) {
+				Class<?> tfClass = Class.forName((String ) hints.get(KEY_TRANSFORMER_FACTORY));
+				transFact = (TransformerFactory) tfClass.getConstructor().newInstance();
+			} else {
+				transFact = TransformerFactory.newInstance();
+			}
+
 			transFact.setErrorListener((ErrorListener) this.handler);
 		}
 

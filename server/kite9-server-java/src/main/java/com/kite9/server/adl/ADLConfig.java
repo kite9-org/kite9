@@ -15,6 +15,9 @@ public class ADLConfig {
 	
 	@Value("${kite9.caching:true}")
 	private boolean caching;
+	
+	@Value("${kite9.transformer.factory:}")
+	private String defaultXSLFactory;
 
     @Bean
     public Cache cache() {
@@ -23,7 +26,7 @@ public class ADLConfig {
 
     @Bean
     public ADLFactory adlFactory(Cache c) {
-        return new ADLFactoryImpl(c);
+        return new ADLFactoryImpl(c, defaultXSLFactory);
     }
 
     @Bean

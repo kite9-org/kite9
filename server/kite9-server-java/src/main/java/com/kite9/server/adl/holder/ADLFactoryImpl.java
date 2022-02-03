@@ -42,10 +42,12 @@ import java.util.Map;
 public class ADLFactoryImpl implements ADLFactory {
 	
 	private Cache cache;
+	private String defaultXSLFactory;
 
-	public ADLFactoryImpl(Cache cache) {
+	public ADLFactoryImpl(Cache cache, String defaultXSLFactory) {
 		super();
 		this.cache = cache;
+		this.defaultXSLFactory = defaultXSLFactory;
 	}
 
 	@NotNull
@@ -117,6 +119,7 @@ public class ADLFactoryImpl implements ADLFactory {
 
 	private Kite9Transcoder createNewTranscoder(K9URI u) {
 		Kite9Transcoder out = new Kite9TranscoderImpl(cache);
+		out.addTranscodingHint(Kite9SVGTranscoder.KEY_TRANSFORMER_FACTORY, defaultXSLFactory);
 		if (u != null) {
 			RequestParameters.configure(URIWrapper.from(u), out);
 		}
