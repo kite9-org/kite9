@@ -1,8 +1,6 @@
 package org.kite9.diagram.visualization.compaction.align
 
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.*
 import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Compactor
@@ -26,8 +24,10 @@ class AlignmentCompactionStep(cd: CompleteDisplayer, vararg aligners: Aligner) :
     protected fun alignContents(de: Container, c: Compaction) {
         val contents: List<DiagramElement> = de.getContents()
         for (a in aligners) {
-            alignOnAxis(c, contents, a, true, de)
-            alignOnAxis(c, contents, a, false, de)
+            alignConnecteds(c, contents, a, true, de)
+            alignConnecteds(c, contents, a, false, de)
+            alignLabels(c, contents, a, true, de)
+            alignLabels(c, contents, a, false, de)
         }
         for (de2 in contents) {
             if (de2 is Container) {
@@ -36,15 +36,27 @@ class AlignmentCompactionStep(cd: CompleteDisplayer, vararg aligners: Aligner) :
         }
     }
 
-    private fun alignOnAxis(c: Compaction, contents: List<DiagramElement>, a: Aligner, horizontal: Boolean, de: Container) {
+    private fun alignConnecteds(c: Compaction, contents: List<DiagramElement>, a: Aligner, horizontal: Boolean, de: Container) {
         val filtered = contents
+            .filterIsInstance<Connected>()
             .filterIsInstance<Rectangular>()
             .filter { a.willAlign(it, horizontal) }
-       //     .filterIsInstance<Connected>()
             .toSet()
         if (filtered.isNotEmpty()) {
             a.alignFor(de, filtered, c, horizontal)
         }
     }
+
+    private fun alignLabels(c: Compaction, contents: List<DiagramElement>, a: Aligner, horizontal: Boolean, de: Container) {
+        val filtered = contents
+            .filterIsInstance<Label>()
+            .filterIsInstance<Rectangular>()
+            .filter { a.willAlign(it, horizontal) }
+            .toSet()
+        if (filtered.isNotEmpty()) {
+            a.alignFor(de, filtered, c, horizontal)
+        }
+    }
+
 
 }

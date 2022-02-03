@@ -15,6 +15,7 @@ import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 import kotlin.math.ceil
+import kotlin.math.max
 import kotlin.math.min
 
 
@@ -39,6 +40,12 @@ class CenteringAligner : Aligner, Logable {
             // you can't centre anything on a grid, since cells use all the space in the grid.
             return
         }
+
+        val containerSlideables = sso.getSlideablesFor(co)
+        val leftSlack = minSlack(containerSlideables.a)
+        val rightSlack = minSlack(containerSlideables.b)
+        var slackToHave = min(leftSlack, rightSlack)
+
         if (inLine) {
             val matches = findRelevantSlideables(des, sso)
             if (matches.size != des.size * 2) {
@@ -50,7 +57,7 @@ class CenteringAligner : Aligner, Logable {
             while (i < ceil(des.size / 2.0)) {
                 val leftD = matches[i * 2]
                 val rightD = matches[matches.size - i * 2 - 1]
-                centerSlideables(leftD, rightD, des.size - i * 2)
+                var slackUsed = centerSlideables(leftD, rightD, des.size - i * 2, slackToHave)
                 i++
             }
         } else {
@@ -59,7 +66,7 @@ class CenteringAligner : Aligner, Logable {
                 val (a, b) = sso.getSlideablesFor(
                     r
                 )
-                centerSlideables(a, b, 1)
+                var slackUsed = centerSlideables(a, b, 1, slackToHave)
             }
         }
     }
@@ -71,12 +78,12 @@ class CenteringAligner : Aligner, Logable {
             .sortedBy { it.minimumPosition }
     }
 
-    private fun centerSlideables(left: SegmentSlideable?, right: SegmentSlideable?, elementCount: Int) {
+    private fun centerSlideables(left: SegmentSlideable?, right: SegmentSlideable?, elementCount: Int, slackToHave: Int): Int {
         val leftSlack = minSlack(left)
         val rightSlack = minSlack(right)
-        var slackToUse = min(leftSlack, rightSlack)
+        var slackToUse = max(min(leftSlack, rightSlack) - slackToHave,0)
         if (slackToUse == 0) {
-            return
+            return 0
         }
         slackToUse /= (elementCount + 1)
         try {
@@ -88,6 +95,8 @@ class CenteringAligner : Aligner, Logable {
             // remove all remaining slack
             right.minimumPosition = right.maximumPosition!!
             left.maximumPosition = left.minimumPosition
+
+            return slackToUse
         } catch (e: Exception) {
             throw LogicException("Could not set center align constraint: ", e)
         }

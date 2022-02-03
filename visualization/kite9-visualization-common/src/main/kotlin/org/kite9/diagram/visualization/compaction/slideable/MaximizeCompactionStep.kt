@@ -21,21 +21,26 @@ class MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractSizingCompactionSt
     }
 
     override fun performSizing(r: Rectangular, c: Compaction, horizontal: Boolean) {
-        val hsso = c.getHorizontalSegmentSlackOptimisation()
-        val hs = hsso.getSlideablesFor(r)
-        val vsso = c.getVerticalSegmentSlackOptimisation()
-        val vs = vsso.getSlideablesFor(r)
-        if (hs != null && vs != null) {
-            log.send("Maximizing Distance $r")
-            if (horizontal) {
-                maximizeDistance(vs.a, vs.b)
-            } else {
-                maximizeDistance(hs.a, hs.b)
+        log.send("Maximizing Distance $r")
+        if (horizontal) {
+            val vsso = c.getVerticalSegmentSlackOptimisation()
+            val vs = vsso.getSlideablesFor(r)
+            if (vs != null) {
+                maximizeDistance(vs.a!!, vs.b!!)
+            }
+        } else {
+            val hsso = c.getHorizontalSegmentSlackOptimisation()
+            val hs = hsso.getSlideablesFor(r)
+            if (hs != null) {
+                maximizeDistance(hs.a!!, hs.b!!)
             }
         }
     }
 
-    private fun maximizeDistance(min: SegmentSlideable?, max: SegmentSlideable?) {
+    private fun maximizeDistance(min: SegmentSlideable, max: SegmentSlideable) {
+        //val biggestDistance = max.maximumPosition!! - min.minimumPosition!!
+        //min.addMinimumForwardConstraint(max, biggestDistance)
+        // old way
         max!!.minimumPosition = max.maximumPosition!!
         min!!.maximumPosition = min.minimumPosition
     }

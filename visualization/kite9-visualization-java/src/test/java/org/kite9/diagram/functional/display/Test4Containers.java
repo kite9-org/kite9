@@ -168,6 +168,27 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, two), null);
 		renderDiagram(d);
 	}
-	
+
+	@Test
+	public void test_4_7_MinimumSizing() throws Exception {
+		Glyph one = new Glyph("Stereo", "one", null, null);
+		one.setAttribute("style", "--kite9-min-width: 100px; --kite9-sizing: minimize;");
+
+		Glyph two = new Glyph("Stereo", "two", null, null);
+		two.setAttribute("style", "--kite9-min-width: 100px; --kite9-sizing: minimize;");
+		Glyph three = new Glyph("Stereo", "three", null, null);
+		three.setAttribute("style", "--kite9-min-width: 100px; --kite9-sizing: minimize;");
+		Context con1 = new Context("b1", createList(one), true, new TextLabel("This is some really long and annoying label"), null);
+		con1.setAttribute("style", "--kite9-min-width: 600px; --kite9-sizing: minimize;");
+		Context con2 = new Context("b2", createList(two, three), true, null, null);
+		con2.setAttribute("style", "--kite9-min-width: 600px; --kite9-sizing: minimize; ");
+
+		//new Link(one, three);
+
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, con2), null);
+		d.setAttribute("style", "--kite9-min-width: 1500px;");
+
+		renderDiagram(d);
+	}
 
 }
