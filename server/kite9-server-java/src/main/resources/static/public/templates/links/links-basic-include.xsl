@@ -21,6 +21,7 @@
     <xsl:param name="shape">
    		<g k9-elem="link-grab">
         <xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
+        <xsl:attribute name="k9-texture">none</xsl:attribute>
         <path pp:d="$path" d="" k9-animate="link"/>
       </g>
     </xsl:param>

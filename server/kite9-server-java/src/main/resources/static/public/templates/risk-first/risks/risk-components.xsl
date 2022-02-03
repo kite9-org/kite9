@@ -47,15 +47,21 @@
           <xsl:with-param name="k9-elem">code</xsl:with-param>
           <xsl:with-param name="content"><text><xsl:value-of select="$code" /></text></xsl:with-param>
           <xsl:with-param name="id"></xsl:with-param>
+          <xsl:with-param name="class"></xsl:with-param>
+          <xsl:with-param name="style"></xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="formats-image">
           <xsl:with-param name="href" select="$image" />
           <xsl:with-param name="k9-elem">image</xsl:with-param>
           <xsl:with-param name="id"><xsl:value-of select="@id" />@image</xsl:with-param>
+          <xsl:with-param name="class"></xsl:with-param>
+          <xsl:with-param name="style"></xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="formats-text-fixed">
           <xsl:with-param name="k9-elem">title</xsl:with-param>
           <xsl:with-param name="id"><xsl:value-of select="@id" />@text</xsl:with-param>
+          <xsl:with-param name="class"></xsl:with-param>
+          <xsl:with-param name="style"></xsl:with-param>
           <xsl:with-param name="content">
             <xsl:choose>
               <xsl:when test="text()"> 
@@ -194,7 +200,7 @@
   
   <xsl:template match="adl:risk[@class='feature-fit']">
     <xsl:call-template name="risks-fixed">
-      <xsl:with-param name="code">FF</xsl:with-param>
+      <xsl:with-param name="code">F-F</xsl:with-param>
       <xsl:with-param name="image">/public/templates/risk-first/redesign/risks/feature_fit_risk_v2.svg</xsl:with-param>
       <xsl:with-param name="dtitle">Feature Fit Risk</xsl:with-param>
     </xsl:call-template>
