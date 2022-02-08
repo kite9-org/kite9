@@ -10,13 +10,13 @@
 	stroke: none;
 }
 
-[k9-texture=background][k9-elem=container].solid >  * {
+[k9-texture=background][k9-elem=container].solid > g > rect {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: none;
 }
 
-[k9-texture=background][k9-elem=container].dotted >  * {
+[k9-texture=background][k9-elem=container].dotted > g > rect {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: 4 4;	

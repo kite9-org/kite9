@@ -4,18 +4,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.web.URIRewriter;
 import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.ParsedURLDefaultProtocolHandler;
 import org.springframework.http.HttpHeaders;
+
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.web.URIRewriter;
 
 /**
  * This allows onward-forwarding requests to maintain the identity of the original request, 

@@ -21,6 +21,10 @@
 	fill: none;
 }
 
+[k9-elem=link].invisible [k9-elem=link-body] {
+	stroke: none;
+}
+
 [k9-elem=link].dotted [k9-elem=link-body] {
 	stroke-dasharray: 8;
 }

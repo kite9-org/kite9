@@ -20,6 +20,14 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:template name="glyph" match="adl:glyph">
+    <xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-elem">glyph</xsl:with-param>
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>
+      <xsl:with-param name="k9-texture">background</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
   <xsl:template name="risk-action-left" match="adl:action[contains(@class, 'left')]" priority="5">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit vote</xsl:with-param>

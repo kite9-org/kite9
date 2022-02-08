@@ -67,18 +67,22 @@
 }
 
 
+[k9-elem=align][drawDirection=LEFT],
 [k9-elem=link][drawDirection=LEFT] {
 	--kite9-direction: left;
 }
 
+[k9-elem=align][drawDirection=RIGHT],
 [k9-elem=link][drawDirection=RIGHT] {
 	--kite9-direction: right;
 }
 
+[k9-elem=align][drawDirection=UP],
 [k9-elem=link][drawDirection=UP] {
 	--kite9-direction: up;
 }
 
+[k9-elem=align][drawDirection=DOWN],
 [k9-elem=link][drawDirection=DOWN] {
 	--kite9-direction: down;
 }

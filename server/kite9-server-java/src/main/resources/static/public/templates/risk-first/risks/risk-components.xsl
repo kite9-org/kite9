@@ -170,7 +170,8 @@
     <xsl:call-template name="risks-fixed">
       <xsl:with-param name="code">T</xsl:with-param>
       <xsl:with-param name="image">/public/templates/risk-first/redesign/risks/trust_belief_risk_v2.svg</xsl:with-param>
-      <xsl:with-param name="dtitle">Trust &amp; Belief Risk</xsl:with-param>
+      <xsl:with-param name="dtitle">Trust &amp; Belief 
+      Risk</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
