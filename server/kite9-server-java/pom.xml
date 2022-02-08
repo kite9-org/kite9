@@ -108,6 +108,14 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>test</scope>
         </dependency> -->
+        
+        <!-- server-side xslt transform
+        <dependency>
+			<groupId>net.sf.saxon</groupId>
+			<artifactId>Saxon-HE</artifactId>
+			<version>10.5</version>
+		</dependency> -->
+
 
         <!-- comparing doms. Used for commands and tests -->
         <dependency>

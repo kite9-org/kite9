@@ -12,6 +12,7 @@
 
 				transition.xslt(doc, '/public/templates/basic/basic-template.xsl', cb => {
 					alert("done: "+cb);
+					document.body.appendChild(cb.documentElement);
 				});
 
 

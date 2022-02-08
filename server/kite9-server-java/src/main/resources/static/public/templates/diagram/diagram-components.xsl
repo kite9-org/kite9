@@ -4,6 +4,7 @@
         xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
         xmlns:adl="http://www.kite9.org/schema/adl"
         xmlns:pp="http://www.kite9.org/schema/post-processor"
+        xmlns:exslt="http://exslt.org/common"
         version="1.0">
 
   <xsl:template name="diagram-root-svg" match="/">
@@ -23,28 +24,26 @@
           <xsl:attribute name="pp:height">$height</xsl:attribute>
           <defs>
              <style type="text/css">
-             	<!-- breaks on client -->
-             	<xsl:for-each select="$css/*">
+            	<xsl:for-each select="exslt:node-set($css)/*">
                  	<xsl:text>
 		     		</xsl:text>
-                 	<xsl:copy-of select="text()" />
+                 		<xsl:copy-of select="text()" /> 
                  </xsl:for-each>
-              </style>
+              </style> 
               <xsl:copy-of select="$defs"/>
           </defs>
-
-          <xsl:copy-of select="$content" />
+ 
+          <xsl:copy-of select="$content" /> 
 
           <defs>
               <script>
                  document.params = {
                  "palettes" : [
-	                 <!-- breaks on client -->
-                 	<xsl:for-each select="$palettes/*">
+                	<xsl:for-each select="exslt:node-set($palettes)/*">
                         "<xsl:value-of select="@url"/>",  "<xsl:value-of select="@contains"/>",                  
-                    </xsl:for-each> -->
+                    </xsl:for-each>  
                    ],
-                 <xsl:for-each select="$constants/*">
+                 <xsl:for-each select="exslt:node-set($constants)/*">
                   "<xsl:value-of select="@name" />": "<xsl:value-of select="@url"/>",
                  </xsl:for-each>};
               </script>

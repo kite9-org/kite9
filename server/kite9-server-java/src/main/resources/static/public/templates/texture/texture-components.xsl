@@ -92,13 +92,12 @@
 	            </xsl:if>
 	            <xsl:comment>shape</xsl:comment> 
 	            <!-- breaks on client -->
-	            <xsl:copy-of select="$shape" />
+	            <xsl:copy-of select="$shape" /> 
 	          </g>
 	          <xsl:if test="$content">
 	            <g>
 	              <xsl:comment>content</xsl:comment> 
-	              <!-- breaks on client -->
-	              <xsl:copy-of select="$content"/>
+	              <xsl:copy-of select="$content"/> 
 	            </g>
 	          </xsl:if>
 	        </xsl:when>
@@ -110,8 +109,8 @@
 	                <xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
 	              </xsl:if>
 	              <xsl:comment>content</xsl:comment> 
-	              <!-- breaks on client -->
-				  <xsl:copy-of select="$content"/>
+	              <!-- breaks on client 
+				  <xsl:copy-of select="$content"/> -->
 	            </g>
 	           </xsl:if>
 	        </xsl:otherwise>
@@ -119,8 +118,8 @@
 	    
 	      <xsl:if test="$decoration">
 	        <xsl:comment>decoration</xsl:comment> 
-	        <!-- breaks on client -->
-	        <xsl:copy-of select="$decoration" />
+	        <!-- breaks on client 
+	        <xsl:copy-of select="$decoration" /> -->
 	      </xsl:if>
 	    </g>
 
