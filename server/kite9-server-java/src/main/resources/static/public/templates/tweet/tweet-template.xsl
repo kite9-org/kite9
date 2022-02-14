@@ -25,6 +25,7 @@
 
   <xsl:template match="/" mode="diagram-defs">
   	<xsl:call-template name="adl-diagram-defs" />
+  	<xsl:call-template name="twitter-defs" />
   </xsl:template> 
   
 </xsl:stylesheet>
