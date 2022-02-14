@@ -3,8 +3,7 @@
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
    
-   <tweet>
-   		<avatar href="http://pbs.twimg.com/profile_images/1475849206799773701/Ct01gCJL_normal.jpg" />
+   <tweet href="http://pbs.twimg.com/profile_images/1475849206799773701/Ct01gCJL_normal.jpg" >
    		<heading 
    			displayName="Rob Moffat"
    			screenName="@risk_first"
@@ -13,7 +12,6 @@
    		<contents>
 	   		<textarea>I love &#x1F926; how Twitter 🏩 dark mode inverts &#128515; the black/white 🤦🏻‍♂️</textarea>
    		</contents>	
-   		 saf
    		<footer
    			likes="12"
    			comments="24K"
