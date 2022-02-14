@@ -32,7 +32,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	
 
 	protected void renderDiagram(Element d) throws Exception {
-		String xml = new XMLHelper().toXML(d.getOwnerDocument());
+		String xml = new XMLHelper().toXML(d.getOwnerDocument(), true);
 		renderDiagram(xml);
 	}
 
@@ -154,7 +154,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		dxe.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", AbstractMutableXMLElement.TRANSFORM);
 		
 		// fix for old-style <allLinks> tag
-		String theXML = xmlHelper.toXML(dxe);
+		String theXML = xmlHelper.toXML(dxe, true);
 		//Kite9Log.setLogging(false);
 		transcodeSVG(theXML);
 		copyTo(getOutputFile(".svg"), "svg-output");

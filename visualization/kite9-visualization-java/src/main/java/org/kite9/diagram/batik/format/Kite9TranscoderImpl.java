@@ -5,6 +5,7 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.TranscodingHints;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.w3c.dom.Document;
@@ -14,11 +15,8 @@ import org.w3c.dom.Document;
  */
 public class Kite9TranscoderImpl extends Kite9SVGTranscoder implements Kite9Transcoder {
 
-    public Kite9TranscoderImpl() {
-    }
-
-    public Kite9TranscoderImpl(Cache c) {
-        super(c);
+    public Kite9TranscoderImpl(Cache c, XMLHelper xmlHelper) {
+        super(c, xmlHelper);
     }
 
     @Override

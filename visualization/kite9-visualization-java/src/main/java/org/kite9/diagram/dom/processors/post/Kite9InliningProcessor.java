@@ -44,16 +44,16 @@ import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
  */
 public class Kite9InliningProcessor extends DiagramPositionProcessor {
 	
-	private UserAgent ua;
-	private Kite9BridgeContext bridge;
+	private final UserAgent ua;
+	private final Kite9BridgeContext bridge;
+	private final XMLHelper xmlHelper;
 
-	public Kite9InliningProcessor(Kite9BridgeContext ec, PatternValueReplacer vr, UserAgent ua) {
+	public Kite9InliningProcessor(Kite9BridgeContext ec, PatternValueReplacer vr, UserAgent ua, XMLHelper xmlHelper) {
 		super(ec, vr);
 		this.ua = ua;
 		this.bridge = ec;
+		this.xmlHelper = xmlHelper;
 	}
-	
-	
 	
 	@Override
 	protected Element processTag(Element from) {
@@ -109,7 +109,7 @@ public class Kite9InliningProcessor extends DiagramPositionProcessor {
 		} catch (IOException e1) {
 			try {
 				Document d = ua.getBrokenLinkDocument(e, uriStr, e1.getMessage());
-				String out = new XMLHelper().toXML(d);
+				String out = xmlHelper.toXML(d, true);
 				return encodeContents("image/svg+xml", new ByteArrayInputStream(out.getBytes()));
 			} catch (IOException e2) {
 				// not really sure what to do here...

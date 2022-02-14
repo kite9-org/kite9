@@ -101,7 +101,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	}
 	
 	protected String wrap(Element x) {
-		String xml = new XMLHelper().toXML(x.getOwnerDocument());
+		String xml = new XMLHelper().toXML(x.getOwnerDocument(), true);
 		return xml;
 	}
 

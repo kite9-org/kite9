@@ -20,6 +20,7 @@ import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
 import org.kite9.diagram.dom.Kite9DocumentFactory;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.dom.processors.DiagramPositionProcessor;
@@ -65,8 +66,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	 * not the usual way for editable diagrams, so is false by default.
 	 */
 	public static final TranscodingHints.Key KEY_ENCAPSULATING = new BooleanKey();
-	public static final TranscodingHints.Key KEY_TRANSFORMER_FACTORY = new StringKey();
-
 
 	/**
 	 * This allows us to specify the name of the template used to transform the input document.
@@ -81,15 +80,18 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentLoader docLoader;
 	private final Cache cache;
 	private final BatikDiagramElementFactory def;
-	private TransformerFactory transFact;
+	private final XMLHelper xmlHelper;
 
+	/**
+	 * Just used in testing
+	 */
 	public Kite9SVGTranscoder() {
-		this(Cache.NO_CACHE);
+		this(Cache.NO_CACHE, new XMLHelper());
 	}
 	
-	public Kite9SVGTranscoder(Cache c) {
+	public Kite9SVGTranscoder(Cache c, XMLHelper xmlHelper) {
 		super();
-		this.handler = new ConsolidatedErrorHandler(log);
+		this.handler = xmlHelper.getErrorHandler();
 		this.cache = c;
 		this.domImpl = new ADLExtensibleDOMImplementation(c);
 		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName(), (ErrorHandler) this.handler);
@@ -97,6 +99,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		this.ctx = new Kite9BridgeContext(userAgent, docLoader, false);
 		this.def = new BatikDiagramElementFactory((Kite9BridgeContext) ctx);
 		setTranscodingHints(initTranscodingHints());
+		this.xmlHelper = xmlHelper;
 	}
 
 	protected TranscodingHints initTranscodingHints() {
@@ -105,22 +108,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		hints.put(XMLAbstractTranscoder.KEY_DOCUMENT_ELEMENT_NAMESPACE_URI, CachingSVGDOMImplementation.SVG_NAMESPACE_URI);
 		hints.put(XMLAbstractTranscoder.KEY_DOM_IMPLEMENTATION, domImpl);
 		return hints;
-	}
-
-
-	public TransformerFactory getTransformerFactory() throws Exception {
-		if (transFact == null) {
-			if (hints.getOrDefault(KEY_TRANSFORMER_FACTORY, "").toString().trim().length() > 0) {
-				Class<?> tfClass = Class.forName((String ) hints.get(KEY_TRANSFORMER_FACTORY));
-				transFact = (TransformerFactory) tfClass.getConstructor().newInstance();
-			} else {
-				transFact = TransformerFactory.newInstance();
-			}
-
-			transFact.setErrorListener((ErrorListener) this.handler);
-		}
-
-		return transFact;
 	}
 
 	public Kite9DocumentFactory getDocFactory() {
@@ -288,7 +275,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 				ParsedURL parsedTemplateUri = new ParsedURL(templateURI.toString());
 				Source source = new StreamSource(parsedTemplateUri.openStream());
 				source.setSystemId(templateURI.toString());
-				trans = getTransformerFactory().newTransformer(source);
+				trans = xmlHelper.newTransformer(source, false);
 				trans.setParameter("base-uri", baseUri.toString());
 				trans.setParameter("template-uri", uri.toString());
 				trans.setParameter("template-path", templatePath.toString());
@@ -317,7 +304,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		if (Boolean.TRUE == hints.get(KEY_ENCAPSULATING)) {
 			// in this mode, we are converting the whole diagram into a single SVG file without
 			// external references.
-			return new Kite9InliningProcessor(ctx, new XPathValueReplacer(ctx), getUserAgent());
+			return new Kite9InliningProcessor(ctx, new XPathValueReplacer(ctx), getUserAgent(), xmlHelper);
 		} else {
 			// this version is an "editable" svg diagram, which still uses stylesheets etc.
 			return new DiagramPositionProcessor(ctx, new XPathValueReplacer(ctx));

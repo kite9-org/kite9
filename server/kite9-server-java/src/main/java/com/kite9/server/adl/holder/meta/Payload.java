@@ -137,20 +137,6 @@ public class Payload {
         adlScriptTag.setTextContent(base64Encoded);
     }
 
-    public static String toXMLString(Node n, boolean omitDeclaration) {
-        try {
-            StringWriter output = new StringWriter();
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            if (omitDeclaration) {
-                transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-            }
-            transformer.transform(new DOMSource(n), new StreamResult(output));
-            return output.toString();
-        } catch (Exception e) {
-            throw new Kite9XMLProcessingException("Couldn't serialize XML:", e, null, null);
-        }
-    }
-
     public static String createBase64ADLString(ADLDom adl) {
         byte[] bytes = adl.getAsString().getBytes();
         String base64Encoded = new String(Base64.getEncoder().encode(bytes));

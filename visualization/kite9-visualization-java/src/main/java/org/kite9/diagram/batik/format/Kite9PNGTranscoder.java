@@ -5,6 +5,8 @@ import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.apache.batik.transcoder.image.PNGTranscoder;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.cache.Cache;
 import org.w3c.dom.Document;
 
 /**
@@ -13,6 +15,10 @@ import org.w3c.dom.Document;
  * Only used for testing.
  */
 public class Kite9PNGTranscoder extends Kite9SVGTranscoder {
+
+	public Kite9PNGTranscoder() {
+		super(Cache.NO_CACHE, new XMLHelper());
+	}
 
 	@Override
 	public String getPrefix() {

@@ -104,7 +104,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 			return "";
 		}
 		try {
-			return getPath(n)+ "\n" + new XMLHelper().toXML(n);
+			return getPath(n)+ "\n" + new XMLHelper().toXML(n, false);
 		} catch (Exception e) {
 			return "Couldn't create XML representation: "+e.getMessage();
 		}
@@ -130,7 +130,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 		} else if (n == null) {
 			return "";
  		} else {
-			return getPath(n.getParentNode())+ " > " + new XMLHelper().toXML(n);
+			return getPath(n.getParentNode())+ " > " + new XMLHelper().toXML(n, false);
 		}
 	}
 	

@@ -11,6 +11,7 @@ import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.HelpMethods;
 import org.kite9.diagram.common.StreamHelp;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
@@ -31,7 +32,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		try {
 			TranscoderOutput out = getTranscoderOutputSVG();
 			TranscoderInput in = getTranscoderInput(s);
-			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE);
+			Transcoder transcoder = new Kite9SVGTranscoder(Cache.NO_CACHE, new XMLHelper());
 			transcoder.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
 			transcoder.transcode(in, out);
 

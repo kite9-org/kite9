@@ -1,0 +1,26 @@
+@font-face {
+	font-family: "Chirp";
+	src: url('/public/fonts/chirp/chirp-heavy-web.ttf') format('truetype');
+	font-weight: 900;
+}
+
+
+@font-face {
+	font-family: "Chirp";
+	src: url('/public/fonts/chirp/chirp-bold-web.ttf') format('truetype');
+	font-weight: 700;
+}
+
+
+@font-face {
+	font-family: "Chirp";
+	src: url('/public/fonts/chirp/chirp-medium-web.ttf') format('truetype');
+	font-weight: 500;
+}
+
+
+@font-face {
+	font-family: "Chirp";
+	src: url('/public/fonts/chirp/chirp-regular-web.ttf') format('truetype');
+	font-weight: 300;
+}

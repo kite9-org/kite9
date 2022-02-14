@@ -3,16 +3,22 @@ package com.kite9.server.adl.holder;
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.ADLFactory;
-import com.kite9.pipeline.adl.holder.pipeline.*;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.adl.holder.pipeline.AbstractXMLBase;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.uri.URIWrapper;
 import com.kite9.server.web.URIRewriter;
+import org.apache.commons.io.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
+import org.kite9.diagram.batik.format.ConsolidatedErrorHandler;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.batik.format.Kite9TranscoderImpl;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.kite9.diagram.format.Kite9Transcoder;
@@ -25,29 +31,25 @@ import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ADLFactoryImpl implements ADLFactory {
 	
-	private Cache cache;
-	private String defaultXSLFactory;
+	private final Cache cache;
+	private final XMLHelper xmlHelper;
 
-	public ADLFactoryImpl(Cache cache, String defaultXSLFactory) {
+	public ADLFactoryImpl(Cache cache, XMLHelper xmlhelper) {
 		super();
 		this.cache = cache;
-		this.defaultXSLFactory = defaultXSLFactory;
+		this.xmlHelper = xmlhelper;
 	}
 
 	@NotNull
@@ -118,8 +120,7 @@ public class ADLFactoryImpl implements ADLFactory {
 	}
 
 	private Kite9Transcoder createNewTranscoder(K9URI u) {
-		Kite9Transcoder out = new Kite9TranscoderImpl(cache);
-		out.addTranscodingHint(Kite9SVGTranscoder.KEY_TRANSFORMER_FACTORY, defaultXSLFactory);
+		Kite9Transcoder out = new Kite9TranscoderImpl(cache, xmlHelper);
 		if (u != null) {
 			RequestParameters.configure(URIWrapper.from(u), out);
 		}
@@ -153,7 +154,7 @@ public class ADLFactoryImpl implements ADLFactory {
 	protected Document parseADLDocument(String content, K9URI uri2) {
 		try {
 			Kite9DocumentLoader l = ((Kite9TranscoderImpl) createNewTranscoder(uri2)).getDocLoader();
-			InputStream is = new ByteArrayInputStream(content.getBytes());
+			InputStream is = new ByteArrayInputStream(content.getBytes(Charsets.UTF_8));
 			return l.loadXMLDocument(uri2 == null ? null : uri2.toString(), is);
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't load XML into DOM, URI: "+uri2, e, content, null, null);
@@ -180,43 +181,34 @@ public class ADLFactoryImpl implements ADLFactory {
 		try {
 			WebClient webClient = WebClient.create(uri2.toString());
 			ClientResponse cr = webClient
-				.get()
-				.header(HttpHeaders.ACCEPT,
-						Kite9MediaTypes.ADL_XML_VALUE,
-						Kite9MediaTypes.SVG_VALUE,
-						Kite9MediaTypes.TEXT_PLAIN_VALUE,
-						Kite9MediaTypes.TEXT_XML_VALUE,
-						Kite9MediaTypes.ALL_VALUE)
-				.headers(h -> {
-					if (matchingHost(uri2, requestHeaders)) {
-						h.set("cookie", getFirst(requestHeaders, "cookie"));
-					}
-				})
-				.exchange()
-				.block();
+					.get()
+					.header(HttpHeaders.ACCEPT,
+							Kite9MediaTypes.ADL_XML_VALUE,
+							Kite9MediaTypes.SVG_VALUE,
+							Kite9MediaTypes.TEXT_PLAIN_VALUE,
+							Kite9MediaTypes.TEXT_XML_VALUE,
+							Kite9MediaTypes.ALL_VALUE)
+					.headers(h -> {
+						if (matchingHost(uri2, requestHeaders)) {
+							h.set("cookie", getFirst(requestHeaders, "cookie"));
+						}
+					})
+					.exchange()
+					.block();
 			if (cr.statusCode().isError()) {
 				String body = cr.bodyToMono(String.class).block();
-				throw new Kite9XMLProcessingException("Error "+cr.statusCode().toString()+" loading content from "+uri2+"\n"+body, null, null);
+				throw new Kite9XMLProcessingException("Error " + cr.statusCode().toString() + " loading content from " + uri2 + "\n" + body, null, null);
 			}
-			
+
 			return cr.bodyToMono(String.class).block();
 		} catch (Exception e) {
-			throw new Kite9XMLProcessingException("Couldn't request XML from: "+uri2, e, null, null);
+			throw new Kite9XMLProcessingException("Couldn't request XML from: " + uri2, e, null, null);
 		}
 	}
-	
-	public static String toXMLString(Node n, boolean omitDeclaration) {
-		StringWriter output = new StringWriter();
-		duplicate(n, omitDeclaration, new StreamResult(output));
-		return output.toString();
-	}
 
-	public static void duplicate(Node n, boolean omitDeclaration, Result sr) {
+	public void duplicate(Node n, boolean omitDeclaration, Result sr) {
 		try {
-		    Transformer transformer = TransformerFactory.newInstance().newTransformer();
-		    if (omitDeclaration) {
-		    	transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-		    }
+		    Transformer transformer = xmlHelper.newTransformer(omitDeclaration);
 		    transformer.transform(new DOMSource(n), sr);
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't serialize XML:", e, null, null);
@@ -252,7 +244,7 @@ public class ADLFactoryImpl implements ADLFactory {
 
 		@Override
 		public String getAsString() {
-			return toXMLString(doc, false);
+			return xmlHelper.toXML(doc, false);
 		}
 
 		@Override

@@ -56,7 +56,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 	
 	protected void renderDiagram(Element d) throws Exception {
-		String xml = new XMLHelper().toXML(d.getOwnerDocument());
+		String xml = new XMLHelper().toXML(d.getOwnerDocument(), true);
 		renderDiagram(xml);
 	}
 	

@@ -1,0 +1,11 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<diagram xslt:template="/public/templates/tweet/tweet-template.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
+   
+   <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; ">
+     <box id="b2" ><textarea id="t2">I love &#x1F926; how Twitter 🏩 dark mode inverts &#128515; the black/white 🤦🏻‍♂️</textarea></box>
+     <box id="b3" ><textarea id="t3">b3 line</textarea></box>
+   </container>
+
+</diagram>
