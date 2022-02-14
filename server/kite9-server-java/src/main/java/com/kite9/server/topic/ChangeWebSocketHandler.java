@@ -177,7 +177,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	
 	protected void metaUpdate(MetaRead meta, String topic) {
 		Document d = Payload.createMetaDocument(meta);
-		String text = xmlHelper.toXML(d);
+		String text = xmlHelper.toXML(d, true);
 		TextMessage bm = new TextMessage(text);
 		broadcastTextMessage(topic, bm);
 	}

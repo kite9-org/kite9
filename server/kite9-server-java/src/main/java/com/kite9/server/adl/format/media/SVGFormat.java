@@ -10,6 +10,7 @@ import com.kite9.pipeline.uri.K9URI;
 import org.apache.batik.util.SVGConstants;
 import org.apache.commons.io.Charsets;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.springframework.http.HttpHeaders;
@@ -36,7 +37,8 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 
     private final ADLFactory factory;
 
-    public SVGFormat(ADLFactory factory) {
+    public SVGFormat(ADLFactory factory, XMLHelper helper) {
+        super(helper);
         this.factory = factory;
     }
 

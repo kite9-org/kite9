@@ -20,6 +20,7 @@ import org.apache.xmlgraphics.image.codec.png.PNGImageDecoder;
 import org.kite9.diagram.batik.format.ADLEmbeddingPNGTranscoder;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.http.HttpHeaders;
 import org.w3c.dom.Document;
@@ -36,7 +37,8 @@ public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 	private ADLFactory factory;
 	private List<K9MediaType> mediaTypes;
 	
-	public PNGFormat(ADLFactory factory) {
+	public PNGFormat(ADLFactory factory, XMLHelper helper) {
+		super(helper);
 		this.factory = factory;
 		this.mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getPNG());
 	}

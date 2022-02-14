@@ -8,6 +8,7 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.server.adl.holder.ADLOutputImpl;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.util.StreamUtils;
 
@@ -33,8 +34,8 @@ public class HTMLFormat extends AbstractSVGFormat implements EditableDiagramForm
 	public List<K9MediaType> getMediaTypes() {
 		return mediaTypes;
 	}
-	public HTMLFormat() {
-		super();
+	public HTMLFormat(XMLHelper helper) {
+		super(helper);
 		String pageTemplate;
 		try {
 			pageTemplate = StreamUtils.copyToString(this.getClass().getResourceAsStream("/page-template.html"), Charset.defaultCharset());

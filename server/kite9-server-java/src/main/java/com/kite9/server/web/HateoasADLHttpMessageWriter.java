@@ -143,7 +143,7 @@ public class HateoasADLHttpMessageWriter extends AbstractADLDomMessageWriter<Rep
 		
 		Document out = generateRestXML(t);
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("IN: " + new XMLHelper().toXML(out));
+			LOG.debug("IN: " + new XMLHelper().toXML(out, true));
 		}
 
 		ADLDom adlDom = adlFactory.dom(u, out, EMPTY_HEADERS);

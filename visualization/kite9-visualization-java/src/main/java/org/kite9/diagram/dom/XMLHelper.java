@@ -12,33 +12,19 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 /**
- * Utility methods for converting to and from XML in the expected format.
- * 
- * This copy exists here because we need it for testing.
- * 
- * This provides the following functionality:
- * <ul>
- * <li>Object-reference fixing so that we can omit parent/container references
- * in the xml</li>
- * <li>Use of kite9 namespace for xml generated</li>
- * <li>use of Kite9 id field in the xml, instead of Xstream generated ones.</li>
- * <li>Use of xsi:type to choose the subclass in the xml format (in accordance
- * with schema)</li>
+ * Utility methods for handling XML, DOM and XSLT.
  * 
  * @author robmoffat
  * 
  */
 public class XMLHelper {
 
-//	public static final String XML_SCHEMA_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
-//	public static final String DIAGRAM_ELEMENT = "diagram";
-//	public static final String CONTENTS_ELEMENT = "contents";
-
-	public String transformerFactoryClassName = "";
+	private final String transformerFactoryClassName;
 	private transient TransformerFactory transFact;
 	private ConsolidatedErrorHandler eh;
 	
 	public XMLHelper() {
+		this("", null);
 	}
 
 	public XMLHelper(String transFact, ConsolidatedErrorHandler eh) {
@@ -79,6 +65,15 @@ public class XMLHelper {
 			throw new Kite9XMLProcessingException("Couldn't parse xml: ", e);
 		}
 
+	}
+
+	public void duplicate(Node n, boolean omitDeclaration, Result sr) {
+		try {
+			Transformer transformer = newTransformer(omitDeclaration);
+			transformer.transform(new DOMSource(n), sr);
+		} catch (Exception e) {
+			throw new Kite9XMLProcessingException("Couldn't serialize XML:", e, null, null);
+		}
 	}
 
 	public Transformer newTransformer(boolean omitDeclaration) throws Exception {

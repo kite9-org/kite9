@@ -8,6 +8,7 @@ import com.kite9.pipeline.adl.format.media.StaticFormat;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.*;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 
 import java.util.Arrays;
@@ -22,22 +23,22 @@ public class BasicFormatSupplier implements FormatSupplier {
 	private final Format[] formats;
 	private final K9MediaType[] mediaTypes;
 
-	public BasicFormatSupplier(ADLFactory adlFactory) {
+	public BasicFormatSupplier(ADLFactory adlFactory, XMLHelper xmlHelper) {
 		super();
 		this.formats = new Format[] { 
 			// things that could be diagrams
-			new ADLFormat(adlFactory),
-			new SVGFormat(adlFactory),
-			new PNGFormat(adlFactory),
-			new EditableSVGFormat(),
+			new ADLFormat(adlFactory, xmlHelper),
+			new SVGFormat(adlFactory, xmlHelper),
+			new PNGFormat(adlFactory, xmlHelper),
+			new EditableSVGFormat(xmlHelper),
 
 			
 			// entities
-			new EntityFormat("hal", singletonList(Kite9MediaTypes.INSTANCE.getHAL_JSON())),
-			new EntityFormat("json", singletonList(Kite9MediaTypes.INSTANCE.getAPPLICATION_JSON())),
+			new EntityFormat("hal", singletonList(Kite9MediaTypes.INSTANCE.getHAL_JSON()), xmlHelper),
+			new EntityFormat("json", singletonList(Kite9MediaTypes.INSTANCE.getAPPLICATION_JSON()), xmlHelper),
 			
 			// static stuff
-			new HTMLFormat(),
+			new HTMLFormat(xmlHelper),
 			new StaticFormat("xml", Arrays.asList(
 					Kite9MediaTypes.INSTANCE.getTEXT_XML(),
 					Kite9MediaTypes.INSTANCE.getAPPLICATION_XML())),

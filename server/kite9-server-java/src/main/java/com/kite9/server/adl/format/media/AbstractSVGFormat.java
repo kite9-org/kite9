@@ -10,6 +10,7 @@ import com.kite9.server.adl.holder.ADLOutputImpl;
 import com.kite9.server.adl.holder.meta.Payload;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.w3c.dom.Document;
 
@@ -18,13 +19,19 @@ import java.io.ByteArrayOutputStream;
 
 public abstract class AbstractSVGFormat implements DiagramWriteFormat {
 
+    private final XMLHelper xmlHelper;
+
+    public AbstractSVGFormat(XMLHelper helper) {
+        this.xmlHelper = helper;
+    }
+
     public ADLOutput handleWrite(ADLDom toWrite, Kite9Transcoder t) {
         setupTranscoder(t, toWrite);
         Document d = transformADL(toWrite.getDocument(), toWrite.getUri(), t, toWrite);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         StreamResult sr = new StreamResult(baos);
-        ADLFactoryImpl.duplicate(d, isOmitDeclaration(), sr);
+        xmlHelper.duplicate(d, isOmitDeclaration(), sr);
         return new ADLOutputImpl(this, toWrite, baos.toByteArray(), d);
     }
 

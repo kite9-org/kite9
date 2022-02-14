@@ -80,7 +80,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentLoader docLoader;
 	private final Cache cache;
 	private final BatikDiagramElementFactory def;
-	private final XMLHelper xmlHelper;
+	protected final XMLHelper xmlHelper;
 
 	/**
 	 * Just used in testing

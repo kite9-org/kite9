@@ -1,20 +1,25 @@
 package com.kite9.server.adl;
 
+import org.kite9.diagram.batik.format.ConsolidatedErrorHandler;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.dom.cache.Cache;
+import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Kite9LogImpl;
+import org.kite9.diagram.logging.Logable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.adl.cache.PublicCache;
 import com.kite9.server.adl.format.BasicFormatSupplier;
 import com.kite9.server.adl.holder.ADLFactoryImpl;
-import org.kite9.diagram.batik.format.ConsolidatedErrorHandler;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.dom.cache.Cache;
-import org.kite9.diagram.logging.Kite9Log;
-import org.kite9.diagram.logging.Logable;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import com.kite9.server.web.WebConfig;
 
 @Configuration
+@AutoConfigureAfter({WebConfig.class})
 public class ADLConfig implements Logable {
 	
 	@Value("${kite9.caching:true}")
@@ -35,7 +40,8 @@ public class ADLConfig implements Logable {
 
     @Bean
     public ConsolidatedErrorHandler consolidatedErrorHandler() {
-        return new ConsolidatedErrorHandler(Kite9Log.Companion.instance(this));
+		Kite9Log.Companion.setFactory(logable -> new Kite9LogImpl(logable));
+    	return new ConsolidatedErrorHandler(Kite9Log.Companion.instance(this));
     }
 
     @Bean
@@ -44,8 +50,8 @@ public class ADLConfig implements Logable {
     }
 
     @Bean
-    public FormatSupplier formatSupplier(ADLFactory adlFactory) {
-        return new BasicFormatSupplier(adlFactory);
+    public FormatSupplier formatSupplier(ADLFactory adlFactory, XMLHelper xmlHelper) {
+        return new BasicFormatSupplier(adlFactory, xmlHelper);
     }
 
 

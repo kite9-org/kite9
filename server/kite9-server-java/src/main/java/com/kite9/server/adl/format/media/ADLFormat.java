@@ -10,6 +10,7 @@ import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.holder.ADLFactoryImpl;
 import com.kite9.server.adl.holder.ADLOutputImpl;
 import org.apache.commons.io.Charsets;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StreamUtils;
@@ -30,8 +31,10 @@ import java.util.stream.Collectors;
 public class ADLFormat implements DiagramFileFormat {
 	
 	private final ADLFactory factory;
+	private final XMLHelper xmlHelper;
 	
-	public ADLFormat(ADLFactory factory) {
+	public ADLFormat(ADLFactory factory, XMLHelper xmlHelper) {
+		this.xmlHelper = xmlHelper;
 		this.factory = factory;
 	}
 
@@ -48,7 +51,7 @@ public class ADLFormat implements DiagramFileFormat {
 	@Override
 	public ADLOutput handleWrite(ADLDom toWrite, Kite9Transcoder t) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ADLFactoryImpl.duplicate(toWrite.getDocument(), isOmitDeclaration(), new StreamResult(baos));
+		xmlHelper.duplicate(toWrite.getDocument(), isOmitDeclaration(), new StreamResult(baos));
 		return new ADLOutputImpl(this, toWrite, baos.toByteArray(), toWrite.getDocument());
 	}
 

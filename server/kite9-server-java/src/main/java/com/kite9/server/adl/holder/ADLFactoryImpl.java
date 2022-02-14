@@ -13,7 +13,6 @@ import com.kite9.server.web.URIRewriter;
 import org.apache.commons.io.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
-import org.kite9.diagram.batik.format.ConsolidatedErrorHandler;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.batik.format.Kite9TranscoderImpl;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
@@ -203,15 +202,6 @@ public class ADLFactoryImpl implements ADLFactory {
 			return cr.bodyToMono(String.class).block();
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't request XML from: " + uri2, e, null, null);
-		}
-	}
-
-	public void duplicate(Node n, boolean omitDeclaration, Result sr) {
-		try {
-		    Transformer transformer = xmlHelper.newTransformer(omitDeclaration);
-		    transformer.transform(new DOMSource(n), sr);
-		} catch (Exception e) {
-			throw new Kite9XMLProcessingException("Couldn't serialize XML:", e, null, null);
 		}
 	}
 

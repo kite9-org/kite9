@@ -7,6 +7,7 @@ import com.kite9.pipeline.adl.format.media.K9MediaType;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 
 import java.util.Collections;
@@ -23,6 +24,10 @@ import java.util.List;
 public class EditableSVGFormat extends AbstractSVGFormat implements EditableDiagramFormat {
 
     private final List<K9MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getESVG());
+
+    public EditableSVGFormat(XMLHelper helper) {
+        super(helper);
+    }
 
     public List<K9MediaType> getMediaTypes() {
         return mediaTypes;

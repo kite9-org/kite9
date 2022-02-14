@@ -12,4 +12,5 @@ interface ADLFactory {
     fun adl(uri: K9URI, xml: String, requestHeaders: Map<String, List<String>>): ADLBase
 
     fun dom(uri: K9URI, doc: Document, requestHeaders: Map<String, List<String>>) : ADLDom
+
 }

@@ -82,7 +82,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			api.addMeta(dom);
 		
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument()));
+				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument(), true));
 			}
 
 			// this must come after processing, to make sure it renders correctly.

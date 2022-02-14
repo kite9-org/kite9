@@ -11,4 +11,5 @@ interface Kite9Transcoder {
     fun addTranscodingHint(key: Any, value: Any)
 
     fun transcode(doc: Document): Document
+
 }
