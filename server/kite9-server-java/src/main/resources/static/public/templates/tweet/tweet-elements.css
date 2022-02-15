@@ -27,7 +27,8 @@
 	--kite9-horizontal-align: left;
 	--kite9-padding: 0;
 	--kite9-margin: 0;
-	--kite9-text-bounds-width:1500pt;
+	--kite9-min-width: 1540pt;
+	--kite9-text-bounds-width:1540pt;
 }
 
 
@@ -134,6 +135,8 @@
 
 [k9-elem=tweet].big [k9-elem=textarea] > g > text{
 	font-size: 80pt;
+	--kite9-min-width: 1540pt;
+	--kite9-text-bounds-width:1540pt;
 }
 
 [k9-elem=big-body] {
@@ -244,11 +247,40 @@
 	--kite9-padding: 0;
 	--kite9-margin-top: 15pt;
 	--kite9-horizontal-align: left;
+	--kite9-layout:down;
 } 
 
 [k9-elem=media-image] {
 	--kite9-margin: 0;
 	--kite9-padding: 0;
 } 
- 
- 
+
+[k9-elem=media-info] {
+	--kite9-margin: 0;
+	--kite9-padding: 30pt;
+} 
+
+
+[k9-elem=media-info] {
+	--kite9-horizontal-sizing: maximize;
+	--kite9-layout: down;
+}
+
+[k9-elem=site-name],
+[k9-elem=site-title],
+[k9-elem=site-description] {
+	--kite9-horizontal-align: left;	
+	--kite9-padding: 3px;
+	--kite9-margin: 0px;
+}
+
+[k9-elem=site-name] > g > text,
+[k9-elem=site-description] > g > text {
+	font-size: 41pt;
+	fill: rgb(83, 100, 113); 
+}
+
+[k9-elem=site-title] > g > text {
+	font-size: 41pt;
+	fill: black;
+}

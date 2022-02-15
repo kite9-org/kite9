@@ -12,8 +12,8 @@
 
 	<xsl:template match="adl:tweet">
 		<xsl:call-template name="formats-container">
-	 		<xsl:with-param name="k9-texture">none</xsl:with-param>
-			<xsl:with-param name="content">
+	 	 		<xsl:with-param name="k9-texture">none</xsl:with-param>
+ 				<xsl:with-param name="content">
 				<xsl:call-template name="avatar" />
 				<xsl:call-template name="formats-container">
 					<xsl:with-param name="k9-elem">mini-body</xsl:with-param>
@@ -32,8 +32,8 @@
 	
 	<xsl:template match="adl:tweet[@class='big']">
 		<xsl:call-template name="formats-container">
-	 		<xsl:with-param name="k9-texture">none</xsl:with-param>
-			<xsl:with-param name="content">
+ 	 		<xsl:with-param name="k9-texture">none</xsl:with-param>
+ 			<xsl:with-param name="content">
 				<xsl:call-template name="formats-container">
 					<xsl:with-param name="k9-elem">big-top</xsl:with-param>
 	 					<xsl:with-param name="k9-texture">none</xsl:with-param>
@@ -166,28 +166,15 @@
 		<xsl:param name="width">
 			<xsl:choose>
 				<xsl:when test="contains(ancestor::adl:tweet/@class, 'big')">1700</xsl:when>
-				<xsl:otherwise>1470</xsl:otherwise>
+				<xsl:otherwise>1540</xsl:otherwise>
 			</xsl:choose>
 		</xsl:param>
-		<xsl:param name="rounding">40pt</xsl:param>
+		<xsl:param name="rounding">40</xsl:param>
 		<xsl:param name="ratio" select="@height div @width" />
 		<xsl:param name="height" select="$width * $ratio" />
 		<xsl:call-template name="formats-container">
 			<xsl:with-param name="k9-elem">media</xsl:with-param>
-			<xsl:with-param name="k9-rounding"><xsl:value-of select="$rounding" /></xsl:with-param>
-			<xsl:with-param name="decoration">
-				<defs>
-				 	<clipPath>
-				 		<xsl:attribute name="id"><xsl:value-of select="@id" />-cp</xsl:attribute>
-			    		<rect id="rect" x="0" y="0">
-			    			<xsl:attribute name="width"><xsl:value-of select="$width" />pt</xsl:attribute>
-			    			<xsl:attribute name="height"><xsl:value-of select="$height" />pt</xsl:attribute>
-			    			<xsl:attribute name="rx"><xsl:value-of select="$rounding" /></xsl:attribute>
-			    		</rect>
-				 	</clipPath>
-				</defs>
-			</xsl:with-param>
-			
+			<xsl:with-param name="k9-rounding"><xsl:value-of select="$rounding" />pt</xsl:with-param>
 			<xsl:with-param name="content">
 				<xsl:call-template name="formats-image-fixed">
 					<xsl:with-param name="k9-elem">media-image</xsl:with-param>
@@ -201,6 +188,58 @@
 				    </xsl:with-param>
 					<xsl:with-param name="width"><xsl:value-of select="$width" />pt</xsl:with-param>
 					<xsl:with-param name="height"><xsl:value-of select="$height" />pt</xsl:with-param>
+					<xsl:with-param name="decoration">
+						<defs>
+						 	<clipPath>
+						 		<xsl:attribute name="id"><xsl:value-of select="@id" />-cp</xsl:attribute>
+						 		<xsl:choose>
+						 			<xsl:when test="@site">
+						 				<!-- rounded at the top only -->
+						 				<path d="" pp:d="M [[$width div 2 - {$rounding} * $pt]] 0 
+						 				h [[$width div 2]]
+						 				q [[{$rounding} * $pt]] 0 [[{$rounding} * $pt]] [[{$rounding} * $pt]]
+						 				v [[$height]] h [[-$width]] 
+						 				v [[-$height]] 
+						 				q 0 -[[{$rounding} * $pt]] [[{$rounding} * $pt]] -[[{$rounding} * $pt]]
+						 				z" />
+						 			</xsl:when>
+						 			<xsl:otherwise>
+							    		<rect id="rect" x="0" y="0">
+							    			<xsl:attribute name="width"><xsl:value-of select="$width" />pt</xsl:attribute>
+							    			<xsl:attribute name="height"><xsl:value-of select="$height" />pt</xsl:attribute>
+							    			<xsl:attribute name="rx"><xsl:value-of select="$rounding" />pt</xsl:attribute>
+							    		</rect>				 			
+						 			</xsl:otherwise>
+						 		</xsl:choose> 
+						 	</clipPath>
+						</defs>
+					</xsl:with-param>
+
+				</xsl:call-template>
+				<xsl:if test="@site">
+					<xsl:call-template name="media-info" />					
+				</xsl:if>
+			</xsl:with-param>
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template name="media-info">
+		<xsl:call-template name="formats-container">
+			<xsl:with-param name="k9-elem">media-info</xsl:with-param>
+			<xsl:with-param name="k9-texture">none</xsl:with-param>
+			
+			<xsl:with-param name="content">
+				<xsl:call-template name="formats-text-fixed">
+					<xsl:with-param name="content"><text><xsl:value-of select="@site" /></text></xsl:with-param>
+					<xsl:with-param name="k9-elem">site-name</xsl:with-param>
+				</xsl:call-template>			
+				<xsl:call-template name="formats-text-fixed">
+					<xsl:with-param name="content"><text><xsl:value-of select="@title" /></text></xsl:with-param>
+					<xsl:with-param name="k9-elem">site-title</xsl:with-param>
+				</xsl:call-template>			
+				<xsl:call-template name="formats-text-fixed">
+					<xsl:with-param name="content"><text><xsl:value-of select="@description" /></text></xsl:with-param>
+					<xsl:with-param name="k9-elem">site-description</xsl:with-param>
 				</xsl:call-template>
 			</xsl:with-param>
 		</xsl:call-template>
