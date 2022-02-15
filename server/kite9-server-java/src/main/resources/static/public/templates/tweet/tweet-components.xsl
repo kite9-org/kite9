@@ -11,11 +11,17 @@
 
 	<xsl:template match="adl:tweet">
 		<xsl:call-template name="formats-container">
+	 		<xsl:with-param name="k9-texture">none</xsl:with-param>
 			<xsl:with-param name="content">
 				<xsl:call-template name="avatar" />
 				<xsl:call-template name="formats-container">
 					<xsl:with-param name="k9-elem">mini-body</xsl:with-param>
 					<xsl:with-param name="k9-texture">none</xsl:with-param>
+					<xsl:with-param name="content">
+						<xsl:call-template name="heading" />
+						<xsl:apply-templates />
+						<xsl:call-template name="footer" />
+					</xsl:with-param>
 				</xsl:call-template>
 			</xsl:with-param>
 		
@@ -23,17 +29,53 @@
 		</xsl:call-template>
 	</xsl:template>
 	
-	<xsl:template match="adl:avatar" name="avatar">
-		<xsl:call-template name="formats-image-fixed">
-			<xsl:with-param name="k9-elem">avatar</xsl:with-param>
-			<xsl:with-param name="width">160pt</xsl:with-param>
-			<xsl:with-param name="height">160pt</xsl:with-param>	
+	<xsl:template match="adl:tweet[@class='big']">
+		<xsl:call-template name="formats-container">
+	 		<xsl:with-param name="k9-texture">none</xsl:with-param>
+			<xsl:with-param name="content">
+				<xsl:call-template name="formats-container">
+					<xsl:with-param name="k9-elem">big-top</xsl:with-param>
+	 					<xsl:with-param name="k9-texture">none</xsl:with-param>
+						<xsl:with-param name="content">
+						<xsl:call-template name="avatar">
+							<xsl:with-param name="reply"><xsl:value-of select="@reply" /></xsl:with-param>
+						</xsl:call-template>
+						<xsl:call-template name="heading">
+							<xsl:with-param name="include-date">false</xsl:with-param>
+						</xsl:call-template>
+					</xsl:with-param>
+				</xsl:call-template>
+				<xsl:call-template name="formats-container">
+					<xsl:with-param name="k9-elem">big-body</xsl:with-param>
+					<xsl:with-param name="k9-texture">none</xsl:with-param>
+			 		<xsl:with-param name="content">
+						<xsl:apply-templates select="adl:contents" />
+						<xsl:call-template name="sent" />
+						<xsl:call-template name="social-text" />
+					</xsl:with-param>
+				</xsl:call-template>
+			</xsl:with-param>
+		
+			<xsl:with-param name="k9-rounding">5pt</xsl:with-param>	
 		</xsl:call-template>
 	</xsl:template>
 	
-	<xsl:template match="adl:heading">
+	
+	<xsl:template match="adl:avatar" name="avatar">
+		<xsl:param name="reply">false</xsl:param>
+		<xsl:call-template name="formats-image-fixed">
+			<xsl:with-param name="k9-elem">avatar</xsl:with-param>
+			<xsl:with-param name="width">160pt</xsl:with-param>
+			<xsl:with-param name="height">160pt</xsl:with-param>
+			<xsl:with-param name="id"><xsl:value-of select="@id" />@avatar</xsl:with-param>	
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template name="heading">
+		<xsl:param name="include-date">true</xsl:param>
 		<xsl:call-template name="formats-container">
 			<xsl:with-param name="k9-texture">none</xsl:with-param>
+			<xsl:with-param name="k9-elem">heading</xsl:with-param>
 			<xsl:with-param name="content">
 				<xsl:call-template name="formats-text-fixed">
 					<xsl:with-param name="content"><text><xsl:value-of select="@displayName" /></text></xsl:with-param>
@@ -42,11 +84,79 @@
 				<xsl:call-template name="formats-text-fixed">
 					<xsl:with-param name="content"><text><xsl:value-of select="@screenName" /></text></xsl:with-param>
 					<xsl:with-param name="k9-elem">screenName</xsl:with-param>
+				</xsl:call-template>	
+				<xsl:if test="contains($include-date,'true')">		
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text> &#183; <xsl:value-of select="@date" /></text></xsl:with-param>
+						<xsl:with-param name="k9-elem">date</xsl:with-param>
+					</xsl:call-template>
+				</xsl:if>				
+			</xsl:with-param>		
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template name="sent">
+		<xsl:call-template name="formats-container">
+			<xsl:with-param name="shape">
+				<path pp:d="M[[$x]] [[$y]] L [[$width]] [[$y]]" d="" />
+				<path pp:d="M[[$x]] [[$y + $height]] L [[$width]] [[$y + $height]]" d="" />
+			</xsl:with-param>
+			<xsl:with-param name="k9-elem">sent</xsl:with-param>
+			<xsl:with-param name="content">
+				<xsl:call-template name="formats-text-fixed">
+					<xsl:with-param name="content"><text><xsl:value-of select="@longDate" /></text></xsl:with-param>
+					<xsl:with-param name="k9-elem">date</xsl:with-param>
 				</xsl:call-template>			
 				<xsl:call-template name="formats-text-fixed">
-					<xsl:with-param name="content"><text> &#183; <xsl:value-of select="@date" /></text></xsl:with-param>
-					<xsl:with-param name="k9-elem">date</xsl:with-param>
-				</xsl:call-template>				
+					<xsl:with-param name="content"><text> &#183; <xsl:value-of select="@source" /></text></xsl:with-param>
+					<xsl:with-param name="k9-elem">source</xsl:with-param>
+				</xsl:call-template>
+			</xsl:with-param>		
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template name="social-text">
+		<xsl:call-template name="formats-container">
+			<xsl:with-param name="k9-elem">social-text</xsl:with-param>
+			<xsl:with-param name="k9-texture">none</xsl:with-param>
+			<xsl:with-param name="content">
+				<xsl:if test="@retweets">
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text><xsl:value-of select="@retweets" /></text></xsl:with-param>
+						<xsl:with-param name="class">bold</xsl:with-param>
+						<xsl:with-param name="k9-elem">retweets-count</xsl:with-param>
+					</xsl:call-template>			
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text>Retweet<xsl:if test="@retweets != '1'">s</xsl:if></text></xsl:with-param>
+						<xsl:with-param name="class">label</xsl:with-param>
+						<xsl:with-param name="k9-elem">retweets-label</xsl:with-param>
+					</xsl:call-template>
+				</xsl:if>			
+				<xsl:if test="@quoteTweets">
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text><xsl:value-of select="@quoteTweets" /></text></xsl:with-param>
+						<xsl:with-param name="class">bold</xsl:with-param>
+						<xsl:with-param name="k9-elem">quoteTweets-count</xsl:with-param>
+					</xsl:call-template>			
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text>Quote Tweet<xsl:if test="@quoteTweets != '1'">s</xsl:if></text></xsl:with-param>
+						<xsl:with-param name="class">label</xsl:with-param>
+						<xsl:with-param name="k9-elem">quoteTweets-label</xsl:with-param>
+					</xsl:call-template>
+				</xsl:if>
+				<xsl:if test="@likes">		
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text><xsl:value-of select="@likes" /></text></xsl:with-param>
+						<xsl:with-param name="class">bold</xsl:with-param>
+						<xsl:with-param name="k9-elem">likes-count</xsl:with-param>
+					</xsl:call-template>			
+					<xsl:call-template name="formats-text-fixed">
+						<xsl:with-param name="content"><text>Like<xsl:if test="@likes != '1'">s</xsl:if></text></xsl:with-param>
+						<xsl:with-param name="class">label</xsl:with-param>
+						<xsl:with-param name="k9-elem">likes-label</xsl:with-param>
+					</xsl:call-template>
+				</xsl:if>
+				
 			</xsl:with-param>		
 		</xsl:call-template>
 	</xsl:template>
@@ -58,9 +168,10 @@
 		</xsl:call-template>
 	</xsl:template>
 	
-	<xsl:template match="adl:footer">
+	<xsl:template name="footer">
 		<xsl:call-template name="formats-container">
 			<xsl:with-param name="k9-texture">none</xsl:with-param>
+			<xsl:with-param name="k9-elem">footer</xsl:with-param>
 			<xsl:with-param name="content">
 				<xsl:call-template name="formats-text-shape-portrait">
 					<xsl:with-param name="shape">

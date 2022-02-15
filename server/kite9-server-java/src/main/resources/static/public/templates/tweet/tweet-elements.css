@@ -1,20 +1,25 @@
+[k9-elem=diagram] {
+	--kite9-layout: down;
+}
+
 [k9-elem=tweet] {
-	--kite9-padding: 10pt;
+	--kite9-padding: 0;
 	--kite9-sizing: minimize;
 	--kite9-margin: 20pt;
-	--kite9-min-size: 100pt 100pt;
+	--kite9-min-size: 1700pt 100pt;
 	--kite9-connection-align: 50%;
 	--kite9-connection-align: 50%;
 	--kite9-layout: right;
 }
 
 [k9-elem=mini-body],
-[k9-elem=contents] {
+[k9-elem=mini-body] [k9-elem=contents] {
 	--kite9-layout: down;	
-	--kite9-sizing: minimize;
-	--kite9-min-width: 1000pt;
+	--kite9-vertical-sizing: minimize;
+	--kite9-horizontal-sizing: maximize;
 	--kite9-margin: 0;
 	--kite9-padding: 0;
+	--kite9-horizontal-align: left;
 }
 
 [k9-elem=heading], 
@@ -23,7 +28,7 @@
 	--kite9-horizontal-align: left;
 	--kite9-padding: 0;
 	--kite9-margin: 0;
-	--kite9-text-bounds-width:1000pt;
+	--kite9-text-bounds-width:1500pt;
 }
 
 [k9-elem=contents] {
@@ -48,7 +53,10 @@
 
 [k9-elem=tweet] [k9-elem=heading] {
 	--kite9-layout: right;
+	--kite9-margin-top: 15pt;
+	--kite9-margin-bottom: 15pt;
 } 
+
 
 [k9-elem=displayName],
 [k9-elem=screenName],
@@ -124,4 +132,116 @@
 }
 
 
+/**
+ * Big Tweet Format 
+ */
+ 
 
+[k9-elem=tweet].big {
+	--kite9-layout: down;
+	
+}
+
+[k9-elem=tweet].big [k9-elem=textarea] > g > text{
+	font-size: 80pt;
+}
+
+[k9-elem=big-body] {
+	--kite9-layout: down;	
+	--kite9-horizontal-sizing: maximize;
+	--kite9-vertical-sizing: minimize;
+	--kite9-margin: 0pt;
+	--kite9-padding: 0;
+	--kite9-horizontal-align: left;
+	--kite9-padding: 25pt;
+}
+
+[k9-elem=tweet] [k9-elem=big-top] {
+	--kite9-layout: right;
+	--kite9-horizontal-align: left;
+	--kite9-padding: 0;
+	--kite9-margin: 0;
+} 
+
+[k9-elem=tweet] [k9-elem=big-top] [k9-elem=heading] {
+	--kite9-layout: down;
+	--kite9-horizontal-align: left;
+	--kite9-padding: 0;
+	--kite9-margin: 0;
+} 
+
+[k9-elem=tweet] [k9-elem=big-top] [k9-elem=heading] [k9-elem=screenName] {
+	--kite9-padding-left: 0;
+}
+
+[k9-elem=sent] {
+	--kite9-horizontal-align: left;
+	--kite9-horizontal-sizing: maximize;
+}
+
+[k9-elem=sent] [k9-elem=date] {
+	--kite9-padding-left: 0;
+}
+
+[k9-elem=sent],
+[k9-elem=social-text] {
+	--kite9-horizontal-align: left;	
+	--kite9-margin: 0;
+	--kite9-padding: 0;
+	--kite9-padding-bottom: 6pt;
+	--kite9-horizontal-sizing: maximize;	
+	--kite9-padding-top: 25pt;
+	--kite9-padding-bottom: 25pt;
+}
+
+[k9-elem=source] {
+	--kite9-horizontal-align: left;	
+	--kite9-margin: 0;
+	--kite9-padding: 0;
+}
+
+[k9-elem=date] > g > text,
+[k9-elem=source] > g > text {
+	font-size: 41pt;
+	fill: rgb(83, 100, 113);
+}
+
+[k9-elem=source] {
+	--kite9-padding-left: 30pt;
+}
+
+
+[k9-elem=social-text] [k9-elem].label > g > text {
+	font-size: 41pt;
+	fill: rgb(83, 100, 113);
+}
+
+[k9-elem=social-text] [k9-elem].bold {
+	--kite9-padding-left: 0;
+	--kite9-padding-right: 40pt;
+	--kite9-horizontal-align: left;
+	--kite9-margin-left: 0;
+}
+
+[k9-elem=social-text] [k9-elem].label {
+	--kite9-padding-right: 90pt;
+}
+	
+
+[k9-elem=social-text] [k9-elem].bold > g > text {
+	font-size: 41pt;
+	fill: black;
+	font-weight: 900;
+}
+
+[k9-elem=tweet].big [k9-elem=contents],
+[k9-elem=tweet].big [k9-elem=source],
+[k9-elem=tweet].big [k9-elem=social-text] {
+	--kite9-horizontal-align: left;
+}
+
+[k9-elem=sent][k9-texture=background],
+[k9-elem=social-text][k9-texture=background] {
+	stroke: rgb(209, 223, 224);
+	stroke-width: 1pt;
+}
