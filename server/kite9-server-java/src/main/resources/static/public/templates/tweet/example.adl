@@ -13,17 +13,17 @@
 		retweets="3,499"
 		source="Twitter For iPhone">
    		
-   		<contents>
 	   		<textarea>In publishing and graphic design, Lorem ipsum is a placeholder text commonly 
 	   		used to demonstrate the visual form of a document or a typeface without.
 	   		
 	   		I love &#x1F926; how Twitter 🏩 dark mode inverts &#128515; the black/white 🤦🏻‍♂️</textarea>
 	   		
-	   		<media 
+	   		<media id="m1"
 	   			href="https://pbs.twimg.com/media/FLGylvuXwAcZ7ZU?format=jpg&amp;name=small" 
+	   			width="1190"
+	   			height="766"
 	   			site="quizzable.com"
 	   			description="QUIZ: Are You A Disney Villain? " />
-   		</contents>	
    </tweet>
    
    <tweet class="big" href="http://pbs.twimg.com/profile_images/1484948639260811269/S7p4fvbe_bigger.jpg"
@@ -38,10 +38,10 @@
 		source="Twitter For iPhone" 
 		reply="true">
    		
-   		<contents>
 	   		<textarea>What’s the benefit of providing liquidity? Is it worth it?️</textarea>
-	   		<media href="https://pbs.twimg.com/media/FLGylvuXwAcZ7ZU?format=jpg&amp;name=small" />
-   		</contents>	
+	   		<media id="m2" href="https://pbs.twimg.com/media/FLGylvuXwAcZ7ZU?format=jpg&amp;name=small"
+	   			   			width="1190"
+	   			height="766" />
    </tweet>
 
 </diagram>

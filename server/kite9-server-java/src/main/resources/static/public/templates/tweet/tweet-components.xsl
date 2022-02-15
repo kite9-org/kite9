@@ -1,6 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:adl="http://www.kite9.org/schema/adl"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
 	<xsl:template name="twitter-defs">
@@ -49,7 +50,7 @@
 					<xsl:with-param name="k9-elem">big-body</xsl:with-param>
 					<xsl:with-param name="k9-texture">none</xsl:with-param>
 			 		<xsl:with-param name="content">
-						<xsl:apply-templates select="adl:contents" />
+						<xsl:apply-templates />
 						<xsl:call-template name="sent" />
 						<xsl:call-template name="social-text" />
 					</xsl:with-param>
@@ -161,10 +162,47 @@
 		</xsl:call-template>
 	</xsl:template>
 	
-	<xsl:template match="adl:contents">
+	<xsl:template match="adl:media">
+		<xsl:param name="width">
+			<xsl:choose>
+				<xsl:when test="contains(ancestor::adl:tweet/@class, 'big')">1700</xsl:when>
+				<xsl:otherwise>1470</xsl:otherwise>
+			</xsl:choose>
+		</xsl:param>
+		<xsl:param name="rounding">40pt</xsl:param>
+		<xsl:param name="ratio" select="@height div @width" />
+		<xsl:param name="height" select="$width * $ratio" />
 		<xsl:call-template name="formats-container">
-			<xsl:with-param name="k9-texture">none</xsl:with-param>
-		
+			<xsl:with-param name="k9-elem">media</xsl:with-param>
+			<xsl:with-param name="k9-rounding"><xsl:value-of select="$rounding" /></xsl:with-param>
+			<xsl:with-param name="decoration">
+				<defs>
+				 	<clipPath>
+				 		<xsl:attribute name="id"><xsl:value-of select="@id" />-cp</xsl:attribute>
+			    		<rect id="rect" x="0" y="0">
+			    			<xsl:attribute name="width"><xsl:value-of select="$width" />pt</xsl:attribute>
+			    			<xsl:attribute name="height"><xsl:value-of select="$height" />pt</xsl:attribute>
+			    			<xsl:attribute name="rx"><xsl:value-of select="$rounding" /></xsl:attribute>
+			    		</rect>
+				 	</clipPath>
+				</defs>
+			</xsl:with-param>
+			
+			<xsl:with-param name="content">
+				<xsl:call-template name="formats-image-fixed">
+					<xsl:with-param name="k9-elem">media-image</xsl:with-param>
+					<xsl:with-param name="image">
+				      <image x="0" y="0">
+				        <xsl:attribute name="xlink:href"><xsl:value-of select="@href" /></xsl:attribute>
+				        <xsl:attribute name="width"><xsl:value-of select="$width" />pt</xsl:attribute>
+				        <xsl:attribute name="height"><xsl:value-of select="$height" />pt</xsl:attribute>
+						<xsl:attribute name="clip-path">url(#<xsl:value-of select="@id" />-cp)</xsl:attribute>
+				      </image>
+				    </xsl:with-param>
+					<xsl:with-param name="width"><xsl:value-of select="$width" />pt</xsl:with-param>
+					<xsl:with-param name="height"><xsl:value-of select="$height" />pt</xsl:with-param>
+				</xsl:call-template>
+			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
 	
