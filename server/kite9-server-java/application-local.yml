@@ -19,7 +19,7 @@ spring:
         max-age: 0
 
 kite9:
-  diagram-log: STREAM
+  diagram-log: OFF
   caching: false
   transformer:
     factory: net.sf.saxon.TransformerFactoryImpl

@@ -1,8 +1,23 @@
 package org.kite9.diagram.batik.bridge;
 
-import kotlin.reflect.KClass;
+import java.awt.Shape;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.bridge.*;
+import org.apache.batik.bridge.BridgeException;
+import org.apache.batik.bridge.BridgeExtension;
+import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.Mark;
+import org.apache.batik.bridge.SVGBridgeExtension;
+import org.apache.batik.bridge.TextNode;
+import org.apache.batik.bridge.TextPainter;
+import org.apache.batik.bridge.URIResolver;
+import org.apache.batik.bridge.UnitProcessor;
+import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.bridge.svg12.SVG12BridgeContext;
 import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.css.engine.CSSContext;
@@ -13,12 +28,10 @@ import org.apache.batik.css.engine.value.Value;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
-import org.apache.xmlgraphics.java2d.Dimension2DDouble;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
-import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.managers.EnumValue;
 import org.kite9.diagram.dom.managers.IntegerRangeValue;
@@ -27,7 +40,6 @@ import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Rectangle2D;
-import org.kite9.diagram.model.position.RectangleRenderingInformation;
 import org.kite9.diagram.model.style.Measurement;
 import org.kite9.diagram.model.style.Placement;
 import org.w3c.dom.Document;
@@ -37,11 +49,7 @@ import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.xpath.XPathResult;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import kotlin.reflect.KClass;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -52,8 +60,6 @@ import java.util.Map;
  *
  */
 public class Kite9BridgeContext extends SVG12BridgeContext implements ElementContext {
-
-	private Mark end;
 
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
 		super(userAgent, loader);
@@ -123,6 +129,9 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 				out.set(i, new SVG12BridgeExtension());
 			}
 		}
+
+		out.add(new Kite9BridgeExtensions());
+		
 		return out;
 	}
 
