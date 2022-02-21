@@ -6,14 +6,12 @@
 @import url(/public/templates/links/links-textures.css);
 @import url(/public/templates/highlight/highlight.css);
 @import url(/public/templates/editor/editor.css);
-@import url(/public/fonts/twemoji/twemoji.css);
 @import url(/public/fonts/chirp/chirp-ttf.css);
-@import url(/public/fonts/metropolis/metropolis.css); 
 
 
 text {
 	fill: rgb(36, 51, 20);
-	font-family: "chirp", "twemoji";
+	font-family: "chirp";
 	font-size: 50pt;
 	font-weight: 300;
 }

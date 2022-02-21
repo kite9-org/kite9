@@ -37,8 +37,6 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
      */
     private static final AWTFontFamily DEFAULT_FONT_FAMILY = new AWTFontFamily("SansSerif");
 
-    protected final List<AWTGVTFont> awtFonts = new ArrayList<>();
-
     private String getFaceKey(FontFace ff) {
     	return ff.getFamilyName()+" "+ff.getFontWeight()+" "+ff.getFontStyle();
     }
@@ -104,7 +102,9 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
      * a given character.  
      */
     public GVTFontFamily getFamilyThatCanDisplay(char c) {
-//        for (int i = 0; i < awtFontFamilies.size(); i++) {
+//    	Font fonts = 
+    		
+    	//        for (int i = 0; i < awtFontFamilies.size(); i++) {
 //            AWTFontFamily fontFamily = (AWTFontFamily)awtFontFamilies.get(i);
 //            AWTGVTFont font = (AWTGVTFont)awtFonts.get(i);
 //            if (font.canDisplay(c) && fontFamily.getFamilyName().indexOf("Song") == -1) {

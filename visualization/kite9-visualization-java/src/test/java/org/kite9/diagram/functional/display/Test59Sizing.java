@@ -197,10 +197,26 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	 * Uses contents to set the size of the decal
 	 */
 	@Test
-	public void test_59_21_RotatedShape() throws Exception {
+	public void test_59_22_RotatedShape() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(svgLeaf(longEllipse(), "", ""),"")));
 	}
 	
+	/**
+	 * More complex text wrap which includes embedded images.
+	 */
+	@Test
+	public void test_59_23_TestImageAndTextWrap() throws Exception {
+		String imageFile = Test59Sizing.class.getResource("1f170.svg").toURI().toString();
+		renderDiagram(basicDiagram(
+				glyphContainer(
+					text("<svg:g wrap=\"true\">" +
+							"<svg:text>a b c d e f g h i j k      </svg:text>"+
+							"<svg:image xlink:href=\""+imageFile+"\" width=\"20\" height=\"20\"/>"+
+						  	"<svg:text>     l m n o q r s t u \n v w x y z</svg:text>"+
+							"</svg:g>",
+							"font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds: 200px 150px; --kite9-margin: 0; "),
+						"--kite9-padding: 0px; --kite9-layout: down; ")));
+	}
 	
 	private String para() {
 		return "<svg:text>Search the world's information, including webpages, images, videos and more.\n"+
@@ -232,7 +248,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 
 	private String basicDiagram(String xml) throws Exception {
-		return "\n  <svg:svg style=\"--kite9-type: diagram; --kite9-layout: down; \" "+
+		return "\n  <svg:svg xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"--kite9-type: diagram; --kite9-layout: down; \" "+
 			//	"transform=\""+ DiagramKite9XMLElement.TRANSFORM+"\" "+
 				"xmlns:svg=\""+ Kite9Namespaces.SVG_NAMESPACE +"\" "+
 				"xmlns:pp=\""+Kite9Namespaces.POSTPROCESSOR_NAMESPACE+"\" "+

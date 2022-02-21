@@ -167,6 +167,14 @@
             <version>0.1-SNAPSHOT</version>
         </dependency>
 
+		<!-- temporary, please remove -->
+		<dependency>
+		    <groupId>org.webjars.npm</groupId>
+		    <artifactId>twemoji</artifactId>
+		    <version>13.1.0</version>
+		</dependency>
+
+
     </dependencies>
 
     <build>
