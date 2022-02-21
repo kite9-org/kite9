@@ -70,7 +70,7 @@
 }
 
 [k9-elem=displayName] > g > text {
-	font-weight: 500;
+	font-weight: 900;
 }
 
 [k9-elem=screenName] > g > text,

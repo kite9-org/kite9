@@ -1,21 +1,49 @@
 package org.kite9.diagram.batik.format;
 
+import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPATIBLE_OUTPUT_TYPE;
+import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.net.URLConnection;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.anim.dom.SVGDOMImplementation;
 import org.apache.batik.anim.dom.SVGOMDocument;
+import org.apache.batik.bridge.FontFamilyResolver;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.svggen.SVGGraphics2D;
-import org.apache.batik.transcoder.*;
+import org.apache.batik.transcoder.SVGAbstractTranscoder;
+import org.apache.batik.transcoder.ToSVGAbstractTranscoder;
+import org.apache.batik.transcoder.TranscoderException;
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.TranscodingHints;
+import org.apache.batik.transcoder.XMLAbstractTranscoder;
 import org.apache.batik.transcoder.keys.BooleanKey;
 import org.apache.batik.transcoder.keys.StringKey;
 import org.apache.batik.util.ParsedURL;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9BridgeContext;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.model.BatikDiagramElementFactory;
+import org.kite9.diagram.batik.text.Kite9FontFamilyResolver;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ADLExtensibleDOMImplementation;
 import org.kite9.diagram.dom.CachingSVGDOMImplementation;
@@ -42,19 +70,6 @@ import org.w3c.dom.svg.SVGDocument;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.XMLFilter;
 
-import javax.xml.transform.*;
-import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
-import java.net.URLConnection;
-
-import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.ERROR_INCOMPATIBLE_OUTPUT_TYPE;
-import static org.apache.batik.transcoder.ToSVGAbstractTranscoder.KEY_ESCAPED;
-
 /**
  * Please note - this transcoder is single-use.
  */
@@ -80,6 +95,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Kite9DocumentLoader docLoader;
 	private final Cache cache;
 	private final BatikDiagramElementFactory def;
+	private final FontFamilyResolver ffr;
 	protected final XMLHelper xmlHelper;
 
 	/**
@@ -93,10 +109,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		super();
 		this.handler = xmlHelper.getErrorHandler();
 		this.cache = c;
+		this.ffr = new Kite9FontFamilyResolver();
 		this.domImpl = new ADLExtensibleDOMImplementation(c);
 		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName(), (ErrorHandler) this.handler);
 	    this.docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache, (ErrorHandler) this.handler);
-		this.ctx = new Kite9BridgeContext(userAgent, docLoader, false);
+		this.ctx = new Kite9BridgeContext(userAgent, docLoader, ffr);
 		this.def = new BatikDiagramElementFactory((Kite9BridgeContext) ctx);
 		setTranscodingHints(initTranscodingHints());
 		this.xmlHelper = xmlHelper;
@@ -127,18 +144,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return new SVGAbstractTranscoderUserAgent() {
 
 			@Override
-			public void checkLoadScript(String scriptType, ParsedURL scriptURL, ParsedURL docURL) throws SecurityException {
-				// TODO Auto-generated method stub
-				super.checkLoadScript(scriptType, scriptURL, docURL);
-			}
-
-			@Override
-			public void checkLoadExternalResource(ParsedURL resourceURL, ParsedURL docURL) throws SecurityException {
-				// TODO Auto-generated method stub
-				super.checkLoadExternalResource(resourceURL, docURL);
-			}
-
-			@Override
 			public SVGDocument getBrokenLinkDocument(Element e, String url, String message) {
 				try {
 					InputStream broken = Kite9SVGTranscoder.class.getResourceAsStream("/broken.svg");
@@ -147,9 +152,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 					throw new Kite9XMLProcessingException("Couldn't load broken.svg", e1, e);
 				}
 			}
-			
-			
-			
+
+			@Override
+			public FontFamilyResolver getFontFamilyResolver() {
+				return ffr;
+			}			
 		};
 	}
 	
@@ -200,7 +207,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 
 			// prepare context + css
 			outputDocument.setDocumentURI(uri);
-			setupBridgeContext();
+			createBridgeContext();
 			ensureCSSEngine((SVGOMDocument) outputDocument);
 
 			// create GVT tree
@@ -258,29 +265,15 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		Document out;
 
 		String template = getTemplateUri(input);
+		Transformer trans;
 
-		if ((template == null) || (template.length() == 0)) {
-			return input;
-		}
 
 		try {
-			URI uri = new URI(input.getDocumentURI());
-			URI templateURI = uri.resolve(template);
-			URI baseUri = uri.resolve("/");
-			URI templatePath = templateURI.resolve("");
-
-			// load the transform document
-			Transformer trans = (Transformer) cache.get(template, TRANSFORMER);
-			if (trans == null) {
-				ParsedURL parsedTemplateUri = new ParsedURL(templateURI.toString());
-				Source source = new StreamSource(parsedTemplateUri.openStream());
-				source.setSystemId(templateURI.toString());
-				trans = xmlHelper.newTransformer(source, false);
-				trans.setParameter("base-uri", baseUri.toString());
-				trans.setParameter("template-uri", uri.toString());
-				trans.setParameter("template-path", templatePath.toString());
-
-				cache.set(template, TRANSFORMER, trans);
+			if ((template == null) || (template.length() == 0)) {
+				// returns the 'null' transformer
+				trans = xmlHelper.newTransformer(true);
+			} else {
+				trans = getTransformer(input, template);
 			}
 
 			SVG12OMDocument r = new SVG12OMDocument(null, domImpl);
@@ -299,6 +292,29 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		return out;
 	}
 
+	@NotNull
+	private Transformer getTransformer(Document input, String template) throws Exception {
+		URI uri = new URI(input.getDocumentURI());
+		URI templateURI = uri.resolve(template);
+		URI baseUri = uri.resolve("/");
+		URI templatePath = templateURI.resolve("");
+
+		// load the transform document
+		Transformer trans = (Transformer) cache.get(template, TRANSFORMER);
+		if (trans == null) {
+			ParsedURL parsedTemplateUri = new ParsedURL(templateURI.toString());
+			Source source = new StreamSource(parsedTemplateUri.openStream());
+			source.setSystemId(templateURI.toString());
+			trans = xmlHelper.newTransformer(source, false);
+			trans.setParameter("base-uri", baseUri.toString());
+			trans.setParameter("template-uri", uri.toString());
+			trans.setParameter("template-path", templatePath.toString());
+
+			cache.set(template, TRANSFORMER, trans);
+		}
+		return trans;
+	}
+
 	protected XMLProcessor buildOutputProcessor(Document input) {
 		Kite9BridgeContext ctx = createBridgeContext();
 		if (Boolean.TRUE == hints.get(KEY_ENCAPSULATING)) {
@@ -308,15 +324,6 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		} else {
 			// this version is an "editable" svg diagram, which still uses stylesheets etc.
 			return new DiagramPositionProcessor(ctx, new XPathValueReplacer(ctx));
-		}
-	}
-
-	protected void setupBridgeContext() {
-		Kite9BridgeContext ctx = createBridgeContext();
-		if (Boolean.TRUE == hints.get(KEY_ENCAPSULATING)) {
-			ctx.setTextAsGlyphs(true);
-		} else {
-			ctx.setTextAsGlyphs(false);
 		}
 	}
 

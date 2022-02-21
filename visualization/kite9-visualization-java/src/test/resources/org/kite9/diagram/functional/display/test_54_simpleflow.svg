@@ -7,6 +7,10 @@
 		font-family: "obw";
 		src: url('opensans-bold-webfont.ttf') format('truetype');
 	}
+	@font-face {
+		font-family: "if";
+		src: url('IndieFlower.ttf') format('truetype');
+	}
   </style>
   
   <title>Basic textflow</title>
@@ -16,16 +20,20 @@
       <path d="M100,50L50,300L250,300L200,50z" fill="none" stroke="none"/>
     </flowRegion>
     <flowDiv>
-      <flowPara stroke="none" fill="red" font-size="12" text-align="full" text-decoration="underline">
-      aaaaaaaaaa aaaaaaaaaa
-      pppppppp ppppppppp pppppppppp
+    <flowPara stroke="none" fill="red" font-size="12" text-align="full" text-decoration="underline">
+      aaaaa aaaaa aaa aaaa aaa
+      ppppp pp pppp ppppp pppp pppppp
+    </flowPara>
+    <flowPara font-size="12" text-align="end">        
       Search the world's information, including webpages, images, videos and more. 
-      Google has many special features to help you find exactly what you.
+    </flowPara>
+    <flowPara font-size="8" text-align="full" font-family="if" >  
+      Google has many special features to help you find exactly what you think you need in this crazy world.
      </flowPara>
-     <flowPara font-size="14" text-align="middle">
-     Google, Mountain View, CA. 24M likes. Organizing the world's information and making it universally accessible and useful.
+     <flowPara font-size="14">
+     Google, Mou1ntain View, CA. 24M likes. Organizing the world's information and making it universally accessible and useful.
      </flowPara>
     </flowDiv>
   </flowRoot>
-  <path d="M90,40L40,270L260,270L210,40z" fill="none" stroke="black" stroke-width="5"/>
+  <path d="M100,50L50,300L250,300L200,50z" fill="none" stroke="green" stroke-width="1" stroke-opacity=".5"/>
 </svg>

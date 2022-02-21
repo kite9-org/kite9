@@ -18,13 +18,13 @@
 	   		
 	   		I love &#x1F926; how Twitter 🏩 dark mode inverts &#128515; the black/white 🤦🏻‍♂️</textarea>
 	   		
-	   		<media id="m1"
+	   		<!--<media id="m1"
 	   			href="https://pbs.twimg.com/media/FKwbMBnXsAcQTA1?format=jpg" 
 	   			width="700"
 	   			height="449"
 	   			site="quizzable.com"
 	   			title="Some disney quiz"
-	   			description="QUIZ: Are You A Disney Villain? " />
+	   			description="QUIZ: Are You A Disney Villain? " />-->
    </tweet>
    
    <tweet class="big" href="http://pbs.twimg.com/profile_images/1484948639260811269/S7p4fvbe_bigger.jpg"
@@ -40,9 +40,9 @@
 		reply="true">
    		
 	   		<textarea>What’s the benefit of providing liquidity? Is it worth it?️</textarea>
-	   		<media id="m2" href="https://pbs.twimg.com/media/FLGylvuXwAcZ7ZU?format=jpg&amp;name=small"
+	   		<!--<media id="m2" href="https://pbs.twimg.com/media/FLGylvuXwAcZ7ZU?format=jpg&amp;name=small"
 	   			   			width="1190"
-	   			height="766" />
+	   			height="766" />-->
    </tweet>
    
    <tweet href="http://pbs.twimg.com/profile_images/1484948639260811269/S7p4fvbe_bigger.jpg" 
@@ -56,10 +56,10 @@
 		source="Twitter For iPhone">
    			<textarea>Vet time… ☹️</textarea>
    		
-	   		<media id="m3"
+	   	<!--	<media id="m3"
 	   			href="https://pbs.twimg.com/media/FK_Nh9kXIAIV3k5?format=jpg&amp;name=medium" 
 	   			width="530"
-	   			height="706" />
+	   			height="706" /> -->
    </tweet>
 
 </diagram>

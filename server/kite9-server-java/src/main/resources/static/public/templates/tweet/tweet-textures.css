@@ -6,24 +6,14 @@
 @import url(/public/templates/links/links-textures.css);
 @import url(/public/templates/highlight/highlight.css);
 @import url(/public/templates/editor/editor.css);
+@import url(/public/fonts/twemoji/twemoji.css);
 @import url(/public/fonts/chirp/chirp-ttf.css);
+@import url(/public/fonts/metropolis/metropolis.css); 
 
-[k9-elem=box] > [k9-texture=background] {
-	fill: #CCCCAA;
-	fill-opacity: 1;
-	stroke: #AAAA88;
-	stroke-dasharray: none;
-}
 
-[k9-texture=foreground],
-[k9-texture=background] > g > text {
+text {
 	fill: rgb(36, 51, 20);
-	font-family: "chirp";
+	font-family: "chirp", "twemoji";
 	font-size: 50pt;
-}
-
-[k9-elem=label] > [k9-texture=foreground]	{
-  fill: black;
-  font-family: "chirp";
-  font-size: 16pt;
+	font-weight: 300;
 }

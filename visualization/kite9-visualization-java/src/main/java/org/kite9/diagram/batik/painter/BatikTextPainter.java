@@ -1,6 +1,5 @@
 package org.kite9.diagram.batik.painter;
 
-import org.apache.batik.util.CSSConstants;
 import org.kite9.diagram.dom.bridge.ElementContext;
 import org.kite9.diagram.dom.processors.TextWrapProcessor;
 import org.kite9.diagram.model.position.Rectangle2D;

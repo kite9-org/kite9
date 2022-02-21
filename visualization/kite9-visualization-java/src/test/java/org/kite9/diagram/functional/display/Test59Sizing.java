@@ -1,16 +1,8 @@
 package org.kite9.diagram.functional.display;
 
-import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
-import org.kite9.diagram.dom.processors.AbstractProcessor;
-
-import java.io.File;
-import java.net.URI;
 
 public class Test59Sizing extends AbstractDisplayFunctionalTest {
 
@@ -156,16 +148,24 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_59_18_TestTextBoundedSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
-				text("<svg:text>hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds: 150px 500px; ")
-				+text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-size: 25px; --kite9-text-bounds: 150px 100px; ")
-				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
+				text("<svg:text>hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds: 20px 500px; ")
+				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 0px; --kite9-layout: down; --kite9-min-height: 120px")));
 	}
 	
+	/**
+	 * This proves that the font choice determines the wrap.
+	 */
 	@Test
-	public void test_59_19_TestTextBoundedSize() throws Exception {
-		renderDiagram(basicDiagram(glyphContainer(
-				text("<svg:text style=\" white-space: pre;\" >hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds: 150px 500px; ")
-				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-height: 120px")));
+	public void test_59_19_TestWrap() throws Exception {
+		renderDiagram(basicDiagram(
+				
+				glyphContainer(
+					text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds: 200px 100px; --kite9-margin: 0; "),
+						"--kite9-padding: 0px; --kite9-layout: down; ")
+				+glyphContainer(
+						text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-family: opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 200px 100px; --kite9-margin: 0; "),
+							"--kite9-padding: 0px; --kite9-layout: down; "))
+				);
 	}
 	
 	@Test
@@ -180,7 +180,19 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				
 				));
 	}
-	
+
+	@Test
+	public void test_59_21_MultipleStyleText() throws Exception {
+		transcodePNG(basicDiagram(
+				"<svg:g style=\"--kite9-type: text; font-weight:700; font-family: chirp; font-size: 25px; line-height: 120%;\">\n" +
+				"          <svg:text>ABC Bold</svg:text>\n" +
+				"      </svg:g>\n" +
+				"		<svg:g style=\"--kite9-type: text; font-weight:400; font-family: chirp; font-size: 25px; line-height: 120%;\">\n" +
+				"          <svg:text>ABC Regular</svg:text>\n" +
+				"      </svg:g>\n"));
+	}
+
+
 	/**
 	 * Uses contents to set the size of the decal
 	 */
@@ -220,7 +232,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	}
 
 	private String basicDiagram(String xml) throws Exception {
-		return "\n  <svg:svg style=\"--kite9-type: diagram; \" "+
+		return "\n  <svg:svg style=\"--kite9-type: diagram; --kite9-layout: down; \" "+
 			//	"transform=\""+ DiagramKite9XMLElement.TRANSFORM+"\" "+
 				"xmlns:svg=\""+ Kite9Namespaces.SVG_NAMESPACE +"\" "+
 				"xmlns:pp=\""+Kite9Namespaces.POSTPROCESSOR_NAMESPACE+"\" "+

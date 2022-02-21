@@ -13,6 +13,20 @@
 	src: url('../fonts/opensans-regular-webfont.ttf') format('truetype');
 }
 
+/** these two are used to test font-caching bug. */
+
+@font-face {
+	font-family: "chirp";
+	src: url('../fonts/chirp-medium-web.ttf') format('truetype');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: "opensans";
+	src: url('../fonts/chirp-bold-web.ttf') format('truetype');
+	font-weight: 700;
+}
+
 
 /* Definitions of Kite9 Elements */
 

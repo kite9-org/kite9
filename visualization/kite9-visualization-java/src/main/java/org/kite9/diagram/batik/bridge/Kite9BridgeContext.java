@@ -10,6 +10,8 @@ import org.apache.batik.anim.dom.SVGOMDocument;
 import org.apache.batik.bridge.BridgeException;
 import org.apache.batik.bridge.BridgeExtension;
 import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.FlowTextPainter;
+import org.apache.batik.bridge.FontFamilyResolver;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.Mark;
 import org.apache.batik.bridge.SVGBridgeExtension;
@@ -61,17 +63,11 @@ import kotlin.reflect.KClass;
  */
 public class Kite9BridgeContext extends SVG12BridgeContext implements ElementContext {
 
-	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, boolean textAsGlyphs) {
-		super(userAgent, loader);
-		setTextAsGlyphs(textAsGlyphs);
-	}
+	private FontFamilyResolver ffr;
 	
-	public void setTextAsGlyphs(boolean textAsGlyphs) {
-//		if (!textAsGlyphs) {
-//			setTextPainter(new LocalRenderingFlowTextPainter());
-//		} else {
-//			setTextPainter(null);
-//		}
+	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, FontFamilyResolver ffr) {
+		super(userAgent, loader);
+		this.ffr = ffr;
 	}
 	
 	/**
@@ -403,4 +399,20 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 			}
 		};
 	}
+	
+	private FlowTextPainter ftp = new FlowTextPainter() {
+
+		@Override
+		protected FontFamilyResolver getFontFamilyResolver() {
+			return ffr;
+		}
+		
+	};
+
+	@Override
+	public TextPainter getTextPainter() {
+		return ftp; 
+	}
+	
+	
 }
