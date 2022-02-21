@@ -3,9 +3,9 @@
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg contentScriptType="text/ecmascript" width="700" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" height="660" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 >
-  <defs
+  <defs xmlns="http://www.w3.org/2000/svg"
   >
-    <pattern width="75" xmlns:xlink="http://www.w3.org/1999/xlink" patternUnits="userSpaceOnUse" xlink:type="simple" xlink:actuate="onLoad" height="75" id="image" preserveAspectRatio="xMidYMid meet" xlink:show="other" xml:id="image"
+    <pattern xmlns:xml="http://www.w3.org/XML/1998/namespace" width="75" xmlns:xlink="http://www.w3.org/1999/xlink" patternUnits="userSpaceOnUse" xlink:type="simple" xlink:actuate="onLoad" id="image" height="75" preserveAspectRatio="xMidYMid meet" xlink:show="other" xmlns="http://www.w3.org/2000/svg" xml:id="image"
     >
       <image x="0" y="0" width="75" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhs
 aW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0
@@ -22,37 +22,37 @@ MTUuNzA3IEw4LjI5MzUsMTQuMjkzIEwxMC41ODY1LDEyIEw4LjI5MzUsOS43MDcg
 TDkuNzA3NSw4LjI5MyBMMTIuMDAwNSwxMC41ODYgTDE0LjI5MzUsOC4yOTMgTDE1
 LjcwNzUsOS43MDcgTDEzLjQxNDUsMTIgTDE1LjcwNzUsMTQuMjkzIFogTTYuOTk5
 NSwxNyBMMTYuOTk5NSwxNyBMMTYuOTk5NSw3IEw2Ljk5OTUsNyBMNi45OTk1LDE3
-IFoiLz4KICA8L2c+Cjwvc3ZnPgo=" xlink:type="simple" xlink:actuate="onLoad" height="75" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+IFoiLz4KICA8L2c+Cjwvc3ZnPgo=" xlink:type="simple" xlink:actuate="onLoad" height="75" preserveAspectRatio="xMidYMid meet" xlink:show="embed" xmlns="http://www.w3.org/2000/svg"
       />
     </pattern
       >
     
-    <linearGradient xlink:actuate="onLoad" xlink:type="simple" id="Gradient1" xlink:show="other" xml:id="Gradient1" xmlns:xlink="http://www.w3.org/1999/xlink"
+    <linearGradient xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" id="Gradient1" xlink:show="other" xmlns="http://www.w3.org/2000/svg" xml:id="Gradient1"
       >
-      <stop stop-color="white" offset="5%"
+      <stop xmlns="http://www.w3.org/2000/svg" offset="5%" stop-color="white"
         />
-      <stop stop-color="blue" offset="95%"
+      <stop xmlns="http://www.w3.org/2000/svg" offset="95%" stop-color="blue"
         />
     </linearGradient
         >
     
-    <pattern x="0" y="0" width=".25" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" height=".25" id="squares" preserveAspectRatio="xMidYMid meet" xlink:show="other" xml:id="squares"
+    <pattern xmlns:xlink="http://www.w3.org/1999/xlink" id="squares" width=".25" xlink:show="other" xlink:type="simple" preserveAspectRatio="xMidYMid meet" xmlns:xml="http://www.w3.org/XML/1998/namespace" height=".25" xmlns="http://www.w3.org/2000/svg" x="0" y="0" xml:id="squares" xlink:actuate="onLoad"
         >
-      <rect fill="skyblue" x="0" width="50" height="50" y="0"
+      <rect fill="skyblue" x="0" width="50" y="0" height="50" xmlns="http://www.w3.org/2000/svg"
           />
-      <rect fill="blue" x="0" width="25" height="25" y="0"
+      <rect fill="blue" x="0" width="25" y="0" height="25" xmlns="http://www.w3.org/2000/svg"
           />
-      <circle fill="url(#Gradient1)" fill-opacity="0.5" r="20" cx="25" cy="25"
+      <circle fill="url(#Gradient1)" r="20" fill-opacity="0.5" cx="25" xmlns="http://www.w3.org/2000/svg" cy="25"
           />
     </pattern
           >
     
   </defs
           >
-  <circle fill="url(#squares)" r="100" id="top" cx="300" cy="150" xml:id="top"
+  <circle xmlns:xml="http://www.w3.org/XML/1998/namespace" fill="url(#squares)" r="100" cx="300" id="top" cy="150" xmlns="http://www.w3.org/2000/svg" xml:id="top"
           />
   
-  <circle fill="url(#image)" r="100" id="t2" cx="150" cy="150" xml:id="t2"
+  <circle xmlns:xml="http://www.w3.org/XML/1998/namespace" fill="url(#image)" r="100" cx="150" id="t2" cy="150" xmlns="http://www.w3.org/2000/svg" xml:id="t2"
           />
   
   <image x="300" y="75" width="150px" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhs
@@ -70,7 +70,7 @@ MTUuNzA3IEw4LjI5MzUsMTQuMjkzIEwxMC41ODY1LDEyIEw4LjI5MzUsOS43MDcg
 TDkuNzA3NSw4LjI5MyBMMTIuMDAwNSwxMC41ODYgTDE0LjI5MzUsOC4yOTMgTDE1
 LjcwNzUsOS43MDcgTDEzLjQxNDUsMTIgTDE1LjcwNzUsMTQuMjkzIFogTTYuOTk5
 NSwxNyBMMTYuOTk5NSwxNyBMMTYuOTk5NSw3IEw2Ljk5OTUsNyBMNi45OTk1LDE3
-IFoiLz4KICA8L2c+Cjwvc3ZnPgo=" xlink:type="simple" xlink:actuate="onLoad" height="150px" preserveAspectRatio="xMidYMid meet" xlink:show="embed"
+IFoiLz4KICA8L2c+Cjwvc3ZnPgo=" xlink:type="simple" xlink:actuate="onLoad" height="150px" preserveAspectRatio="xMidYMid meet" xlink:show="embed" xmlns="http://www.w3.org/2000/svg"
           />
 </svg
         >

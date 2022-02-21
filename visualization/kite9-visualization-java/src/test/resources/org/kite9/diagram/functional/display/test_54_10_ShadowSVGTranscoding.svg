@@ -3,25 +3,25 @@
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" viewBox="-50 -50 200 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 >
-  <title
+  <title xmlns="http://www.w3.org/2000/svg"
   >svg arrow with dropshadow</title
   >
-  <desc
+  <desc xmlns="http://www.w3.org/2000/svg"
   >An svg example of an arrow shape with a dropshadow filter applied. The dropshadow filter effect uses feGaussianBlur, feOffset and feMerge.</desc
   >
-  <defs
+  <defs xmlns="http://www.w3.org/2000/svg"
   >
-    <filter xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" height="130%" id="dropshadow" xlink:show="other" xml:id="dropshadow"
+    <filter xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:actuate="onLoad" height="130%" id="dropshadow" xlink:show="other" xmlns="http://www.w3.org/2000/svg" xml:id="dropshadow"
     >
-      <feGaussianBlur stdDeviation="3" in="SourceAlpha"
+      <feGaussianBlur xmlns="http://www.w3.org/2000/svg" stdDeviation="3" in="SourceAlpha"
       /> 
-      <feOffset result="offsetblur" dx="2" dy="2"
+      <feOffset dx="2" dy="2" xmlns="http://www.w3.org/2000/svg" result="offsetblur"
       /> 
-      <feMerge
+      <feMerge xmlns="http://www.w3.org/2000/svg"
       > 
-        <feMergeNode
+        <feMergeNode xmlns="http://www.w3.org/2000/svg"
         />
-        <feMergeNode in="SourceGraphic"
+        <feMergeNode xmlns="http://www.w3.org/2000/svg" in="SourceGraphic"
         /> 
       </feMerge
         >
@@ -29,7 +29,7 @@
         >
   </defs
         >
-  <polygon fill="#EEEEEE" points="58.263,0.056 100,41.85 58.263,83.641 30.662,83.641 62.438,51.866 0,51.866 0,31.611 62.213,31.611 30.605,0 58.263,0.056" filter="url(#dropshadow)"
+  <polygon fill="#EEEEEE" xmlns="http://www.w3.org/2000/svg" points="58.263,0.056 100,41.85 58.263,83.641 30.662,83.641 62.438,51.866 0,51.866 0,31.611 62.213,31.611 30.605,0 58.263,0.056" filter="url(#dropshadow)"
         />
 </svg
       >

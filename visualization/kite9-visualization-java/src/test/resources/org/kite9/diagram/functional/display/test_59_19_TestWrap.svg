@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg:svg xmlns:pp="http://www.kite9.org/schema/post-processor" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" style="--kite9-type: diagram; --kite9-layout: down; " version="1.0" width="213" pp:width="$width" preserveAspectRatio="xMidYMid meet" xmlns:xml="http://www.w3.org/XML/1998/namespace" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=213.0, h=210.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7b572ff6; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" pp:height="$height"
+>
+<svg:defs xmlns:svg="http://www.w3.org/2000/svg"
+  ><svg:style xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:svg="http://www.w3.org/2000/svg" xml:space="preserve"
+    > @import url("file:/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");</svg:style
+    ><svg:linearGradient xmlns:xml="http://www.w3.org/XML/1998/namespace" x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
+    ><svg:stop offset="0%" stop-color="#FFF" xmlns:svg="http://www.w3.org/2000/svg"
+      /><svg:stop offset="100%" stop-color="#DDD" xmlns:svg="http://www.w3.org/2000/svg"
+    /></svg:linearGradient
+  ></svg:defs
+  >    <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: container; --kite9-padding: 0px; --kite9-layout: down;  " transform="translate(15.0,15.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=183.0, h=90.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@18fdcc1f; "
+  >
+      <svg:rect x="0" y="0" width="183" xmlns:svg="http://www.w3.org/2000/svg" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" height="90" ry="8" xmlns:pp="http://www.kite9.org/schema/post-processor" pp:width="$width"
+    />
+      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds: 200px 100px; --kite9-margin: 0; " transform="translate(1.6,25.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=183.0, h=90.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@382213b0; "
+    >
+        <svg:text xmlns:svg="http://www.w3.org/2000/svg"
+      ><tspan x="0.0px" y="0.0px" wrap="done"
+        >a b c d e f g h i </tspan
+        ><tspan x="0.0px" y="30.0px" wrap="done"
+        >j k l m n o p q r </tspan
+        ><tspan x="0.0px" y="60.0px" wrap="done"
+        >s t u v w x y z</tspan
+      ></svg:text
+      >
+      </svg:g
+      >
+    </svg:g
+      >    <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: container; --kite9-padding: 0px; --kite9-layout: down;  " transform="translate(21.0,105.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=21.0, h=105.0); rect-size: BasicDimension2D(w=171.0, h=90.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@2dace478; "
+      >
+      <svg:rect x="0" y="0" width="171" xmlns:svg="http://www.w3.org/2000/svg" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" height="90" ry="8" xmlns:pp="http://www.kite9.org/schema/post-processor" pp:width="$width"
+        />
+      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-family: opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 200px 100px; --kite9-margin: 0; " transform="translate(-.3,25.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=21.0, h=105.0); rect-size: BasicDimension2D(w=171.0, h=90.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@199d82d9; "
+        >
+        <svg:text xmlns:svg="http://www.w3.org/2000/svg"
+          ><tspan x="0.0px" y="0.0px" wrap="done"
+            >a b c d e f g h i j </tspan
+            ><tspan x="0.0px" y="30.0px" wrap="done"
+            >k l m n o p q r s </tspan
+            ><tspan x="0.0px" y="60.0px" wrap="done"
+            >t u v w x y z</tspan
+          ></svg:text
+          >
+      </svg:g
+          >
+    </svg:g
+          >
+  </svg:svg
+        >

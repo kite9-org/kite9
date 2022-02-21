@@ -3,7 +3,7 @@
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify" contentStyleType="text/css" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
 >
-  <style xml:space="preserve"
+  <style xmlns="http://www.w3.org/2000/svg" xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve"
   >
   @font-face {
      font-family: "opensans-bold-webfont";
@@ -24,22 +24,22 @@
   </style
   >
   
-  <text style="font-family: Unknownski; font-size: 33px;" x="10" y="350"
+  <text x="10" y="350" style="font-family: Unknownski; font-size: 33px;" xmlns="http://www.w3.org/2000/svg"
   >Unknown Font</text
   >
   
-  <rect x="10" y="350" fill="none" width="300" height="33" stroke="grey" stroke-width="1px"
+  <rect x="10" y="350" fill="none" width="300" height="33" stroke="grey" xmlns="http://www.w3.org/2000/svg" stroke-width="1px"
   />
 
-  <text class="sansseriftext" x="10" y="50"
+  <text x="10" y="50" class="sansseriftext" xmlns="http://www.w3.org/2000/svg"
   >Some Verdana Text</text
   >
   
-  <text class="otherfont" x="10" y="150"
+  <text x="10" y="150" class="otherfont" xmlns="http://www.w3.org/2000/svg"
   >Some Opensans Text</text
   >
   
-  <text x="10" font-size="33px" y="250" style="font-family: 'Arial', sans-serif;" transform="skewX(-20) rotate(-5)" text-decoration="underline"
+  <text x="10" font-size="33px" y="250" text-decoration="underline" transform="skewX(-20) rotate(-5)" style="font-family: 'Arial', sans-serif;" xmlns="http://www.w3.org/2000/svg"
   >Some Arial Skewed Text</text
   >
   

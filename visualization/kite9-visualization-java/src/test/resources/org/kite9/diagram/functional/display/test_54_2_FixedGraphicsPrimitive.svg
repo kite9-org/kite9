@@ -2,10 +2,10 @@
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
 <svg:svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" zoomAndPan="magnify" contentStyleType="text/css" xmlns:pp="http://www.kite9.org/schema/post-processor" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
-><svg:g id="one" style="--kite9-type: diagram; --kite9-padding: 50px;" xmlns="http://www.kite9.org/schema/adl" xml:id="one" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=304.0, h=304.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@ba0d5f4; "
-  ><svg:g style="fill: white; stroke: grey; stroke-width: 3px; "
-    ><svg:g id="someelement" style="--kite9-type: svg; " transform="translate(-47.6,-48.5)" xml:id="someelement" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=50.0, h=50.0); rect-size: BasicDimension2D(w=204.0, h=204.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@4af11ca3; "
-      ><svg:path fill="red" stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" stroke="blue"
+><svg:g xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: diagram; --kite9-padding: 50px;" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=304.0, h=304.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7d6c50b3; " id="one" xmlns="http://www.kite9.org/schema/adl" xml:id="one"
+  ><svg:g style="fill: white; stroke: grey; stroke-width: 3px; " xmlns:svg="http://www.w3.org/2000/svg"
+    ><svg:g transform="translate(-47.6,-48.5)" xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: svg; " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=50.0, h=50.0); rect-size: BasicDimension2D(w=204.0, h=204.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@20cfa864; " id="someelement" xml:id="someelement"
+      ><svg:path xmlns:svg="http://www.w3.org/2000/svg" fill="red" stroke-width="3" d="M 100 100 L 300 100 L 200 300 z" stroke="blue"
       /></svg:g
     ></svg:g
   ></svg:g
