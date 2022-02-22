@@ -1,12 +1,14 @@
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
-import com.kite9.pipeline.adl.holder.ADLFactory;
-import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.uri.K9URI;
+import java.io.InputStream;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.batik.util.SVGConstants;
 import org.apache.commons.io.Charsets;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -18,13 +20,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.InputStream;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.uri.K9URI;
 
 /**
  * Returns encapsulated SVG.  i.e. with no references to external

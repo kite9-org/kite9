@@ -1,15 +1,12 @@
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.server.adl.holder.ADLOutputImpl;
-import com.kite9.server.adl.holder.meta.Payload;
-import com.kite9.pipeline.adl.holder.ADLFactory;
-import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.uri.K9URI;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
@@ -25,12 +22,16 @@ import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.http.HttpHeaders;
 import org.w3c.dom.Document;
 
-import java.awt.image.RenderedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.holder.ADLOutputImpl;
+import com.kite9.server.adl.holder.meta.Payload;
 
 public class PNGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 

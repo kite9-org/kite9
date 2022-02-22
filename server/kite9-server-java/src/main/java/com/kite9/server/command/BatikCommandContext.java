@@ -1,29 +1,28 @@
 package com.kite9.server.command;
 
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.command.Command;
-import com.kite9.pipeline.command.CommandContext;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+
 import org.apache.batik.anim.dom.AbstractElement;
-import org.apache.batik.anim.dom.SVGOMDocument;
-import org.apache.batik.css.engine.CSSEngine;
-import org.apache.batik.css.engine.CSSStylableElement;
-import org.apache.batik.css.engine.StyleMap;
-import org.apache.batik.css.parser.CSSLexicalUnit;
-import org.apache.batik.css.parser.DefaultDocumentHandler;
 import org.apache.batik.dom.AbstractAttr;
 import org.apache.commons.io.Charsets;
-import org.apache.xpath.jaxp.XPathImpl;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
-import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.css.Kite9CSSParser;
 import org.kite9.diagram.dom.managers.IntegerRangeManager;
-import org.kite9.diagram.dom.managers.IntegerRangeValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.css.sac.CSSException;
 import org.w3c.css.sac.LexicalUnit;
-import org.w3c.css.sac.Parser;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -32,9 +31,9 @@ import org.xmlunit.builder.Input;
 import org.xmlunit.diff.Comparison;
 import org.xmlunit.diff.ComparisonType;
 
-import javax.xml.xpath.*;
-import java.io.IOException;
-import java.util.*;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.command.CommandContext;
 
 
 public class BatikCommandContext implements CommandContext {

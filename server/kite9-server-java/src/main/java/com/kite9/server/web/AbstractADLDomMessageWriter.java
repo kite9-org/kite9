@@ -21,7 +21,6 @@ import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.server.adl.format.MediaTypeHelper;
-import com.kite9.server.adl.format.media.EditableSVGFormat;
 import com.kite9.server.topic.ChangeBroadcaster;
 
 public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttpMessageConverter<X> {

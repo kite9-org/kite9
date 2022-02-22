@@ -1,11 +1,12 @@
 package com.kite9.server.adl.holder.meta;
 
-import com.kite9.pipeline.adl.holder.meta.MetaWrite;
-import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+
+import com.kite9.pipeline.adl.holder.meta.MetaWrite;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
 
 public class MetaHelper {
 

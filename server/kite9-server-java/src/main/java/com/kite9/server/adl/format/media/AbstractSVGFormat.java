@@ -1,21 +1,22 @@
 
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.holder.ADLFactoryImpl;
-import com.kite9.server.adl.holder.ADLOutputImpl;
-import com.kite9.server.adl.holder.meta.Payload;
+import java.io.ByteArrayOutputStream;
+
+import javax.xml.transform.stream.StreamResult;
+
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.w3c.dom.Document;
 
-import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.holder.ADLOutputImpl;
+import com.kite9.server.adl.holder.meta.Payload;
 
 public abstract class AbstractSVGFormat implements DiagramWriteFormat {
 

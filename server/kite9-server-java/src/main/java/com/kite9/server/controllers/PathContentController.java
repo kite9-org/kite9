@@ -3,10 +3,6 @@ package com.kite9.server.controllers;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.update.Update;
-import com.kite9.server.web.URIRewriter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -23,11 +19,15 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.update.Update;
+import com.kite9.server.web.URIRewriter;
 
 /**
  * Returns content held within the public folder of the project, which anyone

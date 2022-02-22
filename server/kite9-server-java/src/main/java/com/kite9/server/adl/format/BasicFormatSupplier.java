@@ -1,22 +1,28 @@
 package com.kite9.server.adl.format;
 
-import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.pipeline.adl.format.media.Format;
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.adl.format.media.StaticFormat;
-import com.kite9.pipeline.adl.holder.ADLFactory;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.*;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.logging.Kite9ProcessingException;
+import static java.util.Collections.singletonList;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.singletonList;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.logging.Kite9ProcessingException;
+
+import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.format.media.StaticFormat;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.ADLFormat;
+import com.kite9.server.adl.format.media.EditableSVGFormat;
+import com.kite9.server.adl.format.media.EntityFormat;
+import com.kite9.server.adl.format.media.HTMLFormat;
+import com.kite9.server.adl.format.media.PNGFormat;
+import com.kite9.server.adl.format.media.SVGFormat;
 
 public class BasicFormatSupplier implements FormatSupplier {
 

@@ -2,9 +2,6 @@ package com.kite9.server.persistence;
 
 import java.util.Arrays;
 
-import com.kite9.server.persistence.github.GithubSourceAPIFactory;
-import com.kite9.server.persistence.local.StaticSourceAPIFactory;
-import com.kite9.server.topic.ChangeBroadcaster;
 import org.kite9.diagram.dom.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +11,11 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.server.persistence.github.GithubSourceAPIFactory;
+import com.kite9.server.persistence.local.StaticSourceAPIFactory;
 import com.kite9.server.sources.PlugableContentAPIFactory;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.topic.ChangeBroadcaster;
 
 /**
  * Handles the primary, plug-able {@link SourceAPIFactory}.

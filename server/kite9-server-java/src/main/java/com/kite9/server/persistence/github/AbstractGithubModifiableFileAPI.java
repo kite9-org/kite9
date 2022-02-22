@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.function.Consumer;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHPermissionType;
@@ -16,7 +14,9 @@ import org.kohsuke.github.GitHub;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.ModifiableAPI;
 
 public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFileAPI implements ModifiableAPI {

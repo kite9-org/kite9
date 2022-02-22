@@ -1,20 +1,20 @@
 package com.kite9.server.persistence.github;
 
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
-import com.kite9.server.topic.WebSocketConfig;
 import org.kohsuke.github.GHContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.sources.ModifiableDiagramAPI;
+import com.kite9.server.topic.WebSocketConfig;
 
 public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileAPI implements ModifiableDiagramAPI {
 	

@@ -1,16 +1,16 @@
 
 package com.kite9.server.adl.cache;
 
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.web.URIRewriter;
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.kite9.diagram.dom.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.ref.SoftReference;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.web.URIRewriter;
 
 /**
  * Caches all files loaded from the public area of the current site.

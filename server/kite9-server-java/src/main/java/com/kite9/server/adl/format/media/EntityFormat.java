@@ -1,9 +1,10 @@
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
+import java.util.List;
+
 import org.kite9.diagram.dom.XMLHelper;
 
-import java.util.List;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 
 /**
  * Used for Hateoas, JSON.

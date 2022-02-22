@@ -1,10 +1,11 @@
 package com.kite9.server.uri;
 
-import com.kite9.pipeline.uri.K9URI;
+import java.net.URISyntaxException;
+
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 
-import java.net.URISyntaxException;
+import com.kite9.pipeline.uri.K9URI;
 
 public class URIWrapper {
 

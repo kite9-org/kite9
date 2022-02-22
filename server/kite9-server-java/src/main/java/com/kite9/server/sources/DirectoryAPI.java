@@ -1,7 +1,8 @@
 package com.kite9.server.sources;
 
-import com.kite9.server.domain.RestEntity;
 import org.springframework.security.core.Authentication;
+
+import com.kite9.server.domain.RestEntity;
 
 public interface DirectoryAPI extends SourceAPI {
 

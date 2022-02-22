@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.server.adl.format.media.DiagramFileFormat;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHOrganization;
@@ -24,6 +23,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.domain.Directory;
 import com.kite9.server.domain.Document;
 import com.kite9.server.domain.Organisation;

@@ -3,7 +3,6 @@ package com.kite9.server.adl.holder.meta;
 
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -12,11 +11,6 @@ import java.util.List;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
@@ -29,7 +23,6 @@ import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.meta.MetaRead;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.XMLBase;
 
 /**
  * Handles placing ADL content and metadata within the SVG document.  Some helper functions for the ADLFactory.

@@ -1,17 +1,17 @@
 
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.EditableDiagramFormat;
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import java.util.Collections;
+import java.util.List;
 
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 
-import java.util.Collections;
-import java.util.List;
+import com.kite9.pipeline.adl.format.media.EditableDiagramFormat;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 
 /**
  * Returns editable SVG.  This is where all the references to 

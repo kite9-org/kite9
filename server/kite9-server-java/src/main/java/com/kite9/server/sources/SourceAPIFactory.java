@@ -1,7 +1,8 @@
 package com.kite9.server.sources;
 
-import com.kite9.server.update.Update;
 import org.springframework.security.core.Authentication;
+
+import com.kite9.server.update.Update;
 
 public interface SourceAPIFactory {
 

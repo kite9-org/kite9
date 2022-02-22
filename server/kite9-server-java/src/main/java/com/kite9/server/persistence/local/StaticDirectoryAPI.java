@@ -2,9 +2,9 @@ package com.kite9.server.persistence.local;
 
 import java.net.URISyntaxException;
 
-import com.kite9.server.domain.RestEntity;
 import org.springframework.security.core.Authentication;
 
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.DirectoryAPI;
 
 public class StaticDirectoryAPI implements DirectoryAPI {

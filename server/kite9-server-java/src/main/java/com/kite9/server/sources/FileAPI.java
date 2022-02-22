@@ -2,8 +2,9 @@ package com.kite9.server.sources;
 
 import java.io.InputStream;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
 import org.springframework.security.core.Authentication;
+
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 
 /**
  * Source is a file.

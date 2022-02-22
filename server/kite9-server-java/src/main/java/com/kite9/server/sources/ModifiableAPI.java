@@ -1,8 +1,9 @@
 package com.kite9.server.sources;
 
+import org.springframework.security.core.Authentication;
+
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.uri.K9URI;
-import org.springframework.security.core.Authentication;
 
 /**
  * This is an API that controls peristence to some kind of backing storage.

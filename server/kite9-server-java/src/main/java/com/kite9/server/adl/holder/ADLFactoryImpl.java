@@ -1,15 +1,15 @@
 package com.kite9.server.adl.holder;
 
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.holder.ADLFactory;
-import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.pipeline.adl.holder.pipeline.AbstractXMLBase;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.uri.URIWrapper;
-import com.kite9.server.web.URIRewriter;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.commons.io.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
@@ -25,20 +25,18 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Result;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.dom.DOMSource;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.adl.holder.pipeline.AbstractXMLBase;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.uri.URIWrapper;
+import com.kite9.server.web.URIRewriter;
 
 public class ADLFactoryImpl implements ADLFactory {
 	

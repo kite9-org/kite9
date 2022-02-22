@@ -4,11 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
-import com.kite9.server.persistence.queue.ChangeQueue;
-import com.kite9.server.persistence.queue.ChangeQueueImpl;
-import com.kite9.server.persistence.queue.CommandQueueModifiableDiagramAPI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +11,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 
 import com.kite9.pipeline.adl.holder.ADLFactory;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
+import com.kite9.server.persistence.queue.ChangeQueue;
+import com.kite9.server.persistence.queue.ChangeQueueImpl;
+import com.kite9.server.persistence.queue.CommandQueueModifiableDiagramAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;

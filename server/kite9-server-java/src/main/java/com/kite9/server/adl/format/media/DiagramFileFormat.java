@@ -1,14 +1,15 @@
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
-import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.pipeline.uri.K9URI;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
-import org.springframework.http.HttpHeaders;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.springframework.http.HttpHeaders;
+
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.uri.K9URI;
 
 /**
  * This interface marks this format as one with which we can persist diagrams into files.

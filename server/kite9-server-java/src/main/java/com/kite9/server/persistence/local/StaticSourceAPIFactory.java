@@ -5,12 +5,6 @@ import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.concurrent.TimeUnit;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.MediaTypeHelper;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
-import com.kite9.server.update.Update;
-import com.kite9.server.web.URIRewriter;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.logging.Kite9ProcessingException;
@@ -32,12 +26,18 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.format.media.NotKite9DiagramException;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.MediaTypeHelper;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.update.Update;
+import com.kite9.server.web.URIRewriter;
 
 /**
  * Handles content that cannot be changed - either referenced from a classpath resource

@@ -9,11 +9,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
-import com.kite9.server.topic.ChangeBroadcaster;
-import com.kite9.server.update.Update;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
@@ -31,12 +26,17 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.persistence.PathUtils;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.persistence.cache.CacheManagedAPIFactory;
 import com.kite9.server.sources.SourceAPI;
+import com.kite9.server.topic.ChangeBroadcaster;
+import com.kite9.server.update.Update;
 
 public final class GithubSourceAPIFactory extends CacheManagedAPIFactory implements InitializingBean {
 

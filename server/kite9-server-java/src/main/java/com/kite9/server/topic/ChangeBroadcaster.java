@@ -1,11 +1,11 @@
 package com.kite9.server.topic;
 
+import java.util.List;
+
 import com.kite9.pipeline.adl.holder.meta.MetaRead;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
-
-import java.util.List;
 
 public interface ChangeBroadcaster {
 

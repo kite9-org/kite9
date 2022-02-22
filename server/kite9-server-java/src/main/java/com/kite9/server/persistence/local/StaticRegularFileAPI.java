@@ -3,11 +3,11 @@ package com.kite9.server.persistence.local;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
 import org.springframework.security.core.Authentication;
 
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.Role;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.ModifiableAPI;
 
 public class StaticRegularFileAPI implements ModifiableAPI {

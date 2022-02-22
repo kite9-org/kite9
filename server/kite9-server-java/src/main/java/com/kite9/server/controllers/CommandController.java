@@ -1,10 +1,5 @@
 package com.kite9.server.controllers;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import com.kite9.server.update.Update;
-import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.logging.Logable;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -17,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.update.Update;
 
 /**
  * Applies commands to given xml url, but no persistence done.

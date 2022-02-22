@@ -2,8 +2,9 @@ package com.kite9.server.sources;
 
 import java.util.List;
 
-import com.kite9.server.update.Update;
 import org.springframework.security.core.Authentication;
+
+import com.kite9.server.update.Update;
 
 public class PlugableContentAPIFactory implements SourceAPIFactory {
 	

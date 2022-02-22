@@ -3,11 +3,6 @@ package com.kite9.server.controllers;
 import java.net.URI;
 import java.util.List;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
-import com.kite9.server.adl.holder.meta.MetaHelper;
-import com.kite9.server.uri.URIWrapper;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,13 +16,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.adl.holder.meta.MetaHelper;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
+import com.kite9.server.uri.URIWrapper;
 
 /**
  * Used for loading content from writable ContentAPIs, like Github.  Handles creation of initial versions

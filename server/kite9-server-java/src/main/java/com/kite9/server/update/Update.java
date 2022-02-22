@@ -2,12 +2,12 @@ package com.kite9.server.update;
 
 import java.util.List;
 
-import com.kite9.pipeline.uri.K9URI;
 import org.springframework.http.HttpHeaders;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.uri.K9URI;
 
 /**
  * Contains all the state required to perform a set of commands on some ADL xml.

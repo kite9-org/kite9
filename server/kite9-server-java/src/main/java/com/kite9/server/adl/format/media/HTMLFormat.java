@@ -1,17 +1,5 @@
 package com.kite9.server.adl.format.media;
 
-import com.kite9.pipeline.adl.format.media.EditableDiagramFormat;
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.server.adl.holder.ADLOutputImpl;
-import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
-import org.kite9.diagram.common.Kite9XMLProcessingException;
-import org.kite9.diagram.dom.XMLHelper;
-import org.kite9.diagram.format.Kite9Transcoder;
-import org.springframework.util.StreamUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -19,6 +7,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
+import org.kite9.diagram.common.Kite9XMLProcessingException;
+import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.format.Kite9Transcoder;
+import org.springframework.util.StreamUtils;
+
+import com.kite9.pipeline.adl.format.media.EditableDiagramFormat;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.server.adl.holder.ADLOutputImpl;
 
 /**
  * Renders the GUI.

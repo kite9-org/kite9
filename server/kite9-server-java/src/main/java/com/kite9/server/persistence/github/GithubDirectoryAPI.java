@@ -2,9 +2,9 @@ package com.kite9.server.persistence.github;
 
 import java.util.List;
 
-import com.kite9.server.domain.RestEntity;
 import org.springframework.security.core.Authentication;
 
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.DirectoryAPI;
 
 public class GithubDirectoryAPI implements DirectoryAPI {

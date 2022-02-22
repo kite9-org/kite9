@@ -6,15 +6,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.server.domain.Directory;
-import com.kite9.server.domain.Document;
-import com.kite9.server.domain.RestEntity;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.security.core.Authentication;
+
+import com.kite9.server.domain.Directory;
+import com.kite9.server.domain.Document;
+import com.kite9.server.domain.RestEntity;
 
 public abstract class AbstractPublicEntityConverter {
 

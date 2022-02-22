@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.kite9.pipeline.command.CommandContext;
-import com.kite9.server.adl.holder.meta.MetaHelper;
-import com.kite9.server.command.BatikCommandContext;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.logging.Logable;
@@ -15,16 +12,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
+import org.w3c.dom.Document;
 
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.command.CommandContext;
+import com.kite9.server.adl.holder.meta.MetaHelper;
+import com.kite9.server.command.BatikCommandContext;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.update.Update.Type;
-import org.w3c.dom.Document;
 
 /**
  * Handles updates, provided by the {@link Update} class.
