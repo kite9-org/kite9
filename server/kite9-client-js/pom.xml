@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>kite9-server-java</artifactId>
+    <artifactId>kite9-client-js</artifactId>
     <packaging>jar</packaging>
 
     <parent>
@@ -17,10 +17,9 @@
     <properties>
     	<java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.run.main-class>com.kite9.server.Kite9ServerApplication</spring-boot.run.main-class>
     </properties>
 
-    <name>Kite9 Server (Redux)</name>
+    <name>Kite9 Client Javascript</name>
 
     <dependencies>
         <!-- Kite9 -->

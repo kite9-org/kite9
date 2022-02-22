@@ -4,7 +4,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>kite9-server-java</artifactId>
+    <artifactId>kite9-templates</artifactId>
     <packaging>jar</packaging>
 
     <parent>
@@ -17,23 +17,11 @@
     <properties>
     	<java.version>11</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.run.main-class>com.kite9.server.Kite9ServerApplication</spring-boot.run.main-class>
     </properties>
 
-    <name>Kite9 Server (Redux)</name>
+    <name>Kite9 Templates</name>
 
     <dependencies>
-        <!-- Kite9 -->
-        <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-visualization-java</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-pipeline-common</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.xmlgraphics</groupId>
             <artifactId>batik-transcoder</artifactId>
