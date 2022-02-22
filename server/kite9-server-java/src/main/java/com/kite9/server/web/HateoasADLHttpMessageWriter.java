@@ -204,6 +204,7 @@ public class HateoasADLHttpMessageWriter extends AbstractADLDomMessageWriter<Rep
 		ToXmlGenerator generator = xmlFactory.createGenerator(streamWriter);
 
 		// disable pretty-printing with DOM Write
+		@SuppressWarnings("serial")
 		DefaultXmlPrettyPrinter pp = new DefaultXmlPrettyPrinter() {
 			@Override
 			public void writePrologLinefeed(XMLStreamWriter2 sw) throws XMLStreamException {

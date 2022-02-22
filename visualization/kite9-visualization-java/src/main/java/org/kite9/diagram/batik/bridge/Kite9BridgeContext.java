@@ -222,6 +222,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <X> X getCSSStyleEnumProperty(String prop, Element e, KClass<X> c) {
 		Value v = getCSSValue(prop, e);

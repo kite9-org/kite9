@@ -41,7 +41,7 @@ public class ADLConfig implements Logable {
     @Bean
     public ConsolidatedErrorHandler consolidatedErrorHandler() {
 		Kite9Log.Companion.setFactory(logable -> new Kite9LogImpl(logable));
-    	return new ConsolidatedErrorHandler(Kite9Log.Companion.instance(this));
+    	return new ConsolidatedErrorHandler();
     }
 
     @Bean

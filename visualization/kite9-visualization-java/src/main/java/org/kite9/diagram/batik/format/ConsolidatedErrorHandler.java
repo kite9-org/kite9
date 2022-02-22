@@ -1,22 +1,28 @@
 package org.kite9.diagram.batik.format;
 
+import javax.xml.transform.ErrorListener;
+import javax.xml.transform.TransformerException;
+
 import org.apache.batik.transcoder.ErrorHandler;
 import org.apache.batik.transcoder.TranscoderException;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9Log;
+import org.kite9.diagram.logging.Logable;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import javax.xml.transform.ErrorListener;
-import javax.xml.transform.TransformerException;
-
 public class ConsolidatedErrorHandler implements
         ErrorListener,
         ErrorHandler,
-        org.xml.sax.ErrorHandler {
+        org.xml.sax.ErrorHandler,
+        Logable {
 
     private final Kite9Log log;
+    
+    public ConsolidatedErrorHandler() {
+    	this.log = Kite9Log.Companion.instance(this);
+    }
 
     public ConsolidatedErrorHandler(Kite9Log log) {
         this.log = log;
@@ -102,4 +108,14 @@ public class ConsolidatedErrorHandler implements
 
         return !exception.getSystemId().endsWith(".css");
     }
+
+	@Override
+	public String getPrefix() {
+		return "XML ";
+	}
+
+	@Override
+	public boolean isLoggingEnabled() {
+		return true;
+	}
 }

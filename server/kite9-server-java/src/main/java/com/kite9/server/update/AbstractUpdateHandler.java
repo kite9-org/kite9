@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
-import org.w3c.dom.Document;
 
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
@@ -48,8 +47,6 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 			ModifiableDiagramAPI api = (ModifiableDiagramAPI) a;
 			ADLDom dom = api.getCurrentRevisionContent(authentication, update.getHeaders()).parse();
 			
-			// allows us to interrogate styles, if need be
-			Document doc = dom.getDocument();
 			List<Command> commands = update.getCommands();
 			
 			List<Command.Mismatch> errors = new ArrayList<>();

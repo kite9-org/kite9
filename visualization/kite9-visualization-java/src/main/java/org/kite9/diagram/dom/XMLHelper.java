@@ -24,7 +24,7 @@ public class XMLHelper {
 	private ConsolidatedErrorHandler eh;
 	
 	public XMLHelper() {
-		this("", null);
+		this("", new ConsolidatedErrorHandler());
 	}
 
 	public XMLHelper(String transFact, ConsolidatedErrorHandler eh) {
