@@ -22,107 +22,18 @@
     <name>Kite9 Client Javascript</name>
 
     <dependencies>
-        <!-- Kite9 -->
+       	<dependency>
+		    <groupId>org.webjars.npm</groupId>
+		    <artifactId>kotlin</artifactId>
+		    <version>1.4.30</version>
+		</dependency>
+
         <dependency>
             <groupId>org.kite9</groupId>
-            <artifactId>kite9-visualization-java</artifactId>
+            <artifactId>kite9-visualization-js</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-pipeline-common</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-transcoder</artifactId>
-            <version>${batik.version}</version>
-        </dependency>
-        <!-- Github -->
-        <dependency>
-            <groupId>org.kohsuke</groupId>
-            <artifactId>github-api</artifactId>
-            <version>1.113</version>
-        </dependency>
- 
-        <!-- Azure -->
-        <dependency>
-            <groupId>com.microsoft.azure</groupId>
-            <artifactId>applicationinsights-spring-boot-starter</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-
-        <!-- Spring Infrastructure -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-hateoas</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
-
-        <!-- for client calls. eventually convert application to use this entirely -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-        </dependency>
-        <!-- for websockets and change notificationsp -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-
-        <!-- For converting admin page REST into XML -->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
-        <!-- Kotlin Command Classes -->
-       <!-- <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-        </dependency> -->
-        <!-- Testing -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <scope>test</scope>
-        </dependency> -->
-        
-        <!-- server-side xslt transform -->
-        <dependency>
-			<groupId>net.sf.saxon</groupId>
-			<artifactId>Saxon-HE</artifactId>
-			<version>10.5</version>
-		</dependency> 
-
-
-        <!-- comparing doms. Used for commands and tests -->
-        <dependency>
-            <groupId>org.xmlunit</groupId>
-            <artifactId>xmlunit-core</artifactId>
-        </dependency>
-
+    
         <!-- webjars -->
         <dependency>
             <groupId>org.webjars.npm</groupId>
@@ -153,106 +64,8 @@
             <artifactId>hint.css</artifactId>
             <version>2.3.2</version>
         </dependency>
-        
-        <dependency>
-		    <groupId>org.webjars.npm</groupId>
-		    <artifactId>kotlin</artifactId>
-		    <version>1.4.30</version>
-		</dependency>
-
-        <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-visualization-js</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
 
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.microsoft.azure</groupId>
-                <artifactId>azure-webapp-maven-plugin</artifactId>
-                <version>1.9.0</version>
-                <configuration>
-                    <schemaVersion>V2</schemaVersion>
-                    <resourceGroup>k9-parent-rg</resourceGroup>
-                    <appName>k9-server</appName>
-                    <pricingTier>P1v2</pricingTier>
-                    <region>westeurope</region>
-                    <runtime>
-                        <os>linux</os>
-                        <javaVersion>jre8</javaVersion>
-                        <webContainer>jre8</webContainer>
-                    </runtime>
-                    <deployment>
-                        <resources>
-                            <resource>
-                                <directory>${project.basedir}/target</directory>
-                                <includes>
-                                    <include>k9-server-*.jar</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </deployment>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.4.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                        <configuration>
-                            <mainClass>${spring-boot.run.main-class}</mainClass>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <release>8</release>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-resources</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/target/classes</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}</directory>
-                                    <includes>
-                                        <include>application.yml</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
-                    <printSummary>true</printSummary>
-                    <argLine>-Xms500M -Xmx500M -Djava.awt.headless=true</argLine>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
+   
 </project>

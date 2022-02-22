@@ -137,7 +137,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             val list = n.childNodes
             val out = mutableListOf<Span>()
             for (i in 0..list.length-1) {
-                var ret = splitIntoSpans(list.item(i))
+                var ret = splitIntoSpans(list.item(i)!!)
                 out.addAll(ret)
             }
             out

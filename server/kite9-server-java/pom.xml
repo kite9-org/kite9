@@ -35,10 +35,17 @@
             <version>0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.xmlgraphics</groupId>
-            <artifactId>batik-transcoder</artifactId>
-            <version>${batik.version}</version>
+            <groupId>org.kite9</groupId>
+            <artifactId>kite9-templates</artifactId>
+            <version>0.1-SNAPSHOT</version>
         </dependency>
+         <dependency>
+            <groupId>org.kite9</groupId>
+            <artifactId>kite9-client-js</artifactId>
+            <version>0.1-SNAPSHOT</version>
+        </dependency>
+        
+        
         <!-- Github -->
         <dependency>
             <groupId>org.kohsuke</groupId>
@@ -87,11 +94,6 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
-        <!-- Kotlin Command Classes -->
-       <!-- <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-kotlin</artifactId>
-        </dependency> -->
         <!-- Testing -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -124,48 +126,7 @@
             <artifactId>xmlunit-core</artifactId>
         </dependency>
 
-        <!-- webjars -->
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>animejs</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>codemirror</artifactId>
-            <version>5.58.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>highlightjs</artifactId>
-            <version>9.6.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>hint.css</artifactId>
-            <version>2.3.2</version>
-        </dependency>
-        
-        <dependency>
-		    <groupId>org.webjars.npm</groupId>
-		    <artifactId>kotlin</artifactId>
-		    <version>1.4.30</version>
-		</dependency>
-
-        <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-visualization-js</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
+       
 
     </dependencies>
 
