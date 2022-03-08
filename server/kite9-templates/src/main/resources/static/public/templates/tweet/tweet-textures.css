@@ -12,6 +12,21 @@
 text {
 	fill: rgb(36, 51, 20);
 	font-family: "chirp";
-	font-size: 50pt;
+	font-size: 15px;
 	font-weight: 300;
+	line-height: 20px;
+}
+
+[k9-elem=diagram][k9-texture=none] {
+	fill: #eaeaea;
+	fill-opacity: 1;
+}
+
+[k9-elem=frame][k9-texture=default] {
+	fill: #fafafa;
+}
+
+[k9-elem=tweet][k9-texture=none] {
+	fill: #ffffff;
+	fill-opacity: 1;
 }

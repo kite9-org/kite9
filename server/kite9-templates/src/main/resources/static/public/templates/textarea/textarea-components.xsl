@@ -11,6 +11,13 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:template match="adl:wraparea">
+    <xsl:call-template name="formats-text-fixed">
+      <xsl:with-param name="k9-texture">foreground</xsl:with-param>
+      <xsl:with-param name="content"><xsl:apply-templates /></xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
   <xsl:template name="textarea-diagram-element-css">
     <adl:css>@import url('/public/templates/textarea/textarea-elements.css');</adl:css>
   </xsl:template>

@@ -1,0 +1,60 @@
+
+/** text-fixed format */
+
+[k9-format=text-fixed] {
+  --kite9-margin: 15pt;
+  --kite9-padding: 10pt;
+}
+
+/** image, image-fixed format */
+
+[k9-format=image],
+[k9-format=image-fixed] {
+  --kite9-margin: 10pt;
+}
+
+/* shape */
+
+[k9-format=shape] {
+  --kite9-margin: 10pt;
+  --kite9-min-size: 50pt 50pt;
+}
+
+/* container format */
+
+[k9-format=container] {
+	--kite9-margin: 15pt;
+	--kite9-padding: 11pt;
+}
+
+/* text-captioned, text-portrait, text-shape-inline format */
+
+[k9-format=text-image-portrait],
+[k9-format=text-image-captioned],
+[k9-format=text-shape-captioned],
+[k9-format=text-shape-portrait],
+[k9-format=text-shape-inline] {
+	--kite9-margin: 16pt;
+}
+
+
+/* depiction:  a shape inside an object */
+
+[k9-format=text-shape-captioned] > g > [k9-elem=depiction],
+[k9-format=text-image-portrait] > g > [k9-elem=depiction],
+[k9-format=text-shape-portrait] > g > [k9-elem=depiction] {
+  --kite9-min-size: 50pt 50pt;
+  --kite9-margin: 15pt;
+}
+
+/* caption:  text inside the object */
+
+[k9-format=text-shape-inline] > g >[k9-elem=caption],
+[k9-format=text-image-portrait] > g >[k9-elem=caption],
+[k9-format=text-shape-portrait] > g > [k9-elem=caption],
+[k9-format=text-shape-captioned] > g > [k9-elem=caption]  {
+  --kite9-margin: 15pt;
+  --kite9-padding: 11pt;
+}
+
+

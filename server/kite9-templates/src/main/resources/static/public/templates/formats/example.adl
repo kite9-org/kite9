@@ -2,6 +2,12 @@
          xmlns:svg="http://www.w3.org/2000/svg"
          id="dia" style="--kite9-layout: down; ">
          
+   <svg:defs>
+     <svg:style type="text/css">
+       @import url('/public/templates/formats/formats-textures.css');
+     </svg:style>
+   </svg:defs>
+         
    <item id="c" k9-format="container">
      <item id="t1" k9-format="text-shape-inline">Text Shape Inline</item>
      

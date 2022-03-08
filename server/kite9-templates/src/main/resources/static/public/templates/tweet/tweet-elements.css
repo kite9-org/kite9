@@ -1,12 +1,14 @@
-[k9-elem=diagram] {
+[k9-elem=frame] {
 	--kite9-layout: down;
+	--kite9-padding: 100px;
+	--kite9-sizing: minimize;
 }
 
 [k9-elem=tweet] {
-	--kite9-padding: 0;
+	--kite9-padding: 16px;
 	--kite9-sizing: minimize;
-	--kite9-margin: 20pt;
-	--kite9-min-size: 1700pt 100pt;
+	--kite9-margin: 0;
+	--kite9-min-size: 598px 60px;
 	--kite9-connection-align: 50%;
 	--kite9-connection-align: 50%;
 	--kite9-layout: right;
@@ -23,17 +25,17 @@
 
 [k9-elem=heading], 
 [k9-elem=textarea],
+[k9-elem=wraparea],
 [k9-elem=footer] {
 	--kite9-horizontal-align: left;
 	--kite9-padding: 0;
 	--kite9-margin: 0;
-	--kite9-min-width: 1540pt;
-	--kite9-text-bounds-width:1540pt;
+	--kite9-text-bounds-width:508px;
 }
 
 
 [k9-elem=footer] {
-	--kite9-margin-top: 30pt;
+	--kite9-margin-top: 5px;
 }
 	
 [k9-elem=avatar] > g > image {
@@ -42,18 +44,18 @@
 
 [k9-elem=avatar] {
 	--kite9-vertical-align: top;
-	--kite9-padding-left: 15pt;
-	--kite9-padding-right: 15pt;
-	--kite9-padding-top: 2pt;
-	--kite9-padding-bottom: 2pt;
+	--kite9-padding-left: 0;
+	--kite9-padding-right: 0px;
+	--kite9-padding-top: 0;
+	--kite9-padding-bottom: 0;
+	--kite9-margin-right: 12px;
 }
 
-[k9-elem=tweet] [k9-elem=heading] {
+[k9-elem=heading] {
 	--kite9-layout: right;
-	--kite9-margin-top: 15pt;
-	--kite9-margin-bottom: 15pt;
+	--kite9-margin-bottom: 9px;
+	--kite9-horizontal-sizing: minimize;
 } 
-
 
 [k9-elem=displayName],
 [k9-elem=screenName],
@@ -65,16 +67,16 @@
 }
 
 [k9-elem=screenName] {
-	--kite9-padding-left: 16pt;
-	--kite9-padding-right: 16pt;
+	--kite9-padding-left: 6px;
+	--kite9-padding-right: 6px;
 }
 
-[k9-elem=displayName] > g > text {
+[k9-elem=displayName] > text {
 	font-weight: 900;
 }
 
-[k9-elem=screenName] > g > text,
-[k9-elem=date] > g > text {
+[k9-elem=screenName] > text,
+[k9-elem=date] > text {
 	fill: rgb(83, 100, 113);
 }
 
@@ -89,7 +91,7 @@
 [k9-elem=likes],
 [k9-elem=retweets] {
 	--kite9-layout: right;
-	--kite9-min-width: 300pt;
+	--kite9-min-width: 128px;
 		--kite9-margin: 0;
 	--kite9-padding: 0;
 }
@@ -99,30 +101,36 @@
 [k9-elem=likes] > g > [k9-elem=caption],
 [k9-elem=retweets] > g > [k9-elem=caption] {
 	--kite9-horizontal-align: left;	
-	font-size: 41pt;
+	font-size: 16px;
 	fill: rgb(83, 100, 113);
 	--kite9-margin: 0;
 	--kite9-padding: 0;
-	--kite9-padding-left: 50pt;
-	--kite9-padding-bottom: 6pt;
+	--kite9-padding-left: 10px;
+	--kite9-padding-bottom: 3px;
 }
+
+
 
 [k9-elem=comments] > g > [k9-elem=depiction],
 [k9-elem=likes] > g > [k9-elem=depiction],
 [k9-elem=retweets] > g > [k9-elem=depiction] {
 	--kite9-transform: rescale;
 	--kite9-type: svg;
+	--kite9-min-size: 16px 19px;
+	--kite9-margin: 0px;
+	--kite9-padding: 0px;
+	--kite9-horizontal-align: left;
+	stroke: none;
 	stroke-width: .5;
 	fill: rgb(83, 100, 113);
-	stroke: none;
-	--kite9-min-size: 50pt 70pt;
-	--kite9-margin: 0pt;
-	--kite9-padding: 0pt;
-	--kite9-horizontal-align: left;
-	
 }
 
-
+[k9-elem=comments] > g > [k9-elem=caption] > text,
+[k9-elem=likes] > g > [k9-elem=caption] > text,
+[k9-elem=retweets] > g > [k9-elem=caption] > text {
+	stroke-width: .5;
+	fill: rgb(83, 100, 113);
+}
 /**
  * Big Tweet Format 
  */
@@ -133,20 +141,20 @@
 	
 }
 
-[k9-elem=tweet].big [k9-elem=textarea] > g > text{
-	font-size: 80pt;
-	--kite9-min-width: 1540pt;
-	--kite9-text-bounds-width:1540pt;
+[k9-elem=tweet].big [k9-elem=textarea] > text{
+	font-size: 80px;
+	--kite9-min-width: 1540px;
+	--kite9-text-bounds-width:1540px;
 }
 
 [k9-elem=big-body] {
 	--kite9-layout: down;	
 	--kite9-horizontal-sizing: maximize;
 	--kite9-vertical-sizing: minimize;
-	--kite9-margin: 0pt;
+	--kite9-margin: 0px;
 	--kite9-padding: 0;
 	--kite9-horizontal-align: left;
-	--kite9-padding: 25pt;
+	--kite9-padding: 25px;
 }
 
 [k9-elem=tweet] [k9-elem=big-top] {
@@ -181,10 +189,10 @@
 	--kite9-horizontal-align: left;	
 	--kite9-margin: 0;
 	--kite9-padding: 0;
-	--kite9-padding-bottom: 6pt;
+	--kite9-padding-bottom: 6px;
 	--kite9-horizontal-sizing: maximize;	
-	--kite9-padding-top: 25pt;
-	--kite9-padding-bottom: 25pt;
+	--kite9-padding-top: 25px;
+	--kite9-padding-bottom: 25px;
 }
 
 [k9-elem=source] {
@@ -193,36 +201,36 @@
 	--kite9-padding: 0;
 }
 
-[k9-elem=date] > g > text,
-[k9-elem=source] > g > text {
-	font-size: 41pt;
+[k9-elem=date] > text,
+[k9-elem=source] > text {
+	font-size: 15px;
 	fill: rgb(83, 100, 113);
 }
 
 [k9-elem=source] {
-	--kite9-padding-left: 30pt;
+	--kite9-padding-left: 30px;
 }
 
 
-[k9-elem=social-text] [k9-elem].label > g > text {
-	font-size: 41pt;
+[k9-elem=social-text] [k9-elem].label > text {
+	font-size: 41px;
 	fill: rgb(83, 100, 113);
 }
 
 [k9-elem=social-text] [k9-elem].bold {
 	--kite9-padding-left: 0;
-	--kite9-padding-right: 40pt;
+	--kite9-padding-right: 40px;
 	--kite9-horizontal-align: left;
 	--kite9-margin-left: 0;
 }
 
 [k9-elem=social-text] [k9-elem].label {
-	--kite9-padding-right: 90pt;
+	--kite9-padding-right: 90px;
 }
 	
 
-[k9-elem=social-text] [k9-elem].bold > g > text {
-	font-size: 41pt;
+[k9-elem=social-text] [k9-elem].bold > text {
+	font-size: 41px;
 	fill: black;
 	font-weight: 900;
 }
@@ -235,7 +243,7 @@
 [k9-elem=sent][k9-texture=background],
 [k9-elem=social-text][k9-texture=background] {
 	stroke: rgb(209, 223, 224);
-	stroke-width: 1pt;
+	stroke-width: 1px;
 }
 
 /** 
@@ -245,7 +253,7 @@
 [k9-elem=media] {
 	--kite9-margin: 0;
 	--kite9-padding: 0;
-	--kite9-margin-top: 15pt;
+	--kite9-margin-top: 15px;
 	--kite9-horizontal-align: left;
 	--kite9-layout:down;
 } 
@@ -257,7 +265,7 @@
 
 [k9-elem=media-info] {
 	--kite9-margin: 0;
-	--kite9-padding: 30pt;
+	--kite9-padding: 30px;
 } 
 
 
@@ -272,15 +280,16 @@
 	--kite9-horizontal-align: left;	
 	--kite9-padding: 3px;
 	--kite9-margin: 0px;
+	--kite9-text-bounds-width:1500px;
 }
 
-[k9-elem=site-name] > g > text,
-[k9-elem=site-description] > g > text {
-	font-size: 41pt;
+[k9-elem=site-name] > text,
+[k9-elem=site-description] > text {
+	font-size: 41px;
 	fill: rgb(83, 100, 113); 
 }
 
-[k9-elem=site-title] > g > text {
-	font-size: 41pt;
+[k9-elem=site-title] > text {
+	font-size: 41px;
 	fill: black;
 }
