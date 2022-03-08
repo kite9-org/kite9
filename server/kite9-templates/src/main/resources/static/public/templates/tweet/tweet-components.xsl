@@ -57,8 +57,8 @@
 					<xsl:with-param name="k9-texture">none</xsl:with-param>
 			 		<xsl:with-param name="content">
 						<xsl:apply-templates />
-						<!-- <xsl:call-template name="sent" />
-						<xsl:call-template name="social-text" /> -->
+						<xsl:call-template name="sent" />
+						<xsl:call-template name="social-text" />
 					</xsl:with-param>
 				</xsl:call-template>
 			</xsl:with-param>
@@ -171,7 +171,7 @@
 	<xsl:template match="adl:media">
 		<xsl:param name="width">
 			<xsl:choose>
-				<xsl:when test="contains(ancestor::adl:tweet/@class, 'big')">598</xsl:when>
+				<xsl:when test="contains(ancestor::adl:tweet/@class, 'big')">566</xsl:when>
 				<xsl:otherwise>506</xsl:otherwise>
 			</xsl:choose>
 		</xsl:param>

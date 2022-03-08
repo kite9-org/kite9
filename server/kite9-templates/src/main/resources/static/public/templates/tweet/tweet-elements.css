@@ -5,6 +5,7 @@
 [k9-elem=media] {
 	--kite9-padding: 0;
 	--kite9-margin-top: 15px;
+	--kite9-margin-bottom: 15px;
 	--kite9-horizontal-align: left;
 	--kite9-layout:down;
 } 
@@ -14,6 +15,8 @@
 	--kite9-padding: 0;
 } 
 
+[k9-elem=media] rect,
+[k9-elem=media-info] rect,
 [k9-elem=media-image] rect {
 	stroke: rgb(207, 217, 222);
 	stroke-width: 1px;
@@ -22,7 +25,7 @@
 
 [k9-elem=media-info] {
 	--kite9-margin: 0;
-	--kite9-padding: 30px;
+	--kite9-padding: 8px;
 } 
 
 
@@ -37,17 +40,19 @@
 	--kite9-horizontal-align: left;	
 	--kite9-padding: 3px;
 	--kite9-margin: 0px;
-	--kite9-text-bounds-width:1500px;
+	--kite9-text-bounds-width:500px;
 }
 
 [k9-elem=site-name] > text,
 [k9-elem=site-description] > text {
-	font-size: 41px;
+	font-size: 15px;
+	line-height: 20px;
 	fill: rgb(83, 100, 113); 
 }
 
 [k9-elem=site-title] > text {
-	font-size: 41px;
+	font-size: 15px;
+	line-height: 20px;
 	fill: black;
 }
 
@@ -80,7 +85,6 @@
 }
 
 [k9-elem=heading], 
-[k9-elem=textarea],
 [k9-elem=wraparea],
 [k9-elem=footer] {
 	--kite9-horizontal-align: left;
@@ -187,30 +191,40 @@
 	stroke-width: .5;
 	fill: rgb(83, 100, 113);
 }
+
 /**
  * Big Tweet Format 
  */
 [k9-elem=tweet].big {
-	--kite9-layout: down;
-	
+	--kite9-layout: down;	
 }
 
-[k9-elem=tweet].big [k9-elem=textarea] > text,
-[k9-elem=tweet].big [k9-elem=textarea] > text{
-{
+[k9-elem=tweet].big [k9-elem=wraparea] {
+	--kite9-text-bounds-width: 536px;
 	font-size: 23px;
-	--kite9-min-width: 1540px;
-	--kite9-text-bounds-width:1540px;
+	line-height: 28px;
+}
+
+[k9-elem=tweet].big [k9-elem=displayName],
+[k9-elem=tweet].big [k9-elem=screenName],
+[k9-elem=tweet].big [k9-elem=date] {
+	--kite9-vertical-align: top;
+	--kite9-padding-bottom: 4px;
+	--kite9-padding-left: 0;
+}
+
+[k9-elem=tweet].big [k9-elem=wraparea] text {
+	font-size: 23px;
+	line-height: 28px;
 }
 
 [k9-elem=big-body] {
 	--kite9-layout: down;	
 	--kite9-horizontal-sizing: maximize;
 	--kite9-vertical-sizing: minimize;
-	--kite9-margin: 0px;
-	--kite9-padding: 0;
+	--kite9-padding-top: 5px;
+	--kite9-padding-bottom: 5px;
 	--kite9-horizontal-align: left;
-	--kite9-padding: 25px;
 }
 
 [k9-elem=tweet] [k9-elem=big-top] {
@@ -226,10 +240,6 @@
 	--kite9-padding: 0;
 	--kite9-margin: 0;
 } 
-
-[k9-elem=tweet] [k9-elem=big-top] [k9-elem=heading] [k9-elem=screenName] {
-	--kite9-padding-left: 0;
-}
 
 [k9-elem=sent] {
 	--kite9-horizontal-align: left;
@@ -247,8 +257,8 @@
 	--kite9-padding: 0;
 	--kite9-padding-bottom: 6px;
 	--kite9-horizontal-sizing: maximize;	
-	--kite9-padding-top: 25px;
-	--kite9-padding-bottom: 25px;
+	--kite9-padding-top: 12px;
+	--kite9-padding-bottom: 12px;
 }
 
 [k9-elem=source] {
@@ -269,24 +279,24 @@
 
 
 [k9-elem=social-text] [k9-elem].label > text {
-	font-size: 41px;
+	font-size: 15px;
 	fill: rgb(83, 100, 113);
 }
 
 [k9-elem=social-text] [k9-elem].bold {
 	--kite9-padding-left: 0;
-	--kite9-padding-right: 40px;
+	--kite9-padding-right: 10px;
 	--kite9-horizontal-align: left;
 	--kite9-margin-left: 0;
 }
 
 [k9-elem=social-text] [k9-elem].label {
-	--kite9-padding-right: 90px;
+	--kite9-padding-right: 30px;
 }
 	
 
 [k9-elem=social-text] [k9-elem].bold > text {
-	font-size: 41px;
+	font-size: 15px;
 	fill: black;
 	font-weight: 900;
 }

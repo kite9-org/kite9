@@ -20,10 +20,14 @@
 			<displayName>Rob Moffat</displayName>
 			<screenName>@risk_first</screenName>
    		
-	   		<wraparea><svg:text>What’s the benefit of providing liquidity? Is it worth it?</svg:text>️</wraparea>
-	   		<media id="m2" href="https://pbs.twimg.com/media/FLGylvuXwAcZ7ZU?format=jpg&amp;name=small"
-	   			   			width="1190"
-	   			height="766" />
+	   		<wraparea><svg:text>This is gonna test you.  We're gonna go on and on over a whole bunch of lines to test the wrapping of this.</svg:text>️</wraparea>
+	   		<media
+	   			href="https://pbs.twimg.com/media/FKwbMBnXsAcQTA1?format=jpg" 
+	   			width="700"
+	   			height="449"
+	   			site="quizzable.com"
+	   			title="Some disney quiz"
+	   			description="QUIZ: Are You A Disney Villain? " />
    </tweet>
    
    </frame>
