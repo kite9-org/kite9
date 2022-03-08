@@ -57,8 +57,8 @@
 					<xsl:with-param name="k9-texture">none</xsl:with-param>
 			 		<xsl:with-param name="content">
 						<xsl:apply-templates />
-						<xsl:call-template name="sent" />
-						<xsl:call-template name="social-text" />
+						<!-- <xsl:call-template name="sent" />
+						<xsl:call-template name="social-text" /> -->
 					</xsl:with-param>
 				</xsl:call-template>
 			</xsl:with-param>
@@ -171,11 +171,11 @@
 	<xsl:template match="adl:media">
 		<xsl:param name="width">
 			<xsl:choose>
-				<xsl:when test="contains(ancestor::adl:tweet/@class, 'big')">568</xsl:when>
-				<xsl:otherwise>508</xsl:otherwise>
+				<xsl:when test="contains(ancestor::adl:tweet/@class, 'big')">598</xsl:when>
+				<xsl:otherwise>506</xsl:otherwise>
 			</xsl:choose>
 		</xsl:param>
-		<xsl:param name="rounding">40</xsl:param>
+		<xsl:param name="rounding">15</xsl:param>
 		<xsl:param name="ratio" select="@height div @width" />
 		<xsl:param name="height" select="$width * $ratio" />
 		<xsl:call-template name="formats-container">
@@ -192,8 +192,8 @@
 						<xsl:attribute name="clip-path">url(#<xsl:value-of select="@id" />-cp)</xsl:attribute>
 				      </image>
 				    </xsl:with-param>
-					<xsl:with-param name="width"><xsl:value-of select="$width" />px</xsl:with-param>
-					<xsl:with-param name="height"><xsl:value-of select="$height" />px</xsl:with-param>
+					<xsl:with-param name="width"><xsl:value-of select="$width - 1" />px</xsl:with-param>
+					<xsl:with-param name="height"><xsl:value-of select="$height - 1" />px</xsl:with-param>
 					<xsl:with-param name="decoration">
 						<defs>
 						 	<clipPath>

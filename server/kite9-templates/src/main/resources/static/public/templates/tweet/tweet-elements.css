@@ -1,3 +1,59 @@
+
+/** 
+ * Media
+ */
+[k9-elem=media] {
+	--kite9-padding: 0;
+	--kite9-margin-top: 15px;
+	--kite9-horizontal-align: left;
+	--kite9-layout:down;
+} 
+
+[k9-elem=media-image] {
+	--kite9-margin: 0;
+	--kite9-padding: 0;
+} 
+
+[k9-elem=media-image] rect {
+	stroke: rgb(207, 217, 222);
+	stroke-width: 1px;
+}
+
+
+[k9-elem=media-info] {
+	--kite9-margin: 0;
+	--kite9-padding: 30px;
+} 
+
+
+[k9-elem=media-info] {
+	--kite9-horizontal-sizing: maximize;
+	--kite9-layout: down;
+}
+
+[k9-elem=site-name],
+[k9-elem=site-title],
+[k9-elem=site-description] {
+	--kite9-horizontal-align: left;	
+	--kite9-padding: 3px;
+	--kite9-margin: 0px;
+	--kite9-text-bounds-width:1500px;
+}
+
+[k9-elem=site-name] > text,
+[k9-elem=site-description] > text {
+	font-size: 41px;
+	fill: rgb(83, 100, 113); 
+}
+
+[k9-elem=site-title] > text {
+	font-size: 41px;
+	fill: black;
+}
+
+
+/* Tweets */
+
 [k9-elem=frame] {
 	--kite9-layout: down;
 	--kite9-padding: 100px;
@@ -134,15 +190,15 @@
 /**
  * Big Tweet Format 
  */
- 
-
 [k9-elem=tweet].big {
 	--kite9-layout: down;
 	
 }
 
+[k9-elem=tweet].big [k9-elem=textarea] > text,
 [k9-elem=tweet].big [k9-elem=textarea] > text{
-	font-size: 80px;
+{
+	font-size: 23px;
 	--kite9-min-width: 1540px;
 	--kite9-text-bounds-width:1540px;
 }
@@ -244,52 +300,4 @@
 [k9-elem=social-text][k9-texture=background] {
 	stroke: rgb(209, 223, 224);
 	stroke-width: 1px;
-}
-
-/** 
- * Media
- */
- 
-[k9-elem=media] {
-	--kite9-margin: 0;
-	--kite9-padding: 0;
-	--kite9-margin-top: 15px;
-	--kite9-horizontal-align: left;
-	--kite9-layout:down;
-} 
-
-[k9-elem=media-image] {
-	--kite9-margin: 0;
-	--kite9-padding: 0;
-} 
-
-[k9-elem=media-info] {
-	--kite9-margin: 0;
-	--kite9-padding: 30px;
-} 
-
-
-[k9-elem=media-info] {
-	--kite9-horizontal-sizing: maximize;
-	--kite9-layout: down;
-}
-
-[k9-elem=site-name],
-[k9-elem=site-title],
-[k9-elem=site-description] {
-	--kite9-horizontal-align: left;	
-	--kite9-padding: 3px;
-	--kite9-margin: 0px;
-	--kite9-text-bounds-width:1500px;
-}
-
-[k9-elem=site-name] > text,
-[k9-elem=site-description] > text {
-	font-size: 41px;
-	fill: rgb(83, 100, 113); 
-}
-
-[k9-elem=site-title] > text {
-	font-size: 41px;
-	fill: black;
 }

@@ -79,7 +79,9 @@ public class HTMLFormat extends AbstractSVGFormat implements EditableDiagramForm
 
 	@Override
 	protected void setupTranscoder(Kite9Transcoder t, ADLDom toWrite) {
-		t.addTranscodingHint(Kite9SVGTranscoder.KEY_MEDIA, "editor");
+    	if (!t.hasTranscodingHint(Kite9SVGTranscoder.KEY_MEDIA)) {
+    		t.addTranscodingHint(Kite9SVGTranscoder.KEY_MEDIA, "editor");
+    	}
 		super.setupTranscoder(t, toWrite);
 	}
 

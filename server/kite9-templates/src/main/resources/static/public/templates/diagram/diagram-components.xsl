@@ -6,6 +6,8 @@
         xmlns:pp="http://www.kite9.org/schema/post-processor"
         xmlns:exslt="http://exslt.org/common"
         version="1.0">
+        
+  <xsl:param name="viewBox" />
 
   <xsl:template name="diagram-root-svg" match="/">
      
@@ -22,6 +24,9 @@
       <svg>
           <xsl:attribute name="pp:width">$width</xsl:attribute>
           <xsl:attribute name="pp:height">$height</xsl:attribute>
+          <xsl:if test="$viewBox">
+	          <xsl:attribute name="viewBox"><xsl:value-of select="$viewBox" /></xsl:attribute>
+          </xsl:if>
           <defs>
              <style type="text/css">
             	<xsl:for-each select="exslt:node-set($css)/*">

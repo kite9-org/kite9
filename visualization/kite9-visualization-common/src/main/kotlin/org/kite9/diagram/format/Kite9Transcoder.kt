@@ -8,7 +8,11 @@ import org.w3c.dom.Document
  */
 interface Kite9Transcoder {
 
+    fun hasTranscodingHint(key: Any) : Boolean
+
     fun addTranscodingHint(key: Any, value: Any)
+
+    fun addParameter(key: String, value: String)
 
     fun transcode(doc: Document): Document
 

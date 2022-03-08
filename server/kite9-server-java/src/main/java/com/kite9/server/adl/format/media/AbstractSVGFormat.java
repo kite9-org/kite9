@@ -42,7 +42,9 @@ public abstract class AbstractSVGFormat implements DiagramWriteFormat {
 
 
     protected void setupTranscoder(Kite9Transcoder t, ADLDom toWrite) {
-        t.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, false);
+    	if (!t.hasTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING)) {
+    		t.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, false);
+    	}
     }
 
     protected Document transformADL(Document d, K9URI uri, Kite9Transcoder transcoder, ADLDom meta) {

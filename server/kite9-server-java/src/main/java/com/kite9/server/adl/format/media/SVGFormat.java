@@ -97,7 +97,9 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
 
     @Override
     protected void setupTranscoder(Kite9Transcoder t, ADLDom toWrite) {
-        t.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
+    	if (!t.hasTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING)) {
+    		t.addTranscodingHint(Kite9SVGTranscoder.KEY_ENCAPSULATING, true);
+    	}
     }
 
 

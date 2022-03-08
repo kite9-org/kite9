@@ -24,6 +24,7 @@ public class RequestParameters {
 	public static final String MAX_HEIGHT = "maxHeight";
 	public static final String MEDIA = "media";
 	public static final String TEMPLATE = "template";
+	public static final String VIEW_BOX = "viewBox";
 
 	public static void configure(URI uri, Kite9Transcoder transcoder) {
 		MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(uri).build().getQueryParams();
@@ -34,6 +35,15 @@ public class RequestParameters {
 		setFloatIfPresent(WIDTH, queryParams, transcoder, SVGAbstractTranscoder.KEY_WIDTH);
 		setStringIfPresent(MEDIA, queryParams, transcoder, SVGAbstractTranscoder.KEY_MEDIA);
 		setStringIfPresent(TEMPLATE, queryParams, transcoder, Kite9SVGTranscoder.KEY_TEMPLATE);
+		setStringIfPresent(VIEW_BOX, queryParams, transcoder, Kite9SVGTranscoder.KEY_VIEW_BOX);
+		
+		queryParams.forEach((k, lv) -> {
+			if (lv.size() > 0) {
+				transcoder.addParameter(k, String.join(",", lv));
+			} else {
+				transcoder.addParameter(k, lv.get(0));
+			}
+		});
 	}
 
 	private static void setStringIfPresent(String paramName, MultiValueMap<String, String> queryParams, Kite9Transcoder transcoder, Key key) {

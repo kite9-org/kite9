@@ -12,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -26,7 +28,6 @@ import org.apache.batik.bridge.FontFamilyResolver;
 import org.apache.batik.bridge.GVTBuilder;
 import org.apache.batik.bridge.UserAgent;
 import org.apache.batik.css.engine.CSSEngine;
-import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.svggen.SVGGraphics2D;
 import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.ToSVGAbstractTranscoder;
@@ -87,6 +88,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	 */
 	public static final TranscodingHints.Key KEY_TEMPLATE = new StringKey();
 
+	/**
+	 * Allows us to set the viewBox of the SVG (if used in the template
+	 */
+	public static final TranscodingHints.Key KEY_VIEW_BOX = new StringKey();
+
 	public static final String TRANSFORMER = "transformer";
 
 	private final ADLExtensibleDOMImplementation domImpl;
@@ -96,6 +102,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	private final Cache cache;
 	private final BatikDiagramElementFactory def;
 	private final FontFamilyResolver ffr;
+	protected final Map<String, String> variables = new HashMap<>();
 	protected final XMLHelper xmlHelper;
 
 	/**
@@ -113,9 +120,9 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		this.domImpl = new ADLExtensibleDOMImplementation(c);
 		this.docFactory = new Kite9DocumentFactory(domImpl, XMLResourceDescriptor.getXMLParserClassName(), (ErrorHandler) this.handler);
 	    this.docLoader = new Kite9DocumentLoader(userAgent, docFactory, cache, (ErrorHandler) this.handler);
-		this.ctx = new Kite9BridgeContext(userAgent, docLoader, ffr);
-		this.def = new BatikDiagramElementFactory((Kite9BridgeContext) ctx);
 		setTranscodingHints(initTranscodingHints());
+		this.ctx = new Kite9BridgeContext(userAgent, docLoader, ffr, variables);
+		this.def = new BatikDiagramElementFactory((Kite9BridgeContext) ctx);
 		this.xmlHelper = xmlHelper;
 	}
 
@@ -212,7 +219,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 
 			// create GVT tree
 			this.builder = new GVTBuilder();
-			GraphicsNode gvtRoot = this.builder.build(this.ctx, outputDocument);
+			this.builder.build(this.ctx, outputDocument);
 
 			// handle text-wrapping
 			TextWrapProcessor wrapProcessor = new TextWrapProcessor((Kite9BridgeContext) this.ctx);
@@ -309,6 +316,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			trans.setParameter("base-uri", baseUri.toString());
 			trans.setParameter("template-uri", uri.toString());
 			trans.setParameter("template-path", templatePath.toString());
+			
+			for (String key : variables.keySet()) {
+				trans.setParameter(key, variables.get(key));
+			}
 
 			cache.set(template, TRANSFORMER, trans);
 		}

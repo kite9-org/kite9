@@ -2,6 +2,7 @@ package org.kite9.diagram.batik.bridge;
 
 import java.awt.Shape;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,10 +65,16 @@ import kotlin.reflect.KClass;
 public class Kite9BridgeContext extends SVG12BridgeContext implements ElementContext {
 
 	private FontFamilyResolver ffr;
+	private Map<String, String> variables;
 	
 	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, FontFamilyResolver ffr) {
+		this(userAgent, loader, ffr, Collections.emptyMap());
+	}
+	
+	public Kite9BridgeContext(UserAgent userAgent, DocumentLoader loader, FontFamilyResolver ffr, Map<String, String> variables) {
 		super(userAgent, loader);
 		this.ffr = ffr;
+		this.variables = variables;
 	}
 	
 	/**
@@ -394,6 +401,8 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 							.orElse("0");
 				} else if (ElementContext.Companion.getUNITS().contains(name)) {
 						return "" + getCssUnitSizeInPixels(name, at);
+				} else if (variables.containsKey(name)) {
+					return variables.get(name);
 				} else {
 					return "";
 				}

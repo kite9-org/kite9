@@ -7,10 +7,11 @@
  */
 @media editor {
   [k9-elem=diagram] {
-    --kite9-padding: 200pt !important;
+  	 --kite9-padding: 200pt !important; 
+     --kite9-min-width: 50pt;
+     --kite9-min-height: 50pt;
   }  
 }
-
 
 /* 
  * Prevents the original selection process 
