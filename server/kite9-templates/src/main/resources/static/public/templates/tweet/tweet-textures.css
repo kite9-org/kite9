@@ -8,6 +8,11 @@
 @import url(/public/templates/editor/editor.css);
 @import url(/public/fonts/chirp/chirp-ttf.css);
 
+/* Add this in to see the frame 
+[k9-elem=frame][k9-texture=default] {
+	fill: #fafafa !important;
+}
+*/
 
 text {
 	fill: rgb(36, 51, 20);
@@ -22,9 +27,6 @@ text {
 	fill-opacity: 1;
 }
 
-[k9-elem=frame][k9-texture=default] {
-	fill: #fafafa;
-}
 
 [k9-elem=tweet][k9-texture=none] {
 	fill: #ffffff;
