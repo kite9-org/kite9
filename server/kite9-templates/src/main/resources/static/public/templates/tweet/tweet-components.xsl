@@ -10,6 +10,8 @@
     	</clipPath>
 	</xsl:template>
 	
+	
+	
 	<xsl:template match="adl:frame">
 		<xsl:call-template name="formats-container">
 			<xsl:with-param name="k9-texture">default</xsl:with-param>

@@ -5,10 +5,12 @@
 
   <xsl:import href="../adl/adl-all-components.xsl" />
   <xsl:import href="tweet-components.xsl" /> 
+  <xsl:import href="card-components.xsl" /> 
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:call-template name="adl-diagram-element-css" />
     <adl:css>@import url('/public/templates/tweet/tweet-elements.css');</adl:css>
+    <adl:css>@import url('/public/templates/tweet/card-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">

@@ -445,6 +445,10 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
             throw new TranscoderException(e);
         }
     }
+    
+   	public Map<String, String> getVariables() {
+		return variables;
+	}
 
 	@Override
 	public String getPrefix() {

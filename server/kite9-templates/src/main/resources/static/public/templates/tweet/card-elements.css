@@ -1,0 +1,27 @@
+[k9-elem=postcard] {
+	--kite9-min-width: 600px;
+	--kite9-min-height: 400px;	
+}
+
+[k9-elem=greetingscard] {
+	--kite9-min-width: 600px;
+	--kite9-min-height: 500px;	
+}
+
+[k9-elem=message] {
+	font-size: 35px;
+	
+}
+
+[k9-elem=address] {
+	--kite9-vertical-align: bottom;
+	--kite9-margin: 40px;
+	--kite9-margin-bottom: 50px;
+	font-family: chirp;
+	line-height: 38px;
+}
+
+[k9-elem=address] > text {	
+	font-size: 22px;
+	line-height: 38px;
+}

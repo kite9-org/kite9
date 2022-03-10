@@ -7,6 +7,9 @@
 @import url(/public/templates/highlight/highlight.css);
 @import url(/public/templates/editor/editor.css);
 @import url(/public/fonts/chirp/chirp-ttf.css);
+@import url(/public/fonts/noto-sans/NotoSans.css);
+@import url(/public/fonts/dancing-script/DancingScript.css);
+@import url(/public/fonts/noto-serif-display/NotoSerifDisplay.css);
 
 /* Add this in to see the frame 
 [k9-elem=frame][k9-texture=default] {
@@ -14,7 +17,7 @@
 }
 */
 
-text {
+[k9-elem=tweet] text {
 	fill: rgb(36, 51, 20);
 	font-family: "chirp";
 	font-size: 15px;

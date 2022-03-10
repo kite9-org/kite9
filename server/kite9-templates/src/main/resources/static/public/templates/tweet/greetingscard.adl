@@ -1,0 +1,20 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<diagram xslt:template="/public/templates/tweet/tweet-template.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
+   
+   <greetingscard>
+   		<message style="font-family: 'Dancing Script'">
+   			<svg:text>
+   			Dear Fred,
+			Hope you are well.
+			Weather awful.
+			Wish you were here.
+			Love Jim
+   			</svg:text>
+   		</message>
+   </greetingscard>
+  
+</diagram>

@@ -1,0 +1,31 @@
+<?xml version = "1.0" encoding = "UTF-8"  ?>
+<diagram xslt:template="/public/templates/tweet/tweet-template.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
+   
+   <postcard>
+   		<message style="font-family: 'Dancing Script'">
+   			<svg:text>
+   			Dear Fred,
+			Hope you are well.
+			Weather awful.
+			Wish you were here.
+			Love Jim
+   			</svg:text>
+   		</message>
+   		<address>
+   			<svg:text>
+   			Fred Moffat
+   			
+   			14 Manor Close
+   			Colchester
+   			Essex
+   			UK
+   		    </svg:text>
+   		</address>
+   
+   </postcard>
+  
+</diagram>
