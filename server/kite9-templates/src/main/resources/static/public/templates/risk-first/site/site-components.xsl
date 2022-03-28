@@ -18,7 +18,6 @@
         <feMergeNode in="SourceGraphic" />
       </feMerge>
     </filter>
-	<xsl:next-match />
   </xsl:template>
   
   <xsl:template match="adl:big-image">
@@ -29,15 +28,12 @@
   	</xsl:call-template>
   </xsl:template>
   
-  <!-- 
- 
-  <template id="image-artifact">
-    <image href="pre:#{@imgsrc}" width="80pt" height="80pt" style="kite9-vertical-align: center; kite9-min-size: 80pt 80pt;" />
-    <title><contents /></title>
-  </template>
- 
+  <xsl:template match="adl:celltext">
+  	<xsl:call-template name="formats-text-fixed" />
+  </xsl:template>
   
-  <template id="celltext">
+  <!-- 
+ </template>
     <text-label style="kite9-type: text;">
       <svg:flowRegion>
         <svg:rect width="950pt" height="400pt" />
@@ -45,6 +41,13 @@
       <contents />
     </text-label>
   </template>
+  
+  <template id="image-artifact">
+    <image href="pre:#{@imgsrc}" width="80pt" height="80pt" style="kite9-vertical-align: center; kite9-min-size: 80pt 80pt;" />
+    <title><contents /></title>
+  </template>
+ 
+  
   
   <template id="bulleted" style="kite9-type: container; kite9-layout: right;" >
    	<text-label style="kite9-type: text; kite9-vertical-align: top; kite9-padding-right: 15pt;">
@@ -124,7 +127,7 @@
   	  <xsl:with-param name="k9-texture">none</xsl:with-param>
       <xsl:with-param name="shape">
 	      <image x="0" y="0" width="100" height="100" pp:width="$width" pp:height="$height">
-	      	<xsl:attribute name="xlink:href" select="$imageurl" />
+	      	<xsl:attribute name="xlink:href"><xsl:value-of select="$imageurl" /></xsl:attribute>
 	      </image>
 	  </xsl:with-param>
 	  <xsl:with-param name="content">
@@ -136,7 +139,6 @@
   </xsl:template>
   
   <xsl:template name="site-risk-first-diagram-element-css">
-    <xsl:next-match />
     <adl:css>@import url('/public/templates/risk-first/site/site-elements.css');</adl:css>
   </xsl:template>
   

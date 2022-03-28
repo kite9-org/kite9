@@ -19,7 +19,6 @@
 
   <xsl:template match="/" mode="diagram-palette">
     <adl:palette contains="connected" url="/public/templates/designer/palette.adl"/>
-    <xsl:next-match/>
   </xsl:template>
  
 </xsl:stylesheet>

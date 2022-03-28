@@ -5,21 +5,32 @@
 
 [k9-elem=greetingscard] {
 	--kite9-min-width: 600px;
-	--kite9-min-height: 500px;	
+	--kite9-min-height: 429px;	
 }
 
 [k9-elem=message] {
 	font-size: 35px;
-	
+	--kite9-margin: 20px;
 }
 
 [k9-elem=address] {
 	--kite9-vertical-align: bottom;
-	--kite9-margin: 40px;
-	--kite9-margin-bottom: 50px;
+	--kite9-margin: 20px;
 	font-family: chirp;
 	line-height: 38px;
 }
+
+
+[k9-elem=postcard] [k9-elem=message],
+[k9-elem=postcard] [k9-elem=address] {
+	--kite9-text-bounds-width: 260px;
+}
+
+[k9-elem=greetingscard] [k9-elem=message],
+[k9-elem=greetingscard] [k9-elem=address] {
+	--kite9-text-bounds-width: 560px;
+}
+
 
 [k9-elem=address] > text {	
 	font-size: 22px;

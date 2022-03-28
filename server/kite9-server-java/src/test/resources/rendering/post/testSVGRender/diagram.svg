@@ -1,63 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:adl="http://www.kite9.org/schema/adl" xmlns:pp="http://www.kite9.org/schema/post-processor" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="text/ecmascript" zoomAndPan="magnify" contentStyleType="text/css" version="1.0" width="200" pp:width="$width" preserveAspectRatio="xMidYMid meet" height="254" pp:height="$height"><metadata xmlns:md="http://www.kite9.org/schema/metadata"><md:self>http://localhost:39000/api/renderer</md:self></metadata><defs><style xml:space="preserve">*[k9-format="text-fixed"] {
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:pp="http://www.kite9.org/schema/post-processor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:adl="http://www.kite9.org/schema/adl" xmlns:exslt="http://exslt.org/common" contentScriptType="text/ecmascript" zoomAndPan="magnify" contentStyleType="text/css" version="1.0" width="186" pp:width="$width" preserveAspectRatio="xMidYMid meet" height="239" pp:height="$height">
+  <metadata xmlns:md="http://www.kite9.org/schema/metadata">
+    <md:self>http://localhost:39000/api/renderer</md:self>
+  </metadata>
+  <defs>
+    <style xml:space="preserve">*[k9-format="text-fixed"] {
 --kite9-type: TEXT;
 --kite9-vertical-align: CENTER;
 --kite9-horizontal-align: CENTER;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
 }
 
 *[k9-format="image"], *[k9-format="image-fixed"] {
 --kite9-type: SVG;
 --kite9-horizontal-align: CENTER;
 --kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
 }
 
 *[k9-format="shape"] {
 --kite9-type: CONTAINER;
 --kite9-horizontal-align: CENTER;
 --kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
 }
 
 *[k9-format="container"] {
 --kite9-type: CONTAINER;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
 }
 
 *[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
 --kite9-type: CONTAINER;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
 }
 
 *[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
@@ -65,31 +40,17 @@
 }
 
 *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
+--kite9-type: SVG;
 --kite9-horizontal-align: CENTER;
 --kite9-connections: SEPARATE;
 }
 
 *[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
 --kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
 --kite9-horizontal-align: CENTER;
 --kite9-vertical-align: CENTER;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
 }
 
 *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
@@ -100,208 +61,342 @@
 --kite9-type: LINK_END;
 }
 
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
+*[k9-elem="diagram"] {
+--kite9-type: DIAGRAM;
+--kite9-traversal-bottom: LEAVING;
+--kite9-traversal-left: LEAVING;
+--kite9-traversal-right: LEAVING;
+--kite9-traversal-top: LEAVING;
+}
+
+*[k9-elem="group"] {
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
+--kite9-traversal-bottom: ALWAYS;
+--kite9-traversal-left: ALWAYS;
+--kite9-traversal-right: ALWAYS;
+--kite9-traversal-top: ALWAYS;
+--kite9-min-width: 40pt;
+--kite9-min-height: 40pt;
+}
+
+*[k9-elem="container"] {
+--kite9-padding-top: 15pt;
+--kite9-padding-right: 15pt;
+--kite9-padding-bottom: 15pt;
+--kite9-padding-left: 15pt;
 --kite9-margin-top: 15pt;
 --kite9-margin-right: 15pt;
 --kite9-margin-bottom: 15pt;
 --kite9-margin-left: 15pt;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+}
+
+*[layout="right"] {
+--kite9-layout: RIGHT;
+}
+
+*[layout="down"] {
+--kite9-layout: DOWN;
+}
+
+*[layout="up"] {
+--kite9-layout: UP;
+}
+
+*[layout="left"] {
+--kite9-layout: LEFT;
+}
+
+*[layout="horizontal"] {
+--kite9-layout: HORIZONTAL;
+}
+
+*[layout="vertical"] {
+--kite9-layout: VERTICAL;
+}
+
+*[k9-elem="label"] {
+--kite9-usage: LABEL;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-label-placement: BOTTOM_LEFT;
+}
+
+*[k9-elem="label-inner"] {
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-padding-top: 4pt;
+--kite9-padding-right: 4pt;
+--kite9-padding-bottom: 4pt;
+--kite9-padding-left: 4pt;
+--kite9-margin-top: 4pt;
+--kite9-margin-right: 4pt;
+--kite9-margin-bottom: 4pt;
+--kite9-margin-left: 4pt;
+}
+
+*[k9-elem="label"][end="to"] {
+--kite9-link-end: TO;
+}
+
+*[k9-elem="label"][end="from"] {
+--kite9-link-end: FROM;
+}
+
+*[k9-elem="table"] {
+--kite9-layout: GRID;
 --kite9-padding-top: 10pt;
 --kite9-padding-right: 10pt;
 --kite9-padding-bottom: 10pt;
 --kite9-padding-left: 10pt;
 }
 
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
+*[k9-elem="cell"] {
+--kite9-usage: REGULAR;
 --kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
 --kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
+text-align: middle;
+--kite9-min-width: 30pt;
+--kite9-min-height: 30pt;
+--kite9-traversal-bottom: ALWAYS;
+--kite9-traversal-left: ALWAYS;
+--kite9-traversal-right: ALWAYS;
+--kite9-traversal-top: ALWAYS;
 }
 
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
+*[k9-format="link-align"], *[k9-format="link-basic"] {
 --kite9-type: LINK;
+--kite9-link-from-xpath: ".//*[@k9-elem='from']/@reference";
+--kite9-link-to-xpath: ".//*[@k9-elem='to']/@reference";
 }
 
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
+*[k9-elem="link-grab"], *[k9-elem="align-grab"], *[k9-elem="grab"], *[k9-elem="align-body"], *[k9-elem="link-body"] {
+--kite9-usage: DECAL;
+--kite9-type: SVG;
+fill: none;
+}
+
+*[k9-elem="from"], *[k9-elem="to"] {
+fill: rgb(255, 255, 255);
+fill-opacity: 0.01;
+}
+
+*[k9-elem="link"] {
+--kite9-margin-top: 20pt;
+--kite9-margin-right: 20pt;
+--kite9-margin-bottom: 20pt;
+--kite9-margin-left: 20pt;
+--kite9-link-corner-radius: 6pt;
+}
+
+*[k9-elem="from"] {
+--kite9-link-end: FROM;
+}
+
+*[k9-elem="to"] {
+--kite9-link-end: TO;
+}
+
+*[k9-elem="from"].gap, *[k9-elem="to"].gap {
+--kite9-marker-reserve: 20pt;
+}
+
+*[k9-elem="from"][shape="open-diamond"], *[k9-elem="to"][shape="open-diamond"] {
+--kite9-marker-reserve: 8pt;
+}
+
+*[k9-elem="from"][shape="open-arrow"], *[k9-elem="to"][shape="open-arrow"] {
+--kite9-marker-reserve: 6pt;
+}
+
+*[k9-elem="from"], *[k9-elem="to"] {
 --kite9-type: LINK_END;
+--kite9-padding-top: 8pt;
+--kite9-padding-right: 8pt;
+--kite9-padding-bottom: 8pt;
+--kite9-padding-left: 8pt;
 }
 
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
+*[k9-elem="align"][drawDirection="LEFT"], *[k9-elem="link"][drawDirection="LEFT"] {
+--kite9-direction: LEFT;
+}
+
+*[k9-elem="align"][drawDirection="RIGHT"], *[k9-elem="link"][drawDirection="RIGHT"] {
+--kite9-direction: RIGHT;
+}
+
+*[k9-elem="align"][drawDirection="UP"], *[k9-elem="link"][drawDirection="UP"] {
+--kite9-direction: UP;
+}
+
+*[k9-elem="align"][drawDirection="DOWN"], *[k9-elem="link"][drawDirection="DOWN"] {
+--kite9-direction: DOWN;
+}
+
+*[k9-elem="hub"] {
+--kite9-type: SVG;
+--kite9-margin-top: 0;
+--kite9-margin-right: 0;
+--kite9-margin-bottom: 0;
+--kite9-margin-left: 0;
+--kite9-min-width: 10pt;
+--kite9-min-height: 10pt;
+}
+
+*[k9-elem="group"] {
+--kite9-type: CONTAINER;
+--kite9-margin-top: 20pt;
+--kite9-margin-right: 20pt;
+--kite9-margin-bottom: 20pt;
+--kite9-margin-left: 20pt;
+}
+
+*[k9-elem="textarea"] {
+--kite9-margin-top: 4pt;
+--kite9-margin-right: 4pt;
+--kite9-margin-bottom: 4pt;
+--kite9-margin-left: 4pt;
 --kite9-vertical-align: CENTER;
 --kite9-horizontal-align: CENTER;
+}
+
+*[k9-elem="action"] {
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
+--kite9-margin-top: 10pt;
+--kite9-margin-right: 10pt;
+--kite9-margin-bottom: 10pt;
+--kite9-margin-left: 10pt;
+--kite9-padding-top: 12pt;
+--kite9-padding-right: 22pt;
+--kite9-padding-bottom: 12pt;
+--kite9-padding-left: 12pt;
+}
+
+*[k9-elem="action"].left {
+--kite9-padding-left: 22pt;
+--kite9-padding-right: 12pt;
+}
+
+*[k9-elem="glyph"] &gt; g &gt; *[k9-elem="caption"], *[k9-elem="action"] &gt; g &gt; *[k9-elem="caption"] {
+--kite9-margin-top: 0pt;
+--kite9-margin-right: 0pt;
+--kite9-margin-bottom: 0pt;
+--kite9-margin-left: 0pt;
+--kite9-padding-top: 0pt;
+--kite9-padding-right: 0pt;
+--kite9-padding-bottom: 0pt;
+--kite9-padding-left: 0pt;
+}
+
+*[k9-elem="glyph"] {
+--kite9-layout: DOWN;
+--kite9-padding-top: 6pt;
+--kite9-padding-right: 10pt;
+--kite9-padding-bottom: 6pt;
+--kite9-padding-left: 10pt;
+--kite9-margin-top: 10pt;
+--kite9-margin-right: 10pt;
+--kite9-margin-left: 10pt;
+--kite9-margin-bottom: 10pt;
+}
+
+*[k9-elem="artifact"], *[k9-elem="document"], *[k9-elem="users"], *[k9-elem="computer"], *[k9-elem="interface"], *[k9-elem="component"], *[k9-elem="channel-artifact"], *[k9-elem="internal-model-artifact"], *[k9-elem="protocol-artifact"], *[k9-elem="agent-artifact"], *[k9-elem="image-artifact"], *[k9-elem="generic-artifact"] {
+--kite9-margin-top: 10pt;
+--kite9-margin-right: 10pt;
+--kite9-margin-bottom: 10pt;
+--kite9-margin-left: 10pt;
+--kite9-link-inset: 10pt;
+--kite9-link-gutter: 10pt;
+--kite9-layout: VERTICAL;
+--kite9-padding-top: 10pt;
+--kite9-padding-right: 10pt;
+--kite9-padding-bottom: 10pt;
+--kite9-padding-left: 10pt;
+--kite9-min-width: 110pt;
+--kite9-min-height: 140pt;
+}
+
+*[k9-elem="arrow"], *[k9-elem="block"] {
+--kite9-padding-top: 8pt;
+--kite9-padding-right: 5pt;
+--kite9-padding-bottom: 8pt;
+--kite9-padding-left: 5pt;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-connections: SEPARATE;
+font-size: 14pt;
+font-weight: 500;
+--kite9-link-inset: 3pt;
+}
+
+*[k9-elem="block"] &gt; g &gt; *[k9-elem="caption"] {
+--kite9-margin-top: 5pt;
+--kite9-margin-right: 5pt;
+--kite9-margin-bottom: 5pt;
+--kite9-margin-left: 5pt;
+--kite9-padding-top: 5pt;
+--kite9-padding-right: 5pt;
+--kite9-padding-bottom: 5pt;
+--kite9-padding-left: 5pt;
+}
+
+*[k9-elem="arrow"] &gt; g &gt; *[k9-elem="caption"] {
+--kite9-margin-top: 0pt;
+--kite9-margin-right: 0pt;
+--kite9-margin-bottom: 0pt;
+--kite9-margin-left: 0pt;
+--kite9-padding-top: 0pt;
+--kite9-padding-right: 0pt;
+--kite9-padding-bottom: 0pt;
+--kite9-padding-left: 0pt;
+}
+
+*[k9-elem="description"] {
+--kite9-padding-top: 10pt;
+--kite9-padding-right: 10pt;
+--kite9-padding-bottom: 10pt;
+--kite9-padding-left: 10pt;
+--kite9-usage: LABEL;
+--kite9-text-bounds-width: 250pt;
+--kite9-label-placement: BOTTOM;
+}
+
+*[k9-elem="planner"] {
+--kite9-layout: GRID;
 --kite9-padding-top: 10pt;
 --kite9-padding-right: 10pt;
 --kite9-padding-bottom: 10pt;
 --kite9-padding-left: 10pt;
 }
 
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
+*[k9-elem="planner-cell"], *[k9-elem="planner-header"] {
+--kite9-usage: REGULAR;
 --kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
 --kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
 --kite9-horizontal-sizing: MINIMIZE;
 --kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
+text-align: middle;
+--kite9-min-width: 230pt;
+--kite9-min-height: 30pt;
+--kite9-traversal-bottom: ALWAYS;
+--kite9-traversal-left: ALWAYS;
+--kite9-traversal-right: ALWAYS;
+--kite9-traversal-top: ALWAYS;
+--kite9-padding-top: 10pt;
+--kite9-padding-right: 10pt;
+--kite9-padding-bottom: 10pt;
+--kite9-padding-left: 10pt;
+--kite9-layout: RIGHT;
 }
 
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
+*[k9-elem="planner-header"] {
+--kite9-min-width: 60pt;
+--kite9-min-height: 30pt;
 }
 
 *[k9-elem="mitigated"] {
@@ -363,1887 +458,121 @@
 --kite9-horizontal-align: CENTER;
 }
 
-*[k9-elem="textarea"] {
---kite9-margin-top: 4pt;
---kite9-margin-right: 4pt;
---kite9-margin-bottom: 4pt;
---kite9-margin-left: 4pt;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-format="link-align"], *[k9-format="link-basic"] {
---kite9-type: LINK;
---kite9-link-from-xpath: ".//*[@k9-elem='from']/@reference";
---kite9-link-to-xpath: ".//*[@k9-elem='to']/@reference";
-}
-
-*[k9-elem="link-grab"], *[k9-elem="align-grab"], *[k9-elem="grab"], *[k9-elem="align-body"], *[k9-elem="link-body"] {
---kite9-usage: DECAL;
---kite9-type: SVG;
-fill: none;
-}
-
-*[k9-elem="from"], *[k9-elem="to"] {
-fill: rgb(255, 255, 255);
-fill-opacity: 0.01;
-}
-
-*[k9-elem="link"] {
---kite9-margin-top: 20pt;
---kite9-margin-right: 20pt;
---kite9-margin-bottom: 20pt;
---kite9-margin-left: 20pt;
---kite9-link-corner-radius: 6pt;
-}
-
-*[k9-elem="from"] {
---kite9-link-end: FROM;
-}
-
-*[k9-elem="to"] {
---kite9-link-end: TO;
-}
-
-*[k9-elem="from"].gap, *[k9-elem="to"].gap {
---kite9-marker-reserve: 20pt;
-}
-
-*[k9-elem="from"][shape="open-diamond"], *[k9-elem="to"][shape="open-diamond"] {
---kite9-marker-reserve: 8pt;
-}
-
-*[k9-elem="from"][shape="open-arrow"], *[k9-elem="to"][shape="open-arrow"] {
---kite9-marker-reserve: 6pt;
-}
-
-*[k9-elem="from"], *[k9-elem="to"] {
---kite9-type: LINK_END;
---kite9-padding-top: 8pt;
---kite9-padding-right: 8pt;
---kite9-padding-bottom: 8pt;
---kite9-padding-left: 8pt;
-}
-
-*[k9-elem="link"][drawDirection="LEFT"] {
---kite9-direction: LEFT;
-}
-
-*[k9-elem="link"][drawDirection="RIGHT"] {
---kite9-direction: RIGHT;
-}
-
-*[k9-elem="link"][drawDirection="UP"] {
---kite9-direction: UP;
-}
-
-*[k9-elem="link"][drawDirection="DOWN"] {
---kite9-direction: DOWN;
-}
-
-*[k9-elem="hub"] {
---kite9-type: SVG;
---kite9-margin-top: 0;
---kite9-margin-right: 0;
---kite9-margin-bottom: 0;
---kite9-margin-left: 0;
---kite9-min-width: 10pt;
---kite9-min-height: 10pt;
-}
-
-*[k9-elem="group"] {
---kite9-type: CONTAINER;
---kite9-margin-top: 20pt;
---kite9-margin-right: 20pt;
---kite9-margin-bottom: 20pt;
---kite9-margin-left: 20pt;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="table"] {
---kite9-layout: GRID;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-elem="cell"] {
+*[k9-elem="celltext"] {
 --kite9-usage: REGULAR;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
-text-align: middle;
---kite9-min-width: 30pt;
---kite9-min-height: 30pt;
---kite9-traversal-bottom: ALWAYS;
---kite9-traversal-left: ALWAYS;
---kite9-traversal-right: ALWAYS;
---kite9-traversal-top: ALWAYS;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
 --kite9-padding-top: 10pt;
 --kite9-padding-right: 10pt;
 --kite9-padding-bottom: 10pt;
 --kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
 --kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
+--kite9-horizontal-align: LEFT;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+font-size: 40pt;
+fill: black;
+font-family: "gothic";
+stroke: none;
+--kite9-text-bounds-width: 350pt;
 }
 
-*[k9-format="shape"] {
+*[k9-elem="celltext"].bold {
+font-family: "gothic-bold";
+}
+
+*[k9-elem="celltext"].bottom {
+--kite9-vertical-align: BOTTOM;
+}
+
+*[k9-elem="celltext"] *[k9-elem="text-label"] {
+--kite9-horizontal-align: LEFT;
+}
+
+*[k9-elem="bulleted"] {
+--kite9-usage: REGULAR;
 --kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="label"] {
---kite9-usage: LABEL;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-label-placement: BOTTOM_LEFT;
-}
-
-*[k9-elem="label-inner"] {
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-padding-top: 4pt;
---kite9-padding-right: 4pt;
---kite9-padding-bottom: 4pt;
---kite9-padding-left: 4pt;
---kite9-margin-top: 4pt;
---kite9-margin-right: 4pt;
---kite9-margin-bottom: 4pt;
---kite9-margin-left: 4pt;
-}
-
-*[k9-elem="label"][end="to"] {
---kite9-link-end: TO;
-}
-
-*[k9-elem="label"][end="from"] {
---kite9-link-end: FROM;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="group"] {
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-traversal-bottom: ALWAYS;
---kite9-traversal-left: ALWAYS;
---kite9-traversal-right: ALWAYS;
---kite9-traversal-top: ALWAYS;
---kite9-min-width: 40pt;
---kite9-min-height: 40pt;
-}
-
-*[k9-elem="container"] {
---kite9-padding-top: 15pt;
---kite9-padding-right: 15pt;
---kite9-padding-bottom: 15pt;
---kite9-padding-left: 15pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
-}
-
-*[layout="right"] {
---kite9-layout: RIGHT;
-}
-
-*[layout="down"] {
---kite9-layout: DOWN;
-}
-
-*[layout="up"] {
---kite9-layout: UP;
-}
-
-*[layout="left"] {
---kite9-layout: LEFT;
-}
-
-*[layout="horizontal"] {
---kite9-layout: HORIZONTAL;
-}
-
-*[layout="vertical"] {
---kite9-layout: VERTICAL;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="votes"] {
---kite9-type: SVG;
---kite9-usage: DECAL;
-}
-
-*[k9-elem="votes"] &gt; g &gt; rect.back {
-fill: rgb(122, 164, 127);
-fill-opacity: 0.9;
+--kite9-vertical-align: TOP;
+--kite9-horizontal-align: LEFT;
+font-size: 40pt;
+fill: black;
+font-family: "gothic";
 stroke: none;
 }
 
-*[k9-elem="votes"] &gt; g &gt; text.count {
-font-size: 16pt;
-fill: white;
-fill-opacity: 1;
-text-anchor: middle;
-dominant-baseline: middle;
-}
-
-*[k9-elem="votes"] &gt; g &gt; text.font-awesome {
-font-size: 16pt;
-font-family: "Font Awesome 5 Free";
-font-weight: 400;
-fill: white;
-fill-opacity: 1;
-text-anchor: middle;
-dominant-baseline: middle;
-}
-
-*[k9-elem="votes"][count="0"] &gt; g &gt; rect.back, *[k9-elem="votes"][count="0"] &gt; g &gt; text.count, *[k9-elem="votes"][count="0"] &gt; g &gt; text.font-awesome {
-fill-opacity: 0;
-stroke-opacity: 0;
-}
-
-*[k9-elem="textarea"] {
---kite9-margin-top: 4pt;
---kite9-margin-right: 4pt;
---kite9-margin-bottom: 4pt;
---kite9-margin-left: 4pt;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-format="link-align"], *[k9-format="link-basic"] {
---kite9-type: LINK;
---kite9-link-from-xpath: ".//*[@k9-elem='from']/@reference";
---kite9-link-to-xpath: ".//*[@k9-elem='to']/@reference";
-}
-
-*[k9-elem="link-grab"], *[k9-elem="align-grab"], *[k9-elem="grab"], *[k9-elem="align-body"], *[k9-elem="link-body"] {
---kite9-usage: DECAL;
---kite9-type: SVG;
-fill: none;
-}
-
-*[k9-elem="from"], *[k9-elem="to"] {
-fill: rgb(255, 255, 255);
-fill-opacity: 0.01;
-}
-
-*[k9-elem="link"] {
---kite9-margin-top: 20pt;
---kite9-margin-right: 20pt;
---kite9-margin-bottom: 20pt;
---kite9-margin-left: 20pt;
---kite9-link-corner-radius: 6pt;
-}
-
-*[k9-elem="from"] {
---kite9-link-end: FROM;
-}
-
-*[k9-elem="to"] {
---kite9-link-end: TO;
-}
-
-*[k9-elem="from"].gap, *[k9-elem="to"].gap {
---kite9-marker-reserve: 20pt;
-}
-
-*[k9-elem="from"][shape="open-diamond"], *[k9-elem="to"][shape="open-diamond"] {
---kite9-marker-reserve: 8pt;
-}
-
-*[k9-elem="from"][shape="open-arrow"], *[k9-elem="to"][shape="open-arrow"] {
---kite9-marker-reserve: 6pt;
-}
-
-*[k9-elem="from"], *[k9-elem="to"] {
---kite9-type: LINK_END;
---kite9-padding-top: 8pt;
---kite9-padding-right: 8pt;
---kite9-padding-bottom: 8pt;
---kite9-padding-left: 8pt;
-}
-
-*[k9-elem="link"][drawDirection="LEFT"] {
---kite9-direction: LEFT;
-}
-
-*[k9-elem="link"][drawDirection="RIGHT"] {
---kite9-direction: RIGHT;
-}
-
-*[k9-elem="link"][drawDirection="UP"] {
---kite9-direction: UP;
-}
-
-*[k9-elem="link"][drawDirection="DOWN"] {
---kite9-direction: DOWN;
-}
-
-*[k9-elem="hub"] {
---kite9-type: SVG;
---kite9-margin-top: 0;
---kite9-margin-right: 0;
---kite9-margin-bottom: 0;
---kite9-margin-left: 0;
---kite9-min-width: 10pt;
---kite9-min-height: 10pt;
-}
-
-*[k9-elem="group"] {
---kite9-type: CONTAINER;
---kite9-margin-top: 20pt;
---kite9-margin-right: 20pt;
---kite9-margin-bottom: 20pt;
---kite9-margin-left: 20pt;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="table"] {
---kite9-layout: GRID;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-elem="cell"] {
+*[k9-elem="ctext"] {
 --kite9-usage: REGULAR;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
-text-align: middle;
---kite9-min-width: 30pt;
---kite9-min-height: 30pt;
---kite9-traversal-bottom: ALWAYS;
---kite9-traversal-left: ALWAYS;
---kite9-traversal-right: ALWAYS;
---kite9-traversal-top: ALWAYS;
+--kite9-vertical-align: TOP;
+--kite9-horizontal-align: LEFT;
+font-size: 40pt;
+fill: black;
+font-family: "gothic";
+stroke: none;
+--kite9-type: TEXT;
 }
 
-*[k9-format="text-fixed"] {
+*[k9-elem="btext"] {
+--kite9-usage: REGULAR;
+--kite9-vertical-align: TOP;
+--kite9-horizontal-align: LEFT;
+font-size: 40pt;
+fill: black;
+font-family: "gothic-bold";
+stroke: none;
 --kite9-type: TEXT;
---kite9-vertical-align: CENTER;
+}
+
+*[k9-elem="tick"] {
+--kite9-usage: REGULAR;
+--kite9-type: CONTAINER;
+}
+
+*[k9-elem="table"] *[k9-elem="risk"], *[k9-elem="table"] *[k9-elem="tick"] {
 --kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
+--kite9-margin-top: 20pt;
+--kite9-margin-right: 20pt;
+--kite9-margin-bottom: 20pt;
+--kite9-margin-left: 20pt;
+}
+
+*[k9-elem="table"] *[k9-elem="celltext"].bottom {
+--kite9-vertical-align: BOTTOM;
+}
+
+*[k9-elem="table"] *[k9-elem="celltext"].top {
+--kite9-vertical-align: TOP;
+}
+
+*[k9-elem="description"], *[k9-elem="long-description"], *.description {
+font-size: 14pt;
+font-family: "gothic-italic";
+font-style: italic;
 --kite9-padding-top: 10pt;
 --kite9-padding-right: 10pt;
 --kite9-padding-bottom: 10pt;
 --kite9-padding-left: 10pt;
+--kite9-text-bounds-width: 250pt;
 }
 
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
+*[k9-elem="leg"] {
 --kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
 --kite9-layout: DOWN;
+--kite9-min-height: 110pt;
+--kite9-min-width: 70pt;
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-margin-top: 0px;
+--kite9-margin-right: 0px;
+--kite9-margin-bottom: 0px;
+--kite9-margin-left: 0px;
+--kite9-vertical-align: BOTTOM;
 }
 
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
+*[k9-elem="plinth"] {
 --kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
 }
 
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="label"] {
---kite9-usage: LABEL;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-label-placement: BOTTOM_LEFT;
-}
-
-*[k9-elem="label-inner"] {
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-padding-top: 4pt;
---kite9-padding-right: 4pt;
---kite9-padding-bottom: 4pt;
---kite9-padding-left: 4pt;
---kite9-margin-top: 4pt;
---kite9-margin-right: 4pt;
---kite9-margin-bottom: 4pt;
---kite9-margin-left: 4pt;
-}
-
-*[k9-elem="label"][end="to"] {
---kite9-link-end: TO;
-}
-
-*[k9-elem="label"][end="from"] {
---kite9-link-end: FROM;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="group"] {
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-traversal-bottom: ALWAYS;
---kite9-traversal-left: ALWAYS;
---kite9-traversal-right: ALWAYS;
---kite9-traversal-top: ALWAYS;
---kite9-min-width: 40pt;
---kite9-min-height: 40pt;
-}
-
-*[k9-elem="container"] {
---kite9-padding-top: 15pt;
---kite9-padding-right: 15pt;
---kite9-padding-bottom: 15pt;
---kite9-padding-left: 15pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
-}
-
-*[layout="right"] {
---kite9-layout: RIGHT;
-}
-
-*[layout="down"] {
---kite9-layout: DOWN;
-}
-
-*[layout="up"] {
---kite9-layout: UP;
-}
-
-*[layout="left"] {
---kite9-layout: LEFT;
-}
-
-*[layout="horizontal"] {
---kite9-layout: HORIZONTAL;
-}
-
-*[layout="vertical"] {
---kite9-layout: VERTICAL;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-format="text-fixed"] {
---kite9-type: TEXT;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-format="image"], *[k9-format="image-fixed"] {
---kite9-type: SVG;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
-}
-
-*[k9-format="shape"] {
---kite9-type: CONTAINER;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-format="container"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-image-captioned"], *[k9-format="text-shape-captioned"], *[k9-format="text-shape-portrait"], *[k9-format="text-shape-inline"] {
---kite9-type: CONTAINER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 16pt;
---kite9-margin-right: 16pt;
---kite9-margin-bottom: 16pt;
---kite9-margin-left: 16pt;
-}
-
-*[k9-format="text-image-portrait"], *[k9-format="text-shape-portrait"] {
---kite9-layout: DOWN;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="depiction"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="depiction"] {
---kite9-type: CONTAINER;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
---kite9-horizontal-align: CENTER;
---kite9-connections: SEPARATE;
-}
-
-*[k9-format="text-shape-inline"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-image-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-portrait"] &gt; g &gt; *[k9-elem="caption"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-type: TEXT;
---kite9-padding-top: 11pt;
---kite9-padding-right: 11pt;
---kite9-padding-bottom: 11pt;
---kite9-padding-left: 11pt;
---kite9-horizontal-align: CENTER;
---kite9-vertical-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 15pt;
---kite9-margin-right: 15pt;
---kite9-margin-bottom: 15pt;
---kite9-margin-left: 15pt;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] {
---kite9-type: LINK;
-}
-
-*[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="from"], *[k9-format="text-shape-captioned"] &gt; g &gt; *[k9-elem="shape-align"] &gt; g &gt; *[k9-elem="to"] {
---kite9-type: LINK_END;
-}
-
-*[k9-elem="diagram"] {
---kite9-type: DIAGRAM;
---kite9-padding-top: 15pt;
---kite9-padding-bottom: 15pt;
---kite9-padding-left: 15pt;
---kite9-padding-right: 15pt;
---kite9-traversal-bottom: LEAVING;
---kite9-traversal-left: LEAVING;
---kite9-traversal-right: LEAVING;
---kite9-traversal-top: LEAVING;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-elem="diagram"] {
---kite9-type: DIAGRAM;
---kite9-padding-top: 15pt;
---kite9-padding-bottom: 15pt;
---kite9-padding-left: 15pt;
---kite9-padding-right: 15pt;
---kite9-traversal-bottom: LEAVING;
---kite9-traversal-left: LEAVING;
---kite9-traversal-right: LEAVING;
---kite9-traversal-top: LEAVING;
---kite9-min-width: 50pt;
---kite9-min-height: 50pt;
-}
-
-*[k9-elem="artifact"], *[k9-elem="document"], *[k9-elem="users"], *[k9-elem="computer"], *[k9-elem="interface"], *[k9-elem="component"], *[k9-elem="channel-artifact"], *[k9-elem="internal-model-artifact"], *[k9-elem="protocol-artifact"], *[k9-elem="agent-artifact"], *[k9-elem="image-artifact"], *[k9-elem="generic-artifact"] {
+*[k9-elem="big-image"] {
 --kite9-margin-top: 10pt;
 --kite9-margin-right: 10pt;
 --kite9-margin-bottom: 10pt;
@@ -2259,90 +588,142 @@ text-align: middle;
 --kite9-min-height: 140pt;
 }
 
-*[k9-elem="arrow"] {
---kite9-padding-top: 8pt;
---kite9-padding-right: 5pt;
---kite9-padding-bottom: 8pt;
---kite9-padding-left: 5pt;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-connections: SEPARATE;
-font-size: 14pt;
-font-weight: 500;
---kite9-link-inset: 3pt;
-}
-
-*[k9-elem="arrow"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-margin-top: 0pt;
---kite9-margin-right: 0pt;
---kite9-margin-bottom: 0pt;
---kite9-margin-left: 0pt;
---kite9-padding-top: 0pt;
---kite9-padding-right: 0pt;
---kite9-padding-bottom: 0pt;
+*[k9-elem="diagram"].principle {
+fill-opacity: 1;
+fill: white;
+--kite9-layout: VERTICAL;
 --kite9-padding-left: 0pt;
+--kite9-padding-right: 0pt;
+--kite9-padding-top: 0pt;
+--kite9-padding-bottom: 0pt;
 }
 
-*[k9-elem="planner"] {
+*[k9-elem="container"].principle-top {
 --kite9-layout: GRID;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
-}
-
-*[k9-elem="planner-cell"], *[k9-elem="planner-header"] {
---kite9-usage: REGULAR;
---kite9-vertical-align: CENTER;
---kite9-horizontal-align: CENTER;
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
-text-align: middle;
---kite9-min-width: 230pt;
---kite9-min-height: 30pt;
---kite9-traversal-bottom: ALWAYS;
---kite9-traversal-left: ALWAYS;
---kite9-traversal-right: ALWAYS;
---kite9-traversal-top: ALWAYS;
---kite9-padding-top: 10pt;
---kite9-padding-right: 10pt;
---kite9-padding-bottom: 10pt;
---kite9-padding-left: 10pt;
---kite9-layout: RIGHT;
-}
-
-*[k9-elem="planner-header"] {
---kite9-min-width: 60pt;
---kite9-min-height: 30pt;
-}
-
-*[k9-elem="action"] {
---kite9-horizontal-sizing: MINIMIZE;
---kite9-vertical-sizing: MINIMIZE;
---kite9-margin-top: 10pt;
---kite9-margin-right: 10pt;
---kite9-margin-bottom: 10pt;
---kite9-margin-left: 10pt;
---kite9-padding-top: 12pt;
---kite9-padding-right: 22pt;
---kite9-padding-bottom: 12pt;
---kite9-padding-left: 12pt;
-}
-
-*[k9-elem="action"].left {
---kite9-padding-left: 22pt;
---kite9-padding-right: 12pt;
-}
-
-*[k9-elem="action"] &gt; g &gt; *[k9-elem="caption"] {
---kite9-margin-top: 0pt;
---kite9-margin-right: 0pt;
---kite9-margin-bottom: 0pt;
---kite9-margin-left: 0pt;
+--kite9-grid-columns: 2;
+--kite9-grid-rows: 2;
 --kite9-padding-top: 0pt;
 --kite9-padding-right: 0pt;
 --kite9-padding-bottom: 0pt;
 --kite9-padding-left: 0pt;
+--kite9-margin-top: 0pt;
+--kite9-margin-right: 0pt;
+--kite9-margin-bottom: 0pt;
+--kite9-margin-left: 0pt;
+stroke: rgb(245, 245, 245);
+stroke-width: 7pt;
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-min-width: 1200px;
+--kite9-min-height: 675px;
+}
+
+*[k9-elem="group"].principle-left-top {
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-layout: DOWN;
+--kite9-padding-top: 0;
+--kite9-margin-top: 0pt;
+}
+
+*[k9-elem="group"].principle-right-top {
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MINIMIZE;
+--kite9-layout: DOWN;
+--kite9-padding-top: 0;
+--kite9-padding-right: 0;
+--kite9-padding-bottom: 0;
+--kite9-padding-left: 30pt;
+--kite9-margin-top: 0pt;
+--kite9-margin-right: 0pt;
+--kite9-margin-bottom: 0pt;
+--kite9-margin-left: 0pt;
+}
+
+*[k9-elem="group"].principle-left-bottom {
+--kite9-horizontal-sizing: MINIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-layout: DOWN;
+--kite9-padding-top: 0;
+--kite9-padding-right: 0;
+--kite9-padding-bottom: 0;
+--kite9-padding-left: 0;
+--kite9-margin-top: 0pt;
+--kite9-margin-right: 0pt;
+--kite9-margin-bottom: 0pt;
+--kite9-margin-left: 0pt;
+}
+
+*[k9-elem="group"].principle-right-bottom {
+--kite9-horizontal-sizing: MAXIMIZE;
+--kite9-vertical-sizing: MAXIMIZE;
+--kite9-layout: DOWN;
+--kite9-padding-top: 0;
+--kite9-padding-right: 0;
+--kite9-padding-bottom: 0;
+--kite9-padding-left: 30pt;
+--kite9-margin-top: 0pt;
+--kite9-margin-right: 0pt;
+--kite9-margin-bottom: 0pt;
+--kite9-margin-left: 0pt;
+}
+
+*[k9-elem="risk-first-logo"].principle {
+--kite9-vertical-align: BOTTOM;
+--kite9-padding-top: 0;
+--kite9-padding-right: 0;
+--kite9-padding-bottom: 0;
+--kite9-padding-left: 0;
+--kite9-margin-top: 0;
+--kite9-margin-right: 0;
+--kite9-margin-bottom: 0;
+--kite9-margin-left: 0;
+}
+
+*[k9-elem="page-title"].principle-site {
+font-family: "Metropolis";
+font-size: 14pt;
+fill: rgb(97, 162, 161);
+letter-spacing: 1.4;
+font-weight: 600;
+text-align: middle;
+--kite9-margin-top: 0;
+}
+
+*[k9-elem="page-title"].number {
+font-family: "Metropolis";
+font-size: 60pt;
+fill: rgb(245, 62, 121);
+indent: 0;
+font-weight: 600;
+--kite9-padding-bottom: 0;
+--kite9-margin-bottom: 0;
+}
+
+*[k9-elem="page-title"].principle {
+font-family: "Metropolis";
+font-size: 50pt;
+font-weight: 500;
+fill: rgb(0, 0, 0);
+text-align: full;
+--kite9-padding-bottom: 0;
+--kite9-margin-bottom: 0;
+--kite9-margin-right: 30pt;
+}
+
+*[k9-elem="page-summary"].principle {
+font-family: "Metropolis";
+font-size: 25pt;
+--kite9-text-bounds-width: 600pt;
+--kite9-padding-top: 0pt;
+--kite9-padding-right: 0pt;
+--kite9-padding-bottom: 0pt;
+--kite9-padding-left: 0pt;
+fill: rgb(97, 162, 161);
+indent: 0;
+text-align: middle;
+font-weight: 300;
+font-style: italic;
 }
 
 *[k9-texture="none"] {
@@ -2371,6 +752,7 @@ fill-opacity: 1;
 fill: white;
 fill-opacity: 0.01;
 stroke: black;
+stroke-opacity: 1;
 }
 
 *[k9-texture~="foreground"] {
@@ -2393,13 +775,13 @@ fill: none;
 stroke: none;
 }
 
-*[k9-texture="background"][k9-elem="container"].solid &gt; * {
+*[k9-texture="background"][k9-elem="container"].solid &gt; g &gt; rect {
 stroke: black;
 stroke-width: 1pt;
 stroke-dasharray: none;
 }
 
-*[k9-texture="background"][k9-elem="container"].dotted &gt; * {
+*[k9-texture="background"][k9-elem="container"].dotted &gt; g &gt; rect {
 stroke: black;
 stroke-width: 1pt;
 stroke-dasharray: 4 4;
@@ -2418,6 +800,10 @@ fill-opacity: 0.01;
 stroke: black;
 stroke-width: 2pt;
 fill: none;
+}
+
+*[k9-elem="link"].invisible *[k9-elem="link-body"] {
+stroke: none;
 }
 
 *[k9-elem="link"].dotted *[k9-elem="link-body"] {
@@ -2506,6 +892,10 @@ fill-opacity: 0.01;
 stroke: black;
 stroke-width: 2pt;
 fill: none;
+}
+
+*[k9-elem="link"].invisible *[k9-elem="link-body"] {
+stroke: none;
 }
 
 *[k9-elem="link"].dotted *[k9-elem="link-body"] {
@@ -2695,6 +1085,8 @@ fill: rgb(255, 89, 86);
 --kite9-padding-right: 200pt;
 --kite9-padding-bottom: 200pt;
 --kite9-padding-left: 200pt;
+--kite9-min-width: 50pt;
+--kite9-min-height: 50pt;
 }
 }
 
@@ -2755,9 +1147,20 @@ fill-opacity: 0;
 stroke-opacity: 0;
 }
 
+*[k9-elem="diagram"][k9-texture="none"] {
+fill: white;
+fill-opacity: 1;
+}
+
 *[k9-texture] {
 font-family: "metropolis";
 font-size: 12pt;
+}
+
+*[k9-texture="artifact"] {
+fill: white;
+fill-opacity: 0.01;
+stroke: none;
 }
 
 *[k9-texture="artifact"] text {
@@ -2768,8 +1171,27 @@ text-align: middle;
 --kite9-text-bounds-width: 100pt;
 }
 
-*[k9-elem="label-inner"] {
+*[k9-elem="description"] text {
+font-style: italic;
 font-size: 12pt;
+font-weight: 200;
+--kite9-label-placement: RIGHT;
+}
+
+*[k9-elem="label-inner"] &gt; g &gt; *[k9-elem="caption"] {
+--kite9-padding-top: 0;
+--kite9-padding-right: 0;
+--kite9-padding-bottom: 0;
+--kite9-padding-left: 0;
+}
+
+*[k9-elem="label-inner"] {
+stroke: none;
+font-size: 12pt;
+}
+
+*[k9-elem="caption"] text {
+text-align: middle;
 }
 
 *[k9-elem="arrow"] {
@@ -2777,7 +1199,7 @@ fill: black;
 fill-opacity: 1;
 }
 
-*[k9-elem="arrow"] &gt; g &gt; *[k9-elem="caption"] &gt; g &gt; text {
+*[k9-elem="arrow"] &gt; g &gt; *[k9-elem="caption"] &gt; text {
 fill: white;
 fill-opacity: 1;
 }
@@ -2790,7 +1212,7 @@ fill-opacity: 1;
 --kite9-link-minimum-length: 30pt;
 }
 
-*[k9-elem="action"] *[k9-texture="background"] {
+*[k9-elem="glyph"][k9-texture="background"] &gt; g &gt; rect, *[k9-elem="action"] *[k9-texture="background"] {
 fill: url(#risk-background);
 stroke: black;
 }
@@ -2821,7 +1243,7 @@ fill: black;
 text-align: middle;
 }
 
-*[k9-elem="risk"][k9-texture="background"] {
+*[k9-elem="risk"][k9-texture="background"], *[k9-elem="block"][k9-texture="background"] {
 fill: url(#risk-background);
 stroke: black;
 }
@@ -2835,6 +1257,135 @@ stroke: rgb(174, 174, 174);
 stroke-width: 1pt;
 }
 
-</style><linearGradient x1="0%" y1="0%" x2="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="risk-background" xlink:show="other"><stop stop-color="#FFF" offset="0%"/><stop stop-color="#DDD" offset="100%"/></linearGradient><defs id="links-markers"><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"/><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"/><marker refX="1" refY="3" orient="auto" id="strike-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="strike-marker" d="         M7,0 L5,6 h-1 L6,0z"/></marker><marker refX="7" refY="3" orient="auto" id="strike-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="strike-marker" d="         M3,0 L1,6 h-1 L2,0z"/></marker><marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-start-marker" markerWidth="6" refX="3"><circle r="2" class="circle-marker" cx="3" cy="3"/></marker><marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-end-marker" markerWidth="6" refX="3"><circle r="2" class="circle-marker" cx="3" cy="3"/></marker><marker refX="2" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/></marker><marker refX="6" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/></marker><marker refX="5" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="open-diamond-marker" d="         M0,3 L3,1 L6,3 L5,3 L3,1.66 L1,3             L3,4.33 L5,3 L6,3 L3,5 L0,3"/></marker><marker refX="1" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="open-diamond-marker" d="         M6,3 L3,1 L0,3 L1,3 L3,1.66 L5,3             L3,4.33 L1,3 L0,3 L3,5 L6,3"/></marker><marker refX="4" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6 L4,4 L2,2"/></marker><marker refX="4" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6 L4,4 L6,2"/></marker><marker refX="1" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="open-arrow-marker" d="         M6,4 L1,2 L1,3 L4,4 L1,5 L1,6 L6,4         M2,3 h-1 v2 h1z"/></marker><marker refX="6" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="open-arrow-marker" d="         M1,4 L6,2 L6,3 L3,4 L6,5 L6,6 L1,4         M5,3 h1 v2 h-1z"/></marker><marker refX="4" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><polygon class="arrow-marker" points="2,4 6,2 6,6"/></marker><marker refX="4" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><polygon class="arrow-marker" points="6,4 2,2 2,6"/></marker><marker refX="5" refY="4" orient="auto" id="crow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="crow-marker" d="          M1,4 L4,1 l0.66 0.66 L2.3,4z          M1,4 L4,7 l0.66 -0.66 L2.3,4z"/></marker><marker refX="1" refY="4" orient="auto" id="crow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="crow-marker" d="          M5,4 L2,1 l-0.66 0.66 L3.66,4z          M5,4 L2,7 l-0.66 -0.66 L3.66,4z"/></marker><marker refX="2" refY="2" orient="auto" id="square-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><rect x="0" width="4" height="4" y="0" class="square-marker"/></marker><marker refX="2" refY="2" orient="auto" id="square-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><rect x="0" width="4" height="4" y="0" class="square-marker"/></marker></defs><defs id="container-indicators"><marker refX="3" refY="3" fill="none" orient="auto" id="indicator-arrow" markerHeight="15" stroke="none" preserveAspectRatio="xMidYMid meet" markerWidth="15"><path d="M0,0 L3,3 L0,6" k9-highlight="stroke"/></marker></defs><defs id="links-markers"><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"/><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"/><marker refX="1" refY="3" orient="auto" id="strike-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="strike-marker" d="         M7,0 L5,6 h-1 L6,0z"/></marker><marker refX="7" refY="3" orient="auto" id="strike-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="strike-marker" d="         M3,0 L1,6 h-1 L2,0z"/></marker><marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-start-marker" markerWidth="6" refX="3"><circle r="2" class="circle-marker" cx="3" cy="3"/></marker><marker refY="3" preserveAspectRatio="xMidYMid meet" markerHeight="6" id="circle-end-marker" markerWidth="6" refX="3"><circle r="2" class="circle-marker" cx="3" cy="3"/></marker><marker refX="2" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/></marker><marker refX="6" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/></marker><marker refX="5" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="open-diamond-marker" d="         M0,3 L3,1 L6,3 L5,3 L3,1.66 L1,3             L3,4.33 L5,3 L6,3 L3,5 L0,3"/></marker><marker refX="1" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"><path class="open-diamond-marker" d="         M6,3 L3,1 L0,3 L1,3 L3,1.66 L5,3             L3,4.33 L1,3 L0,3 L3,5 L6,3"/></marker><marker refX="4" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6 L4,4 L2,2"/></marker><marker refX="4" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6 L4,4 L6,2"/></marker><marker refX="1" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="open-arrow-marker" d="         M6,4 L1,2 L1,3 L4,4 L1,5 L1,6 L6,4         M2,3 h-1 v2 h1z"/></marker><marker refX="6" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="open-arrow-marker" d="         M1,4 L6,2 L6,3 L3,4 L6,5 L6,6 L1,4         M5,3 h1 v2 h-1z"/></marker><marker refX="4" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><polygon class="arrow-marker" points="2,4 6,2 6,6"/></marker><marker refX="4" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><polygon class="arrow-marker" points="6,4 2,2 2,6"/></marker><marker refX="5" refY="4" orient="auto" id="crow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="crow-marker" d="          M1,4 L4,1 l0.66 0.66 L2.3,4z          M1,4 L4,7 l0.66 -0.66 L2.3,4z"/></marker><marker refX="1" refY="4" orient="auto" id="crow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><path class="crow-marker" d="          M5,4 L2,1 l-0.66 0.66 L3.66,4z          M5,4 L2,7 l-0.66 -0.66 L3.66,4z"/></marker><marker refX="2" refY="2" orient="auto" id="square-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><rect x="0" width="4" height="4" y="0" class="square-marker"/></marker><marker refX="2" refY="2" orient="auto" id="square-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"><rect x="0" width="4" height="4" y="0" class="square-marker"/></marker></defs><defs id="container-indicators"><marker refX="3" refY="3" fill="none" orient="auto" id="indicator-arrow" markerHeight="15" stroke="none" preserveAspectRatio="xMidYMid meet" markerWidth="15"><path d="M0,0 L3,3 L0,6" k9-highlight="stroke"/></marker></defs><script xlink:actuate="onLoad" xlink:type="simple" id="adl:markup" xlink:show="other" type="text/adl-svg+xml;base64">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48ZGlhZ3JhbSB4bWxucz0iaHR0cDovL3d3dy5raXRlOS5vcmcvc2NoZW1hL2FkbCIgeG1sbnM6eHNsdD0iaHR0cDovL3d3dy5raXRlOS5vcmcvc2NoZW1hL3hzbHQiIGlkPSJkaWEiIG5hbWU9IlBhdHRlcm4gTGFuZ3VhZ2UiIHhzbHQ6dGVtcGxhdGU9Ii9wdWJsaWMvdGVtcGxhdGVzL3Jpc2stZmlyc3Qvcmlzay1maXJzdC10ZW1wbGF0ZS54c2wiPgogICAgICAgICAKICAgIDxyaXNrIGNsYXNzPSJnZW5lcmljIiBocmVmPSIvcHVibGljL3RlbXBsYXRlcy9yaXNrLWZpcnN0L3JlZGVzaWduL2FydGlmYWN0cy9tZXRob2RvbG9neV92Mi5zdmciIGlkPSJpZF8wIj4KICAgICAgPGNvZGUgaWQ9ImMiPk1ldGhvZDwvY29kZT4KICAgICAgPHRpdGxlIGlkPSJkIj5Tb2Z0d2FyZSBNZXRob2RvbG9neTwvdGl0bGU+CiAgICA8L3Jpc2s+CiAgICAKPC9kaWFncmFtPg==</script></defs><g xmlns:xslt="http://www.kite9.org/schema/xslt" k9-contains="connected" k9-palette="connected" k9-texture="none" k9-info="margin: 20.0 20.0 20.0 20.0; padding: 20.0 20.0 20.0 20.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=200.0, h=254.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@4100b8b5; " id="dia" k9-format="container" k9-ui="layout label" name="Pattern Language" k9-elem="diagram" xslt:template="/public/templates/risk-first/risk-first-template.xsl"><g><!--shape--><rect x="0" y="0" width="200" pp:y="$y" pp:height="$height" pp:x="$x" rx="0" ry="0" height="254" pp:width="$width"/></g><g><!--content--><g k9-contains="connected" href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(20.0,20.0)" k9-palette="connected risk" k9-texture="background" k9-info="margin: 20.0 20.0 20.0 20.0; padding: 14.666666984558105 14.666666984558105 14.666666984558105 14.666666984558105; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=20.0, h=20.0); rect-size: BasicDimension2D(w=160.0, h=214.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7386842e; " class="generic" id="id_0" k9-format="container" k9-ui="drag delete align connect autoconnect vote edit" k9-elem="risk"><g k9-highlight="pulse"><!--shape--><rect x="0" y="0" width="160" pp:y="$y" pp:height="$height" pp:x="$x" rx="5pt" ry="5pt" height="214" pp:width="$width"/></g><g><!--content--><g k9-contains="connected" transform="translate(27.2,43.3)" k9-palette="connected" k9-texture="foreground" k9-info="margin: 0.0 0.0 20.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=50.0, h=34.0); rect-size: BasicDimension2D(w=101.0, h=35.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@80cc48; " id="c" k9-format="text-fixed" k9-ui="orphan edit" k9-elem="code"><g k9-highlight="pulse"><!--content--><g rendered="true"><g><path d="M2.7595 -20.1476 L4.6311 -20.1476 L12.3177 -5.7196 L20.0043 -20.1476 L21.8854 -20.1476 L21.8854 0 L20.0043 0 L20.0043 -16.1658 L12.3177 -1.7283 L4.6311 -16.1658 L4.6311 0 L2.7595 0 L2.7595 -20.1476 ZM33.6444 -1.3177 Q35.0862 -1.3177 36.4899 -1.8429 Q37.9031 -2.3776 38.6861 -3.2274 L39.8319 -1.9957 Q38.8961 -0.9644 37.1201 -0.3056 Q35.344 0.3533 33.6444 0.3533 Q31.6487 0.3533 29.8918 -0.697 Q28.1348 -1.7569 27.0845 -3.5712 Q26.0437 -5.395 26.0437 -7.6293 Q26.0437 -9.8255 27.0558 -11.6302 Q28.068 -13.4349 29.7868 -14.4757 Q31.5055 -15.5165 33.5298 -15.5165 Q35.7546 -15.5165 37.3684 -14.447 Q38.9821 -13.3776 39.8414 -11.4201 Q40.7104 -9.4722 40.7104 -6.8655 L27.8961 -6.8655 Q28.0394 -5.309 28.8319 -4.0295 Q29.6244 -2.7595 30.8657 -2.0339 Q32.1166 -1.3177 33.6444 -1.3177 ZM33.5871 -13.8455 Q31.3527 -13.8455 29.7868 -12.3655 Q28.2208 -10.8854 27.9248 -8.5365 L38.8961 -8.5365 Q38.7243 -10.9141 37.3111 -12.375 Q35.9074 -13.8455 33.5871 -13.8455 ZM51.9762 -0.6207 Q51.3938 -0.1432 50.6585 0.105 Q49.9233 0.3533 49.1594 0.3533 Q47.6412 0.3533 46.6386 -0.7257 Q45.6455 -1.8142 45.6455 -3.5234 L45.6455 -13.4922 L43.182 -13.4922 L43.182 -15.1632 L45.6455 -15.1632 L45.6455 -19.3264 L47.4597 -19.3264 L47.4597 -15.1632 L51.2792 -15.1632 L51.2792 -13.4922 L47.4597 -13.4922 L47.4597 -3.5234 Q47.4597 -2.5495 47.9849 -1.9288 Q48.5196 -1.3177 49.2835 -1.3177 Q49.8087 -1.3177 50.2575 -1.4896 Q50.7158 -1.671 51.0405 -1.967 L51.9762 -0.6207 ZM61.9204 -15.5165 Q63.5628 -15.5165 64.8709 -14.7812 Q66.1791 -14.046 66.8952 -12.7283 Q67.6114 -11.4106 67.6114 -9.7396 L67.6114 0 L65.7971 0 L65.7971 -9.5009 Q65.7971 -11.4106 64.6513 -12.6233 Q63.5055 -13.8455 61.6912 -13.8455 Q60.364 -13.8455 59.2754 -13.2821 Q58.1965 -12.7283 57.5662 -11.7543 Q56.936 -10.7899 56.936 -9.6536 L56.936 0 L55.1218 0 L55.1218 -20.5009 L56.936 -20.5009 L56.936 -12.671 Q57.5567 -13.9314 58.9126 -14.724 Q60.278 -15.5165 61.9204 -15.5165 ZM79.1145 0.3533 Q77.0329 0.3533 75.2091 -0.7257 Q73.3949 -1.8142 72.3159 -3.6476 Q71.2465 -5.4809 71.2465 -7.6007 Q71.2465 -9.7109 72.3159 -11.5252 Q73.3949 -13.349 75.2091 -14.428 Q77.0329 -15.5165 79.1145 -15.5165 Q81.1961 -15.5165 83.0008 -14.428 Q84.8055 -13.349 85.8749 -11.5252 Q86.9444 -9.7109 86.9444 -7.6007 Q86.9444 -5.4809 85.8749 -3.6476 Q84.8055 -1.8142 83.0008 -0.7257 Q81.1961 0.3533 79.1145 0.3533 ZM79.1145 -1.3177 Q80.6996 -1.3177 82.0555 -2.1675 Q83.4209 -3.0174 84.223 -4.4688 Q85.0347 -5.9297 85.0347 -7.6007 Q85.0347 -9.2717 84.223 -10.704 Q83.4209 -12.1458 82.0555 -12.9957 Q80.6996 -13.8455 79.1145 -13.8455 Q77.5008 -13.8455 76.1353 -12.9957 Q74.7699 -12.1458 73.9583 -10.704 Q73.1562 -9.2717 73.1562 -7.6007 Q73.1562 -5.8915 73.9583 -4.4497 Q74.7699 -3.0174 76.1353 -2.1675 Q77.5008 -1.3177 79.1145 -1.3177 ZM104.3366 -20.5009 L104.3366 0 L102.5223 0 L102.5223 -2.9601 Q101.6152 -1.4036 100.1543 -0.5252 Q98.7029 0.3533 96.86 0.3533 Q94.9216 0.3533 93.3366 -0.6875 Q91.7515 -1.7283 90.8444 -3.5425 Q89.9372 -5.3663 89.9372 -7.6007 Q89.9372 -9.8255 90.8444 -11.6302 Q91.7515 -13.4349 93.3366 -14.4757 Q94.9216 -15.5165 96.86 -15.5165 Q98.7029 -15.5165 100.1543 -14.638 Q101.6152 -13.7595 102.5223 -12.2031 L102.5223 -20.5009 L104.3366 -20.5009 ZM97.1846 -1.3177 Q98.7315 -1.3177 99.9442 -2.1198 Q101.1664 -2.9314 101.8444 -4.3542 Q102.5223 -5.7769 102.5223 -7.6007 Q102.5223 -9.4149 101.8444 -10.8377 Q101.1664 -12.2604 99.9442 -13.053 Q98.7315 -13.8455 97.1846 -13.8455 Q95.6855 -13.8455 94.4537 -13.0243 Q93.222 -12.2031 92.5154 -10.7804 Q91.8088 -9.3576 91.8088 -7.6007 Q91.8088 -5.8342 92.5154 -4.3924 Q93.222 -2.9601 94.4537 -2.1389 Q95.6855 -1.3177 97.1846 -1.3177 Z" stroke="none"/></g></g></g><!--decoration--></g><g k9-contains="connected" href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(47.5,69.5)" k9-palette="connected" k9-texture="none" k9-info="margin: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=67.0, h=89.0); rect-size: BasicDimension2D(w=67.0, h=67.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@7a84ee07; " class="generic" id="id_0@image" k9-format="image" k9-ui="image" k9-elem="image"><g k9-highlight="pulse"><!--content--><image x="0" y="0" width="50pt" xlink:href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5l&#xA;cmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjEuMCwgU1ZHIEV4cG9ydCBQbHVn&#xA;LUluIC4gU1ZHIFZlcnNpb246IAoJNi4wMCBCdWlsZCAwKSAtLT4KPHN2ZyB2ZXJz&#xA;aW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv&#xA;MjAwMC9zdmciCgl4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94&#xA;bGluayIgeD0iMHB0IiB5PSIwcHQiCgl2aWV3Qm94PSIwIDAgODUgODUiIHN0eWxl&#xA;PSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDg1IDg1OyIKCXhtbDpzcGFjZT0i&#xA;cHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHsKCQlmaWxs&#xA;Om5vbmU7CgkJc3Ryb2tlOiMxQTE3MUI7CgkJc3Ryb2tlLXdpZHRoOjM7CgkJc3Ry&#xA;b2tlLWxpbmVjYXA6cm91bmQ7CgkJc3Ryb2tlLW1pdGVybGltaXQ6MTA7Cgl9Cjwv&#xA;c3R5bGU+CjxnPgoJPHBhdGggY2xhc3M9InN0MCIKCWQ9Ik0yNS42LDIyLjVoNTBj&#xA;MC4yLDAsMC4zLDAuMSwwLjMsMC4zdjE5LjNjMCwwLjItMC4yLDAuNC0wLjQsMC40&#xA;aC0xNiIgLz4KCTxwYXRoIGNsYXNzPSJzdDAiCglkPSJNNjIuNyw0NmwtMy4zLTMu&#xA;MmMtMC4yLTAuMi0wLjItMC40LDAtMC42bDMuMy0zLjIiIC8+CjwvZz4KPGc+Cgk8&#xA;cGF0aCBjbGFzcz0ic3QwIgoJZD0iTTI1LjcsNDIuNWgtMTZjLTAuMiwwLTAuMyww&#xA;LjEtMC4zLDAuM3YxOS4zYzAsMC4yLDAuMiwwLjQsMC40LDAuNGg0OSIgLz4KCTxw&#xA;YXRoIGNsYXNzPSJzdDAiCglkPSJNNTUuNiw2NmwzLjMtMy4yYzAuMi0wLjIsMC4y&#xA;LTAuNCwwLTAuNmwtMy4zLTMuMiIgLz4KPC9nPgo8Y2lyY2xlIGNsYXNzPSJzdDAi&#xA;IGN4PSI0Mi41IiBjeT0iNDIuNSIgcj0iNi45IiAvPgo8cGF0aCBjbGFzcz0ic3Qw&#xA;IgoJZD0iTTE1LjQsMjkuMkgyLjhjLTAuMywwLTAuNS0wLjItMC41LTAuNVYxNi4y&#xA;YzAtMC4zLDAuMi0wLjUsMC41LTAuNWgxMi42YzAuMywwLDAuNSwwLjIsMC41LDAu&#xA;NXYxMi42CglDMTUuOSwyOSwxNS42LDI5LjIsMTUuNCwyOS4yeiIgLz4KPHBhdGgg&#xA;Y2xhc3M9InN0MCIKCWQ9Ik03NC44LDU1LjVsLTYuMiwxM2MtMC4xLDAuMywwLjEs&#xA;MC43LDAuNCwwLjdIODJjMC40LDAsMC42LTAuNCwwLjQtMC43bC02LjctMTNDNzUu&#xA;NSw1NS4yLDc1LDU1LjIsNzQuOCw1NS41eiIgLz4KPC9zdmc+Cg==" xlink:type="simple" xlink:actuate="onLoad" height="50pt" preserveAspectRatio="xMidYMid meet" xlink:show="embed"/><rect x="0" y="0" width="50pt" rx="5pt" ry="5pt" height="50pt"/></g><!--decoration--></g><g k9-contains="connected" transform="translate(30.5,172.0)" k9-palette="connected" k9-texture="foreground" k9-info="margin: 20.0 20.0 20.0 20.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=52.0, h=176.0); rect-size: BasicDimension2D(w=97.0, h=38.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@426d9695; " id="d" k9-format="text-fixed" k9-ui="orphan edit" k9-elem="title"><g k9-highlight="pulse"><!--content--><g rendered="true"><g><path d="M18.5729 0.1771 Q17.3229 0.1771 16.2031 -0.276 Q15.0833 -0.7344 14.2344 -1.5677 L14.7344 -2.1927 Q15.4844 -1.4375 16.4844 -1.0156 Q17.4844 -0.5938 18.6042 -0.5938 Q19.4688 -0.5938 20.1406 -0.8802 Q20.8125 -1.1667 21.1719 -1.6771 Q21.5312 -2.1927 21.5312 -2.8177 Q21.5312 -3.7135 20.776 -4.2552 Q20.026 -4.8021 18.3333 -5.1979 Q16.4271 -5.6302 15.5781 -6.276 Q14.7344 -6.9271 14.7344 -8.0625 Q14.7344 -8.9583 15.1875 -9.6719 Q15.6458 -10.3854 16.4583 -10.7917 Q17.276 -11.1979 18.3021 -11.1979 Q19.3542 -11.1979 20.3281 -10.7917 Q21.3073 -10.3854 22.1094 -9.6302 L21.6302 -9.0104 Q20.9062 -9.6979 20.0417 -10.0625 Q19.1823 -10.4323 18.25 -10.4323 Q17.4688 -10.4323 16.849 -10.125 Q16.2344 -9.8229 15.8802 -9.3021 Q15.5312 -8.7865 15.5312 -8.1302 Q15.5312 -7.3281 16.276 -6.849 Q17.0208 -6.3698 18.7344 -5.9531 Q20.6042 -5.5052 21.4688 -4.7969 Q22.3333 -4.0938 22.3333 -2.8802 Q22.3333 -2.0156 21.8698 -1.3177 Q21.4062 -0.625 20.5573 -0.224 Q19.7083 0.1771 18.5729 0.1771 ZM28.2533 0.1927 Q27.1179 0.1927 26.1231 -0.3958 Q25.1335 -0.9896 24.545 -1.9896 Q23.9616 -2.9896 23.9616 -4.1458 Q23.9616 -5.2969 24.545 -6.2865 Q25.1335 -7.2812 26.1231 -7.8698 Q27.1179 -8.4635 28.2533 -8.4635 Q29.3887 -8.4635 30.3731 -7.8698 Q31.3575 -7.2812 31.9408 -6.2865 Q32.5241 -5.2969 32.5241 -4.1458 Q32.5241 -2.9896 31.9408 -1.9896 Q31.3575 -0.9896 30.3731 -0.3958 Q29.3887 0.1927 28.2533 0.1927 ZM28.2533 -0.5417 Q29.1804 -0.5417 29.9721 -1.0365 Q30.7637 -1.5365 31.2429 -2.3594 Q31.7221 -3.1823 31.7221 -4.1458 Q31.7221 -5.0885 31.2429 -5.9167 Q30.7637 -6.75 29.9616 -7.2396 Q29.1648 -7.7292 28.2533 -7.7292 Q27.3262 -7.7292 26.5241 -7.2396 Q25.7221 -6.75 25.2429 -5.9167 Q24.7637 -5.0885 24.7637 -4.1458 Q24.7637 -3.1823 25.2429 -2.349 Q25.7221 -1.5208 26.5241 -1.0312 Q27.3262 -0.5417 28.2533 -0.5417 ZM36.0785 -8.2708 L38.3025 -8.2708 L38.3025 -7.5365 L36.0785 -7.5365 L36.0785 0 L35.292 0 L35.292 -7.5365 L33.8858 -7.5365 L33.8858 -8.2708 L35.292 -8.2708 L35.292 -9.4062 Q35.292 -10.3385 35.7972 -10.9271 Q36.3025 -11.5208 37.0837 -11.5208 Q37.9639 -11.5208 38.6202 -10.9896 L38.2191 -10.401 Q37.7868 -10.7865 37.1306 -10.7865 Q36.667 -10.7865 36.3702 -10.3906 Q36.0785 -10 36.0785 -9.4062 L36.0785 -8.2708 ZM44.1242 -0.3385 Q43.4523 0.1927 42.5877 0.1927 Q41.8065 0.1927 41.3013 -0.3958 Q40.7961 -0.9896 40.7961 -1.9219 L40.7961 -7.5365 L39.3898 -7.5365 L39.3898 -8.2708 L40.7961 -8.2708 L40.7961 -10.5417 L41.5825 -10.5417 L41.5825 -8.2708 L43.7075 -8.2708 L43.7075 -7.5365 L41.5825 -7.5365 L41.5825 -1.9219 Q41.5825 -1.3281 41.8742 -0.9323 Q42.1711 -0.5417 42.6346 -0.5417 Q42.9263 -0.5417 43.2127 -0.6458 Q43.4992 -0.75 43.7231 -0.9427 L44.1242 -0.3385 ZM45.1666 -8.2708 L45.9791 -8.2708 L48.3332 -1.0417 L50.7343 -8.2708 L51.4061 -8.2708 L53.8176 -1.0417 L56.1561 -8.2708 L56.9739 -8.2708 L54.2343 0 L53.3697 0 L51.0676 -7.0104 L48.7499 0 L47.8853 0 L45.1666 -8.2708 ZM61.9949 -8.4635 Q63.5157 -8.4635 64.3699 -7.5208 Q65.2293 -6.5781 65.2293 -5.0417 L65.2293 0 L64.4428 0 L64.4428 -1.3281 Q63.9949 -0.6094 63.1043 -0.2083 Q62.2188 0.1927 61.2918 0.1927 Q59.9793 0.1927 59.1407 -0.5417 Q58.3022 -1.2812 58.3022 -2.4635 Q58.3022 -3.2656 58.724 -3.8854 Q59.1459 -4.5104 59.8959 -4.8542 Q60.6511 -5.1979 61.5938 -5.1979 Q62.8907 -5.1979 64.4428 -4.6562 L64.4428 -5.0417 Q64.4428 -6.1615 63.8334 -6.9531 Q63.2293 -7.7448 61.9168 -7.7448 Q60.7345 -7.7448 59.422 -7.0104 L59.099 -7.6615 Q59.8386 -8.0625 60.5886 -8.2604 Q61.3386 -8.4635 61.9949 -8.4635 ZM61.4063 -0.5417 Q62.0261 -0.5417 62.672 -0.776 Q63.323 -1.0104 63.8126 -1.474 Q64.3022 -1.9375 64.4428 -2.5938 L64.4428 -3.9844 Q62.9584 -4.4792 61.7084 -4.4792 Q60.5574 -4.4792 59.8126 -3.9167 Q59.0678 -3.3594 59.0678 -2.4792 Q59.0678 -1.6302 59.7397 -1.0833 Q60.4115 -0.5417 61.4063 -0.5417 ZM68.5747 -6.4635 Q68.8924 -7.3438 69.7622 -7.901 Q70.6372 -8.4635 71.7726 -8.4635 L71.7726 -7.7292 Q70.8455 -7.7292 70.1164 -7.3281 Q69.3872 -6.9271 68.9809 -6.224 Q68.5747 -5.5208 68.5747 -4.625 L68.5747 0 L67.7882 0 L67.7882 -8.2708 L68.5747 -8.2708 L68.5747 -6.4635 ZM77.0847 -0.5417 Q77.9493 -0.5417 78.741 -0.8281 Q79.5326 -1.1198 79.9962 -1.6302 L80.5066 -1.0885 Q79.9805 -0.5104 79.017 -0.1562 Q78.0587 0.1927 77.1003 0.1927 Q76.0118 0.1927 75.0587 -0.3906 Q74.1055 -0.974 73.543 -1.974 Q72.9857 -2.974 72.9857 -4.1615 Q72.9857 -5.3594 73.5274 -6.3438 Q74.0743 -7.3281 75.0014 -7.8958 Q75.9337 -8.4635 77.0535 -8.4635 Q78.2514 -8.4635 79.1368 -7.8854 Q80.0274 -7.3125 80.5066 -6.2552 Q80.9857 -5.1979 80.9857 -3.8073 L73.7878 -3.8073 Q73.866 -2.9115 74.3243 -2.1562 Q74.7826 -1.4062 75.5066 -0.974 Q76.2357 -0.5417 77.0847 -0.5417 ZM77.0691 -7.7292 Q76.2201 -7.7292 75.5014 -7.3177 Q74.7826 -6.9115 74.3243 -6.1823 Q73.866 -5.4583 73.7878 -4.5417 L80.2045 -4.5417 Q80.1264 -5.9688 79.2826 -6.849 Q78.4441 -7.7292 77.0691 -7.7292 Z" stroke="none"/><path d="M1.5052 8.2104 L2.3021 8.2104 L6.6094 16.3042 L10.9115 8.2104 L11.7135 8.2104 L11.7135 19.2 L10.9115 19.2 L10.9115 9.8719 L6.6094 17.9656 L2.3021 9.8719 L2.3021 19.2 L1.5052 19.2 L1.5052 8.2104 ZM18.0806 18.6583 Q18.9452 18.6583 19.7369 18.3719 Q20.5285 18.0802 20.9921 17.5698 L21.5025 18.1115 Q20.9764 18.6896 20.0129 19.0438 Q19.0546 19.3927 18.0962 19.3927 Q17.0077 19.3927 16.0546 18.8094 Q15.1014 18.226 14.5389 17.226 Q13.9817 16.226 13.9817 15.0385 Q13.9817 13.8406 14.5233 12.8563 Q15.0702 11.8719 15.9973 11.3042 Q16.9296 10.7365 18.0494 10.7365 Q19.2473 10.7365 20.1327 11.3146 Q21.0233 11.8875 21.5025 12.9448 Q21.9817 14.0021 21.9817 15.3927 L14.7837 15.3927 Q14.8619 16.2885 15.3202 17.0438 Q15.7785 17.7938 16.5025 18.226 Q17.2317 18.6583 18.0806 18.6583 ZM18.065 11.4708 Q17.216 11.4708 16.4973 11.8823 Q15.7785 12.2885 15.3202 13.0177 Q14.8619 13.7417 14.7837 14.6583 L21.2004 14.6583 Q21.1223 13.2313 20.2785 12.351 Q19.44 11.4708 18.065 11.4708 ZM28.0642 18.8615 Q27.3923 19.3927 26.5277 19.3927 Q25.7465 19.3927 25.2413 18.8042 Q24.736 18.2104 24.736 17.2781 L24.736 11.6635 L23.3298 11.6635 L23.3298 10.9292 L24.736 10.9292 L24.736 8.6583 L25.5225 8.6583 L25.5225 10.9292 L27.6475 10.9292 L27.6475 11.6635 L25.5225 11.6635 L25.5225 17.2781 Q25.5225 17.8719 25.8142 18.2677 Q26.111 18.6583 26.5746 18.6583 Q26.8663 18.6583 27.1527 18.5542 Q27.4392 18.45 27.6631 18.2573 L28.0642 18.8615 ZM33.2784 10.7365 Q34.1743 10.7365 34.8774 11.1271 Q35.5857 11.5177 35.9764 12.226 Q36.367 12.9292 36.367 13.825 L36.367 19.2 L35.5857 19.2 L35.5857 13.9344 Q35.5857 12.8458 34.9139 12.1583 Q34.242 11.4708 33.1691 11.4708 Q32.4295 11.4708 31.8357 11.7938 Q31.2472 12.1115 30.9034 12.674 Q30.5597 13.2313 30.5597 13.9188 L30.5597 19.2 L29.7784 19.2 L29.7784 8.0177 L30.5597 8.0177 L30.5597 12.351 Q30.8826 11.6167 31.617 11.1792 Q32.3514 10.7365 33.2784 10.7365 ZM42.6414 19.3927 Q41.506 19.3927 40.5112 18.8042 Q39.5216 18.2104 38.933 17.2104 Q38.3497 16.2104 38.3497 15.0542 Q38.3497 13.9031 38.933 12.9135 Q39.5216 11.9188 40.5112 11.3302 Q41.506 10.7365 42.6414 10.7365 Q43.7768 10.7365 44.7612 11.3302 Q45.7455 11.9188 46.3289 12.9135 Q46.9122 13.9031 46.9122 15.0542 Q46.9122 16.2104 46.3289 17.2104 Q45.7455 18.2104 44.7612 18.8042 Q43.7768 19.3927 42.6414 19.3927 ZM42.6414 18.6583 Q43.5685 18.6583 44.3601 18.1635 Q45.1518 17.6635 45.631 16.8406 Q46.1101 16.0177 46.1101 15.0542 Q46.1101 14.1115 45.631 13.2833 Q45.1518 12.45 44.3497 11.9604 Q43.5528 11.4708 42.6414 11.4708 Q41.7143 11.4708 40.9122 11.9604 Q40.1101 12.45 39.631 13.2833 Q39.1518 14.1115 39.1518 15.0542 Q39.1518 16.0177 39.631 16.851 Q40.1101 17.6792 40.9122 18.1688 Q41.7143 18.6583 42.6414 18.6583 ZM56.2582 8.0177 L56.2582 19.2 L55.4718 19.2 L55.4718 17.5177 Q54.9926 18.3979 54.1593 18.8979 Q53.3259 19.3927 52.2895 19.3927 Q51.2634 19.3927 50.4041 18.8198 Q49.5499 18.2417 49.0447 17.2417 Q48.5447 16.2417 48.5447 15.0542 Q48.5447 13.8719 49.0447 12.8823 Q49.5499 11.8875 50.4041 11.3146 Q51.2634 10.7365 52.2895 10.7365 Q53.3259 10.7365 54.1593 11.226 Q54.9926 11.7104 55.4718 12.5906 L55.4718 8.0177 L56.2582 8.0177 ZM52.4457 18.6583 Q53.3103 18.6583 53.9978 18.2 Q54.6905 17.7417 55.0811 16.9188 Q55.4718 16.0958 55.4718 15.0542 Q55.4718 14.0177 55.0811 13.2 Q54.6905 12.3823 53.9978 11.9292 Q53.3103 11.4708 52.4457 11.4708 Q51.602 11.4708 50.8936 11.9552 Q50.1905 12.4344 49.7739 13.2573 Q49.3624 14.0802 49.3624 15.0542 Q49.3624 16.0333 49.7739 16.8667 Q50.1905 17.6948 50.8936 18.1792 Q51.602 18.6583 52.4457 18.6583 ZM62.6414 19.3927 Q61.506 19.3927 60.5112 18.8042 Q59.5216 18.2104 58.9331 17.2104 Q58.3498 16.2104 58.3498 15.0542 Q58.3498 13.9031 58.9331 12.9135 Q59.5216 11.9188 60.5112 11.3302 Q61.506 10.7365 62.6414 10.7365 Q63.7768 10.7365 64.7612 11.3302 Q65.7456 11.9188 66.3289 12.9135 Q66.9122 13.9031 66.9122 15.0542 Q66.9122 16.2104 66.3289 17.2104 Q65.7456 18.2104 64.7612 18.8042 Q63.7768 19.3927 62.6414 19.3927 ZM62.6414 18.6583 Q63.5685 18.6583 64.3602 18.1635 Q65.1518 17.6635 65.631 16.8406 Q66.1102 16.0177 66.1102 15.0542 Q66.1102 14.1115 65.631 13.2833 Q65.1518 12.45 64.3497 11.9604 Q63.5529 11.4708 62.6414 11.4708 Q61.7143 11.4708 60.9123 11.9604 Q60.1102 12.45 59.631 13.2833 Q59.1518 14.1115 59.1518 15.0542 Q59.1518 16.0177 59.631 16.851 Q60.1102 17.6792 60.9123 18.1688 Q61.7143 18.6583 62.6414 18.6583 ZM68.8937 8.0177 L69.6801 8.0177 L69.6801 19.2 L68.8937 19.2 L68.8937 8.0177 ZM75.9534 19.3927 Q74.818 19.3927 73.8232 18.8042 Q72.8337 18.2104 72.2451 17.2104 Q71.6618 16.2104 71.6618 15.0542 Q71.6618 13.9031 72.2451 12.9135 Q72.8337 11.9188 73.8232 11.3302 Q74.818 10.7365 75.9534 10.7365 Q77.0889 10.7365 78.0732 11.3302 Q79.0576 11.9188 79.6409 12.9135 Q80.2243 13.9031 80.2243 15.0542 Q80.2243 16.2104 79.6409 17.2104 Q79.0576 18.2104 78.0732 18.8042 Q77.0889 19.3927 75.9534 19.3927 ZM75.9534 18.6583 Q76.8805 18.6583 77.6722 18.1635 Q78.4639 17.6635 78.943 16.8406 Q79.4222 16.0177 79.4222 15.0542 Q79.4222 14.1115 78.943 13.2833 Q78.4639 12.45 77.6618 11.9604 Q76.8649 11.4708 75.9534 11.4708 Q75.0264 11.4708 74.2243 11.9604 Q73.4222 12.45 72.943 13.2833 Q72.4639 14.1115 72.4639 15.0542 Q72.4639 16.0177 72.943 16.851 Q73.4222 17.6792 74.2243 18.1688 Q75.0264 18.6583 75.9534 18.6583 ZM89.4245 10.9292 L89.4245 18.3198 Q89.4245 19.3771 88.9245 20.2 Q88.4297 21.0229 87.5599 21.4865 Q86.6901 21.95 85.5703 21.95 Q84.638 21.95 83.7161 21.6375 Q82.7995 21.3302 82.2265 20.8458 L82.5911 20.1896 Q83.1068 20.6583 83.9036 20.9344 Q84.7057 21.2156 85.4713 21.2156 Q86.8984 21.2156 87.7682 20.4135 Q88.638 19.6167 88.638 18.3198 L88.638 16.6219 Q88.1745 17.5698 87.2995 18.0802 Q86.4297 18.5906 85.3307 18.5906 Q84.3203 18.5906 83.4713 18.0646 Q82.6224 17.5385 82.1328 16.6323 Q81.6484 15.726 81.6484 14.6583 Q81.6484 13.5854 82.1328 12.6844 Q82.6224 11.7781 83.4713 11.2573 Q84.3203 10.7365 85.3307 10.7365 Q86.4505 10.7365 87.3099 11.2417 Q88.1745 11.7417 88.638 12.7052 L88.638 10.9292 L89.4245 10.9292 ZM85.487 17.8563 Q86.3672 17.8563 87.0859 17.45 Q87.8099 17.0385 88.2213 16.3146 Q88.638 15.5854 88.638 14.6583 Q88.638 13.7417 88.2213 13.0177 Q87.8099 12.2885 87.0859 11.8823 Q86.3672 11.4708 85.487 11.4708 Q84.6536 11.4708 83.9661 11.8979 Q83.2786 12.3198 82.8724 13.0594 Q82.4661 13.7938 82.4661 14.6583 Q82.4661 15.5385 82.8724 16.2677 Q83.2786 16.9917 83.9661 17.424 Q84.6536 17.8563 85.487 17.8563 ZM92.9293 22.0802 Q92.1897 22.0802 91.6168 21.8094 L91.8095 21.0698 Q92.3668 21.3302 92.9137 21.3302 Q93.9501 21.3302 94.398 20.5594 L94.8824 19.4396 L91.2314 10.9292 L92.0959 10.9292 L95.2939 18.4656 L98.3668 10.9292 L99.2157 10.9292 L95.3616 20.3198 Q94.9918 21.2156 94.3928 21.6375 Q93.7939 22.0646 92.9293 22.0802 Z" stroke="none"/></g></g></g><!--decoration--></g></g><!--decoration--></g></g><!--decoration--></g><defs><script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module">
+</style>
+    <defs id="links-markers">
+      <marker id="-start-marker" preserveAspectRatio="xMidYMid meet"/>
+      <marker id="-end-marker" preserveAspectRatio="xMidYMid meet"/>
+      <marker refX="1" refY="3" orient="auto" id="strike-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="strike-marker" d="         M7,0 L5,6 h-1 L6,0z"/>
+      </marker>
+      <marker refX="7" refY="3" orient="auto" id="strike-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="strike-marker" d="         M3,0 L1,6 h-1 L2,0z"/>
+      </marker>
+      <marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3">
+        <circle r="2" cx="3" class="circle-marker" cy="3"/>
+      </marker>
+      <marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3">
+        <circle r="2" cx="3" class="circle-marker" cy="3"/>
+      </marker>
+      <marker refX="2" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/>
+      </marker>
+      <marker refX="6" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/>
+      </marker>
+      <marker refX="5" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="open-diamond-marker" d="         M0,3 L3,1 L6,3 L5,3 L3,1.66 L1,3             L3,4.33 L5,3 L6,3 L3,5 L0,3"/>
+      </marker>
+      <marker refX="1" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="open-diamond-marker" d="         M6,3 L3,1 L0,3 L1,3 L3,1.66 L5,3             L3,4.33 L1,3 L0,3 L3,5 L6,3"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6 L4,4 L2,2"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6 L4,4 L6,2"/>
+      </marker>
+      <marker refX="1" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="open-arrow-marker" d="         M6,4 L1,2 L1,3 L4,4 L1,5 L1,6 L6,4         M2,3 h-1 v2 h1z"/>
+      </marker>
+      <marker refX="6" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="open-arrow-marker" d="         M1,4 L6,2 L6,3 L3,4 L6,5 L6,6 L1,4         M5,3 h1 v2 h-1z"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <polygon class="arrow-marker" points="2,4 6,2 6,6"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <polygon class="arrow-marker" points="6,4 2,2 2,6"/>
+      </marker>
+      <marker refX="5" refY="4" orient="auto" id="crow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="crow-marker" d="          M1,4 L4,1 l0.66 0.66 L2.3,4z          M1,4 L4,7 l0.66 -0.66 L2.3,4z"/>
+      </marker>
+      <marker refX="1" refY="4" orient="auto" id="crow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="crow-marker" d="          M5,4 L2,1 l-0.66 0.66 L3.66,4z          M5,4 L2,7 l-0.66 -0.66 L3.66,4z"/>
+      </marker>
+      <marker refX="2" refY="2" orient="auto" id="square-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <rect x="0" width="4" y="0" height="4" class="square-marker"/>
+      </marker>
+      <marker refX="2" refY="2" orient="auto" id="square-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <rect x="0" width="4" y="0" height="4" class="square-marker"/>
+      </marker>
+    </defs>
+    <defs id="container-indicators">
+      <marker refX="3" refY="3" fill="none" orient="auto" id="indicator-arrow" markerHeight="15" preserveAspectRatio="xMidYMid meet" stroke="none" markerWidth="15">
+        <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
+      </marker>
+    </defs>
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="risk-background" xlink:show="other">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#DDD"/>
+    </linearGradient>
+    <filter xlink:actuate="onLoad" xlink:type="simple" id="dropshadow" height="130%" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <feGaussianBlur stdDeviation="4" in="SourceAlpha"/>
+      <feOffset dx="6" dy="6"/>
+      <feColorMatrix type="matrix" values="             0 0 0 0 0                 0 0 0 0 0                 0 0 0 0 0                 0 0 0 .4 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <script xlink:actuate="onLoad" xlink:type="simple" id="adl:markup" xlink:show="other" type="text/xml;purpose=adl;base64" xmlns:xlink="http://www.w3.org/1999/xlink">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48ZGlhZ3JhbSB4bWxucz0iaHR0cDovL3d3dy5raXRlOS5vcmcvc2NoZW1hL2FkbCIgeG1sbnM6eHNsdD0iaHR0cDovL3d3dy5raXRlOS5vcmcvc2NoZW1hL3hzbHQiIGlkPSJkaWEiIG5hbWU9IlBhdHRlcm4gTGFuZ3VhZ2UiIHhzbHQ6dGVtcGxhdGU9Ii9wdWJsaWMvdGVtcGxhdGVzL3Jpc2stZmlyc3Qvcmlzay1maXJzdC10ZW1wbGF0ZS54c2wiPgogICAgICAgICAKICAgIDxyaXNrIGNsYXNzPSJnZW5lcmljIiBocmVmPSIvcHVibGljL3RlbXBsYXRlcy9yaXNrLWZpcnN0L3JlZGVzaWduL2FydGlmYWN0cy9tZXRob2RvbG9neV92Mi5zdmciIGlkPSJpZF8wIj4KICAgICAgPGNvZGUgaWQ9ImMiPk1ldGhvZDwvY29kZT4KICAgICAgPHRpdGxlIGlkPSJkIj5Tb2Z0d2FyZSBNZXRob2RvbG9neTwvdGl0bGU+CiAgICA8L3Jpc2s+CiAgICAKPC9kaWFncmFtPgo=</script>
+  </defs>
+  <g xmlns:xslt="http://www.kite9.org/schema/xslt" k9-contains="connected" k9-palette="connected" k9-texture="none" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=186.0, h=239.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@3df63b08; " id="dia" k9-format="container" k9-ui="layout label" name="Pattern Language" k9-elem="diagram" xslt:template="/public/templates/risk-first/risk-first-template.xsl">
+    <g>
+      <!--shape-->
+      <rect x="0" y="0" width="186" pp:y="$y" pp:height="$height" pp:x="$x" rx="0" ry="0" height="239" pp:width="$width"/>
+    </g>
+    <g>
+      <!--content-->
+      <g k9-contains="connected" href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(13.0,13.0)" k9-palette="connected risk" k9-texture="background" k9-info="margin: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; padding: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=13.0, h=13.0); rect-size: BasicDimension2D(w=160.0, h=213.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@1f8397f0; " class="generic" id="id_0" k9-format="container" k9-ui="drag delete align connect autoconnect vote edit" k9-elem="risk">
+        <g k9-highlight="pulse">
+          <!--shape-->
+          <rect x="0" y="0" width="160" pp:y="$y" pp:height="$height" pp:x="$x" rx="5pt" ry="5pt" height="213" pp:width="$width"/>
+        </g>
+        <g>
+          <!--content-->
+          <g k9-contains="connected" transform="translate(27.3,42.3)" k9-palette="connected" k9-texture="foreground" k9-info="margin: 0.0 0.0 20.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=43.0, h=26.0); rect-size: BasicDimension2D(w=101.0, h=35.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@aa0e33d; " id="c" k9-format="text-fixed" k9-ui="orphan edit" k9-elem="code">
+            <g rendered="true">
+              <g>
+                <path d="M2.7357 0 L2.7357 -21.1979 L6.9036 -21.1979 L12.776 -4.7982 L18.8203 -21.1979 L22.5443 -21.1979 L22.5443 0 L19.737 0 L19.737 -17.2448 L13.8932 -1.418 L10.9857 -1.418 L5.3138 -17.2878 L5.3138 0 ZM39.4883 -0.5013 Q36.6523 0.3581 34.6328 0.3581 Q31.1953 0.3581 29.0254 -1.9264 Q26.8555 -4.2109 26.8555 -7.849 Q26.8555 -11.3867 28.7676 -13.6497 Q30.6797 -15.9128 33.6589 -15.9128 Q36.4805 -15.9128 38.0202 -13.9076 Q39.5599 -11.9023 39.5599 -8.207 L39.5456 -7.3333 L29.7344 -7.3333 Q30.3503 -1.7904 35.1628 -1.7904 Q36.9245 -1.7904 39.4883 -2.7357 ZM29.8633 -9.4531 L36.724 -9.4531 Q36.724 -13.793 33.487 -13.793 Q30.2357 -13.793 29.8633 -9.4531 ZM49.099 0.3581 Q46.9505 0.3581 45.7474 -0.8737 Q44.5443 -2.1055 44.5443 -4.2969 L44.5443 -13.4349 L42.5964 -13.4349 L42.5964 -15.5547 L44.5443 -15.5547 L44.5443 -18.3763 L47.3659 -18.6484 L47.3659 -15.5547 L51.4336 -15.5547 L51.4336 -13.4349 L47.3659 -13.4349 L47.3659 -4.8125 Q47.3659 -1.7617 50.0013 -1.7617 Q50.5599 -1.7617 51.362 -1.9479 L51.362 0 Q50.0586 0.3581 49.099 0.3581 ZM55.401 0 L55.401 -22.6159 L58.2227 -22.6159 L58.2227 -12.6328 Q60.457 -15.8984 63.694 -15.8984 Q65.7135 -15.8984 66.9167 -14.6165 Q68.1198 -13.3346 68.1198 -11.1719 L68.1198 0 L65.2982 0 L65.2982 -10.2552 Q65.2982 -11.9883 64.7897 -12.7259 Q64.2812 -13.4635 63.1068 -13.4635 Q60.5143 -13.4635 58.2227 -10.069 L58.2227 0 ZM79.6927 0.3581 Q76.3555 0.3581 74.3646 -1.8548 Q72.3737 -4.0677 72.3737 -7.7773 Q72.3737 -11.5299 74.3717 -13.7142 Q76.3698 -15.8984 79.793 -15.8984 Q83.2161 -15.8984 85.2142 -13.7142 Q87.2122 -11.5299 87.2122 -7.806 Q87.2122 -3.9961 85.207 -1.819 Q83.2018 0.3581 79.6927 0.3581 ZM79.7357 -1.7617 Q84.2188 -1.7617 84.2188 -7.806 Q84.2188 -13.7786 79.793 -13.7786 Q75.3815 -13.7786 75.3815 -7.7773 Q75.3815 -1.7617 79.7357 -1.7617 ZM101.6068 0 L101.6068 -2.9219 Q99.888 0.3581 96.4219 0.3581 Q93.6146 0.3581 92.0033 -1.6901 Q90.3919 -3.7383 90.3919 -7.2904 Q90.3919 -11.1719 92.2181 -13.5352 Q94.0443 -15.8984 97.0234 -15.8984 Q99.7878 -15.8984 101.6068 -13.7786 L101.6068 -22.6159 L104.4427 -22.6159 L104.4427 0 ZM101.6068 -11.8451 Q99.4154 -13.7786 97.4531 -13.7786 Q93.3997 -13.7786 93.3997 -7.5768 Q93.3997 -2.1198 97.0091 -2.1198 Q99.3581 -2.1198 101.6068 -4.6836 Z" stroke="none"/>
+              </g>
+            </g>
+          </g>
+          <g k9-contains="connected" href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(47.5,82.5)" k9-palette="connected" k9-texture="none" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=60.0, h=95.0); rect-size: BasicDimension2D(w=67.0, h=67.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@550543b; " class="generic" id="id_0@image" k9-format="image" k9-ui="image" k9-elem="image">
+            <g k9-highlight="pulse">
+              <!--content-->
+              <image x="0" y="0" width="50pt" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5l&#10;cmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDIxLjEuMCwgU1ZHIEV4cG9ydCBQbHVn&#10;LUluIC4gU1ZHIFZlcnNpb246IAoJNi4wMCBCdWlsZCAwKSAtLT4KPHN2ZyB2ZXJz&#10;aW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv&#10;MjAwMC9zdmciCgl4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94&#10;bGluayIgeD0iMHB0IiB5PSIwcHQiCgl2aWV3Qm94PSIwIDAgODUgODUiIHN0eWxl&#10;PSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDg1IDg1OyIKCXhtbDpzcGFjZT0i&#10;cHJlc2VydmUiPgo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPgoJLnN0MHsKCQlmaWxs&#10;Om5vbmU7CgkJc3Ryb2tlOiMxQTE3MUI7CgkJc3Ryb2tlLXdpZHRoOjM7CgkJc3Ry&#10;b2tlLWxpbmVjYXA6cm91bmQ7CgkJc3Ryb2tlLW1pdGVybGltaXQ6MTA7Cgl9Cjwv&#10;c3R5bGU+CjxnPgoJPHBhdGggY2xhc3M9InN0MCIKCWQ9Ik0yNS42LDIyLjVoNTBj&#10;MC4yLDAsMC4zLDAuMSwwLjMsMC4zdjE5LjNjMCwwLjItMC4yLDAuNC0wLjQsMC40&#10;aC0xNiIgLz4KCTxwYXRoIGNsYXNzPSJzdDAiCglkPSJNNjIuNyw0NmwtMy4zLTMu&#10;MmMtMC4yLTAuMi0wLjItMC40LDAtMC42bDMuMy0zLjIiIC8+CjwvZz4KPGc+Cgk8&#10;cGF0aCBjbGFzcz0ic3QwIgoJZD0iTTI1LjcsNDIuNWgtMTZjLTAuMiwwLTAuMyww&#10;LjEtMC4zLDAuM3YxOS4zYzAsMC4yLDAuMiwwLjQsMC40LDAuNGg0OSIgLz4KCTxw&#10;YXRoIGNsYXNzPSJzdDAiCglkPSJNNTUuNiw2NmwzLjMtMy4yYzAuMi0wLjIsMC4y&#10;LTAuNCwwLTAuNmwtMy4zLTMuMiIgLz4KPC9nPgo8Y2lyY2xlIGNsYXNzPSJzdDAi&#10;IGN4PSI0Mi41IiBjeT0iNDIuNSIgcj0iNi45IiAvPgo8cGF0aCBjbGFzcz0ic3Qw&#10;IgoJZD0iTTE1LjQsMjkuMkgyLjhjLTAuMywwLTAuNS0wLjItMC41LTAuNVYxNi4y&#10;YzAtMC4zLDAuMi0wLjUsMC41LTAuNWgxMi42YzAuMywwLDAuNSwwLjIsMC41LDAu&#10;NXYxMi42CglDMTUuOSwyOSwxNS42LDI5LjIsMTUuNCwyOS4yeiIgLz4KPHBhdGgg&#10;Y2xhc3M9InN0MCIKCWQ9Ik03NC44LDU1LjVsLTYuMiwxM2MtMC4xLDAuMywwLjEs&#10;MC43LDAuNCwwLjdIODJjMC40LDAsMC42LTAuNCwwLjQtMC43bC02LjctMTNDNzUu&#10;NSw1NS4yLDc1LDU1LjIsNzQuOCw1NS41eiIgLz4KPC9zdmc+Cg==" xlink:type="simple" xlink:actuate="onLoad" height="50pt" preserveAspectRatio="xMidYMid meet" xlink:show="embed"/>
+              <rect x="0" y="0" width="50pt" xmlns:xlink="http://www.w3.org/1999/xlink" rx="5pt" ry="5pt" height="50pt"/>
+            </g>
+            <!--decoration-->
+          </g>
+          <g k9-contains="connected" transform="translate(29.5,178.0)" k9-palette="connected" k9-texture="foreground" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=44.0, h=175.0); rect-size: BasicDimension2D(w=99.0, h=38.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@1eadef12; " id="d" k9-format="text-fixed" k9-ui="orphan edit" k9-elem="title">
+            <g rendered="true">
+              <g>
+                <path d="M18.2578 0.2891 Q17.0938 0.2891 15.2812 -0.2188 L15.2812 -1.8438 Q17.2344 -0.9375 18.4922 -0.9375 Q19.4609 -0.9375 20.0508 -1.4453 Q20.6406 -1.9531 20.6406 -2.7812 Q20.6406 -3.4609 20.2539 -3.9375 Q19.8672 -4.4141 18.8281 -5 L18.0312 -5.4609 Q16.5547 -6.3047 15.9492 -7.0508 Q15.3438 -7.7969 15.3438 -8.7891 Q15.3438 -10.125 16.3125 -10.9883 Q17.2812 -11.8516 18.7812 -11.8516 Q20.1172 -11.8516 21.6016 -11.4062 L21.6016 -9.9062 Q19.7734 -10.625 18.875 -10.625 Q18.0234 -10.625 17.4688 -10.1719 Q16.9141 -9.7188 16.9141 -9.0312 Q16.9141 -8.4531 17.3203 -8.0078 Q17.7266 -7.5625 18.8047 -6.9453 L19.6328 -6.4766 Q21.1328 -5.625 21.7266 -4.8672 Q22.3203 -4.1094 22.3203 -3.0469 Q22.3203 -1.5391 21.207 -0.625 Q20.0938 0.2891 18.2578 0.2891 ZM27.9766 0.1953 Q26.1562 0.1953 25.0703 -1.0117 Q23.9844 -2.2188 23.9844 -4.2422 Q23.9844 -6.2891 25.0742 -7.4805 Q26.1641 -8.6719 28.0312 -8.6719 Q29.8984 -8.6719 30.9883 -7.4805 Q32.0781 -6.2891 32.0781 -4.2578 Q32.0781 -2.1797 30.9844 -0.9922 Q29.8906 0.1953 27.9766 0.1953 ZM28 -0.9609 Q30.4453 -0.9609 30.4453 -4.2578 Q30.4453 -7.5156 28.0312 -7.5156 Q25.625 -7.5156 25.625 -4.2422 Q25.625 -0.9609 28 -0.9609 ZM36.3203 -7.3281 L36.3203 0 L34.7734 0 L34.7734 -7.3281 L33.5703 -7.3281 L33.5703 -8.4844 L34.7734 -8.4844 L34.7734 -9.5 Q34.7734 -12.5312 37.5391 -12.5312 Q38.3125 -12.5312 39.2969 -12.2734 L39.2969 -11.0547 Q38.2578 -11.375 37.6328 -11.375 Q36.875 -11.375 36.5977 -11.0117 Q36.3203 -10.6484 36.3203 -9.6641 L36.3203 -8.4844 L38.4375 -8.4844 L38.4375 -7.3281 ZM42.9141 0.1953 Q41.7422 0.1953 41.0859 -0.4766 Q40.4297 -1.1484 40.4297 -2.3438 L40.4297 -7.3281 L39.3672 -7.3281 L39.3672 -8.4844 L40.4297 -8.4844 L40.4297 -10.0234 L41.9688 -10.1719 L41.9688 -8.4844 L44.1875 -8.4844 L44.1875 -7.3281 L41.9688 -7.3281 L41.9688 -2.625 Q41.9688 -0.9609 43.4062 -0.9609 Q43.7109 -0.9609 44.1484 -1.0625 L44.1484 0 Q43.4375 0.1953 42.9141 0.1953 ZM47.3359 0 L44.9062 -8.4844 L46.4141 -8.4844 L48.2734 -1.9141 L50.2812 -8.4844 L51.8203 -8.4844 L53.5781 -1.9141 L55.7109 -8.4844 L57.0312 -8.4844 L54.2656 0 L52.7188 0 L50.9219 -6.5703 L48.8906 0 ZM63.0547 -1.0781 Q61.6719 0.1953 60.3906 0.1953 Q59.3359 0.1953 58.6406 -0.4648 Q57.9453 -1.125 57.9453 -2.1328 Q57.9453 -3.5234 59.1133 -4.2695 Q60.2812 -5.0156 62.4609 -5.0156 L62.8281 -5.0156 L62.8281 -6.0391 Q62.8281 -7.5156 61.3125 -7.5156 Q60.0938 -7.5156 58.6797 -6.7656 L58.6797 -8.0391 Q60.2344 -8.6719 61.5938 -8.6719 Q63.0156 -8.6719 63.6914 -8.0312 Q64.3672 -7.3906 64.3672 -6.0391 L64.3672 -2.1953 Q64.3672 -0.875 65.1797 -0.875 Q65.2812 -0.875 65.4766 -0.9062 L65.5859 -0.0547 Q65.0625 0.1953 64.4297 0.1953 Q63.3516 0.1953 63.0547 -1.0781 ZM62.8281 -1.9141 L62.8281 -4.1094 L62.3125 -4.125 Q61.0469 -4.125 60.2656 -3.6445 Q59.4844 -3.1641 59.4844 -2.3828 Q59.4844 -1.8281 59.875 -1.4453 Q60.2656 -1.0625 60.8281 -1.0625 Q61.7891 -1.0625 62.8281 -1.9141 ZM67.5156 0 L67.5156 -8.4844 L69.0547 -8.4844 L69.0547 -6.8906 Q69.9688 -8.6719 71.7109 -8.6719 Q71.9453 -8.6719 72.2031 -8.6328 L72.2031 -7.1953 Q71.8047 -7.3281 71.5 -7.3281 Q70.0391 -7.3281 69.0547 -5.5938 L69.0547 0 ZM80.2812 -0.2734 Q78.7344 0.1953 77.6328 0.1953 Q75.7578 0.1953 74.5742 -1.0508 Q73.3906 -2.2969 73.3906 -4.2812 Q73.3906 -6.2109 74.4336 -7.4453 Q75.4766 -8.6797 77.1016 -8.6797 Q78.6406 -8.6797 79.4805 -7.5859 Q80.3203 -6.4922 80.3203 -4.4766 L80.3125 -4 L74.9609 -4 Q75.2969 -0.9766 77.9219 -0.9766 Q78.8828 -0.9766 80.2812 -1.4922 ZM75.0312 -5.1562 L78.7734 -5.1562 Q78.7734 -7.5234 77.0078 -7.5234 Q75.2344 -7.5234 75.0312 -5.1562 Z" stroke="none"/>
+              </g>
+            </g>
+            <g rendered="true">
+              <g>
+                <path d="M1.4922 19.2 L1.4922 7.6375 L3.7656 7.6375 L6.9688 16.5828 L10.2656 7.6375 L12.2969 7.6375 L12.2969 19.2 L10.7656 19.2 L10.7656 9.7938 L7.5781 18.4266 L5.9922 18.4266 L2.8984 9.7703 L2.8984 19.2 ZM21.5391 18.9266 Q19.9922 19.3953 18.8906 19.3953 Q17.0156 19.3953 15.832 18.1492 Q14.6484 16.9031 14.6484 14.9188 Q14.6484 12.9891 15.6914 11.7547 Q16.7344 10.5203 18.3594 10.5203 Q19.8984 10.5203 20.7383 11.6141 Q21.5781 12.7078 21.5781 14.7234 L21.5703 15.2 L16.2188 15.2 Q16.5547 18.2234 19.1797 18.2234 Q20.1406 18.2234 21.5391 17.7078 ZM16.2891 14.0438 L20.0312 14.0438 Q20.0312 11.6766 18.2656 11.6766 Q16.4922 11.6766 16.2891 14.0438 ZM26.7812 19.3953 Q25.6094 19.3953 24.9531 18.7234 Q24.2969 18.0516 24.2969 16.8563 L24.2969 11.8719 L23.2344 11.8719 L23.2344 10.7156 L24.2969 10.7156 L24.2969 9.1766 L25.8359 9.0281 L25.8359 10.7156 L28.0547 10.7156 L28.0547 11.8719 L25.8359 11.8719 L25.8359 16.575 Q25.8359 18.2391 27.2734 18.2391 Q27.5781 18.2391 28.0156 18.1375 L28.0156 19.2 Q27.3047 19.3953 26.7812 19.3953 ZM30.2188 19.2 L30.2188 6.8641 L31.7578 6.8641 L31.7578 12.3094 Q32.9766 10.5281 34.7422 10.5281 Q35.8438 10.5281 36.5 11.2273 Q37.1562 11.9266 37.1562 13.1063 L37.1562 19.2 L35.6172 19.2 L35.6172 13.6063 Q35.6172 12.6609 35.3398 12.2586 Q35.0625 11.8563 34.4219 11.8563 Q33.0078 11.8563 31.7578 13.7078 L31.7578 19.2 ZM43.4688 19.3953 Q41.6484 19.3953 40.5625 18.1883 Q39.4766 16.9813 39.4766 14.9578 Q39.4766 12.9109 40.5664 11.7195 Q41.6562 10.5281 43.5234 10.5281 Q45.3906 10.5281 46.4805 11.7195 Q47.5703 12.9109 47.5703 14.9422 Q47.5703 17.0203 46.4766 18.2078 Q45.3828 19.3953 43.4688 19.3953 ZM43.4922 18.2391 Q45.9375 18.2391 45.9375 14.9422 Q45.9375 11.6844 43.5234 11.6844 Q41.1172 11.6844 41.1172 14.9578 Q41.1172 18.2391 43.4922 18.2391 ZM55.4219 19.2 L55.4219 17.6063 Q54.4844 19.3953 52.5938 19.3953 Q51.0625 19.3953 50.1836 18.2781 Q49.3047 17.1609 49.3047 15.2234 Q49.3047 13.1063 50.3008 11.8172 Q51.2969 10.5281 52.9219 10.5281 Q54.4297 10.5281 55.4219 11.6844 L55.4219 6.8641 L56.9688 6.8641 L56.9688 19.2 ZM55.4219 12.7391 Q54.2266 11.6844 53.1562 11.6844 Q50.9453 11.6844 50.9453 15.0672 Q50.9453 18.0438 52.9141 18.0438 Q54.1953 18.0438 55.4219 16.6453 ZM63.3672 19.3953 Q61.5469 19.3953 60.4609 18.1883 Q59.375 16.9813 59.375 14.9578 Q59.375 12.9109 60.4648 11.7195 Q61.5547 10.5281 63.4219 10.5281 Q65.2891 10.5281 66.3789 11.7195 Q67.4688 12.9109 67.4688 14.9422 Q67.4688 17.0203 66.375 18.2078 Q65.2812 19.3953 63.3672 19.3953 ZM63.3906 18.2391 Q65.8359 18.2391 65.8359 14.9422 Q65.8359 11.6844 63.4219 11.6844 Q61.0156 11.6844 61.0156 14.9578 Q61.0156 18.2391 63.3906 18.2391 ZM69.875 19.2 L69.875 6.8641 L71.4141 6.8641 L71.4141 19.2 ZM77.8203 19.3953 Q76 19.3953 74.9141 18.1883 Q73.8281 16.9813 73.8281 14.9578 Q73.8281 12.9109 74.918 11.7195 Q76.0078 10.5281 77.875 10.5281 Q79.7422 10.5281 80.832 11.7195 Q81.9219 12.9109 81.9219 14.9422 Q81.9219 17.0203 80.8281 18.2078 Q79.7344 19.3953 77.8203 19.3953 ZM77.8438 18.2391 Q80.2891 18.2391 80.2891 14.9422 Q80.2891 11.6844 77.875 11.6844 Q75.4688 11.6844 75.4688 14.9578 Q75.4688 18.2391 77.8438 18.2391 ZM84.3594 22.0203 L84.5391 20.6844 Q85.875 21.3172 87.1719 21.3172 Q89.7734 21.3172 89.7734 18.5594 L89.7734 17.2234 Q88.9219 19.0047 86.9766 19.0047 Q85.4531 19.0047 84.5547 17.8953 Q83.6562 16.7859 83.6562 14.9031 Q83.6562 12.9656 84.6797 11.7469 Q85.7031 10.5281 87.3281 10.5281 Q88.75 10.5281 89.7734 11.6844 L89.7734 10.7156 L91.3203 10.7156 L91.3203 16.8875 Q91.3203 18.8797 91.1133 19.8367 Q90.9062 20.7938 90.3359 21.4031 Q89.3281 22.4734 87.2031 22.4734 Q85.7188 22.4734 84.3594 22.0203 ZM89.7734 16.2625 L89.7734 12.7391 Q88.7578 11.6844 87.5625 11.6844 Q86.5 11.6844 85.8984 12.5359 Q85.2969 13.3875 85.2969 14.8719 Q85.2969 17.6609 87.2578 17.6609 Q88.5938 17.6609 89.7734 16.2625 ZM94.7969 22.2859 L96.1719 19.2 L92.8906 10.7156 L94.5547 10.7156 L96.9844 17.1063 L99.5781 10.7156 L101.0312 10.7156 L96.3984 22.2859 Z" stroke="none"/>
+              </g>
+            </g>
+          </g>
+        </g>
+        <!--decoration-->
+      </g>
+    </g>
+    <!--decoration-->
+  </g>
+  <defs>
+    <script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink">
      import '/public/templates/risk-first/risk-first.js';
-  </script></defs></svg>
+  </script>
+  </defs>
+</svg>

@@ -11,7 +11,17 @@
   fill: black;
   font-family: "gothic";
   stroke: none;
+  --kite9-text-bounds-width: 350pt;
 }
+
+[k9-elem=celltext].bold {
+	font-family: "gothic-bold";
+}
+
+[k9-elem=celltext].bottom {
+	--kite9-vertical-align: bottom;	
+}
+
 
 [k9-elem=celltext] [k9-elem=text-label] {
   --kite9-horizontal-align: left;

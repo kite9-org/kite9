@@ -16,6 +16,7 @@
 [k9-texture=artifact] {
 	fill: white;
 	fill-opacity: 0.01;
+	stroke: none;
 }
 
 [k9-texture=artifact] text {
@@ -55,7 +56,7 @@
   fill-opacity: 1; 
 }
 
-[k9-elem=arrow] > g > [k9-elem=caption] > g > text {
+[k9-elem=arrow] > g > [k9-elem=caption] > text {
   fill: white;
   fill-opacity: 1; 
 }

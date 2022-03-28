@@ -28,7 +28,6 @@
             <feMergeNode in="SourceGraphic"/>
         </feMerge>
     </filter>
-    <xsl:next-match />
   </xsl:template>
 
 

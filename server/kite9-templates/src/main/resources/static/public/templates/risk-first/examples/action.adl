@@ -1,0 +1,8 @@
+<diagram xslt:template="/public/templates/risk-first/risk-first-template.xsl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia"
+         xmlns="http://www.kite9.org/schema/adl"
+         name="Pattern Language">
+         
+    <component>Some Part</component>
+    
+</diagram>
