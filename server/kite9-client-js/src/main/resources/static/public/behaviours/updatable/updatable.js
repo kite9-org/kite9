@@ -1,4 +1,5 @@
 import { createSVGResolver } from '/public/behaviours/updatable/svgResolver.js';
+import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver.js';
 
 /**
  * there are three ways of processing updates:
@@ -77,6 +78,9 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver, transitio
 	
 } 
 
+/**
+ * This updater applies the commands locally
+ */
 export function initLocalUpdater(adl, contentTypeResolver, transition) {
 	
 	
@@ -89,19 +93,24 @@ export function initLocalUpdater(adl, contentTypeResolver, transition) {
  * This version of the updater adapts depending on what the meta-data says to do.
  * It also figures out what 
  */
-export function initMetadataBasedUpdater(metadata, transition) {
+export function initMetadataBasedUpdater(command, metadata, transition, renderServerSide) {
 	
+	var resolver = renderServerSide ? createSVGResolver() : createAdlToSVGResolver();
+	var contentType = renderServerSide ? "image/svg+xml;purpose=editable, application/json" :
+						"text/xml;purpose=adl";
+
+
+
 	var delegate;
-	var resolver;
 	
 	if (metadata.get("user") != undefined) {
-		// ok, maybe do something else.
+		// logged in, use websockets
 		
 	} else {
-		const resolver = createSVGResolver();
+		// not using web-sockets
 		delegate = initHttpUpdater(
 			metadata.get("self"), 
-			"image/svg+xml;purpose=editable, application/json", 
+			contentType, 
 			resolver, 
 			transition);
 	}

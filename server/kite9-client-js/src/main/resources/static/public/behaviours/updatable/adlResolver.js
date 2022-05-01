@@ -4,6 +4,7 @@ export function createAdlToSVGResolver() {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
+	const DEFAULT_TEMPLATE = "/public/templates/basic/basic-template.xsl";
 
 	var transformer = null;	  // set on first use
 	
@@ -14,9 +15,8 @@ export function createAdlToSVGResolver() {
 		ensureJs('/webjars/kotlin/1.4.30/kotlin.js');	
 		setTimeout(() => {
 			ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
-			window['kite9-visualization-js'].initCSS();
+			setTimeout(() => window['kite9-visualization-js'].initCSS(), 100);
 		}, 20)
-		
 
 		// not using this since we run into licensing issues.
 		//ensureJs('/public/external/SaxonJS2.js');
@@ -44,17 +44,20 @@ export function createAdlToSVGResolver() {
 	
 		const template = doc.documentElement.getAttributeNS(XSL_TEMPLATE_NAMESPACE, "template");
 		
-		if ((template == null) || (template.length() == 0)) {
+		if ((template == null) || (template.length == 0)) {
 			if (ADL_NAMESPACE == doc.documentElement.namespaceURI) {
 				// default to the basic template
-				return new URL("/public/templates/basic/basic-template.xsl", document.location.href).href;
+				return new URL(DEFAULT_TEMPLATE, document.location.href).href;
 			}
 		}
 		
 		return new URL(template, document.location.href).href;
 	}
 
-	(doc) => {
+	return (text) => {
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(text, "text/xml");
+		
 		if (transformer == null) {
 			// using this to make sure document location is correct.
 			var xhr = new XMLHttpRequest;

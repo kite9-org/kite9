@@ -1,24 +1,14 @@
 package com.kite9.server.command.xml;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
-import com.kite9.pipeline.command.Command;
-import com.kite9.pipeline.command.xml.insert.Delete;
-import com.kite9.pipeline.command.xml.insert.InsertUrl;
-import com.kite9.pipeline.command.xml.insert.InsertUrlWithChanges;
-import com.kite9.pipeline.command.xml.insert.InsertXML;
-import com.kite9.pipeline.command.xml.move.ADLMoveCells;
-import com.kite9.pipeline.command.xml.move.Move;
-import com.kite9.pipeline.command.xml.replace.*;
-import com.kite9.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.XMLCompare;
-import com.kite9.server.controllers.CommandController;
-import com.kite9.server.update.AbstractUpdateHandler;
-import com.kite9.server.update.Update;
-import com.kite9.server.uri.URIWrapper;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.kite9.diagram.testing.TestingHelp;
@@ -33,10 +23,32 @@ import org.springframework.http.RequestEntity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StreamUtils;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
+import com.kite9.pipeline.command.Command;
+import com.kite9.pipeline.command.xml.insert.Delete;
+import com.kite9.pipeline.command.xml.insert.InsertUrl;
+import com.kite9.pipeline.command.xml.insert.InsertUrlWithChanges;
+import com.kite9.pipeline.command.xml.insert.InsertXML;
+import com.kite9.pipeline.command.xml.move.ADLMoveCells;
+import com.kite9.pipeline.command.xml.move.Move;
+import com.kite9.pipeline.command.xml.replace.ReplaceAttr;
+import com.kite9.pipeline.command.xml.replace.ReplaceStyle;
+import com.kite9.pipeline.command.xml.replace.ReplaceTag;
+import com.kite9.pipeline.command.xml.replace.ReplaceTagUrl;
+import com.kite9.pipeline.command.xml.replace.ReplaceText;
+import com.kite9.pipeline.command.xml.replace.ReplaceText.PreserveChildElements;
+import com.kite9.pipeline.command.xml.replace.ReplaceXML;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.XMLCompare;
+import com.kite9.server.controllers.CommandController;
+import com.kite9.server.update.AbstractUpdateHandler;
+import com.kite9.server.update.Update;
+import com.kite9.server.uri.URIWrapper;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {
@@ -282,11 +294,11 @@ public class CommandsTest {
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.CONTENT_TYPE, Kite9MediaTypes.ADL_XML_VALUE);
 		headers.set(HttpHeaders.ACCEPT, Kite9MediaTypes.ADL_XML_VALUE);
-		ADLOutput out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
+		ADLDom out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
 		String modified = performSaveAndCheck(out, name, "/commands/after_"+name+".xml");
 		System.out.println("After command "+name+" do(): \n"+modified+"\n adl: \n"+new String(out.getAsBytes()));
 		String modifiedBase64 = Base64.getEncoder().encodeToString(modified.getBytes());
-		ADLOutput out2 = commandController.applyCommandOnStatic(buildUndoRequestEntity(c, modifiedBase64, new URI(sourceURI), headers), sourceURI);
+		ADLDom out2 = commandController.applyCommandOnStatic(buildUndoRequestEntity(c, modifiedBase64, new URI(sourceURI), headers), sourceURI);
 		String resource = sourceURI.substring(sourceURI.indexOf("/public"));
 		String back = performSaveAndCheck(out2, name+ "-2", "/static"+resource);
 		System.out.println("After command "+name+" undo(): \n"+back+"\n adl: \n"+new String(out2.getAsBytes()));
