@@ -1,12 +1,13 @@
 import { ensureJs, once } from '/public/bundles/ensure.js';
 
-export function createAdlToSVGResolver() {
+export function createAdlToSVGResolver(transition) {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
 	const DEFAULT_TEMPLATE = "/public/templates/basic/basic-template.xsl";
 
 	var transformer = null;	  // set on first use
+	var template = null;
 	
 	/**
 	 * Replace with ES6 module as soon as possible
@@ -57,18 +58,19 @@ export function createAdlToSVGResolver() {
 	return (text) => {
 		const parser = new DOMParser();
 		const doc = parser.parseFromString(text, "text/xml");
+		const currentTemplate = getTemplateUri(doc);
 		
-		if (transformer == null) {
-			// using this to make sure document location is correct.
+		if (currentTemplate != template) {
 			var xhr = new XMLHttpRequest;
-			xhr.open('GET', getTemplateUri(doc));
+			xhr.open('GET', currentTemplate);
 			xhr.responseType = 'document';
 			xhr.overrideMimeType('text/xml');
 			xhr.onload = function () {
 			  	if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-					this.transformer = new XSLTProcessor();
-					this.transformer.importStylesheet(xhr.responseXML);	
-					const result = this.transformer.transformToDocument(doc);
+					transformer = new XSLTProcessor();
+					template = currentTemplate;
+					transformer.importStylesheet(xhr.responseXML);	
+					const result = transformer.transformToDocument(doc);
 					
 					// we have to add the result to the main dom 
 					// to get the computedStyleMap and format
@@ -80,7 +82,7 @@ export function createAdlToSVGResolver() {
 					
 					// put it back in the result 
 					result.appendChild(docElement);
-					callback(result);
+					transition.change(result);
 				} else {
 					console.error("Couldn't transform'");
 				}
@@ -88,7 +90,7 @@ export function createAdlToSVGResolver() {
 				
 			xhr.send();		
 		} else {
-			return callback(this.transformer.transformToDocument(doc));
+			return transition.change(transformer.transformToDocument(doc));
 		}
   	}
 	

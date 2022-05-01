@@ -1,10 +1,10 @@
 
-export function createSVGResolver() {
+export function createSVGResolver(transition) {
 	
 	return (text) => {
 		var parser = new DOMParser();
 		var doc = parser.parseFromString(text, "image/svg+xml");
-		return doc;
+		transition.change(doc);
 	}
 	
 }

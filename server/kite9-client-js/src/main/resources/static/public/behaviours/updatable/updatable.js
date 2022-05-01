@@ -10,7 +10,7 @@ import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver
  * All the methods return a function returning a promise.
  */
  
-export function initWebsocketUpdater(uri, contentTypeResolver, transition) {
+export function initWebsocketUpdater(uri, contentTypeResolver) {
 	
 	const socket = new WebSocket(uri);
 	
@@ -42,7 +42,7 @@ export function initWebsocketUpdater(uri, contentTypeResolver, transition) {
 	
 } 
  
-export function initHttpUpdater(uri, contentType, contentTypeResolver, transition) {
+export function initHttpUpdater(uri, contentType, contentTypeResolver) {
 	
 	/** Really basic error handler */
 	function handleErrors(response) {
@@ -70,7 +70,6 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver, transitio
 	            .then(handleErrors)
 				.then(response => response.text())
 	            .then(text => contentTypeResolver(text))
-	            .then(svg => transition.change(svg));
         } catch (e) {
             alert(e);
         }
@@ -81,7 +80,7 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver, transitio
 /**
  * This updater applies the commands locally
  */
-export function initLocalUpdater(adl, contentTypeResolver, transition) {
+export function initLocalUpdater(adl, contentTypeResolver) {
 	
 	
 	
@@ -95,7 +94,7 @@ export function initLocalUpdater(adl, contentTypeResolver, transition) {
  */
 export function initMetadataBasedUpdater(command, metadata, transition, renderServerSide) {
 	
-	var resolver = renderServerSide ? createSVGResolver() : createAdlToSVGResolver();
+	var resolver = renderServerSide ? createSVGResolver(transition) : createAdlToSVGResolver(transition);
 	var contentType = renderServerSide ? "image/svg+xml;purpose=editable, application/json" :
 						"text/xml;purpose=adl";
 
@@ -111,8 +110,7 @@ export function initMetadataBasedUpdater(command, metadata, transition, renderSe
 		delegate = initHttpUpdater(
 			metadata.get("self"), 
 			contentType, 
-			resolver, 
-			transition);
+			resolver);
 	}
 	
 	return (update) => {
