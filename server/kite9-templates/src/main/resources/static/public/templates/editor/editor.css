@@ -22,3 +22,6 @@ svg {
   cursor: pointer;
 }
 
+#_update {
+	display: none;
+}

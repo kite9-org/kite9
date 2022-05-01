@@ -2,16 +2,22 @@ package org.kite9.diagram.js.bridge
 
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.bridge.ElementContext
+import org.kite9.diagram.dom.bridge.ElementContext.Companion.UNITS
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.logging.Kite9ProcessingException
+import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
+import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.Placement.Companion.NONE
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGGraphicsElement
+import org.w3c.dom.svg.SVGTSpanElement
+import org.w3c.dom.svg.SVGTextElement
 import kotlin.reflect.KClass
+
 
 class JSElementContext : ElementContext {
 
@@ -22,16 +28,16 @@ class JSElementContext : ElementContext {
      */
     private fun getUndirectedVersion(prop: String) : String? {
         if (prop.endsWith(CSSConstants.LEFT)) {
-            return prop.substring(0, prop.length - CSSConstants.LEFT.length - 1);
+            return prop.substring(0, prop.length - CSSConstants.LEFT.length - 1)
         }
         if (prop.endsWith(CSSConstants.RIGHT)) {
-            return prop.substring(0, prop.length - CSSConstants.RIGHT.length - 1);
+            return prop.substring(0, prop.length - CSSConstants.RIGHT.length - 1)
         }
         if (prop.endsWith(CSSConstants.TOP)) {
-            return prop.substring(0, prop.length - CSSConstants.TOP.length - 1);
+            return prop.substring(0, prop.length - CSSConstants.TOP.length - 1)
         }
         if (prop.endsWith(CSSConstants.BOTTOM)) {
-            return prop.substring(0, prop.length - CSSConstants.BOTTOM.length - 1);
+            return prop.substring(0, prop.length - CSSConstants.BOTTOM.length - 1)
         }
 
         return null;
@@ -54,7 +60,25 @@ class JSElementContext : ElementContext {
     }
 
     override fun getDocumentReplacer(at: Element): XPathAware {
-        TODO("Not yet implemented")
+        return object : XPathAware {
+            override fun getXPathVariable(name: String): String {
+                return if ("width" == name) {
+                   ( xmlToDiagram.values
+                        .filterIsInstance<Diagram>()
+                        .maxOfOrNull{it.getRenderingInformation().position!!.x() + it.getRenderingInformation().size!!.x() }
+                        ?: 0 ).toString()
+                } else if ("height" == name) {
+                    ( xmlToDiagram.values
+                        .filterIsInstance<Diagram>()
+                        .maxOfOrNull{ it.getRenderingInformation().position!!.y()!! + it.getRenderingInformation().size!!.y()!! }
+                        ?: 0 ).toString()
+                } else if (UNITS.contains(name)) {
+                    "" + getCssUnitSizeInPixels(name, at)
+                } else {
+                    ""
+                }
+            }
+        }
     }
 
     override fun getCssStyleDoubleProperty(prop: String, e: Element): Double {
@@ -109,9 +133,13 @@ class JSElementContext : ElementContext {
     }
 
     override fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X? {
-        val s = getCssStyleStringProperty(prop, e)!!.trim()
-        return (c.asDynamic().jClass.values() as Array<X>)
-            .firstOrNull { (it.asDynamic().name as String).toLowerCase().replace("_", "-") == s }
+        val s = getCssStyleStringProperty(prop, e)
+        if (s==null) {
+            return null
+        } else {
+            return (c.asDynamic().jClass.values() as Array<X>)
+                .firstOrNull { (it.asDynamic().name as String).toLowerCase().replace("_", "-") == s.trim() }
+        }
     }
 
     override fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange? {
@@ -131,16 +159,12 @@ class JSElementContext : ElementContext {
 
         if (s.asDynamic().value == "none") {
             return NONE;
+        } else if (s.asDynamic().unit == "percent") {
+            return Placement(Measurement.PERCENTAGE, s.asDynamic().value);
+        } else if (s.asDynamic().unit == "pixels") {
+            return Placement(Measurement.PIXELS, s.asDynamic().value);
         } else {
             TODO("Not yet implemented")
-//
-//            if (v.getPrimitiveType() == org.w3c.dom.css.CSSPrimitiveValue.CSS_PERCENTAGE) {
-//                return ConnectionAlignment(ConnectionAlignment.Measurement.PERCENTAGE, v.getFloatValue())
-//            } else if (v.getPrimitiveType() == org.w3c.dom.css.CSSPrimitiveValue.CSS_PX) {
-//                return ConnectionAlignment(ConnectionAlignment.Measurement.PIXELS, v.getFloatValue())
-//            }
-//
-//            return NONE
         }
 
     }
@@ -183,7 +207,20 @@ class JSElementContext : ElementContext {
     }
 
     override fun textWidth(s: String, inside: Element): Double {
-        TODO("Not yet implemented")
+        val start = inside.textContent?.indexOf(s) ?: 0
+        val end = start + s.length
+
+        return if (inside is SVGTextElement) {
+            var charTL = inside.getStartPositionOfChar(start)
+            var charBR = inside.getEndPositionOfChar(end)
+            charBR.x - charTL.x
+        } else if (inside is SVGTSpanElement) {
+            var charTL = inside.getStartPositionOfChar(start)
+            var charBR = inside.getEndPositionOfChar(end)
+            charBR.x - charTL.x
+        } else {
+            0.0
+        }
     }
 
     override fun getCssUnitSizeInPixels(prop: String, e: Element): Double {

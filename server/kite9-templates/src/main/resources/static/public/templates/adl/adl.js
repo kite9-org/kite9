@@ -11,6 +11,9 @@ import { Containment } from '/public/classes/containment/containment.js';
 import { Command, initCommandTransitionCallback } from '/public/classes/command/command.js';
 import { Palette, initPaletteHoverableAllowed } from '/public/classes/palette/palette.js';
 
+//updatable
+import { initMetadataBasedUpdater } from '/public/behaviours/updatable/updatable.js';
+
 // animation
 import { initTransitionAnimationCallback } from '/public/behaviours/animation/animation.js';
 
@@ -34,20 +37,12 @@ import { once } from '/public/bundles/ensure.js';
 export const 
 	command = new Command(), 
 	metadata = new Metadata(), 
-	
-	transition = new Transition(
-			() => metadata.get('self'),	
-			() => metadata.get('topic')), 
-			
+	transition = new Transition(), 
 	instrumentation = new Instrumentation(), 
-	
 	dragger  = new Dragger(), 
-	
 	contextMenu = new ContextMenu(),
-	
 	containment = new Containment(),
-
-  palette =  new Palette("_palette", document.params['palettes']);
+	palette =  new Palette("_palette", document.params['palettes']);
 	
 
 function initCommon() {
@@ -63,7 +58,7 @@ function initCommon() {
 	transition.animation(zoomableTransitionCallback);
 	transition.animation(initTransitionAnimationCallback());
 
-	command.add((update) => transition.update(update));
+	command.add(initMetadataBasedUpdater(metadata, transition));
 
 	dragger.moveWith(() => contextMenu.destroy());
 

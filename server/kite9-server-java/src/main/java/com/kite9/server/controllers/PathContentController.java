@@ -83,7 +83,7 @@ public class PathContentController extends AbstractContentController {
 			produces = Kite9MediaTypes.ALL_VALUE,
 			consumes = Kite9MediaTypes.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ADLOutput updateViaPost(@RequestHeader HttpHeaders headers, NativeWebRequest req, @RequestBody Update update,
+	public ADLDom updateViaPost(@RequestHeader HttpHeaders headers, NativeWebRequest req, @RequestBody Update update,
 			Authentication authentication) throws Exception {
 		K9URI uri = URIRewriter.getCompleteCurrentRequestURI();
 
@@ -92,8 +92,7 @@ public class PathContentController extends AbstractContentController {
 		try {
 			update.setUri(uri);
 			update.addHeaders(headers);
-			ADLOutput adl = performDiagramUpdate(update, authentication, format)
-				.process(update.getUri(), format);
+			ADLDom adl = performDiagramUpdate(update, authentication, format);
 			return adl;
 		} catch (Exception e) {
 			String properCause = getProperCause(e);
@@ -101,7 +100,7 @@ public class PathContentController extends AbstractContentController {
 			ModifiableDiagramAPI api = (ModifiableDiagramAPI) getSourceAPI(update, authentication);
 			ADLDom dom = api.getCurrentRevisionContent(authentication, headers).parse();
 			dom.setError(properCause);
-			return dom.process(uri, format);
+			return dom;
 		}
 	}
 

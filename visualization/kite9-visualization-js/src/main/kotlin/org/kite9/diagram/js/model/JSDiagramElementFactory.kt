@@ -19,9 +19,14 @@ class JSDiagramElementFactory(context: JSElementContext) : AbstractDiagramElemen
     }
 
     override fun createDiagramElement(x: Element, parent: DiagramElement?): DiagramElement? {
-        var type = context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, DiagramElementType::class)!!
-        var usage= context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, RectangularElementUsage::class)!!
-        var out = instantiateDiagramElement(parent, x, type, usage)
+        val type = context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, DiagramElementType::class)
+        val usage= context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, RectangularElementUsage::class)
+
+        if (type == null || usage == null) {
+            return null
+        }
+
+        val out = instantiateDiagramElement(parent, x, type, usage)
 
         if (out != null) {
             if (parent != null) {
@@ -51,7 +56,7 @@ class JSDiagramElementFactory(context: JSElementContext) : AbstractDiagramElemen
     }
 
     override fun getTextPainter(el: Element): LeafPainter {
-        TODO("Not yet implemented")
+       return JSLeafPainter(el, context!!)
     }
 
 }

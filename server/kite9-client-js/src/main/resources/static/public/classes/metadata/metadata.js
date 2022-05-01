@@ -12,6 +12,9 @@ export class Metadata {
 	}
 	
 	convert(e) {
+		if (e == null) {
+			return {};
+		}
 		const children = Array.from(e.children);
 		const tagName = e.tagName;
 		const isMap = (tagName.endsWith('author')) || (tagName.endsWith('user')) || (tagName.endsWith('metadata'));

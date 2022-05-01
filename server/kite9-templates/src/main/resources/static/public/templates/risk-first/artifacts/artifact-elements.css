@@ -46,7 +46,7 @@
 
 [k9-elem=description] {
   --kite9-padding: 10pt;
-  --kite9-usage: label;
+  --kite9-usage: connected;
   --kite9-text-bounds-width: 250pt;
   --kite9-label-placement: bottom;
 }
