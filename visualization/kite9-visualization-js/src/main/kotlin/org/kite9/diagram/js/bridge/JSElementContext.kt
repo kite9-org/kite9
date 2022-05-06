@@ -52,11 +52,21 @@ class JSElementContext : ElementContext {
     private val xmlToDiagram = mutableMapOf<Element, DiagramElement>()
 
     override fun register(x: Element, out: DiagramElement) {
-        xmlToDiagram[x] = out
+        var uuidL = x.asDynamic().uniqueId;
+        if (uuidL == null) {
+            uuidL = ""+(0..Long.MAX_VALUE).random()+"-"+(0..Long.MAX_VALUE).random()
+            x.asDynamic().uniqueId = uuidL
+        }
+        xmlToDiagram[uuidL] = out
     }
 
     override fun getRegisteredDiagramElement(x: Element) : DiagramElement? {
-        return xmlToDiagram[x]
+        var uuidL = x.asDynamic().uniqueId;
+        if (uuidL != null) {
+            return xmlToDiagram[x]
+        } else {
+            throw Kite9ProcessingException("Not registered: "+x)
+        }
     }
 
     override fun getDocumentReplacer(at: Element): XPathAware {
@@ -97,10 +107,13 @@ class JSElementContext : ElementContext {
             }
         }
 
-        // convert to pixels
-        val vPx = v.to("px")
-        return vPx.value as Double
-
+        if (v.unit != null) {
+            // convert to pixels
+            val vPx = v.to("px")
+            return vPx.value as Double
+        } else {
+            return 0.0
+        }
     }
 
     override fun getCssStyleStringProperty(prop: String, e: Element): String? {
@@ -116,8 +129,9 @@ class JSElementContext : ElementContext {
         }
 
         if (out is String) {
-            if ((out.startsWith("\"")) && (out.endsWith("\""))) {
-                out = out.substring(1, out.length - 1)
+            val trimmed = out.trim()
+            if ((trimmed.startsWith("\"")) && (trimmed.endsWith("\""))) {
+                out = trimmed.substring(1, trimmed.length - 1)
             }
         }
 
@@ -146,25 +160,19 @@ class JSElementContext : ElementContext {
         TODO("Not yet implemented")
     }
 
-    override fun getCSSStylePlacementProperty(prop: String, e: Element): Placement {
-        TODO("Not yet implemented")
-    }
-
     override fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement> {
         return children.getOrElse(parent) { mutableListOf() }
     }
 
-    override fun getPlacement(prop: String, e: Element): Placement {
+    override fun getCSSStylePlacementProperty(prop: String, e: Element): Placement {
         val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
 
-        if (s.asDynamic().value == "none") {
-            return NONE;
-        } else if (s.asDynamic().unit == "percent") {
+        if (s.asDynamic().unit == "percent") {
             return Placement(Measurement.PERCENTAGE, s.asDynamic().value);
         } else if (s.asDynamic().unit == "pixels") {
             return Placement(Measurement.PIXELS, s.asDynamic().value);
         } else {
-            TODO("Not yet implemented")
+            return NONE;
         }
 
     }
@@ -172,7 +180,7 @@ class JSElementContext : ElementContext {
     override fun getReferencedElement(id: String, e: Element): DiagramElement? {
         val ownerDocument = e.ownerDocument!!
         val out = ownerDocument.getElementById(id)
-        return xmlToDiagram[out]
+        return out?.let { getRegisteredDiagramElement(it) }
     }
 
     override fun getReference(prop: String, e: Element): String? {
@@ -207,16 +215,20 @@ class JSElementContext : ElementContext {
     }
 
     override fun textWidth(s: String, inside: Element): Double {
-        val start = inside.textContent?.indexOf(s) ?: 0
-        val end = start + s.length
+        val firstChar = inside.textContent?.indexOf(s) ?: -1
+        if (firstChar == -1) {
+            throw Kite9ProcessingException("Trying to find substring "+s+" inside "+inside.textContent)
+        }
+
+        val lastChar = firstChar + s.length - 1
 
         return if (inside is SVGTextElement) {
-            var charTL = inside.getStartPositionOfChar(start)
-            var charBR = inside.getEndPositionOfChar(end)
+            var charTL = inside.getStartPositionOfChar(firstChar)
+            var charBR = inside.getEndPositionOfChar(lastChar)
             charBR.x - charTL.x
         } else if (inside is SVGTSpanElement) {
-            var charTL = inside.getStartPositionOfChar(start)
-            var charBR = inside.getEndPositionOfChar(end)
+            var charTL = inside.getStartPositionOfChar(firstChar)
+            var charBR = inside.getEndPositionOfChar(lastChar)
             charBR.x - charTL.x
         } else {
             0.0
@@ -224,6 +236,6 @@ class JSElementContext : ElementContext {
     }
 
     override fun getCssUnitSizeInPixels(prop: String, e: Element): Double {
-        TODO("Not yet implemented")
+        return 1.0
     }
 }

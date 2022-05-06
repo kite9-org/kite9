@@ -1,6 +1,6 @@
 import { ensureJs, once } from '/public/bundles/ensure.js';
 
-export function createAdlToSVGResolver(transition) {
+export function createAdlToSVGResolver(transition, metadata) {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
@@ -54,6 +54,23 @@ export function createAdlToSVGResolver(transition) {
 		
 		return new URL(template, document.location.href).href;
 	}
+	
+	function layoutSVGDocument(result, doc) {
+		// we have to add the result to the main dom 
+		// to get the computedStyleMap and format
+		const update = ensureUpdateArea();
+		update.replaceChildren();
+		const docElement = result.documentElement
+		update.appendChild(docElement)
+		window['kite9-visualization-js'].formatSVG(docElement);
+		
+		// put it back in the result 
+		result.appendChild(docElement);
+		update.replaceChildren();
+		
+		transition.change(result);
+		metadata.update(doc);
+	}
 
 	return (text) => {
 		const parser = new DOMParser();
@@ -71,18 +88,8 @@ export function createAdlToSVGResolver(transition) {
 					template = currentTemplate;
 					transformer.importStylesheet(xhr.responseXML);	
 					const result = transformer.transformToDocument(doc);
+					layoutSVGDocument(result, doc)
 					
-					// we have to add the result to the main dom 
-					// to get the computedStyleMap and format
-					const update = ensureUpdateArea();
-					update.replaceChildren();
-					const docElement = result.documentElement
-					update.appendChild(docElement)
-					window['kite9-visualization-js'].formatSVG(docElement);
-					
-					// put it back in the result 
-					result.appendChild(docElement);
-					transition.change(result);
 				} else {
 					console.error("Couldn't transform'");
 				}
@@ -90,7 +97,7 @@ export function createAdlToSVGResolver(transition) {
 				
 			xhr.send();		
 		} else {
-			return transition.change(transformer.transformToDocument(doc));
+			return layoutSVGDocument(transformer.transformToDocument(doc), doc);
 		}
   	}
 	

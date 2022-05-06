@@ -197,20 +197,6 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 		}
 	}
 
-
-	@NotNull
-	@Override
-	public Placement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
-		Value v = getCSSValue(prop, e);
-		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-			return new Placement(Measurement.PERCENTAGE, v.getFloatValue());
-		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
-			return new Placement(Measurement.PIXELS, v.getFloatValue());
-		} else {
-			return new Placement(Measurement.PERCENTAGE, 50.0F);
-		}
-	}
-
 	private Value getCSSValue(String prop, Element e) {
 		if (e instanceof CSSStylableElement) {
 			CSSEngine cssEngine = ((SVGOMDocument) e.getOwnerDocument()).getCSSEngine();
@@ -243,16 +229,17 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	}
 
 
-	public Placement getPlacement(String prop, Element e) {
+	@NotNull
+	@Override
+	public Placement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
 		Value v = getCSSValue(prop, e);
-
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
 			return new Placement(Measurement.PERCENTAGE, v.getFloatValue());
 		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
 			return new Placement(Measurement.PIXELS, v.getFloatValue());
+		} else {
+			return Placement.Companion.getNONE();
 		}
-
-		return Placement.Companion.getNONE();
 	}
 
 	@Override

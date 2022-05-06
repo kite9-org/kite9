@@ -22,6 +22,13 @@ svg {
   cursor: pointer;
 }
 
+/*
+ * This is used for client-side rendering.  The new version of the
+ * diagram is placed in the _update div and positioned.   Size set
+ * to zero so this isn't visible on screen
+ */
 #_update {
-	display: none;
+	width: 0;
+	height: 0;
+	overflow: hidden;
 }

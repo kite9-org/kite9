@@ -3,7 +3,7 @@
  */
 
 import { Instrumentation } from "/public/classes/instrumentation/instrumentation.js";
-import { Metadata, initMetadataTransitionCallback } from "/public/classes/metadata/metadata.js";
+import { Metadata } from "/public/classes/metadata/metadata.js";
 import { ContextMenu } from "/public/classes/context-menu/context-menu.js";
 import { Transition } from '/public/classes/transition/transition.js';
 import { Dragger } from '/public/classes/dragger/dragger.js';
@@ -52,7 +52,6 @@ function initCommon() {
 	instrumentation.add(initIdentityInstrumentationCallback());
 	instrumentation.add(zoomableInstrumentationCallback);
 
-	transition.document(initMetadataTransitionCallback(metadata));
 	transition.document(initCommandTransitionCallback(command));
 
 	transition.animation(zoomableTransitionCallback);

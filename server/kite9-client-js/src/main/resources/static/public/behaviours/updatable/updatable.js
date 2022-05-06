@@ -94,16 +94,20 @@ export function initLocalUpdater(adl, contentTypeResolver) {
  */
 export function initMetadataBasedUpdater(command, metadata, transition, renderServerSide) {
 	
-	var resolver = renderServerSide ? createSVGResolver(transition) : createAdlToSVGResolver(transition);
-	var contentType = renderServerSide ? "image/svg+xml;purpose=editable, application/json" :
-						"text/xml;purpose=adl";
-
-
+	var resolver = renderServerSide ? 
+			createSVGResolver(transition, metadata) :
+			createAdlToSVGResolver(transition, metadata);
+	var contentType = renderServerSide ? 
+			"image/svg+xml;purpose=editable, application/json" :
+			"text/xml;purpose=adl";
 
 	var delegate;
 	
 	if (metadata.get("user") != undefined) {
 		// logged in, use websockets
+		delegate = initWebsocketUpdater(
+			metadata.get("self"), 
+			resolver);
 		
 	} else {
 		// not using web-sockets

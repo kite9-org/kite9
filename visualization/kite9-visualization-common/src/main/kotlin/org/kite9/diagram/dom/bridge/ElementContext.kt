@@ -23,7 +23,6 @@ interface ElementContext {
     fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
     fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange?
     fun getCSSStylePlacementProperty(prop: String, e: Element): Placement
-    fun getPlacement(prop: String, e: Element): Placement
 
     fun addChild(parent: DiagramElement, out: DiagramElement)
     fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement>

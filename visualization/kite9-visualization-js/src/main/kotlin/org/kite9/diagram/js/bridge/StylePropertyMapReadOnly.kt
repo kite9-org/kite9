@@ -6,6 +6,8 @@ external class PropValue {
 
     val value : Any
 
+    val unit : String?
+
     fun to(x: String) : PropValue
 }
 

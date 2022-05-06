@@ -41,6 +41,10 @@ export class Metadata {
 		
 		const news = this.convert(d.querySelector("metadata"));
 		this.metadata = { ...olds, ...news };
+		
+		this.callbacks.forEach(cb => {
+			cb(metadata.metadata);
+		});	
 	}
 	
 	add(cb) {
@@ -60,23 +64,3 @@ export class Metadata {
 		return (role != 'viewer');
 	}
 }
-
-
-
-/**
- * Attach this to the transition object to allow Metadata to 
- * receive messages about document changes.
- */
-export function initMetadataTransitionCallback(metadata) {
-	
-	return function(doc) {
-		
-		metadata.process(doc);
-		
-		metadata.callbacks.forEach(cb => {
-			cb(metadata.metadata);
-		});	
-		
-	}
-} 
-
