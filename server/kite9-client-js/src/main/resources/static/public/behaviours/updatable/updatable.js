@@ -12,7 +12,7 @@ import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver
  
 export function initWebsocketUpdater(uri, contentTypeResolver) {
 	
-	const socket = new WebSocket(uri);
+	const socket = new WebSocket(uri.replace('http', 'ws'));
 	
 	socket.onopen = function(e) {
 		console.log("command Websocket established")

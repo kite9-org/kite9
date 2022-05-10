@@ -49,23 +49,21 @@ class JSElementContext : ElementContext {
         contents.add(out)
     }
 
-    private val xmlToDiagram = mutableMapOf<Element, DiagramElement>()
+    private val xmlToDiagram = mutableMapOf<String, DiagramElement>()
 
     override fun register(x: Element, out: DiagramElement) {
-        var uuidL = x.asDynamic().uniqueId;
-        if (uuidL == null) {
-            uuidL = ""+(0..Long.MAX_VALUE).random()+"-"+(0..Long.MAX_VALUE).random()
-            x.asDynamic().uniqueId = uuidL
+        val id = x.getAttribute("id")
+        if (id != null) {
+            xmlToDiagram[id] = out
         }
-        xmlToDiagram[uuidL] = out
     }
 
     override fun getRegisteredDiagramElement(x: Element) : DiagramElement? {
-        var uuidL = x.asDynamic().uniqueId;
-        if (uuidL != null) {
-            return xmlToDiagram[x]
+        val id = x.getAttribute("id")
+        if (id != null) {
+            return xmlToDiagram[id]
         } else {
-            throw Kite9ProcessingException("Not registered: "+x)
+            return null;
         }
     }
 
