@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.testing.TestingHelp;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -296,12 +297,17 @@ public class CommandsTest {
 		headers.set(HttpHeaders.ACCEPT, Kite9MediaTypes.ADL_XML_VALUE);
 		ADLDom out = commandController.applyCommandOnStatic(buildRequestEntity(c, sourceURI, headers), sourceURI);
 		String modified = performSaveAndCheck(out, name, "/commands/after_"+name+".xml");
-		System.out.println("After command "+name+" do(): \n"+modified+"\n adl: \n"+new String(out.getAsBytes()));
+		System.out.println("After command "+name+" do(): \n"+modified+"\n adl: \n"+new String(getBytes(out)));
 		String modifiedBase64 = Base64.getEncoder().encodeToString(modified.getBytes());
 		ADLDom out2 = commandController.applyCommandOnStatic(buildUndoRequestEntity(c, modifiedBase64, new URI(sourceURI), headers), sourceURI);
 		String resource = sourceURI.substring(sourceURI.indexOf("/public"));
 		String back = performSaveAndCheck(out2, name+ "-2", "/static"+resource);
-		System.out.println("After command "+name+" undo(): \n"+back+"\n adl: \n"+new String(out2.getAsBytes()));
+		System.out.println("After command "+name+" undo(): \n"+back+"\n adl: \n"+new String(getBytes(out)));
+	}
+
+	private byte[] getBytes(ADLDom out) {
+		String xml = new XMLHelper().toXML(out.getDocument(), true);
+		return xml.getBytes();
 	}
 	
 	
@@ -319,11 +325,11 @@ public class CommandsTest {
 	}
 	
 
-	public String performSaveAndCheck(ADLOutput out, String name, String resource) throws Exception {
+	public String performSaveAndCheck(ADLDom out, String name, String resource) throws Exception {
 		
 		System.out.println("Metadata: \n" + out.getMetaData());
 		
-		byte[] result = out.getAsBytes();
+		byte[] result = getBytes(out);
 		TestingHelp.writeOutput(this.getClass(), null, name+".xml", result);
 		String expected4 = StreamUtils.copyToString(this.getClass().getResourceAsStream(resource), StandardCharsets.UTF_8);
 		String s = new String(result);
