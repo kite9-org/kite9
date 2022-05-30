@@ -22,15 +22,20 @@ export function ensureCss(css) {
  * ES6 support
  */
 export function ensureJs(js) {
-	if (!document.getElementById(js)) {
-	    var head  = document.getElementsByTagName('head')[0];
-	    var script  = document.createElement('script');
-	    script.id   = js;
-	    script.type = 'text/javascript';
-	    script.src = js;
-	    head.appendChild(script);
-	}
-} 
+	return new Promise((resolve, reject) => {
+		if (!document.getElementById(js)) {
+	   		const script = document.createElement('script')
+	    	script.type = 'text/javascript'
+	   	 	script.onload = resolve
+	    	script.onerror = reject
+	    	script.src = js
+	    	script.id = js
+	    	document.head.append(script)
+	  	} else {
+			resolve()
+		}	
+	});
+}
 
 const called = [];
 

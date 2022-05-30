@@ -1,6 +1,8 @@
 import { ensureJs, once } from '/public/bundles/ensure.js';
+import { encodeADLElement } from '/public/bundles/api.js';
 
-export function createAdlToSVGResolver(transition, metadata) {
+
+export function createAdlToSVGResolver(transition, command, metadata) {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
@@ -13,12 +15,14 @@ export function createAdlToSVGResolver(transition, metadata) {
 	 * Replace with ES6 module as soon as possible
 	 */
 	once(function() {
-		ensureJs('/webjars/kotlin/1.4.30/kotlin.js');	
-		setTimeout(() => {
-			ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
-			setTimeout(() => window['kite9-visualization-js'].initCSS(), 100);
-		}, 20)
-
+		ensureJs('/webjars/kotlin/1.4.30/kotlin.js')
+			.then(() => {
+				return ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
+			})	
+			.then(() => {
+				window['kite9-visualization-js'].initCSS();
+			})
+	
 		// not using this since we run into licensing issues.
 		//ensureJs('/public/external/SaxonJS2.js');
 	});
@@ -32,6 +36,7 @@ export function createAdlToSVGResolver(transition, metadata) {
 		if (update == undefined) {
 		 	update = document.createElement("div");
 			update.setAttribute("id", "_update");
+			update.setAttribute("media", "editor");
 			document.body.appendChild(update);
 		}
 				
@@ -69,7 +74,9 @@ export function createAdlToSVGResolver(transition, metadata) {
 		update.replaceChildren();
 		
 		transition.change(result);
-		metadata.update(doc);
+		const docText = new XMLSerializer().serializeToString(doc.documentElement);
+		command.adlUpdated(encodeADLElement(docText));
+		metadata.process(doc);
 	}
 
 	return (text) => {

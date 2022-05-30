@@ -1,5 +1,7 @@
 package org.kite9.diagram.js.bridge
 
+import CSSRegistry
+import kotlinx.browser.window
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.bridge.ElementContext.Companion.UNITS
@@ -22,6 +24,9 @@ import kotlin.reflect.KClass
 class JSElementContext : ElementContext {
 
     private val children = mutableMapOf<DiagramElement, MutableList<DiagramElement>>()
+
+    val css = window.asDynamic().CSS as CSSRegistry
+
 
     /**
      * Returns the generic (i.e. non-directed) css property, if there is one
@@ -203,11 +208,16 @@ class JSElementContext : ElementContext {
 
     override fun bounds(g: Element): Rectangle2D {
         val g = g as SVGGraphicsElement
-        val mtrx = g.getCTM()!!;
+        //val mtrx = g.getCTM()!!;
         val bbox = g.getBBox()!!;
+//        return Rectangle2D(
+//            (mtrx.e + bbox.x),
+//            (mtrx.f + bbox.y),
+//            bbox.width,
+//            bbox.height)
         return Rectangle2D(
-            (mtrx.e + bbox.x),
-            (mtrx.f + bbox.y),
+            bbox.x,
+            bbox.y,
             bbox.width,
             bbox.height)
     }
@@ -234,6 +244,13 @@ class JSElementContext : ElementContext {
     }
 
     override fun getCssUnitSizeInPixels(prop: String, e: Element): Double {
-        return 1.0
+        return when (prop) {
+            "cm" -> css.cm("1").to("px")
+            "mm" -> css.mm("1").to("px")
+            "pt" -> css.pt("1").to("px")
+            "pc" -> css.pc("1").to("px")
+            "em" -> css.em("1").to("px")
+            else -> 1.0;
+        }
     }
 }

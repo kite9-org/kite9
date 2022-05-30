@@ -107,6 +107,10 @@ export class Command {
 	
 }
 
+/**
+ * If the SVG document is returned containing the base64-encoded ADL
+ * markup, make sure to update it here.
+ */
 export function initCommandTransitionCallback(command) {
 	
 	return function(doc) {

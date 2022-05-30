@@ -57,7 +57,7 @@ function initCommon() {
 	transition.animation(zoomableTransitionCallback);
 	transition.animation(initTransitionAnimationCallback());
 
-	command.add(initMetadataBasedUpdater(command, metadata, transition, false));
+	command.add(initMetadataBasedUpdater(command, metadata, transition));
 
 	dragger.moveWith(() => contextMenu.destroy());
 

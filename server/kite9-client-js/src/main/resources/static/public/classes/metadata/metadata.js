@@ -43,7 +43,7 @@ export class Metadata {
 		this.metadata = { ...olds, ...news };
 		
 		this.callbacks.forEach(cb => {
-			cb(metadata.metadata);
+			cb(this.metadata);
 		});	
 	}
 	

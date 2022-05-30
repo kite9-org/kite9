@@ -1,6 +1,20 @@
 import { createSVGResolver } from '/public/behaviours/updatable/svgResolver.js';
 import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver.js';
 
+function getWebSocketPath(uri) {
+	const url = new URL(uri)
+	if (url.protocol == 'http:') {
+		url.protocol = 'ws:'
+	} else if (url.protocol == 'https:') {
+		url.protocol = 'wss:'
+	}
+	
+	url.pathname = '/changes' + url.pathname
+	const wsUrl = url.toString() 
+	return wsUrl;
+}
+
+
 /**
  * there are three ways of processing updates:
  * 1.  Send the update as XML to the server via HTTP
@@ -12,7 +26,7 @@ import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver
  
 export function initWebsocketUpdater(uri, contentTypeResolver) {
 	
-	const socket = new WebSocket(uri.replace('http', 'ws'));
+	const socket = new WebSocket(getWebSocketPath(uri));
 	
 	socket.onopen = function(e) {
 		console.log("command Websocket established")
@@ -78,32 +92,25 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver) {
 } 
 
 /**
- * This updater applies the commands locally
+ * This version of the updater adapts depending on what the (initial) meta-data says to do.
  */
-export function initLocalUpdater(adl, contentTypeResolver) {
+export function initMetadataBasedUpdater(command, metadata, transition) {
 	
+	const processViaWebSocket = metadata.get("user") != null;
 	
-	
-}
-
-
-
-/**
- * This version of the updater adapts depending on what the meta-data says to do.
- * It also figures out what 
- */
-export function initMetadataBasedUpdater(command, metadata, transition, renderServerSide) {
+	// for now, all rendering done on the client
+	const renderServerSide = false;	
 	
 	var resolver = renderServerSide ? 
 			createSVGResolver(transition, metadata) :
-			createAdlToSVGResolver(transition, metadata);
+			createAdlToSVGResolver(transition, command, metadata);
 	var contentType = renderServerSide ? 
 			"image/svg+xml;purpose=editable, application/json" :
 			"text/xml;purpose=adl";
 
 	var delegate;
 	
-	if (metadata.get("user") != undefined) {
+	if (processViaWebSocket) {
 		// logged in, use websockets
 		delegate = initWebsocketUpdater(
 			metadata.get("self"), 
