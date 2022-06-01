@@ -58,12 +58,18 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		this.formatSupplier = formatSupplier;
 	}
 	
-	protected GHContent getGHContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
+	protected GHContent getFileContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
 		GitHub api = createGitHub(auth);
 		return api.getRepository(owner+"/"+reponame).getFileContent(filepath);
 	}
+	
+	protected List<GHContent> getDirectoryContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
+		GitHub api = createGitHub(auth);
+		return api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath);
+	}
 
 	public SourceAPI createBackingAPI(K9URI u, Authentication authentication) throws Exception {
+		System.out.println(u.getPath());
 		String path = u.getPath();
 		if (GithubContentController.GITHUB.equals(PathUtils.getPathSegment(PathUtils.TYPE, path))) {
 			String owner = getPathSegment(OWNER, path);
@@ -75,33 +81,28 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			} else if (reponame == null) {
 				return new GithubDirectoryAPI(path, ec.getOrgPage(owner, authentication));
 			} else {
-				try {
-					GHContent o = getGHContent(authentication, owner, reponame, filepath);
-				
-					if (o.isDirectory()) {
-						// it's a directory page
-						return new GithubDirectoryAPI(path, ec.getDirectoryPage(owner, reponame, filepath, o.listDirectoryContent().toList(),  authentication));
-					} else {
-						// it's content.
-						Format f = formatSupplier.getFormatFor(path);
-
+				// try as content.
+				Format f = formatSupplier.getFormatFor(path);
+				if (f != null) {
+					try {
+						GHContent o = getFileContent(authentication, owner, reponame, filepath);
+						
 						if (f instanceof DiagramFileFormat) {
 							return createDiagramApi(u, f, false, o);
 						} else {
 							return createRegularFileApI(u, f, false, o);
 						}
-					}
-				} catch (WebClientResponseException e) {
-					if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-						Format f = formatSupplier.getFormatFor(path);
-						if (f == null) {
-							throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-						} else {
+					} catch (WebClientResponseException e) {
+						if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
 							return createDiagramApi(u,f, true, null);
+						} else {
+							throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
 						}
-					} else {
-						throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
-					}
+					} 
+				} else {
+					// ok, try as directory
+					List<GHContent> go = getDirectoryContent(authentication, owner, reponame, filepath);
+					return new GithubDirectoryAPI(path, ec.getDirectoryPage(owner, reponame, filepath, go,  authentication));
 				}
 				
 			}
