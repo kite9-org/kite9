@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.kite9.diagram.dom.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -11,11 +12,11 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
+import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.persistence.github.GithubSourceAPIFactory;
 import com.kite9.server.persistence.local.StaticSourceAPIFactory;
 import com.kite9.server.sources.PlugableContentAPIFactory;
 import com.kite9.server.sources.SourceAPIFactory;
-import com.kite9.server.topic.ChangeBroadcaster;
 
 /**
  * Handles the primary, plug-able {@link SourceAPIFactory}.
@@ -39,8 +40,11 @@ public class PersistenceConfig {
 	Cache cache;
 	
 	@Autowired
-	ChangeBroadcaster broadcaster;
-
+	ApplicationContext ctx;
+	
+	@Autowired
+	ADLFactory factory;
+	
 	@Bean
 	StaticSourceAPIFactory staticSourceAPIFactory() {
 		return new StaticSourceAPIFactory(cache, resolver, fs);
@@ -48,7 +52,7 @@ public class PersistenceConfig {
 	
 	@Bean
 	GithubSourceAPIFactory githubContentAPIFactory() {
-		return new GithubSourceAPIFactory(clientRepository, fs, broadcaster);
+		return new GithubSourceAPIFactory(ctx, factory, clientRepository, fs);
 	}
 
 	@Bean

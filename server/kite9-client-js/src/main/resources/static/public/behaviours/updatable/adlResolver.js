@@ -7,6 +7,8 @@ export function createAdlToSVGResolver(transition, command, metadata) {
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
 	const DEFAULT_TEMPLATE = "/public/templates/basic/basic-template.xsl";
+    const META_NAMESPACE = "http://www.kite9.org/schema/metadata";
+
 
 	var transformer = null;	  // set on first use
 	var template = null;
@@ -82,29 +84,38 @@ export function createAdlToSVGResolver(transition, command, metadata) {
 	return (text) => {
 		const parser = new DOMParser();
 		const doc = parser.parseFromString(text, "text/xml");
-		const currentTemplate = getTemplateUri(doc);
+		const docNS = doc.documentElement.namespaceURI
 		
-		if (currentTemplate != template) {
-			var xhr = new XMLHttpRequest;
-			xhr.open('GET', currentTemplate);
-			xhr.responseType = 'document';
-			xhr.overrideMimeType('text/xml');
-			xhr.onload = function () {
-			  	if (xhr.readyState === xhr.DONE && xhr.status === 200) {
-					transformer = new XSLTProcessor();
-					template = currentTemplate;
-					transformer.importStylesheet(xhr.responseXML);	
-					const result = transformer.transformToDocument(doc);
-					layoutSVGDocument(result, doc)
+		if (docNS == META_NAMESPACE) {
+			metadata.process(doc);
+		} else if (docNS == ADL_NAMESPACE) {
+			// transformable ADL
+			const currentTemplate = getTemplateUri(doc);
+		
+			if (currentTemplate != template) {
+				var xhr = new XMLHttpRequest;
+				xhr.open('GET', currentTemplate);
+				xhr.responseType = 'document';
+				xhr.overrideMimeType('text/xml');
+				xhr.onload = function () {
+				  	if (xhr.readyState === xhr.DONE && xhr.status === 200) {
+						transformer = new XSLTProcessor();
+						template = currentTemplate;
+						transformer.importStylesheet(xhr.responseXML);	
+						const result = transformer.transformToDocument(doc);
+						layoutSVGDocument(result, doc)
+						
+					} else {
+						console.error("Couldn't transform'");
+					}
+				};
 					
-				} else {
-					console.error("Couldn't transform'");
-				}
-			};
-				
-			xhr.send();		
+				xhr.send();		
+			} else {
+				return layoutSVGDocument(transformer.transformToDocument(doc), doc);
+			}
 		} else {
-			return layoutSVGDocument(transformer.transformToDocument(doc), doc);
+			alert("Don't know how to process: "+docNS)
 		}
   	}
 	

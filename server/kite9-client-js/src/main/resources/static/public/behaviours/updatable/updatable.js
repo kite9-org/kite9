@@ -1,16 +1,19 @@
 import { createSVGResolver } from '/public/behaviours/updatable/svgResolver.js';
 import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver.js';
 
-function getWebSocketPath(uri) {
-	const url = new URL(uri)
+/**
+ * Makes sure that the websocket uses ws/wss where needed
+ */
+function ensureCorrectScheme(uri) {
+	const url = new URL(document.location.href)
+	const topicUri = new URL(uri)
 	if (url.protocol == 'http:') {
-		url.protocol = 'ws:'
+		topicUri.protocol = 'ws:'
 	} else if (url.protocol == 'https:') {
-		url.protocol = 'wss:'
+		topicUri.protocol = 'wss:'
 	}
 	
-	url.pathname = '/changes' + url.pathname
-	const wsUrl = url.toString() 
+	const wsUrl = topicUri.toString() 
 	return wsUrl;
 }
 
@@ -24,21 +27,16 @@ function getWebSocketPath(uri) {
  * All the methods return a function returning a promise.
  */
  
-export function initWebsocketUpdater(uri, contentTypeResolver) {
+export function initWebsocketUpdater(socketUri, pageUri, contentTypeResolver) {
 	
-	const socket = new WebSocket(getWebSocketPath(uri));
+	const socket = new WebSocket(ensureCorrectScheme(socketUri));
 	
 	socket.onopen = function(e) {
 		console.log("command Websocket established")
 	}
 	
 	
-	socket.onmessage = (m) => {
-		return new Promise(m)
-			.then(p => contentTypeResolver(p))
-			.then(svg => transition(svg));
-
-	}
+	socket.onmessage = (m) => contentTypeResolver(m.data)
 	
 	socket.onerror = (e) => {
 		alert("Problem with websocket: "+ JSON.stringify(e))
@@ -48,7 +46,7 @@ export function initWebsocketUpdater(uri, contentTypeResolver) {
 	
 	
 	return (update) => {
-		update.uri = new URL(uri)
+		update.uri = new URL(pageUri)
 		update.base64adl = null;
 		const text = JSON.stringify(update)
 		socket.send(text)
@@ -96,7 +94,7 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver) {
  */
 export function initMetadataBasedUpdater(command, metadata, transition) {
 	
-	const processViaWebSocket = metadata.get("user") != null;
+	const processViaWebSocket = metadata.get("topic") != null;
 	
 	// for now, all rendering done on the client
 	const renderServerSide = false;	
@@ -113,6 +111,7 @@ export function initMetadataBasedUpdater(command, metadata, transition) {
 	if (processViaWebSocket) {
 		// logged in, use websockets
 		delegate = initWebsocketUpdater(
+			metadata.get("topic"), 
 			metadata.get("self"), 
 			resolver);
 		

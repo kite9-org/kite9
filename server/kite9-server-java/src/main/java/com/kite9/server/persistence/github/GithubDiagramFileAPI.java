@@ -20,15 +20,14 @@ public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileA
 	
 	private final DiagramFileFormat dff;
 	
-	public GithubDiagramFileAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, DiagramFileFormat dff, K9MediaType mt, boolean isNew) {
-		super(u, clientRepository, mt, isNew);
+	public GithubDiagramFileAPI(K9URI u, GHContent content, OAuth2AuthorizedClientRepository clientRepository, DiagramFileFormat dff, K9MediaType mt, boolean isNew) {
+		super(u, content, clientRepository, mt, isNew);
 		this.dff = dff;
 	}
 
 	@Override
 	public ADLBase getCurrentRevisionContent(Authentication authentication, HttpHeaders headers) throws Exception {
-		GHContent content = getGHContent(getAccessToken(authentication, clientRepository));
-		ADLBase base = dff.handleRead(content.read(), sourceURI, headers);
+ 		ADLBase base = dff.handleRead(content.read(), sourceURI, headers);
 		return base;
 	}
 
@@ -49,7 +48,7 @@ public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileA
 		adl.setCloseUri(close);
 
 		String socketScheme = u.getScheme().equals("http") ? "ws" : "wss";
-		K9URI topic = u.changeScheme(socketScheme, WebSocketConfig.TOPIC_PREFIX);
+		K9URI topic = u.changeScheme(socketScheme, WebSocketConfig.TOPIC_PREFIX+uPath);
 		adl.setTopicUri(topic);
 
 		String[] parts = uPath.split("/");

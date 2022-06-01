@@ -270,10 +270,10 @@ public class Kite9ErrorController implements ErrorController {
 		sb.append("<h1>Kite9 Error <span class=\"badge badge-danger\">"+statusCode+"</span></h1>");
 		sb.append("<div class=\"alert alert-info\">" + uri+ "</div>");
 	}
-
-	@Override
-	public String getErrorPath() {
-		return "/error";
-	}
+//
+//	@Override
+//	public String getErrorPath() {
+//		return "/error";
+//	}
 
 }

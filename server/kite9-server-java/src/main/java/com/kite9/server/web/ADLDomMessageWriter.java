@@ -3,11 +3,13 @@ package com.kite9.server.web;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.List;
 
 import org.kite9.diagram.dom.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -23,12 +25,14 @@ public class ADLDomMessageWriter extends AbstractADLDomMessageWriter<ADLDom> {
 	public static final Logger LOG = LoggerFactory.getLogger(ADLDomMessageWriter.class);
 
 	public static final Charset DEFAULT = Charset.forName("UTF-8");
+	
+	private final ApplicationContext ctx;
 		
-	public ADLDomMessageWriter(FormatSupplier formatSupplier, Cache c, ChangeBroadcaster changeBroadcaster) {
-		super(formatSupplier, c, changeBroadcaster);
+	public ADLDomMessageWriter(FormatSupplier formatSupplier, Cache c, ApplicationContext ctx) {
+		super(formatSupplier, c);
 		this.formatSupplier = formatSupplier;
 		this.cache = c;
-		this.changeBroadcaster = changeBroadcaster;
+		this.ctx = ctx;
 	}
 
 	@Override
@@ -67,6 +71,11 @@ public class ADLDomMessageWriter extends AbstractADLDomMessageWriter<ADLDom> {
 	protected void writeInternal(ADLDom t, Type type, HttpOutputMessage outputMessage)
 			throws IOException, HttpMessageNotWritableException {
 		writeADLDom(t, outputMessage);
+	}
+
+	@Override
+	protected Collection<ChangeBroadcaster> getChangeBroadcasters() {
+		return ctx.getBeansOfType(ChangeBroadcaster.class).values();
 	}
 
 	

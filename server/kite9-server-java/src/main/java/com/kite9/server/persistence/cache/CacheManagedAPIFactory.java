@@ -1,12 +1,14 @@
 package com.kite9.server.persistence.cache;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 
@@ -26,14 +28,14 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 	
 	private final Map<String, CachingModifiableDiagramAPI> cache = new HashMap<>();
 	
-	@Autowired
-	ChangeEventConsumerFactory changeEventConsumerFactory;
+	protected final ApplicationContext ctx;
 	
-	@Autowired
-	ADLFactory factory;
+	protected final ADLFactory factory;
 
-	public CacheManagedAPIFactory() {
+	public CacheManagedAPIFactory(ApplicationContext ctx, ADLFactory factory) {
 		super();
+		this.ctx = ctx;
+		this.factory = factory;
 	}
 
 	public SourceAPI createAPI(K9URI u, Authentication a) throws Exception {
@@ -70,8 +72,14 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 		return new ChangeQueueImpl(10, createConsumer(path));
 	}
 
-	private Consumer<ChangeQueue.ChangeEvent> createConsumer(String path) {
-		return changeEventConsumerFactory.createEventConsumer(path);
+	/**
+	 * Builds a consumer that sends events to any beans returned from {@link ChangeEventConsumerFactory}s.
+	 */
+	protected Consumer<ChangeQueue.ChangeEvent> createConsumer(String path) {
+		List<Consumer<ChangeQueue.ChangeEvent>> delegates = ctx.getBeansOfType(ChangeEventConsumerFactory.class).values().stream()
+			.map(e -> e.createEventConsumer(path))
+			.collect(Collectors.toList());
+		return e -> delegates.forEach(d -> d.accept(e)); 
 	}
 
 	protected abstract SourceAPI createBackingAPI(K9URI u, Authentication a) throws Exception;

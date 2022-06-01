@@ -121,6 +121,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		String cause = updateHandler.getProperCause(e);
 		ADLDom dom = base.parse();
 		dom.setError(cause);
+		LOG.warn("Responding with error: ", e);
 		session.sendMessage(new TextMessage(dom.getAsString()));
 	}
 
@@ -224,12 +225,6 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		} else {
 			return null;
 		}
-	}
-
-	@Override
-	public void broadcastMeta(K9URI topicUri, MetaRead meta) {
-		String topic = getTopicFromUri(topicUri);
-		metaUpdate(meta, topic);
 	}
 
 	@Override

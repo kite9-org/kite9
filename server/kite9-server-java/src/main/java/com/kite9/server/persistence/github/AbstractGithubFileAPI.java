@@ -19,14 +19,11 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.server.sources.FileAPI;
 import com.kite9.server.web.URIRewriter;
-
-import reactor.core.publisher.Mono;
 
 public abstract class AbstractGithubFileAPI implements FileAPI {
 
@@ -36,18 +33,18 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 	protected String owner;
 	protected String reponame;
 	protected String filepath;
-	protected String branchName;
 	protected OAuth2AuthorizedClientRepository clientRepository;
 	protected K9MediaType mediaType;
+	protected GHContent content;
 	
-	public AbstractGithubFileAPI(String path, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt) {
+	public AbstractGithubFileAPI(String path, GHContent content, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt) {
 		this.path = path;
 		this.owner = getPathSegment(OWNER, path);
 		this.reponame = getPathSegment(REPONAME, path);
 		this.filepath = getPathSegment(FILEPATH, path);
-		this.branchName = "master";
 		this.clientRepository = clientRepository;
 		this.mediaType = mt;
+		this.content = content;
 	}
 
 	public static String getAccessToken(Authentication p, OAuth2AuthorizedClientRepository clientRepository) {
@@ -87,33 +84,6 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 		}
 	}
 
-
-	public static <X> X getGHObject(String pathAndQuery, Class<X> cls, String oauthToken) {
-		WebClient c = createWebClient();
-		RequestHeadersSpec<?> m = c.get().uri(pathAndQuery);
-		if (oauthToken != null) {
-			m = m.header("Authorization", "token " + oauthToken);
-		}
-		
-		Mono<X> mono = m.retrieve().bodyToMono(cls);
-	
-		X content = mono.block();
-		return content;
-	}
-
-	protected GHContent getGHContent(String oauthToken) {
-		String uri = formatGithubPath(owner, reponame, filepath);
-		return getGHObject(uri, GHContent.class, oauthToken);
-	}
-
-	public static Object getGHContent(Authentication authentication, OAuth2AuthorizedClientRepository clientRepository, 
-			String owner, String reponame, String filepath) {
-		Object o;
-		String githubPath = formatGithubPath(owner, reponame, filepath);
-		o = AbstractGithubFileAPI.getGHObject(githubPath, Object.class, getAccessToken(authentication, clientRepository));
-		return o;
-	}
-
 	public static String formatGithubPath(String owner, String reponame, String filepath) {
 		return "/repos/" + owner+"/"+reponame+"/contents/" + filepath;
 	}
@@ -132,7 +102,6 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 
 	@Override
 	public InputStream getCurrentRevisionContentStream(Authentication authentication) throws Exception {
-		GHContent content = getGHContent(getAccessToken(authentication, clientRepository));
 		return content.read();
 	}
 

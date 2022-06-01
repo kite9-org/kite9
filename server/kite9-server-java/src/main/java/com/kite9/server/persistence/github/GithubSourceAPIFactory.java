@@ -7,13 +7,17 @@ import static com.kite9.server.persistence.PathUtils.getPathSegment;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
 import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -21,12 +25,10 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.uri.K9URI;
@@ -46,15 +48,19 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 	
 	private AbstractGithubEntityConverter ec;
 	
-	private ObjectMapper om;
-	
-	private ChangeBroadcaster broadcaster;
-		
-	public GithubSourceAPIFactory(OAuth2AuthorizedClientRepository clientRepository, FormatSupplier formatSupplier, ChangeBroadcaster broadcaster) {
-		super();
+	public GithubSourceAPIFactory(
+			ApplicationContext ctx,
+			ADLFactory factory,
+			OAuth2AuthorizedClientRepository clientRepository, 
+			FormatSupplier formatSupplier) {
+		super(ctx, factory);
 		this.clientRepository = clientRepository;
 		this.formatSupplier = formatSupplier;
-		this.broadcaster = broadcaster;
+	}
+	
+	protected GHContent getGHContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
+		GitHub api = createGitHub(auth);
+		return api.getRepository(owner+"/"+reponame).getFileContent(filepath);
 	}
 
 	public SourceAPI createBackingAPI(K9URI u, Authentication authentication) throws Exception {
@@ -70,21 +76,19 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 				return new GithubDirectoryAPI(path, ec.getOrgPage(owner, authentication));
 			} else {
 				try {
-					Object o = AbstractGithubFileAPI.getGHContent(authentication, clientRepository, owner, reponame, filepath);
+					GHContent o = getGHContent(authentication, owner, reponame, filepath);
 				
-					if (o instanceof List) {
+					if (o.isDirectory()) {
 						// it's a directory page
-						TypeReference<List<GHContent>> contentList = new TypeReference<List<GHContent>>() {};
-						List<GHContent> contents = om.convertValue(o, contentList);
-						return new GithubDirectoryAPI(path, ec.getDirectoryPage(owner, reponame, filepath, contents,  authentication));
+						return new GithubDirectoryAPI(path, ec.getDirectoryPage(owner, reponame, filepath, o.listDirectoryContent().toList(),  authentication));
 					} else {
 						// it's content.
 						Format f = formatSupplier.getFormatFor(path);
 
 						if (f instanceof DiagramFileFormat) {
-							return createDiagramApi(u, f, false);
+							return createDiagramApi(u, f, false, o);
 						} else {
-							return createRegularFileApI(u, f, false);
+							return createRegularFileApI(u, f, false, o);
 						}
 					}
 				} catch (WebClientResponseException e) {
@@ -93,7 +97,7 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 						if (f == null) {
 							throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 						} else {
-							return createDiagramApi(u,f, true);
+							return createDiagramApi(u,f, true, null);
 						}
 					} else {
 						throw new ResponseStatusException(e.getStatusCode(), e.getMessage());
@@ -106,9 +110,9 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		}	
 	}
 
-	protected SourceAPI createRegularFileApI(K9URI u, Format f2, boolean isNew) throws URISyntaxException {
+	protected SourceAPI createRegularFileApI(K9URI u, Format f2, boolean isNew, GHContent o) throws URISyntaxException {
 		K9MediaType mainMediaType = f2.getMediaTypes().get(0);
-		return new AbstractGithubModifiableFileAPI(u, clientRepository, mainMediaType, isNew) {
+		return new AbstractGithubModifiableFileAPI(u, o, clientRepository, mainMediaType, isNew) {
 			
 			@Override
 			public GitHub getGitHubAPI(Authentication a) {
@@ -122,9 +126,9 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		};
 	}
 
-	protected SourceAPI createDiagramApi(K9URI u, Format f2, boolean isNew) throws URISyntaxException {
+	protected SourceAPI createDiagramApi(K9URI u, Format f2, boolean isNew, GHContent o) throws URISyntaxException {
 		K9MediaType mainMediaType = f2.getMediaTypes().get(0);
-		return new GithubDiagramFileAPI(u, clientRepository, (DiagramFileFormat) f2, mainMediaType, isNew) {
+		return new GithubDiagramFileAPI(u, o, clientRepository, (DiagramFileFormat) f2, mainMediaType, isNew) {
 			
 			@Override
 			public GitHub getGitHubAPI(Authentication a) {
@@ -139,17 +143,17 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			@Override
 			public void addMeta(MetaReadWrite adl) {
 				super.addMeta(adl);
-				List<UserMeta> subscribers = broadcaster.getCurrentSubscribers(adl.getTopicUri());
+				List<UserMeta> subscribers = getSubscribers(adl.getTopicUri());
 				adl.setCollaborators(subscribers);
 			}
-
 			
 		};
 	}
 
 	public GitHub createGitHub(String token) {
 		try {
-			return new GitHubBuilder().withOAuthToken(token).build();
+			return new GitHubBuilder()
+					.withOAuthToken(token).build();
 		} catch (IOException e) {
 			throw new Kite9XMLProcessingException("Couldn't get handle to github", e);
 		}
@@ -181,10 +185,17 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			
 			
 		};
-		
-		om = new ObjectMapper();
-		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//		
+//		om = new ObjectMapper();
+//		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+	}
+
+	protected List<UserMeta> getSubscribers(K9URI topicUri) {
+		Set<UserMeta> out = new HashSet<UserMeta>();
+		ctx.getBeansOfType(ChangeBroadcaster.class).values()
+			.forEach(b -> out.addAll(b.getCurrentSubscribers(topicUri)));
+		return new ArrayList<UserMeta>(out);
 	}
 
 }

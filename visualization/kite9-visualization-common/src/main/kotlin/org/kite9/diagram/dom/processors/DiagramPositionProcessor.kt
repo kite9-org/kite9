@@ -40,7 +40,11 @@ open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueRepla
 
     protected fun updateAttribute(n: Element, a: Attr, newValue: String) {
         val attName = a.localName;
-        n.setAttribute(attName, newValue)
+        if (newValue.isEmpty()) {
+            n.removeAttribute(attName)
+        } else {
+            n.setAttribute(attName, newValue)
+        }
     }
 
     protected fun canValueReplace(n: Attr, e: Element): Boolean {

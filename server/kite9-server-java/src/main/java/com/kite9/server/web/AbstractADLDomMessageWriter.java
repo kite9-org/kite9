@@ -1,6 +1,7 @@
 package com.kite9.server.web;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.dom.cache.Cache;
@@ -29,50 +30,48 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 
 	protected FormatSupplier formatSupplier;
 	protected Cache cache;
-	protected ChangeBroadcaster changeBroadcaster;
-		
-	public AbstractADLDomMessageWriter(FormatSupplier formatSupplier, Cache c, ChangeBroadcaster changeBroadcaster) {
+
+	public AbstractADLDomMessageWriter(FormatSupplier formatSupplier, Cache c) {
 		super();
 		this.formatSupplier = formatSupplier;
 		this.cache = c;
-		this.changeBroadcaster = changeBroadcaster;
-		setSupportedMediaTypes(
-				formatSupplier.getMediaTypes().stream()
-					.map(mt -> MediaType.parseMediaType(mt.toString()))
-						.collect(Collectors.toList()));
+		setSupportedMediaTypes(formatSupplier.getMediaTypes().stream()
+				.map(mt -> MediaType.parseMediaType(mt.toString())).collect(Collectors.toList()));
 	}
-	
+
 	protected void writeADLDom(ADLDom t, HttpOutputMessage outputMessage)
 			throws IOException, HttpMessageNotWritableException {
-				MediaType contentType = outputMessage.getHeaders().getContentType();	
-				try {
-					LOG.info("Performing Conversion on {} ",t.getUri());
-					if (LOG.isDebugEnabled()) {
-						LOG.debug(t.getAsString());
-					}
-					
-					Format f = formatSupplier.getFormatFor(MediaTypeHelper.getKite9MediaType(contentType));
-					if (f instanceof DiagramWriteFormat) {
-						DiagramWriteFormat df = (DiagramWriteFormat) f;
-						String uriStr = t.getUri().toString();
-						ADLOutput out = t.process(t.getUri(), df);
-			
-						if (cache.isValid(uriStr)) {
-							cache.set(uriStr, df.getFormatIdentifier(), out.getAsBytes());
-						} 
-						
-						if (changeBroadcaster != null) {
-							changeBroadcaster.broadcast(t.getTopicUri(), t);
-						}
-						outputMessage.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType.toString());
-						StreamUtils.copy(out.getAsBytes(), outputMessage.getBody());
-					} else {
-						throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Can't write diagram as "+f.getExtension());
-					}
-					
-				} catch (Exception e) {
-					throw new HttpMessageNotWritableException("Caused by: "+e.getMessage(), e);
-				}
+		MediaType contentType = outputMessage.getHeaders().getContentType();
+		try {
+			LOG.info("Performing Conversion on {} ", t.getUri());
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(t.getAsString());
 			}
+
+			Format f = formatSupplier.getFormatFor(MediaTypeHelper.getKite9MediaType(contentType));
+			if (f instanceof DiagramWriteFormat) {
+				DiagramWriteFormat df = (DiagramWriteFormat) f;
+				String uriStr = t.getUri().toString();
+				ADLOutput out = t.process(t.getUri(), df);
+
+				if (cache.isValid(uriStr)) {
+					cache.set(uriStr, df.getFormatIdentifier(), out.getAsBytes());
+				}
+
+				getChangeBroadcasters().forEach(cb -> cb.broadcast(t.getTopicUri(), t));
+
+				outputMessage.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType.toString());
+				StreamUtils.copy(out.getAsBytes(), outputMessage.getBody());
+			} else {
+				throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+						"Can't write diagram as " + f.getExtension());
+			}
+
+		} catch (Exception e) {
+			throw new HttpMessageNotWritableException("Caused by: " + e.getMessage(), e);
+		}
+	}
+
+	protected abstract Collection<ChangeBroadcaster> getChangeBroadcasters();
 
 }

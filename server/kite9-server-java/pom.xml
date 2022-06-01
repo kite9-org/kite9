@@ -50,7 +50,7 @@
         <dependency>
             <groupId>org.kohsuke</groupId>
             <artifactId>github-api</artifactId>
-            <version>1.113</version>
+            <version>1.306</version>
         </dependency>
  
         <!-- Azure -->
@@ -125,7 +125,13 @@
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
         </dependency>
-
+        
+        <!-- prevents a weird DNS Resolver error on mac m1 -->
+ 		<dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-resolver-dns-native-macos</artifactId>
+          <classifier>osx-x86_64</classifier>
+        </dependency>
        
 
     </dependencies>

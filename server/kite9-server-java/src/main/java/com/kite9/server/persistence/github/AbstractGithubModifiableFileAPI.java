@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHCommit;
+import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHPermissionType;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTree;
@@ -24,8 +25,8 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 	private boolean isNew;
 	protected final K9URI sourceURI;
 	
-	public AbstractGithubModifiableFileAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt, boolean isNew)  {
-		super(u.getPath(), clientRepository, mt);
+	public AbstractGithubModifiableFileAPI(K9URI u, GHContent content, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt, boolean isNew)  {
+		super(u.getPath(), content, clientRepository, mt);
 		this.isNew = isNew;
 		this.sourceURI = unmodifiedURI(u);
 	}
@@ -41,6 +42,7 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 	protected void commitRevision(String message, Consumer<GHTreeBuilder> fn, Authentication by) {
 		try {
 			GHRepository repo = getGitHubAPI(by).getRepository(owner+"/"+reponame);
+			String branchName = repo.getDefaultBranch();
 			String treeSha = repo.getTree(branchName).getSha();
 			String branchSha = repo.getBranch(branchName).getSHA1();
 

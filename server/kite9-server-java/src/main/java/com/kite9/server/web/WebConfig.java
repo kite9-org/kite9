@@ -10,6 +10,7 @@ import org.kite9.diagram.logging.Kite9LogImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -22,7 +23,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
-import com.kite9.server.topic.ChangeBroadcaster;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled=true)
@@ -40,11 +40,11 @@ public class WebConfig implements WebMvcConfigurer, InitializingBean {
 	FormatSupplier fs;
 	
 	@Autowired
-	ChangeBroadcaster changeBroadcaster;
+	ApplicationContext ctx;
 	
 	@Bean
 	public HttpMessageConverter<?> adlMessageWriter() {
-		return new ADLDomMessageWriter(fs, cache, changeBroadcaster);
+		return new ADLDomMessageWriter(fs, cache, ctx);
 	}
 	
 	@Bean 
