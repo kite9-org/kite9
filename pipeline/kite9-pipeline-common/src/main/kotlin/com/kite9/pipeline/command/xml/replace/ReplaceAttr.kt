@@ -10,31 +10,31 @@ class ReplaceAttr : AbstractReplaceCommand<String?, String?>() {
     @JvmField
 	public var name: String? = null
 
-    override fun getFromContent(d: ADLDom, ctx: CommandContext): String? {
+    override fun getFromContent(context: ADLDom, ctx: CommandContext): String? {
         return from
     }
 
-    override fun getToContent(d: ADLDom, ctx: CommandContext): String? {
+    override fun getToContent(context: ADLDom, ctx: CommandContext): String? {
         return to
     }
 
     override fun getExistingContent(o: ADLDom, ctx: CommandContext): String {
-        val on = findFragmentElement(o.document, fragmentId!!, ctx)
+        val on = findFragmentElement(o.document, fragmentId, ctx)
         return on?.getAttribute(name) ?: ""
     }
 
-    override fun doReplace(existing: ADLDom, site: String?, value: String?, old: String?, ctx: CommandContext) : Command.Mismatch? {
-        val doc: Document = existing.document
+    override fun doReplace(on: ADLDom, site: String?, toContent: String?, fromContent: String?, ctx: CommandContext) : Command.Mismatch? {
+        val doc: Document = on.document
         val e = findFragmentElement(doc, fragmentId, ctx)
 
         if (e==null) {
             return Command.Mismatch { "Couldn't find element with id "+fragmentId }
         }
 
-        if (value == null) {
+        if (toContent == null) {
             e.removeAttribute(name)
         } else {
-            e.setAttribute(name, value)
+            e.setAttribute(name, toContent)
         }
         ctx.log("Processed replace attribute of $fragmentId $name")
         return null

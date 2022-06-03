@@ -23,7 +23,7 @@ object Kite9MediaTypes {
 
     // diagram formats
     const val ADL_XML_VALUE = "text/xml;purpose=adl" // input ADL
-    const val EDITABLE_ADL_XML_VALUE = "text/xml;purpose=editable,adl" // input ADL
+    const val EDITABLE_ADL_XML_VALUE = "text/xml;purpose=editable_adl" // input ADL
     const val EDITABLE_SVG_VALUE = "image/svg+xml;purpose=editable" // editable SVG, with references to fonts and stylesheets.
     const val PNG_VALUE = "image/png"
     const val SVG_VALUE = "image/svg+xml" // output SVG, all styles/images encapsulated

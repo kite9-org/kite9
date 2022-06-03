@@ -16,7 +16,7 @@ import java.util.*
 open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
 
     @JvmField
-    var keptAttributes = Arrays.asList("id") // just keep ID by default.
+    var keptAttributes : List<String> = Arrays.asList("id") // just keep ID by default.
 
     @JvmField
     var keptTags = emptyList<String>()
@@ -55,34 +55,30 @@ open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
         }
     }
 
-    override fun doReplace(d: ADLDom, e: Element?, n: Element, fromContent: Element, ctx: CommandContext) : Command.Mismatch? {
-        if (e==null) {
+    override fun doReplace(on: ADLDom, site: Element?, toContent: Element, fromContent: Element, ctx: CommandContext) : Command.Mismatch? {
+        if (site==null) {
             // in this case, n must also be null, so nothing to do
             return null
         }
 
-        val doc: Document = d.document
-        doc.adoptNode(n)
-        keepImportantAttributes(e, n)
-        e.parentNode.insertBefore(n, e)
-        copyAttributes(e, n, true)
-        checkKeptTags(e, n, doc)
-        moveContents(e, n)
-        e.parentNode.removeChild(e)
+        val doc: Document = on.document
+        doc.adoptNode(toContent)
+        keepImportantAttributes(site, toContent)
+        site.parentNode.insertBefore(toContent, site)
+        copyAttributes(site, toContent, true)
+        checkKeptTags(site, toContent, doc)
+        moveContents(site, toContent)
+        site.parentNode.removeChild(site)
         ctx.log("Processed replace tag of $fragmentId")
         return null
     }
 
-    protected override fun same(existing: Element?, with: Element, ctx: CommandContext): Command.Mismatch? {
+    override fun same(existing: Element?, with: Element, ctx: CommandContext): Command.Mismatch? {
         if (existing==null) {
-            if (with == null) {
-                return null
-            } else {
-                return Command.Mismatch { "Existing is null, so not a replace" }
-            }
+            return Command.Mismatch { "Existing is null, so not a replace" }
         }
         val m1: Command.Mismatch? = checkAttributesSame(existing, with)
-        return if (m1 == null) checkAttributesSame(with, existing) else m1
+        return m1 ?: checkAttributesSame(with, existing)
     }
 
     private fun checkAttributesSame(a: Element, b: Element): Command.Mismatch? {
@@ -100,15 +96,15 @@ open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
         return null
     }
 
-    override fun getFromContent(adl: ADLDom, ctx: CommandContext): Element {
-        return ctx.decodeElement(from, adl)
+    override fun getFromContent(context: ADLDom, ctx: CommandContext): Element {
+        return ctx.decodeElement(from, context)
     }
 
-    override fun getToContent(adl: ADLDom, ctx: CommandContext): Element {
-        return ctx.decodeElement(to, adl)
+    override fun getToContent(context: ADLDom, ctx: CommandContext): Element {
+        return ctx.decodeElement(to, context)
     }
 
-    override fun getExistingContent(d: ADLDom, ctx: CommandContext): Element? {
-        return findFragmentElement(d.document, fragmentId, ctx)
+    override fun getExistingContent(o: ADLDom, ctx: CommandContext): Element? {
+        return findFragmentElement(o.document, fragmentId, ctx)
     }
 }

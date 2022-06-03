@@ -33,10 +33,10 @@ public class Payload {
 
     public static void insertADLInformationIntoSVG(ADLDom adl, Document svgDocument) {
         insertEncodedADL(adl, svgDocument);
-        insertMetadata(adl, svgDocument);
+        insertSVGMetadata(adl, svgDocument);
     }
 
-    public static void insertMetadata(MetaRead adl, Document svgDocument) {
+    private static void insertSVGMetadata(MetaRead adl, Document svgDocument) {
         boolean hasMetadata = !adl.getMetaData().isEmpty();
         NodeList nl = svgDocument.getElementsByTagNameNS(SVG_NAMESPACE_URI, "metadata");
         Element firstMeta = null;
@@ -61,6 +61,12 @@ public class Payload {
 
             addMetadata(adl, svgDocument, firstMeta);
         }
+    }
+    
+    public static void insertADLMetadata(MetaRead adl, Document doc) {
+    	Element e = doc.createElementNS(Kite9Namespaces.META_NAMESPACE, "md:metadata");
+    	doc.getDocumentElement().appendChild(e);
+    	addMetadata(adl, doc, e);
     }
 
     protected static void addMetadata(MetaRead adl, Document doc, Element inside) {

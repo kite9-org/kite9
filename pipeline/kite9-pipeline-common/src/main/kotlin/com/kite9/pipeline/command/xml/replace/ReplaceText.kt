@@ -50,8 +50,7 @@ class ReplaceText : AbstractReplaceCommand<Element?, String>() {
         val childElements = collectChildren(site)
         site.textContent = toContent
         if (preserve == PreserveChildElements.BEFORE) {
-            Collections.reverse(childElements)
-            childElements.stream().forEach { c: Element? -> site.insertBefore(c, null) }
+            childElements.reversed().stream().forEach { c: Element? -> site.insertBefore(c, null) }
         } else if (preserve == PreserveChildElements.AFTER) {
             childElements.stream().forEach { c: Element? -> site.appendChild(c) }
         }
@@ -59,7 +58,7 @@ class ReplaceText : AbstractReplaceCommand<Element?, String>() {
         return null
     }
 
-    protected override fun same(existing: Element?, with: String, ctx: CommandContext): Mismatch? {
+    override fun same(existing: Element?, with: String, ctx: CommandContext): Mismatch? {
         val eText = existing?.textContent ?: ""
         val eTextReplaced = eText.replace("\\s".toRegex(), "")
         val withReplaced = with.replace("\\s".toRegex(), "")
@@ -67,7 +66,6 @@ class ReplaceText : AbstractReplaceCommand<Element?, String>() {
             PreserveChildElements.AFTER -> check(eTextReplaced.startsWith(withReplaced), eText, with)
             PreserveChildElements.BEFORE -> check(eTextReplaced.endsWith(withReplaced), eText, with)
             PreserveChildElements.NONE -> check(eTextReplaced == withReplaced, eText, with)
-            else -> check(eTextReplaced.startsWith(withReplaced), eText, with)
         }
     }
 

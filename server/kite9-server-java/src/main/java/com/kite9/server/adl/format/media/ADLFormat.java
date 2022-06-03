@@ -2,13 +2,13 @@ package com.kite9.server.adl.format.media;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.io.Charsets;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
 import org.springframework.http.HttpHeaders;
@@ -31,8 +31,8 @@ import com.kite9.server.adl.holder.ADLOutputImpl;
  */
 public class ADLFormat implements DiagramFileFormat {
 	
-	private final ADLFactory factory;
-	private final XMLHelper xmlHelper;
+	protected final ADLFactory factory;
+	protected final XMLHelper xmlHelper;
 	
 	public ADLFormat(ADLFactory factory, XMLHelper xmlHelper) {
 		this.xmlHelper = xmlHelper;
@@ -56,7 +56,7 @@ public class ADLFormat implements DiagramFileFormat {
 		return new ADLOutputImpl(this, toWrite, baos.toByteArray(), toWrite.getDocument());
 	}
 
-	private boolean isOmitDeclaration() {
+	protected boolean isOmitDeclaration() {
 		return false;
 	}
 
@@ -72,7 +72,7 @@ public class ADLFormat implements DiagramFileFormat {
 
 	@Override
 	public ADLBase handleRead(InputStream someFormat, K9URI uri, HttpHeaders headers) throws Exception {
-		String s = StreamUtils.copyToString(someFormat, Charsets.UTF_8);
+		String s = StreamUtils.copyToString(someFormat, StandardCharsets.UTF_8);
 		return factory.adl(uri, s, headers);
 	}
 

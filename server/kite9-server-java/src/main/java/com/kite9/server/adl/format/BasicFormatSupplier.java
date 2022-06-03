@@ -18,6 +18,7 @@ import com.kite9.pipeline.adl.format.media.StaticFormat;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.ADLFormat;
+import com.kite9.server.adl.format.media.EditableADLFormat;
 import com.kite9.server.adl.format.media.EditableSVGFormat;
 import com.kite9.server.adl.format.media.EntityFormat;
 import com.kite9.server.adl.format.media.HTMLFormat;
@@ -36,6 +37,7 @@ public class BasicFormatSupplier implements FormatSupplier {
 			new ADLFormat(adlFactory, xmlHelper),
 			new SVGFormat(adlFactory, xmlHelper),
 			new PNGFormat(adlFactory, xmlHelper),
+			new EditableADLFormat(adlFactory, xmlHelper),
 			new EditableSVGFormat(xmlHelper),
 
 			
