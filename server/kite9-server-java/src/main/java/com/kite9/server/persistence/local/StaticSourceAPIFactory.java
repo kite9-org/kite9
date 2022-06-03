@@ -76,7 +76,7 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 			// update contains the ADL we're going to use
 			Decoder d = Base64.getDecoder();
 			byte[] bytes = d.decode(update.getBase64adl());
-			return createAPIFromBytes(sourceUri, update.getHeaders(), bytes, Kite9MediaTypes.INSTANCE.getADL_SVG());
+			return createAPIFromBytes(sourceUri, update.getHeaders(), bytes, Kite9MediaTypes.INSTANCE.getADL());
 		} else {
 			// we need to load from URL
 			if (sourceUri == null) { 

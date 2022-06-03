@@ -13,10 +13,24 @@
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
+	<properties>
+		<java.version>11</java.version>
+	</properties>
+
 	<name>Kite9 Visualization Javascript</name>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-compile</id>
+						<phase>none</phase>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
@@ -39,7 +53,7 @@
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
-				<version>1.4.30</version>
+				<version>${kotlin.version}</version>
 				<executions>
 					<execution>
 						<id>compile-js</id>

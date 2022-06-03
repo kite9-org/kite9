@@ -39,7 +39,7 @@ public class ADLFormat implements DiagramFileFormat {
 		this.factory = factory;
 	}
 
-	private final List<K9MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getADL_SVG());
+	private final List<K9MediaType> mediaTypes = Collections.singletonList(Kite9MediaTypes.INSTANCE.getADL());
 
 	public List<K9MediaType> getMediaTypes() {
 		return mediaTypes;

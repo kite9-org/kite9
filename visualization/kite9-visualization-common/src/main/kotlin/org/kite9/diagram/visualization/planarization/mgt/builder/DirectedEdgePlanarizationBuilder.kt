@@ -10,6 +10,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionContradicting
@@ -52,7 +53,7 @@ abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPosit
             log.error("Failed to add $left connections:")
             for (e in p.uninsertedConnections) {
                 log.error(e.toString())
-                val redundant = p.edgeMappings.get(e)
+                val redundant = p.edgeMappings.get(e as DiagramElement)
                 if (redundant != null) {
                     for (edge in redundant.edges) {
                         edge.remove()
@@ -143,7 +144,7 @@ abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPosit
             }
         }
         if (!done) {
-            p.edgeMappings.remove(c)
+            p.edgeMappings.remove(c as DiagramElement)
         }
         return done
     }

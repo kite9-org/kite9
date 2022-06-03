@@ -18,6 +18,7 @@ import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGGraphicsElement
 import org.w3c.dom.svg.SVGTSpanElement
 import org.w3c.dom.svg.SVGTextElement
+import kotlin.random.Random
 import kotlin.reflect.KClass
 
 
@@ -56,15 +57,21 @@ class JSElementContext : ElementContext {
 
     private val xmlToDiagram = mutableMapOf<String, DiagramElement>()
 
+    /**
+     * This uses a field on the element called privateID to store
+     * a key for the hash map.
+     */
     override fun register(x: Element, out: DiagramElement) {
-        val id = x.getAttribute("id")
-        if (id != null) {
-            xmlToDiagram[id] = out
+        var id: String?  = x.asDynamic().privateID
+        if (id == null) {
+            id = Random.Default.nextBytes(10).toString()
+            x.asDynamic().privateID = id
         }
+        xmlToDiagram[id] = out
     }
 
     override fun getRegisteredDiagramElement(x: Element) : DiagramElement? {
-        val id = x.getAttribute("id")
+        var id: String?  = x.asDynamic().privateID
         if (id != null) {
             return xmlToDiagram[id]
         } else {

@@ -118,7 +118,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     private fun padOrdinal(ordinals: MutableSet<Int>, s: Int) {
-        var max = if (ordinals.size == 0) 0 else ordinals.max()
+        var max = ordinals.maxOrNull() ?: 0
         while (ordinals.size < s) {
             max = if (max == null) 0 else max + 1
             ordinals.add(max)

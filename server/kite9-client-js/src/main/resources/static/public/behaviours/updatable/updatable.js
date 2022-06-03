@@ -4,7 +4,7 @@ import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver
 /**
  * Makes sure that the websocket uses ws/wss where needed
  */
-function ensureCorrectScheme(uri) {
+function ensureCorrectScheme(uri, contentType) {
 	const url = new URL(document.location.href)
 	const topicUri = new URL(uri)
 	if (url.protocol == 'http:') {
@@ -12,6 +12,8 @@ function ensureCorrectScheme(uri) {
 	} else if (url.protocol == 'https:') {
 		topicUri.protocol = 'wss:'
 	}
+	
+	topicUri.searchParams = "contentType="+contentType;
 	
 	const wsUrl = topicUri.toString() 
 	return wsUrl;
@@ -27,7 +29,7 @@ function ensureCorrectScheme(uri) {
  * All the methods return a function returning a promise.
  */
  
-export function initWebsocketUpdater(socketUri, pageUri, contentTypeResolver) {
+export function initWebsocketUpdater(socketUri, pageUri, contentTypeResolver, contentType) {
 	
 	const socket = new WebSocket(ensureCorrectScheme(socketUri));
 	
@@ -97,11 +99,12 @@ export function initMetadataBasedUpdater(command, metadata, transition) {
 	const processViaWebSocket = metadata.get("topic") != null;
 	
 	// for now, all rendering done on the client
-	const renderServerSide = false;	
+	const renderServerSide = true;	
 	
 	var resolver = renderServerSide ? 
 			createSVGResolver(transition, metadata) :
 			createAdlToSVGResolver(transition, command, metadata);
+			
 	var contentType = renderServerSide ? 
 			"image/svg+xml;purpose=editable, application/json" :
 			"text/xml;purpose=adl";
@@ -113,7 +116,8 @@ export function initMetadataBasedUpdater(command, metadata, transition) {
 		delegate = initWebsocketUpdater(
 			metadata.get("topic"), 
 			metadata.get("self"), 
-			resolver);
+			resolver, 
+			contentType);
 		
 	} else {
 		// not using web-sockets

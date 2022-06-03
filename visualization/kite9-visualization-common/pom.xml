@@ -41,7 +41,7 @@
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-maven-plugin</artifactId>
-				<version>1.4.30</version>
+				<version>${kotlin.version}</version>
 				<executions>
 					<execution>
 						<id>compile-java</id>

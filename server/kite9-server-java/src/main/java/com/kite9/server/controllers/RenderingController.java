@@ -57,7 +57,7 @@ public class RenderingController extends AbstractNegotiatingController {
 			RequestEntity<?> request,
 			@RequestParam("uri") String uri, 
 			@RequestHeader HttpHeaders headers) throws Exception {
-		return contentNegotiation(request, resolveAndWrap(request, uri), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getADL_SVG()), null);
+		return contentNegotiation(request, resolveAndWrap(request, uri), URIRewriter.getCompleteCurrentRequestURI(), headers, Arrays.asList(Kite9MediaTypes.INSTANCE.getADL()), null);
 	}
 	
 	@GetMapping(path= {"/api/renderer", "api/renderer.png"}, produces= {IMAGE_PNG_VALUE})

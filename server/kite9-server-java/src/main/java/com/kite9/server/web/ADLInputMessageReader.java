@@ -55,7 +55,7 @@ public class ADLInputMessageReader extends AbstractGenericHttpMessageConverter<A
 	@Override
 	protected boolean canRead(org.springframework.http.MediaType mediaType) {
 		return MediaTypeHelper.includes(Kite9MediaTypes.INSTANCE.getSVG(), mediaType) ||
-				MediaTypeHelper.includes(Kite9MediaTypes.INSTANCE.getADL_SVG(), mediaType);
+				MediaTypeHelper.includes(Kite9MediaTypes.INSTANCE.getADL(), mediaType);
 	}
 
 	@Override

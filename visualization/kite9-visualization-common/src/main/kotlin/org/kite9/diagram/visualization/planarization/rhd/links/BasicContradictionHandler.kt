@@ -315,8 +315,8 @@ class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionH
 
         // ld and d in the same axis
         val reversed = ld !== d
-        val fromI = fromC!!.getContents().indexOf(from)
-        val toI = fromC.getContents().indexOf(to)
+        val fromI = fromC!!.getContents().indexOf(from as Connected)
+        val toI = fromC.getContents().indexOf(to as Connected)
         val contradiction = if (fromI < toI) reversed else !reversed
         if (contradiction) setContradiction(c!!, false)
     }

@@ -61,7 +61,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
 
         private fun addConnections(c: Iterable<BiDirectional<Connected>>) {
             for (item in c) {
-                if (!connections.contains(c)) {
+                if (!connections.contains(item)) {
                     connections.add(item)
                 }
             }

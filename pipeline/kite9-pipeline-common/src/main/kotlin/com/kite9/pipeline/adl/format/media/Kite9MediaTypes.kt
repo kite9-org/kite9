@@ -23,6 +23,7 @@ object Kite9MediaTypes {
 
     // diagram formats
     const val ADL_XML_VALUE = "text/xml;purpose=adl" // input ADL
+    const val EDITABLE_ADL_XML_VALUE = "text/xml;purpose=editable,adl" // input ADL
     const val EDITABLE_SVG_VALUE = "image/svg+xml;purpose=editable" // editable SVG, with references to fonts and stylesheets.
     const val PNG_VALUE = "image/png"
     const val SVG_VALUE = "image/svg+xml" // output SVG, all styles/images encapsulated
@@ -42,14 +43,14 @@ object Kite9MediaTypes {
     const val OTF_VALUE = "font/otf"
     const val EOT_VALUE = "application/vnd.ms-fontobject"
 
-
     val SVG: K9MediaType = K9MediaType.parseMediaType(SVG_VALUE)
     val XSLT: K9MediaType = K9MediaType.parseMediaType(XSLT_VALUE)
     val ESVG: K9MediaType = K9MediaType.parseMediaType(EDITABLE_SVG_VALUE)
     val PNG: K9MediaType = K9MediaType.parseMediaType(PNG_VALUE)
     val JPEG: K9MediaType  = K9MediaType.parseMediaType(JPEG_VALUE)
     val PDF: K9MediaType = K9MediaType.parseMediaType(PDF_VALUE)
-    val ADL_SVG = K9MediaType.parseMediaType(ADL_XML_VALUE)
+    val ADL = K9MediaType.parseMediaType(ADL_XML_VALUE)
+    val EADL = K9MediaType.parseMediaType(EDITABLE_ADL_XML_VALUE)
     val CLIENT_SIDE_IMAGE_MAP = K9MediaType.parseMediaType(CLIENT_SIDE_IMAGE_MAP_VALUE)
     val JS = K9MediaType.parseMediaType(JAVASCRIPT_VALUE)
     val CSS = K9MediaType.parseMediaType(CSS_VALUE)

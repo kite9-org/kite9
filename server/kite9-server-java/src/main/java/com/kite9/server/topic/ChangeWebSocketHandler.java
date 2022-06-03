@@ -251,7 +251,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 				return apiFactory.createAPI(u, a);
 			}
 		};
-		updateFormat = (ADLFormat) formatSupplier.getFormatFor(Kite9MediaTypes.INSTANCE.getADL_SVG());
+		updateFormat = (ADLFormat) formatSupplier.getFormatFor(Kite9MediaTypes.INSTANCE.getADL());
 	}
 
 }

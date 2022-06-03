@@ -76,7 +76,8 @@ open class BalancedFlowOrthogonalizer(va: VertexArranger, clc: EdgeConverter) : 
         // if side is false, then we just want them on different sides, not
         // necessarily opposite
         var side = BalanceChoice.DIFFERENT_SIDE_PREFFERED_MINOR
-        side = decideSide(v, fn, before, after, hn, fg!!.planarization.edgeOrderings[v]!!.getEdgesAsList())
+        val edgeOrderings = fg!!.planarization.edgeOrderings[v!!]
+        side = decideSide(v, fn, before, after, hn, edgeOrderings!!.getEdgesAsList())
         log.send(if (log.go()) null else "V: $v Between Edge $before and $after: $side")
         val portionArc = createBalancedPortionArc(fn, hn, side)
         val vertexArc: Arc = LinearArc(TRACE, 4, 0, vn, hn, vn.getID() + "-" + hn.getID())

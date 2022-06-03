@@ -106,8 +106,8 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
     }
 
     override fun isReadyToPosition(completedGroups: Set<Group>): Boolean {
-        val hready = horizParentGroup == null || completedGroups.contains(horizParentGroup)
-        val vready = vertParentGroup == null || completedGroups.contains(vertParentGroup)
+        val hready = horizParentGroup == null || completedGroups.contains(horizParentGroup as Group)
+        val vready = vertParentGroup == null || completedGroups.contains(vertParentGroup as Group)
         return hready && vready
     }
 

@@ -40,7 +40,7 @@ interface Planarization {
     /**
      * Needs to return the clockwise ordering of edges meeting a vertex or a container.
      */
-    val edgeOrderings: MutableMap<Vertex, EdgeOrdering>
+    val edgeOrderings: MutableMap<Any, EdgeOrdering>
 
     /**
      * Returns all edges in the planarization.

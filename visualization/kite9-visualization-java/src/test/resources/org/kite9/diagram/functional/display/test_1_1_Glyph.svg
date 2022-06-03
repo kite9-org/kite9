@@ -1,37 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="The Diagram" version="1.0" width="335" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=335.0, h=109.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7e86ff3b; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
+<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="The Diagram" version="1.0" width="335" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=335.0, h=109.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7ae3591b; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
-                    @import url("/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");
+                    @import url("/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");
                 </style
   ></defs
   ><g filter="url(#dropshadow)"
   >
   <g k9-elem="glyph" id="0-rob's glyph df  sfsdfs  weferw asfsdf sdfsd
-line 2" transform="translate(15.0,15.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=305.0, h=79.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@5b344510; " rank="0"
+line 2" transform="translate(15.0,15.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=305.0, h=79.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@410c1f44; " rank="0"
     ><rect x="0" y="0" width="305" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="79" pp:width="$width"
       />
-    <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(133.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=149.0, h=21.0); rect-size: BasicDimension2D(w=37.0, h=28.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@3eea7c4b; "
-      ><text
-        ><tspan x="0.0px" y="0.0px" wrap="done"
-          >Stereo
-</tspan
-          ><tspan x="4.0px" y="14.399999999999999px" wrap="done"
-          >Mike</tspan
-        ></text
+    <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(133.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=149.0, h=21.0); rect-size: BasicDimension2D(w=37.0, h=28.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@44f86613; "
+      ><text x="0.0px" y="0.0px"
+        >Stereo
+</text
+        ><text x="4.0px" y="14.399999999999999px"
+        >Mike</text
       ></g
       >
-    <g k9-elem="text-label" class="glyph-label-text" transform="translate(8.5,52.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=52.0); rect-size: BasicDimension2D(w=285.0, h=36.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@50d507ab; "
-      ><text
-        ><tspan x="0.0px" y="0.0px" wrap="done"
-          >Rob's Glyph df  sfsdfs  weferw asfsdf sdfsd
-</tspan
-          ><tspan x="123.5px" y="18.0px" wrap="done"
-          >Line 2</tspan
-        ></text
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(8.5,52.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=52.0); rect-size: BasicDimension2D(w=285.0, h=36.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@5e05dd42; "
+      ><text x="0.0px" y="0.0px"
+        >Rob's Glyph df  sfsdfs  weferw asfsdf sdfsd
+</text
+        ><text x="123.5px" y="18.0px"
+        >Line 2</text
       ></g
       >
   </g

@@ -93,7 +93,7 @@ class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : 
                 if (c.meets(vUnd)) {
                     val prevUndVertex = getVertexFor(prevUnd)
                     val e = getEdgeForConnection(c, pln)
-                    if (pln.uninsertedConnections.contains(e)) {
+                    if (pln.uninsertedConnections.contains(e as BiDirectional<Connected>)) {
                         val d = getDirectionForLayout(inside)
                         val setOk = setEdgeDirection(e, d, prevUndVertex, false)
                         if (setOk) {

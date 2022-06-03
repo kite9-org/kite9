@@ -36,7 +36,7 @@ public class Payload {
         insertMetadata(adl, svgDocument);
     }
 
-    private static void insertMetadata(MetaRead adl, Document svgDocument) {
+    public static void insertMetadata(MetaRead adl, Document svgDocument) {
         boolean hasMetadata = !adl.getMetaData().isEmpty();
         NodeList nl = svgDocument.getElementsByTagNameNS(SVG_NAMESPACE_URI, "metadata");
         Element firstMeta = null;
