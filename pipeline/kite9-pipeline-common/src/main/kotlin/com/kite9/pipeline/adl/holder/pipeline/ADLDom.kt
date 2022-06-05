@@ -13,6 +13,6 @@ interface ADLDom : XMLDom {
     /**
      * Does the actual processing: transforms into SVG and renders it.
      */
-    fun <X> process(forLocation: K9URI, format: DiagramWriteFormat): ADLOutput
+    fun process(forLocation: K9URI, format: DiagramWriteFormat): ADLOutput
 
 }

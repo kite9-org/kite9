@@ -3,6 +3,7 @@ package com.kite9.server.adl.holder;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.commons.io.Charsets;
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.batik.bridge.Kite9DocumentLoader;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -151,7 +151,7 @@ public class ADLFactoryImpl implements ADLFactory {
 	protected Document parseADLDocument(String content, K9URI uri2) {
 		try {
 			Kite9DocumentLoader l = ((Kite9TranscoderImpl) createNewTranscoder(uri2)).getDocLoader();
-			InputStream is = new ByteArrayInputStream(content.getBytes(Charsets.UTF_8));
+			InputStream is = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
 			return l.loadXMLDocument(uri2 == null ? null : uri2.toString(), is);
 		} catch (Exception e) {
 			throw new Kite9XMLProcessingException("Couldn't load XML into DOM, URI: "+uri2, e, content, null, null);

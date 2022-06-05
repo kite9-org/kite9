@@ -1,6 +1,7 @@
 package com.kite9.server.command;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -15,7 +16,6 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.batik.anim.dom.AbstractElement;
 import org.apache.batik.dom.AbstractAttr;
-import org.apache.commons.io.Charsets;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.range.IntegerRange;
 import org.kite9.diagram.dom.css.Kite9CSSParser;
@@ -96,7 +96,7 @@ public class BatikCommandContext implements CommandContext {
 
 
     public Element decodeElement(String base64xml, ADLDom adl) {
-        String xml = new String(Base64.getDecoder().decode(base64xml), Charsets.UTF_8);
+        String xml = new String(Base64.getDecoder().decode(base64xml), StandardCharsets.UTF_8);
         Document nDoc = adl.parseDocument(xml, null);
         Element n = nDoc.getDocumentElement();
         System.out.println("Converting: "+xml+" with id "+n.getAttribute("id")); //+" into " + new XMLHelper().toXML(n));

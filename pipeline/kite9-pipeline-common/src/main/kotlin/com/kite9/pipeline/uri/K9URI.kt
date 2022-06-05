@@ -13,4 +13,6 @@ interface K9URI {
 
     fun changeScheme(scheme: String, path: String): K9URI
     fun withoutQueryParameters(): K9URI
+    
+    fun param(p: String) : List<String>
 }

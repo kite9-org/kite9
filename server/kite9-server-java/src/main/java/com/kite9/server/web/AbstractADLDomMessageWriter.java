@@ -1,7 +1,6 @@
 package com.kite9.server.web;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.dom.cache.Cache;
@@ -22,7 +21,6 @@ import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.server.adl.format.MediaTypeHelper;
-import com.kite9.server.topic.ChangeBroadcaster;
 
 public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttpMessageConverter<X> {
 
@@ -58,8 +56,6 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 					cache.set(uriStr, df.getFormatIdentifier(), out.getAsBytes());
 				}
 
-				getChangeBroadcasters().forEach(cb -> cb.broadcast(t.getTopicUri(), t));
-
 				outputMessage.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType.toString());
 				StreamUtils.copy(out.getAsBytes(), outputMessage.getBody());
 			} else {
@@ -71,7 +67,4 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 			throw new HttpMessageNotWritableException("Caused by: " + e.getMessage(), e);
 		}
 	}
-
-	protected abstract Collection<ChangeBroadcaster> getChangeBroadcasters();
-
 }

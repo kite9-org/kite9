@@ -12,7 +12,7 @@ public interface ChangeBroadcaster {
 	 * When a version of a document is updated, broadcast the contents of it like this,
 	 * so that people can edit the new version.
 	 */
-	public void broadcast(K9URI topicUri, ADLDom adl);
+	public void broadcast(ADLDom dom);
 	
 	public List<UserMeta> getCurrentSubscribers(K9URI topicUri);
 		

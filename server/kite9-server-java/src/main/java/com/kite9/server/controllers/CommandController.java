@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.server.sources.SourceAPIFactory;
 import com.kite9.server.update.Update;
@@ -34,12 +33,12 @@ public class CommandController extends AbstractNegotiatingController implements 
 	public @ResponseBody ADLDom applyCommandOnStatic (
 			RequestEntity<Update> req,
 			@RequestParam(required=true, name="on") String sourceUri) throws Exception {
-		DiagramWriteFormat df = getOutputFormat(req);
 		Update update = req.getBody();
 		update.setUri(resolveAndWrap(req, sourceUri));
 		update.addHeaders(req.getHeaders());
 		
-		return performDiagramUpdate(update, null, df);
+		ADLDom out = performDiagramUpdate(update, null);
+		return out;
 	}
 
 }

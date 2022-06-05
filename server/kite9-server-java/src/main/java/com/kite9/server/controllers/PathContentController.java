@@ -18,11 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPIFactory;
@@ -86,13 +84,11 @@ public class PathContentController extends AbstractContentController {
 	public ADLDom updateViaPost(@RequestHeader HttpHeaders headers, NativeWebRequest req, @RequestBody Update update,
 			Authentication authentication) throws Exception {
 		K9URI uri = URIRewriter.getCompleteCurrentRequestURI();
-
-		DiagramWriteFormat format = getOutputFormat(req);
 		
 		try {
 			update.setUri(uri);
 			update.addHeaders(headers);
-			ADLDom adl = performDiagramUpdate(update, authentication, format);
+			ADLDom adl = performDiagramUpdate(update, authentication);
 			return adl;
 		} catch (Exception e) {
 			String properCause = getProperCause(e);

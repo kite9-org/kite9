@@ -1,21 +1,24 @@
 package com.kite9.server.topic;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.dom.XMLHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -29,14 +32,16 @@ import org.w3c.dom.Document;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.pipeline.adl.format.media.Format;
+import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.meta.BasicMeta;
 import com.kite9.pipeline.adl.holder.meta.MetaRead;
 import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.adl.format.media.ADLFormat;
 import com.kite9.server.adl.holder.meta.MetaHelper;
 import com.kite9.server.adl.holder.meta.Payload;
 import com.kite9.server.persistence.queue.ChangeEventConsumerFactory;
@@ -56,36 +61,52 @@ import com.kite9.server.uri.URIWrapper;
  *
  */
 @Component
-public class ChangeWebSocketHandler extends TextWebSocketHandler implements ChangeBroadcaster, ChangeEventConsumerFactory, InitializingBean {
-	
+public class ChangeWebSocketHandler extends TextWebSocketHandler implements ChangeBroadcaster, ChangeEventConsumerFactory, InitializingBean, ApplicationContextAware {
+
 	private static final Logger LOG = LoggerFactory.getLogger(ChangeWebSocketHandler.class);
+	
+	static class TopicDetails {
+		
+		final K9URI url;
+		final String contentType;
+		
+		public TopicDetails(String url, String contentType) {
+			super();
+			this.url = URIWrapper.wrap(URI.create(url));
+			this.contentType = contentType;
+		}
 
-
-	private Map<String, List<WebSocketSession>> sessions = new HashMap<>();
-	private Map<WebSocketSession, String> topics = new HashMap<>();
+		@Override
+		public String toString() {
+			return "TopicDetails [url=" + url + ", contentType=" + contentType + "]";
+		}
+		
+	}
 	
-	@Autowired
-	private ObjectMapper objectMapper;
-	
-	private XMLHelper xmlHelper = new XMLHelper();
-	
-	@Autowired
-	protected SourceAPIFactory apiFactory;
-	
-	@Autowired
-	protected FormatSupplier formatSupplier;
-	
+	protected final Map<String, List<WebSocketSession>> sessions = new HashMap<>();
+	protected final Map<WebSocketSession, TopicDetails> topics = new HashMap<>();
+	protected final ObjectMapper objectMapper;
+	protected final XMLHelper xmlHelper = new XMLHelper();
+	protected final SourceAPIFactory apiFactory;
+	protected final FormatSupplier formatSupplier;
 	protected UpdateHandler updateHandler;
+	protected ApplicationContext ctx;
 	
-	protected DiagramWriteFormat updateFormat;
-
+	public ChangeWebSocketHandler(ObjectMapper objectMapper, SourceAPIFactory apiFactory, FormatSupplier formatSupplier) {
+		this.objectMapper = objectMapper;
+		this.apiFactory = apiFactory;
+		this.formatSupplier = formatSupplier;
+	}	
+	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		String topic = getTopicFromUri(URIWrapper.wrap(session.getUri()));
+		K9URI k9uri = URIWrapper.wrap(session.getUri());
+		String topic = getTopicFromUri(k9uri);
+		String contentType = getContentTypeFromURI(k9uri);
 		List<WebSocketSession> sessionList = sessions.getOrDefault(topic, new ArrayList<WebSocketSession>());
 		sessionList.add(session);
 		sessions.put(topic, sessionList);
-		topics.put(session, topic);
+		topics.put(session, new TopicDetails(topic, contentType));
 		
 		if (sessionList.size() > 1) {
 			BasicMeta out = new BasicMeta(new HashMap<>(), null);
@@ -101,14 +122,14 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		String topic = topics.get(session);
+		TopicDetails topic = topics.get(session);
 		LOG.info("Received message "+message+" on topic "+topic);
 		Update u = objectMapper.readValue(message.getPayload(), Update.class);
 		Authentication principal = (Authentication) session.getPrincipal();
 
 		try {
-			ADLDom out = updateHandler.performDiagramUpdate(u, principal, updateFormat);
-			broadcastToTopic(out.getAsString().getBytes(StandardCharsets.UTF_8), topic);
+			ADLDom updatedDom = updateHandler.performDiagramUpdate(u, principal);
+			broadcast(updatedDom);
 		} catch (Exception e) {
 			LOG.error("Problem with command", e);
 			respondWithError(session, u, principal, e);
@@ -159,6 +180,20 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 			return null;
 		}
 	}
+	
+	private final static String DEFAULT_CONTENT_TYPE = Kite9MediaTypes.EDITABLE_ADL_XML_VALUE;
+	
+	private String getContentTypeFromURI(K9URI u) {
+		if (u != null) {
+			List<String> values = u.param("contentType");
+			
+			if (values.size() > 0) {
+				return values.get(0);
+			}
+		}
+		
+		return DEFAULT_CONTENT_TYPE;
+	}
 
 	@Scheduled(fixedDelay = 60000) 
 	public void tidyUp() {
@@ -169,36 +204,49 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 			}
 		}
 	}
+	
+	
 
 	@Override
-	public void broadcast(K9URI topicUri, ADLDom adl) {
-		String topic = getTopicFromUri(topicUri);
-		broadcastToTopic(adl.getAsString().getBytes(StandardCharsets.UTF_8), topic);
-	}
-	
-	protected void metaUpdate(MetaRead meta, String topic) {
-		Document d = Payload.createMetaDocument(meta);
-		String text = xmlHelper.toXML(d, true);
-		TextMessage bm = new TextMessage(text);
-		broadcastTextMessage(topic, bm);
+	public void broadcast(ADLDom dom) {
+		String topic = getTopicFromUri(dom.getUri());
+		broadcastInternal(topic, dom, (adl, contentType) -> {
+			K9MediaType mediaType = K9MediaType.Companion.parseMediaType(contentType);
+			Format f = formatSupplier.getFormatFor(mediaType);
+			if (f instanceof DiagramWriteFormat) {
+				ADLOutput out = adl.process(adl.getUri(), (DiagramWriteFormat) f);
+				String strOut = new String(out.getAsBytes());
+				TextMessage bm = new TextMessage(strOut);
+				return bm;
+			}
+				
+			return null;
+		});
 	}
 
-	protected void broadcastTextMessage(String topic, TextMessage bm) {
+	public <X> void broadcastInternal(String topic, X adl, BiFunction<X, String, TextMessage> converter) {
 		sessions.getOrDefault(topic, Collections.emptyList())
 			.parallelStream()
 			.forEach(wss -> {
 				try {
-					wss.sendMessage(bm);	
+					TopicDetails td = topics.get(wss);
+					if (td != null) {
+						TextMessage tm = converter.apply(adl, td.contentType);
+						wss.sendMessage(tm);	
+					}
 				} catch (IOException e) {
 					LOG.error("Couldn't send message: ", e);
 				}	
 			});
 	}
 	
-
-	protected void broadcastToTopic(byte[] contents, String topic) {
-		TextMessage bm = new TextMessage(contents);
-		broadcastTextMessage(topic, bm);
+	protected void metaUpdate(MetaRead meta, String topic) {
+		Document d = Payload.createMetaDocument(meta);
+		String text = xmlHelper.toXML(d, true);
+		TextMessage bm = new TextMessage(text);
+		broadcastInternal(topic, bm, (x, contentType) -> {
+			return x;
+		});
 	}
 
 	@Override
@@ -251,7 +299,13 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 				return apiFactory.createAPI(u, a);
 			}
 		};
-		updateFormat = (ADLFormat) formatSupplier.getFormatFor(Kite9MediaTypes.INSTANCE.getADL());
+		
+		((ApplicationContextAware) updateHandler).setApplicationContext(ctx);
+	}
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.ctx = applicationContext;
 	}
 
 }

@@ -10,7 +10,6 @@ import org.kite9.diagram.logging.Kite9LogImpl;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -39,12 +38,9 @@ public class WebConfig implements WebMvcConfigurer, InitializingBean {
 	@Autowired
 	FormatSupplier fs;
 	
-	@Autowired
-	ApplicationContext ctx;
-	
 	@Bean
 	public HttpMessageConverter<?> adlMessageWriter() {
-		return new ADLDomMessageWriter(fs, cache, ctx);
+		return new ADLDomMessageWriter(fs, cache);
 	}
 	
 	@Bean 

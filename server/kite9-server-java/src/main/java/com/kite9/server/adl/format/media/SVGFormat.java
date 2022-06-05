@@ -1,6 +1,7 @@
 package com.kite9.server.adl.format.media;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
@@ -10,7 +11,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.batik.util.SVGConstants;
-import org.apache.commons.io.Charsets;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.format.Kite9Transcoder;
@@ -80,7 +80,7 @@ public class SVGFormat extends AbstractSVGFormat implements DiagramFileFormat {
             Element e3 = findFirst(e2, "script");
             String content = e3.getTextContent();
             byte[] xml = Base64.getDecoder().decode(content);
-            return factory.adl(in, new String(xml, Charsets.UTF_8), headers);
+            return factory.adl(in, new String(xml, StandardCharsets.UTF_8), headers);
         } catch (Exception e) {
             throw new NotKite9DiagramException("Couldn't decode ADL in "+in+".  Is this definitely a Kite9 Diagram?", e);
         }

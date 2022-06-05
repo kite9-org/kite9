@@ -3,8 +3,6 @@ package com.kite9.server.web;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
-import java.util.Collections;
-import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.namespace.QName;
@@ -53,7 +51,6 @@ import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.MediaTypeHelper;
 import com.kite9.server.adl.holder.meta.MetaHelper;
 import com.kite9.server.domain.RestEntity;
-import com.kite9.server.topic.ChangeBroadcaster;
 
 /**
  * Handles conversion of the Hateoas {@link ResourceSupport} objects to ADL, and therefore HTML, SVG etc..
@@ -230,11 +227,4 @@ public class HateoasADLHttpMessageWriter extends AbstractADLDomMessageWriter<Rep
 
 		return "";
 	}
-
-	@Override
-	protected List<ChangeBroadcaster> getChangeBroadcasters() {
-		return Collections.emptyList();
-	}
-
-
 }

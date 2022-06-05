@@ -9,11 +9,13 @@ import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kite9.diagram.logging.Logable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.command.Command;
 import com.kite9.pipeline.command.CommandContext;
@@ -22,6 +24,7 @@ import com.kite9.server.command.BatikCommandContext;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
+import com.kite9.server.topic.ChangeBroadcaster;
 import com.kite9.server.update.Update.Type;
 
 /**
@@ -30,17 +33,18 @@ import com.kite9.server.update.Update.Type;
  * @author robmoffat
  *
  */
-public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
+public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, ApplicationContextAware {
 	
 	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
 	protected final CommandContext ctx = new BatikCommandContext();
+	protected ApplicationContext appCtx;
 		
 	public AbstractUpdateHandler() {
 		super();
 	}
 	
 	@Override
-	public ADLDom performDiagramUpdate(Update update, Authentication authentication, DiagramWriteFormat f) throws Exception {
+	public ADLDom performDiagramUpdate(Update update, Authentication authentication) throws Exception {
 		ModifiableAPI a = getModifiableAPI(update, authentication);
 		
 		if (a instanceof ModifiableDiagramAPI) {
@@ -81,10 +85,11 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument(), true));
 			}
 
-			// this must come after processing, to make sure it renders correctly.
 			if (api.getType(authentication) != ModifiableAPI.Type.VIEWONLY) {
 				api.commitRevision("Changed "+update.getUri()+" in Kite9 Editor", authentication, dom);
 			}
+			
+			broadcastChange(dom);
 
 			return dom;
 		} else {
@@ -93,6 +98,11 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 	}
 
 	
+	protected void broadcastChange(ADLDom dom) {
+		appCtx.getBeansOfType(ChangeBroadcaster.class).values().stream()
+			.forEach(cb -> cb.broadcast(dom));
+	}
+
 	protected abstract SourceAPI getSourceAPI(Update update, Authentication authentication) throws Exception;
 	
 	public ModifiableAPI getModifiableAPI(Update update, Authentication authentication) throws Exception {
@@ -123,5 +133,9 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler {
 		return true;
 	}
 
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.appCtx = applicationContext;
+	}
 
 }

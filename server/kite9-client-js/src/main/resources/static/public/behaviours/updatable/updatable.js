@@ -13,7 +13,7 @@ function ensureCorrectScheme(uri, contentType) {
 		topicUri.protocol = 'wss:'
 	}
 	
-	topicUri.searchParams = "contentType="+contentType;
+	topicUri.search = "contentType="+contentType;
 	
 	const wsUrl = topicUri.toString() 
 	return wsUrl;
@@ -31,7 +31,7 @@ function ensureCorrectScheme(uri, contentType) {
  
 export function initWebsocketUpdater(socketUri, pageUri, contentTypeResolver, contentType) {
 	
-	const socket = new WebSocket(ensureCorrectScheme(socketUri));
+	const socket = new WebSocket(ensureCorrectScheme(socketUri, contentType));
 	
 	socket.onopen = function(e) {
 		console.log("command Websocket established")
@@ -106,8 +106,8 @@ export function initMetadataBasedUpdater(command, metadata, transition) {
 			createAdlToSVGResolver(transition, command, metadata);
 			
 	var contentType = renderServerSide ? 
-			"image/svg+xml;purpose=editable, application/json" :
-			"text/xml;purpose=adl";
+			"image/svg+xml;purpose=editable" :
+			"text/xml;purpose=editable_adl";
 
 	var delegate;
 	

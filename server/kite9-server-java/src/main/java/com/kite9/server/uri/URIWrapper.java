@@ -1,9 +1,13 @@
 package com.kite9.server.uri;
 
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
 
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.pipeline.uri.K9URI;
 
@@ -76,6 +80,14 @@ public class URIWrapper {
             @Override
             public String getHost() {
                 return javaNetURI.getHost();
+            }
+
+            @NotNull
+            @Override
+            public List<String> param(@NotNull String p) {
+            	MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUri(javaNetURI).build().getQueryParams();
+            	List<String> pValue = queryParams.get(p);
+            	return pValue == null ? Collections.emptyList() : pValue;
             }
         };
     }
