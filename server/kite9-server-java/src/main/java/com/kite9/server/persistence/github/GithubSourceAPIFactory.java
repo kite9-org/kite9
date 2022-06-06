@@ -186,10 +186,6 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			
 			
 		};
-//		
-//		om = new ObjectMapper();
-//		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
 	}
 
 	protected List<UserMeta> getSubscribers(K9URI topicUri) {

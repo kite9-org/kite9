@@ -66,19 +66,18 @@ export function createAdlToSVGResolver(transition, command, metadata) {
 		// we have to add the result to the main dom 
 		// to get the computedStyleMap and format
 		const update = ensureUpdateArea();
-		update.replaceChildren();
 		const docElement = result.documentElement
 		update.appendChild(docElement)
 		window['kite9-visualization-js'].formatSVG(docElement);
 		
 		// put it back in the result 
 		result.appendChild(docElement);
-		update.replaceChildren();
-		
 		transition.change(result);
+
+		// handle adl update
+		metadata.process(doc);
 		const docText = new XMLSerializer().serializeToString(doc.documentElement);
 		command.adlUpdated(encodeADLElement(docText));
-		metadata.process(doc);
 	}
 
 	return (text) => {
@@ -100,8 +99,8 @@ export function createAdlToSVGResolver(transition, command, metadata) {
 				xhr.onload = function () {
 				  	if (xhr.readyState === xhr.DONE && xhr.status === 200) {
 						transformer = new XSLTProcessor();
-						template = currentTemplate;
 						transformer.importStylesheet(xhr.responseXML);	
+						template = currentTemplate;
 						const result = transformer.transformToDocument(doc);
 						layoutSVGDocument(result, doc)
 						

@@ -39,8 +39,14 @@ export class Metadata {
 		delete olds['notification'];
 		delete olds['error'];
 		
-		const news = this.convert(d.querySelector("metadata"));
+		const md_element = d.querySelector("metadata");
+		const news = this.convert(md_element);
 		this.metadata = { ...olds, ...news };
+		
+		if ((md_element != null) && (md_element.parentElement != null)) {
+			md_element.parentElement.removeChild(md_element);
+		}
+		
 		
 		this.callbacks.forEach(cb => {
 			cb(this.metadata);

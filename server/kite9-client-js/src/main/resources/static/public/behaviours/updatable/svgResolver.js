@@ -13,8 +13,8 @@ export function createSVGResolver(transition, metadata) {
 		if (docNS == META_NAMESPACE) {
 			metadata.process(doc);
 		} else if (docNS == SVG_NAMESPACE) {
-			transition.change(doc);
 			metadata.process(doc);
+			transition.change(doc);
 		}
 	};
 	

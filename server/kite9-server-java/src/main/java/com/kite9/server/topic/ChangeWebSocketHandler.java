@@ -128,8 +128,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 		Authentication principal = (Authentication) session.getPrincipal();
 
 		try {
-			ADLDom updatedDom = updateHandler.performDiagramUpdate(u, principal);
-			broadcast(updatedDom);
+			updateHandler.performDiagramUpdate(u, principal);
 		} catch (Exception e) {
 			LOG.error("Problem with command", e);
 			respondWithError(session, u, principal, e);
@@ -225,13 +224,17 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	}
 
 	public <X> void broadcastInternal(String topic, X adl, BiFunction<X, String, TextMessage> converter) {
-		sessions.getOrDefault(topic, Collections.emptyList())
+		List<WebSocketSession> broadcastTo = sessions.getOrDefault(topic, Collections.emptyList());
+		LOG.info("Sending message on "+topic+" to "+broadcastTo.size()+" recipients "+adl.getClass());
+
+		broadcastTo
 			.parallelStream()
 			.forEach(wss -> {
 				try {
 					TopicDetails td = topics.get(wss);
 					if (td != null) {
 						TextMessage tm = converter.apply(adl, td.contentType);
+						LOG.info("Sending message on topic "+topic+"to "+wss.getId());
 						wss.sendMessage(tm);	
 					}
 				} catch (IOException e) {

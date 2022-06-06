@@ -1,6 +1,7 @@
 package com.kite9.server.update;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -99,7 +100,8 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 
 	
 	protected void broadcastChange(ADLDom dom) {
-		appCtx.getBeansOfType(ChangeBroadcaster.class).values().stream()
+		Collection<ChangeBroadcaster> values = appCtx.getBeansOfType(ChangeBroadcaster.class).values();
+		values.stream()
 			.forEach(cb -> cb.broadcast(dom));
 	}
 

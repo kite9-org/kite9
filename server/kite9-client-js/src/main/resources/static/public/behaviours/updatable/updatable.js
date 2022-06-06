@@ -38,8 +38,10 @@ export function initWebsocketUpdater(socketUri, pageUri, contentTypeResolver, co
 	}
 	
 	
-	socket.onmessage = (m) => contentTypeResolver(m.data)
-	
+	socket.onmessage = (m) => {
+		console.log("received message "+m.data)
+		contentTypeResolver(m.data)
+	}
 	socket.onerror = (e) => {
 		alert("Problem with websocket: "+ JSON.stringify(e))
 	}
@@ -91,6 +93,13 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver) {
 	
 } 
 
+/** 
+ * Detect whether we can render on the client side
+ */
+function canRenderClientSide() {
+	return (window.CSS.registerProperty != null);
+}
+
 /**
  * This version of the updater adapts depending on what the (initial) meta-data says to do.
  */
@@ -99,7 +108,7 @@ export function initMetadataBasedUpdater(command, metadata, transition) {
 	const processViaWebSocket = metadata.get("topic") != null;
 	
 	// for now, all rendering done on the client
-	const renderServerSide = true;	
+	const renderServerSide = !canRenderClientSide();	
 	
 	var resolver = renderServerSide ? 
 			createSVGResolver(transition, metadata) :
