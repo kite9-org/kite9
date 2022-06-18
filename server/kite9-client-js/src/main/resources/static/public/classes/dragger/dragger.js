@@ -166,7 +166,9 @@ export class Dragger {
 		}
 		
 		if (!this.state) {
-			this.beginMove(evt);
+			if (evt.buttons == 1) {
+				this.beginMove(evt);
+			}
 		}
 		
 		if (this.state) {
