@@ -55,7 +55,7 @@ function setScale(mag) {
 	
 	// this part is needed since the browser window doesn't appear
 	// to take the scale() into account when determining the element size
-	console.log("New scale: "+mag);
+	// console.log("New scale: "+mag);
 	
 	// new main size
 	const factor = mag / magnification;

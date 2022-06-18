@@ -375,10 +375,10 @@ export function isGrid(e) {
 }
 
 export function getContainerChildren(container, ignore = []) {
-	const allChildren = Array.from(container.children)
-	.filter(e => ignore.indexOf(e) == -1)
-	.filter(e => e.hasAttribute("id"))
-	.filter(e => e.hasAttribute("k9-info"));
+	const allChildren = Array.from(container.querySelectorAll("[id][k9-info]"))
+		.filter(e => getParentElement(e) == container)
+		.filter(e => ignore.indexOf(e) == -1);
+		
 	return allChildren;
 }
 

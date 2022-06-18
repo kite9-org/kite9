@@ -38,9 +38,7 @@
 	    <xsl:param name="content"><xsl:apply-templates /></xsl:param>
 	    <xsl:param name="decoration"></xsl:param>
 	    
-		<g>
-	      <xsl:copy-of select="$attributes" />      
-	      
+		<g>	      
 	      <xsl:attribute name="k9-elem"><xsl:value-of select="$k9-elem" /></xsl:attribute>
 	
 	      <xsl:if test="$k9-format">
@@ -82,6 +80,8 @@
 	          <xsl:attribute name="k9-child"><xsl:value-of select="$k9-child" /></xsl:attribute>
 	        </xsl:if>
 	      </xsl:if>
+	      
+	      <xsl:copy-of select="$attributes" />     
 	      
 	      <xsl:choose>
 	        <xsl:when test="$shape">

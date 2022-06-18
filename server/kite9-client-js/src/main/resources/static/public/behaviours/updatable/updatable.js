@@ -34,12 +34,12 @@ export function initWebsocketUpdater(socketUri, pageUri, contentTypeResolver, co
 	const socket = new WebSocket(ensureCorrectScheme(socketUri, contentType));
 	
 	socket.onopen = function(e) {
-		console.log("command Websocket established")
+		// console.log("command Websocket established")
 	}
 	
 	
 	socket.onmessage = (m) => {
-		console.log("received message "+m.data)
+		// console.log("received message "+m.data)
 		contentTypeResolver(m.data)
 	}
 	socket.onerror = (e) => {

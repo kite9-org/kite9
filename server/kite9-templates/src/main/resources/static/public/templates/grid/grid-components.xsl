@@ -37,7 +37,7 @@
   </xsl:template>
     
   <xsl:template name="grid-diagram-palettes">
-     <adl:palette contains="connected cell table" url="/public/templates/grid/palette.adl" />
+     <adl:palette contains="cell table" url="/public/templates/grid/palette.adl" />
   </xsl:template>  
 
 </xsl:stylesheet>

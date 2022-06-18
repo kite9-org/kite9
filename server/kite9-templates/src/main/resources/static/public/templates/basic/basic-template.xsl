@@ -27,6 +27,11 @@
   	<xsl:call-template name="adl-diagram-defs" />
   </xsl:template> 
   
+  <xsl:template match="/" mode="diagram-palettes">
+    <adl:palette contains="connected" url="/public/templates/basic/palette.adl" />
+  	<xsl:call-template name="adl-diagram-palettes" />
+  </xsl:template>
+  
 </xsl:stylesheet>
         
         
