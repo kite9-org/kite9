@@ -2,6 +2,11 @@ name: Publish
 
 on: 
   workflow_dispatch:
+    inputs:
+      releaseversion:
+        description: 'Release version'
+        required: true
+        default: '0.1'
 
 jobs:
   build:
@@ -14,6 +19,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11.0.4
+    - name: Update Version
+      run: mvn -B versions:set -DnewVersion=${{ github.event.inputs.releaseversion }}  -DartifactId=\*  -DgroupId=\*
     - name: Build with Maven
       run: mvn -B source:jar deploy --file pom.xml --settings .github/workflows/settings.xml -P github -DskipTests
       env: 
