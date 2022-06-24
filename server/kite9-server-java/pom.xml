@@ -34,17 +34,6 @@
             <artifactId>kite9-pipeline-common</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-templates</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-         <dependency>
-            <groupId>org.kite9</groupId>
-            <artifactId>kite9-client-js</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
-        
         
         <!-- Github -->
         <dependency>
@@ -139,33 +128,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>com.microsoft.azure</groupId>
-                <artifactId>azure-webapp-maven-plugin</artifactId>
-                <version>1.9.0</version>
-                <configuration>
-                    <schemaVersion>V2</schemaVersion>
-                    <resourceGroup>k9-parent-rg</resourceGroup>
-                    <appName>k9-server</appName>
-                    <pricingTier>P1v2</pricingTier>
-                    <region>westeurope</region>
-                    <runtime>
-                        <os>linux</os>
-                        <javaVersion>jre8</javaVersion>
-                        <webContainer>jre8</webContainer>
-                    </runtime>
-                    <deployment>
-                        <resources>
-                            <resource>
-                                <directory>${project.basedir}/target</directory>
-                                <includes>
-                                    <include>k9-server-*.jar</include>
-                                </includes>
-                            </resource>
-                        </resources>
-                    </deployment>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.4.0</version>
@@ -180,14 +142,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.8.1</version>-->
-<!--                <configuration>-->
-<!--                    <release>8</release>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.2.0</version>
@@ -212,14 +166,14 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+       <!--     <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
                     <printSummary>true</printSummary>
                     <argLine>-Xms500M -Xmx500M -Djava.awt.headless=true</argLine>
                 </configuration>
-            </plugin>
+            </plugin>--> 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

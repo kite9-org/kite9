@@ -1,0 +1,30 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>zip</id>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <formats>
+        <format>zip</format>
+    </formats>
+    <fileSets>
+        <fileSet>
+            <directory>src</directory>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/external</outputDirectory>
+            <unpack>true</unpack>
+            <unpackOptions>
+            	<includes>
+            		<include>kite9-visualization-js.js</include>
+            		<include>kite9-visualization-js.meta.js</include>
+            		<include>kotlin.js</include>
+            		<include>kotlin.meta.js</include>
+            	</includes>
+            </unpackOptions>
+        </dependencySet>
+    </dependencySets>
+</assembly>

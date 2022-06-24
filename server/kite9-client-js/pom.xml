@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>kite9-client-js</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <parent>
         <groupId>org.kite9</groupId>
@@ -35,7 +35,7 @@
         </dependency>
     
         <!-- webjars -->
-        <dependency>
+    <!--    <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>animejs</artifactId>
             <version>3.0.1</version>
@@ -63,9 +63,33 @@
             <groupId>org.webjars.npm</groupId>
             <artifactId>hint.css</artifactId>
             <version>2.3.2</version>
-        </dependency>
+        </dependency> -->
 
     </dependencies>
+    
+    <build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>${project.basedir}/assembly-zip.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
    
 </project>
