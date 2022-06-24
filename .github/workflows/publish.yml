@@ -1,7 +1,7 @@
-name: Java CI
+name:Publish
 
 on: 
-  workflow_dispatch:
+  wotkflow_dispatch:
 
 jobs:
   build:
