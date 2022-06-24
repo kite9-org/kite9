@@ -1,6 +1,7 @@
 name: Java CI
 
-on: [wotkflow-dispatch]
+on: 
+  wotkflow_dispatch:
 
 jobs:
   build:
