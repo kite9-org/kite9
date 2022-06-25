@@ -54,7 +54,7 @@ public class Kite9ErrorController implements ErrorController {
 		addFooter(sb);
 		return new ResponseEntity<String>(sb.toString(), HttpStatus.resolve(statusCode));
 	}
-
+	
 	private ResponseEntity<String> checkLoginRequired(HttpServletRequest request) {
 
 		Exception exception = getException(request);
