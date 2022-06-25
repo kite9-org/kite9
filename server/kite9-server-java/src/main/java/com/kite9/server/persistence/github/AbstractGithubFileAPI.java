@@ -6,6 +6,7 @@ import static com.kite9.server.persistence.PathUtils.REPONAME;
 import static com.kite9.server.persistence.PathUtils.getPathSegment;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GitHub;
@@ -22,6 +23,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.FileAPI;
 import com.kite9.server.web.URIRewriter;
 
@@ -33,18 +35,29 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 	protected String owner;
 	protected String reponame;
 	protected String filepath;
+	protected String ref;
 	protected OAuth2AuthorizedClientRepository clientRepository;
 	protected K9MediaType mediaType;
 	protected GHContent content;
 	
-	public AbstractGithubFileAPI(String path, GHContent content, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt) {
+	public AbstractGithubFileAPI(String path, String ref, GHContent content, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt) {
 		this.path = path;
+		this.ref = ref;
 		this.owner = getPathSegment(OWNER, path);
 		this.reponame = getPathSegment(REPONAME, path);
 		this.filepath = getPathSegment(FILEPATH, path);
 		this.clientRepository = clientRepository;
 		this.mediaType = mt;
 		this.content = content;
+	}
+	
+	public static String getRef(K9URI u) {
+		List<String> param = u.param("v");
+		if ((param == null) || (param.isEmpty())) {
+			return null;
+		} else {
+			return param.get(0);
+		}
 	}
 
 	public static String getAccessToken(Authentication p, OAuth2AuthorizedClientRepository clientRepository) {
@@ -105,5 +118,8 @@ public abstract class AbstractGithubFileAPI implements FileAPI {
 		return content.read();
 	}
 
-	
+	public String getRef() {
+		return ref;
+	}
+
 }

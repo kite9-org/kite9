@@ -26,7 +26,7 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 	protected final K9URI sourceURI;
 	
 	public AbstractGithubModifiableFileAPI(K9URI u, GHContent content, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt, boolean isNew)  {
-		super(u.getPath(), content, clientRepository, mt);
+		super(u.getPath(), getRef(u), content, clientRepository, mt);
 		this.isNew = isNew;
 		this.sourceURI = unmodifiedURI(u);
 	}
@@ -39,10 +39,10 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 		return out;
 	}
 
-	protected void commitRevision(String message, Consumer<GHTreeBuilder> fn, Authentication by) {
+	protected void commitRevision(String message, String branch, Consumer<GHTreeBuilder> fn, Authentication by) {
 		try {
 			GHRepository repo = getGitHubAPI(by).getRepository(owner+"/"+reponame);
-			String branchName = repo.getDefaultBranch();
+			String branchName = branch == null ? repo.getDefaultBranch() : branch;
 			String treeSha = repo.getTree(branchName).getSha();
 			String branchSha = repo.getBranch(branchName).getSHA1();
 
@@ -66,7 +66,7 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 
 	@Override
 	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
-		commitRevision(message, tb -> tb.add(filepath, bytes, false), by);
+		commitRevision(message, ref, tb -> tb.add(filepath, bytes, false), by);
 	}
 	
 	@Override

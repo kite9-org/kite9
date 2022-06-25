@@ -22,7 +22,6 @@ import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -61,10 +60,11 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		this.formatSupplier = formatSupplier;
 	}
 	
-	protected GHContent getFileContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
+	protected GHContent getFileContent(Authentication auth, String owner, String reponame, String filepath, String ref) throws IOException {
 		try {
 			GitHub api = createGitHub(auth);
-			return api.getRepository(owner+"/"+reponame).getFileContent(filepath);
+			return api.getRepository(owner+"/"+reponame)
+					.getFileContent(filepath, ref);
 		} catch (Exception e) {
 			if (auth == null) {
 				throw new LoginRequiredException(Type.GITHUB);
@@ -74,29 +74,37 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		}
 	}
 	
-	protected List<GHContent> getDirectoryContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
-		GitHub api = createGitHub(auth);
-		return api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath);
+	protected List<GHContent> getDirectoryContent(Authentication auth, String owner, String reponame, String filepath, String ref) throws IOException {
+		try {
+			GitHub api = createGitHub(auth);
+			return api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
+		} catch (Exception e) {
+			if (auth == null) {
+				throw new LoginRequiredException(Type.GITHUB);
+			} else {
+				throw e;
+			}
+		}
 	}
 
 	public SourceAPI createBackingAPI(K9URI u, Authentication authentication) throws Exception {
-		System.out.println(u.getPath());
 		String path = u.getPath();
+		String ref = AbstractGithubFileAPI.getRef(u);
 		if (GithubContentController.GITHUB.equals(PathUtils.getPathSegment(PathUtils.TYPE, path))) {
 			String owner = getPathSegment(OWNER, path);
 			String reponame = getPathSegment(REPONAME, path);
 			String filepath = getPathSegment(FILEPATH, path);
 			
 			if (owner == null) {
-				return new GithubDirectoryAPI(path,  ec.getHomePage(authentication));
+				return new GithubDirectoryAPI(path, ref, ec.getHomePage(authentication));
 			} else if (reponame == null) {
-				return new GithubDirectoryAPI(path, ec.getOrgPage(owner, authentication));
+				return new GithubDirectoryAPI(path, ref, ec.getOrgPage(owner, authentication));
 			} else {
 				// try as content.
 				Format f = formatSupplier.getFormatFor(path);
 				if (f != null) {
 					try {
-						GHContent o = getFileContent(authentication, owner, reponame, filepath);
+						GHContent o = getFileContent(authentication, owner, reponame, filepath, ref);
 						
 						if (f instanceof DiagramFileFormat) {
 							return createDiagramApi(u, f, false, o);
@@ -112,8 +120,8 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 					} 
 				} else {
 					// ok, try as directory
-					List<GHContent> go = getDirectoryContent(authentication, owner, reponame, filepath);
-					return new GithubDirectoryAPI(path, ec.getDirectoryPage(owner, reponame, filepath, go,  authentication));
+					List<GHContent> go = getDirectoryContent(authentication, owner, reponame, filepath, ref);
+					return new GithubDirectoryAPI(path, ref, ec.getDirectoryPage(owner, reponame, filepath, go,  authentication));
 				}
 				
 			}

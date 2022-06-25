@@ -10,13 +10,15 @@ import com.kite9.server.sources.DirectoryAPI;
 public class GithubDirectoryAPI implements DirectoryAPI {
 
 	String path;
+	String ref;
 	RestEntity re;
 	List<Object> contents;
 	
 	
-	public GithubDirectoryAPI(String path, RestEntity re) {
+	public GithubDirectoryAPI(String path, String ref, RestEntity re) {
 		super();
 		this.path = path;
+		this.ref = ref;
 		this.re = re;
 	}
 

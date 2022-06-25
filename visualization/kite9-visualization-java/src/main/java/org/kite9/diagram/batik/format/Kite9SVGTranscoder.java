@@ -92,6 +92,11 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	 * Allows us to set the viewBox of the SVG (if used in the template
 	 */
 	public static final TranscodingHints.Key KEY_VIEW_BOX = new StringKey();
+	
+	/**
+	 * Sets the default template to use in the absence of KEY_TEMPLATE
+	 */
+	public static final TranscodingHints.Key KEY_DEFAULT_TEMPLATE = new StringKey();
 
 	public static final String TRANSFORMER = "transformer";
 
@@ -262,7 +267,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		if ((template == null) || (template.length() == 0)) {
 			if (Kite9Namespaces.ADL_NAMESPACE.equals(input.getDocumentElement().getNamespaceURI())) {
 				// default to the basic template
-				return "/public/templates/basic/basic-template.xsl";
+				return "/public/templates/basic/`";
 			}
 		}
 		return template;
