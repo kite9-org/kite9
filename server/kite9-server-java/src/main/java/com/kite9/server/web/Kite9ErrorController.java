@@ -13,15 +13,19 @@ import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.transcoder.TranscoderException;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
+import org.springframework.web.util.NestedServletException;
 import org.xml.sax.SAXParseException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kite9.server.web.LoginRequiredException.Type;
 
 @Controller
 public class Kite9ErrorController implements ErrorController {
@@ -34,8 +38,12 @@ public class Kite9ErrorController implements ErrorController {
 	public static final String BOOTSTRAP = "<link href=\"/webjars/bootstrap/4.3.1/css/bootstrap.min.css\" rel=\"stylesheet\" />";
 	
 	@RequestMapping(path = "/error", produces = MediaType.TEXT_HTML_VALUE )
-	@ResponseBody
-	public String handleError(HttpServletRequest request) {
+	public ResponseEntity<String> handleError(HttpServletRequest request) {
+		ResponseEntity<String> lr = checkLoginRequired(request);
+		if (lr != null) {
+			return lr;
+		}
+	
 		Integer statusCode = getStatusCode(request);
 		String uri = getRequestURI(request);
 		Exception exception = getException(request);
@@ -44,8 +52,23 @@ public class Kite9ErrorController implements ErrorController {
 		addHeader(sb, statusCode, uri);
 		processException(sb, exception, 1);
 		addFooter(sb);
-		return sb.toString();
+		return new ResponseEntity<String>(sb.toString(), HttpStatus.resolve(statusCode));
 	}
+
+	private ResponseEntity<String> checkLoginRequired(HttpServletRequest request) {
+
+		Exception exception = getException(request);
+		if (exception instanceof LoginRequiredException) {
+			Type t = ((LoginRequiredException) exception).t;
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Location", t.path);    
+			return new ResponseEntity<String>(headers,HttpStatus.FOUND);	
+			
+		}
+		
+		return null;
+	}
+
 
 	private Exception getException(HttpServletRequest request) {
 		return (Exception) request.getAttribute("javax.servlet.error.exception");

@@ -22,6 +22,7 @@ import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -39,6 +40,8 @@ import com.kite9.server.persistence.cache.CacheManagedAPIFactory;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.topic.ChangeBroadcaster;
 import com.kite9.server.update.Update;
+import com.kite9.server.web.LoginRequiredException;
+import com.kite9.server.web.LoginRequiredException.Type;
 
 public final class GithubSourceAPIFactory extends CacheManagedAPIFactory implements InitializingBean {
 
@@ -59,8 +62,16 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 	}
 	
 	protected GHContent getFileContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
-		GitHub api = createGitHub(auth);
-		return api.getRepository(owner+"/"+reponame).getFileContent(filepath);
+		try {
+			GitHub api = createGitHub(auth);
+			return api.getRepository(owner+"/"+reponame).getFileContent(filepath);
+		} catch (Exception e) {
+			if (auth == null) {
+				throw new LoginRequiredException(Type.GITHUB);
+			} else {
+				throw e;
+			}
+		}
 	}
 	
 	protected List<GHContent> getDirectoryContent(Authentication auth, String owner, String reponame, String filepath) throws IOException {
@@ -153,8 +164,12 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 
 	public GitHub createGitHub(String token) {
 		try {
-			return new GitHubBuilder()
-					.withOAuthToken(token).build();
+			GitHubBuilder gb = new GitHubBuilder();
+			if (token != null) {
+				return gb.withOAuthToken(token).build();
+			} else {
+				return gb.build();
+			}
 		} catch (IOException e) {
 			throw new Kite9XMLProcessingException("Couldn't get handle to github", e);
 		}

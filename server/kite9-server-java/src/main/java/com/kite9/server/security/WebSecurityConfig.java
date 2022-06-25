@@ -28,22 +28,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		
 		http.authorizeRequests()
-		.antMatchers("/").permitAll() 			// home page
-		.antMatchers("/webjars/**").permitAll()	// javascript dependencies
-		.antMatchers("/stylesheet.js").permitAll()	// error page
-		.antMatchers("/stylesheet.css").permitAll()	// error page
-		.antMatchers("/oauth/token").permitAll()	// oauth login
-		.antMatchers("/console/**").permitAll()
-		.antMatchers("/public/**").permitAll()		// public pages/stylesheets etc.
-		.antMatchers("/command/v1").permitAll()		
-		.antMatchers("/actuator/**").permitAll()	// health/metrics
-		.antMatchers("/api/renderer").permitAll()
-		.antMatchers("/api/renderer.*").permitAll()	// used for book, other remote rendering
-		.antMatchers("/**").authenticated()
 		.requestMatchers(r -> {
-			// this lets us skip oauth2 if the user provides a token that might be compatible with github.
-			return (r.getRequestURI().startsWith("/github") && 
-					(r.getHeader("Authorization") == null));
+			if (r.getHeader("Authorization") != null) {
+				// this lets us skip oauth2 if the user provides 
+				// a token that might be compatible with github.
+				return false;
+			}
+			
+			if ("POST".equals(r.getMethod())) {
+				if (r.getRequestURI().startsWith("/github")) {
+					// github post requests must be authenticated
+					return true;
+				}
+			}
+			
+			if (r.getRequestURI().equals("/github")) {
+				// we'll do login if the user looks here
+				return true;
+			}
+			
+			return false;
 		}).authenticated()
 		.and()
 		.oauth2Login();

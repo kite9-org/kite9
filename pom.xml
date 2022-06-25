@@ -17,14 +17,7 @@
 		<module>visualization/kite9-visualization-js</module>
 		<module>visualization/kite9-visualization-java</module>
 		<module>pipeline/kite9-pipeline-common</module>
-		<module>server/kite9-client-js</module>
 		<module>server/kite9-server-java</module>
-		<module>templates/parent</module>
-		<module>templates/adl</module>
-		<!-- <module>templates/risk-first</module>
-		<module>templates/uml</module>
-		<module>templates/designer</module>
-		<module>templates/tweet</module>-->
 	</modules>
 
 	<properties>
