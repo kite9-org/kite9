@@ -17,17 +17,17 @@
   </xsl:template>
   
   <xsl:template name="links-diagram-element-css">
-    <adl:css>@import url('/public/templates/links/links-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/links/links-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template name="links-diagram-constants">
-     <adl:constant name="link-template-uri" url="/public/templates/links/common-links.adl#l1" />
-     <adl:constant name="align-template-uri" url="/public/templates/links/common-links.adl#align" />
+     <adl:constant name="link-template-uri" url="/github/kite9-org/kite9/templates/links/common-links.adl#l1" />
+     <adl:constant name="align-template-uri" url="/github/kite9-org/kite9/templates/links/common-links.adl#align" />
   </xsl:template>
   
   <xsl:template name="links-diagram-palettes">
-     <adl:palette contains="link" url="/public/templates/links/links-palette.adl" />
-     <adl:palette contains="end" url="/public/templates/links/ends-palette.adl" />
+     <adl:palette contains="link" url="/github/kite9-org/kite9/templates/links/links-palette.adl" />
+     <adl:palette contains="end" url="/github/kite9-org/kite9/templates/links/ends-palette.adl" />
   </xsl:template>
   
   <xsl:template name="links-diagram-defs">

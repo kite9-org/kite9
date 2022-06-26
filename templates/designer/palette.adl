@@ -1,5 +1,5 @@
 <diagram 
-  xslt:template="/public/templates/designer/designer-template.xsl"
+  xslt:template="/github/kite9-org/kite9/templates/designer/designer-template.xsl"
   xmlns="http://www.kite9.org/schema/adl" 
   xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia"
   style="--kite9-layout: vertical; ">

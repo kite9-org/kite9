@@ -47,6 +47,6 @@
   </xsl:template>
 
   <xsl:template name="actions-risk-first-diagram-element-css">
-    <adl:css>@import url('/public/templates/risk-first/actions/action-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/risk-first/actions/action-elements.css');</adl:css>
   </xsl:template>
 </xsl:stylesheet>

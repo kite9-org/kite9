@@ -18,7 +18,7 @@
   </xsl:template>
 
   <xsl:template name="votes-diagram-element-css">
-    <adl:css>@import url('/public/templates/votes/votes-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/votes/votes-elements.css');</adl:css>
   </xsl:template>
 
 </xsl:stylesheet>

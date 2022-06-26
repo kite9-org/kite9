@@ -1,5 +1,5 @@
-import '/public/templates/containers/containers.js';
-import '/public/templates/grid/grid.js';
-import '/public/templates/labels/labels.js';
-import '/public/templates/links/links.js';
-import '/public/templates/votes/votes.js';
+import '/github/kite9-org/kite9/templates/containers/containers.js';
+import '/github/kite9-org/kite9/templates/grid/grid.js';
+import '/github/kite9-org/kite9/templates/labels/labels.js';
+import '/github/kite9-org/kite9/templates/links/links.js';
+import '/github/kite9-org/kite9/templates/votes/votes.js';

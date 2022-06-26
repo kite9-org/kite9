@@ -33,11 +33,11 @@
   
   
   <xsl:template name="grid-diagram-element-css">
-    <adl:css>@import url('/public/templates/grid/grid-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/grid/grid-elements.css');</adl:css>
   </xsl:template>
     
   <xsl:template name="grid-diagram-palettes">
-     <adl:palette contains="cell table" url="/public/templates/grid/palette.adl" />
+     <adl:palette contains="cell table" url="/github/kite9-org/kite9/templates/grid/palette.adl" />
   </xsl:template>  
 
 </xsl:stylesheet>

@@ -36,11 +36,11 @@ import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.persistence.PathUtils;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.persistence.cache.CacheManagedAPIFactory;
+import com.kite9.server.security.LoginRequiredException;
+import com.kite9.server.security.LoginRequiredException.Type;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.topic.ChangeBroadcaster;
 import com.kite9.server.update.Update;
-import com.kite9.server.web.LoginRequiredException;
-import com.kite9.server.web.LoginRequiredException.Type;
 
 public final class GithubSourceAPIFactory extends CacheManagedAPIFactory implements InitializingBean {
 
@@ -61,30 +61,14 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 	}
 	
 	protected GHContent getFileContent(Authentication auth, String owner, String reponame, String filepath, String ref) throws IOException {
-		try {
-			GitHub api = createGitHub(auth);
-			return api.getRepository(owner+"/"+reponame)
-					.getFileContent(filepath, ref);
-		} catch (Exception e) {
-			if (auth == null) {
-				throw new LoginRequiredException(Type.GITHUB);
-			} else {
-				throw e;
-			}
-		}
+		GitHub api = createGitHub(auth);
+		return api.getRepository(owner+"/"+reponame)
+				.getFileContent(filepath, ref);
 	}
 	
 	protected List<GHContent> getDirectoryContent(Authentication auth, String owner, String reponame, String filepath, String ref) throws IOException {
-		try {
-			GitHub api = createGitHub(auth);
-			return api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
-		} catch (Exception e) {
-			if (auth == null) {
-				throw new LoginRequiredException(Type.GITHUB);
-			} else {
-				throw e;
-			}
-		}
+		GitHub api = createGitHub(auth);
+		return api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
 	}
 
 	public SourceAPI createBackingAPI(K9URI u, Authentication authentication) throws Exception {
@@ -111,6 +95,8 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 						} else {
 							return createRegularFileApI(u, f, false, o);
 						}
+					} catch (IOException e) {
+						return ensureLogin(u, authentication, e);
 					} catch (WebClientResponseException e) {
 						if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
 							return createDiagramApi(u,f, true, null);
@@ -119,15 +105,32 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 						}
 					} 
 				} else {
-					// ok, try as directory
-					List<GHContent> go = getDirectoryContent(authentication, owner, reponame, filepath, ref);
-					return new GithubDirectoryAPI(path, ref, ec.getDirectoryPage(owner, reponame, filepath, go,  authentication));
+					try {
+						// ok, try as directory
+						List<GHContent> go = getDirectoryContent(authentication, owner, reponame, filepath, ref);
+						return new GithubDirectoryAPI(path, ref, ec.getDirectoryPage(owner, reponame, filepath, go,  authentication));
+					} catch (IOException e) {
+						return ensureLogin(u, authentication, e);
+					}
 				}
 				
 			}
 		} else {
 			return null;
 		}	
+	}
+
+	/**
+	 * If the user gets a 404, it could be due to lack of authentication, 
+	 * so redirect to the auth page.
+	 */
+	private SourceAPI ensureLogin(K9URI u, Authentication authentication, IOException e)
+			throws LoginRequiredException, IOException {
+		if (authentication == null) {
+			throw new LoginRequiredException(Type.GITHUB, u);
+		} else {
+			throw e;
+		}
 	}
 
 	protected SourceAPI createRegularFileApI(K9URI u, Format f2, boolean isNew, GHContent o) throws URISyntaxException {

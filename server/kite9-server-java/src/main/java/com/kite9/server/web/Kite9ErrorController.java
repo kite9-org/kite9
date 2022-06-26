@@ -24,7 +24,9 @@ import org.springframework.web.util.HtmlUtils;
 import org.xml.sax.SAXParseException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kite9.server.web.LoginRequiredException.Type;
+import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.security.LoginRequiredException;
+import com.kite9.server.security.LoginRequiredException.Type;
 
 @Controller
 public class Kite9ErrorController implements ErrorController {
@@ -58,7 +60,9 @@ public class Kite9ErrorController implements ErrorController {
 
 		Exception exception = getException(request);
 		if (exception instanceof LoginRequiredException) {
-			Type t = ((LoginRequiredException) exception).t;
+			LoginRequiredException lre = (LoginRequiredException) exception;
+			Type t = lre.getType();
+			K9URI redirect = lre.getRedirectUri(); 
 			HttpHeaders headers = new HttpHeaders();
 			headers.add("Location", t.path);    
 			return new ResponseEntity<String>(headers,HttpStatus.FOUND);	

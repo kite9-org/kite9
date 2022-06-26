@@ -1,13 +1,13 @@
-@import url(/public/templates/common/common.css);
-@import url('/public/templates/containers/common-containers.css');
-@import url(/public/templates/links/common-links.css);
-@import url(/public/templates/labels/common-labels.css);
-@import url(/public/templates/grid/common-grid.css);
-@import url(/public/fonts/metropolis/metropolis.css);
+@import url(/github/kite9-org/kite9/templates/common/common.css);
+@import url('/github/kite9-org/kite9/templates/containers/common-containers.css');
+@import url(/github/kite9-org/kite9/templates/links/common-links.css);
+@import url(/github/kite9-org/kite9/templates/labels/common-labels.css);
+@import url(/github/kite9-org/kite9/templates/grid/common-grid.css);
+@import url(/github/kite9-org/kite9/fonts/metropolis/metropolis.css);
 @import url(pool.css);
 @import url(bpmn-shapes.css);
 @import url(bpmn-components.css);
-@import url(/public/templates/editor/editor.css);
+@import url(/github/kite9-org/kite9/templates/editor/editor.css);
 
 
 /*@params {

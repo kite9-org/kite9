@@ -1,4 +1,4 @@
-<diagram xslt:template="/public/templates/uml/uml-template.xsl"
+<diagram xslt:template="/github/kite9-org/kite9/templates/uml/uml-template.xsl"
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" 
          id="dia" 

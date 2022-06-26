@@ -9,16 +9,16 @@
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:call-template name="adl-diagram-element-css" />
-    <adl:css>@import url('/public/templates/tweet/tweet-elements.css');</adl:css>
-    <adl:css>@import url('/public/templates/tweet/card-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/tweet/tweet-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/tweet/card-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">
-    <adl:css>@import url('/public/templates/tweet/tweet-textures.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/tweet/tweet-textures.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">
-    import '/public/templates/tweet/tweet.js';
+    import '/github/kite9-org/kite9/templates/tweet/tweet.js';
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-constants">

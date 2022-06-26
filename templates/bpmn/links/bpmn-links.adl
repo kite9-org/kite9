@@ -2,10 +2,10 @@
 <svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
 	<svg:defs>
 		<svg:style type="text/css">
-			@import url(/public/templates/bpmn/links/bpmn-links.css);
+			@import url(/github/kite9-org/kite9/templates/bpmn/links/bpmn-links.css);
 
 			[k9-elem=hub] {
-				--kite9-template: url(/public/common/links/common-links-template.xml#hub);
+				--kite9-template: url(/github/kite9-org/kite9/common/links/common-links-template.xml#hub);
 				--kite9-type: svg;
 				--kite9-connection-align: 50%;
 				fill: #FAFAFA;

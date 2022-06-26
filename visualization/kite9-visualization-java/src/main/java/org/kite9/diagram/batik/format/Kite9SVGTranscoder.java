@@ -266,8 +266,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 
 		if ((template == null) || (template.length() == 0)) {
 			if (Kite9Namespaces.ADL_NAMESPACE.equals(input.getDocumentElement().getNamespaceURI())) {
-				// default to the basic template
-				return "/public/templates/basic/`";
+				return getTranscodingHints().get(KEY_DEFAULT_TEMPLATE).toString();
 			}
 		}
 		return template;

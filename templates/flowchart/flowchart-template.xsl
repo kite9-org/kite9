@@ -7,17 +7,17 @@
   <xsl:import href="flowchart-components.xsl" />
   
   <xsl:template match="/" mode="diagram-script">
-    import '/public/templates/flowchart/flowchart.js';
+    import '/github/kite9-org/kite9/templates/flowchart/flowchart.js';
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">
-    <adl:css>@import url('/public/templates/flowchart/flowchart-textures.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/flowchart/flowchart-textures.css');</adl:css>
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">
   	<xsl:call-template name="adl-diagram-palettes" />
-    <adl:palette contains="connected" url="/public/templates/flowchart/palette-inline.adl"/>
-    <adl:palette contains="connected" url="/public/templates/flowchart/palette-captioned.adl"/>
+    <adl:palette contains="connected" url="/github/kite9-org/kite9/templates/flowchart/palette-inline.adl"/>
+    <adl:palette contains="connected" url="/github/kite9-org/kite9/templates/flowchart/palette-captioned.adl"/>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-element-css">

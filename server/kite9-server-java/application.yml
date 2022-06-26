@@ -16,7 +16,9 @@ spring:
 kite9:
   diagram-log: OFF
   caching: true
-  transformer-factory: net.sf.saxon.TransformerFactoryImpl
+  transformer:
+    factory: net.sf.saxon.TransformerFactoryImpl
+    defaultTemplate: /github/kite9-org/kite9/templates/basic/basic-template.xsl
     
 server:
   use-forward-headers: true

@@ -16,7 +16,7 @@
 
 
   <xsl:template name="formats-diagram-element-css">
-    <adl:css>@import url('/public/templates/formats/formats.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/formats/formats.css');</adl:css>
   </xsl:template>
   
 

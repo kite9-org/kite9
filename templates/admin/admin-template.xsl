@@ -15,19 +15,19 @@
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-script">
-  	 import '/public/templates/admin/admin.js';
+  	 import '/github/kite9-org/kite9/templates/admin/admin.js';
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-element-css">
      <xsl:call-template name="adl-diagram-element-css" />
-     <adl:css>@import url('/public/templates/admin/admin-elements.css');</adl:css>     
+     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-elements.css');</adl:css>     
    </xsl:template>
   
    <xsl:template match="/" mode="diagram-palettes">
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-texture-css">
-     <adl:css>@import url('/public/templates/admin/admin-textures.css');</adl:css>
+     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-textures.css');</adl:css>
    </xsl:template>
    
    
@@ -175,7 +175,7 @@
   		<xsl:if test="$chevron">
   			<xsl:call-template name="formats-image-fixed">
   				<xsl:with-param name="k9-elem">chevron</xsl:with-param>
-   				<xsl:with-param name="href">/public/templates/admin/icons/chevron.svg</xsl:with-param>
+   				<xsl:with-param name="href">/github/kite9-org/kite9/templates/admin/icons/chevron.svg</xsl:with-param>
    			</xsl:call-template>
   		</xsl:if>
   		

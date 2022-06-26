@@ -1,5 +1,5 @@
 <diagram
-	xslt:template="/public/templates/risk-first/risk-first-template.xsl"
+	xslt:template="/github/kite9-org/kite9/templates/risk-first/risk-first-template.xsl"
 	xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia"
 	xmlns="http://www.kite9.org/schema/adl"
 	xmlns:svg="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@
 			
 		<group  class="principle-left-bottom">
 			<risk-first-logo width="150pt" height="150pt" class="principle"
-					href="/public/templates/risk-first/logo/R1_logo_grue.svg" />
+					href="/github/kite9-org/kite9/templates/risk-first/logo/R1_logo_grue.svg" />
 			
 				<page-title class="principle-site">
 RISK-FIRST

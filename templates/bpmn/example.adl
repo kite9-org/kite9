@@ -2,7 +2,7 @@
 <svg:svg xmlns:svg='http://www.w3.org/2000/svg'>
 	<svg:defs>
 		<svg:style type="text/css">
-			@import url("/public/templates/bpmn/bpmn.css");
+			@import url("/github/kite9-org/kite9/templates/bpmn/bpmn.css");
 		</svg:style>
 
 	</svg:defs>

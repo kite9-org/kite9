@@ -184,7 +184,7 @@
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-element-css" name="uml-diagram-element-css">
-    <adl:css>@import url('/public/templates/uml/uml-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/uml/uml-elements.css');</adl:css>
   </xsl:template>
 
 </xsl:stylesheet>

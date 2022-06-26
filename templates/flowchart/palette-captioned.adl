@@ -1,4 +1,4 @@
-<diagram xslt:template="/public/templates/flowchart/flowchart-template.xsl"
+<diagram xslt:template="/github/kite9-org/kite9/templates/flowchart/flowchart-template.xsl"
   xmlns="http://www.kite9.org/schema/adl"
   xmlns:xslt="http://www.kite9.org/schema/xslt" 
   id="dia"

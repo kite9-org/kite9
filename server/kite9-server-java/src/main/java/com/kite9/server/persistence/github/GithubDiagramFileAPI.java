@@ -52,12 +52,16 @@ public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileA
 		adl.setTopicUri(topic);
 
 		String[] parts = uPath.split("/");
+		
+		if (parts.length >=3) {
 
 		adl.setUploadsPath("/"+GithubContentController.GITHUB
 				+"/"+parts[2]	// org
 				+"/"+parts[3]	// repo
 				+GithubContentController.DEFAULT_GITHUB_UPLOADS);
 
+		}
+		
 		adl.setTitle(AbstractGithubModifiableFileAPI.createTitle(u));
 	}
 

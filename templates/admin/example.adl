@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <diagram xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt"
-         xslt:template="/public/templates/admin/admin-template.xsl">
+         xslt:template="/github/kite9-org/kite9/templates/admin/admin-template.xsl">
    <parents>
       <parents/>
       <repositories/>
       <organisations/>
       <title>GitHub</title>
       <description/>
-      <icon>/public/templates/admin/icons/github.png</icon>
+      <icon>/github/kite9-org/kite9/templates/admin/icons/github.png</icon>
       <commands>focus</commands>
       <type>user</type>
       <links>
@@ -33,7 +33,7 @@
       <parents/>
       <title>board.html</title>
       <description></description>
-      <icon>/public/templates/admin/icons/html.svg</icon>
+      <icon>/github/kite9-org/kite9/templates/admin/icons/html.svg</icon>
       <commands>open</commands>
       <type>document</type>
       <links>
@@ -45,7 +45,7 @@
       <parents/>
       <title>browser.js</title>
       <description></description>
-      <icon>/public/templates/admin/icons/js.svg</icon>
+      <icon>/github/kite9-org/kite9/templates/admin/icons/js.svg</icon>
       <commands>open</commands>
       <type>document</type>
       <links>
@@ -57,7 +57,7 @@
       <parents/>
       <title>common1.js</title>
       <description></description>
-      <icon>/public/templates/admin/icons/js.svg</icon>
+      <icon>/github/kite9-org/kite9/templates/admin/icons/js.svg</icon>
       <commands>open</commands>
       <type>document</type>
       <links>
@@ -69,7 +69,7 @@
       <parents/>
       <title>zombies.js</title>
       <description></description>
-      <icon>/public/templates/admin/icons/js.svg</icon>
+      <icon>/github/kite9-org/kite9/templates/admin/icons/js.svg</icon>
       <commands>open</commands>
       <type>document</type>
       <links>
@@ -80,7 +80,7 @@
    <title>go</title>
    <description/>
    <commands>focus NewDocument</commands>
-   <icon>/public/templates/admin/icons/project.svg</icon>
+   <icon>/github/kite9-org/kite9/templates/admin/icons/project.svg</icon>
    <type>repository</type>
    <links>
       <rel>self</rel>

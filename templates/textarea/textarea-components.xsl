@@ -21,7 +21,7 @@
   </xsl:template>
   
   <xsl:template name="textarea-diagram-element-css">
-    <adl:css>@import url('/public/templates/textarea/textarea-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/textarea/textarea-elements.css');</adl:css>
   </xsl:template>
   
 

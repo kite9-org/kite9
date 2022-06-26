@@ -7,7 +7,7 @@
   <xsl:template match="adl:planner">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-contains">planner</xsl:with-param>
-      <xsl:with-param name="k9-child">/public/templates/risk-first/planner/palette.adl#cell</xsl:with-param>
+      <xsl:with-param name="k9-child">/github/kite9-org/kite9/templates/risk-first/planner/palette.adl#cell</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
@@ -26,7 +26,7 @@
   </xsl:template>
   
    <xsl:template name="planner-risk-first-diagram-element-css">
-    <adl:css>@import url('/public/templates/risk-first/planner/planner-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/risk-first/planner/planner-elements.css');</adl:css>
   </xsl:template>
   
 </xsl:stylesheet>

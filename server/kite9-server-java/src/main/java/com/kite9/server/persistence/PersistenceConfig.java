@@ -14,7 +14,6 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.persistence.github.GithubSourceAPIFactory;
-import com.kite9.server.persistence.local.StaticSourceAPIFactory;
 import com.kite9.server.sources.PlugableContentAPIFactory;
 import com.kite9.server.sources.SourceAPIFactory;
 
@@ -44,11 +43,11 @@ public class PersistenceConfig {
 	
 	@Autowired
 	ADLFactory factory;
-	
-	@Bean
-	StaticSourceAPIFactory staticSourceAPIFactory() {
-		return new StaticSourceAPIFactory(cache, resolver, fs);
-	}
+//	
+//	@Bean
+//	StaticSourceAPIFactory staticSourceAPIFactory() {
+//		return new StaticSourceAPIFactory(cache, resolver, fs);
+//	}
 	
 	@Bean
 	GithubSourceAPIFactory githubContentAPIFactory() {
@@ -59,6 +58,6 @@ public class PersistenceConfig {
 	@Primary
 	public SourceAPIFactory contentAPIFactory() {
 		return new PlugableContentAPIFactory(
-					Arrays.asList(githubContentAPIFactory(), staticSourceAPIFactory()));
+					Arrays.asList(githubContentAPIFactory()));
 	} 
 }

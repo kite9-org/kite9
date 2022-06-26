@@ -9,11 +9,11 @@
   
   
   <xsl:template match="/" mode="diagram-script">
-     import '/public/templates/uml/uml.js';
+     import '/github/kite9-org/kite9/templates/uml/uml.js';
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">
-    <adl:css>@import url('/public/templates/uml/uml-textures.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/uml/uml-textures.css');</adl:css>
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">

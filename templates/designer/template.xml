@@ -8,7 +8,7 @@
 	<!-- Any text item in designer can have symbols attached to it -->
 	<template id="generic-text" k9-contains="symbol"
 		symbols="pre:#{boolean(adl:symbol)}"
-		k9-child="/public/templates/designer/template.xml#symbol-example"
+		k9-child="/github/kite9-org/kite9/templates/designer/template.xml#symbol-example"
 		k9-ui="delete orphan cascade edit drag" k9-texture="none"
 		k9-palette="designer-text">
 		<back k9-highlight="pulse" />
@@ -19,7 +19,7 @@
 	</template>
 
 	<template id="diagram"
-		k9-label="/public/templates/designer/template.xml#example-key"
+		k9-label="/github/kite9-org/kite9/templates/designer/template.xml#example-key"
 		k9-ui="layout" k9-contains="connected">
 		<back />
 		<svg:g filter="url(#dropshadow)" id="_dropshadow">
@@ -28,7 +28,7 @@
 	</template>
 	
 	<template id="diagram-noshadow"
-    k9-label="/public/templates/designer/template.xml#example-key"
+    k9-label="/github/kite9-org/kite9/templates/designer/template.xml#example-key"
     k9-ui="layout" k9-contains="connected">
     <back />
     <contents optional="true" />
@@ -60,7 +60,7 @@
     k9-ui="drag delete align connect insert autoconnect layout cascade"
     k9-palette="connected" k9-shape="pre:#{local-name()}"
     k9-contains="designer-text"
-    k9-child="/public/templates/designer/template.xml#text-example"
+    k9-child="/github/kite9-org/kite9/templates/designer/template.xml#text-example"
     k9-format="inline-container" k9-texture="solid">
     <back k9-highlight="pulse" />
     <contents optional="true" />

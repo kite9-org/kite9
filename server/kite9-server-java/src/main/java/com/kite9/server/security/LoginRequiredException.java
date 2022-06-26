@@ -1,6 +1,8 @@
-package com.kite9.server.web;
+package com.kite9.server.security;
 
 import java.io.IOException;
+
+import com.kite9.pipeline.uri.K9URI;
 
 /**
  * Throw this if you want the user to log in - will redirect to the login page.
@@ -19,9 +21,21 @@ public class LoginRequiredException extends IOException {
 	
 	} 
 	
-	Type t;
+	private final Type t;
+	private final K9URI redirectUri;
 	
-	public LoginRequiredException(Type t) {
+	public LoginRequiredException(Type t, K9URI u) {
 		this.t = t;
+		this.redirectUri = u;
 	}
+
+	public Type getType() {
+		return t;
+	}
+
+	public K9URI getRedirectUri() {
+		return redirectUri;
+	}
+	
+	
 }

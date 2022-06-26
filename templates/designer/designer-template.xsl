@@ -10,15 +10,15 @@
 
 
   <xsl:template match="/" mode="diagram-css">
-    <adl:css>@import url('/public/templates/designer/designer.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/designer/designer.css');</adl:css>
   </xsl:template>
   
    <xsl:template match="/" mode="diagram-script">
-     import '/public/templates/risk-first/risk-first.js';
+     import '/github/kite9-org/kite9/templates/risk-first/risk-first.js';
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">
-    <adl:palette contains="connected" url="/public/templates/designer/palette.adl"/>
+    <adl:palette contains="connected" url="/github/kite9-org/kite9/templates/designer/palette.adl"/>
   </xsl:template>
  
 </xsl:stylesheet>

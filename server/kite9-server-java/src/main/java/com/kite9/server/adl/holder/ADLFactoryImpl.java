@@ -42,11 +42,13 @@ public class ADLFactoryImpl implements ADLFactory {
 	
 	private final Cache cache;
 	private final XMLHelper xmlHelper;
+	private final String defaultTransform;
 
-	public ADLFactoryImpl(Cache cache, XMLHelper xmlhelper) {
+	public ADLFactoryImpl(Cache cache, XMLHelper xmlhelper, String defaultTransform) {
 		super();
 		this.cache = cache;
 		this.xmlHelper = xmlhelper;
+		this.defaultTransform = defaultTransform;
 	}
 
 	@NotNull
@@ -118,6 +120,7 @@ public class ADLFactoryImpl implements ADLFactory {
 
 	private Kite9Transcoder createNewTranscoder(K9URI u) {
 		Kite9Transcoder out = new Kite9TranscoderImpl(cache, xmlHelper);
+		out.addTranscodingHint(Kite9SVGTranscoder.KEY_DEFAULT_TEMPLATE, defaultTransform);
 		if (u != null) {
 			RequestParameters.configure(URIWrapper.from(u), out);
 		}

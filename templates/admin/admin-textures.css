@@ -1,6 +1,6 @@
-@import url('/public/templates/basic/basic-textures.css');
-@import url('/public/templates/highlight/highlight.css');
-@import url('/public/fonts/Kanit/Kanit.css');
+@import url('/github/kite9-org/kite9/templates/basic/basic-textures.css');
+@import url('/github/kite9-org/kite9/templates/highlight/highlight.css');
+@import url('/github/kite9-org/kite9/fonts/Kanit/Kanit.css');
 
 * {
 	font-family: Kanit;

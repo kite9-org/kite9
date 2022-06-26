@@ -3,7 +3,7 @@
 	  xmlns="http://www.kite9.org/schema/adl"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	  xmlns:svg="http://www.w3.org/2000/svg"
-	  xslt:template="/public/templates/admin/admin-template.xsl"
+	  xslt:template="/github/kite9-org/kite9/templates/admin/admin-template.xsl"
     xmlns:xslt="http://www.kite9.org/schema/xslt" 
 	  style="--kite9-layout: down; ">
 
@@ -31,18 +31,18 @@
 
 		<container id="https://github.com/--kite9-org/docs/wiki"
 			class="panel invis" k9-ui="open">
-			<icon>/public/templates/admin/books.svg</icon>
+			<icon>/github/kite9-org/kite9/templates/admin/books.svg</icon>
 			<title>Documentation</title>
 		</container>
 
 		<container id="/github" class="panel invis" k9-ui="open">
-			<icon>/public/templates/admin/icons/github.png</icon>
+			<icon>/github/kite9-org/kite9/templates/admin/icons/github.png</icon>
 			<title>GitHub Login</title>
 		</container>
 
 		<container id="/github/--kite9-org/examples"
 			class="panel invis" k9-ui="open">
-			<icon>/public/templates/admin/leaf.svg</icon>
+			<icon>/github/kite9-org/kite9/templates/admin/leaf.svg</icon>
 			<title>Examples</title>
 		</container>
 

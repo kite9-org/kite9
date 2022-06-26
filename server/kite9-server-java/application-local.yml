@@ -21,8 +21,6 @@ spring:
 kite9:
   diagram-log: OFF
   caching: false
-  transformer:
-    factory: net.sf.saxon.TransformerFactoryImpl
 
   
 management:

@@ -27,6 +27,9 @@ public class ADLConfig implements Logable {
 	
 	@Value("${kite9.transformer.factory:}")
 	private String defaultXSLFactory;
+	
+	@Value("${kite9.transformer.defaultTemplate}")
+	private String defaultTemplate;
 
     @Bean
     public Cache cache() {
@@ -35,7 +38,7 @@ public class ADLConfig implements Logable {
 
     @Bean
     public ADLFactory adlFactory(Cache c) {
-        return new ADLFactoryImpl(c, xmlHelper());
+        return new ADLFactoryImpl(c, xmlHelper(), defaultTemplate);
     }
 
     @Bean

@@ -1,5 +1,5 @@
-@import url('/public/templates/basic/basic-textures.css');
-@import url('/public/templates/votes/votes-textures.css');
+@import url('/github/kite9-org/kite9/templates/basic/basic-textures.css');
+@import url('/github/kite9-org/kite9/templates/votes/votes-textures.css');
 
 [k9-elem=diagram][k9-texture=none] {
 	fill: white;

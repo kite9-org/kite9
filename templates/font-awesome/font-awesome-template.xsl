@@ -7,16 +7,16 @@
   <xsl:import href="font-awesome-components.xsl" />
 
   <xsl:template match="/" mode="diagram-texture-css">
-    <adl:css>@import url('/public/templates/font-awesome/font-awesome.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/font-awesome/font-awesome.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:call-template name="adl-diagram-element-css" />
-    <adl:css>@import url('/public/templates/basic/basic-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/basic/basic-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">
-    import '/public/templates/basic/basic.js';
+    import '/github/kite9-org/kite9/templates/basic/basic.js';
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-constants">

@@ -59,11 +59,11 @@
   </xsl:template>
    
   <xsl:template name="containers-diagram-element-css">
-    <adl:css>@import url('/public/templates/containers/containers-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/containers/containers-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template name="containers-diagram-palettes">
-     <adl:palette contains="connected" url="/public/templates/containers/palette.adl" />
+     <adl:palette contains="connected" url="/github/kite9-org/kite9/templates/containers/palette.adl" />
   </xsl:template>
   
    <xsl:template name="containers-diagram-defs">

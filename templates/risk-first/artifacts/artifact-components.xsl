@@ -29,14 +29,14 @@
       <xsl:with-param name="k9-texture">artifact</xsl:with-param>
       <xsl:with-param name="href">
       	<xsl:choose>
-          <xsl:when test="name() = 'agent-artifact'">/public/templates/risk-first/redesign/risks/agency_risk_v2.svg</xsl:when>
-          <xsl:when test="name() = 'document'">/public/templates/risk-first/redesign/artifacts/document_v2.svg</xsl:when>
-          <xsl:when test="name() = 'users'">/public/templates/risk-first/redesign/artifacts/users_v2.svg</xsl:when>
-          <xsl:when test="name() = 'interface'">/public/templates/risk-first/redesign/artifacts/interface_v2.svg</xsl:when>
-          <xsl:when test="name() = 'protocol-artifact'">/public/templates/risk-first/redesign/risks/protocol_risk_v2.svg</xsl:when>
-          <xsl:when test="name() = 'internal-model-artifact'">/public/templates/risk-first/redesign/risks/internal_model_risk.svg</xsl:when>
-          <xsl:when test="name() = 'channel-artifact'">/public/templates/risk-first/redesign/risks/channel_risk_v2.svg</xsl:when>
-          <xsl:when test="name() = 'component'">/public/templates/risk-first/redesign/artifacts/component_v2.svg</xsl:when>
+          <xsl:when test="name() = 'agent-artifact'">/github/kite9-org/kite9/templates/risk-first/redesign/risks/agency_risk_v2.svg</xsl:when>
+          <xsl:when test="name() = 'document'">/github/kite9-org/kite9/templates/risk-first/redesign/artifacts/document_v2.svg</xsl:when>
+          <xsl:when test="name() = 'users'">/github/kite9-org/kite9/templates/risk-first/redesign/artifacts/users_v2.svg</xsl:when>
+          <xsl:when test="name() = 'interface'">/github/kite9-org/kite9/templates/risk-first/redesign/artifacts/interface_v2.svg</xsl:when>
+          <xsl:when test="name() = 'protocol-artifact'">/github/kite9-org/kite9/templates/risk-first/redesign/risks/protocol_risk_v2.svg</xsl:when>
+          <xsl:when test="name() = 'internal-model-artifact'">/github/kite9-org/kite9/templates/risk-first/redesign/risks/internal_model_risk.svg</xsl:when>
+          <xsl:when test="name() = 'channel-artifact'">/github/kite9-org/kite9/templates/risk-first/redesign/risks/channel_risk_v2.svg</xsl:when>
+          <xsl:when test="name() = 'component'">/github/kite9-org/kite9/templates/risk-first/redesign/artifacts/component_v2.svg</xsl:when>
           <xsl:otherwise><xsl:value-of select="@imgsrc"></xsl:value-of></xsl:otherwise>
         </xsl:choose>
       </xsl:with-param> 
@@ -52,7 +52,7 @@
   </xsl:template>  
   
   <xsl:template name="artifacts-risk-first-diagram-element-css">
-    <adl:css>@import url('/public/templates/risk-first/artifacts/artifact-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/risk-first/artifacts/artifact-elements.css');</adl:css>
   </xsl:template>
   
 </xsl:stylesheet>

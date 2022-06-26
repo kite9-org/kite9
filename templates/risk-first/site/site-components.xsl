@@ -116,10 +116,10 @@
   <xsl:template match="adl:diagram[contains(@class,'bg')]">
   	<xsl:param name="imageurl">
   		<xsl:choose>
-  			<xsl:when test="@class = 'bg1'">/public/templates/risk-first/backgrounds/vecteezy-5.jpg</xsl:when>
-  			<xsl:when test="@class = 'bg2'">/public/templates/risk-first/backgrounds/vecteezy-1.jpg</xsl:when>
-  			<xsl:when test="@class = 'bg3'">/public/templates/risk-first/backgrounds/vecteezy-3.jpg</xsl:when>
-  			<xsl:otherwise>/public/templates/risk-first/backgrounds/vecteezy-2.jpg</xsl:otherwise>
+  			<xsl:when test="@class = 'bg1'">/github/kite9-org/kite9/templates/risk-first/backgrounds/vecteezy-5.jpg</xsl:when>
+  			<xsl:when test="@class = 'bg2'">/github/kite9-org/kite9/templates/risk-first/backgrounds/vecteezy-1.jpg</xsl:when>
+  			<xsl:when test="@class = 'bg3'">/github/kite9-org/kite9/templates/risk-first/backgrounds/vecteezy-3.jpg</xsl:when>
+  			<xsl:otherwise>/github/kite9-org/kite9/templates/risk-first/backgrounds/vecteezy-2.jpg</xsl:otherwise>
   		</xsl:choose>
   	</xsl:param>
   	
@@ -139,7 +139,7 @@
   </xsl:template>
   
   <xsl:template name="site-risk-first-diagram-element-css">
-    <adl:css>@import url('/public/templates/risk-first/site/site-elements.css');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/risk-first/site/site-elements.css');</adl:css>
   </xsl:template>
   
   <xsl:template match="adl:risk-first-logo">
