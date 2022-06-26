@@ -36,3 +36,7 @@ plan.txt
 positions.png
 ssp.info
 *.log
+
+# Secrets
+application.yml
+application-local.yml
