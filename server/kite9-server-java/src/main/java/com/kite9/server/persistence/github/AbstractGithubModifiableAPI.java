@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHPermissionType;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTree;
@@ -15,28 +14,22 @@ import org.kohsuke.github.GitHub;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
-import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.ModifiableAPI;
 
-public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFileAPI implements ModifiableAPI {
-	
-	private boolean isNew;
-	protected final K9URI sourceURI;
-	
-	public AbstractGithubModifiableFileAPI(K9URI u, GHContent content, OAuth2AuthorizedClientRepository clientRepository, K9MediaType mt, boolean isNew)  {
-		super(u.getPath(), getRef(u), content, clientRepository, mt);
-		this.isNew = isNew;
-		this.sourceURI = unmodifiedURI(u);
-	}
+/**
+ * Augments the source api with methods to allow updating.
+ * 
+ * @author rob@kite9.com
+ *
+ */
+public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAPI implements ModifiableAPI {
+		
+	protected boolean isNew;
 
-	/**
-	 * This simplifies the URI to remove any query parameters
-	 */
-	private K9URI unmodifiedURI(K9URI u) {
-		K9URI out = u.withoutQueryParameters();
-		return out;
+	public AbstractGithubModifiableAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository)  {
+		super(u, clientRepository);
 	}
 
 	protected void commitRevision(String message, String branch, Consumer<GHTreeBuilder> fn, Authentication by) {
@@ -51,7 +44,7 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 			GHTree newTree = treeBuilder.create();
 			
 			GHCommit c = repo.createCommit()
-					.committer(AbstractGithubModifiableFileAPI.getUserLogin(by), AbstractGithubModifiableFileAPI.getEmail(by), new Date())
+					.committer(AbstractGithubModifiableAPI.getUserLogin(by), AbstractGithubModifiableAPI.getEmail(by), new Date())
 					.message(message)
 					.parent(branchSha)
 					.tree(newTree.getSha())
@@ -70,8 +63,8 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 	}
 	
 	@Override
-	public Type getType(Authentication a) {
-		return getAuthenticatedRole(a) == Role.EDITOR ? (isNew ? Type.CREATABLE : Type.MODIFIABLE) : Type.VIEWONLY;
+	public ModificationType getModificationType(Authentication a) {
+		return getAuthenticatedRole(a) == Role.EDITOR ? (isNew ? ModificationType.CREATABLE : ModificationType.MODIFIABLE) : ModificationType.VIEWONLY;
 	}
 
 	@Override
@@ -83,7 +76,7 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 				GHPermissionType pt = repo.getPermission(api.getMyself());
 				return translateRole(pt);
 			} catch (Throwable e) {
-				logger.error("Couldn't determine user's role", e);
+				LOG.error("Couldn't determine user's role", e);
 			}
 		}
 
@@ -103,11 +96,6 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 		}
 	}
 
-	@Override
-	public K9URI getSourceLocation() {
-		return sourceURI;
-	}
-
 	public static String createTitle(K9URI u) {
 		String fileNamePart = u.getPath().contains("/") ? 
 			u.getPath().substring(u.getPath().lastIndexOf("/")+1) :
@@ -121,5 +109,4 @@ public abstract class AbstractGithubModifiableFileAPI extends AbstractGithubFile
 		return withoutExtension;
 	}
 
-	
 }

@@ -14,6 +14,12 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
+/**
+ * This class allows diagrams to be edited client-side, even though they are static on disk.
+ * 
+ * @author rob@kite9.com
+ *
+ */
 public class TransientDiagramAPI implements ModifiableDiagramAPI {
 
 	private final K9MediaType underlying;
@@ -34,8 +40,8 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	}
 
 	@Override
-	public Type getType(Authentication a) {
-		return Type.MODIFIABLE;
+	public ModificationType getModificationType(Authentication a) {
+		return ModificationType.MODIFIABLE;
 	}
 
 	@Override

@@ -3,17 +3,18 @@ package com.kite9.server.sources;
 import org.springframework.security.core.Authentication;
 
 import com.kite9.pipeline.adl.holder.meta.Role;
-import com.kite9.pipeline.uri.K9URI;
 
 /**
  * This is an API that controls peristence to some kind of backing storage.
  * 
+ * Generally this is diagrams, but we also use it for file upload (creatable)
+ * 
  * @author robmoffat
  *
  */
-public interface ModifiableAPI extends FileAPI {
+public interface ModifiableAPI extends SourceAPI {
 
-	public enum Type { 
+	public enum ModificationType { 
 		/** Doesn't exist yet, but the user has the rights to create it */
 		CREATABLE,		
 	
@@ -27,10 +28,7 @@ public interface ModifiableAPI extends FileAPI {
 	
 	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes);
 	
-	/**
-	 * Means that this diagram already has >0 versions.
-	 */
-	public Type getType(Authentication a);
+	public ModificationType getModificationType(Authentication a);
 
 	/**
 	 * Returns role for user, or NONE if the user isn't authenticated
@@ -41,12 +39,5 @@ public interface ModifiableAPI extends FileAPI {
 	 * Returns a userid for the underlying api.
 	 */
 	public String getUserId(Authentication a);
-	
-	/**
-	 * Underlying system URI that is being modified.
-	 */
-	public K9URI getSourceLocation();
-
-	
 	
 }

@@ -1,7 +1,5 @@
 package com.kite9.server.persistence.github;
 
-
-import org.kohsuke.github.GHContent;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
@@ -16,28 +14,35 @@ import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.topic.WebSocketConfig;
 
-public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileAPI implements ModifiableDiagramAPI {
-	
+public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubModifiableAPI
+		implements ModifiableDiagramAPI {
+
 	private final DiagramFileFormat dff;
-	
-	public GithubDiagramFileAPI(K9URI u, GHContent content, OAuth2AuthorizedClientRepository clientRepository, DiagramFileFormat dff, K9MediaType mt, boolean isNew) {
-		super(u, content, clientRepository, mt, isNew);
+	protected K9MediaType mediaType;
+
+	public AbstractGithubModifiableDiagramAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository,
+			DiagramFileFormat dff, K9MediaType mt) {
+		super(u, clientRepository);
 		this.dff = dff;
+		this.mediaType = mt;
+	}
+
+	@Override
+	public K9MediaType getMediaType() {
+		return mediaType;
 	}
 
 	@Override
 	public ADLBase getCurrentRevisionContent(Authentication authentication, HttpHeaders headers) throws Exception {
- 		ADLBase base = dff.handleRead(content.read(), sourceURI, headers);
+		ADLBase base = dff.handleRead(getCurrentRevisionContentStream(authentication), getKite9ResourceURI(), headers);
 		return base;
 	}
 
-
 	@Override
 	public void commitRevision(String message, Authentication by, ADLDom dom) {
-		ADLOutput out = dom.process(sourceURI, dff);
+		ADLOutput out = dom.process(getKite9ResourceURI(), dff);
 		commitRevision(message, ref, tb -> tb.add(filepath, out.getAsBytes(), false), by);
 	}
-	
 
 	@Override
 	public void addMeta(MetaReadWrite adl) {
@@ -48,21 +53,19 @@ public abstract class GithubDiagramFileAPI extends AbstractGithubModifiableFileA
 		adl.setCloseUri(close);
 
 		String socketScheme = u.getScheme().equals("http") ? "ws" : "wss";
-		K9URI topic = u.changeScheme(socketScheme, WebSocketConfig.TOPIC_PREFIX+uPath);
+		K9URI topic = u.changeScheme(socketScheme, WebSocketConfig.TOPIC_PREFIX + uPath);
 		adl.setTopicUri(topic);
 
 		String[] parts = uPath.split("/");
-		
-		if (parts.length >=3) {
 
-		adl.setUploadsPath("/"+GithubContentController.GITHUB
-				+"/"+parts[2]	// org
-				+"/"+parts[3]	// repo
-				+GithubContentController.DEFAULT_GITHUB_UPLOADS);
+		if (parts.length >= 3) {
+
+			adl.setUploadsPath("/" + GithubContentController.GITHUB + "/" + parts[2] // org
+					+ "/" + parts[3] // repo
+					+ GithubContentController.DEFAULT_GITHUB_UPLOADS);
 
 		}
-		
-		adl.setTitle(AbstractGithubModifiableFileAPI.createTitle(u));
-	}
 
+		adl.setTitle(AbstractGithubModifiableAPI.createTitle(u));
+	}
 }

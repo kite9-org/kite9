@@ -1,12 +1,17 @@
 package com.kite9.server.security;
 
+import java.io.IOException;
 import java.util.Arrays;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -24,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
+	//	http.csrf().disable();
 		http.headers().frameOptions().disable();
 		
 		http.authorizeRequests()
@@ -50,7 +55,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			return false;
 		}).authenticated()
 		.and()
-		.oauth2Login();
+		.oauth2Login()
+		.successHandler(new AuthenticationSuccessHandler() {
+			
+			@Override
+			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+					Authentication authentication) throws IOException, ServletException {
+				// TODO Auto-generated method stub
+				
+
+			}
+		});
 		
 		http.cors().configurationSource(new CorsConfigurationSource() {
 			

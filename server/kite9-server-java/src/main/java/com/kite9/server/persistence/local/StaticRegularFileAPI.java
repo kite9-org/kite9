@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.ModifiableAPI;
 
 public class StaticRegularFileAPI implements ModifiableAPI {
@@ -32,8 +33,8 @@ public class StaticRegularFileAPI implements ModifiableAPI {
 	}
 
 	@Override
-	public Type getType(Authentication a) {
-		return Type.MODIFIABLE;
+	public ModificationType getModificationType(Authentication a) {
+		return ModificationType.MODIFIABLE;
 	}
 	
 	@Override
@@ -47,12 +48,24 @@ public class StaticRegularFileAPI implements ModifiableAPI {
 	}
 
 	@Override
-	public K9URI getSourceLocation() {
+	public K9URI getKite9ResourceURI() {
 		return sourceUri;
 	}
 
 	@Override
 	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
+	}
+
+	@Override
+	public RestEntity getEntityRepresentation(Authentication a) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SourceType getSourceType(Authentication a) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

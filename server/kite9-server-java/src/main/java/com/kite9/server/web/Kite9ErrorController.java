@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.HtmlUtils;
+import org.springframework.web.util.NestedServletException;
 import org.xml.sax.SAXParseException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,14 +58,16 @@ public class Kite9ErrorController implements ErrorController {
 	}
 	
 	private ResponseEntity<String> checkLoginRequired(HttpServletRequest request) {
-
-		Exception exception = getException(request);
+		Throwable exception = getException(request);
+		while (exception instanceof NestedServletException) {
+			exception = ((NestedServletException)exception).getCause();
+		}
 		if (exception instanceof LoginRequiredException) {
 			LoginRequiredException lre = (LoginRequiredException) exception;
 			Type t = lre.getType();
 			K9URI redirect = lre.getRedirectUri(); 
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Location", t.path);    
+			headers.add("Location", t.path+"?state=bllabh");    
 			return new ResponseEntity<String>(headers,HttpStatus.FOUND);	
 			
 		}

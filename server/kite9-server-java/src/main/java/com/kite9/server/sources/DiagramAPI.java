@@ -12,7 +12,7 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
  * @author robmoffat
  *
  */
-public interface DiagramFileAPI extends FileAPI {
+public interface DiagramAPI extends SourceAPI {
 
 	/**
 	 * Returns the contents of the file as a renderable pipeline.

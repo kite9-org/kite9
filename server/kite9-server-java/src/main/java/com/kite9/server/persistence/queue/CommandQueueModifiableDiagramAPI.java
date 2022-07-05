@@ -14,6 +14,7 @@ import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.persistence.cache.AbstractCachingModifiableDiagramAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
@@ -76,7 +77,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 				return bs;
 			}
 			
-			return factory.adl(getSourceLocation(), localCache, headers);
+			return factory.adl(getKite9ResourceURI(), localCache, headers);
 		} else {
 			// try to access without authentication
 			return backingStore.getCurrentRevisionContent(a, headers);
@@ -104,13 +105,13 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 
 	@Override
-	public Type getType(Authentication a) {
-		return backingStore.getType(a);
+	public ModificationType getModificationType(Authentication a) {
+		return backingStore.getModificationType(a);
 	}
 
 	@Override
-	public K9URI getSourceLocation() {
-		return backingStore.getSourceLocation();
+	public K9URI getKite9ResourceURI() {
+		return backingStore.getKite9ResourceURI();
 	}
 
 	@Override
@@ -118,6 +119,16 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 		// potentially, the user could be getting back some stale content here, if the
 		// edits are still being persisted.  
 		return backingStore.getCurrentRevisionContentStream(authentication);
+	}
+
+	@Override
+	public RestEntity getEntityRepresentation(Authentication a) throws Exception {
+		return backingStore.getEntityRepresentation(a);
+	}
+
+	@Override
+	public SourceType getSourceType(Authentication a) throws Exception {
+		return backingStore.getSourceType(a);
 	}
 
 	

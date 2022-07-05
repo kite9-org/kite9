@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.kite9.diagram.dom.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.persistence.github.GithubSourceAPIFactory;
+import com.kite9.server.persistence.local.StaticSourceAPIFactory;
 import com.kite9.server.sources.PlugableContentAPIFactory;
 import com.kite9.server.sources.SourceAPIFactory;
 
@@ -43,21 +45,24 @@ public class PersistenceConfig {
 	
 	@Autowired
 	ADLFactory factory;
-//	
-//	@Bean
-//	StaticSourceAPIFactory staticSourceAPIFactory() {
-//		return new StaticSourceAPIFactory(cache, resolver, fs);
-//	}
+	
+	@Value("${kite9.github.default-api-key:}")
+	String githubApiKey;
+	
+	@Bean
+	StaticSourceAPIFactory staticSourceAPIFactory() {
+		return new StaticSourceAPIFactory(cache, resolver, fs);
+	}
 	
 	@Bean
 	GithubSourceAPIFactory githubContentAPIFactory() {
-		return new GithubSourceAPIFactory(ctx, factory, clientRepository, fs);
+		return new GithubSourceAPIFactory(ctx, factory, clientRepository, fs, githubApiKey);
 	}
 
 	@Bean
 	@Primary
 	public SourceAPIFactory contentAPIFactory() {
 		return new PlugableContentAPIFactory(
-					Arrays.asList(githubContentAPIFactory()));
+					Arrays.asList(githubContentAPIFactory(), staticSourceAPIFactory()));
 	} 
 }

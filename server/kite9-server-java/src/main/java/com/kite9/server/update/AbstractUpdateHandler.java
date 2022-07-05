@@ -86,7 +86,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 				LOG.debug("Modified ADL: "+new XMLHelper().toXML(dom.getDocument(), true));
 			}
 
-			if (api.getType(authentication) != ModifiableAPI.Type.VIEWONLY) {
+			if (api.getModificationType(authentication) != ModifiableAPI.ModificationType.VIEWONLY) {
 				api.commitRevision("Changed "+update.getUri()+" in Kite9 Editor", authentication, dom);
 			}
 			

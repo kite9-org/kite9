@@ -31,12 +31,11 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.domain.RestEntity;
-import com.kite9.server.sources.DiagramFileAPI;
-import com.kite9.server.sources.DirectoryAPI;
-import com.kite9.server.sources.FileAPI;
+import com.kite9.server.sources.DiagramAPI;
 import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.sources.SourceAPI;
+import com.kite9.server.sources.SourceAPI.SourceType;
 import com.kite9.server.sources.SourceAPIFactory;
 import com.kite9.server.update.AbstractUpdateHandler;
 import com.kite9.server.update.Update;
@@ -83,16 +82,16 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 			List<K9MediaType> putMediaType,
 			Authentication authentication) throws Exception {
 		
-		if (s instanceof DirectoryAPI) {
+		if (s.getSourceType(authentication) == SourceType.DIRECTORY) {
 			return outputDirectory(s, rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication);
 		} 
 
-		if ((s instanceof ModifiableDiagramAPI) && (((ModifiableAPI) s).getType(authentication) == ModifiableAPI.Type.CREATABLE)) {
+		if ((s instanceof ModifiableDiagramAPI) && (((ModifiableAPI) s).getModificationType(authentication) == ModifiableAPI.ModificationType.CREATABLE)) {
 			return handleCreatableContent(req, authentication, rewrittenURI, (ModifiableDiagramAPI) s, putMediaType, headers);
 		}
 	
-		if (s instanceof DiagramFileAPI) {
-			DiagramFileAPI api = (DiagramFileAPI) s;
+		if (s instanceof DiagramAPI) {
+			DiagramAPI api = (DiagramAPI) s;
 			if (putMediaType.contains(api.getMediaType())) {
 				return unconvertedOutput(rewrittenURI, headers, authentication, api);
 			} else {
@@ -100,8 +99,8 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 			}
 		}
 		
-		if (s instanceof FileAPI) {
-			return unconvertedOutput(rewrittenURI, headers, authentication, (FileAPI) s);
+		if (s instanceof SourceAPI) {
+			return unconvertedOutput(rewrittenURI, headers, authentication, (SourceAPI) s);
 		}
 		
 		throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -117,12 +116,12 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 
 	protected ResponseEntity<?> outputDirectory(SourceAPI s, K9URI rewrittenURI, HttpHeaders headers,
 												K9MediaType putMediaType, Authentication authentication) throws Exception {
-		RestEntity re = ((DirectoryAPI) s).getEntityRepresentation(authentication);
+		RestEntity re = s.getEntityRepresentation(authentication);
 		return new ResponseEntity<RestEntity>(re, createResponseHeaders(rewrittenURI, headers, putMediaType, true), HttpStatus.OK);
 	}
 
 	protected ResponseEntity<ADLDom> convertDiagram(K9URI rewrittenURI, HttpHeaders headers, K9MediaType putMediaType,
-													Authentication authentication, DiagramFileAPI api) throws Exception {
+													Authentication authentication, DiagramAPI api) throws Exception {
 			// we always load and process the diagram here, adding dynamic metadata as we go.
 		try {
 			Format inFormat = fs.getFormatFor(api.getMediaType());
@@ -140,7 +139,7 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 	}
 
 	protected ResponseEntity<?> unconvertedOutput(K9URI rewrittenURI, HttpHeaders headers, Authentication authentication,
-												  FileAPI api) throws Exception {
+												  SourceAPI api) throws Exception {
 		InputStreamResource ris = new InputStreamResource(api.getCurrentRevisionContentStream(authentication));
 		return new ResponseEntity<InputStreamResource>(ris, createResponseHeaders(rewrittenURI, headers, api.getMediaType(), false), HttpStatus.OK);
 	}

@@ -343,7 +343,7 @@ public abstract class AbstractGithubEntityConverter {
 	
 	public User getHomePage(Authentication authentication) throws Exception {
 		GitHub github = getGithubApi(authentication);
-		String name = GithubDiagramFileAPI.getUserLogin(authentication);
+		String name = AbstractGithubModifiableDiagramAPI.getUserLogin(authentication);
 		LinkBuilder lb = linkToRemappedURI();
 		GHUser user = github.getUser(name);
 		List<Repository> repoList = templateChildRepos(lb.slash("github").slash(name), user);
