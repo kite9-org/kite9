@@ -7,6 +7,7 @@ import static com.kite9.server.persistence.PathUtils.getPathSegment;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +24,7 @@ import org.springframework.security.oauth2.client.authentication.OAuth2Authentic
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
 import org.springframework.web.reactive.function.client.WebClientResponseException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -163,21 +165,33 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 				// first, check to see if there is a raw entry
 				String ref = this.ref == null ? HEAD_REF : this.ref;
 				String url = RAW_GITHUB + owner + "/" + reponame + "/" + ref + "/" + filepath;
+				String token = null;
 				if (auth instanceof OAuth2AuthenticationToken) {
 					// do something
-					String token = getAccessToken(auth, clientRepository);
+					token = getAccessToken(auth, clientRepository);
 					url = url + "?token="+token;
 				}
 				
 				WebClient webClient = WebClient.create(url);
-				contents = webClient.get()
+						
+				RequestHeadersSpec<?> spec = webClient.get()
 					.header("Accept-Encoding", "identity")
-					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE)
-					.retrieve()
-					.bodyToMono(DataBuffer.class)
-					.block()
-					.asByteBuffer()
-					.array();
+					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE);
+				
+				if (auth != null) {
+					spec = spec.header("Authorization", "bearer "+token);
+				}
+				
+				ByteBuffer bb = spec
+						.retrieve()
+						.bodyToMono(DataBuffer.class)
+						.block()
+						.asByteBuffer();
+				
+				if (bb != null) {
+					contents = new byte[bb.remaining()];
+					bb.get((byte[]) contents);
+				}
 			} catch (NotFound notFound) {
 				if (auth == null) {
 					// ask for a login

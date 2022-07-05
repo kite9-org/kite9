@@ -56,16 +56,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		}).authenticated()
 		.and()
 		.oauth2Login()
-		.successHandler(new AuthenticationSuccessHandler() {
-			
-			@Override
-			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-					Authentication authentication) throws IOException, ServletException {
-				// TODO Auto-generated method stub
-				
-
-			}
-		});
+//		.successHandler(new AuthenticationSuccessHandler() {
+//			
+//			@Override
+//			public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+//					Authentication authentication) throws IOException, ServletException {
+//				// TODO Auto-generated method stub
+//				
+//
+//			}
+//		})
+		;
 		
 		http.cors().configurationSource(new CorsConfigurationSource() {
 			

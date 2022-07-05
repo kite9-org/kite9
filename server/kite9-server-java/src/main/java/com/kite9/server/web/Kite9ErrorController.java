@@ -74,8 +74,7 @@ public class Kite9ErrorController implements ErrorController {
 		
 		return null;
 	}
-
-
+		
 	private Exception getException(HttpServletRequest request) {
 		return (Exception) request.getAttribute("javax.servlet.error.exception");
 	}

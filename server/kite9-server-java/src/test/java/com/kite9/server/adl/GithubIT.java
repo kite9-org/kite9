@@ -32,7 +32,7 @@ public class GithubIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleJS() throws Exception {
-		byte[] js = loadStatic(JS+"?format=js");
+		byte[] js = loadStatic(JS+"?format=js&v=master");
 		persistInAFile(js, "testExampleJs", "actionable.js");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/github/testExampleJs/actionable.js"), Charset.forName("UTF-8"));
 		assertEquals(expected, new String(js));
@@ -40,9 +40,9 @@ public class GithubIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleADL() throws Exception {
-		byte[] adl = loadStatic(MINIMAL + "?format=adl&v=testing");
-		persistInAFile(adl, "testExampleADl", "diagram.adl");
-		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/github/testExampleADL/diagram.html"), Charset.forName("UTF-8"));
+		byte[] adl = loadStatic(MINIMAL + "?format=adl&v=master");
+		persistInAFile(adl, "testExampleADL", "diagram.adl");
+		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/github/testExampleADL/diagram.adl"), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(expected, new String(adl));
 	}
 	
