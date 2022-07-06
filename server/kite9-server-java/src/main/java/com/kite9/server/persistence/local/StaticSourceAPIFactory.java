@@ -100,7 +100,7 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 							byte[] bytes = StreamUtils.copyToByteArray(r.getInputStream());
 							return createAPIFromBytes(sourceUri, update.getHeaders(), bytes, underlying);	
 						} else {
-							return new StaticDirectoryAPI(uStr, ec);
+							return new StaticDirectoryAPI(sourceUri, uStr, ec);
 						}
 					} else {
 						return null;	
@@ -125,7 +125,7 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 			LOG.debug("Couldn't find kite9 diagram in: "+uri);
 		} 
 		
-		return new StaticRegularFileAPI(mt, bytes, uri);
+		return new StaticSourceAPI(mt, bytes, uri);
 		
 	}
 	

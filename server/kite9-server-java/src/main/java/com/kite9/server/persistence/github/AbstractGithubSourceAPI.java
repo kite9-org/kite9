@@ -6,8 +6,8 @@ import static com.kite9.server.persistence.PathUtils.REPONAME;
 import static com.kite9.server.persistence.PathUtils.getPathSegment;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +15,7 @@ import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -25,6 +25,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
 import org.springframework.web.reactive.function.client.WebClientResponseException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -34,6 +35,8 @@ import com.kite9.server.security.LoginRequiredException;
 import com.kite9.server.security.LoginRequiredException.Type;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.web.URIRewriter;
+
+import reactor.core.publisher.Mono;
 
 /**
  * Represents files or directories loaded from Github.
@@ -138,15 +141,23 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	}
 
 	private void testDirectory(Authentication auth) throws Exception {
-		if (contents == null) {
+		if ((contents == null) && (auth != null)) {
 			GitHub api = getGitHubAPI(auth);
-			contents = api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
+			try {
+				contents = api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
+			} catch (IOException e) {
+				LOG.debug("Not a directory");
+			}
 		}
 	}
 
 	private void testMissing(Authentication auth) {
 		if (contents == null) {
-			contents = NO_FILE;
+			if (auth == null) {
+				throw new LoginRequiredException(Type.GITHUB, getKite9ResourceURI());
+			} else {
+				contents = NO_FILE;
+			}
 		}
 	}
 
@@ -165,12 +176,6 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 				// first, check to see if there is a raw entry
 				String ref = this.ref == null ? HEAD_REF : this.ref;
 				String url = RAW_GITHUB + owner + "/" + reponame + "/" + ref + "/" + filepath;
-				String token = null;
-				if (auth instanceof OAuth2AuthenticationToken) {
-					// do something
-					token = getAccessToken(auth, clientRepository);
-					url = url + "?token="+token;
-				}
 				
 				WebClient webClient = WebClient.create(url);
 						
@@ -178,32 +183,30 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 					.header("Accept-Encoding", "identity")
 					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE);
 				
-				if (auth != null) {
-					spec = spec.header("Authorization", "bearer "+token);
+				if (auth instanceof OAuth2AuthenticationToken) {
+					String token = getAccessToken(auth, clientRepository);
+					spec = spec.header("Authorization", "token "+token);
 				}
+						
+				ResponseSpec retrieve = spec.retrieve();
+				Mono<ByteArrayResource> mono = retrieve.bodyToMono(ByteArrayResource.class);
+				ByteArrayResource db = mono.block();
 				
-				ByteBuffer bb = spec
-						.retrieve()
-						.bodyToMono(DataBuffer.class)
-						.block()
-						.asByteBuffer();
-				
-				if (bb != null) {
-					contents = new byte[bb.remaining()];
-					bb.get((byte[]) contents);
+				if (db != null) {
+					contents =  db.getByteArray();
 				}
-			} catch (NotFound notFound) {
+			} catch (NotFound e) {
 				if (auth == null) {
-					// ask for a login
-					throw new LoginRequiredException(Type.GITHUB, getKite9ResourceURI());
+					return;
 				} else {
-					throw notFound;
+					throw e;
 				}
+			} catch (Exception e) {
+				LOG.debug("Not file: "+e.getMessage());
 			}
 		}
 	}
 	
-
 	@Override
 	public SourceType getSourceType(Authentication auth) throws Exception {
 		initContents(auth);

@@ -11,13 +11,19 @@ import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.ModifiableAPI;
 
-public class StaticRegularFileAPI implements ModifiableAPI {
+/**
+ * This is used for returning static files from the kite9 server.
+ * 
+ * @author rob@kite9.com
+ *
+ */
+public class StaticSourceAPI implements ModifiableAPI {
 	
 	private final K9MediaType underlying;
 	private byte[] bytes;
 	private K9URI sourceUri;
 
-	public StaticRegularFileAPI(K9MediaType underlying, byte[] bytes, K9URI sourceUri) {
+	public StaticSourceAPI(K9MediaType underlying, byte[] bytes, K9URI sourceUri) {
 		this.underlying = underlying;
 		this.bytes = bytes;
 		this.sourceUri = sourceUri;
@@ -54,18 +60,17 @@ public class StaticRegularFileAPI implements ModifiableAPI {
 
 	@Override
 	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
+		throw new UnsupportedOperationException("Can't change static files");
 	}
 
 	@Override
 	public RestEntity getEntityRepresentation(Authentication a) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Only works for directories");
 	}
 
 	@Override
 	public SourceType getSourceType(Authentication a) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return SourceType.FILE;
 	}
 
 	

@@ -12,6 +12,7 @@ import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
 /**
@@ -73,11 +74,6 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	}
 
 	@Override
-	public K9URI getSourceLocation() {
-		return dom.getUri();
-	}
-
-	@Override
 	public void commitRevision(String message, Authentication by, ADLDom data) {
 	}
 
@@ -88,6 +84,21 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	@Override
 	public InputStream getCurrentRevisionContentStream(Authentication authentication) throws Exception {
 		return new ByteArrayInputStream(dom.getAsString().getBytes());
+	}
+
+	@Override
+	public RestEntity getEntityRepresentation(Authentication a) throws Exception {
+		throw new UnsupportedOperationException("Only works for directories");
+	}
+
+	@Override
+	public SourceType getSourceType(Authentication a) throws Exception {
+		return SourceType.FILE;
+	}
+
+	@Override
+	public K9URI getKite9ResourceURI() {
+		return dom.getUri();
 	}
 
 }
