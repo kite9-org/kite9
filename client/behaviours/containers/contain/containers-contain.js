@@ -1,6 +1,6 @@
-import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId, getParentElements } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.2'
-import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.2'
+import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId, getParentElements } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
+import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.3'
 
 
 function defaultContainSelector() {

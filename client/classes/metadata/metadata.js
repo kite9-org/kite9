@@ -1,4 +1,4 @@
-import { onlyUnique } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
+import { onlyUnique } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
 
 /**
  * Handles monitoring of document metadata, and callbacks for when it changes.

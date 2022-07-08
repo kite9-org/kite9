@@ -1,7 +1,7 @@
-import { parseInfo, getParentElement, isConnected, isDiagram, isCell, isGrid, getContainerChildren, getNextSiblingId, } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
-import { drawBar, getBefore, clearBar } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.2'
-import { getElementPageBBox, getSVGCoords, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.2'
-import { getOrdinal, getOrdinals  } from '/github/kite9-org/kite9/behaviours/grid/common-grid.js?v=v0.2' 
+import { parseInfo, getParentElement, isConnected, isDiagram, isCell, isGrid, getContainerChildren, getNextSiblingId, } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
+import { drawBar, getBefore, clearBar } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.3'
+import { getElementPageBBox, getSVGCoords, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
+import { getOrdinal, getOrdinals  } from '/github/kite9-org/kite9/behaviours/grid/common-grid.js?v=v0.3' 
 
 function isEmptyGrid(e) {
 	if (isGrid(e)) {

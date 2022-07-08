@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-Regular.ttf?v=v0.2') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-Regular.ttf?v=v0.3') format('truetype');
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-Medium.ttf?v=v0.2') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-Medium.ttf?v=v0.3') format('truetype');
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-SemiBold.ttf?v=v0.2') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-SemiBold.ttf?v=v0.3') format('truetype');
 }
 
 @font-face {
@@ -27,5 +27,5 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-Bold.ttf?v=v0.2') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript-Bold.ttf?v=v0.3') format('truetype');
 }

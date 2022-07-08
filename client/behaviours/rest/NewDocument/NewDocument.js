@@ -1,5 +1,5 @@
 import { hasLastSelected } from "/public/client/bundles/api.js";
-import { form, ok, cancel, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.2'
+import { form, ok, cancel, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.3'
 
 const LOADING = '/public/behaviours/rest/loading.svg';
 

@@ -1,5 +1,5 @@
-import { createSVGResolver } from '/github/kite9-org/kite9/behaviours/updatable/svgResolver.js?v=v0.2'
-import { createAdlToSVGResolver } from '/github/kite9-org/kite9/behaviours/updatable/adlResolver.js?v=v0.2'
+import { createSVGResolver } from '/github/kite9-org/kite9/behaviours/updatable/svgResolver.js?v=v0.3'
+import { createAdlToSVGResolver } from '/github/kite9-org/kite9/behaviours/updatable/adlResolver.js?v=v0.3'
 
 /**
  * Makes sure that the websocket uses ws/wss where needed

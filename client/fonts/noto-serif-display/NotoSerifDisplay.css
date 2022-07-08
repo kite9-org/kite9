@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay-Regular.ttf?v=v0.2') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay-Regular.ttf?v=v0.3') format('truetype');
 }
 
 /* latin */
@@ -12,5 +12,5 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay-SemiBold.ttf?v=v0.2') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay-SemiBold.ttf?v=v0.3') format('truetype');
 }

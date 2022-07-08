@@ -1,5 +1,5 @@
-import { ensureJs, once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
-import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
+import { ensureJs, once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.3'
+import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
 
 
 export function createAdlToSVGResolver(transition, command, metadata) {

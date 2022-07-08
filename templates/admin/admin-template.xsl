@@ -15,7 +15,7 @@
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-script">
-  	 import '/github/kite9-org/kite9/templates/admin/admin.js?v=v0.2'
+  	 import '/github/kite9-org/kite9/templates/admin/admin.js?v=v0.3'
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-element-css">
