@@ -1,5 +1,5 @@
-import { parseInfo, getContainerChildren } from "/public/client/bundles/api.js?v=v0.4";
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
+import { parseInfo, getContainerChildren } from "/public/client/bundles/api.js?v=v0.5";
+import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.5'
 
 function doSort(contents, horiz, c, ignore) {
 	var sorted = contents

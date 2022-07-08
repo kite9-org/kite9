@@ -6,12 +6,12 @@
     </svg:style>
    
     <svg:script type="module">
-      import { ContextMenu } from "./context-menu.js?v=v0.4";
-      import { hasLastSelected } from "/public/client/bundles/api.js?v=v0.4";
-      import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
-      import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.4'
-      import { initActionable } from '/github/kite9-org/kite9/behaviours/actionable/actionable.js?v=v0.4'
-      import { initSelectable } from '/github/kite9-org/kite9/behaviours/selectable/selectable.js?v=v0.4'
+      import { ContextMenu } from "./context-menu.js?v=v0.5";
+      import { hasLastSelected } from "/public/client/bundles/api.js?v=v0.5";
+      import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.5'
+      import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.5'
+      import { initActionable } from '/github/kite9-org/kite9/behaviours/actionable/actionable.js?v=v0.5'
+      import { initSelectable } from '/github/kite9-org/kite9/behaviours/selectable/selectable.js?v=v0.5'
       
       const contextMenu = new ContextMenu([function(event, cm) {
       

@@ -7,7 +7,7 @@
   <xsl:import href="flowchart-components.xsl" />
   
   <xsl:template match="/" mode="diagram-script">
-    import '/github/kite9-org/kite9/templates/flowchart/flowchart.js?v=v0.4'
+    import '/github/kite9-org/kite9/templates/flowchart/flowchart.js?v=v0.5'
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">

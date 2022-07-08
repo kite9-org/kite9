@@ -1,7 +1,7 @@
-import { parseInfo, getContainingDiagram, hasLastSelected, getParentElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.4'
-import { getMainSvg, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
+import { parseInfo, getContainingDiagram, hasLastSelected, getParentElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.5'
+import { getMainSvg, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.5'
 import { getAlignElementsAndDirections } from '/public/behaviours/links/linkable.js'
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.4'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.5'
 
 /** 
  * Keeps track of the URI of the element we are using for new links 

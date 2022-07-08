@@ -4,7 +4,7 @@
          
    <svg:defs>
      <svg:style type="text/css">
-       @import url('/github/kite9-org/kite9/templates/formats/formats-textures.css?v=v0.4');
+       @import url('/github/kite9-org/kite9/templates/formats/formats-textures.css?v=v0.5');
      </svg:style>
    </svg:defs>
          

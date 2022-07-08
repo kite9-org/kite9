@@ -1,15 +1,15 @@
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.4'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.5'
 
-import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.4'
+import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.5'
 
 //Containers
-import { initInsertPaletteCallback, initInsertContextMenuCallback, initInsertDragLocator } from '/github/kite9-org/kite9/behaviours/containers/insert/containers-insert.js?v=v0.4'
-import { initContainPaletteCallback, initContainContextMenuCallback } from '/github/kite9-org/kite9/behaviours/containers/contain/containers-contain.js?v=v0.4'
-import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback } from '/github/kite9-org/kite9/behaviours/containers/layout/containers-layout.js?v=v0.4'
-import { initChildContextMenuCallback } from '/github/kite9-org/kite9/behaviours/containers/child/containers-child.js?v=v0.4'
+import { initInsertPaletteCallback, initInsertContextMenuCallback, initInsertDragLocator } from '/github/kite9-org/kite9/behaviours/containers/insert/containers-insert.js?v=v0.5'
+import { initContainPaletteCallback, initContainContextMenuCallback } from '/github/kite9-org/kite9/behaviours/containers/contain/containers-contain.js?v=v0.5'
+import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback } from '/github/kite9-org/kite9/behaviours/containers/layout/containers-layout.js?v=v0.5'
+import { initChildContextMenuCallback } from '/github/kite9-org/kite9/behaviours/containers/child/containers-child.js?v=v0.5'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '/github/kite9-org/kite9/behaviours/containers/drag/containers-drag.js' 
-import { initAttributeContainmentCallback } from '/github/kite9-org/kite9/behaviours/containers/rules/containers-rules.js?v=v0.4'
+import { initAttributeContainmentCallback } from '/github/kite9-org/kite9/behaviours/containers/rules/containers-rules.js?v=v0.5'
 
 
 function initContainers() {

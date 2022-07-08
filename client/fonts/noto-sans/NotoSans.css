@@ -3,7 +3,7 @@
   font-style: italic;
   font-weight: 400;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-Italic.ttf?v=v0.4') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-Italic.ttf?v=v0.5') format('truetype');
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-Regular.ttf?v=v0.4') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-Regular.ttf?v=v0.5') format('truetype');
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-BoldItalic.ttf?v=v0.4') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-BoldItalic.ttf?v=v0.5') format('truetype');
 }
 
 
@@ -28,5 +28,5 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-Bold.ttf?v=v0.4') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans-Bold.ttf?v=v0.5') format('truetype');
 }

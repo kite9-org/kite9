@@ -1387,7 +1387,7 @@ stroke-width: 1pt;
   </g>
   <defs>
     <script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink">
-     import '/github/kite9-org/kite9/templates/risk-first/risk-first.js?v=v0.4'
+     import '/github/kite9-org/kite9/templates/risk-first/risk-first.js?v=v0.5'
   </script>
   </defs>
 </svg>

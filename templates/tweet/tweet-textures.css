@@ -1,15 +1,15 @@
-@import url(/github/kite9-org/kite9/templates/texture/texture-defaults.css);
-@import url(/github/kite9-org/kite9/templates/containers/containers-textures.css);
-@import url(/github/kite9-org/kite9/templates/links/links-textures.css);
-@import url(/github/kite9-org/kite9/templates/grid/grid-textures.css);
-@import url(/github/kite9-org/kite9/templates/labels/labels-textures.css);
-@import url(/github/kite9-org/kite9/templates/links/links-textures.css);
-@import url(/github/kite9-org/kite9/templates/highlight/highlight.css);
-@import url(/github/kite9-org/kite9/templates/editor/editor.css);
-@import url(/github/kite9-org/kite9/client/fonts/chirp/chirp-ttf.css);
-@import url(/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans.css);
-@import url(/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript.css);
-@import url(/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay.css);
+@import url('/github/kite9-org/kite9/templates/texture/texture-defaults.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/containers/containers-textures.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/links/links-textures.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/grid/grid-textures.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/labels/labels-textures.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/links/links-textures.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/highlight/highlight.css?v=v0.5');
+@import url('/github/kite9-org/kite9/templates/editor/editor.css?v=v0.5');
+@import url('/github/kite9-org/kite9/client/fonts/chirp/chirp-ttf.css?v=v0.5');
+@import url('/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans.css?v=v0.5');
+@import url('/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript.css?v=v0.5');
+@import url('/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay.css?v=v0.5');
 
 /* Add this in to see the frame 
 [k9-elem=frame][k9-texture=default] {
