@@ -6,8 +6,8 @@
     </svg:style>
    
     <svg:script type="module">
-      import { Instrumentation } from "./instrumentation.js";
-      import { icon } from "../../client/bundles/form.js";
+      import { Instrumentation } from "./instrumentation.js?v=v0.3";
+      import { icon } from "../../client/bundles/form.js?v=v0.3";
       
       
       new Instrumentation([function(nav) {

@@ -17,7 +17,7 @@ import org.springframework.util.StreamUtils;
 @ContextConfiguration
 public class PrivateGithubIT extends AbstractRestIT {
 
-	public static final String JS = "/github/kite9-org/examples/some.js";
+	public static final String JS = "/github/kite9-org/examples/some.js?v=v0.3";
 	public static final String DIR = "/github/kite9-org/examples";
 
 

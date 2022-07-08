@@ -92,7 +92,7 @@ function updateUser(user, alert, notification) {
 export function initIdentityInstrumentationCallback() {
 	return function(nav) {
 		navigator = nav;
-		ensureCss('/public/behaviours/identity/collaborators.css');
+		ensureCss('/public/behaviours/identity/collaborators.css?v=v0.3');
 		updateUser(currentUser);
 	}
 }

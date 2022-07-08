@@ -7,7 +7,7 @@ export class Modal {
 		this.callbacks = cb == undefined ? [] : cb;
 		this.expanded = {};
 
-		ensureCss('/public/client/classes/modal/modal.css');
+		ensureCss('/public/client/classes/modal/modal.css?v=v0.3');
 		
 		var darken = document.getElementById("_darken");
 		if (!darken) {

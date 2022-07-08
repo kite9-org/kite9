@@ -12,7 +12,7 @@ export class ContextMenu {
 	constructor(instrumentation) {
 		this.instrumentation = instrumentation;
 		this.callbacks = [];
-		ensureCss('/public/client/classes/context-menu/context-menu.css');
+		ensureCss('/public/client/classes/context-menu/context-menu.css?v=v0.3');
 		
 		this.moving = undefined;
 		this.offsetCoords = undefined;

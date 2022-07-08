@@ -20,14 +20,14 @@
    
    <xsl:template match="/" mode="diagram-element-css">
      <xsl:call-template name="adl-diagram-element-css" />
-     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-elements.css');</adl:css>     
+     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-elements.css?v=v0.3');</adl:css>     
    </xsl:template>
   
    <xsl:template match="/" mode="diagram-palettes">
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-texture-css">
-     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-textures.css');</adl:css>
+     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-textures.css?v=v0.3');</adl:css>
    </xsl:template>
    
    

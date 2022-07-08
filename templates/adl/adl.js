@@ -2,9 +2,9 @@
  * This contains basic kite9 classes that we can plug behaviours into, for manipulating ADL documents.
  */
 
-import { Instrumentation } from "/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.js";
-import { Metadata } from "/github/kite9-org/kite9/client/classes/metadata/metadata.js";
-import { ContextMenu } from "/github/kite9-org/kite9/client/classes/context-menu/context-menu.js";
+import { Instrumentation } from "/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.js?v=v0.3";
+import { Metadata } from "/github/kite9-org/kite9/client/classes/metadata/metadata.js?v=v0.3";
+import { ContextMenu } from "/github/kite9-org/kite9/client/classes/context-menu/context-menu.js?v=v0.3";
 import { Transition } from '/github/kite9-org/kite9/client/classes/transition/transition.js?v=v0.3'
 import { Dragger } from '/github/kite9-org/kite9/client/classes/dragger/dragger.js?v=v0.3'
 import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.3'
@@ -18,16 +18,16 @@ import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/behaviours/upd
 import { initTransitionAnimationCallback } from '/github/kite9-org/kite9/behaviours/animation/animation.js?v=v0.3'
 
 //identity
-import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/github/kite9-org/kite9/behaviours/identity/identity.js";
+import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/github/kite9-org/kite9/behaviours/identity/identity.js?v=v0.3";
 
 //zoomable
-import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/github/kite9-org/kite9/behaviours/zoomable/zoomable.js";
+import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/github/kite9-org/kite9/behaviours/zoomable/zoomable.js?v=v0.3";
 
 //dragable
-import { initDragable, initMainHoverableAllowed } from '/github/kite9-org/kite9/behaviours/dragable/dragable.js' 
+import { initDragable, initMainHoverableAllowed } from '/github/kite9-org/kite9/behaviours/dragable/dragable.js?v=v0.3' 
 
 // actionable 
-import { initActionable } from '/github/kite9-org/kite9/behaviours/actionable/actionable.js' 
+import { initActionable } from '/github/kite9-org/kite9/behaviours/actionable/actionable.js?v=v0.3' 
 
 //hoverable
 import { initHoverable } from '/github/kite9-org/kite9/behaviours/hoverable/hoverable.js?v=v0.3'

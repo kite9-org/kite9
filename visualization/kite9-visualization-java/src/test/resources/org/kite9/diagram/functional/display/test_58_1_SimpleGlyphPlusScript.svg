@@ -177,7 +177,7 @@
 </script
                                                 ><script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                 >
-import "file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/diagram.js";
+import "file:/Users/rob/Documents/kite9/kite9-visualization/k9batik/target/test-classes/stylesheets/diagram.js?v=v0.3";
 </script
                                               ></defs
                                             ></svg

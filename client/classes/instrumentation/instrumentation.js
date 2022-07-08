@@ -8,7 +8,7 @@ export class Instrumentation {
 	constructor() {
 		this.callbacks = [];
 
-		ensureCss('/public/client/classes/instrumentation/instrumentation.css');
+		ensureCss('/public/client/classes/instrumentation/instrumentation.css?v=v0.3');
 		
 		this.nav = document.getElementById("_instrumentation");
 		if (this.nav == undefined) {

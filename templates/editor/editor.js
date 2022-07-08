@@ -22,10 +22,10 @@ import { initSelectable } from '/github/kite9-org/kite9/behaviours/selectable/se
 import { initToggleInstrumentationCallback } from '/github/kite9-org/kite9/behaviours/indication/toggle/toggle.js?v=v0.3'
 
 // navigation
-import { closeMetadataCallback, initCloseInstrumentationCallback } from "/github/kite9-org/kite9/behaviours/navigable/close/close.js";
+import { closeMetadataCallback, initCloseInstrumentationCallback } from "/github/kite9-org/kite9/behaviours/navigable/close/close.js?v=v0.3";
 
 // undo, redo, revisions
-import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "/github/kite9-org/kite9/behaviours/revisioned/undoable.js";
+import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "/github/kite9-org/kite9/behaviours/revisioned/undoable.js?v=v0.3";
 
 // editing
 import { initXMLContextMenuCallback } from '/github/kite9-org/kite9/behaviours/editable/xml/editable-xml.js?v=v0.3'

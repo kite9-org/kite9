@@ -1,4 +1,4 @@
-import { getMainSvg } from "/public/client/bundles/screen.js";
+import { getMainSvg } from "/public/client/bundles/screen.js?v=v0.3";
 import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
 
 /**
