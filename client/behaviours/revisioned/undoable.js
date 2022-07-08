@@ -1,4 +1,4 @@
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.3'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.4'
 
 
 var undo, redo; 	// buttons

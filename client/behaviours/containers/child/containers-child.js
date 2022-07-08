@@ -1,5 +1,5 @@
-import { hasLastSelected, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
+import { hasLastSelected, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.4'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
 
 
 function defaultChildSelector() {

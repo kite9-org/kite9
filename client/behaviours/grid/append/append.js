@@ -1,5 +1,5 @@
-import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
-import { nextOrdinal, getOrdinals  } from '/github/kite9-org/kite9/behaviours/grid/common-grid.js?v=v0.3' 
+import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.4'
+import { nextOrdinal, getOrdinals  } from '/github/kite9-org/kite9/behaviours/grid/common-grid.js?v=v0.4' 
 
 
 export function initCellAppendContextMenuCallback(command, selector) {

@@ -1,4 +1,4 @@
-import { getHtmlCoords } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
+import { getHtmlCoords } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
 
 
 /**

@@ -1,6 +1,6 @@
-import { getSVGCoords, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
-import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
-import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.3'
+import { getSVGCoords, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
+import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.4'
+import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.4'
 
 export function initContainerDropLocatorFunction(containment) {
 

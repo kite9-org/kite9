@@ -2,9 +2,9 @@
  * This handles moving a block from one place to another on the diagram, via drag and drop.
  * You can't drop into an element unless it has 
  */
-import { parseInfo, isTerminator, getKite9Target, isConnected, getParentElement } from "/public/client/bundles/api.js?v=v0.3";
-import { getSVGCoords, getElementPageBBox } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
-import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.3'
+import { parseInfo, isTerminator, getKite9Target, isConnected, getParentElement } from "/public/client/bundles/api.js?v=v0.4";
+import { getSVGCoords, getElementPageBBox } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
+import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.4'
 
 /**
  * Keeps track of any links we've animated moving.

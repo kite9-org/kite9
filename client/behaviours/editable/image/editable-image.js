@@ -1,6 +1,6 @@
-import { hasLastSelected} from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.3'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.3'
-import { icon, form, text, p, inlineButtons, ok, cancel, formValues, img, fieldset, div } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.3'
+import { hasLastSelected} from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.4'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.4'
+import { icon, form, text, p, inlineButtons, ok, cancel, formValues, img, fieldset, div } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.4'
 
 const LOADING = '/public/behaviours/editable/image/loading.svg';
 const SUCCESS = '/public/behaviours/editable/image/success.svg';
