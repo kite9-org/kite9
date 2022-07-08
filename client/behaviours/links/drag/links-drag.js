@@ -1,4 +1,4 @@
-import { isLink, isConnected, isTerminator, getKite9Target, parseInfo, createUniqueId, onlyUnique, getContainingDiagram } from '/public/bundles/api.js';
+import { isLink, isConnected, isTerminator, getKite9Target, parseInfo, createUniqueId, onlyUnique, getContainingDiagram } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 
 /**

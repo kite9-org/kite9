@@ -1,5 +1,5 @@
-import { suffixIds } from '/public/bundles/api.js';
-import { icon } from '/public/bundles/form.js';
+import { suffixIds } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { icon } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
 
 /**
  * Provides functionality for populating/ showing/ hiding a palette.  

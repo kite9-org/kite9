@@ -1,5 +1,5 @@
-import { getSVGCoords, getMainSvg, getHtmlCoords, currentTarget } from '/public/bundles/screen.js';
-import { handleTransformAsStyle, getKite9Target, getParentElement, onlyUnique, getNextSiblingId, isLink, isConnected } from '/public/bundles/api.js';
+import { getSVGCoords, getMainSvg, getHtmlCoords, currentTarget } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { handleTransformAsStyle, getKite9Target, getParentElement, onlyUnique, getNextSiblingId, isLink, isConnected } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 
 /**

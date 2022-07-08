@@ -1,4 +1,4 @@
-import { ensureCss } from '/public/bundles/ensure.js';
+import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
 
 /**
  * Provides functionality for populating the instrumentation menu, keyboard shortcuts and interaction state (keys/mouse/touch etc).

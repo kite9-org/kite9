@@ -1,5 +1,5 @@
-import { getMainSvg } from '/public/bundles/screen.js';
-import { createUniqueId, parseInfo, getKite9Target, hasLastSelected } from '/public/bundles/api.js';
+import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { createUniqueId, parseInfo, getKite9Target, hasLastSelected } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 /**
  * Allows you to select temporary grid elements.

@@ -1,6 +1,6 @@
-import { getSVGCoords, getMainSvg, is_touch_device4 } from '/public/bundles/screen.js';
-import { handleTransformAsStyle, getKite9Target, isConnected, isDiagram, getParentElement, onlyUnique } from '/public/bundles/api.js';
-import { getBeforeId } from '/public/bundles/ordering.js';
+import { getSVGCoords, getMainSvg, is_touch_device4 } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { handleTransformAsStyle, getKite9Target, isConnected, isDiagram, getParentElement, onlyUnique } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { getBeforeId } from '/github/kite9-org/kite9/bundles/ordering.js?v=v0.2'
 
 export function initDragable(dragger, selector) {
 	

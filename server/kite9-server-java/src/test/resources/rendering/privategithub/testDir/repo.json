@@ -2,52 +2,12 @@
 <diagram xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt"
          xslt:template="/public/templates/admin/admin-template.xsl">
-   <subDirectories>
-      <subDirectories/>
-      <documents/>
-      <description></description>
-      <title>.kite9</title>
-      <parents/>
-      <commands>focus NewDocument</commands>
-      <type>directory</type>
-      <icon>/public/templates/admin/icons/folder.svg</icon>
-      <links>
-         <rel>self</rel>
-         <href>/github/kite9-org/examples/.kite9</href>
-      </links>
-   </subDirectories>
-   <documents>
-      <description></description>
-      <title>SomethingNew2.adl</title>
-      <parents/>
-      <icon>/github/kite9-org/examples/SomethingNew2.adl</icon>
-      <commands>open</commands>
-      <type>document</type>
-      <links>
-         <rel>self</rel>
-         <href>/github/kite9-org/examples/SomethingNew2.adl</href>
-      </links>
-   </documents>
-   <documents>
-      <description></description>
-      <title>some.js</title>
-      <parents/>
-      <icon>/public/templates/admin/icons/js.svg</icon>
-      <commands>open</commands>
-      <type>document</type>
-      <links>
-         <rel>self</rel>
-         <href>/github/kite9-org/examples/some.js</href>
-      </links>
-   </documents>
-   <description>Kite9 diagram examples to edit.</description>
-   <title>examples</title>
    <parents>
-      <organisations/>
-      <repositories/>
-      <description/>
-      <title>GitHub</title>
       <parents/>
+      <title>GitHub</title>
+      <description/>
+      <repositories/>
+      <organisations/>
       <icon>/public/templates/admin/icons/github.png</icon>
       <commands>focus</commands>
       <type>user</type>
@@ -57,10 +17,10 @@
       </links>
    </parents>
    <parents>
-      <repositories/>
-      <description>Kite9</description>
-      <title>kite9-org</title>
       <parents/>
+      <title>kite9-org</title>
+      <description>Kite9</description>
+      <repositories/>
       <icon>https://avatars.githubusercontent.com/u/16177164?v=4</icon>
       <commands>focus</commands>
       <type>organisation</type>
@@ -69,6 +29,46 @@
          <href>/github/kite9-org</href>
       </links>
    </parents>
+   <title>examples</title>
+   <description>Kite9 diagram examples to edit.</description>
+   <documents>
+      <parents/>
+      <title>SomethingNew2.adl</title>
+      <description></description>
+      <icon>/github/kite9-org/examples/SomethingNew2.adl</icon>
+      <commands>open</commands>
+      <type>document</type>
+      <links>
+         <rel>self</rel>
+         <href>/github/kite9-org/examples/SomethingNew2.adl</href>
+      </links>
+   </documents>
+   <documents>
+      <parents/>
+      <title>some.js</title>
+      <description></description>
+      <icon>/public/templates/admin/icons/js.svg</icon>
+      <commands>open</commands>
+      <type>document</type>
+      <links>
+         <rel>self</rel>
+         <href>/github/kite9-org/examples/some.js</href>
+      </links>
+   </documents>
+   <subDirectories>
+      <parents/>
+      <title>.kite9</title>
+      <description></description>
+      <documents/>
+      <subDirectories/>
+      <commands>focus NewDocument</commands>
+      <type>directory</type>
+      <icon>/public/templates/admin/icons/folder.svg</icon>
+      <links>
+         <rel>self</rel>
+         <href>/github/kite9-org/examples/.kite9</href>
+      </links>
+   </subDirectories>
    <commands>focus NewDocument</commands>
    <type>repository</type>
    <icon>/public/templates/admin/icons/project.svg</icon>

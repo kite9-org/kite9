@@ -1,5 +1,5 @@
-import { getMainSvg } from '/public/bundles/screen.js';
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId } from '/public/bundles/api.js';
+import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 
 export function labelableSelector() {

@@ -1,7 +1,7 @@
-import { icon, numeric, change, form } from '/public/bundles/form.js';
-import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren } from '/public/bundles/api.js';
-import { getMainSvg } from '/public/bundles/screen.js';
-import { getOrdinals } from '/public/behaviours/grid/common-grid.js';
+import { icon, numeric, change, form } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
+import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { getOrdinals } from '/github/kite9-org/kite9/behaviours/grid/common-grid.js?v=v0.2'
 
 function getMinGridSize(e) {
 	const info = parseInfo(e);

@@ -1,6 +1,6 @@
-import { getMainSvg, is_touch_device4 } from '/public/bundles/screen.js';
-import { icon } from '/public/bundles/form.js';
-import { number } from '/public/bundles/api.js';
+import { getMainSvg, is_touch_device4 } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { icon } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
+import { number } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 var magnification = null;
 const main = document.querySelector("div.main");

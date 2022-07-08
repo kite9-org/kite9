@@ -1,5 +1,5 @@
-import { getMainSvg, getElementPageBBox, currentTarget } from '/public/bundles/screen.js';
-import { parseInfo, createUniqueId, getContainingDiagram, reverseDirection, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId } from '/public/bundles/api.js';
+import { getMainSvg, getElementPageBBox, currentTarget } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { parseInfo, createUniqueId, getContainingDiagram, reverseDirection, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 var link = null;
 var link_to = undefined;

@@ -1,5 +1,5 @@
-import { icon, fieldset, form, cancel } from '/public/bundles/form.js';
-import { ensureCss } from '/public/bundles/ensure.js';
+import { icon, fieldset, form, cancel } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
+import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
 
 const NO_USER = {
 	name: "Anonymous",

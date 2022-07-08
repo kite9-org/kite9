@@ -1,7 +1,7 @@
-import { getHtmlCoords } from '/public/bundles/screen.js';
-import { ensureCss } from '/public/bundles/ensure.js';
-import { icon } from '/public/bundles/form.js';
-import { number } from '/public/bundles/api.js';
+import { getHtmlCoords } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { icon } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
+import { number } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 /**
  * Provides functionality for populating the context menu.  Takes a number of callbacks

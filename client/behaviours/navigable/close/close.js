@@ -1,4 +1,4 @@
-import { icon } from '/public/bundles/form.js';
+import { icon } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
 
 
 var closeUrl;

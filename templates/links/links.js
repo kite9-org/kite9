@@ -1,22 +1,22 @@
 
 
-import { once } from '/github/kite9-org/kite9/bundles/ensure.js';
+import { once } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
 
-import { Linker } from '/github/kite9-org/kite9/classes/linker/linker.js';
+import { Linker } from '/github/kite9-org/kite9/classes/linker/linker.js?v=v0.2'
 
 
-import { command, metadata, instrumentation, dragger, contextMenu, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js';
+import { command, metadata, instrumentation, dragger, contextMenu, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.2'
 
 // Links
-import { initLinkable, updateLink, initLinkerDropCallback } from '/github/kite9-org/kite9/behaviours/links/linkable.js';
-import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/github/kite9-org/kite9/behaviours/links/autoconnect/autoconnect.js';
-import { initLinkPaletteCallback, initLinkLinkerCallback, initLinkContextMenuCallback, initLinkInstrumentationCallback, initLinkFinder, getLinkTemplateUri } from '/github/kite9-org/kite9/behaviours/links/link/link.js';
-import { initDirectionContextMenuCallback } from '/github/kite9-org/kite9/behaviours/links/direction/direction.js';
-import { initAlignContextMenuCallback } from '/github/kite9-org/kite9/behaviours/links/align/align.js';
-import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/github/kite9-org/kite9/behaviours/links/drag/terminators-drag.js';
-import { initLinkDropLocator, initLinkDropCallback } from '/github/kite9-org/kite9/behaviours/links/drag/links-drag.js';
-import { initNewLinkPaletteCallback, initNewLinkContextMenuCallback } from '/github/kite9-org/kite9/behaviours/links/new/links-new.js';
-import { initLinksCheckerDropCallback } from '/github/kite9-org/kite9/behaviours/links/checker/links-checker.js';
+import { initLinkable, updateLink, initLinkerDropCallback } from '/github/kite9-org/kite9/behaviours/links/linkable.js?v=v0.2'
+import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/github/kite9-org/kite9/behaviours/links/autoconnect/autoconnect.js?v=v0.2'
+import { initLinkPaletteCallback, initLinkLinkerCallback, initLinkContextMenuCallback, initLinkInstrumentationCallback, initLinkFinder, getLinkTemplateUri } from '/github/kite9-org/kite9/behaviours/links/link/link.js?v=v0.2'
+import { initDirectionContextMenuCallback } from '/github/kite9-org/kite9/behaviours/links/direction/direction.js?v=v0.2'
+import { initAlignContextMenuCallback } from '/github/kite9-org/kite9/behaviours/links/align/align.js?v=v0.2'
+import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/github/kite9-org/kite9/behaviours/links/drag/terminators-drag.js?v=v0.2'
+import { initLinkDropLocator, initLinkDropCallback } from '/github/kite9-org/kite9/behaviours/links/drag/links-drag.js?v=v0.2'
+import { initNewLinkPaletteCallback, initNewLinkContextMenuCallback } from '/github/kite9-org/kite9/behaviours/links/new/links-new.js?v=v0.2'
+import { initLinksCheckerDropCallback } from '/github/kite9-org/kite9/behaviours/links/checker/links-checker.js?v=v0.2'
 
 const linker = new Linker(updateLink);
 

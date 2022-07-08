@@ -1,5 +1,5 @@
-import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElements, parseInfo } from '/public/bundles/api.js';
-import { getMainSvg } from '/public/bundles/screen.js';
+import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElements, parseInfo } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
 
 /**
  * k9-palette attribute says which type of element this is.  The element can be replaced with another element of the same type.

@@ -1,26 +1,26 @@
 @font-face {
 	font-family: "chirp";
-	src: url('/public/fonts/chirp/chirp-heavy-web.ttf') format('truetype');
+	src: url('/github/kite9-org/kite9/fonts/chirp/chirp-heavy-web.ttf?v=v0.2') format('truetype');
 	font-weight: 900;
 }
 
 
 @font-face {
 	font-family: "chirp";
-	src: url('/public/fonts/chirp/chirp-bold-web.ttf') format('truetype');
+	src: url('/github/kite9-org/kite9/fonts/chirp/chirp-bold-web.ttf?v=v0.2') format('truetype');
 	font-weight: 700;
 }
 
 
 @font-face {
 	font-family: "chirp";
-	src: url('/public/fonts/chirp/chirp-medium-web.ttf') format('truetype');
+	src: url('/github/kite9-org/kite9/fonts/chirp/chirp-medium-web.ttf?v=v0.2') format('truetype');
 	font-weight: 500;
 }
 
 
 @font-face {
 	font-family: "chirp";
-	src: url('/public/fonts/chirp/chirp-regular-web.ttf') format('truetype');
+	src: url('/github/kite9-org/kite9/fonts/chirp/chirp-regular-web.ttf?v=v0.2') format('truetype');
 	font-weight: 400;
 }

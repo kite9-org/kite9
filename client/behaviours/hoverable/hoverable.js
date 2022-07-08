@@ -1,5 +1,5 @@
-import { getMainSvg, getHtmlCoords, currentTarget } from '/public/bundles/screen.js';
-import { getKite9Target } from '/public/bundles/api.js';
+import { getMainSvg, getHtmlCoords, currentTarget } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { getKite9Target } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 
 
 /**

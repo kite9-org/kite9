@@ -1,4 +1,4 @@
-import { isGrid } from '/public/bundles/api.js';
+import { isGrid } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
 /**
  * Three attributes:
  * 

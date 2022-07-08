@@ -12,7 +12,7 @@
  * These are to be used with the ContextMenu class for building the menu.
  * 
  */
-import { ensureCss } from '/public/bundles/ensure.js';
+import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
 
 ensureCss('/public/external/normform-2.0.css');
 ensureCss('/webjars/hint.css/2.3.2/hint.css');

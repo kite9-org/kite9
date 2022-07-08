@@ -5,17 +5,17 @@
 import { Instrumentation } from "/github/kite9-org/kite9/classes/instrumentation/instrumentation.js";
 import { Metadata } from "/github/kite9-org/kite9/classes/metadata/metadata.js";
 import { ContextMenu } from "/github/kite9-org/kite9/classes/context-menu/context-menu.js";
-import { Transition } from '/github/kite9-org/kite9/classes/transition/transition.js';
-import { Dragger } from '/github/kite9-org/kite9/classes/dragger/dragger.js';
-import { Containment } from '/github/kite9-org/kite9/classes/containment/containment.js';
-import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/classes/command/command.js';
-import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/classes/palette/palette.js';
+import { Transition } from '/github/kite9-org/kite9/classes/transition/transition.js?v=v0.2'
+import { Dragger } from '/github/kite9-org/kite9/classes/dragger/dragger.js?v=v0.2'
+import { Containment } from '/github/kite9-org/kite9/classes/containment/containment.js?v=v0.2'
+import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/classes/command/command.js?v=v0.2'
+import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/classes/palette/palette.js?v=v0.2'
 
 //updatable
-import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/behaviours/updatable/updatable.js';
+import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/behaviours/updatable/updatable.js?v=v0.2'
 
 // animation
-import { initTransitionAnimationCallback } from '/github/kite9-org/kite9/behaviours/animation/animation.js';
+import { initTransitionAnimationCallback } from '/github/kite9-org/kite9/behaviours/animation/animation.js?v=v0.2'
 
 //identity
 import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/github/kite9-org/kite9/behaviours/identity/identity.js";
@@ -30,9 +30,9 @@ import { initDragable, initMainHoverableAllowed } from '/github/kite9-org/kite9/
 import { initActionable } from '/github/kite9-org/kite9/behaviours/actionable/actionable.js' 
 
 //hoverable
-import { initHoverable } from '/github/kite9-org/kite9/behaviours/hoverable/hoverable.js';
+import { initHoverable } from '/github/kite9-org/kite9/behaviours/hoverable/hoverable.js?v=v0.2'
 
-import { once } from '/github/kite9-org/kite9/bundles/ensure.js';
+import { once } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
 
 export const 
 	command = new Command(), 

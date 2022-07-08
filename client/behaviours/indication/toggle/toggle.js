@@ -1,6 +1,6 @@
-import { getMainSvg } from '/public/bundles/screen.js';
-import { ensureCss } from '/public/bundles/ensure.js';
-import { icon } from '/public/bundles/form.js';
+import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { icon } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
 
 
 export function initToggleInstrumentationCallback(on) {

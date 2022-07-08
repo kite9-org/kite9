@@ -1,6 +1,6 @@
-import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/public/bundles/api.js';
-import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/public/bundles/screen.js';
-import { getBefore } from '/public/bundles/ordering.js';
+import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { getBefore } from '/github/kite9-org/kite9/bundles/ordering.js?v=v0.2'
 
 
 function defaultInsertSelector() {

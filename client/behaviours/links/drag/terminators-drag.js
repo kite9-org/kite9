@@ -3,8 +3,8 @@
  * You can't drop into an element unless it has 
  */
 import { parseInfo, isTerminator, getKite9Target, isConnected, getParentElement } from "/public/bundles/api.js";
-import { getSVGCoords, getElementPageBBox } from '/public/bundles/screen.js';
-import { getBeforeId } from '/public/bundles/ordering.js';
+import { getSVGCoords, getElementPageBBox } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { getBeforeId } from '/github/kite9-org/kite9/bundles/ordering.js?v=v0.2'
 
 /**
  * Keeps track of any links we've animated moving.

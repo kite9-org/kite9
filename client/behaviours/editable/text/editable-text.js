@@ -1,5 +1,5 @@
-import { hasLastSelected } from '/public/bundles/api.js';
-import { textarea, form, ok, cancel, inlineButtons, formValues } from '/public/bundles/form.js';
+import { hasLastSelected } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { textarea, form, ok, cancel, inlineButtons, formValues } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
 
 export function initEditContextMenuCallback(command, selector, textCollector) {
 	
