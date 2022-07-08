@@ -75,8 +75,8 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		return new AbstractGithubModifiableAPI(u, clientRepository) {		
 			
 			@Override
-			public GitHub getGitHubAPI(Authentication a) {
-				return createGitHub(getAccessToken(a, clientRepository));
+			public GitHub getGitHubAPI(String token) {
+				return createGitHub(token);
 			}
 			
 			@Override
@@ -108,8 +108,8 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		return new AbstractGithubModifiableDiagramAPI(u, clientRepository, (DiagramFileFormat) f2, mainMediaType) {
 			
 			@Override
-			public GitHub getGitHubAPI(Authentication a) {
-				return createGitHub(getAccessToken(a, clientRepository));
+			public GitHub getGitHubAPI(String token) {
+				return createGitHub(token);
 			}
 
 			@Override

@@ -1,5 +1,7 @@
 package com.kite9.server.adl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -16,9 +18,11 @@ import org.springframework.util.StreamUtils;
 import com.kite9.server.XMLCompare;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 
-public class PublicRenderingIT extends AbstractRestIT {
+public class PublicGithubIT extends AbstractRestIT {
 	
-	public static final String MINIMAL = "/public/templates/risk-first/examples/minimal.adl";
+	public static final String ADL_EXAMPLE = "/public/examples/basic.adl";
+	public static final String MINIMAL = "/github/kite9-org/kite9/templates/risk-first/examples/minimal.adl";
+	public static final String JS = "/github/kite9-org/kite9/client/behaviours/actionable/actionable.js";
 
 	protected byte[] loadStaticHtml(String page) throws Exception {
 		HttpHeaders headers = new HttpHeaders();
@@ -26,6 +30,21 @@ public class PublicRenderingIT extends AbstractRestIT {
 		HttpEntity<Void> ent = new HttpEntity<>(headers);
 		ResponseEntity<byte[]> back = getRestTemplate().exchange(new URI(getUrlBase()+page), HttpMethod.GET, ent, byte[].class);
 		return back.getBody();
+	}
+
+	protected byte[] loadStatic(String page) throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+		HttpEntity<Void> ent = new HttpEntity<>(headers);
+		ResponseEntity<byte[]> back = getRestTemplate().exchange(new URI(getUrlBase()+page), HttpMethod.GET, ent, byte[].class);
+		return back.getBody();
+	}
+	
+	@Test
+	public void testExampleJS() throws Exception {
+		byte[] js = loadStatic(JS+"?format=js&v=master");
+		persistInAFile(js, "testExampleJs", "actionable.js");
+		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/github/testExampleJs/actionable.js"), Charset.forName("UTF-8"));
+		assertEquals(expected, new String(js));
 	}
 	
 	protected byte[] loadStaticPNG(String page) throws Exception {
@@ -71,9 +90,9 @@ public class PublicRenderingIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleADL() throws Exception {
-		byte[] svg = loadStaticADL(MINIMAL);
+		byte[] svg = loadStaticADL(ADL_EXAMPLE);
 		persistInAFile(svg, "testExampleADL", "diagram.adl");
-		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/static/"+MINIMAL), Charset.forName("UTF-8"));
+		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/static/"+ADL_EXAMPLE), Charset.forName("UTF-8"));
 		XMLCompare.compareXML(new String(svg), expected);
 	}
 	

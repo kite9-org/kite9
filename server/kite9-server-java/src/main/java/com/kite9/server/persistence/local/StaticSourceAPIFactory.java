@@ -99,12 +99,10 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 						if (r.isReadable()) {
 							byte[] bytes = StreamUtils.copyToByteArray(r.getInputStream());
 							return createAPIFromBytes(sourceUri, update.getHeaders(), bytes, underlying);	
-						} else {
-							return new StaticDirectoryAPI(sourceUri, uStr, ec);
-						}
-					} else {
-						return null;	
-					}
+						} 
+					} 
+					
+					return null;	
 				}			
 			} else {
 				// loading from the internet somewhere...

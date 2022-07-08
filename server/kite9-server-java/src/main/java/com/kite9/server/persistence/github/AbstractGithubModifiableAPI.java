@@ -34,7 +34,8 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 
 	protected void commitRevision(String message, String branch, Consumer<GHTreeBuilder> fn, Authentication by) {
 		try {
-			GHRepository repo = getGitHubAPI(by).getRepository(owner+"/"+reponame);
+			String token = getAccessToken(by, clientRepository);
+			GHRepository repo = getGitHubAPI(token).getRepository(owner+"/"+reponame);
 			String branchName = branch == null ? repo.getDefaultBranch() : branch;
 			String treeSha = repo.getTree(branchName).getSha();
 			String branchSha = repo.getBranch(branchName).getSHA1();
@@ -71,7 +72,8 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 	public Role getAuthenticatedRole(Authentication a) {
 		if (a != null) {
 			try {
-				GitHub api = getGitHubAPI(a);
+				String token = getAccessToken(a, clientRepository);
+				GitHub api = getGitHubAPI(token);
 				GHRepository repo = api.getRepository(owner+ "/"+reponame);
 				GHPermissionType pt = repo.getPermission(api.getMyself());
 				return translateRole(pt);

@@ -126,7 +126,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		}
 	}
 
-	public abstract GitHub getGitHubAPI(Authentication a);
+	public abstract GitHub getGitHubAPI(String token);
 
 	public String getRef() {
 		return ref;
@@ -134,15 +134,16 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	
 
 	protected void initContents(Authentication auth) throws Exception {
+		String token = getAccessToken(auth, clientRepository);
 		testOrg();
-		testFile(auth);
-		testDirectory(auth);
-		testMissing(auth);
+		testFile(token);
+		testDirectory(token);
+		testMissing(token);
 	}
 
-	private void testDirectory(Authentication auth) throws Exception {
-		if ((contents == null) && (auth != null)) {
-			GitHub api = getGitHubAPI(auth);
+	private void testDirectory(String token) throws Exception {
+		if ((contents == null) && (token != null)) {
+			GitHub api = getGitHubAPI(token);
 			try {
 				contents = api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
 			} catch (IOException e) {
@@ -151,9 +152,9 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		}
 	}
 
-	private void testMissing(Authentication auth) {
+	private void testMissing(String token) {
 		if (contents == null) {
-			if (auth == null) {
+			if (token == null) {
 				throw new LoginRequiredException(Type.GITHUB, getKite9ResourceURI());
 			} else {
 				contents = NO_FILE;
@@ -170,7 +171,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		}
 	}
 
-	private void testFile(Authentication auth) throws Exception {
+	private void testFile(String token) throws Exception {
 		if (contents == null) {
 			try {
 				// first, check to see if there is a raw entry
@@ -183,8 +184,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 					.header("Accept-Encoding", "identity")
 					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE);
 				
-				if (auth instanceof OAuth2AuthenticationToken) {
-					String token = getAccessToken(auth, clientRepository);
+				if (token != null) {
 					spec = spec.header("Authorization", "token "+token);
 				}
 						
@@ -196,7 +196,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 					contents =  db.getByteArray();
 				}
 			} catch (NotFound e) {
-				if (auth == null) {
+				if (token != null) {
 					return;
 				} else {
 					throw e;
