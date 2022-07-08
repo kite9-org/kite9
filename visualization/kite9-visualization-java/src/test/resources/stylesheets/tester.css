@@ -1,29 +1,29 @@
 @font-face {
 	font-family: "opensans-light-webfont";
-	src: url('../fonts/opensans-light-webfont.ttf') format('truetype');
+	src: url('../client/fonts/opensans-light-webfont.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: "opensans-bold-webfont";
-	src: url('../fonts/opensans-bold-webfont.ttf') format('truetype');
+	src: url('../client/fonts/opensans-bold-webfont.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: "opensans-regular-webfont";
-	src: url('../fonts/opensans-regular-webfont.ttf') format('truetype');
+	src: url('../client/fonts/opensans-regular-webfont.ttf') format('truetype');
 }
 
 /** these two are used to test font-caching bug. */
 
 @font-face {
 	font-family: "chirp";
-	src: url('../fonts/chirp-medium-web.ttf') format('truetype');
+	src: url('../client/fonts/chirp-medium-web.ttf') format('truetype');
 	font-weight: 400;
 }
 
 @font-face {
 	font-family: "opensans";
-	src: url('../fonts/chirp-bold-web.ttf') format('truetype');
+	src: url('../client/fonts/chirp-bold-web.ttf') format('truetype');
 	font-weight: 700;
 }
 

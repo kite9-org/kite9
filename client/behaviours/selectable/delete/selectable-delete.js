@@ -1,4 +1,4 @@
-import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement } from "/public/bundles/api.js";
+import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement } from "/public/client/bundles/api.js";
 
 
 export function initDeleteContextMenuCallback(command, selector, cascade, orphan) {

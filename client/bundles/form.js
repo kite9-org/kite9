@@ -12,9 +12,9 @@
  * These are to be used with the ContextMenu class for building the menu.
  * 
  */
-import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
 
-ensureCss('/public/external/normform-2.0.css');
+ensureCss('/public/client/external/normform-2.0.css?v=v0.2');
 ensureCss('/webjars/hint.css/2.3.2/hint.css');
 
 export function icon(id, title, image, onClick, imageAtts) {

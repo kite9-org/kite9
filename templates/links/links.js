@@ -1,8 +1,8 @@
 
 
-import { once } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
 
-import { Linker } from '/github/kite9-org/kite9/classes/linker/linker.js?v=v0.2'
+import { Linker } from '/github/kite9-org/kite9/client/classes/linker/linker.js?v=v0.2'
 
 
 import { command, metadata, instrumentation, dragger, contextMenu, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.2'

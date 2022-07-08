@@ -41,7 +41,7 @@ public class PublicGithubIT extends AbstractRestIT {
 	
 	@Test
 	public void testExampleJS() throws Exception {
-		byte[] js = loadStatic(JS+"?format=js&v=master");
+		byte[] js = loadStatic(JS+"?format=js&v=main");
 		persistInAFile(js, "testExampleJs", "actionable.js");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/github/testExampleJs/actionable.js"), Charset.forName("UTF-8"));
 		assertEquals(expected, new String(js));

@@ -1,5 +1,5 @@
-import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
-import { getExistingConnections, parseInfo, reverseDirection } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.2'
+import { getExistingConnections, parseInfo, reverseDirection } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
 
 /**
  * Contains the functionality for linking drawing links between selected elements 

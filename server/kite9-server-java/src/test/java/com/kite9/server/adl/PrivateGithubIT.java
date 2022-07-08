@@ -33,7 +33,7 @@ public class PrivateGithubIT extends AbstractRestIT {
 	@Test
 	@WithMockUser
 	public void testExampleJS() throws Exception {
-		byte[] js = loadStatic(JS+"?format=js&v=master");
+		byte[] js = loadStatic(JS+"?format=js&v=main");
 		persistInAFile(js, "testExampleJs", "some.js");
 		String expected = StreamUtils.copyToString(this.getClass().getResourceAsStream("/rendering/privategithub/testExampleJs/some.js"), Charset.forName("UTF-8"));
 		assertEquals(expected, new String(js));

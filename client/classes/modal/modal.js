@@ -1,4 +1,4 @@
-import { ensureCss } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
 
 export class Modal {
 
@@ -7,7 +7,7 @@ export class Modal {
 		this.callbacks = cb == undefined ? [] : cb;
 		this.expanded = {};
 
-		ensureCss('/public/classes/modal/modal.css');
+		ensureCss('/public/client/classes/modal/modal.css');
 		
 		var darken = document.getElementById("_darken");
 		if (!darken) {

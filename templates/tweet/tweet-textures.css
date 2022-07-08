@@ -6,10 +6,10 @@
 @import url(/github/kite9-org/kite9/templates/links/links-textures.css);
 @import url(/github/kite9-org/kite9/templates/highlight/highlight.css);
 @import url(/github/kite9-org/kite9/templates/editor/editor.css);
-@import url(/github/kite9-org/kite9/fonts/chirp/chirp-ttf.css);
-@import url(/github/kite9-org/kite9/fonts/noto-sans/NotoSans.css);
-@import url(/github/kite9-org/kite9/fonts/dancing-script/DancingScript.css);
-@import url(/github/kite9-org/kite9/fonts/noto-serif-display/NotoSerifDisplay.css);
+@import url(/github/kite9-org/kite9/client/fonts/chirp/chirp-ttf.css);
+@import url(/github/kite9-org/kite9/client/fonts/noto-sans/NotoSans.css);
+@import url(/github/kite9-org/kite9/client/fonts/dancing-script/DancingScript.css);
+@import url(/github/kite9-org/kite9/client/fonts/noto-serif-display/NotoSerifDisplay.css);
 
 /* Add this in to see the frame 
 [k9-elem=frame][k9-texture=default] {

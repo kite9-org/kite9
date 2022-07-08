@@ -1,5 +1,5 @@
-import { ensureJs, once } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
-import { encodeADLElement } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { ensureJs, once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
+import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
 
 
 export function createAdlToSVGResolver(transition, command, metadata) {
@@ -24,9 +24,6 @@ export function createAdlToSVGResolver(transition, command, metadata) {
 			.then(() => {
 				window['kite9-visualization-js'].initCSS();
 			})
-	
-		// not using this since we run into licensing issues.
-		//ensureJs('/public/external/SaxonJS2.js');
 	});
 	
 	/** 

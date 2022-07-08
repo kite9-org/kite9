@@ -1,4 +1,4 @@
-import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
+import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
 import { nextOrdinal, getOrdinals  } from '/github/kite9-org/kite9/behaviours/grid/common-grid.js?v=v0.2' 
 
 

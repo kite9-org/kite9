@@ -47,7 +47,7 @@ import reactor.core.publisher.Mono;
 public abstract class AbstractGithubSourceAPI implements SourceAPI {
 
 	private static final String RAW_GITHUB = "https://raw.githubusercontent.com/";
-	private static final String HEAD_REF = "HEAD";
+	private static final String HEAD_REF = "main";
 	protected static final Object NO_FILE = new Object();
 	protected static final Object ORG_PAGE = new Object();
 	

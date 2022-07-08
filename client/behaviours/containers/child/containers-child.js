@@ -1,5 +1,5 @@
-import { hasLastSelected, createUniqueId } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
-import { getMainSvg } from '/github/kite9-org/kite9/bundles/screen.js?v=v0.2'
+import { hasLastSelected, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.2'
 
 
 function defaultChildSelector() {
@@ -37,7 +37,7 @@ export function initChildContextMenuCallback(command, selector) {
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/public/behaviours/containers/child/add.svg", "Add Child", 
+			contextMenu.addControl(event, "/public/client/behaviours/containers/child/add.svg", "Add Child", 
 				function(e2) {
 					selectedElements.forEach(e => {
 						const uri = getElementUri(e);

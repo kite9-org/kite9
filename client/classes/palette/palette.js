@@ -1,5 +1,5 @@
-import { suffixIds } from '/github/kite9-org/kite9/bundles/api.js?v=v0.2'
-import { icon } from '/github/kite9-org/kite9/bundles/form.js?v=v0.2'
+import { suffixIds } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.2'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.2'
 
 /**
  * Provides functionality for populating/ showing/ hiding a palette.  
@@ -38,7 +38,7 @@ export class Palette {
       link.id = cssId;
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = '/public/classes/palette/palette.css';
+      link.href = '/public/client/classes/palette/palette.css';
       link.media = 'all';
       head.appendChild(link);
     }
@@ -85,7 +85,7 @@ export class Palette {
 
     // create loading indicator
     var loading = document.createElement("img");
-    loading.setAttribute("src", "/public/classes/palette/loading.svg");
+    loading.setAttribute("src", "/public/client/classes/palette/loading.svg");
     item.appendChild(loading);
 
     // populate it
@@ -99,7 +99,7 @@ export class Palette {
     .then(response => {
       if (!response.ok) {
         return response.json().then(j => {
-          loading.setAttribute("src", "/public/classes/palette/missing.svg");
+          loading.setAttribute("src", "/public/client/classes/palette/missing.svg");
           throw new Error(j.message);
         });
       }
@@ -206,7 +206,7 @@ export class Palette {
     }
 
     // add cancel button
-    var cancel = icon('palette-cancel', 'Close',  "/public/classes/palette/cancel.svg", (event) => this.destroy());
+    var cancel = icon('palette-cancel', 'Close',  "/public/client/classes/palette/cancel.svg", (event) => this.destroy());
     control.appendChild(cancel);
 
     var paletteWidth = 100, paletteHeight = 100, width, height;
@@ -242,7 +242,7 @@ export class Palette {
       }
 
       if (toShow.length > 1) {
-        var dot = icon('', getTitle(e), "/public/classes/palette/dot.svg", (event) => expandPanel(e, dot));
+        var dot = icon('', getTitle(e), "/public/client/classes/palette/dot.svg", (event) => expandPanel(e, dot));
         dot.classList.remove("hint--bottom");
         dot.classList.add("hint--right");
         

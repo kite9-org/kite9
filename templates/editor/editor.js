@@ -4,8 +4,8 @@
 
 // classes
 
-import { Containment } from '/github/kite9-org/kite9/classes/containment/containment.js?v=v0.2'
-import { Property } from '/github/kite9-org/kite9/classes/property/property.js?v=v0.2'
+import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.2'
+import { Property } from '/github/kite9-org/kite9/client/classes/property/property.js?v=v0.2'
 
 // Behaviours
 
@@ -32,7 +32,7 @@ import { initXMLContextMenuCallback } from '/github/kite9-org/kite9/behaviours/e
 import { initEditContextMenuCallback } from '/github/kite9-org/kite9/behaviours/editable/text/editable-text.js?v=v0.2'
 import { initEditableImageContextMenuCallback } from '/github/kite9-org/kite9/behaviours/editable/image/editable-image.js?v=v0.2'
 
-import { once } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
 
 /**
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 

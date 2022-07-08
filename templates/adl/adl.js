@@ -2,14 +2,14 @@
  * This contains basic kite9 classes that we can plug behaviours into, for manipulating ADL documents.
  */
 
-import { Instrumentation } from "/github/kite9-org/kite9/classes/instrumentation/instrumentation.js";
-import { Metadata } from "/github/kite9-org/kite9/classes/metadata/metadata.js";
-import { ContextMenu } from "/github/kite9-org/kite9/classes/context-menu/context-menu.js";
-import { Transition } from '/github/kite9-org/kite9/classes/transition/transition.js?v=v0.2'
-import { Dragger } from '/github/kite9-org/kite9/classes/dragger/dragger.js?v=v0.2'
-import { Containment } from '/github/kite9-org/kite9/classes/containment/containment.js?v=v0.2'
-import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/classes/command/command.js?v=v0.2'
-import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/classes/palette/palette.js?v=v0.2'
+import { Instrumentation } from "/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.js";
+import { Metadata } from "/github/kite9-org/kite9/client/classes/metadata/metadata.js";
+import { ContextMenu } from "/github/kite9-org/kite9/client/classes/context-menu/context-menu.js";
+import { Transition } from '/github/kite9-org/kite9/client/classes/transition/transition.js?v=v0.2'
+import { Dragger } from '/github/kite9-org/kite9/client/classes/dragger/dragger.js?v=v0.2'
+import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.2'
+import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/client/classes/command/command.js?v=v0.2'
+import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/client/classes/palette/palette.js?v=v0.2'
 
 //updatable
 import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/behaviours/updatable/updatable.js?v=v0.2'
@@ -32,7 +32,7 @@ import { initActionable } from '/github/kite9-org/kite9/behaviours/actionable/ac
 //hoverable
 import { initHoverable } from '/github/kite9-org/kite9/behaviours/hoverable/hoverable.js?v=v0.2'
 
-import { once } from '/github/kite9-org/kite9/bundles/ensure.js?v=v0.2'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.2'
 
 export const 
 	command = new Command(), 
