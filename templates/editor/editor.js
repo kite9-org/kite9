@@ -4,41 +4,41 @@
 
 // classes
 
-import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.6'
-import { Property } from '/github/kite9-org/kite9/client/classes/property/property.js?v=v0.6'
+import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.7'
+import { Property } from '/github/kite9-org/kite9/client/classes/property/property.js?v=v0.7'
 
 // Behaviours
 
 // dragable
-import { initCompleteDragable, initDragableDragLocator } from '/github/kite9-org/kite9/client/behaviours/dragable/dragable.js?v=v0.6' 
+import { initCompleteDragable, initDragableDragLocator } from '/github/kite9-org/kite9/client/behaviours/dragable/dragable.js?v=v0.7' 
 
 // selectable
-import { initDeleteContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/delete/selectable-delete.js?v=v0.6'
-import { initReplaceContextMenuCallback, initReplacePaletteCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/replace/selectable-replace.js?v=v0.6'
-import { initXCPContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/xcp/xcp.js?v=v0.6'
-import { initSelectable } from '/github/kite9-org/kite9/client/behaviours/selectable/selectable.js?v=v0.6'
+import { initDeleteContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/delete/selectable-delete.js?v=v0.7'
+import { initReplaceContextMenuCallback, initReplacePaletteCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/replace/selectable-replace.js?v=v0.7'
+import { initXCPContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/xcp/xcp.js?v=v0.7'
+import { initSelectable } from '/github/kite9-org/kite9/client/behaviours/selectable/selectable.js?v=v0.7'
 
 // indication
-import { initToggleInstrumentationCallback } from '/github/kite9-org/kite9/client/behaviours/indication/toggle/toggle.js?v=v0.6'
+import { initToggleInstrumentationCallback } from '/github/kite9-org/kite9/client/behaviours/indication/toggle/toggle.js?v=v0.7'
 
 // navigation
-import { closeMetadataCallback, initCloseInstrumentationCallback } from "/github/kite9-org/kite9/client/behaviours/navigable/close/close.js?v=v0.6";
+import { closeMetadataCallback, initCloseInstrumentationCallback } from "/github/kite9-org/kite9/client/behaviours/navigable/close/close.js?v=v0.7";
 
 // undo, redo, revisions
-import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "/github/kite9-org/kite9/client/behaviours/revisioned/undoable.js?v=v0.6";
+import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "/github/kite9-org/kite9/client/behaviours/revisioned/undoable.js?v=v0.7";
 
 // editing
-import { initXMLContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/xml/editable-xml.js?v=v0.6'
-import { initEditContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/text/editable-text.js?v=v0.6'
-import { initEditableImageContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/image/editable-image.js?v=v0.6'
+import { initXMLContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/xml/editable-xml.js?v=v0.7'
+import { initEditContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/text/editable-text.js?v=v0.7'
+import { initEditableImageContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/image/editable-image.js?v=v0.7'
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.6'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.7'
 
 /**
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 
  * plugin/behaviour system.
  */
-import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.6'
+import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.7'
 
 const 
 	containment = new Containment(),

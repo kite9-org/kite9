@@ -82,24 +82,24 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 			List<K9MediaType> putMediaType,
 			Authentication authentication) throws Exception {
 		
-		if (s.getSourceType(authentication) == SourceType.DIRECTORY) {
-			return outputDirectory(s, rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication);
-		} 
-
-		if ((s instanceof ModifiableDiagramAPI) && (((ModifiableAPI) s).getModificationType(authentication) == ModifiableAPI.ModificationType.CREATABLE)) {
-			return handleCreatableContent(req, authentication, rewrittenURI, (ModifiableDiagramAPI) s, putMediaType, headers);
-		}
-	
-		if (s instanceof DiagramAPI) {
-			DiagramAPI api = (DiagramAPI) s;
-			if (putMediaType.contains(api.getMediaType())) {
-				return unconvertedOutput(rewrittenURI, headers, authentication, api);
-			} else {
-				return convertDiagram(rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication, api);
-			}
-		}
-		
 		if (s instanceof SourceAPI) {
+			if (s.getSourceType(authentication) == SourceType.DIRECTORY) {
+				return outputDirectory(s, rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication);
+			} 
+
+			if ((s instanceof ModifiableDiagramAPI) && (((ModifiableAPI) s).getModificationType(authentication) == ModifiableAPI.ModificationType.CREATABLE)) {
+				return handleCreatableContent(req, authentication, rewrittenURI, (ModifiableDiagramAPI) s, putMediaType, headers);
+			}
+	
+			if (s instanceof DiagramAPI) {
+				DiagramAPI api = (DiagramAPI) s;
+				if (putMediaType.contains(api.getMediaType())) {
+					return unconvertedOutput(rewrittenURI, headers, authentication, api);
+				} else {
+					return convertDiagram(rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication, api);
+				}
+			}
+		
 			return unconvertedOutput(rewrittenURI, headers, authentication, (SourceAPI) s);
 		}
 		

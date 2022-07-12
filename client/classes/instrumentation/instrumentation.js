@@ -1,4 +1,4 @@
-import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.6'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.7'
 
 /**
  * Provides functionality for populating the instrumentation menu, keyboard shortcuts and interaction state (keys/mouse/touch etc).
@@ -8,7 +8,7 @@ export class Instrumentation {
 	constructor() {
 		this.callbacks = [];
 
-		ensureCss('/public/client/classes/instrumentation/instrumentation.css?v=v0.6');
+		ensureCss('/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.css?v=v0.7');
 		
 		this.nav = document.getElementById("_instrumentation");
 		if (this.nav == undefined) {

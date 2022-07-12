@@ -9,7 +9,7 @@
   
   
   <xsl:template match="/" mode="diagram-script">
-     import '/github/kite9-org/kite9/templates/uml/uml.js?v=v0.6'
+     import '/github/kite9-org/kite9/templates/uml/uml.js?v=v0.7'
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">

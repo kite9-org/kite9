@@ -37,7 +37,7 @@ export function initChildContextMenuCallback(command, selector) {
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/public/client/behaviours/containers/child/add.svg", "Add Child", 
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/child/add.svg", "Add Child", 
 				function(e2) {
 					selectedElements.forEach(e => {
 						const uri = getElementUri(e);

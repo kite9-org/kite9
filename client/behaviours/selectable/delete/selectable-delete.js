@@ -1,4 +1,4 @@
-import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement } from "/public/client/bundles/api.js?v=v0.6";
+import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement } from "/github/kite9-org/kite9/client/bundles/api.js?v=v0.7";
 
 
 export function initDeleteContextMenuCallback(command, selector, cascade, orphan) {

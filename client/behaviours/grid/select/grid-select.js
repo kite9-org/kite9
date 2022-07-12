@@ -1,4 +1,4 @@
-import { hasLastSelected, getParentElement, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.6'
+import { hasLastSelected, getParentElement, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.7'
 
 
 export function initSelectContextMenuCallback(selector) {
