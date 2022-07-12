@@ -1,7 +1,7 @@
-import { Modal } from '/github/kite9-org/kite9/client/classes/modal/modal.js?v=v0.7'
-import { hasLastSelected, encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.7'
-import { form, ok, cancel, inlineButtons, formFields } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.7'
-import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.7'
+import { Modal } from '/github/kite9-org/kite9/client/classes/modal/modal.js?v=v0.8'
+import { hasLastSelected, encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { form, ok, cancel, inlineButtons, formFields } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
 import '/webjars/codemirror/5.58.3/lib/codemirror.js';
 import '/webjars/codemirror/5.58.3/mode/xml/xml.js';
 

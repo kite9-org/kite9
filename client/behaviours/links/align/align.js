@@ -1,5 +1,5 @@
-import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, reverseDirection } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.7'
-import { getMainSvg, getElementPageBBox } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.7'
+import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, reverseDirection } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg, getElementPageBBox } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
 
 
 export function initAlignContextMenuCallback(command, templateUri, selector) {

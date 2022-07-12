@@ -6,7 +6,7 @@
 @import url(/github/kite9-org/kite9/templates/links/links-textures.css);
 @import url(/github/kite9-org/kite9/templates/highlight/highlight.css);
 @import url(/github/kite9-org/kite9/templates/editor/editor.css);
-@import url(/github/kite9-org/kite9/client/fonts/metropolis/metropolis.css?v=v0.7);
+@import url(/github/kite9-org/kite9/client/fonts/metropolis/metropolis.css?v=v0.8);
 
 [k9-elem=box] > [k9-texture=background] {
 	fill: #CCCCAA;

@@ -1,6 +1,6 @@
-import { hasLastSelected, isConnected, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.7'
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.7'
-import { drawBar, clearBar } from  '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.7'
+import { hasLastSelected, isConnected, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { drawBar, clearBar } from  '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.8'
 
 function getLayout(e) {
 	if (e==null) {

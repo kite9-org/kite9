@@ -2,37 +2,37 @@
  * This contains basic kite9 classes that we can plug behaviours into, for manipulating ADL documents.
  */
 
-import { Instrumentation } from "/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.js?v=v0.7";
-import { Metadata } from "/github/kite9-org/kite9/client/classes/metadata/metadata.js?v=v0.7";
-import { ContextMenu } from "/github/kite9-org/kite9/client/classes/context-menu/context-menu.js?v=v0.7";
-import { Transition } from '/github/kite9-org/kite9/client/classes/transition/transition.js?v=v0.7'
-import { Dragger } from '/github/kite9-org/kite9/client/classes/dragger/dragger.js?v=v0.7'
-import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.7'
-import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/client/classes/command/command.js?v=v0.7'
-import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/client/classes/palette/palette.js?v=v0.7'
+import { Instrumentation } from "/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.js?v=v0.8";
+import { Metadata } from "/github/kite9-org/kite9/client/classes/metadata/metadata.js?v=v0.8";
+import { ContextMenu } from "/github/kite9-org/kite9/client/classes/context-menu/context-menu.js?v=v0.8";
+import { Transition } from '/github/kite9-org/kite9/client/classes/transition/transition.js?v=v0.8'
+import { Dragger } from '/github/kite9-org/kite9/client/classes/dragger/dragger.js?v=v0.8'
+import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.8'
+import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/client/classes/command/command.js?v=v0.8'
+import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/client/classes/palette/palette.js?v=v0.8'
 
 //updatable
-import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/client/behaviours/updatable/updatable.js?v=v0.7'
+import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/client/behaviours/updatable/updatable.js?v=v0.8'
 
 // animation
-import { initTransitionAnimationCallback } from '/github/kite9-org/kite9/client/behaviours/animation/animation.js?v=v0.7'
+import { initTransitionAnimationCallback } from '/github/kite9-org/kite9/client/behaviours/animation/animation.js?v=v0.8'
 
 //identity
-import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/github/kite9-org/kite9/client/behaviours/identity/identity.js?v=v0.7";
+import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/github/kite9-org/kite9/client/behaviours/identity/identity.js?v=v0.8";
 
 //zoomable
-import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/github/kite9-org/kite9/client/behaviours/zoomable/zoomable.js?v=v0.7";
+import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/github/kite9-org/kite9/client/behaviours/zoomable/zoomable.js?v=v0.8";
 
 //dragable
-import { initDragable, initMainHoverableAllowed } from '/github/kite9-org/kite9/client/behaviours/dragable/dragable.js?v=v0.7' 
+import { initDragable, initMainHoverableAllowed } from '/github/kite9-org/kite9/client/behaviours/dragable/dragable.js?v=v0.8' 
 
 // actionable 
-import { initActionable } from '/github/kite9-org/kite9/client/behaviours/actionable/actionable.js?v=v0.7' 
+import { initActionable } from '/github/kite9-org/kite9/client/behaviours/actionable/actionable.js?v=v0.8' 
 
 //hoverable
-import { initHoverable } from '/github/kite9-org/kite9/client/behaviours/hoverable/hoverable.js?v=v0.7'
+import { initHoverable } from '/github/kite9-org/kite9/client/behaviours/hoverable/hoverable.js?v=v0.8'
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.7'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
 
 export const 
 	command = new Command(), 

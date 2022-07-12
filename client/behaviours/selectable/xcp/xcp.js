@@ -1,6 +1,6 @@
-import { hasLastSelected, encodeADLElement, getParentElement, getNextSiblingId, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.7'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.7'
-import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.7'
+import { hasLastSelected, encodeADLElement, getParentElement, getNextSiblingId, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.8'
 
 /**
  * Handles cut, copy, paste.

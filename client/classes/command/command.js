@@ -1,5 +1,5 @@
-import { getMainSvg } from "/github/kite9-org/kite9/client/bundles/screen.js?v=v0.7";
-import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.7'
+import { getMainSvg } from "/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8";
+import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
 
 /**
  * Command handles the flow of commands through the system, and the undo/redo log and

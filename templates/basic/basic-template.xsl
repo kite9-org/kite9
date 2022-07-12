@@ -8,15 +8,15 @@
 
   <xsl:template match="/" mode="diagram-element-css">
     <xsl:call-template name="adl-diagram-element-css" />
-    <adl:css>@import url('/github/kite9-org/kite9/templates/basic/basic-elements.css?v=v0.7');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/basic/basic-elements.css?v=v0.8');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-texture-css">
-    <adl:css>@import url('/github/kite9-org/kite9/templates/basic/basic-textures.css?v=v0.7');</adl:css>
+    <adl:css>@import url('/github/kite9-org/kite9/templates/basic/basic-textures.css?v=v0.8');</adl:css>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">
-    import '/github/kite9-org/kite9/templates/basic/basic.js?v=v0.7'
+    import '/github/kite9-org/kite9/templates/basic/basic.js?v=v0.8'
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-constants">
@@ -28,7 +28,7 @@
   </xsl:template> 
   
   <xsl:template match="/" mode="diagram-palettes">
-    <adl:palette contains="connected" url="/github/kite9-org/kite9/templates/basic/palette.adl?v=v0.7" />
+    <adl:palette contains="connected" url="/github/kite9-org/kite9/templates/basic/palette.adl?v=v0.8" />
   	<xsl:call-template name="adl-diagram-palettes" />
   </xsl:template>
   
