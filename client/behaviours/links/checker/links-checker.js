@@ -1,5 +1,5 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.5'
-import { parseInfo, getParentElement, getNextSiblingId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.5'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.6'
+import { parseInfo, getParentElement, getNextSiblingId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.6'
 
 /**
  * This is added to drag-and-drop to make sure that any time we move an object

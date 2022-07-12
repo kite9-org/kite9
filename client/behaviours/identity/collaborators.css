@@ -1,13 +1,13 @@
 @font-face {
 	font-family: "metropolis";
-	src: url('/github/kite9-org/kite9/client/fonts/metropolis/Metropolis-Regular.ttf?v=v0.5')
+	src: url('/github/kite9-org/kite9/client/fonts/metropolis/Metropolis-Regular.ttf?v=v0.6')
 		format('truetype');
 	font-weight: 400;
 }
 
 @font-face {
 	font-family: "metropolis";
-	src: url('/github/kite9-org/kite9/client/fonts/metropolis/Metropolis-Light.ttf?v=v0.5')
+	src: url('/github/kite9-org/kite9/client/fonts/metropolis/Metropolis-Light.ttf?v=v0.6')
 		format('truetype');
 	font-weight: 200;
 }

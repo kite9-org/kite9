@@ -1,5 +1,5 @@
-import { suffixIds } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.5'
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.5'
+import { suffixIds } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.6'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.6'
 
 /**
  * Provides functionality for populating/ showing/ hiding a palette.  
@@ -38,7 +38,7 @@ export class Palette {
       link.id = cssId;
       link.rel = 'stylesheet';
       link.type = 'text/css';
-      link.href = '/public/client/classes/palette/palette.css';
+      link.href = '/github/kite9-org/kite9/client/classes/palette/palette.css?v=v0.6';
       link.media = 'all';
       head.appendChild(link);
     }

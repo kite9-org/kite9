@@ -22,7 +22,7 @@ public class PublicGithubIT extends AbstractRestIT {
 	
 	public static final String ADL_EXAMPLE = "/public/examples/basic.adl";
 	public static final String MINIMAL = "/github/kite9-org/kite9/templates/risk-first/examples/minimal.adl";
-	public static final String JS = "/github/kite9-org/kite9/client/behaviours/actionable/actionable.js?v=v0.5";
+	public static final String JS = "/github/kite9-org/kite9/client/behaviours/actionable/actionable.js?v=v0.6";
 
 	protected byte[] loadStaticHtml(String page) throws Exception {
 		HttpHeaders headers = new HttpHeaders();

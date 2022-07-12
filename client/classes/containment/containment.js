@@ -1,4 +1,4 @@
-import { getParentElement, getContainerChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.5'
+import { getParentElement, getContainerChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.6'
 
 export const WILDCARD = "*";
 

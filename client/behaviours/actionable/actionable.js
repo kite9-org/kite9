@@ -1,4 +1,4 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.5'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.6'
 
 /**
  * Allows the context menu to appear when the user clicks an element with an id

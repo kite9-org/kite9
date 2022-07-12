@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-weight: 400;
-  src: url('/github/kite9-org/kite9/client/fonts/fontawesome/fa-regular-400.ttf?v=v0.5') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/fontawesome/fa-regular-400.ttf?v=v0.6') format('truetype');
 }
 
 @font-face {
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
-  src: url('/github/kite9-org/kite9/client/fonts/fontawesome/fa-solid-900.ttf?v=v0.5') format('truetype');
+  src: url('/github/kite9-org/kite9/client/fonts/fontawesome/fa-solid-900.ttf?v=v0.6') format('truetype');
 }

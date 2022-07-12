@@ -2,19 +2,19 @@
  * This composes the basic edit behaviour of the application
  */
 
-import { metadata, transition, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.5'
+import { metadata, transition, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.6'
 
 // navigation
-import { initFocusContextMenuCallback, initFocusMetadataCallback, initFocus } from '/github/kite9-org/kite9/behaviours/navigable/focus/focus.js?v=v0.5'
-import { initOpenContextMenuCallback } from '/github/kite9-org/kite9/behaviours/navigable/open/open.js?v=v0.5'
+import { initFocusContextMenuCallback, initFocusMetadataCallback, initFocus } from '/github/kite9-org/kite9/client/behaviours/navigable/focus/focus.js?v=v0.6'
+import { initOpenContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/navigable/open/open.js?v=v0.6'
 
 // rest stuff
-import { initNewDocumentContextMenuCallback, initTemplateSource } from '/github/kite9-org/kite9/behaviours/rest/NewDocument/NewDocument.js?v=v0.5'
+import { initNewDocumentContextMenuCallback, initTemplateSource } from '/github/kite9-org/kite9/client/behaviours/rest/NewDocument/NewDocument.js?v=v0.6'
 
 //selectable
-import { initSelectable } from '/github/kite9-org/kite9/behaviours/selectable/selectable.js?v=v0.5'
+import { initSelectable } from '/github/kite9-org/kite9/client/behaviours/selectable/selectable.js?v=v0.6'
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.5'
+import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.6'
 
 
 once(function() {
