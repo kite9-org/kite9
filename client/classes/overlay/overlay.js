@@ -1,4 +1,4 @@
-import { getHtmlCoords } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { getHtmlCoords } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
 
 
 /**
@@ -16,7 +16,7 @@ export class Overlay {
 		    link.id   = cssId;
 		    link.rel  = 'stylesheet';
 		    link.type = 'text/css';
-		    link.href = '/github/kite9-org/kite9/client/classes/overlay/overlay.css?v=v0.8';
+		    link.href = '/github/kite9-org/kite9/client/classes/overlay/overlay.css?v=v0.9';
 		    link.media = 'all';
 		    head.appendChild(link);
 		}

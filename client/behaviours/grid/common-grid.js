@@ -1,4 +1,4 @@
-import { parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 export function getOrdinal(index, ordinals) {

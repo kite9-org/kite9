@@ -1,7 +1,7 @@
-import { icon, numeric, change, form } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
-import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { getOrdinals } from '/github/kite9-org/kite9/client/behaviours/grid/common-grid.js?v=v0.8'
+import { icon, numeric, change, form } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
+import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { getOrdinals } from '/github/kite9-org/kite9/client/behaviours/grid/common-grid.js?v=v0.9'
 
 function getMinGridSize(e) {
 	const info = parseInfo(e);
@@ -170,7 +170,7 @@ export function initGridLayoutPropertyFormCallback() {
 				(evt) => cols = number(evt.target.value))
 			]));
 		
-		var img2 = contextMenu.addControl(event, "/public/behaviours/containers/layout/grid.svg","Grid", undefined);
+		var img2 = contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/layout/grid.svg","Grid", undefined);
 		img2.children[0].style.borderRadius = "0px";
 		img2.setAttribute("title", "grid");
 		img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));

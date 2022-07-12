@@ -1,7 +1,7 @@
-import { hasLastSelected } from "/github/kite9-org/kite9/client/bundles/api.js?v=v0.8";
-import { form, ok, cancel, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
+import { hasLastSelected } from "/github/kite9-org/kite9/client/bundles/api.js?v=v0.9";
+import { form, ok, cancel, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
 
-const LOADING = '/public/behaviours/rest/loading.svg';
+const LOADING = '/github/kite9-org/kite9/client/behaviours/rest/loading.svg';
 
 const DEFAULT_TEMPLATES = {
   "documents": [
@@ -144,7 +144,7 @@ export function initNewDocumentContextMenuCallback(command, metadata, templateSo
     }
 
     if (e) {
-      cm.addControl(event, "/public/behaviours/rest/NewDocument/add.svg", "New Document",
+      cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/rest/NewDocument/add.svg", "New Document",
         function(e2, selector) {
           cm.clear(event);
           const templateUri = text('Template Uri', undefined, { 'required': true });

@@ -1,4 +1,4 @@
-import { hasLastSelected, getParentElement, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { hasLastSelected, getParentElement, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 export function initSelectContextMenuCallback(selector) {
@@ -44,8 +44,8 @@ export function initSelectContextMenuCallback(selector) {
 		const e = hasLastSelected(selector());
 		
 		if (e.length > 0) {
-			cm.addControl(event, "/public/behaviours/grid/select/vertical.svg",  "Select Column", () => performSelect(cm, event, false, selector()));
-			cm.addControl(event, "/public/behaviours/grid/select/horizontal.svg",  "Select Row", () => performSelect(cm, event, true, selector()));
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/grid/select/vertical.svg",  "Select Column", () => performSelect(cm, event, false, selector()));
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/grid/select/horizontal.svg",  "Select Row", () => performSelect(cm, event, true, selector()));
 		}
 	}
 	

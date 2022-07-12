@@ -121,9 +121,9 @@ public abstract class AbstractPublicEntityConverter {
 					@Override
 					public String getIcon() {
 						if (hasIcon(d.getFilename())) {
-							return "/public/templates/admin/icons/"+getExtension(d.getFilename())+".svg";
+							return "/github/kite9-org/kite9/templates/admin/icons/"+getExtension(d.getFilename())+".svg?v=v0.9";
 						} else {
-							return "/public/templates/admin/icons/unknown.svg";
+							return "/github/kite9-org/kite9/templates/admin/icons/unknown.svg?v=v0.9";
 						}
 					}
 					

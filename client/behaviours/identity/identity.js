@@ -1,9 +1,9 @@
-import { icon, fieldset, form, cancel } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
-import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
+import { icon, fieldset, form, cancel } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
 
 const NO_USER = {
 	name: "Anonymous",
-	icon:  '/public/behaviours/identity/user.svg',
+	icon:  '/github/kite9-org/kite9/client/behaviours/identity/user.svg',
 }
 
 var currentUser = NO_USER;
@@ -92,7 +92,7 @@ function updateUser(user, alert, notification) {
 export function initIdentityInstrumentationCallback() {
 	return function(nav) {
 		navigator = nav;
-		ensureCss('/public/behaviours/identity/collaborators.css?v=v0.8');
+		ensureCss('/github/kite9-org/kite9/client/behaviours/identity/collaborators.css?v=v0.9');
 		updateUser(currentUser);
 	}
 }

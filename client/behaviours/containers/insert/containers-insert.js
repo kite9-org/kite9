@@ -1,6 +1,6 @@
-import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { getBefore } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.8'
+import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { getBefore } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.9'
 
 
 function defaultInsertSelector() {
@@ -129,7 +129,7 @@ export function initInsertContextMenuCallback(palette, containment, selector) {
 			const allowed = containment.canInsert(selectedElements);
 			if (allowed) {
 				// console.log("Allowing insert with types: "+allowedTypes);
-				contextMenu.addControl(event, "/public/behaviours/containers/insert/insert.svg", "Insert",
+				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/insert/insert.svg", "Insert",
 					function(e2, selector) {
 						contextMenu.destroy();
 						// primes this based on the screen.

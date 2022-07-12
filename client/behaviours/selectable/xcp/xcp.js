@@ -1,6 +1,6 @@
-import { hasLastSelected, encodeADLElement, getParentElement, getNextSiblingId, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.8'
+import { hasLastSelected, encodeADLElement, getParentElement, getNextSiblingId, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.9'
 
 /**
  * Handles cut, copy, paste.
@@ -132,20 +132,20 @@ export function initXCPContextMenuCallback(command, metadata, containment, cutSe
 		if (copyElements.length > 0) {
 		
 			if (cutElements.length > 0) {
-				contextMenu.addControl(event, "/public/behaviours/selectable/xcp/cut.svg", "Cut", (e2, selector) => {
+				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/selectable/xcp/cut.svg", "Cut", (e2, selector) => {
 					contextMenu.destroy();
 					performCopy(Array.from(copyElements), Array.from(cutElements));
 				});
 			}
 			
-			contextMenu.addControl(event, "/public/behaviours/selectable/xcp/copy.svg", "Copy", (e2, selector) => {
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/selectable/xcp/copy.svg", "Copy", (e2, selector) => {
 				contextMenu.destroy();
 				performCopy(Array.from(copyElements), []);
 			});
 		}
 		
 		if (pasteElements.length > 0) {
-			contextMenu.addControl(event, "/public/behaviours/selectable/xcp/paste.svg", "Paste", (e2, selector) => {
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/selectable/xcp/paste.svg", "Paste", (e2, selector) => {
 				contextMenu.destroy();
 				performPaste(event, Array.from(copyElements));
 			});

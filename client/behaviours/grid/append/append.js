@@ -1,5 +1,5 @@
-import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { nextOrdinal, getOrdinals  } from '/github/kite9-org/kite9/client/behaviours/grid/common-grid.js?v=v0.8' 
+import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { nextOrdinal, getOrdinals  } from '/github/kite9-org/kite9/client/behaviours/grid/common-grid.js?v=v0.9' 
 
 
 export function initCellAppendContextMenuCallback(command, selector) {
@@ -131,12 +131,12 @@ export function initCellAppendContextMenuCallback(command, selector) {
 				cm.clear(event);
 
 				["right", "down", "left", "up"].forEach(s => {
-					cm.addControl(event, "/public/behaviours/grid/append/" + s.toLowerCase() + ".svg", 
+					cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/grid/append/" + s.toLowerCase() + ".svg", 
 							"Append (" + s + ")", () => appendsCells(selector(), s, cm));
 				});
 			}
 			
-			cm.addControl(event, "/public/behaviours/grid/append/append.svg", 'Append', () => handleClick());
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/grid/append/append.svg", 'Append', () => handleClick());
 		}
 	}
 	

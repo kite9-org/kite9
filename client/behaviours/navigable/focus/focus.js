@@ -1,5 +1,5 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { hasLastSelected } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { hasLastSelected } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 export function initFocusContextMenuCallback(command, selector) {
@@ -18,7 +18,7 @@ export function initFocusContextMenuCallback(command, selector) {
 		const e = hasLastSelected(selector(), true);
 		
 		if (e) {
-			contextMenu.addControl(event, "/public/behaviours/navigable/focus/focus.svg", "Focus On",
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/navigable/focus/focus.svg", "Focus On",
 				function(e2, selector) {
 					contextMenu.destroy();
 					var url = e.getAttribute("id");

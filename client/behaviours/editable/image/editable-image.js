@@ -1,10 +1,10 @@
-import { hasLastSelected} from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { icon, form, text, p, inlineButtons, ok, cancel, formValues, img, fieldset, div } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
+import { hasLastSelected} from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { icon, form, text, p, inlineButtons, ok, cancel, formValues, img, fieldset, div } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
 
-const LOADING = '/public/behaviours/editable/image/loading.svg';
-const SUCCESS = '/public/behaviours/editable/image/success.svg';
-const FAIL = '/public/behaviours/editable/image/fail.svg';
+const LOADING = '/github/kite9-org/kite9/client/behaviours/editable/image/loading.svg';
+const SUCCESS = '/github/kite9-org/kite9/client/behaviours/editable/image/success.svg';
+const FAIL = '/github/kite9-org/kite9/client/behaviours/editable/image/fail.svg';
 
 export function initEditableImageContextMenuCallback(command, metadata, selector) {
 	
@@ -87,7 +87,7 @@ export function initEditableImageContextMenuCallback(command, metadata, selector
 
 		if (elements.length> 0) {
 			const last = hasLastSelected(elements, true);
-			contextMenu.addControl(event, "/public/behaviours/editable/image/edit.svg", 'Edit Image', () => {
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/editable/image/edit.svg", 'Edit Image', () => {
 				const href =  last.getAttribute("href");
 								
 				contextMenu.clear();

@@ -1,5 +1,5 @@
-import { hasLastSelected } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { textarea, form, ok, cancel, inlineButtons, formValues } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
+import { hasLastSelected } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { textarea, form, ok, cancel, inlineButtons, formValues } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
 
 export function initEditContextMenuCallback(command, selector, textCollector) {
 	
@@ -37,7 +37,7 @@ export function initEditContextMenuCallback(command, selector, textCollector) {
 		
 		if (selectedElements.length > 0) {
 			
-			cm.addControl(event, "/public/behaviours/editable/text/edit.svg", 'Edit Text', () => {
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/editable/text/edit.svg", 'Edit Text', () => {
 				const defaultText = textCollector(hasLastSelected(selectedElements, true));
 				cm.clear();
 				var htmlElement = cm.get(event);

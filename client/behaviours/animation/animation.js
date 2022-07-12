@@ -1,5 +1,5 @@
-import { parseTransform, number, handleTransformAsStyle } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { parseTransform, number, handleTransformAsStyle } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
 
 /**
  * Somehow, someday, make these extensible

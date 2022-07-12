@@ -1,6 +1,6 @@
-import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId, getParentElements } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.8'
+import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId, getParentElements } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { getBeforeId } from '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.9'
 
 
 function defaultContainSelector() {
@@ -98,7 +98,7 @@ export function initContainContextMenuCallback(palette, containment, selector) {
 			const parentElements = getParentElements(selectedElements);
 			
 			if (containment.canInsert(parentElements, selectedElements)) {
-				contextMenu.addControl(event, "/public/behaviours/containers/contain/contain.svg", "Contain", 
+				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/contain/contain.svg", "Contain", 
 					function(e2) {
 						contextMenu.destroy();
 						palette.open(

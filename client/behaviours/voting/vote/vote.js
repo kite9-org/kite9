@@ -1,5 +1,5 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId, encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId, encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 export function voteableSelector() {
@@ -74,14 +74,14 @@ export function initVoteContextMenuCallback(command, metadata, selector) {
 		
 		if (selectedElement) {
 			if (canVote(selectedElement, true)) {
-				contextMenu.addControl(event, "/public/behaviours/voting/vote/up.svg", "Vote Up", 
+				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/voting/vote/up.svg", "Vote Up", 
 					function(e2, selector) {
 						contextMenu.destroy();
 						addVote(selectedElement);
 						command.perform();
 					});
 			} else if (canVote(selectedElement, false)) {
-				contextMenu.addControl(event, "/public/behaviours/voting/vote/down.svg", "Vote Down", 
+				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/voting/vote/down.svg", "Vote Down", 
 					function(e2, selector) {
 						contextMenu.destroy();
 						removeVote(selectedElement);

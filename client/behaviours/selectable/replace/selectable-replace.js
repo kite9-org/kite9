@@ -1,5 +1,5 @@
-import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElements, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElements, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
 
 /**
  * k9-palette attribute says which type of element this is.  The element can be replaced with another element of the same type.
@@ -113,7 +113,7 @@ export function initReplaceContextMenuCallback(palette, containment, selector) {
 			
 			if (containment.canContainAll(selectedElements, parents)) {
 				// console.log("Allowing replace with types: "+allowedTypes);
-				contextMenu.addControl(event, "/public/behaviours/selectable/replace/replace.svg",
+				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/selectable/replace/replace.svg",
 						"Replace", 
 						function(e2, selector) {
 					contextMenu.destroy();

@@ -1,4 +1,4 @@
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
 
 
 var undo, redo; 	// buttons
@@ -18,7 +18,7 @@ function ensureButton(nav, name, cb) {
 	
 	if (b == undefined) {
 		var b = icon('_'+name, name, 
-				 "/public/behaviours/revisioned/"+name+".svg",
+				 "/github/kite9-org/kite9/client/behaviours/revisioned/"+name+".svg",
 				 cb);
 		nav.appendChild(b);
 	}

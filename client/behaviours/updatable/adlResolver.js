@@ -1,12 +1,12 @@
-import { ensureJs, once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
-import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { ensureJs, once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 export function createAdlToSVGResolver(transition, command, metadata) {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
-	const DEFAULT_TEMPLATE = "/public/templates/basic/basic-template.xsl";
+	const DEFAULT_TEMPLATE = "/github/kite9-org/kite9/templates/basic/basic-template.xsl?v=v0.9";
     const META_NAMESPACE = "http://www.kite9.org/schema/metadata";
 
 

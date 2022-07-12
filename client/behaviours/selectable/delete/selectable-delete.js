@@ -1,4 +1,4 @@
-import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement } from "/github/kite9-org/kite9/client/bundles/api.js?v=v0.8";
+import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement } from "/github/kite9-org/kite9/client/bundles/api.js?v=v0.9";
 
 
 export function initDeleteContextMenuCallback(command, selector, cascade, orphan) {
@@ -65,7 +65,7 @@ export function initDeleteContextMenuCallback(command, selector, cascade, orphan
 		const e = hasLastSelected(selector());
 		
 		if (e.length > 0){
-			cm.addControl(event, "/public/behaviours/selectable/delete/delete.svg", 'Delete', () => performDelete(cm));
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/selectable/delete/delete.svg", 'Delete', () => performDelete(cm));
 		}
 	}
 }

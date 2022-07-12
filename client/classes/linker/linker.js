@@ -1,5 +1,5 @@
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js' ;
-import { createUniqueId, parseInfo, onlyUnique, changeId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8' 
+import { createUniqueId, parseInfo, onlyUnique, changeId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9' 
 
 /**
  * Provides functionality for drawing links on the diagram, and keeping track of them.

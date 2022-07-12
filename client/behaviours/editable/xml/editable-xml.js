@@ -1,7 +1,7 @@
-import { Modal } from '/github/kite9-org/kite9/client/classes/modal/modal.js?v=v0.8'
-import { hasLastSelected, encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { form, ok, cancel, inlineButtons, formFields } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
-import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
+import { Modal } from '/github/kite9-org/kite9/client/classes/modal/modal.js?v=v0.9'
+import { hasLastSelected, encodeADLElement } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { form, ok, cancel, inlineButtons, formFields } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
 import '/webjars/codemirror/5.58.3/lib/codemirror.js';
 import '/webjars/codemirror/5.58.3/mode/xml/xml.js';
 
@@ -46,7 +46,7 @@ export function initXMLContextMenuCallback(command, selector, xmlCollector) {
     if (selectedElements.length == 1) {
       const theElement = selectedElements[0];
 
-      cm.addControl(event, "/public/behaviours/editable/xml/xml.svg", 'Edit XML', () => {
+      cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/editable/xml/xml.svg", 'Edit XML', () => {
         const defaultText = xmlCollector(theElement);
         cm.destroy();
         xmlModal.clear();

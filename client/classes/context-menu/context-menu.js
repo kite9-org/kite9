@@ -1,7 +1,7 @@
-import { getHtmlCoords } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
-import { number } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getHtmlCoords } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
+import { number } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 /**
  * Provides functionality for populating the context menu.  Takes a number of callbacks
@@ -12,7 +12,7 @@ export class ContextMenu {
 	constructor(instrumentation) {
 		this.instrumentation = instrumentation;
 		this.callbacks = [];
-		ensureCss('/github/kite9-org/kite9/client/classes/context-menu/context-menu.css?v=v0.8');
+		ensureCss('/github/kite9-org/kite9/client/classes/context-menu/context-menu.css?v=v0.9');
 		
 		this.moving = undefined;
 		this.offsetCoords = undefined;

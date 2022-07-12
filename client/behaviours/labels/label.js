@@ -1,5 +1,5 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 export function labelableSelector() {
@@ -50,7 +50,7 @@ export function initLabelContextMenuCallback(command, templateUri, selector, act
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/public/behaviours/labels/label.svg", "Add Label", 
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/labels/label.svg", "Add Label", 
 				function(e2, selector) {
 					contextMenu.destroy();
 					selectedElements.forEach(e => action(e, templateUri, command));

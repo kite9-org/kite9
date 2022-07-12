@@ -1,5 +1,5 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 export function initDirectionContextMenuCallback(command, selector) {
 	
@@ -43,10 +43,10 @@ export function initDirectionContextMenuCallback(command, selector) {
 		
 		if (direction != "null") {
 			title= "Link Direction ("+direction+")";
-			src = "/public/behaviours/links/direction/"+direction.toLowerCase()+".svg";
+			src = "/github/kite9-org/kite9/client/behaviours/links/direction/"+direction.toLowerCase()+".svg";
 		} else {
 			title =  "Link Direction (undirected)";
-			src =  "/public/behaviours/links/direction/undirected.svg";				
+			src =  "/github/kite9-org/kite9/client/behaviours/links/direction/undirected.svg";				
 		}
 
 		var a = cm.addControl(event, src, title);

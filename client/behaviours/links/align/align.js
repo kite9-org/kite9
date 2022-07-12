@@ -1,5 +1,5 @@
-import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, reverseDirection } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg, getElementPageBBox } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, reverseDirection } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg, getElementPageBBox } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
 
 
 export function initAlignContextMenuCallback(command, templateUri, selector) {
@@ -125,8 +125,8 @@ export function initAlignContextMenuCallback(command, templateUri, selector) {
 		const e = hasLastSelected(selector());
 		
 		if (e.length > 1) {
-			cm.addControl(event, "/public/behaviours/links/align/align-horiz.svg", "Horizontal Align",() => performAlign(cm, true));
-			cm.addControl(event, "/public/behaviours/links/align/align-vert.svg", "Vertical Align",() => performAlign(cm, false));
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/links/align/align-horiz.svg", "Horizontal Align",() => performAlign(cm, true));
+			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/links/align/align-vert.svg", "Vertical Align",() => performAlign(cm, false));
 		}
 	}
 }

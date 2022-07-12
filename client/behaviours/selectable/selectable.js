@@ -1,5 +1,5 @@
-import { getMainSvg, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { getKite9Target } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { getKite9Target } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 
 // Adds .selected class when the user mouseups over an element.

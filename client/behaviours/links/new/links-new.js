@@ -1,5 +1,5 @@
-import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
+import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
 
 function defaultInsertableSelector(palettePanel) {
 	return palettePanel.querySelectorAll("[id][k9-palette]");	
@@ -103,7 +103,7 @@ export function initNewLinkContextMenuCallback(palette, containment, selector) {
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/public/behaviours/links/new/new-link.svg", "Linked Insert",
+			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/links/new/new-link.svg", "Linked Insert",
 				function(e2, selector) {
 					contextMenu.destroy();
 					// primes this based on the screen.

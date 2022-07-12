@@ -1,6 +1,6 @@
-import { getMainSvg, is_touch_device4 } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
-import { number } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
+import { getMainSvg, is_touch_device4 } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
+import { number } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
 
 var magnification = null;
 const main = document.querySelector("div.main");
@@ -98,11 +98,11 @@ export function zoomableInstrumentationCallback(nav) {
 	var zoomOut = nav.querySelector("#_zoom-out");
 	
 	if (zoomIn == undefined) {
-		nav.appendChild(icon('_zoom-in', "Zoom In", "/public/behaviours/zoomable/zoom_in.svg", () => setScale(magnification * 1.3))); 
+		nav.appendChild(icon('_zoom-in', "Zoom In", "/github/kite9-org/kite9/client/behaviours/zoomable/zoom_in.svg", () => setScale(magnification * 1.3))); 
 	}
 	
 	if (zoomOut == undefined) {
-		nav.appendChild(icon('_zoom-out', "Zoom Out", "/public/behaviours/zoomable/zoom_out.svg", () => setScale(magnification / 1.3))); 
+		nav.appendChild(icon('_zoom-out', "Zoom Out", "/github/kite9-org/kite9/client/behaviours/zoomable/zoom_out.svg", () => setScale(magnification / 1.3))); 
 	}
 	
 }

@@ -1,6 +1,6 @@
-import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.8'
-import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.8'
+import { getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { ensureCss } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { icon } from '/github/kite9-org/kite9/client/bundles/form.js?v=v0.9'
 
 
 export function initToggleInstrumentationCallback(on) {
@@ -16,7 +16,7 @@ export function initToggleInstrumentationCallback(on) {
 	
 		if (toggle == undefined) {
 	
-		    toggle = nav.appendChild(icon('_indication-toggle', "Toggle Indicators", '/public/behaviours/indication/toggle/toggle.svg', function() {
+		    toggle = nav.appendChild(icon('_indication-toggle', "Toggle Indicators", '/github/kite9-org/kite9/client/behaviours/indication/toggle/toggle.svg', function() {
 		    	if (main.classList.contains('indicators-on')) {
 		    		main.classList.remove('indicators-on');
 		    		toggle.classList.remove('on');

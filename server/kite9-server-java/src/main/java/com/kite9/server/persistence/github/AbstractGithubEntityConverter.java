@@ -51,7 +51,7 @@ public abstract class AbstractGithubEntityConverter {
 
 			@Override
 			public String getIcon() {
-				return "/public/templates/admin/icons/github.png";
+				return "/github/kite9-org/kite9/templates/admin/icons/github.png?v=v0.9";
 			}
 
 			@Override
@@ -89,7 +89,7 @@ public abstract class AbstractGithubEntityConverter {
 
 			@Override
 			public String getIcon() {
-				return "/public/templates/admin/icons/github.png";
+				return "/github/kite9-org/kite9/templates/admin/icons/github.png?v=v0.9";
 			}
 
 			@Override
@@ -281,9 +281,9 @@ public abstract class AbstractGithubEntityConverter {
 				if (fs.getFormatFor(c.getName()) instanceof DiagramFileFormat) {
 					return l.getHref();	
 				} else if (hasIcon(c.getName())) {
-					return "/public/templates/admin/icons/"+getExtension(c.getName())+".svg";
+					return "/github/kite9-org/kite9/templates/admin/icons/"+getExtension(c.getName())+".svg?v=v0.9";
 				} else {
-					return "/public/templates/admin/icons/unknown.svg";
+					return "/github/kite9-org/kite9/templates/admin/icons/unknown.svg?v=v0.9";
 				}
 			}
 

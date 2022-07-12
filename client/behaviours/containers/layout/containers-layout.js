@@ -1,6 +1,6 @@
-import { hasLastSelected, isConnected, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.8'
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.8'
-import { drawBar, clearBar } from  '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.8'
+import { hasLastSelected, isConnected, parseInfo } from '/github/kite9-org/kite9/client/bundles/api.js?v=v0.9'
+import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js?v=v0.9'
+import { drawBar, clearBar } from  '/github/kite9-org/kite9/client/bundles/ordering.js?v=v0.9'
 
 function getLayout(e) {
 	if (e==null) {
@@ -17,7 +17,7 @@ function drawLayout(event, cm, layout, selected) {
 		layout = "none";
 	}
 	
-	var out = cm.addControl(event, "/public/behaviours/containers/layout/" + layout.toLowerCase() + ".svg",
+	var out = cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/layout/" + layout.toLowerCase() + ".svg",
 			 "Layout (" + layout + ")",
 			 undefined);
 	
