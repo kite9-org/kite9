@@ -1,22 +1,22 @@
 
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { once } from '/public/bundles/ensure.js'
 
-import { Linker } from '/github/kite9-org/kite9/client/classes/linker/linker.js?v=v0.9'
+import { Linker } from '/public/classes/linker/linker.js'
 
 
 import { command, metadata, instrumentation, dragger, contextMenu, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.9'
 
 // Links
-import { initLinkable, updateLink, initLinkerDropCallback } from '/github/kite9-org/kite9/client/behaviours/links/linkable.js?v=v0.9'
-import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/github/kite9-org/kite9/client/behaviours/links/autoconnect/autoconnect.js?v=v0.9'
-import { initLinkPaletteCallback, initLinkLinkerCallback, initLinkContextMenuCallback, initLinkInstrumentationCallback, initLinkFinder, getLinkTemplateUri } from '/github/kite9-org/kite9/client/behaviours/links/link/link.js?v=v0.9'
-import { initDirectionContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/links/direction/direction.js?v=v0.9'
-import { initAlignContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/links/align/align.js?v=v0.9'
-import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/github/kite9-org/kite9/client/behaviours/links/drag/terminators-drag.js?v=v0.9'
-import { initLinkDropLocator, initLinkDropCallback } from '/github/kite9-org/kite9/client/behaviours/links/drag/links-drag.js?v=v0.9'
-import { initNewLinkPaletteCallback, initNewLinkContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/links/new/links-new.js?v=v0.9'
-import { initLinksCheckerDropCallback } from '/github/kite9-org/kite9/client/behaviours/links/checker/links-checker.js?v=v0.9'
+import { initLinkable, updateLink, initLinkerDropCallback } from '/public/behaviours/links/linkable.js'
+import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/public/behaviours/links/autoconnect/autoconnect.js'
+import { initLinkPaletteCallback, initLinkLinkerCallback, initLinkContextMenuCallback, initLinkInstrumentationCallback, initLinkFinder, getLinkTemplateUri } from '/public/behaviours/links/link/link.js'
+import { initDirectionContextMenuCallback } from '/public/behaviours/links/direction/direction.js'
+import { initAlignContextMenuCallback } from '/public/behaviours/links/align/align.js'
+import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/public/behaviours/links/drag/terminators-drag.js'
+import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/links/drag/links-drag.js'
+import { initNewLinkPaletteCallback, initNewLinkContextMenuCallback } from '/public/behaviours/links/new/links-new.js'
+import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/links-checker.js'
 
 const linker = new Linker(updateLink);
 

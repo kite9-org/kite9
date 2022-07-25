@@ -2,37 +2,37 @@
  * This contains basic kite9 classes that we can plug behaviours into, for manipulating ADL documents.
  */
 
-import { Instrumentation } from "/github/kite9-org/kite9/client/classes/instrumentation/instrumentation.js?v=v0.9";
-import { Metadata } from "/github/kite9-org/kite9/client/classes/metadata/metadata.js?v=v0.9";
-import { ContextMenu } from "/github/kite9-org/kite9/client/classes/context-menu/context-menu.js?v=v0.9";
-import { Transition } from '/github/kite9-org/kite9/client/classes/transition/transition.js?v=v0.9'
-import { Dragger } from '/github/kite9-org/kite9/client/classes/dragger/dragger.js?v=v0.9'
-import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.9'
-import { Command, initCommandTransitionCallback } from '/github/kite9-org/kite9/client/classes/command/command.js?v=v0.9'
-import { Palette, initPaletteHoverableAllowed } from '/github/kite9-org/kite9/client/classes/palette/palette.js?v=v0.9'
+import { Instrumentation } from "/public/classes/instrumentation/instrumentation.js";
+import { Metadata } from "/public/classes/metadata/metadata.js";
+import { ContextMenu } from "/public/classes/context-menu/context-menu.js";
+import { Transition } from '/public/classes/transition/transition.js'
+import { Dragger } from '/public/classes/dragger/dragger.js'
+import { Containment } from '/public/classes/containment/containment.js'
+import { Command, initCommandTransitionCallback } from '/public/classes/command/command.js'
+import { Palette, initPaletteHoverableAllowed } from '/public/classes/palette/palette.js'
 
 //updatable
-import { initMetadataBasedUpdater } from '/github/kite9-org/kite9/client/behaviours/updatable/updatable.js?v=v0.9'
+import { initMetadataBasedUpdater } from '/public/behaviours/updatable/updatable.js'
 
 // animation
-import { initTransitionAnimationCallback } from '/github/kite9-org/kite9/client/behaviours/animation/animation.js?v=v0.9'
+import { initTransitionAnimationCallback } from '/public/behaviours/animation/animation.js'
 
 //identity
-import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/github/kite9-org/kite9/client/behaviours/identity/identity.js?v=v0.9";
+import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/public/behaviours/identity/identity.js";
 
 //zoomable
-import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/github/kite9-org/kite9/client/behaviours/zoomable/zoomable.js?v=v0.9";
+import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/public/behaviours/zoomable/zoomable.js";
 
 //dragable
-import { initDragable, initMainHoverableAllowed } from '/github/kite9-org/kite9/client/behaviours/dragable/dragable.js?v=v0.9' 
+import { initDragable, initMainHoverableAllowed } from '/public/behaviours/dragable/dragable.js' 
 
 // actionable 
-import { initActionable } from '/github/kite9-org/kite9/client/behaviours/actionable/actionable.js?v=v0.9' 
+import { initActionable } from '/public/behaviours/actionable/actionable.js' 
 
 //hoverable
-import { initHoverable } from '/github/kite9-org/kite9/client/behaviours/hoverable/hoverable.js?v=v0.9'
+import { initHoverable } from '/public/behaviours/hoverable/hoverable.js'
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { once } from '/public/bundles/ensure.js'
 
 export const 
 	command = new Command(), 

@@ -4,35 +4,35 @@
 
 // classes
 
-import { Containment } from '/github/kite9-org/kite9/client/classes/containment/containment.js?v=v0.9'
-import { Property } from '/github/kite9-org/kite9/client/classes/property/property.js?v=v0.9'
+import { Containment } from '/public/classes/containment/containment.js'
+import { Property } from '/public/classes/property/property.js'
 
 // Behaviours
 
 // dragable
-import { initCompleteDragable, initDragableDragLocator } from '/github/kite9-org/kite9/client/behaviours/dragable/dragable.js?v=v0.9' 
+import { initCompleteDragable, initDragableDragLocator } from '/public/behaviours/dragable/dragable.js' 
 
 // selectable
-import { initDeleteContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/delete/selectable-delete.js?v=v0.9'
-import { initReplaceContextMenuCallback, initReplacePaletteCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/replace/selectable-replace.js?v=v0.9'
-import { initXCPContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/selectable/xcp/xcp.js?v=v0.9'
-import { initSelectable } from '/github/kite9-org/kite9/client/behaviours/selectable/selectable.js?v=v0.9'
+import { initDeleteContextMenuCallback } from '/public/behaviours/selectable/delete/selectable-delete.js'
+import { initReplaceContextMenuCallback, initReplacePaletteCallback } from '/public/behaviours/selectable/replace/selectable-replace.js'
+import { initXCPContextMenuCallback } from '/public/behaviours/selectable/xcp/xcp.js'
+import { initSelectable } from '/public/behaviours/selectable/selectable.js'
 
 // indication
-import { initToggleInstrumentationCallback } from '/github/kite9-org/kite9/client/behaviours/indication/toggle/toggle.js?v=v0.9'
+import { initToggleInstrumentationCallback } from '/public/behaviours/indication/toggle/toggle.js'
 
 // navigation
-import { closeMetadataCallback, initCloseInstrumentationCallback } from "/github/kite9-org/kite9/client/behaviours/navigable/close/close.js?v=v0.9";
+import { closeMetadataCallback, initCloseInstrumentationCallback } from "/public/behaviours/navigable/close/close.js";
 
 // undo, redo, revisions
-import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "/github/kite9-org/kite9/client/behaviours/revisioned/undoable.js?v=v0.9";
+import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "/public/behaviours/revisioned/undoable.js";
 
 // editing
-import { initXMLContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/xml/editable-xml.js?v=v0.9'
-import { initEditContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/text/editable-text.js?v=v0.9'
-import { initEditableImageContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/editable/image/editable-image.js?v=v0.9'
+import { initXMLContextMenuCallback } from '/public/behaviours/editable/xml/editable-xml.js'
+import { initEditContextMenuCallback } from '/public/behaviours/editable/text/editable-text.js'
+import { initEditableImageContextMenuCallback } from '/public/behaviours/editable/image/editable-image.js'
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { once } from '/public/bundles/ensure.js'
 
 /**
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 

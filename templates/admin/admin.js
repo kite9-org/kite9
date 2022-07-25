@@ -5,16 +5,16 @@
 import { metadata, transition, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.9'
 
 // navigation
-import { initFocusContextMenuCallback, initFocusMetadataCallback, initFocus } from '/github/kite9-org/kite9/client/behaviours/navigable/focus/focus.js?v=v0.9'
-import { initOpenContextMenuCallback } from '/github/kite9-org/kite9/client/behaviours/navigable/open/open.js?v=v0.9'
+import { initFocusContextMenuCallback, initFocusMetadataCallback, initFocus } from '/public/behaviours/navigable/focus/focus.js'
+import { initOpenContextMenuCallback } from '/public/behaviours/navigable/open/open.js'
 
 // rest stuff
-import { initNewDocumentContextMenuCallback, initTemplateSource } from '/github/kite9-org/kite9/client/behaviours/rest/NewDocument/NewDocument.js?v=v0.9'
+import { initNewDocumentContextMenuCallback, initTemplateSource } from '/public/behaviours/rest/NewDocument/NewDocument.js'
 
 //selectable
-import { initSelectable } from '/github/kite9-org/kite9/client/behaviours/selectable/selectable.js?v=v0.9'
+import { initSelectable } from '/public/behaviours/selectable/selectable.js'
 
-import { once } from '/github/kite9-org/kite9/client/bundles/ensure.js?v=v0.9'
+import { once } from '/public/bundles/ensure.js'
 
 
 once(function() {
