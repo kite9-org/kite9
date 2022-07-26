@@ -3,7 +3,7 @@ import { ensureCss } from '/public/bundles/ensure.js'
 
 const NO_USER = {
 	name: "Anonymous",
-	icon:  '/github/kite9-org/kite9/client/behaviours/identity/user.svg',
+	icon:  '/public/behaviours/identity/user.svg',
 }
 
 var currentUser = NO_USER;

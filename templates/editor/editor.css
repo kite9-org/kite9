@@ -1,6 +1,6 @@
-@import url('/github/kite9-org/kite9/templates/editor/dragable.css?v=v0.9');
-@import url('/github/kite9-org/kite9/templates/highlight/highlight.css?v=v0.9');
-@import url('/github/kite9-org/kite9/templates/editor/contradictions.css?v=v0.9');
+@import url('/github/kite9-org/kite9/templates/editor/dragable.css?v=v0.10');
+@import url('/github/kite9-org/kite9/templates/highlight/highlight.css?v=v0.10');
+@import url('/github/kite9-org/kite9/templates/editor/contradictions.css?v=v0.10');
 
 /* 
  * ensures enough space to drag in when using the editor 

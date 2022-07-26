@@ -1,14 +1,14 @@
 
 import { once } from '/public/bundles/ensure.js'
 
-import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.9'
+import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.10'
 
 //Containers
 import { initInsertPaletteCallback, initInsertContextMenuCallback, initInsertDragLocator } from '/public/behaviours/containers/insert/containers-insert.js'
 import { initContainPaletteCallback, initContainContextMenuCallback } from '/public/behaviours/containers/contain/containers-contain.js'
 import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback } from '/public/behaviours/containers/layout/containers-layout.js'
 import { initChildContextMenuCallback } from '/public/behaviours/containers/child/containers-child.js'
-import { initContainerDropLocatorFunction, initContainerDropCallback } from '/github/kite9-org/kite9/client/behaviours/containers/drag/containers-drag.js' 
+import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '/public/behaviours/containers/rules/containers-rules.js'
 
 

@@ -1,4 +1,4 @@
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '/github/kite9-org/kite9/client/bundles/screen.js' ;
+import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js' ;
 import { createUniqueId, parseInfo, onlyUnique, changeId } from '/public/bundles/api.js' 
 
 /**

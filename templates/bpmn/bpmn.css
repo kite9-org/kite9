@@ -3,7 +3,7 @@
 @import url(/github/kite9-org/kite9/templates/links/common-links.css);
 @import url(/github/kite9-org/kite9/templates/labels/common-labels.css);
 @import url(/github/kite9-org/kite9/templates/grid/common-grid.css);
-@import url(/github/kite9-org/kite9/client/fonts/metropolis/metropolis.css);
+@import url(/public/fonts/metropolis/metropolis.css);
 @import url(pool.css);
 @import url(bpmn-shapes.css);
 @import url(bpmn-components.css);

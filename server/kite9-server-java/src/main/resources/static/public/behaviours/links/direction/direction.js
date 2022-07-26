@@ -43,10 +43,10 @@ export function initDirectionContextMenuCallback(command, selector) {
 		
 		if (direction != "null") {
 			title= "Link Direction ("+direction+")";
-			src = "/github/kite9-org/kite9/client/behaviours/links/direction/"+direction.toLowerCase()+".svg";
+			src = "/public/behaviours/links/direction/"+direction.toLowerCase()+".svg";
 		} else {
 			title =  "Link Direction (undirected)";
-			src =  "/github/kite9-org/kite9/client/behaviours/links/direction/undirected.svg";				
+			src =  "/public/behaviours/links/direction/undirected.svg";				
 		}
 
 		var a = cm.addControl(event, src, title);

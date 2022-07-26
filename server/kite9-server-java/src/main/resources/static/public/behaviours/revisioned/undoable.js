@@ -18,7 +18,7 @@ function ensureButton(nav, name, cb) {
 	
 	if (b == undefined) {
 		var b = icon('_'+name, name, 
-				 "/github/kite9-org/kite9/client/behaviours/revisioned/"+name+".svg",
+				 "/public/behaviours/revisioned/"+name+".svg",
 				 cb);
 		nav.appendChild(b);
 	}

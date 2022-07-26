@@ -103,7 +103,7 @@ export function initNewLinkContextMenuCallback(palette, containment, selector) {
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/links/new/new-link.svg", "Linked Insert",
+			contextMenu.addControl(event, "/public/behaviours/links/new/new-link.svg", "Linked Insert",
 				function(e2, selector) {
 					contextMenu.destroy();
 					// primes this based on the screen.

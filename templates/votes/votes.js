@@ -1,4 +1,4 @@
-import { contextMenu, command, metadata } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.9'
+import { contextMenu, command, metadata } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.10'
 import { initVoteContextMenuCallback } from '/public/behaviours/voting/vote/vote.js' 
 import { once } from '/public/bundles/ensure.js'
 

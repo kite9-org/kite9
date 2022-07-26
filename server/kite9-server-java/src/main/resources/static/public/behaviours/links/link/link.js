@@ -1,6 +1,6 @@
 import { parseInfo, getContainingDiagram, hasLastSelected, getParentElement } from '/public/bundles/api.js'
 import { getMainSvg, currentTarget } from '/public/bundles/screen.js'
-import { getAlignElementsAndDirections } from '/github/kite9-org/kite9/client/behaviours/links/linkable.js'
+import { getAlignElementsAndDirections } from '/public/behaviours/links/linkable.js'
 import { icon } from '/public/bundles/form.js'
 
 /** 
@@ -92,7 +92,7 @@ export function initLinkContextMenuCallback(command, linker, selector, linkFinde
 		const elements = hasLastSelected(selector());
 		
 		if (elements.length > 0) {
-			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/links/link/link.svg",
+			contextMenu.addControl(event, "/public/behaviours/links/link/link.svg",
 				"Draw Link", e => {
 					contextMenu.destroy();
 					linker.start(Array.from(elements), linkFinder(templateUri));
@@ -111,7 +111,7 @@ export function initLinkInstrumentationCallback(palette) {
 		var b =  nav.querySelector("_link");
 		if (b == undefined) {
 			nav.appendChild(icon('_link', "Link Style", 
-					'/github/kite9-org/kite9/client/behaviours/links/link/linkmenu.svg',
+					'/public/behaviours/links/link/linkmenu.svg',
 						(evt) => palette.open(evt, 
 						(e) => {
 							const p = e.getAttribute("k9-palette");

@@ -38,7 +38,7 @@ import { once } from '/public/bundles/ensure.js'
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 
  * plugin/behaviour system.
  */
-import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.9'
+import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.10'
 
 const 
 	containment = new Containment(),

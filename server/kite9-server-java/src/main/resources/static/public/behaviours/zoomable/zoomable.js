@@ -98,11 +98,11 @@ export function zoomableInstrumentationCallback(nav) {
 	var zoomOut = nav.querySelector("#_zoom-out");
 	
 	if (zoomIn == undefined) {
-		nav.appendChild(icon('_zoom-in', "Zoom In", "/github/kite9-org/kite9/client/behaviours/zoomable/zoom_in.svg", () => setScale(magnification * 1.3))); 
+		nav.appendChild(icon('_zoom-in', "Zoom In", "/public/behaviours/zoomable/zoom_in.svg", () => setScale(magnification * 1.3))); 
 	}
 	
 	if (zoomOut == undefined) {
-		nav.appendChild(icon('_zoom-out', "Zoom Out", "/github/kite9-org/kite9/client/behaviours/zoomable/zoom_out.svg", () => setScale(magnification / 1.3))); 
+		nav.appendChild(icon('_zoom-out', "Zoom Out", "/public/behaviours/zoomable/zoom_out.svg", () => setScale(magnification / 1.3))); 
 	}
 	
 }

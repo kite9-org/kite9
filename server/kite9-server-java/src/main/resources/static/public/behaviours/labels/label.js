@@ -50,7 +50,7 @@ export function initLabelContextMenuCallback(command, templateUri, selector, act
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/labels/label.svg", "Add Label", 
+			contextMenu.addControl(event, "/public/behaviours/labels/label.svg", "Add Label", 
 				function(e2, selector) {
 					contextMenu.destroy();
 					selectedElements.forEach(e => action(e, templateUri, command));

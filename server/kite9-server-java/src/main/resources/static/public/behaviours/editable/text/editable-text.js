@@ -37,7 +37,7 @@ export function initEditContextMenuCallback(command, selector, textCollector) {
 		
 		if (selectedElements.length > 0) {
 			
-			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/editable/text/edit.svg", 'Edit Text', () => {
+			cm.addControl(event, "/public/behaviours/editable/text/edit.svg", 'Edit Text', () => {
 				const defaultText = textCollector(hasLastSelected(selectedElements, true));
 				cm.clear();
 				var htmlElement = cm.get(event);

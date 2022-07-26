@@ -17,7 +17,7 @@ function drawLayout(event, cm, layout, selected) {
 		layout = "none";
 	}
 	
-	var out = cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/layout/" + layout.toLowerCase() + ".svg",
+	var out = cm.addControl(event, "/public/behaviours/containers/layout/" + layout.toLowerCase() + ".svg",
 			 "Layout (" + layout + ")",
 			 undefined);
 	

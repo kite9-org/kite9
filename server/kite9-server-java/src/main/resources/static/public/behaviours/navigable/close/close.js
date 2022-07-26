@@ -19,7 +19,7 @@ function updateClose() {
 		var newClose;
 		
 		if (!editor) {
-			var image = '/github/kite9-org/kite9/client/behaviours/navigable/close/viewer.svg';
+			var image = '/public/behaviours/navigable/close/viewer.svg';
 			newClose = icon('_close', 'Close Viewer', image, function() {
 		    	window.location.href = closeUrl;
 		    });
@@ -28,9 +28,9 @@ function updateClose() {
 			const hasCommits = (metadata['committing'] != undefined) && (metadata['committing'] != '0');
       const canClose = (!hasCommits) && (closeUrl);
 			
-			var image = hasCommits ? '/github/kite9-org/kite9/client/behaviours/navigable/close/waiting.svg' :
-				 (canClose ? '/github/kite9-org/kite9/client/behaviours/navigable/close/cloud.svg' :
-          '/github/kite9-org/kite9/client/behaviours/navigable/close/cloud-minus.svg');
+			var image = hasCommits ? '/public/behaviours/navigable/close/waiting.svg' :
+				 (canClose ? '/public/behaviours/navigable/close/cloud.svg' :
+          '/public/behaviours/navigable/close/cloud-minus.svg');
          
 			
 			var pop =  canClose ? 'Close Editor' : (hasCommits ? 'Changes Pending: ' + metadata['committing'] : "Can't Save Here");

@@ -2,9 +2,9 @@ import { hasLastSelected} from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
 import { icon, form, text, p, inlineButtons, ok, cancel, formValues, img, fieldset, div } from '/public/bundles/form.js'
 
-const LOADING = '/github/kite9-org/kite9/client/behaviours/editable/image/loading.svg';
-const SUCCESS = '/github/kite9-org/kite9/client/behaviours/editable/image/success.svg';
-const FAIL = '/github/kite9-org/kite9/client/behaviours/editable/image/fail.svg';
+const LOADING = '/public/behaviours/editable/image/loading.svg';
+const SUCCESS = '/public/behaviours/editable/image/success.svg';
+const FAIL = '/public/behaviours/editable/image/fail.svg';
 
 export function initEditableImageContextMenuCallback(command, metadata, selector) {
 	
@@ -87,7 +87,7 @@ export function initEditableImageContextMenuCallback(command, metadata, selector
 
 		if (elements.length> 0) {
 			const last = hasLastSelected(elements, true);
-			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/editable/image/edit.svg", 'Edit Image', () => {
+			contextMenu.addControl(event, "/public/behaviours/editable/image/edit.svg", 'Edit Image', () => {
 				const href =  last.getAttribute("href");
 								
 				contextMenu.clear();

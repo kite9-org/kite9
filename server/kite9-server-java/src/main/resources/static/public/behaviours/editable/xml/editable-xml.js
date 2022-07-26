@@ -46,7 +46,7 @@ export function initXMLContextMenuCallback(command, selector, xmlCollector) {
     if (selectedElements.length == 1) {
       const theElement = selectedElements[0];
 
-      cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/editable/xml/xml.svg", 'Edit XML', () => {
+      cm.addControl(event, "/public/behaviours/editable/xml/xml.svg", 'Edit XML', () => {
         const defaultText = xmlCollector(theElement);
         cm.destroy();
         xmlModal.clear();

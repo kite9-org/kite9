@@ -113,7 +113,7 @@ export function initReplaceContextMenuCallback(palette, containment, selector) {
 			
 			if (containment.canContainAll(selectedElements, parents)) {
 				// console.log("Allowing replace with types: "+allowedTypes);
-				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/selectable/replace/replace.svg",
+				contextMenu.addControl(event, "/public/behaviours/selectable/replace/replace.svg",
 						"Replace", 
 						function(e2, selector) {
 					contextMenu.destroy();

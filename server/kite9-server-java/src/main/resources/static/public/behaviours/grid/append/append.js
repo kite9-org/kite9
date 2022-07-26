@@ -131,12 +131,12 @@ export function initCellAppendContextMenuCallback(command, selector) {
 				cm.clear(event);
 
 				["right", "down", "left", "up"].forEach(s => {
-					cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/grid/append/" + s.toLowerCase() + ".svg", 
+					cm.addControl(event, "/public/behaviours/grid/append/" + s.toLowerCase() + ".svg", 
 							"Append (" + s + ")", () => appendsCells(selector(), s, cm));
 				});
 			}
 			
-			cm.addControl(event, "/github/kite9-org/kite9/client/behaviours/grid/append/append.svg", 'Append', () => handleClick());
+			cm.addControl(event, "/public/behaviours/grid/append/append.svg", 'Append', () => handleClick());
 		}
 	}
 	

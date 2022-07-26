@@ -98,7 +98,7 @@ export function initContainContextMenuCallback(palette, containment, selector) {
 			const parentElements = getParentElements(selectedElements);
 			
 			if (containment.canInsert(parentElements, selectedElements)) {
-				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/contain/contain.svg", "Contain", 
+				contextMenu.addControl(event, "/public/behaviours/containers/contain/contain.svg", "Contain", 
 					function(e2) {
 						contextMenu.destroy();
 						palette.open(

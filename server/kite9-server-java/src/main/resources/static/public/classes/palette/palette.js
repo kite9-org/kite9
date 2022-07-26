@@ -85,7 +85,7 @@ export class Palette {
 
     // create loading indicator
     var loading = document.createElement("img");
-    loading.setAttribute("src", "/github/kite9-org/kite9/client/classes/palette/loading.svg");
+    loading.setAttribute("src", "/public/classes/palette/loading.svg");
     item.appendChild(loading);
 
     // populate it
@@ -99,7 +99,7 @@ export class Palette {
     .then(response => {
       if (!response.ok) {
         return response.json().then(j => {
-          loading.setAttribute("src", "/github/kite9-org/kite9/client/classes/palette/missing.svg");
+          loading.setAttribute("src", "/public/classes/palette/missing.svg");
           throw new Error(j.message);
         });
       }
@@ -206,7 +206,7 @@ export class Palette {
     }
 
     // add cancel button
-    var cancel = icon('palette-cancel', 'Close',  "/github/kite9-org/kite9/client/classes/palette/cancel.svg", (event) => this.destroy());
+    var cancel = icon('palette-cancel', 'Close',  "/public/classes/palette/cancel.svg", (event) => this.destroy());
     control.appendChild(cancel);
 
     var paletteWidth = 100, paletteHeight = 100, width, height;
@@ -242,7 +242,7 @@ export class Palette {
       }
 
       if (toShow.length > 1) {
-        var dot = icon('', getTitle(e), "/github/kite9-org/kite9/client/classes/palette/dot.svg", (event) => expandPanel(e, dot));
+        var dot = icon('', getTitle(e), "/public/classes/palette/dot.svg", (event) => expandPanel(e, dot));
         dot.classList.remove("hint--bottom");
         dot.classList.add("hint--right");
         

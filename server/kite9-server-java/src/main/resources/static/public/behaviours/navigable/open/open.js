@@ -18,7 +18,7 @@ export function initOpenContextMenuCallback(command, selector) {
 		const e = hasLastSelected(selector(), true);
 		
 		if (e) {
-			contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/navigable/open/open.svg", "Open",
+			contextMenu.addControl(event, "/public/behaviours/navigable/open/open.svg", "Open",
 				function(e2, selector) {
 					contextMenu.destroy();
 					var url = e.getAttribute("id");

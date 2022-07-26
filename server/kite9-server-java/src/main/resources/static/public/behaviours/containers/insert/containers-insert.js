@@ -129,7 +129,7 @@ export function initInsertContextMenuCallback(palette, containment, selector) {
 			const allowed = containment.canInsert(selectedElements);
 			if (allowed) {
 				// console.log("Allowing insert with types: "+allowedTypes);
-				contextMenu.addControl(event, "/github/kite9-org/kite9/client/behaviours/containers/insert/insert.svg", "Insert",
+				contextMenu.addControl(event, "/public/behaviours/containers/insert/insert.svg", "Insert",
 					function(e2, selector) {
 						contextMenu.destroy();
 						// primes this based on the screen.
