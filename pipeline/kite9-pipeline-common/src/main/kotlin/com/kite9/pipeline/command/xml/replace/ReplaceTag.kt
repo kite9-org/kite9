@@ -31,6 +31,8 @@ open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
         for (a in keptAttributes) {
             if (e.hasAttribute(a)) {
                 n.setAttribute(a, e.getAttribute(a))
+            } else {
+                n.removeAttribute(a);
             }
         }
     }

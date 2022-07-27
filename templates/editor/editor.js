@@ -38,7 +38,7 @@ import { once } from '/public/bundles/ensure.js'
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 
  * plugin/behaviour system.
  */
-import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.10'
+import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.11'
 
 const 
 	containment = new Containment(),
@@ -60,7 +60,7 @@ function initEditor() {
 		dragger.dragLocator(initDragableDragLocator());
 	
 		
-		palette.add(initReplacePaletteCallback(command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection', 'style'], keptTags: ['from', 'to' ]}, containment));
+		palette.add(initReplacePaletteCallback(command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		

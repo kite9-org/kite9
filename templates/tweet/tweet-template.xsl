@@ -18,7 +18,7 @@
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">
-    import '/github/kite9-org/kite9/templates/tweet/tweet.js?v=v0.10'
+    import '/github/kite9-org/kite9/templates/tweet/tweet.js?v=v0.11'
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-constants">

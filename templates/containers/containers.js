@@ -1,7 +1,7 @@
 
 import { once } from '/public/bundles/ensure.js'
 
-import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.10'
+import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.11'
 
 //Containers
 import { initInsertPaletteCallback, initInsertContextMenuCallback, initInsertDragLocator } from '/public/behaviours/containers/insert/containers-insert.js'

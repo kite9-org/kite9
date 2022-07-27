@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -101,8 +101,8 @@ public class CommandsTest {
 		ReplaceTag replace = new ReplaceTag();
 		replace.fragmentId = "link";
 		replace.from= Base64.getEncoder().encodeToString(("<link id=\"link\" rank=\"4\"></link>").getBytes());
-		replace.to= Base64.getEncoder().encodeToString(("<glyph id=\"The Diagram\"></glyph>").getBytes());
-		replace.keptAttributes = Arrays.asList("rank", "id");
+		replace.to= Base64.getEncoder().encodeToString(("<glyph id=\"The Diagram\" style=\"raw: fish\"></glyph>").getBytes());
+		replace.keptAttributes = Arrays.asList("rank", "id", "style");
 	
 		testDoAndUndo(replace, "replaceTag");
 	}
