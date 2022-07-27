@@ -13,6 +13,23 @@ export function hasLastSelected(e, onlyLastSelected) {
 	return onlyLastSelected ? null : [];
 }
 
+/**
+ * Given a list of Ids, return elements that are dependent on them
+ */
+export function getDependentElements(ids) {
+	return Array.from(document.querySelectorAll("div.main svg [id][k9-info*='link:']")).filter(e => {
+		const parsed = parseInfo(e);
+		const depIds = parsed['link'];
+		const anyMatch = depIds
+			.filter(di => ids.indexOf(di) != -1)
+			.reduce((a, b) => a || b, false);
+		return anyMatch;
+	});	
+}
+
+/**
+ * Returns a connection linking to id1 and (if provided) also id2.
+ */
 export function getExistingConnections(id1, id2) {
 	return Array.from(document.querySelectorAll("div.main svg [id][k9-info*='link:']")).filter(e => {
 		const parsed = parseInfo(e);
