@@ -1,4 +1,4 @@
-import { suffixIds } from '/public/bundles/api.js'
+import { suffixIds, addQueryParam } from '/public/bundles/api.js'
 import { icon } from '/public/bundles/form.js'
 
 /**
@@ -294,4 +294,13 @@ export function initPaletteHoverableAllowed(palette) {
     return currentSelector(v);
   }
 
+}
+
+/**
+ * For the purposes of referencing the ADL of an element on a palette
+ */
+export function getElementUri(e, palettePanel) {
+	var paletteId = palettePanel.getAttribute("id");
+	var id = e.getAttribute("id");
+	return addQueryParam(palettePanel.getAttribute("k9-palette-uri"), "format", "adl")+"#"+ id.substring(0, id.length - paletteId.length);	
 }

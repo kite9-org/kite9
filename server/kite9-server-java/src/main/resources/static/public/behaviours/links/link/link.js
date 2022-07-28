@@ -2,6 +2,7 @@ import { parseInfo, getContainingDiagram, hasLastSelected, getParentElement } fr
 import { getMainSvg, currentTarget } from '/public/bundles/screen.js'
 import { getAlignElementsAndDirections } from '/public/behaviours/links/linkable.js'
 import { icon } from '/public/bundles/form.js'
+import { getElementUri} from '/public/classes/palette/palette.js';
 
 /** 
  * Keeps track of the URI of the element we are using for new links 
@@ -24,16 +25,10 @@ export function initLinkPaletteCallback(selector) {
 	
 	
 	return function(palette, palettePanel) {
-
-		function getElementUri(e) {
-			var paletteId = palettePanel.getAttribute("id");
-			var id = e.getAttribute("id");
-			return palettePanel.getAttribute("k9-palette-uri")+"?format=adl#"+id.substring(0, id.length - paletteId.length);	
-		}
 		
 		function click(elem, event) {
 			if (palette.getCurrentAction() == 'link') {
-				templateUri = getElementUri(elem);
+				templateUri = getElementUri(elem, palettePanel);
 				palette.destroy();		
 				event.stopPropagation();
 			}

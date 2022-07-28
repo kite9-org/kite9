@@ -1,5 +1,6 @@
 import { getMainSvg } from '/public/bundles/screen.js'
 import { createUniqueId, parseInfo, getKite9Target, hasLastSelected } from '/public/bundles/api.js'
+import { getElementUri } from '/public/classes/palette/palette.js';
 
 /**
  * Allows you to select temporary grid elements.
@@ -26,9 +27,7 @@ export function initGridTemporaryReplacePaletteCallback(command, replaceChoiceSe
 	}
 	
 	function createReplaceStep (command, e, drop, palettePanel) {	
-		const paletteId = palettePanel.getAttribute("id");
-		const id = drop.getAttribute("id");
-		const uri = palettePanel.getAttribute("k9-palette-uri")+"?format=adl#"+id.substring(0, id.length - paletteId.length);	
+		const uri = getElementUri(drop, palettePanel); 	
 
 		if (e.classList.contains("grid-temporary")) {
 			

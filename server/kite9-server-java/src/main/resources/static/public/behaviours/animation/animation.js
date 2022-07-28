@@ -19,7 +19,7 @@ function reconcileStyles(fromElement, toElement, tl, start, end) {
   var fromStyles = Array.from(fromElement.style);
   var toRemove = fromStyles.filter(a => -1 == toStyles.indexOf(a));
 
-  toRemove.forEach(a => fromElement.style[a] = undefined);
+  toRemove.forEach(a => fromElement.style[a] = null);
 
   toStyles.forEach(a => {
 

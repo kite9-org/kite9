@@ -1,6 +1,6 @@
 import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId, getParentElements } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
-import { getBeforeId } from '/public/bundles/ordering.js'
+import { getElementUri} from '/public/classes/palette/palette.js';
 
 
 function defaultContainSelector() {
@@ -27,16 +27,10 @@ export function initContainPaletteCallback(command, containableSelector, contain
 	
 	return function(palette, palettePanel) {
 		
-		function getElementUri(e) {
-			var paletteId = palettePanel.getAttribute("id");
-			var id = e.getAttribute("id");
-			return palettePanel.getAttribute("k9-palette-uri")+"?format=adl#"+id.substring(0, id.length - paletteId.length);	
-		}
-
 		function createInsertStep(e, drop, newId) {
 			return {
 				"type": 'InsertUrl',
-				"uriStr": getElementUri(drop),
+				"uriStr": getElementUri(drop, palettePanel),
 				"fragmentId": getParentElement(e).getAttribute("id"),
 				"beforeId" : e.getAttribute("id"),
 				"newId": newId,

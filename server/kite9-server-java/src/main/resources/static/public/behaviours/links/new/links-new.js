@@ -1,5 +1,6 @@
 import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/public/bundles/api.js'
 import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/public/bundles/screen.js'
+import { getElementUri } from '/public/classes/palette/palette.js';
 
 function defaultInsertableSelector(palettePanel) {
 	return palettePanel.querySelectorAll("[id][k9-palette]");	
@@ -20,13 +21,7 @@ export function initNewLinkPaletteCallback(dragger, insertableSelector) {
 	}
 	
 	return function(palette, palettePanel) {
-		
-		function getElementUri(e) {
-			var paletteId = palettePanel.getAttribute("id");
-			var id = e.getAttribute("id");
-			return palettePanel.getAttribute("k9-palette-uri")+"?format=adl#"+id.substring(0, id.length - paletteId.length);	
-		}
-		
+	
 		function getPaletteElement(event) {
 			var choices = Array.from(insertableSelector(palettePanel));
 			var target = getKite9Target(currentTarget(event));
@@ -58,7 +53,7 @@ export function initNewLinkPaletteCallback(dragger, insertableSelector) {
 			
 			palette.destroy();	
 			const map = new Map();
-			const uri = getElementUri(paletteElement);
+			const uri = getElementUri(paletteElement, palettePanel);
 			map.set(droppingElement, uri);
 			dragger.beginAdd(map, event);
 			dragger.grab(event);

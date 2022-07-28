@@ -1,6 +1,7 @@
 import { hasLastSelected, getKite9Target, createUniqueId, changeId } from '/public/bundles/api.js'
 import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '/public/bundles/screen.js'
 import { getBefore } from '/public/bundles/ordering.js'
+import { getElementUri} from '/public/classes/palette/palette.js';
 
 
 function defaultInsertSelector() {
@@ -26,18 +27,12 @@ export function initInsertPaletteCallback(command, containment, insertableSelect
 	}
 	
 	return function(palette, palettePanel) {
-		
-		function getElementUri(e) {
-			var paletteId = palettePanel.getAttribute("id");
-			var id = e.getAttribute("id");
-			return palettePanel.getAttribute("k9-palette-uri")+"?format=adl#"+id.substring(0, id.length - paletteId.length);	
-		}
 
 		function createInsertStep(e, drop, newId, beforeId) {			
 			return {
 				"type": 'InsertUrl',
 				"fragmentId": e.getAttribute('id'),
-				"uriStr": getElementUri(drop),
+				"uriStr": getElementUri(drop, palettePanel),
 				"beforeId" : beforeId,
 				"newId": newId
 			}

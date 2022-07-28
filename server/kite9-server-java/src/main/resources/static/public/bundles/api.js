@@ -437,5 +437,12 @@ export function encodeADLElement(text) {
 	return btoa(text);
 }
 
+export function addQueryParam(url, name, value) {
+	if (url.indexOf("?") != -1) {
+		return url + "&" + name + "=" + value;
+	} else {
+		return url + "?" + name + "=" + value;
+	}
+}
 
 

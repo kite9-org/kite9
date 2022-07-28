@@ -1,5 +1,6 @@
 import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElements, parseInfo } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
+import { getElementUri } from '/public/classes/palette/palette.js';
 
 /**
  * k9-palette attribute says which type of element this is.  The element can be replaced with another element of the same type.
@@ -29,9 +30,7 @@ export function initReplacePaletteCallback(command, rules, containment, replaceC
 	
 	if (createReplaceStep == undefined) {
 		createReplaceStep = function(command, e, drop, palettePanel) {			
-			const paletteId = palettePanel.getAttribute("id");
-			const id = drop.getAttribute("id");
-			const uri = palettePanel.getAttribute("k9-palette-uri")+"?format=adl#"+id.substring(0, id.length - paletteId.length);	
+			const uri = getElementUri(drop, palettePanel);	
 			const eId = e.getAttribute('id');
 			const info = parseInfo(e);
 			
