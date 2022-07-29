@@ -1539,5 +1539,5 @@ kite9-padding-left: 20pt;
  'label-template-uri' : 'http://localhost:39000/public/templates/labels/common-labels.adl#label'
  } 
 </script><script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink">
-import "http://localhost:39000/public/templates/risk-first/risk-first.js?v=v0.11";
+import "http://localhost:39000/public/templates/risk-first/risk-first.js?v=v0.12";
 </script></defs></svg>

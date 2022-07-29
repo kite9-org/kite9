@@ -86,16 +86,14 @@
 	      <xsl:choose>
 	        <xsl:when test="$shape">
 	          <!-- in this case, we need to add the highlight to the shape, if there is one -->
-	          <g>
+	          <g class="k9-shape">
 	            <xsl:if test="$k9-highlight">
 	              <xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
 	            </xsl:if>
-	            <xsl:comment>shape</xsl:comment> 
 	            <xsl:copy-of select="$shape" /> 
 	          </g>
 	          <xsl:if test="$content">
-	            <g>
-	              <xsl:comment>content</xsl:comment> 
+	            <g class="k9-content">
 	              <xsl:copy-of select="$content"/> 
 	            </g>
 	          </xsl:if>
@@ -103,11 +101,10 @@
 	        <xsl:otherwise>
 	          <!--  add the highlight to the content  -->
 	           <xsl:if test="$content">
-	            <g>
+	            <g class="k9-content k9-no-shape">
 	              <xsl:if test="$k9-highlight">
 	                <xsl:attribute name="k9-highlight"><xsl:value-of select="$k9-highlight" /></xsl:attribute>
 	              </xsl:if>
-	              <xsl:comment>content</xsl:comment> 
 				  <xsl:copy-of select="$content"/> 
 	            </g>
 	           </xsl:if>
@@ -115,8 +112,9 @@
 	      </xsl:choose>
 	    
 	      <xsl:if test="$decoration">
-	        <xsl:comment>decoration</xsl:comment> 
-	        <xsl:copy-of select="$decoration" /> 
+	      	<g class="k9-decoration">
+	          <xsl:copy-of select="$decoration" />
+	        </g> 
 	      </xsl:if>
 	    </g>
 
