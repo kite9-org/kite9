@@ -1,22 +1,15 @@
-[k9-elem=container] > [k9-texture=background] {
-	stroke: black;
-	stroke-width: 2pt;
-}
-
-[k9-elem=container] > [k9-elem=indicator],
-[k9-elem=group] > [k9-elem=indicator],
-[k9-elem=diagram] > [k9-elem=indicator] {
-	fill: none;
-	stroke: none;
-}
-
-[k9-texture=background][k9-elem=container].solid > g > rect {
+[k9-texture=background][k9-elem=container] > g.k9-shape > rect {
 	stroke: black;
 	stroke-width: 1pt;
+}
+
+[k9-texture=background][k9-elem=container].solid > g.k9-shape > rect {
+	stroke: black;
+	stroke-width: 2pt;
 	stroke-dasharray: none;
 }
 
-[k9-texture=background][k9-elem=container].dotted > g > rect {
+[k9-texture=background][k9-elem=container].dotted > g.k9-shape > rect {
 	stroke: black;
 	stroke-width: 1pt;
 	stroke-dasharray: 4 4;	

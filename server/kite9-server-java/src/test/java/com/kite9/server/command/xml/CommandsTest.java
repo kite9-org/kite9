@@ -271,6 +271,21 @@ public class CommandsTest {
 
 	} 
 	
+	@Test
+	public void testInsertUrl2Command() throws Exception {
+		String uri = sourceURI+"#two";
+		
+		InsertUrl copy = new InsertUrl();
+		copy.uriStr =  uri;
+		copy.fragmentId="The Diagram";
+		copy.newId="six";
+		copy.containedIds = Arrays.asList("two");
+		copy.beforeId = "link";
+		
+		testDoAndUndo(copy, "insertUrl2");
+
+	} 
+	
 
 	@Test
 	public void testInsertUrlLinkCommand() throws Exception {

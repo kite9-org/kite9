@@ -107,11 +107,13 @@ export function getParentElements(elements) {
 
 export function getNextSiblingElement(elem) {
 	var p = elem;
-	while ((p != null) && (!p.hasAttribute("k9-elem"))) {
-		p = p.nextSibling;
+	var children = Array.from(p.parentElement.children).filter(e => e.hasAttribute("k9-elem"));
+	var thisOne = children.indexOf(elem);
+	if (thisOne < children.length-1) {
+		return children[thisOne+1];
+	} else {
+		return null;
 	}
-	
-	return p == elem ? null : p;
 }
 
 export function getNextSiblingId(elem) {
