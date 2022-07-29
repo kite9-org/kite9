@@ -14,7 +14,7 @@
   </xsl:template>
   
    <xsl:template match="/" mode="diagram-script">
-     import '/github/kite9-org/kite9/templates/risk-first/risk-first.js?v=v0.13'
+     import '/github/kite9-org/kite9/templates/risk-first/risk-first.js?v=v0.14'
   </xsl:template>
 
   <xsl:template match="/" mode="diagram-palette">

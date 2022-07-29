@@ -5,7 +5,7 @@ import { once } from '/public/bundles/ensure.js'
 import { Linker } from '/public/classes/linker/linker.js'
 
 
-import { command, metadata, instrumentation, dragger, contextMenu, containment, palette } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.13'
+import { command, metadata, instrumentation, dragger, contextMenu, containment, palette } from '/public/templates/editor/editor.js'
 
 // Links
 import { initLinkable, updateLink, initLinkerDropCallback } from '/public/behaviours/links/linkable.js'

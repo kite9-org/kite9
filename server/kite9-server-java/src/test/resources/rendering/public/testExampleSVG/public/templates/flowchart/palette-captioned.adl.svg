@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="text/ecmascript" width="212.0px" zoomAndPan="magnify" contentStyleType="text/css" height="265.0px" preserveAspectRatio="xMidYMid" version="1.0"><metadata xmlns:md="http://www.kite9.org/schema/adl-metadata"><md:title>minimal</md:title><md:self>http://localhost:39000/public/templates/risk-first/minimal.adl?format=svg</md:self><md:role>editor</md:role></metadata>
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="text/ecmascript" width="212.0px" zoomAndPan="magnify" contentStyleType="text/css" height="265.0px" preserveAspectRatio="xMidYMid" version="1.0"><metadata xmlns:md="http://www.kite9.org/schema/adl-metadata"><md:title>minimal</md:title><md:self>http://localhost:39000/public/templates/risk-first/minimal.adlformat=svg</md:self><md:role>editor</md:role></metadata>
   <defs>
     <style xml:space="preserve">@defs url(http://localhost:39000/public/templates/common/diagram/diagram-template.xml);
 diagram, *[k9-elem="diagram"] {
@@ -1539,5 +1539,5 @@ kite9-padding-left: 20pt;
  'label-template-uri' : 'http://localhost:39000/public/templates/labels/common-labels.adl#label'
  } 
 </script><script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink">
-import "http://localhost:39000/public/templates/risk-first/risk-first.js?v=v0.13";
+import "http://localhost:39000/public/templates/risk-first/risk-first.j?v=v0.14";
 </script></defs></svg>

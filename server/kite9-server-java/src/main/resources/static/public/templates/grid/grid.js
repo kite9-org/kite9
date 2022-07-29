@@ -12,7 +12,7 @@ import { initGridLayoutPropertyFormCallback, initGridLayoutPropertySetCallback }
 import { initCellCreator } from '/public/behaviours/grid/create/create.js'
 
 
-import { command, metadata, dragger, contextMenu, layout, palette, containment } from '/github/kite9-org/kite9/templates/editor/editor.js?v=v0.13'
+import { command, metadata, dragger, contextMenu, layout, palette, containment } from '/public/templates/editor/editor.js'
 
 export function initGrid() {
 	
