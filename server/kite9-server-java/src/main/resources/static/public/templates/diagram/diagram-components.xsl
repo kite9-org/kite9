@@ -80,7 +80,7 @@
   <xsl:template match="text()" mode="diagram-palettes" />
 
   <xsl:template name="diagram-diagram-element-css">
-  	<adl:css>@import url('/github/kite9-org/kite9/templates/diagram/diagram-elements.css');</adl:css>
+  	<adl:css>@import url('/public/templates/diagram/diagram-elements.css');</adl:css>
   </xsl:template>   
 
 </xsl:stylesheet>
