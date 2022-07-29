@@ -3,7 +3,7 @@
 	xmlns:adl="http://www.kite9.org/schema/adl"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:import href="../adl/adl-all-components.xsl" />
+  <xsl:import href="/public/templates/adl/adl-all-components.xsl" />
   <xsl:import href="basic-components.xsl" /> 
 
   <xsl:template match="/" mode="diagram-element-css">

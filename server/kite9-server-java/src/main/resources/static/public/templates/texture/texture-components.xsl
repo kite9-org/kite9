@@ -112,9 +112,7 @@
 	      </xsl:choose>
 	    
 	      <xsl:if test="$decoration">
-	      	<g class="k9-decoration">
-	          <xsl:copy-of select="$decoration" />
-	        </g> 
+	        <xsl:copy-of select="$decoration" />
 	      </xsl:if>
 	    </g>
 

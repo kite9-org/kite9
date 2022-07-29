@@ -56,9 +56,9 @@ export function initInsertPaletteCallback(command, containment, insertableSelect
 					// insert it in the correct place in the svg.
 					const before = getBefore(e, palette.getOpenEvent(), []);
 					if (before == undefined) {
-						e.appendChild(clone)
+						into.appendChild(clone)
 					} else {
-						e.insertBefore(clone, before);
+						before.parentElement.insertBefore(clone, before);
 					}
 					
 					if (e == getKite9Target(currentTarget(palette.getOpenEvent()))) {
