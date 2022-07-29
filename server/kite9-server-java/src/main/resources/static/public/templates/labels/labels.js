@@ -1,6 +1,6 @@
 import { once } from '/public/bundles/ensure.js'
 import { initLabelContextMenuCallback } from '/public/behaviours/labels/label.js' 
-import { command, metadata, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.12'
+import { command, metadata, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.13'
 
 function initLabels() {
 	

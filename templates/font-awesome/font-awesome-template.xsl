@@ -16,7 +16,7 @@
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">
-    import '/github/kite9-org/kite9/templates/basic/basic.js?v=v0.12'
+    import '/github/kite9-org/kite9/templates/basic/basic.js?v=v0.13'
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-constants">

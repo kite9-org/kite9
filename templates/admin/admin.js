@@ -2,7 +2,7 @@
  * This composes the basic edit behaviour of the application
  */
 
-import { metadata, transition, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.12'
+import { metadata, transition, contextMenu } from '/github/kite9-org/kite9/templates/adl/adl.js?v=v0.13'
 
 // navigation
 import { initFocusContextMenuCallback, initFocusMetadataCallback, initFocus } from '/public/behaviours/navigable/focus/focus.js'
