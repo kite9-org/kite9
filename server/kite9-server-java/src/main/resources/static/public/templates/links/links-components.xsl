@@ -21,8 +21,8 @@
   </xsl:template>
   
   <xsl:template name="links-diagram-constants">
-     <adl:constant name="link-template-uri" url="/public/templates/links/common-links.adl#l1" />
-     <adl:constant name="align-template-uri" url="/public/templates/links/common-links.adl#align" />
+     <adl:constant name="link-template-uri" url="/public/templates/links/links-palette.adl#l2" />
+     <adl:constant name="align-template-uri" url="/public/templates/links/links-palette.adl#align" />
   </xsl:template>
   
   <xsl:template name="links-diagram-palettes">

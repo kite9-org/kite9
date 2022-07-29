@@ -22,8 +22,8 @@
 	font-size: 50pt;
 }
 
-[k9-elem=label] > [k9-texture=foreground]	{
+[k9-elem=label] {
   fill: black;
   font-family: "metropolis";
-  font-size: 16pt;
+  font-size: 35pt;
 }

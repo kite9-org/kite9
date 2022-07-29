@@ -1,12 +1,13 @@
 import { once } from '/public/bundles/ensure.js'
-import { initLabelContextMenuCallback } from '/public/behaviours/labels/label.js' 
+import { initAddLabelContextMenuCallback } from '/public/behaviours/labels/add/labels-add.js' 
+import { initPlaceLabelContextMenuCallback } from '/public/behaviours/labels/place/labels-place.js' 
 import { command, metadata, contextMenu } from '/public/templates/adl/adl.js'
 
 function initLabels() {
 	
 	if (metadata.isEditor()) {
 		
-		contextMenu.add(initLabelContextMenuCallback(command, document.params['label-template-uri']));
+		contextMenu.add(initAddLabelContextMenuCallback(command, document.params['label-template-uri']));
 		
 	}
 }

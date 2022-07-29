@@ -5,7 +5,7 @@
 
 	<xsl:template match="adl:box">
 		<xsl:call-template name="formats-container">
-	     <xsl:with-param name="k9-rounding">5pt</xsl:with-param>	
+	     	<xsl:with-param name="k9-rounding">5pt</xsl:with-param>	
 		</xsl:call-template>
 	</xsl:template>
  
