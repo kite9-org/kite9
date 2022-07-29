@@ -19,9 +19,11 @@ export function initToggleInstrumentationCallback(on) {
 		    toggle = nav.appendChild(icon('_indication-toggle', "Toggle Indicators", '/public/behaviours/indication/toggle/toggle.svg', function() {
 		    	if (main.classList.contains('indicators-on')) {
 		    		main.classList.remove('indicators-on');
+		    		main.classList.add('indicators-off');
 		    		toggle.classList.remove('on');
 		    	} else {
 		    		main.classList.add('indicators-on');
+		    		main.classList.remove('indicators-off');
 		    		toggle.classList.add('on');
 		    	}
 		    }));

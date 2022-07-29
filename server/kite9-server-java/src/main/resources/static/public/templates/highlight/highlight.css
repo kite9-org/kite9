@@ -44,6 +44,14 @@
 	fill-opacity: .6;
 }
 
+.indicators-off [id] > [k9-highlight~=fill] {
+	fill-opacity: 0;
+}
+
+.indicators-off [id] > [k9-highlight~=stroke] {
+	stroke-opacity: 0;
+}
+
 /* Mouse-over effects: stroke, fill + outline and pulse */
 
 .mouseover > [k9-highlight~=stroke],
