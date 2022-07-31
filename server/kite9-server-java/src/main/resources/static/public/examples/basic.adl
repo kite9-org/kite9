@@ -1,4 +1,4 @@
-<diagram xslt:template="/github/kite9-org/kite9/templates/basic/basic-template.xsl?v=v0.14"
+<diagram xslt:template="/github/kite9-org/kite9/templates/basic/basic-template.xsl?v=v0.15"
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
@@ -7,6 +7,7 @@
    <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; ">
      <box id="b2" ><textarea id="t2">,</textarea></box>
      <box id="b3" ><textarea id="t3">b3 line</textarea></box>
+     <label id="l1">Box title</label>
    </container>
    
    <link id="link1" r="r">

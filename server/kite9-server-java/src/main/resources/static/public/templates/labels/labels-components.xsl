@@ -10,11 +10,9 @@
     <xsl:param name="text"><text><xsl:value-of select="text()" /></text></xsl:param>
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-texture">none</xsl:with-param>
-      <xsl:with-param name="k9-highlight"></xsl:with-param>
       <xsl:with-param name="k9-elem">label</xsl:with-param>
-      <xsl:with-param name="k9-contains" />
       <xsl:with-param name="k9-palette">label</xsl:with-param>
-      <xsl:with-param name="k9-ui">delete edit xml</xsl:with-param>
+      <xsl:with-param name="k9-ui">delete edit xml place</xsl:with-param>
     </xsl:call-template>
     
   </xsl:template> 

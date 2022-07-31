@@ -42,9 +42,10 @@ import { command, metadata, transition, instrumentation, dragger, contextMenu, p
 
 const 
 	containment = new Containment(),
-	layout = new Property("layout");
+	layout = new Property("layout"),
+	placement = new Property("placement");
 	
-export { command, metadata, transition, instrumentation, dragger, contextMenu, containment, palette, layout };
+export { command, metadata, transition, instrumentation, dragger, contextMenu, containment, palette, layout, placement };
 
 function initEditor() {
 	
@@ -54,7 +55,9 @@ function initEditor() {
 			
 	if (metadata.isEditor()) {
 		command.add(initUndoableCommandCallback(command));
+		
 		layout.setCallback(() => command.perform());
+		placement.setCallback(() => command.perform());
 	
 		dragger.dropWith(initCompleteDragable(command));
 		dragger.dragLocator(initDragableDragLocator());

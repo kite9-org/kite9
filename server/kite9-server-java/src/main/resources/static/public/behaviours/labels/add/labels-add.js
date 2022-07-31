@@ -11,12 +11,14 @@ export function createInsertLabelStep(e, templateUri, command) {
 	const info = parseInfo(e);
 	const end = info.end;
 	const linkId = info.terminates ? info.terminates : e.getAttribute("id");
+	const customLabel = e.getAttribute("k9-label");
 	const newId = createUniqueId();
+	const labelUri = customLabel ? customLabel : templateUri;
 	
 	command.push({
 		"type": 'InsertUrl',
 		"fragmentId": linkId,
-		"uriStr": templateUri,
+		"uriStr": labelUri,
 		"newId" : newId,
 	});
 	
