@@ -34,7 +34,6 @@ function initContainers() {
 		contextMenu.add(initInsertContextMenuCallback(palette, containment));
 		contextMenu.add(initLayoutContextMenuCallback(layout));
 		contextMenu.add(initChildContextMenuCallback(command));
-
 	}
 	
 }

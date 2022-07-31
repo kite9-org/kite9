@@ -15,19 +15,19 @@
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-script">
-  	 import '/github/kite9-org/kite9/templates/admin/admin.js?v=v0.14'
+  	 import '/github/kite9-org/kite9/templates/admin/admin.js?v=v0.15'
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-element-css">
      <xsl:call-template name="adl-diagram-element-css" />
-     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-elements.css?v=v0.14');</adl:css>     
+     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-elements.css?v=v0.15');</adl:css>     
    </xsl:template>
   
    <xsl:template match="/" mode="diagram-palettes">
    </xsl:template>
    
    <xsl:template match="/" mode="diagram-texture-css">
-     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-textures.css?v=v0.14');</adl:css>
+     <adl:css>@import url('/github/kite9-org/kite9/templates/admin/admin-textures.css?v=v0.15');</adl:css>
    </xsl:template>
    
    

@@ -59,6 +59,17 @@
 			<groupId>org.apache.xmlgraphics</groupId>
 			<artifactId>batik-transcoder</artifactId>
 			<version>${batik.version}</version>
+			<!-- added for eclipse -->
+			<exclusions>
+		        <exclusion>
+		            <groupId>xml-apis</groupId>
+		            <artifactId>xml-apis</artifactId>
+		        </exclusion>
+		        <exclusion>
+		            <groupId>java.xml</groupId>
+		            <artifactId>java.xml</artifactId>
+		        </exclusion>
+		    </exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.xmlgraphics</groupId>

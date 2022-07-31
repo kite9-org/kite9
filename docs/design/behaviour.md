@@ -66,7 +66,7 @@ Dictates the things you can choose from the context menu / gestures within the c
 
 #### Deleting
 
-* **delete** : allows the element to be deleted (single level)   _Implemented by **selectable/delete**_
+  - **delete** : allows the element to be deleted (single level)   _Implemented by **selectable/delete**_
   - **cascade** : deletes child elements
   - **orphan** : deleted when the parent is deleted
   
@@ -93,6 +93,11 @@ Dictates the things you can choose from the context menu / gestures within the c
 #### Selection
 
 * **grid**: Means that we can do select-row and select-column grid operations.
+
+#### Labels
+
+- **label** you can label with the default label
+- **place** you can set the position of a label with one of the values from LabelPlacement
 
 #### Other
 

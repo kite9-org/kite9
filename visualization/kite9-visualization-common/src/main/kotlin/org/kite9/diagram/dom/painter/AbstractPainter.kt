@@ -126,6 +126,17 @@ abstract class AbstractPainter : Painter {
             debug.append("temporary: true; ")
         }
 
+        if (r is Label) {
+            val labelPlacement = (r as Label).getLabelPlacement()
+            if (labelPlacement!=null) {
+                debug.append("placement: " + labelPlacement + ";")
+            }
+            val end = (r as Label).getEnd()
+            if (end != null) {
+                debug.append("end: " + end + ";")
+            }
+        }
+
         debug.append("painter: "+this.toString()+"; ")
 
         out.setAttribute("k9-info", debug.toString())
