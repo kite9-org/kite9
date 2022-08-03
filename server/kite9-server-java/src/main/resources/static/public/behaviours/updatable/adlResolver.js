@@ -6,7 +6,7 @@ export function createAdlToSVGResolver(transition, command, metadata) {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
-	const DEFAULT_TEMPLATE = "/github/kite9-org/kite9/templates/basic/basic-template.xsl?v=v0.15";
+	const DEFAULT_TEMPLATE = "/public/templates/basic/basic-template.xsl";
     const META_NAMESPACE = "http://www.kite9.org/schema/metadata";
 
 
