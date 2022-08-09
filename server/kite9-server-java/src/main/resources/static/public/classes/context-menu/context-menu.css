@@ -29,6 +29,7 @@
 	max-width: 24rem;
 	width: 18rem;
 	font-family: metropolis, sans-serif;
+	z-index: 200;
 }
 
 .contextMenu:after {

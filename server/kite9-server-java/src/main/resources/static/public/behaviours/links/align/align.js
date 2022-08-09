@@ -56,12 +56,13 @@ export function initAlignContextMenuCallback(command, templateUri, selector) {
 			// create an align element
 			steps.push({
 				fragmentId: getContainingDiagram(from).getAttribute("id"),
-				type: 'InsertUrlLink',
+				type: 'InsertUrlWithChanges',
 				newId: linkId,
-				fromId: from.getAttribute("id"),
-				toId: to.getAttribute("id"),
+				xpathToValue: {
+					'from/@reference': from.getAttribute("id"),
+					'to/@reference': to.getAttribute("id")
+				},
 				uriStr: templateUri,
-				deep: true
 			});
 		} else {
 			linkId = toUseId;

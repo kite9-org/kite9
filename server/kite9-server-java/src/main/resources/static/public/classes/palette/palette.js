@@ -149,6 +149,10 @@ export class Palette {
   getOpenEvent() {
     return this.openEvent;
   }
+  
+  getOpenPanel() {
+	return this.expanded[this.getCurrentSelector()];
+  }
 
   getCurrentSelector() {
     return this.currentSelector;

@@ -14,7 +14,8 @@ import { initCompleteDragable, initDragableDragLocator } from '/public/behaviour
 
 // selectable
 import { initDeleteContextMenuCallback } from '/public/behaviours/selectable/delete/selectable-delete.js'
-import { initReplaceContextMenuCallback, initReplacePaletteCallback } from '/public/behaviours/selectable/replace/selectable-replace.js'
+import { initReplaceContextMenuCallback } from '/public/behaviours/selectable/replace/selectable-replace.js'
+import { initPaletteContextMenuCallback, initMenuPaletteCallback } from '/public/behaviours/selectable/palette/selectable-palette.js'
 import { initXCPContextMenuCallback } from '/public/behaviours/selectable/xcp/xcp.js'
 import { initSelectable } from '/public/behaviours/selectable/selectable.js'
 
@@ -38,7 +39,7 @@ import { once } from '/public/bundles/ensure.js'
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 
  * plugin/behaviour system.
  */
-import { command, metadata, transition, instrumentation, dragger, contextMenu, palette } from '/public/templates/adl/adl.js'
+import { command, metadata, transition, instrumentation, dragger, contextMenu, palette, paletteContextMenu } from '/public/templates/adl/adl.js'
 
 const 
 	containment = new Containment(),
@@ -63,16 +64,18 @@ function initEditor() {
 		dragger.dragLocator(initDragableDragLocator());
 	
 		
-		palette.add(initReplacePaletteCallback(command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
+		palette.add(initMenuPaletteCallback(paletteContextMenu));
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		
 		contextMenu.add(initDeleteContextMenuCallback(command));
-		contextMenu.add(initReplaceContextMenuCallback(palette, containment)); 
 		contextMenu.add(initEditContextMenuCallback(command));
-		contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
 		contextMenu.add(initXMLContextMenuCallback(command));
 		contextMenu.add(initEditableImageContextMenuCallback(command, metadata));
+		contextMenu.add(initPaletteContextMenuCallback(palette));
+		
+		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
+		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
 	}
 	
 	instrumentation.add(initToggleInstrumentationCallback());

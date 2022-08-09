@@ -42,7 +42,8 @@ export const
 	dragger  = new Dragger(), 
 	contextMenu = new ContextMenu(),
 	containment = new Containment(),
-	palette =  new Palette("_palette", document.params['palettes']);
+	palette =  new Palette("_palette", document.params['palettes']),
+	paletteContextMenu = new ContextMenu();
 	
 
 function initCommon() {

@@ -18,7 +18,7 @@ function initDefaultReplaceChoiceSelector() {
 }
 
 
-export function initReplacePaletteCallback(command, rules, containment, replaceChoiceSelector, replaceSelector, createReplaceStep) {
+export function initReplaceContextMenuCallback(palette, command, rules, containment, replaceChoiceSelector, replaceSelector, createReplaceStep) {
 	
 	if (replaceChoiceSelector == undefined) {
 		replaceChoiceSelector = initDefaultReplaceChoiceSelector();
@@ -64,68 +64,45 @@ export function initReplacePaletteCallback(command, rules, containment, replaceC
 		}
 	}
 	
-	return function(palette, palettePanel, type) {
-		function click(event) {
-			if (palette.getCurrentAction() == "replace") {
-				const selectedElements = replaceSelector();
-				const droppingElement = palette.get().querySelector("[id].mouseover");
-				const result = Array.from(selectedElements)
-					.map(e => createReplaceStep(command, e, droppingElement, palettePanel))
-					.reduce((a, b) => a || b, false);
-				
-				if (result){
-					palette.destroy();		
-					command.perform();
-					event.stopPropagation();
-				}
-			}
-		}
-	
-		replaceChoiceSelector(palettePanel).forEach(function(v) {
-	    	v.removeEventListener("click", click);
-	    	v.addEventListener("click", click);
-		})
-	}
-	
-	
-	
-}
-
-/**
- * Adds replace option into context menu
- */
-export function initReplaceContextMenuCallback(palette, containment, selector) {
-	
-	if (selector == undefined) {
-		selector = initDefaultReplaceSelector();
-	}
-	
 	/**
 	 * Provides a link option for the context menu
 	 */
 	return function(event, contextMenu) {
 		
-		const selectedElements = hasLastSelected(selector());
+		// this is the elements we are going to replace
+		const selectedElements = hasLastSelected(replaceSelector());
+		
+		// this is the palette element we are going to replace it with
+		const droppingElement = palette.get().querySelector("[id].mouseover");
+		const palettePanel = palette.getOpenPanel();
 
 		if (selectedElements.length > 0) {
 			const parents = getParentElements(selectedElements);
 			
-			if (containment.canContainAll(selectedElements, parents)) {
-				// console.log("Allowing replace with types: "+allowedTypes);
+			if (containment.canContainAll([droppingElement], parents)) {
 				contextMenu.addControl(event, "/public/behaviours/selectable/replace/replace.svg",
-						"Replace", 
-						function(e2, selector) {
-					contextMenu.destroy();
+					"Replace", 
+					function(e2, selector) {
+						contextMenu.destroy();
+						 
+						const result = Array.from(selectedElements)
+							.map(e => createReplaceStep(command, e, droppingElement, palettePanel))
+							.reduce((a, b) => a || b, false);
+				
+						if (result){
+							palette.destroy();		
+							command.perform();
+							event.stopPropagation();
+						}			
 					
-					palette.open(
-						event, 
-						(e) => containment.canContain(e, parents),
-						"replace");
 				});
 			}
 		}
 	}
+	
+	
 }
+
 
 
 
