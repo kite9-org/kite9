@@ -4,7 +4,7 @@ import { isGrid } from '/public/bundles/api.js'
  * 
  * k9-palette:  For parents, elements and children, a list of types.
  * k9-contains:  For parents and elements, which types are allowed inside them.
- * k9-containers:  For children and elements, a list of which types they allow.
+ * k9-containers:  For children and elements, a list of which container types they allow.
  * 
  */
 export function initAttributeContainmentCallback() {

@@ -30,7 +30,9 @@ export class Containment {
 	 * Helper function
 	 */
 	canContain(element, parent) {
-		return this.allowed([element], Array.isArray(parent) ? parent : [parent]).length == 1;
+		return this.allowed(
+			Array.isArray(element) ? element : [element], 
+			Array.isArray(parent) ? parent : [parent]).length == 1;
 	}
 	
 	/**
@@ -50,7 +52,9 @@ export class Containment {
 	 * Can insert into this container
 	 */
 	canInsert(containers, children) {
-		return this.allowed([ WILDCARD ], containers, children).length == 1;
+		return this.allowed([ WILDCARD ], 
+			Array.isArray(containers) ? containers : [ containers], 
+			Array.isArray(children) ? children : [ children ]).length == 1;
 	}
 }
 

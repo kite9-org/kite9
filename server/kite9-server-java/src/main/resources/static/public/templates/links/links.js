@@ -15,7 +15,7 @@ import { initDirectionContextMenuCallback } from '/public/behaviours/links/direc
 import { initAlignContextMenuCallback } from '/public/behaviours/links/align/align.js'
 import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/public/behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/links/drag/links-drag.js'
-import { initNewLinkPaletteCallback, initNewLinkContextMenuCallback } from '/public/behaviours/links/new/links-new.js'
+import { initNewLinkPaletteCallback } from '/public/behaviours/links/new/links-new.js'
 import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/links-checker.js'
 
 const linker = new Linker(updateLink);
@@ -32,7 +32,7 @@ function initLinks() {
 
 		const getAlignTemplateUri = () => document.params['align-template-uri'];
 	
-    linker.add(initLinkLinkerCallback(command));
+    	linker.add(initLinkLinkerCallback(command));
 		linker.add(initAutoConnectLinkerCallback(command));
 	
 		dragger.dropLocatorFn(initTerminatorDropLocatorFunction());
@@ -53,7 +53,6 @@ function initLinks() {
 		palette.add(initNewLinkPaletteCallback(dragger));
 
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
-		contextMenu.add(initNewLinkContextMenuCallback(palette, containment));
 		contextMenu.add(initAlignContextMenuCallback(command));
 		contextMenu.add(initDirectionContextMenuCallback(command));
 		

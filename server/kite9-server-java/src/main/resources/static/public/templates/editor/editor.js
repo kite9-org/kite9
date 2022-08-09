@@ -46,7 +46,7 @@ const
 	layout = new Property("layout"),
 	placement = new Property("placement");
 	
-export { command, metadata, transition, instrumentation, dragger, contextMenu, containment, palette, layout, placement };
+export { command, metadata, transition, instrumentation, dragger, contextMenu, containment, palette, layout, placement, paletteContextMenu };
 
 function initEditor() {
 	

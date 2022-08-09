@@ -61,56 +61,16 @@ export function initNewLinkPaletteCallback(dragger, insertableSelector) {
 			event.stopPropagation();			
 		}
 	
-		/**
-		 * If the user holds the mouse down for 1/2 a second, we activate drag mode
-		 */
-		function mouseDown(event) {
-			if (palette.getCurrentAction() == 'new-link') {
-				handleDrag(event);
-			}
-		}
-	
 		insertableSelector(palettePanel).forEach(function(v) {
-	    	v.removeEventListener("mousedown", mouseDown);
-	    	v.addEventListener("mousedown", mouseDown);
+	    	v.removeEventListener("mousedown", handleDrag);
+	    	v.addEventListener("mousedown", handleDrag);
 	    	
-	    	v.removeEventListener("touchstart", mouseDown);
-	    	v.addEventListener("touchstart", mouseDown);
+	    	v.removeEventListener("touchstart", handleDrag);
+	    	v.addEventListener("touchstart", handleDrag);
 		})
 	}
 }
-	
-/**
- * Adds insert option into context menu
- */
-export function initNewLinkContextMenuCallback(palette, containment, selector) {
-	
-	
-	if (selector == undefined) {
-		selector = defaultInsertSelector;
-	}
-	
-	/**
-	 * Provides a link option for the context menu
-	 */
-	return function(event, contextMenu) {
-		
-		const selectedElements = hasLastSelected(selector());
-		
-		if (selectedElements.length > 0) {
-			contextMenu.addControl(event, "/public/behaviours/links/new/new-link.svg", "Linked Insert",
-				function(e2, selector) {
-					contextMenu.destroy();
-					// primes this based on the screen.
-					currentTarget(event);
-					palette.open(
-						 event, 
-						 (e) => containment.canContain(e, Array.from(selectedElements)),
-						"new-link");
-				});
-		}
-	}
-}
+
 
 
 

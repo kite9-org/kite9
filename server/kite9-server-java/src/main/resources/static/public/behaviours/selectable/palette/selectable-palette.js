@@ -1,4 +1,4 @@
-import { hasLastSelected } from '/public/bundles/api.js'
+import { hasLastSelected, getParentElements } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
 
 /**
@@ -16,10 +16,16 @@ function initDefaultMenuChoiceSelector() {
 	}
 }
 
-export function initPaletteContextMenuCallback(palette, selector) {
+export function initPaletteContextMenuCallback(palette, selector, paletteSelector) {
 	
 	if (selector == undefined) {
 		selector = initDefaultMenuSelector();
+	}
+	
+	if (paletteSelector == undefined) {
+		paletteSelector = function(e) {
+			return true;  // all palettes left available
+		}
 	}
 	
 	/**
@@ -35,7 +41,7 @@ export function initPaletteContextMenuCallback(palette, selector) {
 				function(e2, selector) {
 					contextMenu.destroy();
 					palette.open(event,
-						e => true,
+						paletteSelector,
 						"menu"
 					);
 				});

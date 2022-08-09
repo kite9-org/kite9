@@ -1,7 +1,7 @@
 
 import { once } from '/public/bundles/ensure.js'
 
-import { command, metadata, dragger, contextMenu, layout, containment, palette } from '/public/templates/editor/editor.js'
+import { command, metadata, dragger, contextMenu, layout, containment, palette, paletteContextMenu } from '/public/templates/editor/editor.js'
 
 //Containers
 import { initInsertPaletteCallback, initInsertContextMenuCallback, initInsertDragLocator } from '/public/behaviours/containers/insert/containers-insert.js'
@@ -28,12 +28,13 @@ function initContainers() {
 
 		palette.add(initContainPaletteCallback(command));
 		palette.add(initInsertPaletteCallback(command, containment));
-
 		
-		contextMenu.add(initContainContextMenuCallback(palette, containment)); 
-		contextMenu.add(initInsertContextMenuCallback(palette, containment));
 		contextMenu.add(initLayoutContextMenuCallback(layout));
 		contextMenu.add(initChildContextMenuCallback(command));
+		
+		//paletteContextMenu.add(initContainContextMenuCallback(palette, containment)); 
+		//paletteContextMenu.add(initInsertContextMenuCallback(palette, containment));
+
 	}
 	
 }
