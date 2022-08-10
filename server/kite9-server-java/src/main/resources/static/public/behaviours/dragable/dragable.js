@@ -7,7 +7,6 @@ export function initDragable(dragger, selector) {
 	if (selector == undefined) {
 		selector = function() {
 			return getMainSvg().querySelectorAll("[k9-info][k9-ui~=drag]");
-			
 		}
 	}
 	

@@ -1,6 +1,7 @@
 <diagram xmlns="http://www.kite9.org/schema/adl"
          style="--kite9-layout: vertical; "
          title="Basic"
+         allow-drag="true"
          icon="/public/templates/basic/icon.svg" id="pal">
 
     <box id="b1">
