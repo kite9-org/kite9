@@ -1,5 +1,7 @@
 <diagram xmlns="http://www.kite9.org/schema/adl"
-         style="--kite9-layout: vertical; " id="pal">
+         style="--kite9-layout: vertical; "
+         title="Basic"
+         icon="/public/templates/basic/icon.svg" id="pal">
 
     <box id="b1">
       <textarea id="fs1">Box</textarea>

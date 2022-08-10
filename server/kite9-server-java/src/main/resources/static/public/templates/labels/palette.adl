@@ -1,4 +1,9 @@
-<diagram xmlns="http://www.kite9.org/schema/adl" id="dia" style="--kite9-layout: down; ">
+<diagram 
+	xmlns="http://www.kite9.org/schema/adl" 
+	id="dia" 
+	title="Labels"
+	icon="/public/behaviours/labels/add/add.svg"
+	style="--kite9-layout: down; ">
 
   <label id="label">New Label</label>
 

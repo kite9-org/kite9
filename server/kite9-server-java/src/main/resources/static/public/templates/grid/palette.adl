@@ -1,5 +1,7 @@
  <diagram xmlns="http://www.kite9.org/schema/adl" 
    id="dia" 
+   title="Grid"
+   icon="/public/templates/grid/icon.svg"
    style="--kite9-layout: down; " >
 
   <svg:defs xmlns:svg='http://www.w3.org/2000/svg'>

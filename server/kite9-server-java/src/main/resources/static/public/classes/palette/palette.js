@@ -228,9 +228,17 @@ export class Palette {
     }
     
     function getTitle(palette) {
-      // find out palette title, if any
-      const title = palette.querySelector("title");
-      return title == undefined ? "Untitled Palette" : title.textContent;
+      const d = "Untitled Palette";
+      const diagram = palette.querySelector("g[k9-elem=diagram]");
+      const title = diagram == undefined ? d : diagram.getAttribute("title");
+      return title ? title : d;
+    }
+    
+     function getIcon(palette) {
+      const d = "/public/classes/palette/dot.svg";
+      const diagram = palette.querySelector("g[k9-elem=diagram]");
+      const icon = diagram == undefined ? d  : diagram.getAttribute("icon");
+      return icon  ? icon : d;
     }
 
 
@@ -246,7 +254,7 @@ export class Palette {
       }
 
       if (toShow.length > 1) {
-        var dot = icon('', getTitle(e), "/public/classes/palette/dot.svg", (event) => expandPanel(e, dot));
+        var dot = icon('', getTitle(e), getIcon(e), (event) => expandPanel(e, dot));
         dot.classList.remove("hint--bottom");
         dot.classList.add("hint--right");
         
