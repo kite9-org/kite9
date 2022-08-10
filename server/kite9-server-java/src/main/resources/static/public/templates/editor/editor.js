@@ -65,6 +65,7 @@ function initEditor() {
 	
 		
 		palette.add(initMenuPaletteCallback(paletteContextMenu));
+		palette.addUpdate(() => paletteContextMenu.destroy());
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		

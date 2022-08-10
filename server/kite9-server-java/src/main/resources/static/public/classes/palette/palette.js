@@ -10,6 +10,7 @@ export class Palette {
     this.callbacks = [];
     this.paletteMap = [];
     this.expanded = {};
+    this.updateCallbacks = [];
 
     var done = [];
 
@@ -137,6 +138,10 @@ export class Palette {
   add(cb) {
     this.callbacks.push(cb);
   }
+  
+  addUpdate(cb) {
+	this.updateCallbacks.push(cb);
+  }
 
   getId() {
     return this.id;
@@ -166,6 +171,7 @@ export class Palette {
     this.openEvent = event;
     this.currentSelector = selectorFunction;
     this.currentAction = actionFunction;
+    const _this = this;
 
     var darken = document.getElementById("_darken");
     var palette = document.getElementById(this.id);
@@ -225,6 +231,7 @@ export class Palette {
       if (dot != null) {
         dot.classList.add("selected");
       }
+      _this.updateCallbacks.forEach(cb => cb());
     }
     
     function getTitle(palette) {
@@ -287,6 +294,7 @@ export class Palette {
     var darken = document.getElementById("_darken");
     palette.style.visibility = 'hidden';
     darken.style.display = 'none';
+    this.updateCallbacks.forEach(cb => cb());
   }
 }
 
