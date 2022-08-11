@@ -367,6 +367,13 @@ export function isDiagram(v) {
 	return (att == undefined ? "" : att).includes("diagram");
 }
 
+export function isLabel(v) {
+	if (v == null)
+		return false;
+	const att = v.getAttribute("k9-info");
+	return (att == undefined ? "" : att).includes("rectangular: label");
+}
+
 export function isCell(e) {
 	if (e == null)
 		return false;

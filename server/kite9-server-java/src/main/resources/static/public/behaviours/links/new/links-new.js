@@ -64,6 +64,7 @@ export function initNewLinkPaletteCallback(dragger, dragableSelector) {
 		
 		function moveDrag(event) {
 			if (isDragging(event)) {
+				mouseDown = false;
 				const paletteElement = getPaletteElement(event);
 				
 				// create a new copy of the palette element
@@ -107,11 +108,11 @@ export function initNewLinkPaletteCallback(dragger, dragableSelector) {
 	    	v.addEventListener("touchmove", moveDrag);
 		})
 		
-		document.removeEventListener("mouseup", endDrag);
-		document.addEventListener("mouseup", endDrag);
+		palettePanel.removeEventListener("mouseup", endDrag);
+		palettePanel.addEventListener("mouseup", endDrag);
 		
-		document.removeEventListener("touchend", endDrag);
-		document.addEventListener("touchend", endDrag);
+		palettePanel.removeEventListener("touchend", endDrag);
+		palettePanel.addEventListener("touchend", endDrag);
 	}
 }
 

@@ -2,29 +2,19 @@ import { hasLastSelected, getParentElements } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
 
 /**
- * k9-palette attribute says which type of element this is.  The element can be replaced with another element of the same type.
+ * Provides the palette-menu option for the context menu on the main diagram.
  */
-function initDefaultMenuSelector() {
-	return function() {
-		return getMainSvg().querySelectorAll("[id].selected");
-	}
-}
-
-function initDefaultMenuChoiceSelector() {
-	return function(palettePanel) {
-		return palettePanel.querySelectorAll("[id][k9-palette]");
-	}
-}
-
 export function initPaletteContextMenuCallback(palette, selector, paletteSelector) {
 	
 	if (selector == undefined) {
-		selector = initDefaultMenuSelector();
+		selector = function() {
+			return getMainSvg().querySelectorAll("[id].selected");
+		}
 	}
 	
 	if (paletteSelector == undefined) {
 		paletteSelector = function(e) {
-			return true;  // all palettes left available
+			return e!=undefined;  // all palettes shown and all elements active
 		}
 	}
 	
@@ -36,7 +26,7 @@ export function initPaletteContextMenuCallback(palette, selector, paletteSelecto
 		const selectedElements = hasLastSelected(selector());
 
 		if (selectedElements.length > 0) {			
-			contextMenu.addControl(event, "/public/behaviours/selectable/palette/open-palette.svg",
+			contextMenu.addControl(event, "/public/behaviours/palettes/menu/open-palette.svg",
 				"Open Palette", 
 				function(e2, selector) {
 					contextMenu.destroy();
@@ -49,14 +39,15 @@ export function initPaletteContextMenuCallback(palette, selector, paletteSelecto
 	}
 }
 
-export function initMenuPaletteCallback(paletteContextMenu, selector, menuChoiceSelector) {
-	
-	if (selector == undefined) {
-		selector = initDefaultMenuSelector();
-	}
+/**
+ * Allows elements on the palette to open up a context menu when clicked.
+ */
+export function initMenuPaletteCallback(paletteContextMenu, menuChoiceSelector) {
 	
 	if (menuChoiceSelector == undefined) {
-		menuChoiceSelector = initDefaultMenuChoiceSelector();
+		menuChoiceSelector = function(palettePanel) {
+			return palettePanel.querySelectorAll("[id][k9-palette]");
+		}
 	}
 	
 	return function(palette, palettePanel, type) {

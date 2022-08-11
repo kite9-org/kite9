@@ -9,6 +9,10 @@ export function getMainSvg() {
 	return svg;
 }
 
+export function getAllSvg() {
+	
+}
+
 var tinyDiv;
 
 export function getHtmlCoords(evt) {

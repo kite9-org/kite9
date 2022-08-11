@@ -1,4 +1,4 @@
-import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElements, parseInfo } from '/public/bundles/api.js'
+import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElement, parseInfo, isLink, isTerminator, isLabel, isConnected } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
 import { getElementUri } from '/public/classes/palette/palette.js';
 
@@ -17,8 +17,7 @@ function initDefaultReplaceChoiceSelector() {
 	}
 }
 
-
-export function initReplaceContextMenuCallback(palette, command, rules, containment, replaceChoiceSelector, replaceSelector, createReplaceStep) {
+export function initReplaceContextMenuCallback(palette, command, rules, containment, replaceChoiceSelector, replaceSelector, createReplaceStep, replaceChecker) {
 	
 	if (replaceChoiceSelector == undefined) {
 		replaceChoiceSelector = initDefaultReplaceChoiceSelector();
@@ -26,6 +25,26 @@ export function initReplaceContextMenuCallback(palette, command, rules, containm
 	
 	if (replaceSelector == undefined) {
 		replaceSelector = initDefaultReplaceSelector();
+	}
+	
+	if (replaceChecker == undefined) {
+		replaceChecker = function(oldElement, newElement) {
+			if (isLink(oldElement) && isLink(newElement)) {
+				return true;
+			}
+			
+			if (isTerminator(oldElement) && isTerminator(newElement)) {
+				return true;
+			}
+			
+			if ((isLabel(oldElement) && isLabel(newElement)) ||
+				(isConnected(oldElement) && isConnected(newElement))) {
+				const oldParent = getParentElement(oldElement);
+				const children = getContainerChildren(oldElement);
+				return containment.allowed([newElement], [oldParent], children);
+			}
+		}
+		
 	}
 	
 	if (createReplaceStep == undefined) {
@@ -71,21 +90,21 @@ export function initReplaceContextMenuCallback(palette, command, rules, containm
 		
 		// this is the elements we are going to replace
 		const selectedElements = hasLastSelected(replaceSelector());
+		const lastSelectedElement = hasLastSelected(replaceSelector(), true);
 		
 		// this is the palette element we are going to replace it with
-		const droppingElement = palette.get().querySelector("[id].mouseover");
+		const droppingElement = palette.get().querySelector("[id].lastSelected");
 		const palettePanel = palette.getOpenPanel();
 
-		if (selectedElements.length > 0) {
-			const parents = getParentElements(selectedElements);
-			
-			if (containment.canContainAll([droppingElement], parents)) {
+		if (lastSelectedElement) {			
+			if (replaceChecker(lastSelectedElement, droppingElement)) {
 				contextMenu.addControl(event, "/public/behaviours/selectable/replace/replace.svg",
 					"Replace", 
 					function(e2, selector) {
 						contextMenu.destroy();
 						 
 						const result = Array.from(selectedElements)
+							.filter(e => replaceChecker(e, droppingElement))
 							.map(e => createReplaceStep(command, e, droppingElement, palettePanel))
 							.reduce((a, b) => a || b, false);
 				

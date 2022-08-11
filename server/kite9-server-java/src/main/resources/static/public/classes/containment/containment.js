@@ -1,7 +1,8 @@
-import { getParentElement, getContainerChildren } from '/public/bundles/api.js'
-
 export const WILDCARD = "*";
 
+/** 
+ * Handles drag and drop rules, as well as surround/contain and insert.  Replace is handled elsewhere.
+ */
 export class Containment {
 		
 	constructor() {

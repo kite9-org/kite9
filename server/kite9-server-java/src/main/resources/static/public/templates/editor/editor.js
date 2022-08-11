@@ -15,9 +15,9 @@ import { initCompleteDragable, initDragableDragLocator } from '/public/behaviour
 // selectable
 import { initDeleteContextMenuCallback } from '/public/behaviours/selectable/delete/selectable-delete.js'
 import { initReplaceContextMenuCallback } from '/public/behaviours/selectable/replace/selectable-replace.js'
-import { initPaletteContextMenuCallback, initMenuPaletteCallback } from '/public/behaviours/selectable/palette/selectable-palette.js'
+import { initPaletteContextMenuCallback, initMenuPaletteCallback } from '/public/behaviours/palettes/menu/palettes-menu.js'
 import { initXCPContextMenuCallback } from '/public/behaviours/selectable/xcp/xcp.js'
-import { initSelectable } from '/public/behaviours/selectable/selectable.js'
+import { initSelectable, clearSelectable } from '/public/behaviours/selectable/selectable.js'
 
 // indication
 import { initToggleInstrumentationCallback } from '/public/behaviours/indication/toggle/toggle.js'
@@ -66,6 +66,7 @@ function initEditor() {
 		
 		palette.add(initMenuPaletteCallback(paletteContextMenu));
 		palette.addUpdate(() => paletteContextMenu.destroy());
+		palette.addUpdate(() => clearSelectable(palette.get()));
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		
@@ -77,10 +78,13 @@ function initEditor() {
 		
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
+		
+		initSelectable(() => palette.get().querySelectorAll("[k9-elem][id]"), palette.get(), true);
+
 	}
 	
 	instrumentation.add(initToggleInstrumentationCallback());
-	initSelectable();
+	initSelectable();  // for main svg agrea
 
 }
 

@@ -2,10 +2,20 @@ import { getMainSvg, currentTarget } from '/public/bundles/screen.js'
 import { getKite9Target } from '/public/bundles/api.js'
 
 
+export function clearSelectable(within) {
+	within.querySelectorAll(".lastSelected").forEach(c => {
+		c.classList.remove("lastSelected")
+	})
+}
+
 // Adds .selected class when the user mouseups over an element.
 // Adds .lastSelected class to a single element, which is the last one clicked on
 
-export function initSelectable(selector, singleSelect) {
+export function initSelectable(selector, within, singleSelect) {
+	
+	if (within == undefined) {
+		within = getMainSvg();
+	}
 	
 	function mouseup(event) {
 		if (event.handledSelect) {
@@ -23,7 +33,7 @@ export function initSelectable(selector, singleSelect) {
 			
 			if (singleSelect) {
 				// unselect all other elements
-				getMainSvg().querySelectorAll(".selected").forEach(c => {
+				within.querySelectorAll(".selected").forEach(c => {
 					c.classList.remove("selected");
 				})
 				
@@ -48,10 +58,8 @@ export function initSelectable(selector, singleSelect) {
 			classes.remove("selected")
 		}
 		
-		document.querySelectorAll(".lastSelected").forEach(c => {
-			c.classList.remove("lastSelected")
-		})
-		
+		clearSelectable(within);
+
 		classes.add("lastSelected")
 		
 		event.handledSelect = true;
@@ -59,11 +67,11 @@ export function initSelectable(selector, singleSelect) {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id]");
+			return within.querySelectorAll("[id]");
 		}
 	}
 	
-	getMainSvg().addEventListener("mousedown", mouseup);
+	within.addEventListener("mousedown", mouseup);
 
 }
 

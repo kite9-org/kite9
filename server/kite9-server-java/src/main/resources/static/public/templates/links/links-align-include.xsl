@@ -9,7 +9,6 @@
     <xsl:param name="content"><xsl:apply-templates /></xsl:param>
     <xsl:param name="k9-elem" select="local-name()" />
     <xsl:param name="k9-format">link-basic</xsl:param>
-    <xsl:param name="k9-palette">link</xsl:param>
     <xsl:param name="k9-ui">delete link cascade drop</xsl:param>
     
     <xsl:param name="k9-shape">
@@ -30,7 +29,6 @@
       <xsl:attribute name="k9-ui"><xsl:value-of select="$k9-ui" /></xsl:attribute>
       <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
       <xsl:attribute name="k9-format"><xsl:value-of select="$k9-format" /></xsl:attribute>
-      <xsl:attribute name="k9-palette"><xsl:value-of select="$k9-palette" /></xsl:attribute>
  
       <xsl:if test="$id">
         <xsl:attribute name="id"><xsl:value-of select="$id" /></xsl:attribute>

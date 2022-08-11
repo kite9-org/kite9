@@ -17,6 +17,7 @@ import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorD
 import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/links/drag/links-drag.js'
 import { initNewLinkPaletteCallback } from '/public/behaviours/links/new/links-new.js'
 import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/links-checker.js'
+import { initLinkContainmentCallback, initTerminatorContainmentCallback, initLabelContainmentCallback } from '/public/behaviours/links/rules/links-rules.js'
 
 const linker = new Linker(updateLink);
 
@@ -55,6 +56,10 @@ function initLinks() {
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
 		contextMenu.add(initDirectionContextMenuCallback(command));
+		
+		containment.add(initLabelContainmentCallback());
+		containment.add(initLinkContainmentCallback());
+		containment.add(initTerminatorContainmentCallback());
 		
 		initLinkable(linker);
 

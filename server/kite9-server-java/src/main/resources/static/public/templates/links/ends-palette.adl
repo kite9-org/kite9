@@ -61,48 +61,48 @@
 
 		<svg:g style="--kite9-link-minimum-length: 1pt !important; ">
 
-			<link id="l1">
-				<from id="l1-f" reference="from1" class="null" />
+			<link>
+				<from reference="from1" class="null" />
 				<to id="l1-t" reference="to1" />
 			</link>
 
-			<link id="l2">
-				<from id="l2-f" reference="from2" class="null" />
+			<link>
+				<from reference="from2" class="null" />
 				<to id="l2-t" reference="to2" shape="arrow" />
 			</link>
 
-			<link id="l3">
-				<from id="l3-f" reference="from3" class="null" />
+			<link>
+				<from reference="from3" class="null" />
 				<to id="l3-t" reference="to3" shape="circle" />
 			</link>
 
-			<link id="l4">
-				<from id="l4-f" reference="from4" class="null" />
+			<link>
+				<from reference="from4" class="null" />
 				<to id="l4-t" reference="to4" shape="diamond" />
 			</link>
 
-			<link id="l5">
-				<from id="l5-f" reference="from5" class="null" />
+			<link>
+				<from reference="from5" class="null" />
 				<to id="l5-t" reference="to5" shape="open-diamond" />
 			</link>
 
-			<link id="l6">
-				<from id="l6-f" reference="from6" class="null" />
+			<link>
+				<from reference="from6" class="null" />
 				<to id="l6-t" reference="to6" shape="barbed-arrow" />
 			</link>
 
-			<link id="l7">
-				<from id="l7-f" reference="from7" class="null" />
+			<link>
+				<from reference="from7" class="null" />
 				<to id="l7-t" reference="to7" shape="open-arrow" />
 			</link>
 
-			<link id="l8">
-				<from id="l8-f" reference="from8" class="null" />
+			<link>
+				<from reference="from8" class="null" />
 				<to id="l8-t" reference="to8" shape="crow" />
 			</link>
 
-			<link id="l9">
-				<from id="l9-f" reference="from9" class="null" />
+			<link>
+				<from reference="from9" class="null" />
 				<to id="l9-t" reference="to9" shape="square" />
 			</link> 
 
