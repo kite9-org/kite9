@@ -1,6 +1,7 @@
 import { Modal } from '/public/classes/modal/modal.js'
 import { hasLastSelected, encodeADLElement } from '/public/bundles/api.js'
 import { form, ok, cancel, inlineButtons, formFields } from '/public/bundles/form.js'
+import { getMainSvg } from '/public/bundles/screen.js';
 import { ensureCss } from '/public/bundles/ensure.js'
 import '/webjars/codemirror/5.58.3/lib/codemirror.js';
 import '/webjars/codemirror/5.58.3/mode/xml/xml.js';
@@ -23,7 +24,7 @@ export function initXMLContextMenuCallback(command, selector, xmlCollector) {
 
   if (selector == undefined) {
     selector = function() {
-      return document.querySelectorAll("[id][k9-ui].selected");
+      return getMainSvg().querySelectorAll("[id][k9-ui].selected");
     }
   }
 

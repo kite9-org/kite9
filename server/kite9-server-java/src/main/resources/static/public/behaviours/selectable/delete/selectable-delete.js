@@ -1,11 +1,12 @@
 import { hasLastSelected, getContainedChildren, getNextSiblingId, getParentElement, getDependentElements } from "/public/bundles/api.js";
+import { getMainSvg } from '/public/bundles/screen.js';
 
 
 export function initDeleteContextMenuCallback(command, selector, cascade, orphan) {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return document.querySelectorAll("[id][k9-ui~='delete'].selected")
+			return getMainSvg().querySelectorAll("[id][k9-ui~='delete'].selected")
 		}
 	}
 	

@@ -1,5 +1,6 @@
 import { hasLastSelected } from '/public/bundles/api.js'
 import { textarea, form, ok, cancel, inlineButtons, formValues } from '/public/bundles/form.js'
+import { getMainSvg } from '/public/bundles/screen.js';
 
 export function initEditContextMenuCallback(command, selector, textCollector) {
 	
@@ -15,7 +16,7 @@ export function initEditContextMenuCallback(command, selector, textCollector) {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return document.querySelectorAll("[id][k9-ui~='edit'].selected");
+			return getMainSvg().querySelectorAll("[id][k9-ui~='edit'].selected");
 		}
 	}
 	

@@ -21,12 +21,12 @@
 /*
  * This includes CSS directives for making it easier to grab small elements in the diagram.
  */
-.indicators-on [k9-highlight~=grab] {
+.indicators-on [id] > [k9-highlight~=grab] {
   stroke-width: 10pt !important;
   fill-opacity: .5 !important;
 }
 
-.indicators-on [k9-highlight~=bar] {
+.indicators-on [id] > [k9-highlight~=bar] {
   stroke-width: 10pt !important;
   stroke-opacity: .1 !important;
 }

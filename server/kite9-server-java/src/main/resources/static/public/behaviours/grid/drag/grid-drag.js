@@ -1,5 +1,5 @@
-import { parseInfo, getParentElement, isConnected, isDiagram, isCell, isGrid, getContainerChildren, getNextSiblingId, } from '/public/bundles/api.js'
-import { drawBar, getBefore, clearBar } from '/public/bundles/ordering.js'
+import { parseInfo, isCell, isGrid } from '/public/bundles/api.js'
+import { drawBar, clearBar } from '/public/bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg } from '/public/bundles/screen.js'
 import { getOrdinal, getOrdinals  } from '/public/behaviours/grid/common-grid.js' 
 
@@ -30,7 +30,7 @@ export function initCellDragLocator(selector) {
 	if (selector == undefined) {
 		selector = function() {
 			moveCache = {};
-			const allCells = Array.from(document.querySelectorAll("[id][k9-ui~='cell'].selected, [id][k9-ui~='cell'].mouseover"))
+			const allCells = Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='cell'].selected, [id][k9-ui~='cell'].mouseover"))
 			if (allCells.length > 0) {
 				const mover = allCells.filter(dt => dt.classList.contains("lastSelected"))[0];
 				const container = mover.parentElement;

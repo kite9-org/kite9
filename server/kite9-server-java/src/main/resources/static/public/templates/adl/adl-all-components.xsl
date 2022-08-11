@@ -47,6 +47,7 @@
   
   <xsl:template name="adl-diagram-palettes">
   	<xsl:call-template name="links-diagram-palettes" />
+  	<xsl:call-template name="labels-diagram-palettes" />
   	<xsl:call-template name="containers-diagram-palettes" />
   	<xsl:call-template name="grid-diagram-palettes" />
   </xsl:template>

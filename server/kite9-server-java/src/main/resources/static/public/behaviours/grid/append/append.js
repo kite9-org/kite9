@@ -1,12 +1,13 @@
 import { hasLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '/public/bundles/api.js'
 import { nextOrdinal, getOrdinals  } from '/public/behaviours/grid/common-grid.js' 
+import { getMainSvg } from '/public/bundles/screen.js';
 
 
 export function initCellAppendContextMenuCallback(command, selector) {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return document.querySelectorAll("[id][k9-palette~='cell'].selected")
+			return getMainSvg().querySelectorAll("[id][k9-palette~='cell'].selected")
 		}
 	}
 	

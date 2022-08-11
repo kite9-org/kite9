@@ -1,6 +1,4 @@
-import { getSVGCoords, getMainSvg, is_touch_device4 } from '/public/bundles/screen.js'
-import { handleTransformAsStyle, getKite9Target, isConnected, isDiagram, getParentElement, onlyUnique } from '/public/bundles/api.js'
-import { getBeforeId } from '/public/bundles/ordering.js'
+import { getMainSvg, is_touch_device4 } from '/public/bundles/screen.js'
 
 export function initDragable(dragger, selector) {
 	

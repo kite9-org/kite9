@@ -1,5 +1,6 @@
 import { hasLastSelected } from "/public/bundles/api.js";
 import { form, ok, cancel, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '/public/bundles/form.js'
+import { getMainSvg } from '/public/bundles/screen.js';
 
 const LOADING = '/public/behaviours/rest/loading.svg';
 
@@ -81,7 +82,7 @@ export function initNewDocumentContextMenuCallback(command, metadata, templateSo
 
   if (selector == undefined) {
     selector = function() {
-      return document.querySelectorAll("[id][k9-ui~='NewDocument']")
+      return getMainSvg().querySelectorAll("[id][k9-ui~='NewDocument']")
     }
   }
   
