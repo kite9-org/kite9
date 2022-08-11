@@ -69,22 +69,26 @@ export function initLinkDropCallback(command) {
 		const newId2 = createUniqueId();
 		
 		command.push({
-			"type": 'InsertUrlLink',
+			"type": 'InsertUrlWithChanges',
 			"uriStr": "#"+dropId,
 			"beforeId" : dropId,
 			"newId": newId1,
-			"fromId": ends[0],
-			"toId": dragId,
+			"xpathToValue": {
+					"*[local-name()='from']/@reference": ends[0],
+					"*[local-name()='to']/@reference": dragId
+			},
 			"fragmentId": diagramId
 		})
 		
 		command.push({
-			"type": 'InsertUrlLink',
+			"type": 'InsertUrlWithChanges',
 			"uriStr": "#"+dropId,
 			"beforeId" : dropId,
+			"xpathToValue": {
+					"*[local-name()='from']/@reference": dragId,
+					"*[local-name()='to']/@reference": ends[1]
+			},
 			"newId": newId2,
-			"fromId": dragId,
-			"toId": ends[1],
 			"fragmentId": diagramId
 		})
 		

@@ -70,10 +70,12 @@ export function initAutoConnectLinkerCallback(command) {
 				const linkId = createUniqueId();
 				command.push({
 					fragmentId: diagramId,
-					type: 'InsertUrlLink',
+					type: 'InsertUrlWithChanges',
 					newId: linkId,
-					fromId: id_to, 
-					toId: id_from,
+					xpathToValue: {
+						"*[local-name()='from']/@reference": id_to,
+						"*[local-name()='to']/@reference": id_from
+					},
 					uriStr: templateUri,	
 				});
 				

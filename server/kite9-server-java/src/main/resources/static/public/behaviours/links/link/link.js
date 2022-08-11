@@ -138,11 +138,13 @@ export function initLinkLinkerCallback(command) {
 				var linkId = e.getAttribute("id");
 				
 				command.push({
-					type: "InsertUrlLink",
+					type: "InsertUrlWithChanges",
 					fragmentId: diagramId,
 					uriStr: templateUri,
-					fromId: fromId,
-					toId: linkTargetId,
+					xpathToValue: {
+						"*[local-name()='from']/@reference": fromId,
+						"*[local-name()='to']/@reference": linkTargetId
+					},
 					newId: linkId
 				});
 				
