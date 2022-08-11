@@ -59,8 +59,8 @@ export function initAlignContextMenuCallback(command, templateUri, selector) {
 				type: 'InsertUrlWithChanges',
 				newId: linkId,
 				xpathToValue: {
-					'from/@reference': from.getAttribute("id"),
-					'to/@reference': to.getAttribute("id")
+					"*[local-name()='from']/@reference": from.getAttribute("id"),
+					"*[local-name()='to']/@reference": to.getAttribute("id")
 				},
 				uriStr: templateUri,
 			});

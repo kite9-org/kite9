@@ -297,8 +297,8 @@ public class CommandsTest {
 		copy.newId="six";
 
 		Map<String, String> xpathToValue = new HashMap<>();
-		xpathToValue.put("from/@reference", "one-label");
-		xpathToValue.put("to/@reference", "two-label");
+		xpathToValue.put("*[local-name()='from']/@reference", "one-label");
+		xpathToValue.put("*[local-name()='to']/@reference", "two-label");
 
 		copy.xpathToValue = xpathToValue;
 

@@ -16,7 +16,7 @@ function defaultInsertableSelector(palettePanel) {
  * Provides functionality so that when the user clicks on a 
  * palette element it is inserted into the document.
  */
-export function initInsertPaletteCallback(command, containment, insertableSelector, insertSelector) {
+export function initInsertContextMenuCallback(palette, command, containment, insertableSelector, insertSelector) {
 	
 	if (insertableSelector == undefined) {
 		insertableSelector = defaultInsertableSelector;
@@ -26,8 +26,18 @@ export function initInsertPaletteCallback(command, containment, insertableSelect
 		insertSelector = defaultInsertSelector;
 	}
 	
-	return function(palette, palettePanel) {
-
+    /**
+	 * Provides a contain option for the context menu
+	 */
+	return function(event, contextMenu) {
+		
+		const selectedElements = hasLastSelected(insertSelector());
+	    const lastSelectedElement = hasLastSelected(insertSelector(), true);
+		
+		// this is the palette element we are going to insert into them
+		const droppingElement = palette.get().querySelector("[id].lastSelected");
+		const palettePanel = palette.getOpenPanel();		
+		
 		function createInsertStep(e, drop, newId, beforeId) {			
 			return {
 				"type": 'InsertUrl',
@@ -37,17 +47,17 @@ export function initInsertPaletteCallback(command, containment, insertableSelect
 				"newId": newId
 			}
 		}
-		
-		function handleInsert(event, selectedElements) {
-			const paletteElement = palette.get().querySelector("[id].mouseover");
+	
+		function handleInsert(paletteElement, selectedElements) {
 			const ownBBox = getElementPageBBox(paletteElement);
 			event.droppingElements = [];
-			Array.from(selectedElements)				
+			Array.from(selectedElements)
+				.filter(e => containment.canContain(paletteElement, e))				
 				.map(e => {
 					const newId = createUniqueId();
 					e.classList.remove("selected");
 					const parentBBox = getElementPageBBox(e);
-
+	
 					// create the new svg element
 					const clone = paletteElement.cloneNode(true);
 					const pId = paletteElement.getAttribute("id");
@@ -75,24 +85,23 @@ export function initInsertPaletteCallback(command, containment, insertableSelect
 						(before == undefined ? undefined : before.getAttribute("id")));
 				})
 				.forEach(c => command.push(c));
-			
-			palette.destroy();	
-			
-			command.perform();
-			event.stopPropagation();			
 		}
 		
-		function mouseUp(event) {
-			if (palette.getCurrentAction() == 'insert') {
-				const selectedElements = insertSelector();
-				handleInsert(event, selectedElements);
+		
+		if (lastSelectedElement) {
+			const allowed = containment.canContain(droppingElement, lastSelectedElement);
+			if (allowed) {
+				// console.log("Allowing insert with types: "+allowedTypes);
+				contextMenu.addControl(event, "/public/behaviours/containers/insert/insert.svg", "Insert",
+					function(e2, selector) {
+						contextMenu.destroy();
+						handleInsert(droppingElement, selectedElements);
+						palette.destroy();
+						command.perform();
+						event.stopPropagation();
+					});
 			}
 		}
-	
-		insertableSelector(palettePanel).forEach(function(v) {
-	    	v.removeEventListener("mouseup", mouseUp);
-	    	v.addEventListener("mouseup", mouseUp);
-		})
 	}
 }
 
@@ -103,41 +112,5 @@ export function initInsertDragLocator() {
 	}
 	
 }
-	
-/**
- * Adds insert option into context menu
- */
-export function initInsertContextMenuCallback(palette, containment, selector) {
-	
-	if (selector == undefined) {
-		selector = defaultInsertSelector;
-	}
-	
-	/**
-	 * Provides a link option for the context menu
-	 */
-	return function(event, contextMenu) {
-		
-		const selectedElements = hasLastSelected(selector());
-		
-		if (selectedElements.length > 0) {
-			const allowed = containment.canInsert(selectedElements);
-			if (allowed) {
-				// console.log("Allowing insert with types: "+allowedTypes);
-				contextMenu.addControl(event, "/public/behaviours/containers/insert/insert.svg", "Insert",
-					function(e2, selector) {
-						contextMenu.destroy();
-						// primes this based on the screen.
-						currentTarget(event);
-						palette.open(
-							 event, 
-							 (e) => containment.canContain(e, Array.from(selectedElements)), 
-							"insert");
-					});
-			}
-		}
-	}
-}
-
 
 

@@ -1,4 +1,4 @@
-import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId, getParentElements } from '/public/bundles/api.js'
+import { hasLastSelected, createUniqueId, getParentElement, getNextSiblingId } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
 import { getElementUri} from '/public/classes/palette/palette.js';
 
@@ -7,25 +7,28 @@ function defaultContainSelector() {
 	return getMainSvg().querySelectorAll("[k9-palette].selected");
 }
 
-function defaultContainableSelector(palettePanel) {
-	return palettePanel.querySelectorAll("[id][k9-palette]");	
-}
-
 /**
  * Provides functionality so that when the user clicks on a 
  * palette element it is inserted into the document.
  */
-export function initContainPaletteCallback(command, containableSelector, containSelector) {
-	
-	if (containableSelector == undefined) {
-		containableSelector = defaultContainableSelector;
-	}
+export function initContainContextMenuCallback(palette, command, containment, containSelector) {
 	
 	if (containSelector == undefined) {
 		containSelector = defaultContainSelector;
 	}
 	
-	return function(palette, palettePanel) {
+	/**
+	 * Creates the palette-element inside the container of the lastSelected element.
+	 * Moves all the on-diagram selected elements inside it  
+	 */
+	return function(event, contextMenu) {
+	
+		const selectedElements = hasLastSelected(containSelector());
+	    const lastSelectedElement = hasLastSelected(containSelector(), true);
+		
+		// this is the palette element we are going to contain them with
+		const droppingElement = palette.get().querySelector("[id].lastSelected");
+		const palettePanel = palette.getOpenPanel();		
 		
 		function createInsertStep(e, drop, newId) {
 			return {
@@ -48,60 +51,30 @@ export function initContainPaletteCallback(command, containableSelector, contain
 			}
 		}
 	
-		function click(event) {
-			if (palette.getCurrentAction() == 'contain') {
-				// create the container element
-				const droppingElement = palette.get().querySelector("[id].mouseover");
-				const newId = createUniqueId();
-				const selectedElements = containSelector();
-				const lastElement = hasLastSelected(selectedElements, true);
-				command.push(createInsertStep(lastElement, droppingElement, newId));
-				
-				// now move everything else into it
-				Array.from(selectedElements).forEach(e => command.push(createContainStep(e, newId)));
-				palette.destroy();		
-				command.perform();
-				event.stopPropagation();
-			}
-		}
-	
-		containableSelector(palettePanel).forEach(function(v) {
-	    	v.removeEventListener("click", click);
-	    	v.addEventListener("click", click);
-		})
-	}
-}
-	
-/**
- * Adds contain option into context menu
- */
-export function initContainContextMenuCallback(palette, containment, selector) {
-	
-	if (selector == undefined) {
-		selector = defaultContainSelector;
-	}
-	
-	/**
-	 * Provides a link option for the context menu
-	 */
-	return function(event, contextMenu) {
-		
-		const selectedElements = hasLastSelected(selector());
-		
-		if (selectedElements.length > 0) {
-			const parentElements = getParentElements(selectedElements);
+		if (lastSelectedElement) {
+			const parentElement = getParentElement(lastSelectedElement);
+			const allowed = containment.canContain(droppingElement, parentElement);
+			const newId = createUniqueId();
 			
-			if (containment.canInsert(parentElements, selectedElements)) {
+			if (allowed) {
 				contextMenu.addControl(event, "/public/behaviours/containers/contain/contain.svg", "Contain", 
 					function(e2) {
 						contextMenu.destroy();
-						palette.open(
-							event, 
-							(e) => containment.canSurroundAll([e], parentElements, selectedElements), 		
-						"contain");
+						// create the container element
+						command.push(createInsertStep(lastSelectedElement, droppingElement, newId));
+				
+						// now move everything else into it
+						Array.from(selectedElements)
+							.filter(e => containment.canContain(e, droppingElement))
+							.forEach(e => command.push(createContainStep(e, newId)));
+							
+						palette.destroy();		
+						command.perform();
+						event.stopPropagation();
 					});
 			}
 		}
+	
 	}
 }
 
