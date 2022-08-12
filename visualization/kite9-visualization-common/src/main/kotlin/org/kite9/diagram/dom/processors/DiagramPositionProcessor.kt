@@ -27,12 +27,14 @@ open class DiagramPositionProcessor(val ctx : ElementContext, val vr: ValueRepla
 
     open fun processAttributes(n: Element, context: Element?) {
         for (j in 0 until n.attributes.length) {
-            val a = n.attributes.item(j) as Attr
-            if (canValueReplace(a, n)) {
-                val oldValue: String = a.value
-                val newValue: String = vr.performValueReplace(oldValue, n)
-                if (oldValue != newValue) {
-                    updateAttribute(n, a, newValue)
+            val a = n.attributes.item(j) as Attr?
+            if (a != null) {
+                if (canValueReplace(a, n)) {
+                    val oldValue: String = a.value
+                    val newValue: String = vr.performValueReplace(oldValue, n)
+                    if (oldValue != newValue) {
+                        updateAttribute(n, a, newValue)
+                    }
                 }
             }
         }

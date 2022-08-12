@@ -18,7 +18,6 @@
 [k9-elem=link-body] {
   --kite9-usage: decal;
   --kite9-type: svg;
-  fill: none;
 }
 
 [k9-elem=from],
@@ -32,6 +31,12 @@
 [k9-elem=link] {
 	--kite9-margin: 20pt;
 	--kite9-link-corner-radius: 6pt;
+}
+
+/* Align */
+.indicators-on [id] [k9-elem=align-body] {
+	stroke: #BBDDEE !important;
+	stroke-opacity: 1 !important;
 }
 
 

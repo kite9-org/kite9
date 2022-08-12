@@ -1,14 +1,3 @@
-/** 
- * Link bodies of various types
- */
-[k9-elem=link-grab],
-[k9-elem=align-grab],
-[k9-elem=grab],
-[k9-elem=align-body],
-[k9-elem=link-body] {
-  fill: none;
-}
-
 [k9-elem=from],
 [k9-elem=to] {
 	fill: #FFFFFF;	/* allows hover events to work */

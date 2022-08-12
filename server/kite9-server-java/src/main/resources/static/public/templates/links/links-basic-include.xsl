@@ -37,6 +37,7 @@
     	<xsl:apply-templates />
     	<xsl:copy-of select="$body" />	
    	</xsl:param>
+   	
     <xsl:param name="decoration"><xsl:apply-templates mode="link-decoration" select="." /></xsl:param>
     
     <xsl:call-template name="texture-basic">

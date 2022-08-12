@@ -52,6 +52,22 @@
 	stroke-opacity: 0;
 }
 
+/* show default elements (default label, link etc) */
+
+.indicators-on [id][default] > [k9-highlight~=grab],
+.indicators-on [id][default] > g > [k9-highlight~=grab] {
+  stroke-width: 10pt !important;
+  fill-opacity: 1 !important;
+  fill: #fd9870 !important;
+}
+
+.indicators-on [id][default] > [k9-highlight~=bar],
+.indicators-on [id][default] > g > [k9-highlight~=bar] {
+  stroke-width: 10pt !important;
+  stroke-opacity: .8 !important;
+  stroke: #fd9870 !important;
+}
+
 /* Mouse-over effects: stroke, fill + outline and pulse */
 
 .mouseover > g > [k9-highlight~=stroke],
@@ -95,6 +111,9 @@
 	fill: rgb(255, 204, 0) !important;
 	fill-opacity: .8 !important;
 }
+
+
+
 
 /** 
  * Prevent diagram highlight / select

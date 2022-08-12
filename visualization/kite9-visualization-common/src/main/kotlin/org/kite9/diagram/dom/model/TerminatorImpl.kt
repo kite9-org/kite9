@@ -90,12 +90,12 @@ class TerminatorImpl(
         return arrivalSide
     }
 
-    /**
-     * This is currently true, but won't always be.
-     */
     override fun getConnection(): Connection {
         ensureInitialized()
         val parent = getParent()
+        while (!parent is Connection) {
+            parent = getParent();
+        }
         if (parent is Connection) {
             return parent
         } else {
