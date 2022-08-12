@@ -1,8 +1,10 @@
+import { hasLastSelected } from '/public/bundles/api.js'
+import { getElementUri } from '/public/classes/palette/palette.js';
 
 
-
-
-
+/**
+ * Highlights default template items in the palettes.
+ */
 export function initPaletteUpdateDefaults(palette, linkFinder) {
 	
 	
@@ -23,6 +25,46 @@ export function initPaletteUpdateDefaults(palette, linkFinder) {
 		}
 	}
 }
+
+
+/**
+ * Allows the user to click to make this the default element
+ */
+export function initSetDefaultContextMenuCallback(palette, paramName, description, linkFinder, selector) {
+	
+    /**
+	 * Provides a contain option for the context menu
+	 */
+	return function(event, contextMenu) {
+		const palettePanel = palette.getOpenPanel();		
+	    const lastSelectedElement = hasLastSelected(selector(palettePanel), true);
+		
+		if (lastSelectedElement) {
+			const id = getElementUri(lastSelectedElement, palettePanel);
+			const currentSelectionId = document.params[paramName];
+			const alreadySelected = linkFinder(currentSelectionId);
+			const active = lastSelectedElement == alreadySelected;
+			const title = active ? "Default "+description : "Make default "+description;
+			const ctrl = contextMenu.addControl(event, "/public/behaviours/palettes/template/linkmenu.svg", title,
+				function(e2, selector) {
+					contextMenu.destroy();
+					document.params[paramName] = id;
+					initPaletteUpdateDefaults(palette, linkFinder);
+					event.stopPropagation();
+					palette.destroy();
+				});
+					
+			var img = ctrl.children[0];
+			
+			if (active) {
+				img.setAttribute("class", "selected");
+			}			
+		}
+	}
+}
+
+
+
 
 
 

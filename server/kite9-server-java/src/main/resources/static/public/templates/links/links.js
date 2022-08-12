@@ -5,7 +5,7 @@ import { once } from '/public/bundles/ensure.js'
 import { Linker } from '/public/classes/linker/linker.js'
 
 
-import { command, metadata, dragger, contextMenu, containment, palette } from '/public/templates/editor/editor.js'
+import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette } from '/public/templates/editor/editor.js'
 
 // Links
 import { initLinkable, updateLink, initLinkerDropCallback, initLinkFinder } from '/public/behaviours/links/linkable.js'
@@ -18,7 +18,7 @@ import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/li
 import { initNewLinkPaletteCallback } from '/public/behaviours/links/new/links-new.js'
 import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/links-checker.js'
 import { initTerminatorContainmentCallback, initLabelContainmentCallback } from '/public/behaviours/links/rules/links-rules.js'
-import { initPaletteUpdateDefaults } from '/public/behaviours/links/template/links-template.js';
+import { initPaletteUpdateDefaults, initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
 
 const linker = new Linker(updateLink);
 
@@ -30,6 +30,7 @@ function initLinks() {
 	if (metadata.isEditor()) {
 	
 		const getAlignTemplateUri = () => document.params['align-template-uri'];
+		const linkFinder = initLinkFinder();
 	
     	linker.add(initLinkLinkerCallback(command));
 		linker.add(initAutoConnectLinkerCallback(command));
@@ -40,7 +41,7 @@ function initLinks() {
 		dragger.moveWith(initTerminatorMoveCallback());
 	
 		dragger.moveWith(initAutoConnectMoveCallback(linker, 
-				initLinkFinder(), 
+				linkFinder, 
 				initAutoConnectTemplateSelector(getAlignTemplateUri, getLinkTemplateUri)));
 		
 		dragger.dropWith(initLinkDropCallback(command));
@@ -49,7 +50,7 @@ function initLinks() {
 		dragger.dropWith(initLinksCheckerDropCallback(command));
 		
 		palette.add(initNewLinkPaletteCallback(dragger));
-		palette.addUpdate(initPaletteUpdateDefaults(palette, initLinkFinder()));
+		palette.addUpdate(initPaletteUpdateDefaults(palette, linkFinder));
 
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
@@ -57,6 +58,8 @@ function initLinks() {
 		
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());
+		
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", linkFinder, p => p.querySelectorAll("[k9-elem=link]")));
 		
 		initLinkable(linker);
 

@@ -46,7 +46,7 @@ export function initMenuPaletteCallback(paletteContextMenu, menuChoiceSelector) 
 	
 	if (menuChoiceSelector == undefined) {
 		menuChoiceSelector = function(palettePanel) {
-			return palettePanel.querySelectorAll("[id][k9-palette]");
+			return palettePanel.querySelectorAll("[id]");
 		}
 	}
 	
