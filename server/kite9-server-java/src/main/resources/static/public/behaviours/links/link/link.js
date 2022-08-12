@@ -1,6 +1,7 @@
 import { parseInfo, getContainingDiagram, hasLastSelected, getParentElement } from '/public/bundles/api.js'
 import { getMainSvg, currentTarget } from '/public/bundles/screen.js'
-import { getAlignElementsAndDirections, initLinkFinder } from '/public/behaviours/links/linkable.js'
+import { getAlignElementsAndDirections } from '/public/behaviours/links/linkable.js'
+import { initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js'; 
 import { icon } from '/public/bundles/form.js'
 import { getElementUri} from '/public/classes/palette/palette.js';
 
@@ -22,7 +23,7 @@ export function initLinkContextMenuCallback(command, linker, selector, linkFinde
 	}
 	
 	if (linkFinder == undefined) {
-		linkFinder = initLinkFinder();
+		linkFinder = initPaletteFinder();
 	}
 	
 	/**

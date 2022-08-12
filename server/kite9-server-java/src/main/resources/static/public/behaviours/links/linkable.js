@@ -55,24 +55,6 @@ export function initLinkerDropCallback(command, linker) {
 }
 
 /**
- * Given a URI, returns the element itself, which we can use as the template
- */
-export function initLinkFinder() {
-	
-	return function(uri) {
-		const options = Array.from(document.querySelectorAll("div.palette-item"))
-			.filter(pDiv => uri.startsWith(pDiv.getAttribute("k9-palette-uri")))
-			.map(pDiv => {
-				const paletteId = pDiv.getAttribute("id");
-				const elementId = uri.substr(uri.lastIndexOf("#")+1) + paletteId;
-				return pDiv.querySelector('#'+elementId);
-			});
-		
-		return options[0];
-	}
-}
-
-/**
  * This is for updating links when they are being dragged.
  */
 export function updateLink(e, from, to) {

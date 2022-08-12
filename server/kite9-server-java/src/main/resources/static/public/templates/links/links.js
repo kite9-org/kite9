@@ -8,7 +8,7 @@ import { Linker } from '/public/classes/linker/linker.js'
 import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette } from '/public/templates/editor/editor.js'
 
 // Links
-import { initLinkable, updateLink, initLinkerDropCallback, initLinkFinder } from '/public/behaviours/links/linkable.js'
+import { initLinkable, updateLink, initLinkerDropCallback } from '/public/behaviours/links/linkable.js'
 import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/public/behaviours/links/autoconnect/autoconnect.js'
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '/public/behaviours/links/link/link.js'
 import { initDirectionContextMenuCallback } from '/public/behaviours/links/direction/direction.js'
@@ -18,7 +18,8 @@ import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/li
 import { initNewLinkPaletteCallback } from '/public/behaviours/links/new/links-new.js'
 import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/links-checker.js'
 import { initTerminatorContainmentCallback, initLabelContainmentCallback } from '/public/behaviours/links/rules/links-rules.js'
-import { initPaletteUpdateDefaults, initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
+import { initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
+import { initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js';
 
 const linker = new Linker(updateLink);
 
@@ -30,7 +31,7 @@ function initLinks() {
 	if (metadata.isEditor()) {
 	
 		const getAlignTemplateUri = () => document.params['align-template-uri'];
-		const linkFinder = initLinkFinder();
+		const linkFinder = initPaletteFinder();
 	
     	linker.add(initLinkLinkerCallback(command));
 		linker.add(initAutoConnectLinkerCallback(command));
@@ -50,7 +51,6 @@ function initLinks() {
 		dragger.dropWith(initLinksCheckerDropCallback(command));
 		
 		palette.add(initNewLinkPaletteCallback(dragger));
-		palette.addUpdate(initPaletteUpdateDefaults(palette, linkFinder));
 
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
 		contextMenu.add(initAlignContextMenuCallback(command));

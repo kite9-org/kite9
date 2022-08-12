@@ -15,12 +15,15 @@ import { initCompleteDragable, initDragableDragLocator } from '/public/behaviour
 // selectable
 import { initDeleteContextMenuCallback } from '/public/behaviours/selectable/delete/selectable-delete.js'
 import { initReplaceContextMenuCallback } from '/public/behaviours/selectable/replace/selectable-replace.js'
-import { initPaletteContextMenuCallback, initMenuPaletteCallback } from '/public/behaviours/palettes/menu/palettes-menu.js'
+import { initPaletteContextMenuCallback, initMenuPaletteCallback, initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js'
 import { initXCPContextMenuCallback } from '/public/behaviours/selectable/xcp/xcp.js'
 import { initSelectable, clearSelectable } from '/public/behaviours/selectable/selectable.js'
 
 // indication
 import { initToggleInstrumentationCallback } from '/public/behaviours/indication/toggle/toggle.js'
+
+// defaults
+import { initPaletteUpdateDefaults, initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
 
 // navigation
 import { closeMetadataCallback, initCloseInstrumentationCallback } from "/public/behaviours/navigable/close/close.js";
@@ -67,6 +70,8 @@ function initEditor() {
 		palette.add(initMenuPaletteCallback(paletteContextMenu));
 		palette.addUpdate(() => paletteContextMenu.destroy());
 		palette.addUpdate(() => clearSelectable(palette.get()));
+		palette.addUpdate(initPaletteUpdateDefaults(palette, initPaletteFinder()));
+
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		

@@ -39,6 +39,26 @@ export function initPaletteContextMenuCallback(palette, selector, paletteSelecto
 	}
 }
 
+
+/**
+ * Given a URI, returns the element itself, which we can use as the template
+ */
+export function initPaletteFinder() {
+	
+	return function(uri) {
+		const options = Array.from(document.querySelectorAll("div.palette-item"))
+			.filter(pDiv => uri.startsWith(pDiv.getAttribute("k9-palette-uri")))
+			.map(pDiv => {
+				const paletteId = pDiv.getAttribute("id");
+				const elementId = uri.substr(uri.lastIndexOf("#")+1) + paletteId;
+				return pDiv.querySelector('#'+elementId);
+			});
+		
+		return options[0];
+	}
+}
+
+
 /**
  * Allows elements on the palette to open up a context menu when clicked.
  */
