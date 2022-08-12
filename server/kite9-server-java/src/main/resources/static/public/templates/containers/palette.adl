@@ -1,6 +1,7 @@
 <diagram xmlns="http://www.kite9.org/schema/adl"
          xmlns:svg="http://www.w3.org/2000/svg"
          title="Basic Containers"
+         allow-drag="true"
          icon="/public/templates/containers/icon.svg"
          style="--kite9-layout: down; ">
 
