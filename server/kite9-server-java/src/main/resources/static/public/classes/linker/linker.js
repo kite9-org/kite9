@@ -53,6 +53,7 @@ export class Linker {
 				const newId = createUniqueId();
 				changeId(newLink, template.getAttribute("id"), newId);
 				newLink.classList.remove("selected");
+				newLink.removeAttribute("default");
 	
 				const bbox = getElementPageBBox(e)
 				var from = { x: bbox.x + bbox.width/2, y: bbox.y + bbox.height/2 };
