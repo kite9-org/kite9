@@ -35,18 +35,21 @@ class TerminatorImpl(
         super.initialize()
         arrivalSide = ctx.getCSSStyleEnumProperty(CSSConstants.ARRIVAL_SIDE, theElement, Direction::class)
         end = ctx.getCSSStyleEnumProperty(CSSConstants.LINK_END, theElement, End::class)
-        val from = end === End.FROM
         markerReserve = ctx.getCssStyleDoubleProperty(CSSConstants.MARKER_RESERVE, theElement)
     }
 
     override fun getContainer(): Container? {
         val c = getConnection()
-        return if (this === c.getFromDecoration()) {
-            c.getFrom().getContainer()
-        } else if (this === c.getToDecoration()) {
-            c.getTo().getContainer()
-        } else {
-            throw ctx.contextualException("Couldn't get container for terminator " + getID(), theElement)
+        return when {
+            this === c.getFromDecoration() -> {
+                c.getFrom().getContainer()
+            }
+            this === c.getToDecoration() -> {
+                c.getTo().getContainer()
+            }
+            else -> {
+                throw ctx.contextualException("Couldn't get container for terminator " + getID(), theElement)
+            }
         }
     }
 
@@ -92,9 +95,9 @@ class TerminatorImpl(
 
     override fun getConnection(): Connection {
         ensureInitialized()
-        val parent = getParent()
-        while (!parent is Connection) {
-            parent = getParent();
+        var parent = getParent()
+        while ((parent !is Connection) && (parent != null)) {
+            parent = getParent()
         }
         if (parent is Connection) {
             return parent

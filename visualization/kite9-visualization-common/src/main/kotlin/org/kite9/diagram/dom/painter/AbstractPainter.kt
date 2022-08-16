@@ -52,6 +52,7 @@ abstract class AbstractPainter : Painter {
         if (r is Port) {
             var pr = r as Port
             val rri = pr.getRenderingInformation()
+            debug.append("port: "+pr.getPortDirection()+";");
             debug.append("pos: " + rri.position + "; ")
         }
 

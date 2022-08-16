@@ -2,7 +2,10 @@
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
 
-   <box id="b1" ><textarea id="t1" style="fill: red" >y</textarea></box>
+   <box id="b1" >
+   	<textarea id="t1" style="fill: red" >y</textarea>
+   	<port id="p1" style="--kite9-port-side: top; " />
+   </box>
    
    <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; ">
      <box id="b2" ><textarea id="t2">,</textarea></box>
@@ -11,7 +14,7 @@
    </container>
    
    <link id="link1" r="r">
-    <from id="link1-from" reference="b1" shape="arrow"></from>
+    <from id="link1-from" reference="b2" shape="arrow"></from>
     <to id="link1-to" shape="arrow" reference="b3"></to>
    </link>
    

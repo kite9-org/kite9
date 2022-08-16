@@ -96,6 +96,13 @@
 }
 
 /**
+ * Ports
+ */
+ [k9-elem=port] {
+ 	--kite9-type: port;
+ }
+
+/**
  * For making palette look nice
  */
 [k9-elem=hub] {

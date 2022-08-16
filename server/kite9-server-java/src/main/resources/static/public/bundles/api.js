@@ -350,6 +350,13 @@ export function isLink(v) {
 	return (att == undefined ? "" : att).includes("link:");
 }
 
+export function isPort(v) {
+	if (v == null)
+		return false;
+	const att = v.getAttribute("k9-info");
+	return (att == undefined ? "" : att).includes("port:");
+}
+
 export function isConnected(v) {
 	if (v == null)
 		return false;

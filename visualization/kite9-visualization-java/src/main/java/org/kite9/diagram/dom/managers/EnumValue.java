@@ -12,7 +12,7 @@ public class EnumValue extends AbstractValue {
 
 	@Override
 	public String getCssText() {
-		return EnumManager.cssValueFor(theValue.toString());
+		return theValue == null ? null : EnumManager.cssValueFor(theValue.toString());
 	}
 	
 	public Enum<?> getTheValue() {

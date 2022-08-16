@@ -7,6 +7,8 @@
  <xsl:import href="links-align-include.xsl"/>
  <xsl:import href="links-terminators-include.xsl"/>
  <xsl:import href="links-markers-include.xsl"/>
+ <xsl:import href="links-ports-include.xsl"/>
+ 
   
   <xsl:template name="links-hub">
     <xsl:call-template name="formats-shape" />

@@ -1,5 +1,5 @@
 import { getSVGCoords, getMainSvg } from '/public/bundles/screen.js'
-import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected } from '/public/bundles/api.js'
+import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected, isPort } from '/public/bundles/api.js'
 import { getBeforeId } from '/public/bundles/ordering.js'
 
 export function initContainerDropLocatorFunction(containment) {
