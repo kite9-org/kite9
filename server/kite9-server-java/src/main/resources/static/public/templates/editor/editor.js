@@ -35,6 +35,7 @@ import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from
 import { initXMLContextMenuCallback } from '/public/behaviours/editable/xml/editable-xml.js'
 import { initEditContextMenuCallback } from '/public/behaviours/editable/text/editable-text.js'
 import { initEditableImageContextMenuCallback } from '/public/behaviours/editable/image/editable-image.js'
+import { initStyleContextMenuCallback } from '/public/behaviours/editable/style/editable-style.js'
 
 import { once } from '/public/bundles/ensure.js'
 
@@ -42,14 +43,15 @@ import { once } from '/public/bundles/ensure.js'
  * These are the global variables containing all of the classes used by the editor, and can be extended by other scripts using the 
  * plugin/behaviour system.
  */
-import { command, metadata, transition, instrumentation, dragger, contextMenu, palette, paletteContextMenu } from '/public/templates/adl/adl.js'
+import { command, metadata, transition, instrumentation, dragger, contextMenu, palette, paletteContextMenu, overlay } from '/public/templates/adl/adl.js'
 
 const 
 	containment = new Containment(),
 	layout = new Property("layout"),
-	placement = new Property("placement");
+	placement = new Property("placement"),
+	stylemenu = [];
 	
-export { command, metadata, transition, instrumentation, dragger, contextMenu, containment, palette, layout, placement, paletteContextMenu };
+export { command, metadata, transition, instrumentation, dragger, contextMenu, containment, palette, layout, placement, paletteContextMenu, overlay, stylemenu };
 
 function initEditor() {
 	
@@ -80,6 +82,7 @@ function initEditor() {
 		contextMenu.add(initXMLContextMenuCallback(command));
 		contextMenu.add(initEditableImageContextMenuCallback(command, metadata));
 		contextMenu.add(initPaletteContextMenuCallback(palette));
+		contextMenu.add(initStyleContextMenuCallback(stylemenu))
 		
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));

@@ -2,14 +2,15 @@
  * This contains basic kite9 classes that we can plug behaviours into, for manipulating ADL documents.
  */
 
-import { Instrumentation } from "/public/classes/instrumentation/instrumentation.js";
-import { Metadata } from "/public/classes/metadata/metadata.js";
-import { ContextMenu } from "/public/classes/context-menu/context-menu.js";
+import { Instrumentation } from "/public/classes/instrumentation/instrumentation.js"
+import { Metadata } from "/public/classes/metadata/metadata.js"
+import { ContextMenu } from "/public/classes/context-menu/context-menu.js"
 import { Transition } from '/public/classes/transition/transition.js'
 import { Dragger } from '/public/classes/dragger/dragger.js'
 import { Containment } from '/public/classes/containment/containment.js'
 import { Command, initCommandTransitionCallback } from '/public/classes/command/command.js'
 import { Palette, initPaletteHoverableAllowed } from '/public/classes/palette/palette.js'
+import { Overlay } from '/public/classes/overlay/overlay.js'
 
 //updatable
 import { initMetadataBasedUpdater } from '/public/behaviours/updatable/updatable.js'
@@ -18,10 +19,10 @@ import { initMetadataBasedUpdater } from '/public/behaviours/updatable/updatable
 import { initTransitionAnimationCallback } from '/public/behaviours/animation/animation.js'
 
 //identity
-import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/public/behaviours/identity/identity.js";
+import { initIdentityInstrumentationCallback, identityMetadataCallback } from "/public/behaviours/identity/identity.js"
 
 //zoomable
-import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/public/behaviours/zoomable/zoomable.js";
+import { zoomableInstrumentationCallback, zoomableTransitionCallback, initZoomable } from "/public/behaviours/zoomable/zoomable.js"
 
 //dragable
 import { initDragable, initMainHoverableAllowed } from '/public/behaviours/dragable/dragable.js' 
@@ -43,7 +44,8 @@ export const
 	contextMenu = new ContextMenu(),
 	containment = new Containment(),
 	palette =  new Palette("_palette", document.params['palettes']),
-	paletteContextMenu = new ContextMenu();
+	paletteContextMenu = new ContextMenu(),
+	overlay = new Overlay();
 	
 
 function initCommon() {

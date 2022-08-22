@@ -7,7 +7,7 @@
    	<port id="p1" style="--kite9-port-side: top; " />
    </box>
    
-   <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; ">
+   <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; --kite9-margin-left: 50px; ">
      <box id="b2" ><textarea id="t2">,</textarea></box>
      <box id="b3" ><textarea id="t3">b3 line</textarea></box>
      <label id="l1">Box title</label>

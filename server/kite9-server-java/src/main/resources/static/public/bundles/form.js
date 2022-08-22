@@ -183,7 +183,7 @@ function input(placeholder, type, value, atts) {
 	var id = idFrom(placeholder);
 	return create('div', {}, [
 		create('label', {"for" : id}, [ txt(placeholder)]),
-		create('input', { ...atts, 'class' : 'form-control', 'placeholder': placeholder, 'type': type, 'value': value, 'id': id, 'name': id })
+		create('input', { 'class' : 'form-control', 'placeholder': placeholder, 'type': type, 'value': value, 'id': id, 'name': id, ...atts })
 	]);
 }
 

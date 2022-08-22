@@ -4,13 +4,13 @@ Behaviour of both the Kite9 Editor and Github browser is provided via Javascript
 
 ## 1.  Separation Of Concerns
 
-behaviours / classes / commands / contexts / bundle
+behaviours / classes / commands / templates / bundle
 
-- **external**: 3rd party open-source libraries.
+- **external**: 3rd party open-source libraries (getting rid of these)
 - **bundle**: helper functions.
 - **classes**:  provide bits of functionality, like the palette, transition, metadata, shortcut, linker etc.
 - **behaviours**:  add event listeners
-- **context**: composes everything in to functions, e.g admin, editor
+- **templates**: composes everything in to functions, e.g admin, editor
 
 Note that these are in dependency order: earlier categories cannot access later categories.
 
@@ -97,7 +97,12 @@ Dictates the things you can choose from the context menu / gestures within the c
 #### Labels
 
 - **label** you can label with the default label
-- **place** you can set the position of a label with one of the values from LabelPlacement
+- **place** you can set the position of a label with one of the values from LabelPlacement.  NB:  this should be combined with port placement eventually - it's wrong as-is.
+
+#### Styling
+
+- **layout**:  allows you to set up `--kite9-layout`
+- 
 
 #### Other
 
@@ -105,7 +110,9 @@ Dictates the things you can choose from the context menu / gestures within the c
 
 ### Containment
 
-_Implemented by **selectable/replace**, **containers/insert** and **containers/contain**._
+_Implemented by **containment** class._
+
+_Used by **selectable/replace**, **containers/insert** and **containers/contain**._
 
 Define a token to define the type of the object.  Then use **k9-palette** to mark up an element with this type.
 

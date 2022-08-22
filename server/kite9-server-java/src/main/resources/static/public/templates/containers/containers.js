@@ -1,7 +1,7 @@
 
 import { once } from '/public/bundles/ensure.js'
 
-import { command, metadata, dragger, contextMenu, layout, containment, palette, paletteContextMenu } from '/public/templates/editor/editor.js'
+import { command, metadata, dragger, contextMenu, layout, containment, palette, paletteContextMenu, overlay, stylemenu } from '/public/templates/editor/editor.js'
 
 //Containers
 import { initInsertContextMenuCallback, initInsertDragLocator } from '/public/behaviours/containers/insert/containers-insert.js'
@@ -10,14 +10,14 @@ import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initCon
 import { initChildContextMenuCallback } from '/public/behaviours/containers/child/containers-child.js'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '/public/behaviours/containers/rules/containers-rules.js'
-
+import { initMarginContextMenuCallback } from '/public/behaviours/containers/size/containers-size.js'
 
 function initContainers() {
 	
 	containment.add(initAttributeContainmentCallback());
 
 	if (metadata.isEditor()) {
-
+		
 		layout.formCallback(initContainerLayoutPropertyFormCallback()); 
 		layout.setCallback(initContainerLayoutPropertySetCallback(command)); 
 
@@ -32,6 +32,7 @@ function initContainers() {
 		paletteContextMenu.add(initContainContextMenuCallback(palette, command, containment)); 
 		paletteContextMenu.add(initInsertContextMenuCallback(palette, command, containment));
 
+		stylemenu.push(initMarginContextMenuCallback(command, overlay));
 	}
 	
 }

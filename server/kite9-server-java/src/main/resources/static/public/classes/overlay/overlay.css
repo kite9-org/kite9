@@ -1,20 +1,18 @@
-.overlay {
-	background-color: grey;
-	position: absolute;
-	color: #333;
-	background: #fff;
-	padding: 10px;
-	border: 1px solid #5a5a5a;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	background: #fff;
-	user-select: none; 
-	-webkit-user-select: none;
-	opacity: .7;
-	max-width: 220px;
+._overlay rect {
+	fill: white;
+	fill-opacity: 0.25;
+	stroke: none;
 }
 
-.overlay:hover {
-	background-color: #DDDDDD;
+._overlay path {
+	stroke: #fd9870;
+	stroke-opacity: 1;
+	stroke-width: 1px;
+	stroke-dasharray: 2 2;
+	fill: none;
+}
+
+._overlay ellipse {
+	fill: #fd9870;
+	fill-opacity: 1;
 }
