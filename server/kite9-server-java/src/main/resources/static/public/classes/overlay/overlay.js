@@ -1,4 +1,4 @@
-import { getHtmlCoords, getMainSvg, getSVGCoords } from '/public/bundles/screen.js'
+import { getHtmlCoords, getMainSvg, getSVGCoords, svg } from '/public/bundles/screen.js'
 import { ensureCss } from '/public/bundles/ensure.js'
 
 
@@ -24,29 +24,22 @@ export class Overlay {
 		const _this = this;
 		var controlContainer = getMainSvg().querySelector("g._overlay");
 		if (!controlContainer) {
-			controlContainer = document.createElementNS("http://www.w3.org/2000/svg", "g");
-			getMainSvg().appendChild(controlContainer);
-			controlContainer.setAttribute("class", "_overlay");
-			const background = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-			background.setAttribute('width', getMainSvg().getAttribute("width"));
-			background.setAttribute('height', getMainSvg().getAttribute("height"));
-			controlContainer.appendChild(background);
-
-			const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-			controlContainer.appendChild(defs);
-			const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-			marker.setAttribute("id", "k9-sizing-arrow");
-			marker.setAttribute("markerHeight", "80px");
-			marker.setAttribute("markerWidth", "80px");
-			marker.setAttribute("orient","auto-start-reverse");
-			marker.setAttribute("refX","80px");
-			marker.setAttribute("refY","40px");
-
-			
-			defs.appendChild(marker);
-			const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
-			line.setAttribute("d", "M 80 0 V80 M80 40 L60 20 M 80 40 L 60 60");
-			marker.appendChild(line);
+			controlContainer = svg("g", {"class" : "_overlay"}, [
+				svg("rect", {'width': getMainSvg().getAttribute("width"),
+							 'height': getMainSvg().getAttribute("height")}),
+				svg("defs", {}, [
+					svg("marker", {
+							"id": "k9-sizing-arrow",
+							"markerHeight": "80px",
+							"markerWidth": "80px",
+							"orient": "auto-start-reverse",
+							"refX":"80px",
+							"refY":"40px"
+						},[
+							svg("path", {"d": "M 80 0 V80 M80 40 L60 20 M 80 40 L 60 60"})
+						])
+					])
+				]);
 			
 			function endSize(e) {
 				_this.sizing = null;
@@ -60,10 +53,11 @@ export class Overlay {
 				}
 			}
 				
-			background.addEventListener("mouseup", endSize);
-			background.addEventListener("touchend", endSize);
-			background.addEventListener("touchmove", moveSize);
-			background.addEventListener("mousemove", moveSize); 
+			controlContainer.addEventListener("mouseup", endSize);
+			controlContainer.addEventListener("touchend", endSize);
+			controlContainer.addEventListener("touchmove", moveSize);
+			controlContainer.addEventListener("mousemove", moveSize); 
+			getMainSvg().appendChild(controlContainer);
 		}
 		
 		return controlContainer;

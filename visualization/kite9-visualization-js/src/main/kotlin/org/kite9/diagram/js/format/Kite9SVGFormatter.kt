@@ -15,10 +15,15 @@ import org.w3c.dom.Element
  * Kite9 SVG properly in-browser
  */
 
+@JsName(name = "kite9Context")
+val context = JSElementContext()
+
+@JsName(name = "getCssStyleDoubleProperty")
+fun getCssStyleDoubleProperty(p: String, e: Element) = context.getCssStyleDoubleProperty(p, e)
+
 @JsName("formatSVG")
 fun formatSVG(e: Element) {
     Kite9Log.Companion.factory = { l -> JSKite9Log(l) }
-    val context = JSElementContext()
     val ef = JSDiagramElementFactory(context)
 
     // handle text-wrapping

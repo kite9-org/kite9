@@ -25,8 +25,8 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<El
 	 * Produces the diagram element for the underlying XML.
 	 */
 	public DiagramElement createDiagramElement(Element x, DiagramElement parent) {
-		DiagramElementType type = getContext().getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(DiagramElementType.class));
-		RectangularElementUsage usage = getContext().getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(RectangularElementUsage.class));
+		DiagramElementType type = getContext().getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(DiagramElementType.class));
+		RectangularElementUsage usage = getContext().getCssStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(RectangularElementUsage.class));
 
 		if ((type == null) || (usage == null)) {
 			return null;

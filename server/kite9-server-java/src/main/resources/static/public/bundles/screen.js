@@ -1,19 +1,13 @@
 import { parseTransform } from './api.js';
 
-var svg;
+var _svg;
 
 export function getMainSvg() {
-	if (svg == undefined) {
-		svg = document.querySelector("div.main svg");
+	if (_svg == undefined) {
+		_svg = document.querySelector("div.main svg");
 	}
-	return svg;
+	return _svg;
 }
-
-export function getAllSvg() {
-	
-}
-
-var tinyDiv;
 
 export function getHtmlCoords(evt) {
 	var out =  {x: evt.pageX, y: evt.pageY};
@@ -107,4 +101,38 @@ export function currentTarget(event) {
 	var v = document.elementFromPoint(coords.x - window.pageXOffset, coords.y - window.pageYOffset);
 	event.touchTarget = v;
 	return event.touchTarget;
+}
+
+/** 
+ * SVG Element builder
+ */
+export function svg(tag, atts, contents) {
+	function objectEach(m, action) {
+		for (var key in m) {
+		    // skip loop if the property is from prototype
+		    if (m.hasOwnProperty(key)) {
+		    	const val = m[key];
+		    	if (val) {
+			        action(key, val);
+		    	}
+		    }
+		}	
+	}
+	
+	var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+	objectEach(atts, (k, v) => e.setAttribute(k, v));
+	
+	if (contents) {
+		contents.forEach(c => e.appendChild(c));
+	}
+	
+	return e;
+}
+
+
+/** 
+ * Detect whether we can render on the client side
+ */
+export function canRenderClientSide() {
+	return (window.CSS.registerProperty != null);
 }

@@ -3,12 +3,10 @@ package org.kite9.diagram.dom.processors
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.ns.Kite9Namespaces
-import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.DiagramElementType
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
-import org.w3c.dom.Text
 import kotlin.math.max
 
 /**
@@ -151,7 +149,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         (n is Element) && (n.localName == "image") && (n.namespaceURI == Kite9Namespaces.SVG_NAMESPACE)
 
     private fun isWrapContents(n: Element) =
-        ctx.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, n, DiagramElementType::class) == DiagramElementType.TEXT
+        ctx.getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, n, DiagramElementType::class) == DiagramElementType.TEXT
 
 
     fun splitIntoSpans(s: String, inside: Element) : List<Span> {

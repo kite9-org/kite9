@@ -43,10 +43,10 @@ abstract class AbstractConnectedRectangular(
 
     protected fun initConnectionAlignment() {
         alignments = arrayOf(
-            ctx.getCSSStylePlacementProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
-            ctx.getCSSStylePlacementProperty(CSSConstants.VERTICAL_ALIGN_POSITION, theElement),
-            ctx.getCSSStylePlacementProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
-            ctx.getCSSStylePlacementProperty(CSSConstants.VERTICAL_ALIGN_POSITION, theElement)
+            ctx.getCssStylePlacementProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
+            ctx.getCssStylePlacementProperty(CSSConstants.VERTICAL_ALIGN_POSITION, theElement),
+            ctx.getCssStylePlacementProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
+            ctx.getCssStylePlacementProperty(CSSConstants.VERTICAL_ALIGN_POSITION, theElement)
         )
     }
 
@@ -64,7 +64,7 @@ abstract class AbstractConnectedRectangular(
     }
 
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
-        return ctx.getCSSStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
+        return ctx.getCssStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
     }
 
     override fun getLinkGutter(): Double {

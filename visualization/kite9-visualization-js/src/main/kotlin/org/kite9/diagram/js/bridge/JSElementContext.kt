@@ -156,7 +156,7 @@ class JSElementContext : ElementContext {
         return out
     }
 
-    override fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X? {
+    override fun <X : Any> getCssStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X? {
         val s = getCssStyleStringProperty(prop, e)
         if (s==null) {
             return null
@@ -166,7 +166,7 @@ class JSElementContext : ElementContext {
         }
     }
 
-    override fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange? {
+    override fun getCssStyleRangeProperty(prop: String, e: Element): IntegerRange? {
         TODO("Not yet implemented")
     }
 
@@ -174,7 +174,7 @@ class JSElementContext : ElementContext {
         return children.getOrElse(parent) { mutableListOf() }
     }
 
-    override fun getCSSStylePlacementProperty(prop: String, e: Element): Placement {
+    override fun getCssStylePlacementProperty(prop: String, e: Element): Placement {
         val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
 
         if (s.asDynamic().unit == "percent") {

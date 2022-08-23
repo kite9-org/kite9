@@ -192,24 +192,25 @@ function idFrom(str) {
 	return str.replace(/\W/g, '');
 }
 
-function objectEach(m, action) {
-	for (var key in m) {
-	    // skip loop if the property is from prototype
-	    if (m.hasOwnProperty(key)) {
-	    	const val = m[key];
-	    	if (val) {
-		        action(key, val);
-	    	}
-	    }
-	}	
-}
-	
 function txt(str) {
 	var e = document.createTextNode(str ? str : '');
 	return e;
 }
 
 function create(tag, atts, contents) {
+	
+	function objectEach(m, action) {
+		for (var key in m) {
+		    // skip loop if the property is from prototype
+		    if (m.hasOwnProperty(key)) {
+		    	const val = m[key];
+		    	if (val) {
+			        action(key, val);
+		    	}
+		    }
+		}	
+	}
+	
 	var e = document.createElement(tag);
 	objectEach(atts, (k, v) => e.setAttribute(k, v));
 	

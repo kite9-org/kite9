@@ -6,7 +6,6 @@ import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
 import org.kite9.diagram.dom.transform.SVGTransformer
 import org.kite9.diagram.dom.transform.TransformFactory.initializeTransformer
-import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.UNBOUNDED
@@ -48,7 +47,7 @@ abstract class AbstractModelDiagramElement(
     }
 
     private fun findTransform(): SVGTransformer {
-        val t = ctx.getCSSStyleEnumProperty(CSSConstants.CONTENT_TRANSFORM, theElement, ContentTransform::class)!!
+        val t = ctx.getCssStyleEnumProperty(CSSConstants.CONTENT_TRANSFORM, theElement, ContentTransform::class)!!
         return initializeTransformer(this, t, defaultTransform)
     }
 

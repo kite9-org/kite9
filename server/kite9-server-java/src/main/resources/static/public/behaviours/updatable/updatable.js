@@ -1,5 +1,6 @@
 import { createSVGResolver } from '/public/behaviours/updatable/svgResolver.js'
 import { createAdlToSVGResolver } from '/public/behaviours/updatable/adlResolver.js'
+import { canRenderClientSide } from '/public/bundles/screen.js'
 
 /**
  * Makes sure that the websocket uses ws/wss where needed
@@ -92,13 +93,6 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver) {
 	}
 	
 } 
-
-/** 
- * Detect whether we can render on the client side
- */
-function canRenderClientSide() {
-	return (window.CSS.registerProperty != null);
-}
 
 /**
  * This version of the updater adapts depending on what the (initial) meta-data says to do.

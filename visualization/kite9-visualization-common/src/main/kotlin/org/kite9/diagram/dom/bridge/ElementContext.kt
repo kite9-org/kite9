@@ -20,9 +20,9 @@ interface ElementContext {
      */
     fun getCssStyleDoubleProperty(prop: String, e: Element): Double
     fun getCssStyleStringProperty(prop: String, e: Element): String?
-    fun <X : Any> getCSSStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
-    fun getCSSStyleRangeProperty(prop: String, e: Element): IntegerRange?
-    fun getCSSStylePlacementProperty(prop: String, e: Element): Placement
+    fun <X : Any> getCssStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
+    fun getCssStyleRangeProperty(prop: String, e: Element): IntegerRange?
+    fun getCssStylePlacementProperty(prop: String, e: Element): Placement
 
     fun addChild(parent: DiagramElement, out: DiagramElement)
     fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement>

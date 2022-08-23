@@ -217,13 +217,13 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <X> X getCSSStyleEnumProperty(String prop, Element e, KClass<X> c) {
+	public <X> X getCssStyleEnumProperty(String prop, Element e, KClass<X> c) {
 		Value v = getCSSValue(prop, e);
 		return  v == null ? null : (X) ((EnumValue)v).getTheValue();
 	}
 
 	@Override
-	public IntegerRange getCSSStyleRangeProperty(String prop, Element e) {
+	public IntegerRange getCssStyleRangeProperty(String prop, Element e) {
 		IntegerRangeValue v = (IntegerRangeValue) getCSSValue(prop, e);
 		return v;
 	}
@@ -231,7 +231,7 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@NotNull
 	@Override
-	public Placement getCSSStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
+	public Placement getCssStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
 		Value v = getCSSValue(prop, e);
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
 			return new Placement(Measurement.PERCENTAGE, v.getFloatValue());

@@ -19,8 +19,8 @@ class JSDiagramElementFactory(context: JSElementContext) : AbstractDiagramElemen
     }
 
     override fun createDiagramElement(x: Element, parent: DiagramElement?): DiagramElement? {
-        val type = context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, DiagramElementType::class)
-        val usage= context!!.getCSSStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, RectangularElementUsage::class)
+        val type = context!!.getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, DiagramElementType::class)
+        val usage= context!!.getCssStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, RectangularElementUsage::class)
 
         if (type == null || usage == null) {
             return null
