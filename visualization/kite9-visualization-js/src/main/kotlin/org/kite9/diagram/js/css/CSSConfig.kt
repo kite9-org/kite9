@@ -126,6 +126,9 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_WIDTH, "<length>", "10000px", true))
     css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, "<length>", "10000px", true))
 
+    css.registerProperty(CSSProperty(CSSConstants.PORT_SIDE, syntax<PortSide>(), lower(PortSide.BOTTOM), inherits = false))
+    css.registerProperty(CSSProperty(CSSConstants.PORT_POSITION, "<length-percentage>", "50%", false))
+
 }
 
 

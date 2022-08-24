@@ -16,6 +16,7 @@ import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.Placement.Companion.NONE
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGGraphicsElement
+import org.w3c.dom.svg.SVGSVGElement
 import org.w3c.dom.svg.SVGTSpanElement
 import org.w3c.dom.svg.SVGTextElement
 import kotlin.random.Random
@@ -57,21 +58,25 @@ class JSElementContext : ElementContext {
 
     private val xmlToDiagram = mutableMapOf<String, DiagramElement>()
 
+    private val charset = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
     /**
-     * This uses a field on the element called privateID to store
+     * This uses an attribute on the element called data-id to store
      * a key for the hash map.
      */
     override fun register(x: Element, out: DiagramElement) {
-        var id: String?  = x.asDynamic().privateID
+        var id: String?  = x.getAttribute("data-id")
         if (id == null) {
-            id = Random.Default.nextBytes(10).toString()
-            x.asDynamic().privateID = id
+            id = (1..6)
+                .map { i -> charset.get(Random.nextInt(charset.size)) }
+                .joinToString("");
+            x.setAttribute("data-id",id)
         }
         xmlToDiagram[id] = out
     }
 
     override fun getRegisteredDiagramElement(x: Element) : DiagramElement? {
-        var id: String?  = x.asDynamic().privateID
+        var id: String?  = x.getAttribute("data-id")
         if (id != null) {
             return xmlToDiagram[id]
         } else {
@@ -187,8 +192,17 @@ class JSElementContext : ElementContext {
 
     }
 
+    fun ownerDocument(e: Element?) : SVGSVGElement? {
+        var ee = e;
+        while ((ee !is SVGSVGElement) && (ee != null)) {
+            ee = ee.parentElement
+        }
+
+        return ee as SVGSVGElement?
+    }
+
     override fun getReferencedElement(id: String, e: Element): DiagramElement? {
-        val ownerDocument = e.ownerDocument!!
+        val ownerDocument = ownerDocument(e)!!
         val out = ownerDocument.getElementById(id)
         return out?.let { getRegisteredDiagramElement(it) }
     }
@@ -200,7 +214,7 @@ class JSElementContext : ElementContext {
 
     override fun evaluateXPath(xpath: String, e: Element): String? {
         val ownerDocument = e.ownerDocument!!
-        var ns = ownerDocument.asDynamic().createNSResolver (ownerDocument.documentElement)
+        var ns = ownerDocument.asDynamic().createNSResolver (e)
         val out = ownerDocument.asDynamic().evaluate(xpath, e, ns, 2) // XPathResult.STRING_TYPE)
         return out.stringValue as? String
     }

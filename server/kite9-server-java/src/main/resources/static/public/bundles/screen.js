@@ -49,10 +49,10 @@ export function getElementHTMLBBox(e) {
 	var transform = getMainSvg().style.transform;
 	var t = parseTransform(transform);
 	var out = getElementPageBBox(e);
-	out.x = out.x / t.scaleX;
-	out.y = out.y / t.scaleY;
-	out.width = out.width / t.scaleX;
-	out.height = out.height / t.scaleY;
+	out.x = out.x * t.scaleX;
+	out.y = out.y * t.scaleY;
+	out.width = out.width * t.scaleX;
+	out.height = out.height * t.scaleY;
 	return out;
 }
 
