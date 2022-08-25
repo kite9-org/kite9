@@ -25,27 +25,6 @@ abstract class AbstractPainter : Painter {
         r = de
     }
 
-    protected fun addAttributes(toUse: Element, out: Element) {
-        //copyAttributes(toUse, out)
-        val id = r!!.getID()
-        if (id.length > 0) {
-            out.setAttribute("id", id)
-        }
-        addInfoAttributes(out)
-    }
-
-    fun copyAttributes(from: Element, to: Element) {
-        val attributes = from.attributes
-        for (i in 0 until attributes.length) {
-            val node = attributes.item(i) as Attr
-            if (node.name != "xmlns") {
-                val copy = to.ownerDocument!!.createAttribute(node.name)
-                copy.nodeValue = node.nodeValue
-                to.setAttributeNode(copy)
-            }
-        }
-    }
-
     protected fun addInfoAttributes(out: Element) {
         val debug = StringBuilder()
 

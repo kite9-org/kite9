@@ -15,7 +15,7 @@ open class DirectSVGGroupPainter(protected var theElement: Element) : AbstractPa
     </g> */
     override fun output(d: Document, postProcessor: XMLProcessor): Element? {
         val out = processOutput(theElement, d, postProcessor)
-        out?.let { addAttributes(theElement, it) }
+        out?.let { addInfoAttributes(theElement) }
         return out
     }
 

@@ -17,7 +17,7 @@
     <g xsl:use-attribute-sets="terminators">
       <xsl:copy-of select="@*"/>
       <g>
-        <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
+        <xsl:attribute name="k9-highlight">fill</xsl:attribute>
         <ellipse cx='0' cy='0' rx="8" ry="8"/>
         <xsl:apply-templates/>
       </g>
@@ -28,7 +28,7 @@
     <g xsl:use-attribute-sets="terminators">
       <xsl:copy-of select="@*"/>
       <g>
-        <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
+        <xsl:attribute name="k9-highlight">fill</xsl:attribute>
         <polygon points="-10 12, 0 -8, 10 12"/>
         <xsl:apply-templates/>
       </g>
@@ -40,7 +40,7 @@
     <g xsl:use-attribute-sets="terminators">
       <xsl:copy-of select="@*"/>
       <g>
-        <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
+        <xsl:attribute name="k9-highlight">fill</xsl:attribute>
 
         <polygon points="10 -12, 0 8, -10 -12"/>
         <xsl:apply-templates/>
@@ -53,7 +53,7 @@
     <g xsl:use-attribute-sets="terminators">
       <xsl:copy-of select="@*"/>
       <g>
-        <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
+        <xsl:attribute name="k9-highlight">fill</xsl:attribute>
 
         <polygon points="12 -10, -8 0, 12 10"/>
         <xsl:apply-templates/>
@@ -66,7 +66,7 @@
     <g xsl:use-attribute-sets="terminators">
       <xsl:copy-of select="@*"/>
       <g>
-        <xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
+        <xsl:attribute name="k9-highlight">fill</xsl:attribute>
 
         <polygon points="-12 -10, 8 0, -12 10"/>
         <xsl:apply-templates/>

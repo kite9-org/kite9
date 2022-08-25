@@ -140,14 +140,12 @@ class JSElementContext : ElementContext {
         var out = if (s.length !== undefined) {
             s.asDynamic()[0] as String
         } else {
-            s.value!! as String
+            s.value as String
         }
 
-        if (out is String) {
-            val trimmed = out.trim()
-            if ((trimmed.startsWith("\"")) && (trimmed.endsWith("\""))) {
-                out = trimmed.substring(1, trimmed.length - 1)
-            }
+        val trimmed = out.trim()
+        if ((trimmed.startsWith("\"")) && (trimmed.endsWith("\""))) {
+            out = trimmed.substring(1, trimmed.length - 1)
         }
 
         if (out == "none") {

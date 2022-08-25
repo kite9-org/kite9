@@ -13,6 +13,6 @@ external class PropValue {
 
 external class StylePropertyMapReadOnly {
 
-    fun get(p: String) : PropValue
+    fun get(p: String) : PropValue?
 
 }
