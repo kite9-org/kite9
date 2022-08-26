@@ -63,7 +63,7 @@ export class Overlay {
 		return controlContainer;
 	}
 
-	createSizingArrow(target, fx, fy, length, horiz, inverse, cb) {
+	createSizingArrow(fx, fy, length, horiz, inverse, cb) {
 		const _this = this;
 		var controlContainer = this.ensureOverlay();
 		

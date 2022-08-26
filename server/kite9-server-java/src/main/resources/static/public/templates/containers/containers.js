@@ -10,7 +10,7 @@ import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initCon
 import { initChildContextMenuCallback } from '/public/behaviours/containers/child/containers-child.js'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '/public/behaviours/containers/rules/containers-rules.js'
-import { initMarginContextMenuCallback } from '/public/behaviours/containers/size/containers-size.js'
+import { initMarginContextMenuCallback, initPaddingContextMenuCallback } from '/public/behaviours/containers/size/containers-size.js'
 
 function initContainers() {
 	
@@ -33,6 +33,7 @@ function initContainers() {
 		paletteContextMenu.add(initInsertContextMenuCallback(palette, command, containment));
 
 		stylemenu.push(initMarginContextMenuCallback(command, overlay));
+		stylemenu.push(initPaddingContextMenuCallback(command, overlay));
 	}
 	
 }
