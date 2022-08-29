@@ -15,7 +15,7 @@
   >
       <svg:rect x="0" y="0" width="117" xmlns:svg="http://www.w3.org/2000/svg" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" height="162" ry="8" xmlns:pp="http://www.kite9.org/schema/post-processor" pp:width="$width"
     />
-      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 20px 500px; " transform="translate(-1.0,25.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=117.0, h=90.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@fe09383; "
+      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 25px; --kite9-text-bounds-size: 20px 500px; " transform="translate(-1.0,25.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=117.0, h=90.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@fe09383; "
     ><text x="0.0px" y="0.0px"
       >hello </text
       ><text x="0.0px" y="30.0px"
@@ -24,7 +24,7 @@
       >else</text
     ></svg:g
     >
-      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;" transform="translate(22.8,105.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=38.0, h=105.0); rect-size: BasicDimension2D(w=72.0, h=72.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@5438c17a; "
+      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds-size: 100px 500px;" transform="translate(22.8,105.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=38.0, h=105.0); rect-size: BasicDimension2D(w=72.0, h=72.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@5438c17a; "
     ><text x="0.0px" y="0.0px"
       >hello b this </text
       ><text x="0.0px" y="18.0px"

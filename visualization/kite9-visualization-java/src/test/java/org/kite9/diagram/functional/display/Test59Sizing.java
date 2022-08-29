@@ -148,8 +148,8 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_59_18_TestTextBoundedSize() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
-				text("<svg:text>hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds: 20px 500px; ")
-				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds: 100px 500px;"),"--kite9-padding: 0px; --kite9-layout: down; --kite9-min-height: 120px")));
+				text("<svg:text>hello something else</svg:text>", "font-size: 25px; --kite9-text-bounds-size: 20px 500px; ")
+				+text("<svg:text>hello b this could be a long bit of text</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-text-bounds-size: 100px 500px;"),"--kite9-padding: 0px; --kite9-layout: down; --kite9-min-height: 120px")));
 	}
 	
 	/**
@@ -160,10 +160,10 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 		renderDiagram(basicDiagram(
 				
 				glyphContainer(
-					text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds: 200px 100px; --kite9-margin: 0; "),
+					text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds-size: 200px 100px; --kite9-margin: 0; "),
 						"--kite9-padding: 0px; --kite9-layout: down; ")
 				+glyphContainer(
-						text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-family: opensans-light-webfont; font-size: 25px; --kite9-text-bounds: 200px 100px; --kite9-margin: 0; "),
+						text("<svg:text>a b c d e f g h i j k l m n o p q r s t u v w x y z</svg:text>", "font-family: opensans-light-webfont; font-size: 25px; --kite9-text-bounds-size: 200px 100px; --kite9-margin: 0; "),
 							"--kite9-padding: 0px; --kite9-layout: down; "))
 				);
 	}
@@ -214,7 +214,7 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 							"<svg:image xlink:href=\""+imageFile+"\" width=\"20\" height=\"20\"/>"+
 						  	"<svg:text>     l m n o q r s t u \n v w x y z</svg:text>"+
 							"</svg:g>",
-							"font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds: 200px 150px; --kite9-margin: 0; "),
+							"font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds-size: 200px 150px; --kite9-margin: 0; "),
 						"--kite9-padding: 0px; --kite9-layout: down; ")));
 	}
 	

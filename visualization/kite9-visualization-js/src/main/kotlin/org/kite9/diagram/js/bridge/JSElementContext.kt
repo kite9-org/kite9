@@ -50,6 +50,21 @@ class JSElementContext : ElementContext {
         return null;
     }
 
+    /**
+     * Returns the generic (i.e. non-directed) css property, if there is one
+     */
+    private fun getSizeVersion(prop: String) : Pair<String?, Int> {
+        if (prop.endsWith(CSSConstants.WIDTH)) {
+            return Pair(prop.substring(0, prop.length - CSSConstants.WIDTH.length) + CSSConstants.SIZE, 0)
+        }
+        if (prop.endsWith(CSSConstants.HEIGHT)) {
+            return Pair(prop.substring(0, prop.length - CSSConstants.HEIGHT.length) + CSSConstants.HEIGHT,1)
+        }
+
+        return Pair(null, 0);
+    }
+
+
 
     override fun addChild(parent: DiagramElement, out: DiagramElement) {
         val contents = children.getOrPut(parent) { mutableListOf<DiagramElement>() }
@@ -107,7 +122,7 @@ class JSElementContext : ElementContext {
     }
 
     override fun getCssStyleDoubleProperty(prop: String, e: Element): Double {
-        val v  = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
+        var v  = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
         if (v == null) {
             return 0.0
         }
@@ -120,9 +135,19 @@ class JSElementContext : ElementContext {
             } else {
                 return 0.0
             }
+
+            val ( size , idx ) = getSizeVersion(prop)
+            if (size != null) {
+                val sizeVal = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
+                if (sizeVal !== undefined) {
+                    v = sizeVal.asDynamic()[idx]
+                } else {
+                    v = sizeVal
+                }
+            }
         }
 
-        if (v.unit != null) {
+        if ((v != null) && (v.unit != null)) {
             // convert to pixels
             val vPx = v.to("px")
             return vPx.value as Double

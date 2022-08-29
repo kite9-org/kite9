@@ -7,6 +7,11 @@ interface CSSConstants {
         const val RIGHT = "right"
         const val TOP = "top"
         const val BOTTOM = "bottom"
+        const val WIDTH = "width"
+        const val HEIGHT = "height"
+        const val SIZE = "size"
+
+
         private const val KITE9_CSS_PROPERTY_PREFIX = "--kite9-"
         const val ELEMENT_TYPE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "type"
         const val ELEMENT_USAGE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "usage"
@@ -81,9 +86,9 @@ interface CSSConstants {
         const val LINK_CORNER_RADIUS = KITE9_CSS_PROPERTY_PREFIX + "link-corner-radius"
 
         // Rectangular Sizing 
-        const val RECT_MINIMUM_SIZE = KITE9_CSS_PROPERTY_PREFIX + "min-size"
-        const val RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "min-width"
-        const val RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "min-height"
+        const val RECT_MINIMUM_SIZE = KITE9_CSS_PROPERTY_PREFIX + "min-" + SIZE
+        const val RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "min-"+ WIDTH
+        const val RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "min-"+ HEIGHT
 
         // for link dynamics
         const val LINK_FROM_XPATH = KITE9_CSS_PROPERTY_PREFIX + "link-from-xpath"
@@ -91,9 +96,9 @@ interface CSSConstants {
         const val LINK_END = KITE9_CSS_PROPERTY_PREFIX + "link-end"
 
         // text bounding
-        const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-width"
-        const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-height"
-        const val TEXT_BOUNDS = KITE9_CSS_PROPERTY_PREFIX + "text-bounds"
+        const val TEXT_BOUNDS_SIZE = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ SIZE
+        const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ WIDTH
+        const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ HEIGHT
 
 
     }

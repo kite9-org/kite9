@@ -104,7 +104,7 @@
 	stroke-width: 0;
 	font-size: 18pt;
 	--kite9-margin: 15pt;
-	--kite9-text-bounds: 200pt 240pt;
+	--kite9-text-bounds-size: 200pt 240pt;
 }
 
 [k9-elem=entity] [k9-elem=caption].title {
