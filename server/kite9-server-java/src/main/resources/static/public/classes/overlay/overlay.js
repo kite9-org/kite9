@@ -26,7 +26,8 @@ export class Overlay {
 		if (!controlContainer) {
 			controlContainer = svg("g", {"class" : "_overlay"}, [
 				svg("rect", {'width': getMainSvg().getAttribute("width"),
-							 'height': getMainSvg().getAttribute("height")}),
+							 'height': getMainSvg().getAttribute("height"),
+							 "class" : "_background"}),
 				svg("defs", {}, [
 					svg("marker", {
 							"id": "k9-sizing-arrow",
@@ -36,7 +37,7 @@ export class Overlay {
 							"refX":"80px",
 							"refY":"40px"
 						},[
-							svg("path", {"d": "M 80 0 V80 M80 40 L60 20 M 80 40 L 60 60"})
+							svg("path", {"d": "M80 40 L60 20 M 80 40 L 60 60", "class" : "_sizing-marker"})
 						])
 					])
 				]);
@@ -62,16 +63,49 @@ export class Overlay {
 		
 		return controlContainer;
 	}
+	
+	createSizingRect(x, y, width, height, _up, _right, _down, _left) {
+		const _this = this;
+		const controlContainer = this.ensureOverlay();
+		
+		const rect = svg("rect", { "class" : "_sizing" });
+			
+		controlContainer.appendChild(rect);
+				
+		function setSize(up, right, down, left) {
+			rect.setAttribute("x", (x - left)+"px");
+			rect.setAttribute("y", (y - up)+"px");
+			rect.setAttribute("width", (width + left + right)+"px");
+			rect.setAttribute("height", (height + up + down)+"px");
+			_up = up;
+			_down = down;
+			_left = left;
+			_right = right;
+		}
+		
+		setSize(_up, _right, _down, _left);
+		
+		return [ 
+			(up) => setSize(up, _right, _down, _left), 
+			(right) => setSize(_up, right, _down, _left),
+			(down) => setSize(_up, _right, down, _left),
+			(left) => setSize(_up, _right, _down, left)
+		];
+	}
 
 	createSizingArrow(fx, fy, length, horiz, inverse, cb) {
 		const _this = this;
-		var controlContainer = this.ensureOverlay();
+		const controlContainer = this.ensureOverlay();
 		
-		var line = document.createElementNS("http://www.w3.org/2000/svg", "path")
+		const line = svg("path", {"class": "_sizing",
+			"marker-start": "url(#k9-sizing-arrow)",
+			"marker-end": "url(#k9-sizing-arrow)"})
 		
-		var handle = document.createElementNS("http://www.w3.org/2000/svg", "ellipse")
-		handle.setAttribute("rx", "8px");
-		handle.setAttribute("ry", "8px");
+		const handle = svg("ellipse", {
+			"rx": "8px",
+			"ry": "8px"
+		})
+
 		controlContainer.appendChild(line);
 		controlContainer.appendChild(handle);
 		
@@ -89,13 +123,6 @@ export class Overlay {
 			line.setAttribute("d",start + end);
 			handle.setAttribute("cx", ex);
 			handle.setAttribute("cy", ey);
-			if (length > 0) {
-				line.setAttribute("marker-start","url(#k9-sizing-arrow)");
-				line.setAttribute("marker-end","url(#k9-sizing-arrow)");
-			} else {
-				handle.removeAttribute("marker-end");
-				handle.removeAttribute("marker-start");
-			}
 		}
 		
 		function move(e) {

@@ -2,7 +2,7 @@ import { hasLastSelected, isRectangular, parseInfo } from '/public/bundles/api.j
 import { parseStyle } from '/public/bundles/css.js'
 import { textarea, form, ok, cancel, inlineButtons, formValues } from '/public/bundles/form.js'
 import { getMainSvg, getElementPageBBox, getElementHTMLBBox, canRenderClientSide } from '/public/bundles/screen.js';
-import { numeric } from '/public/bundles/form.js'
+import { numeric, fieldset } from '/public/bundles/form.js'
 
 
 function getCSSLengthPx(element, cssAttribute) {
@@ -14,7 +14,7 @@ function getCSSLengthPx(element, cssAttribute) {
 	return 0;
 }	
 
-function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, sx, sy, inheritedLength) {
+function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, sx, sy, inheritedLength, boxMove) {
 	var val = style[cssAttribute];
 	var length = inheritedLength;
 	if ((val) && val.endsWith("px")) {
@@ -22,17 +22,23 @@ function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, s
 		length = parseFloat(val);
 	}
 	
-	const box = numeric(name, val, {"min" : "0", "placeholder": "default"});
+	const box = numeric(name, val, {"min" : "0", "placeholder": "inherited ("+inheritedLength.toFixed(1)+")"});
 	const input = box.children[1];
 	
-	const sizer = overlay.createSizingArrow(sx, sy, length, horiz, inverse, (v) => input.value = v);
+	const sizer = overlay.createSizingArrow(sx, sy, length, horiz, inverse, (v) => {
+		input.value = v;
+		boxMove(v)
+	});
 
 	// event for when the size is changed in the context menu
 	input.addEventListener("input", (e) => {
 		if (input.value) {
-			sizer(Math.max(input.value,0));		
+			const mpx = Math.max(input.value,0);
+			sizer(mpx);	
+			boxMove(mpx)
 		} else {
 			sizer(inheritedLength);
+			boxMove(inheritedLength);
 		}
 	})
 	
@@ -87,22 +93,27 @@ export function initMarginContextMenuCallback(command, overlay, selector) {
 		if (selectedElement) {
 			cm.addControl(event, "/public/behaviours/containers/size/margins.svg", 'Margins', () => {
 				cm.clear();
-				const initialMargins = parseInfo(selectedElement)['margin'].split(" ").map(x => parseFloat(x));
+				const margins = parseInfo(selectedElement)['margin'].split(" ").map(x => parseFloat(x));
 				const htmlElement = cm.get(event);
 				const adlElement = command.getADLDom(selectedElement.getAttribute("id"))
 				const style = parseStyle(adlElement.getAttribute("style"));
 				const bbox = getElementPageBBox(selectedElement);
 				
+				const innerMove = overlay.createSizingRect(bbox.x, bbox.y, bbox.width, bbox.height, 
+					0, 0, 0, 0);
+				const outerMove = overlay.createSizingRect(bbox.x, bbox.y, bbox.width, bbox.height,
+					margins[0], margins[1], margins[2], margins[3]);
+				
 				const numericControls = [
-					addNumericControl(overlay, '--kite9-margin-left', 'Left', style, true, true, bbox.x, bbox.y + bbox.height / 2, initialMargins[3]),
-					addNumericControl(overlay, '--kite9-margin-right', 'Right', style, true, false, bbox.x + bbox.width, bbox.y + bbox.height / 2, initialMargins[1]),
-					addNumericControl(overlay, '--kite9-margin-top', 'Top', style, false, true, bbox.x + bbox.width / 2 ,bbox.y, initialMargins[0]),
-					addNumericControl(overlay, '--kite9-margin-bottom', 'Bottom', style, false, false, bbox.x + bbox.width / 2, bbox.y + bbox.height, initialMargins[2]),
+					addNumericControl(overlay, '--kite9-margin-top', 'Top', style, false, true, bbox.x + bbox.width / 2 ,bbox.y, margins[0], outerMove[0]),
+					addNumericControl(overlay, '--kite9-margin-right', 'Right', style, true, false, bbox.x + bbox.width, bbox.y + bbox.height / 2, margins[1], outerMove[1]),
+					addNumericControl(overlay, '--kite9-margin-bottom', 'Bottom', style, false, false, bbox.x + bbox.width / 2, bbox.y + bbox.height, margins[2], outerMove[2]),
+					addNumericControl(overlay, '--kite9-margin-left', 'Left', style, true, true, bbox.x, bbox.y + bbox.height / 2, margins[3], outerMove[3])
 				]
 				
 				
 				htmlElement.appendChild(form([
-					...numericControls,
+					fieldset("Margins", numericControls),
 					inlineButtons([
 						ok('ok', {}, (e) => {
 							const selectedElements = hasLastSelected(selector());
@@ -141,22 +152,34 @@ export function initPaddingContextMenuCallback(command, overlay, selector) {
 		if (selectedElement) {
 			cm.addControl(event, "/public/behaviours/containers/size/padding.svg", 'Padding', () => {
 				cm.clear();
-				const initialPadding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
+				const padding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
 				const htmlElement = cm.get(event);
 				const adlElement = command.getADLDom(selectedElement.getAttribute("id"))
 				const style = parseStyle(adlElement.getAttribute("style"));
 				const bbox = getElementPageBBox(selectedElement);
+				const ibox = {
+					x : bbox.x + padding[3],
+					y : bbox.y + padding[0],
+					width: bbox.width -padding[1] - padding[3],
+					height: bbox.height - padding[0] - padding[2]
+				}
+				
+				const innerMove = overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height, 
+					0, 0, 0, 0);
+					
+				const outerMove = overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height,
+					padding[0], padding[1], padding[2], padding[3]);
+				
 				
 				const numericControls = [
-					addNumericControl(overlay, '--kite9-padding-left', 'Left', style, true, true, bbox.x + initialPadding[3], bbox.y + bbox.height / 2, initialPadding[3]),
-					addNumericControl(overlay, '--kite9-padding-right', 'Right', style, true, false, bbox.x + bbox.width - initialPadding[1], bbox.y + bbox.height / 2, initialPadding[1]),
-					addNumericControl(overlay, '--kite9-padding-top', 'Top', style, false, true, bbox.x + bbox.width / 2 ,bbox.y + initialPadding[0], initialPadding[0]),
-					addNumericControl(overlay, '--kite9-padding-bottom', 'Bottom', style, false, false, bbox.x + bbox.width / 2, bbox.y + bbox.height - initialPadding[2], initialPadding[2]),
+					addNumericControl(overlay, '--kite9-padding-top', 'Top', style, false, true, ibox.x + ibox.width / 2 ,ibox.y, padding[0], outerMove[0]),
+					addNumericControl(overlay, '--kite9-padding-right', 'Right', style, true, false, ibox.x + ibox.width, ibox.y + ibox.height / 2, padding[1], outerMove[1]),
+					addNumericControl(overlay, '--kite9-padding-bottom', 'Bottom', style, false, false, ibox.x + ibox.width / 2, ibox.y + ibox.height, padding[2], outerMove[2]),
+					addNumericControl(overlay, '--kite9-padding-left', 'Left', style, true, true, ibox.x, ibox.y + ibox.height / 2, padding[3], outerMove[3])
 				]
 				
-				
 				htmlElement.appendChild(form([
-					...numericControls,
+					fieldset("Padding", numericControls),
 					inlineButtons([
 						ok('ok', {}, (e) => {
 							const selectedElements = hasLastSelected(selector());
