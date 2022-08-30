@@ -105,24 +105,12 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.MARKER_RESERVE, "<length>", "0", false))
 
     // RECTANGLE SIZING
-//    registerCustomCSSShorthandManager(
-//        SizeShorthandManager(
-//            CSSConstants.RECT_MINIMUM_WIDTH,
-//            CSSConstants.RECT_MINIMUM_HEIGHT,
-//            CSSConstants.RECT_MINIMUM_SIZE
-//        )
-//    )
-    css.registerProperty( CSSProperty(CSSConstants.RECT_MINIMUM_WIDTH, "<length>", "0", false))
-    css.registerProperty( CSSProperty(CSSConstants.RECT_MINIMUM_HEIGHT, "<length>", "0", false))
+    css.registerProperty( CSSProperty(CSSConstants.RECT_MINIMUM_SIZE, "<length>+", "0 0", false))
+    css.registerProperty( CSSProperty(CSSConstants.RECT_MINIMUM_WIDTH, "<length> | none", "none", false))
+    css.registerProperty( CSSProperty(CSSConstants.RECT_MINIMUM_HEIGHT, "<length> | none", "none", false))
 
     // TEXT BOUNDS
-//    registerCustomCSSShorthandManager(
-//        SizeShorthandManager(
-//            CSSConstants.TEXT_BOUNDS_WIDTH,
-//            CSSConstants.TEXT_BOUNDS_HEIGHT,
-//            CSSConstants.TEXT_BOUNDS
-//        )
-//    )
+    css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_SIZE, "<length>+", "10000px 10000px", true))
     css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_WIDTH, "<length>", "10000px", true))
     css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, "<length>", "10000px", true))
 

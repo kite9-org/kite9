@@ -33,38 +33,28 @@ class JSElementContext : ElementContext {
     /**
      * Returns the generic (i.e. non-directed) css property, if there is one
      */
-    private fun getUndirectedVersion(prop: String) : String? {
-        if (prop.endsWith(CSSConstants.LEFT)) {
-            return prop.substring(0, prop.length - CSSConstants.LEFT.length - 1)
+    private fun getUndirectedVersion(prop: String) : Pair<String?, Int> {
+        if (prop.endsWith(CSSConstants.TOP)) {
+            return Pair(prop.substring(0, prop.length - CSSConstants.TOP.length - 1),0)
         }
         if (prop.endsWith(CSSConstants.RIGHT)) {
-            return prop.substring(0, prop.length - CSSConstants.RIGHT.length - 1)
-        }
-        if (prop.endsWith(CSSConstants.TOP)) {
-            return prop.substring(0, prop.length - CSSConstants.TOP.length - 1)
+            return Pair(prop.substring(0, prop.length - CSSConstants.RIGHT.length - 1),1)
         }
         if (prop.endsWith(CSSConstants.BOTTOM)) {
-            return prop.substring(0, prop.length - CSSConstants.BOTTOM.length - 1)
+            return Pair(prop.substring(0, prop.length - CSSConstants.BOTTOM.length - 1),2)
         }
-
-        return null;
-    }
-
-    /**
-     * Returns the generic (i.e. non-directed) css property, if there is one
-     */
-    private fun getSizeVersion(prop: String) : Pair<String?, Int> {
+        if (prop.endsWith(CSSConstants.LEFT)) {
+            return Pair(prop.substring(0, prop.length - CSSConstants.LEFT.length - 1),3)
+        }
         if (prop.endsWith(CSSConstants.WIDTH)) {
             return Pair(prop.substring(0, prop.length - CSSConstants.WIDTH.length) + CSSConstants.SIZE, 0)
         }
         if (prop.endsWith(CSSConstants.HEIGHT)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.HEIGHT.length) + CSSConstants.HEIGHT,1)
+            return Pair(prop.substring(0, prop.length - CSSConstants.HEIGHT.length) + CSSConstants.SIZE,1)
         }
 
         return Pair(null, 0);
     }
-
-
 
     override fun addChild(parent: DiagramElement, out: DiagramElement) {
         val contents = children.getOrPut(parent) { mutableListOf<DiagramElement>() }
@@ -129,21 +119,28 @@ class JSElementContext : ElementContext {
 
         if (v.value == "none") {
             // try the generic property
-            val generic = getUndirectedVersion(prop)
-            if (generic != null) {
-                return getCssStyleDoubleProperty(generic, e)
+            val ( size, idx ) = getUndirectedVersion(prop)
+            if (size != null) {
+                val sizeVal = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(size)
+                if (sizeVal != null) {
+                    if (sizeVal.asDynamic().length !== undefined) {
+                        // it's an array
+                        if (sizeVal.asDynamic().length > idx) {
+                            v = sizeVal.asDynamic()[idx]
+                        } else {
+                            v = sizeVal.asDynamic()[0]
+                        }
+                    } else if  (sizeVal.value !== "none") {
+                        // it's a single value
+                        v = sizeVal
+                    } else {
+                        return 0.0
+                    }
+                } else {
+                    return 0.0
+                }
             } else {
                 return 0.0
-            }
-
-            val ( size , idx ) = getSizeVersion(prop)
-            if (size != null) {
-                val sizeVal = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
-                if (sizeVal !== undefined) {
-                    v = sizeVal.asDynamic()[idx]
-                } else {
-                    v = sizeVal
-                }
             }
         }
 
@@ -175,7 +172,7 @@ class JSElementContext : ElementContext {
 
         if (out == "none") {
             // try the generic property
-            val generic = getUndirectedVersion(prop)
+            val ( generic, idx)  = getUndirectedVersion(prop)
             if (generic != null) {
                 return getCssStyleStringProperty(generic, e)
             }

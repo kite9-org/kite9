@@ -46,6 +46,9 @@ abstract class AbstractPainter : Painter {
                         + sr.getPadding(Direction.DOWN) + " " + sr.getPadding(Direction.LEFT) + "; "
             )
             debug.append(
+                "min-size: " + sr.getMinimumSize().width() + " "+sr.getMinimumSize().height()+ "; "
+            )
+            debug.append(
                 "sizing: " + (r as SizedRectangular).getSizing(false) + " " + (r as SizedRectangular).getSizing(
                     true
                 ) + "; "
