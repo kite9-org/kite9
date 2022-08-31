@@ -91,7 +91,7 @@ fun init() {
 
 
     // LABELS
-    css.registerProperty( CSSProperty(CSSConstants.LABEL_PLACEMENT,syntax<LabelPlacement>(),lower(LabelPlacement.BOTTOM_RIGHT), false))
+    css.registerProperty( CSSProperty(CSSConstants.LABEL_PLACEMENT,syntax<LabelPlacement>()+" | none ","none", false))
 
 
     // LINK DYNAMICS

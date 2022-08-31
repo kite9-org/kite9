@@ -5,15 +5,6 @@ import { getMainSvg, getElementPageBBox, getElementHTMLBBox, canRenderClientSide
 import { numeric, fieldset } from '/public/bundles/form.js'
 
 
-function getCSSLengthPx(element, cssAttribute) {
-	if (canRenderClientSide()) {
-		const value = window['kite9-visualization-js'].getCssStyleDoubleProperty(cssAttribute, element);
-		return value;
-	}
-
-	return 0;
-}	
-
 function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, sx, sy, inheritedLength, boxMove) {
 	var val = style[cssAttribute];
 	var length = inheritedLength;
@@ -217,41 +208,26 @@ export function initMinimumSizeContextMenuCallback(command, overlay, selector) {
 		if (selectedElement) {
 			cm.addControl(event, "/public/behaviours/containers/size/size.svg", 'Minimum Size', () => {
 				cm.clear();
-				const padding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
+				const minSize = parseInfo(selectedElement)['min-size'].split(" ").map(x => parseFloat(x));
 				const htmlElement = cm.get(event);
 				const adlElement = command.getADLDom(selectedElement.getAttribute("id"))
 				const style = parseStyle(adlElement.getAttribute("style"));
 				const bbox = getElementPageBBox(selectedElement);
-				const ibox = {
-					x : bbox.x + padding[3],
-					y : bbox.y + padding[0],
-					width: bbox.width -padding[1] - padding[3],
-					height: bbox.height - padding[0] - padding[2]
-				}
-				
-				const innerMove = overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height, 
-					0, 0, 0, 0);
-					
-				const outerMove = overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height,
-					padding[0], padding[1], padding[2], padding[3]);
-				
 				
 				const numericControls = [
-					addNumericControl(overlay, '--kite9-padding-top', 'Top', style, false, true, ibox.x + ibox.width / 2 ,ibox.y, padding[0], outerMove[0]),
-					addNumericControl(overlay, '--kite9-padding-right', 'Right', style, true, false, ibox.x + ibox.width, ibox.y + ibox.height / 2, padding[1], outerMove[1]),
-					addNumericControl(overlay, '--kite9-padding-bottom', 'Bottom', style, false, false, ibox.x + ibox.width / 2, ibox.y + ibox.height, padding[2], outerMove[2]),
-					addNumericControl(overlay, '--kite9-padding-left', 'Left', style, true, true, ibox.x, ibox.y + ibox.height / 2, padding[3], outerMove[3])
+					addNumericControl(overlay, '--kite9-min-width', 'Width', style, true, false, bbox.x,bbox.y, minSize[0], () => {}),
+					addNumericControl(overlay, '--kite9-min-height', 'Height', style, false, false, bbox.x, bbox.y, minSize[1],  () => {}),
 				]
 				
 				htmlElement.appendChild(form([
-					fieldset("Padding", numericControls),
+					fieldset("Minimum Size", numericControls),
 					inlineButtons([
 						ok('ok', {}, (e) => {
 							const selectedElements = hasLastSelected(selector());
-							const fields = ['left', 'right', 'top', 'bottom']
-							const values = formValues('padding');
+							const fields = ['width', 'height']
+							const values = formValues('min-size');
 							const steps = Array.from(selectedElements)
-								.flatMap(e => createStyleSteps(fields, e, values, '--kite9-padding-', style));
+								.flatMap(e => createStyleSteps(fields, e, values, '--kite9-min-', style));
 							command.pushAllAndPerform(steps);
 							overlay.destroy()	
 							cm.destroy();
@@ -261,7 +237,7 @@ export function initMinimumSizeContextMenuCallback(command, overlay, selector) {
 							overlay.destroy()	
 						})
 					])
-				], 'padding'));
+				], 'min-size'));
 				
 				moveContextMenuAway(cm, selectedElement, event)
 			});

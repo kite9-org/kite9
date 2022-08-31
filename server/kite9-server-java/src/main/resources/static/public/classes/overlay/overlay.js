@@ -123,6 +123,7 @@ export class Overlay {
 			line.setAttribute("d",start + end);
 			handle.setAttribute("cx", ex);
 			handle.setAttribute("cy", ey);
+			initial = {x : ex, y: ey };
 		}
 		
 		function move(e) {
@@ -131,15 +132,15 @@ export class Overlay {
 			const newLength = Math.round(horiz ? ( inverse ? length - delta.x : length + delta.x) : 	
 								      ( inverse ? length - delta.y : length + delta.y));
 			if (newLength >= 0) {
-				initial = newCoords;
 				setSize(newLength);
 				cb(newLength);
 				length = newLength;
 			} else {
 				setSize(0);
 				cb(0);
-				length = 0;
+				length = 0;				
 			}
+			
 		}
 		
 		// handle events for when someone starts to drag the sizing handle
