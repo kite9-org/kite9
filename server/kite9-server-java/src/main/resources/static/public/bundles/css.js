@@ -57,3 +57,7 @@ function getKeyValueChunks(raw) {
 
   return chunks;
 }
+
+export function formatStyle(map) {
+	return Object.keys(map).map(k => k +": "+map[k]+";").reduce((a, b) => a+" "+b, "");
+}

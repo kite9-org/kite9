@@ -8,12 +8,16 @@ import { numeric, fieldset } from '/public/bundles/form.js'
 function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, sx, sy, inheritedLength, boxMove) {
 	var val = style[cssAttribute];
 	var length = inheritedLength;
+	var placeholderText;
 	if ((val) && val.endsWith("px")) {
 		val = val.substring(0, val.length-2);
 		length = parseFloat(val);
+		placeholderText = "revert to default"
+	} else {
+		placeholderText = "default ("+inheritedLength.toFixed(1)+")"
 	}
 	
-	const box = numeric(name, val, {"min" : "0", "placeholder": "inherited ("+inheritedLength.toFixed(1)+")"});
+	const box = numeric(name, val, {"min" : "0", "placeholder": placeholderText});
 	const input = box.children[1];
 	
 	const sizer = overlay.createSizingArrow(sx, sy, length, horiz, inverse, (v) => {
@@ -39,7 +43,7 @@ function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, s
 
 function defaultSizingSelector() {
 	return function() {
-		return Array.from(getMainSvg().querySelectorAll("[id][k9-ui].selected"))
+		return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=size].selected"))
 			.filter(e => isRectangular(e));
 	}
 }
@@ -115,10 +119,14 @@ export function initMarginContextMenuCallback(command, overlay, selector) {
 							command.pushAllAndPerform(steps);
 							overlay.destroy()	
 							cm.destroy();
+							event.stopPropagation();
+  				 			event.preventDefault();
 						}),
 						cancel('cancel', [], () => {
 							cm.destroy()
 							overlay.destroy()	
+							event.stopPropagation();
+  				 			event.preventDefault();
 						})
 					])
 				], 'margins'));

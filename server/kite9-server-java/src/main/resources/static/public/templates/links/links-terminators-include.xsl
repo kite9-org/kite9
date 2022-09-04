@@ -7,7 +7,7 @@
 
   <xsl:attribute-set name="terminators">
     <xsl:attribute name="k9-texture">none</xsl:attribute>
-    <xsl:attribute name="k9-ui">drag label</xsl:attribute>
+    <xsl:attribute name="k9-ui">drag label fill</xsl:attribute>
     <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()"/></xsl:attribute>
 
   </xsl:attribute-set>

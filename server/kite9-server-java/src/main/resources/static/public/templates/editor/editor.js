@@ -35,7 +35,10 @@ import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from
 import { initXMLContextMenuCallback } from '/public/behaviours/editable/xml/editable-xml.js'
 import { initEditContextMenuCallback } from '/public/behaviours/editable/text/editable-text.js'
 import { initEditableImageContextMenuCallback } from '/public/behaviours/editable/image/editable-image.js'
-import { initStyleContextMenuCallback } from '/public/behaviours/editable/style/editable-style.js'
+
+// style
+import { initStyleContextMenuCallback } from '/public/behaviours/styleable/style/styleable-style.js'
+import { initFillContextMenuCallback } from '/public/behaviours/styleable/fill/styleable-fill.js'
 
 import { once } from '/public/bundles/ensure.js'
 
@@ -82,7 +85,9 @@ function initEditor() {
 		contextMenu.add(initXMLContextMenuCallback(command));
 		contextMenu.add(initEditableImageContextMenuCallback(command, metadata));
 		contextMenu.add(initPaletteContextMenuCallback(palette));
-		contextMenu.add(initStyleContextMenuCallback(stylemenu))
+		contextMenu.add(initStyleContextMenuCallback(stylemenu));
+		
+		stylemenu.push(initFillContextMenuCallback(command, overlay));
 		
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));

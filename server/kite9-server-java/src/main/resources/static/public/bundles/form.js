@@ -61,7 +61,9 @@ export function formValues(id) {
 		case 'input':
 		case 'textarea':
 		case 'select':
-			out[e.name] = e.value;
+			if (e.name) {
+				out[e.name] = e.value;
+			}
 			break;
 		}
 	}
@@ -79,6 +81,29 @@ export function fieldset(legend, contents, atts = {}){
 	return create("fieldset", atts, [ create("legend", {}, [ txt(legend) ] ), ...contents] )
 }
 
+export function colour(placeholder, value, atts = {}) {
+	var id = idFrom(placeholder);
+	const text = create('input', { 
+		'class' : 'form-control', 
+		'placeholder': 'default', 
+		'type': 'text', 
+		'value': value, 
+		'id': id, 
+		'name': id, ...atts })
+	const patch = create('input', { 
+		'class' : 'form-control', 
+		'type': 'color', 
+		...atts })
+	const label = create('label', {"for" : id}, [ txt(placeholder)]);
+	const controlDiv = div({"class": "inline-buttons"}, [patch, text]);
+	
+	patch.addEventListener("input", e => 
+		text.value = patch.value
+	);
+
+	return div({"class": ""}, [ label, controlDiv]);
+}
+
 export function text(placeholder, value, atts) {
 	return input(placeholder, 'text', value, atts);
 }
@@ -92,7 +117,7 @@ export function hidden(placeholder, value) {
 	return create('input', {'type': 'hidden', 'value': value, 'id': id, 'name': id })
 }
 
-export function numeric(placeholder, value, atts) {
+export function numeric(placeholder, value, clear, atts) {
 	return input(placeholder, 'number', value, atts);
 }
 
@@ -189,7 +214,7 @@ function input(placeholder, type, value, atts) {
 
 function idFrom(str) {
 	str = str.charAt(0).toLowerCase() + str.slice(1)
-	return str.replace(/\W/g, '');
+	return str.replace(/[^a-z0-9-]/g, '');
 }
 
 function txt(str) {

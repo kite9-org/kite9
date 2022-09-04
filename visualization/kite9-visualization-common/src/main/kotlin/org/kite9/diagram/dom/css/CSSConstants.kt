@@ -61,7 +61,6 @@ interface CSSConstants {
 
         // controls which side connections will go into a connected
         const val CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "connections"
-        const val ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX + "arrival-side"
 
         // direction a connection goes in
         const val CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"

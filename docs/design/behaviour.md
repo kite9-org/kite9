@@ -102,7 +102,7 @@ Dictates the things you can choose from the context menu / gestures within the c
 #### Styling
 
 - **layout**:  allows you to set up `--kite9-layout`
-- 
+- **fill**: allows you to set, `stroke`, `fill`, `stroke-opacity`, `fill-opacity`, `stroke-width`, and later `stroke-dasharray` etc.
 
 #### Other
 

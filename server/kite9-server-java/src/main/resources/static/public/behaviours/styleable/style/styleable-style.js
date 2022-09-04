@@ -16,7 +16,7 @@ export function initStyleContextMenuCallback(submenu, selector) {
 
 		if (selectedElements.length > 0) {
 			
-			cm.addControl(event, "/public/behaviours/editable/style/style.svg", 'Styles', () => {
+			cm.addControl(event, "/public/behaviours/styleable/style/style.svg", 'Styles', () => {
 				cm.clear();
 				submenu.forEach(item => {
 					item(event, cm);

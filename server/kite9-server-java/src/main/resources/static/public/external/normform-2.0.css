@@ -70,6 +70,7 @@ form.normform label {
 }
 
 /* Successful inputs */
+form.normform input[type=color]:valid:not(:placeholder-shown),
 form.normform input[type=text]:valid:not(:placeholder-shown),
 form.normform input[type=email]:valid:not(:placeholder-shown),
 form.normform input[type=password]:valid:not(:placeholder-shown),
@@ -285,6 +286,18 @@ form.normform input[type="reset"] {
     border: 1px solid lightgrey;
     color: grey;
 }
+form.normform input[type="range"] {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+form.normform input[type="color"] {
+    padding: 2px;
+    height: 40px;
+    width: 25%;
+}
+
+
 
 form.normform .inline-buttons {
     display: flex;
