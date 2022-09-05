@@ -4,25 +4,25 @@
 	fill-opacity: 0.01;
 }
 
-[k9-elem=link-body] {
+[k9-elem=link] {
 	stroke: black;
 	stroke-width: 2pt;
 	fill: none;
 }
 
-[k9-elem=link].invisible [k9-elem=link-body] {
+[k9-elem=link].invisible {
 	stroke: none;
 }
 
-[k9-elem=link].dotted [k9-elem=link-body] {
+[k9-elem=link].dotted {
 	stroke-dasharray: 8;
 }
 
-[k9-elem=link].thick [k9-elem=link-body] {
+[k9-elem=link].thick {
 	stroke-width: 4pt;
 }
 
-[k9-elem=link].grey [k9-elem=link-body] {
+[k9-elem=link].grey {
 	stroke: #CCCCCC;
 }
 

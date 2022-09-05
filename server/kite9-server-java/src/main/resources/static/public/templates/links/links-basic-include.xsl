@@ -13,7 +13,7 @@
     <xsl:param name="k9-format">link-basic</xsl:param>
     <xsl:param name="k9-highlight">bar stroke</xsl:param>
     <xsl:param name="k9-texture">background</xsl:param>
-    <xsl:param name="k9-ui">delete link cascade drop</xsl:param>
+    <xsl:param name="k9-ui">delete link cascade drop fill</xsl:param>
     
     <xsl:param name="shape">
    		<g k9-elem="link-grab">
@@ -25,7 +25,6 @@
     
     <xsl:param name="body">
       <g k9-elem="link-body">
-        <xsl:attribute name="k9-texture"><xsl:value-of select="$k9-texture" /></xsl:attribute>
         <path k9-animate="link" d="" pp:d="$path">
           <xsl:attribute name="marker-start">url(#<xsl:value-of select="adl:from/@shape" />-start-marker)</xsl:attribute>
           <xsl:attribute name="marker-end">url(#<xsl:value-of select="adl:to/@shape" />-end-marker)</xsl:attribute>

@@ -41,7 +41,7 @@ function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, s
 }
 
 
-function defaultSizingSelector() {
+export function defaultSizingSelector() {
 	return function() {
 		return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=size].selected"))
 			.filter(e => isRectangular(e));
@@ -253,3 +253,10 @@ export function initMinimumSizeContextMenuCallback(command, overlay, selector) {
 	}
 }
 
+
+export const sizingEnumProperties = {
+	'--kite9-horizontal-sizing' : 'Horizontal',
+	'--kite9-vertical-sizing' : 'Vertical'
+}
+
+export const sizingEnumValues = [ 'maximize', 'minimize' ];

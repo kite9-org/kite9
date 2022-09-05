@@ -10,7 +10,9 @@ import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initCon
 import { initChildContextMenuCallback } from '/public/behaviours/containers/child/containers-child.js'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '/public/behaviours/containers/rules/containers-rules.js'
-import { initMarginContextMenuCallback, initPaddingContextMenuCallback, initMinimumSizeContextMenuCallback } from '/public/behaviours/containers/size/containers-size.js'
+import { initMarginContextMenuCallback, initPaddingContextMenuCallback, initMinimumSizeContextMenuCallback, sizingEnumProperties, sizingEnumValues } from '/public/behaviours/containers/size/containers-size.js'
+import { initEnumContextMenuCallback } from '/public/behaviours/styleable/enum/styleable-enum.js'
+import { traversalEnumProperties, traversalEnumValues } from '/public/behaviours/containers/traversal/containers-traversal.js';
 
 function initContainers() {
 	
@@ -35,6 +37,17 @@ function initContainers() {
 		stylemenu.push(initMarginContextMenuCallback(command, overlay));
 		stylemenu.push(initPaddingContextMenuCallback(command, overlay));
 		stylemenu.push(initMinimumSizeContextMenuCallback(command, overlay));
+		
+		const sizing = initEnumContextMenuCallback(command, overlay, sizingEnumProperties, sizingEnumValues, 
+			'/public/behaviours/containers/size/sizing.svg',
+			'Sizing Rules');
+			
+		const traversal = initEnumContextMenuCallback(command, overlay, traversalEnumProperties, traversalEnumValues, 
+			'/public/behaviours/containers/traversal/traversal.svg',
+			'Link Traversal Rules');
+		
+		stylemenu.push(sizing);
+		stylemenu.push(traversal);
 	}
 	
 }

@@ -7,14 +7,14 @@
  *   
  * See designer template and formats/example.adl for an example. 
  */
- 
+
 /** 
  * This allows the element to still be selected, but have no real colour 
  */
 [k9-texture=none] {
 	fill: white;
-  fill-opacity: .01;
-  stroke-opacity: .01;
+	fill-opacity: .01;
+	stroke-opacity: .01;
 }
 
 /** 
@@ -24,11 +24,11 @@
 [k9-texture=background] {
 	fill: white;
 	fill-opacity: 1;
-  stroke: black;
-  stroke-opacity: 1;
+	stroke: black;
+	stroke-opacity: 1;
 }
 
-[k9-texture=background] > g > text {
+[k9-texture=background]>g>text {
 	fill: black;
 }
 
@@ -45,22 +45,20 @@
  * Use when the object is see-through, but should still be visible.  Use to replace background.
  */
 [k9-texture~=outline] {
-  fill: white;
-  fill-opacity: .01;
-  stroke: black;
-  stroke-opacity: 1;
+	fill: white;
+	fill-opacity: .01;
+	stroke: black;
+	stroke-opacity: 1;
 }
 
 /**
  * Use when the object is in the foreground, and won't have content on
- * top of it.  This is used for text, generally.
+ * top of it.  This is used for text, so we set the stroke to none by 
+ * default.
  */
 [k9-texture~=foreground] {
-  fill: black;
-  fill-opacity: 1;
-  stroke: none;
-}
-
-text {
+	fill: black;
+	fill-opacity: 1;
+	stroke: none;
 	stroke-width: 0;
 }

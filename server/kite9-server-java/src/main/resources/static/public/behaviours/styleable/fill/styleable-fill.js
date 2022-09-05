@@ -3,9 +3,9 @@ import { parseStyle, formatStyle } from '/public/bundles/css.js'
 import { textarea, form, ok, cancel, inlineButtons, formValues, fieldset, colour, numeric } from '/public/bundles/form.js'
 import { getMainSvg, canRenderClientSide } from '/public/bundles/screen.js';
 
+const rgba2hex = (rgba) => `#${rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/).slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
 
 function getColour(propName, e) {
-	const rgba2hex = (rgba) => `#${rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/).slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
 	if (canRenderClientSide()) {
 		return rgba2hex(e.computedStyleMap().get(propName).toString());
 	} else {
@@ -116,7 +116,7 @@ export function initFillContextMenuCallback(command, overlay, selector) {
 							const values = extractFormValues('fill');
 							const steps = selectedElements
 								.flatMap(e => createStyleSteps(e, originalStyleMap[e.getAttribute("id")], values));
-							//selectedElement.classList.add('selected');
+							selectedElement.classList.add('selected');
 							command.pushAllAndPerform(steps);
 							cm.destroy();
 							overlay.destroy()
@@ -125,7 +125,7 @@ export function initFillContextMenuCallback(command, overlay, selector) {
 						}),
 						cancel('cancel', [], () => {
 							selectedElement.setAttribute("style", originalSvgStyle);
-							//selectedElement.classList.add('selected');
+							selectedElement.classList.add('selected');
 							cm.destroy()
 							overlay.destroy();
 							event.stopPropagation();

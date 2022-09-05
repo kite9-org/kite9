@@ -17,7 +17,7 @@
     <xsl:param name="k9-palette">connected</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">foreground</xsl:param>
-    <xsl:param name="k9-ui">orphan edit</xsl:param>
+    <xsl:param name="k9-ui">orphan edit fill</xsl:param>
     
     <xsl:param name="shape"></xsl:param>
     <xsl:param name="content"><text><xsl:value-of select="text()" /></text></xsl:param>
