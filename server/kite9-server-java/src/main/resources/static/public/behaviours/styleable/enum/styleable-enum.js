@@ -4,14 +4,9 @@ import { textarea, form, ok, cancel, inlineButtons, formValues, fieldset, select
 import { getMainSvg, canRenderClientSide } from '/public/bundles/screen.js';
 
 
-export function initEnumContextMenuCallback(command, overlay, properties, values, icon, name, initChangeEvent, selector, buildControls) {
+export function initEnumContextMenuCallback(command, overlay, icon, name, buildControlsCallback, selector, initChangeEvent) {
 
 	var originalStyleMap, style;
-
-	function getValue(propName, e) {
-		return style[propName];
-	}
-
 	
 	function extractFormValues(formName) {
 		const asArray = Object.entries(formValues(formName));
@@ -66,13 +61,7 @@ export function initEnumContextMenuCallback(command, overlay, properties, values
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected");
-		}
-	}
-	
-	if (buildControls == undefined) {
-		buildControls = function(selectedElement) {
-			return [ fieldset(name, Object.keys(properties).map(p => select(p, getValue(p, selectedElement), {}, [ '', ...values ] ))) ];
+			return getMainSvg().querySelectorAll("[id][k9-ui].selected");
 		}
 	}
 
@@ -93,7 +82,7 @@ export function initEnumContextMenuCallback(command, overlay, properties, values
 				
 				
 				const theForm = form([				
-					...buildControls(selectedElement),
+					...buildControlsCallback(selectedElement, style),
 					inlineButtons([
 						ok('ok', {}, (e) => {
 							const values = extractFormValues('enum');
@@ -129,5 +118,11 @@ export function initEnumContextMenuCallback(command, overlay, properties, values
 			});
 				
 		}
+	}
+}
+
+export function initBasicBuildControls(properties, values) {
+	return function(selectedElement, style) {
+		return [ fieldset(name, Object.keys(properties).map(p => select(p, style[p], {}, [ '', ...values ] ))) ];
 	}
 }

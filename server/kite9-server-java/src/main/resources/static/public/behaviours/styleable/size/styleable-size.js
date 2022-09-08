@@ -41,7 +41,7 @@ function addNumericControl(overlay, cssAttribute, name, style, horiz, inverse, s
 }
 
 
-export function defaultSizingSelector() {
+export function containerSizingSelector() {
 	return function() {
 		return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=size].selected"))
 			.filter(e => isRectangular(e));
@@ -78,7 +78,7 @@ function createStyleSteps(fields, element, form, prefix, style) {
 export function initMarginContextMenuCallback(command, overlay, selector) {
 	
 	if (selector == undefined) {
-		selector = defaultSizingSelector();
+		selector = containerSizingSelector();
 	}
 	
 	
@@ -86,7 +86,7 @@ export function initMarginContextMenuCallback(command, overlay, selector) {
 	return function(event, cm) {
 		const selectedElement = hasLastSelected(selector(), true);
 		if (selectedElement) {
-			cm.addControl(event, "/public/behaviours/containers/size/margins.svg", 'Margins', () => {
+			cm.addControl(event, "/public/behaviours/styleable/size/margins.svg", 'Margins', () => {
 				cm.clear();
 				const margins = parseInfo(selectedElement)['margin'].split(" ").map(x => parseFloat(x));
 				const htmlElement = cm.get(event);
@@ -141,7 +141,7 @@ export function initMarginContextMenuCallback(command, overlay, selector) {
 export function initPaddingContextMenuCallback(command, overlay, selector) {
 	
 	if (selector == undefined) {
-		selector = defaultSizingSelector();
+		selector = containerSizingSelector();
 	}
 	
 	
@@ -149,7 +149,7 @@ export function initPaddingContextMenuCallback(command, overlay, selector) {
 	return function(event, cm) {
 		const selectedElement = hasLastSelected(selector(), true);
 		if (selectedElement) {
-			cm.addControl(event, "/public/behaviours/containers/size/padding.svg", 'Padding', () => {
+			cm.addControl(event, "/public/behaviours/styleable/size/padding.svg", 'Padding', () => {
 				cm.clear();
 				const padding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
 				const htmlElement = cm.get(event);
@@ -206,7 +206,7 @@ export function initPaddingContextMenuCallback(command, overlay, selector) {
 export function initMinimumSizeContextMenuCallback(command, overlay, selector) {
 	
 	if (selector == undefined) {
-		selector = defaultSizingSelector();
+		selector = containerSizingSelector();
 	}
 	
 	
@@ -214,7 +214,7 @@ export function initMinimumSizeContextMenuCallback(command, overlay, selector) {
 	return function(event, cm) {
 		const selectedElement = hasLastSelected(selector(), true);
 		if (selectedElement) {
-			cm.addControl(event, "/public/behaviours/containers/size/size.svg", 'Minimum Size', () => {
+			cm.addControl(event, "/public/behaviours/styleable/size/size.svg", 'Minimum Size', () => {
 				cm.clear();
 				const minSize = parseInfo(selectedElement)['min-size'].split(" ").map(x => parseFloat(x));
 				const htmlElement = cm.get(event);
@@ -260,3 +260,5 @@ export const sizingEnumProperties = {
 }
 
 export const sizingEnumValues = [ 'maximize', 'minimize' ];
+
+export const sizingIcon = '/public/behaviours/styleable/size/sizing.svg';

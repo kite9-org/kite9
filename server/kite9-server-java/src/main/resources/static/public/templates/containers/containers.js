@@ -10,9 +10,9 @@ import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initCon
 import { initChildContextMenuCallback } from '/public/behaviours/containers/child/containers-child.js'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '/public/behaviours/containers/rules/containers-rules.js'
-import { initMarginContextMenuCallback, initPaddingContextMenuCallback, initMinimumSizeContextMenuCallback, sizingEnumProperties, sizingEnumValues } from '/public/behaviours/containers/size/containers-size.js'
-import { initEnumContextMenuCallback } from '/public/behaviours/styleable/enum/styleable-enum.js'
-import { traversalEnumProperties, traversalEnumValues } from '/public/behaviours/containers/traversal/containers-traversal.js';
+import { initMarginContextMenuCallback, initPaddingContextMenuCallback, initMinimumSizeContextMenuCallback, sizingEnumProperties, sizingEnumValues, containerSizingSelector, sizingIcon } from '/public/behaviours/styleable/size/styleable-size.js'
+import { initEnumContextMenuCallback, initBasicBuildControls } from '/public/behaviours/styleable/enum/styleable-enum.js'
+import { traversalEnumProperties, traversalEnumValues, traversalIcon } from '/public/behaviours/containers/traversal/containers-traversal.js';
 
 function initContainers() {
 	
@@ -38,13 +38,18 @@ function initContainers() {
 		stylemenu.push(initPaddingContextMenuCallback(command, overlay));
 		stylemenu.push(initMinimumSizeContextMenuCallback(command, overlay));
 		
-		const sizing = initEnumContextMenuCallback(command, overlay, sizingEnumProperties, sizingEnumValues, 
-			'/public/behaviours/containers/size/sizing.svg',
-			'Sizing Rules');
+		const sizing = initEnumContextMenuCallback(command, overlay,  
+			sizingIcon,
+			'Sizing Rules',
+			initBasicBuildControls(sizingEnumProperties, sizingEnumValues),
+			containerSizingSelector
+			);
 			
-		const traversal = initEnumContextMenuCallback(command, overlay, traversalEnumProperties, traversalEnumValues, 
-			'/public/behaviours/containers/traversal/traversal.svg',
-			'Link Traversal Rules');
+		const traversal = initEnumContextMenuCallback(command, overlay, 
+			traversalIcon,
+			'Link Traversal Rules',
+			initBasicBuildControls(traversalEnumProperties, traversalEnumValues),
+			containerSizingSelector);
 		
 		stylemenu.push(sizing);
 		stylemenu.push(traversal);

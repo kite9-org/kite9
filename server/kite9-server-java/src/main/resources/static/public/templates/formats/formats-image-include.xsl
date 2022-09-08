@@ -18,7 +18,7 @@
     <xsl:param name="k9-palette">connected</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">none</xsl:param>
-    <xsl:param name="k9-ui">image size</xsl:param>
+    <xsl:param name="k9-ui">image size align</xsl:param>
 
     <xsl:param name="href"><xsl:value-of select="@href" /></xsl:param>
     

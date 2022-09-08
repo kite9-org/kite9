@@ -6,3 +6,5 @@ export const traversalEnumProperties = {
 }
 
 export const traversalEnumValues = [ 'always', 'leaving', 'prevent' ];
+
+export const traversalIcon = '/public/behaviours/containers/traversal/traversal.svg'

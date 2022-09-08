@@ -8,7 +8,7 @@
   <xsl:template name="grid-table-basic">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
-      <xsl:with-param name="k9-ui">drag delete layout fill size</xsl:with-param>
+      <xsl:with-param name="k9-ui">drag delete layout fill size align</xsl:with-param>
       <xsl:with-param name="k9-palette">connected table</xsl:with-param>
     </xsl:call-template>
   </xsl:template>

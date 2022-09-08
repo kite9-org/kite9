@@ -103,6 +103,8 @@ Dictates the things you can choose from the context menu / gestures within the c
 
 - **layout**:  allows you to set up `--kite9-layout`
 - **fill**: allows you to set, `stroke`, `fill`, `stroke-opacity`, `fill-opacity`, `stroke-width`, and later `stroke-dasharray` etc.
+- **size**: allows you to set minimum size, margins, padding.
+- **align**: allows you to set the horizontal and vertical align for an element.
 
 #### Other
 
