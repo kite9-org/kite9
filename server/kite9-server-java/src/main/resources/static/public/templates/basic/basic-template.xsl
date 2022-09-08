@@ -15,6 +15,11 @@
     <adl:css>@import url('/public/templates/basic/basic-textures.css');</adl:css>
   </xsl:template>
   
+  <xsl:template match="/" mode="diagram-font-families">
+    <adl:font-family weights="100 200 300 400 500 600 700 800 900" styles="regular italic">Metropolis</adl:font-family>
+    <adl:font-family weights="400 500 700 900" styles="regular">Chirp</adl:font-family>
+  </xsl:template>
+  
   <xsl:template match="/" mode="diagram-script">
     import '/public/templates/basic/basic.js'
   </xsl:template>

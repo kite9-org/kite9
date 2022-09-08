@@ -20,7 +20,7 @@ export function alignSelector() {
 
 export function initAlignBuildControls() {
 	return function(selectedElement, style) {
-		return [ fieldset(name, [
+		return [ fieldset('Align', [
 			select(props[0], style[props[0]], {}, [ '', ...horiz ]) ,
 			select(props[1], style[props[1]], {}, [ '', ...vert ])
 		]) ];

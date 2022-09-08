@@ -57,7 +57,7 @@
         <xsl:with-param name="k9-format">text-fixed</xsl:with-param>
         <xsl:with-param name="shape"></xsl:with-param>
         <xsl:with-param name="content" select="$text" />
-		    <xsl:with-param name="k9-ui">edit</xsl:with-param>
+		    <xsl:with-param name="k9-ui">edit font</xsl:with-param>
         <xsl:with-param name="id"><xsl:value-of select="$id" />@cap</xsl:with-param>
       </xsl:call-template>
     </xsl:param>  

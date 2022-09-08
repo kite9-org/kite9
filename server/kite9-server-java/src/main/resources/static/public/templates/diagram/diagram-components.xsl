@@ -19,6 +19,7 @@
       <xsl:param name="script"><xsl:apply-templates select="/" mode="diagram-script" /></xsl:param>
       <xsl:param name="constants"><xsl:apply-templates select="/" mode="diagram-constants" /></xsl:param>
       <xsl:param name="palettes"><xsl:apply-templates select="/" mode="diagram-palettes" /></xsl:param>
+      <xsl:param name="font-families"><xsl:apply-templates select="/" mode="diagram-font-families" /></xsl:param>
       <xsl:param name="defs"><xsl:apply-templates select="/" mode="diagram-defs" /></xsl:param>
       <xsl:param name="content"><xsl:apply-templates /></xsl:param>
       <svg>
@@ -48,6 +49,14 @@
                         "<xsl:value-of select="@url"/>",  "<xsl:value-of select="@contains"/>",                  
                     </xsl:for-each>  
                    ],
+                 "font-families" : {
+                	<xsl:for-each select="exslt:node-set($font-families)/*">
+                        "<xsl:value-of select="text()"/>": {
+                        	"styles" : "<xsl:value-of select="@styles"/>",  
+                        	"weights" : "<xsl:value-of select="@weights"/>"
+                        },
+                    </xsl:for-each>  
+                   },
                  <xsl:for-each select="exslt:node-set($constants)/*">
                   "<xsl:value-of select="@name" />": "<xsl:value-of select="@url"/>",
                  </xsl:for-each>};
@@ -78,6 +87,7 @@
   <xsl:template match="text()" mode="diagram-texture-css" />
   <xsl:template match="text()" mode="diagram-constants" />
   <xsl:template match="text()" mode="diagram-palettes" />
+  <xsl:template match="text()" mode="diagram-font-families" />
 
   <xsl:template name="diagram-diagram-element-css">
   	<adl:css>@import url('/public/templates/diagram/diagram-elements.css');</adl:css>

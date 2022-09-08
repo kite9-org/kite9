@@ -41,6 +41,7 @@ import { initStyleContextMenuCallback } from '/public/behaviours/styleable/style
 import { initFillContextMenuCallback } from '/public/behaviours/styleable/fill/styleable-fill.js'
 import { initAlignBuildControls, alignSelector, alignIcon } from '/public/behaviours/styleable/align/styleable-align.js'
 import { initEnumContextMenuCallback } from '/public/behaviours/styleable/enum/styleable-enum.js'
+import { initFontBuildControls, fontSelector, fontIcon} from '/public/behaviours/styleable/font/styleable-font.js'
 
 import { once } from '/public/bundles/ensure.js'
 
@@ -91,6 +92,7 @@ function initEditor() {
 		
 		stylemenu.push(initFillContextMenuCallback(command, overlay));
 		stylemenu.push(initEnumContextMenuCallback(command, overlay, alignIcon, 'Align', initAlignBuildControls(), alignSelector));
+		stylemenu.push(initEnumContextMenuCallback(command, overlay, fontIcon, 'Font', initFontBuildControls(), fontSelector));
 		
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
