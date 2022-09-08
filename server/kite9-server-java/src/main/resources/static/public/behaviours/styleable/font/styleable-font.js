@@ -21,26 +21,26 @@ export function initFontBuildControls() {
 		const fontSize = style['font-size'];
 		
 		const availableFamilies = document.params['font-families'];
-		const allStyles = Object.values(availableFamilies)
+		const allStyles = ['', ...Object.values(availableFamilies)
 			.map(e => e.styles)
 			.flatMap(e => e.split(" "))
-			.filter(onlyUnique).sort();
+			.filter(onlyUnique).sort() ];
 
-		const allWeights = Object.values(availableFamilies)
+		const allWeights = ['',  ...Object.values(availableFamilies)
 			.map(e => e.weights)
 			.flatMap(e => e.split(" "))
-			.filter(onlyUnique).sort();
+			.filter(onlyUnique).sort() ];
 
 		
 		const fontFamilySelect = select('font-family', fontFamily, {}, [ '', ...Object.keys(availableFamilies) ]);
-		const fontWeightSelect = select('font-weight', fontWeight, {}, [ '', ...allWeights])
-		const fontStyleSelect = select('font-style', fontStyle, {}, [ '', ...allStyles ])
+		const fontWeightSelect = select('font-weight', fontWeight, {}, allWeights)
+		const fontStyleSelect = select('font-style', fontStyle, {}, allStyles)
 		const fontSizeField = numeric('font-size', fontSize);
 		
 		
 		function updateWeightAndStyle(selected) {
-			const goodWeights = selected ? availableFamilies[selected].weights.split(" ") : allWeights;
-			const goodStyles = selected ? availableFamilies[selected].styles.split(" "): allStyles;	
+			const goodWeights = selected ? [ '', ...availableFamilies[selected].weights.split(" ") ] : allWeights;
+			const goodStyles = selected ? [ '', ...availableFamilies[selected].styles.split(" ") ] : allStyles;	
 			fontWeightSelect.querySelectorAll("option")
 				.forEach(e => goodWeights.indexOf(e.value) > -1 ? 
 					e.removeAttribute("disabled") : 
