@@ -123,21 +123,6 @@
 	fill: white !important;
 }
 
-/* Selected text effect */
-
-[id].mouseover > g > [k9-highlight~=pulse] > text,
-[id].mouseover > [k9-highlight~=pulse] > text {
-  fill: #CCEEFF !important;
-  fill-opacity: .6 !important;
-}
-
-[id].selected > g > [k9-highlight~=pulse] > text,
-[id].selected > [k9-highlight~=pulse] > text {
-	fill: rgb(255, 204, 0) !important;
-	fill-opacity: .6 !important;	
-}
-
-
 
 /* inactive effect: dims the element */
 

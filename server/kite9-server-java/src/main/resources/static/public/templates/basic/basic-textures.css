@@ -8,6 +8,7 @@
 @import url(/public/templates/editor/editor.css);
 @import url(/public/fonts/metropolis/metropolis.css);
 @import url(/public/fonts/chirp/chirp-ttf.css);
+@import url(/public/fonts/fontawesome/fontawesome.css);
 
 [k9-elem=box] > [k9-texture=background] {
 	fill: #CCCCAA;

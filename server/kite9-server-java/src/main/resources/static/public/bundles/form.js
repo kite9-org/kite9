@@ -214,7 +214,7 @@ function input(placeholder, type, value, atts) {
 
 function idFrom(str) {
 	str = str.charAt(0).toLowerCase() + str.slice(1)
-	return str.replace(/[^a-z0-9-]/g, '');
+	return str.replace(/[^a-zA-Z0-9-]/g, '');
 }
 
 function txt(str) {

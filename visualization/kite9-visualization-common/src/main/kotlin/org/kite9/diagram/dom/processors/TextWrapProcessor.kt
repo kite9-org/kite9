@@ -4,6 +4,7 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.ns.Kite9Namespaces
 import org.kite9.diagram.model.style.DiagramElementType
+import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
@@ -16,15 +17,13 @@ import kotlin.math.max
  */
 class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
-    private val SPECIAL_WORD_CHARS = "\"\'\u2018\u2019\u201C\u201D?./!,;:_".toCharArray().toSet()
-
     private val PUNCTUATION = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".toCharArray().toSet()
 
     private fun replaceZero(v: Double) : Double {
         if (v == 0.0) {
-            return 10000.0;
+            return 10000.0
         } else {
-            return v;
+            return v
         }
     }
 
@@ -33,16 +32,16 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             // parameters to use
             val width = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_WIDTH, n)
             val height = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, n)
-            val align = ctx.getCssStyleStringProperty("text-align", n) ?: "start";
+            val align = ctx.getCssStyleStringProperty("text-align", n) ?: "start"
 
             // build the layout
             val spans = splitIntoSpans(n)
-            val lines = buildLines(n, spans, replaceZero(width))
+            val lines = buildLines(spans, replaceZero(width))
             val simplifiedLines = simplifyLines(lines)
 
             // replace original svg
-            removeAllChildren(n)
-            replaceContents(n, simplifiedLines, align, lines.map { it.second }.maxOfOrNull { it } ?: 0.0, replaceZero(height), "text")
+            removeAllContent(n)
+            replaceContents(n.ownerDocument, simplifiedLines, align, lines.map { it.second }.maxOfOrNull { it } ?: 0.0, replaceZero(height), "text")
 
             return n
         } else {
@@ -56,23 +55,31 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             val fontSize = ctx.getCssStyleDoubleProperty("font-size", n)
             var lineHeight = ctx.getCssStyleDoubleProperty("line-height", n)
             if (lineHeight == 0.0) {
-                lineHeight = 1.2 * fontSize;
+                lineHeight = 1.2 * fontSize
             }
             return lineHeight
         }
     }
 
-
-
-    fun removeAllChildren(e: Element) {
+    fun removeAllContent(e: Element) {
         val childNodes : NodeList = e.childNodes
-        while (childNodes.length > 0) {
-            e.removeChild(childNodes.item(0)!!)
+        var kept = 0
+        var removed = 0
+        while (childNodes.length > kept + removed) {
+            val item = childNodes.item(kept)!!
+            if (isTextNode(item) || isImageNode(item)) {
+                e.removeChild(item)
+                removed++
+            } else {
+                if (item is Element) {
+                    removeAllContent(item)
+                }
+                kept++
+            }
         }
     }
 
-    fun replaceContents(e: Element, lines: List<Pair<List<Span>, Double>>, align: String, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
-        val od = e.ownerDocument!!
+    fun replaceContents(od: Document, lines: List<Pair<List<Span>, Double>>, align: String, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
 
         for ((lineNumber, t) in lines.withIndex()) {
             var sx =  when (align) {
@@ -103,7 +110,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                     cspan.setAttribute("display", "none")
                 }
 
-                e.appendChild(cspan)
+                it.parent.appendChild(cspan)
                 sx += it.width
             }
 
@@ -116,11 +123,13 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
         val width: Double
         val height: Double
+        val parent: Element
+
     }
 
-    data class StringSpan(val s: String, val type: SpanType, override val width: Double, override val height: Double) : Span {}
+    data class StringSpan(val s: String, val type: SpanType, override val width: Double, override val height: Double, override val parent: Element) : Span {}
 
-    data class ImageSpan(val e: Element, override val width: Double, override val height: Double) : Span {}
+    data class ImageSpan(val e: Element, override val width: Double, override val height: Double, override val parent: Element) : Span {}
 
     fun splitIntoSpans(n: Node) : List<Span> {
         return if (isTextNode(n)) {
@@ -130,16 +139,25 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             val bounds = ctx.bounds(n as Element)
             return listOf(ImageSpan(n,
                 bounds?.width ?: 0.0,
-                bounds?.height ?: 0.0))
+                bounds?.height ?: 0.0, getNonTextParent(n)))
         } else {
             val list = n.childNodes
             val out = mutableListOf<Span>()
             for (i in 0..list.length-1) {
-                var ret = splitIntoSpans(list.item(i)!!)
+                val ret = splitIntoSpans(list.item(i)!!)
                 out.addAll(ret)
             }
             out
         }
+    }
+
+    private fun getNonTextParent(n: Node): Element {
+        var n = n
+        while (isTextNode(n) || isImageNode(n)) {
+            n = n.parentNode
+        }
+
+        return n as Element
     }
 
     private fun isTextNode(n: Node) =
@@ -161,7 +179,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             if (buf.isNotEmpty()) {
                 val width = ctx.textWidth(buf.toString(), inside)
                 val lineHeight = calculateLineHeight(inside, ctx)
-                out.add(StringSpan(buf.toString(), last, width, lineHeight));
+                out.add(StringSpan(buf.toString(), last, width, lineHeight, getNonTextParent(inside)))
                 buf.clear()
             }
         }
@@ -171,23 +189,26 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                 SpanType.SPACE -> {
                     when (current) {
                         SpanType.PUNCTUATION, SpanType.WORD_PART, SpanType.NEW_LINE -> breakBuffer()
+                        else -> {}
                     }
                 }
                 SpanType.PUNCTUATION -> {
                     when (current) {
                         SpanType.PUNCTUATION, SpanType.SPACE, SpanType.NEW_LINE -> breakBuffer()
+                        else -> {}
                     }
                 }
                 SpanType.WORD_PART -> {
                     when (current) {
                         SpanType.SPACE, SpanType.NEW_LINE -> breakBuffer()
+                        else -> {}
                     }
                 }
                 SpanType.NEW_LINE -> breakBuffer()
             }
 
             last = current
-            buf.append(c);
+            buf.append(c)
         }
 
 
@@ -208,30 +229,37 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     }
 
 
-    fun buildLines(within: Element, spans: List<Span>, width: Double): List<Pair<List<Span>, Double>> {
+    fun buildLines(spans: List<Span>, width: Double): List<Pair<List<Span>, Double>> {
+        val out = mutableListOf<Pair<List<Span>, Double>>()
         var line = 0
-        var out = mutableListOf<Pair<List<Span>, Double>>()
         var currentSpan = mutableListOf<Span>()
         var currentLineLength = 0.0
+        var currentParent: Element? = null
 
         fun newLine(span: Span) {
             if (currentLineLength > 0) {
                 line++
                 currentSpan.add(span)
+                currentParent = span.parent
                 out.add(Pair(currentSpan, currentLineLength))
                 currentSpan = mutableListOf()
                 currentLineLength = 0.0
             }
         }
 
+        fun parentChange(span: Span) : Boolean{
+            return (currentParent != null) && (span.parent != currentParent)
+        }
+
         fun continueLine(span: Span, newWidth: Double, isSpace: Boolean) {
             if (!isSpace) {
-                if (currentLineLength + newWidth > width) {
+                if ((currentLineLength + newWidth > width) || parentChange(span)) {
                     // need to wrap before adding
-                    newLine(StringSpan("", SpanType.SPACE, 0.0, 0.0));
+                    newLine(StringSpan("", SpanType.SPACE, 0.0, 0.0, span.parent))
                 }
             }
 
+            currentParent = span.parent
             currentSpan.add(span)
             currentLineLength += newWidth
         }
@@ -255,7 +283,10 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             }
         }
 
-        newLine(StringSpan("", SpanType.SPACE, 0.0, 0.0))
+        if (currentParent != null) {
+            newLine(StringSpan("", SpanType.SPACE, 0.0, 0.0, currentParent!!))
+        }
+
         return out
     }
 
@@ -268,7 +299,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         spans.forEach {
             if ((out.lastOrNull() is StringSpan) && (it is StringSpan)) {
                 val last = out.removeLast() as StringSpan
-                val newLast = StringSpan(last.s + it.s, SpanType.WORD_PART, last.width + it.width, max(last.height, it.height))
+                val newLast = StringSpan(last.s + it.s, SpanType.WORD_PART, last.width + it.width, max(last.height, it.height), last.parent)
                 out.add(newLast)
             } else {
                 out.add(it)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg:svg xmlns:pp="http://www.kite9.org/schema/post-processor" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" style="--kite9-type: diagram; --kite9-layout: down; " version="1.0" width="283" pp:width="$width" preserveAspectRatio="xMidYMid meet" xmlns:xml="http://www.w3.org/XML/1998/namespace" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=283.0, h=89.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@2def7a7a; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" pp:height="$height"
+<svg:svg xmlns:pp="http://www.kite9.org/schema/post-processor" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" contentStyleType="text/css" id="The Diagram" style="--kite9-type: diagram; --kite9-layout: down; " version="1.0" width="302" pp:width="$width" preserveAspectRatio="xMidYMid meet" xmlns:xml="http://www.w3.org/XML/1998/namespace" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 15.0 15.0 15.0 15.0; min-size: 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=302.0, h=89.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@288ca5f0; " xmlns="http://www.w3.org/2000/svg" xml:id="The Diagram" pp:height="$height"
 >
 <svg:defs xmlns:svg="http://www.w3.org/2000/svg"
   ><svg:style xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:svg="http://www.w3.org/2000/svg" xml:space="preserve"
@@ -11,18 +11,20 @@
       /><svg:stop offset="100%" stop-color="#DDD" xmlns:svg="http://www.w3.org/2000/svg"
     /></svg:linearGradient
   ></svg:defs
-  >    <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: container; --kite9-padding: 10px; " transform="translate(15.0,15.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=253.0, h=59.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@858d8b4; "
+  >    <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: container; --kite9-padding: 10px; " transform="translate(15.0,15.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; min-size: 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=272.0, h=59.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@5292ceca; "
   >
-      <svg:rect x="0" y="0" width="253" xmlns:svg="http://www.w3.org/2000/svg" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" height="59" ry="8" xmlns:pp="http://www.kite9.org/schema/post-processor" pp:width="$width"
+      <svg:rect x="0" y="0" width="272" xmlns:svg="http://www.w3.org/2000/svg" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" height="59" ry="8" xmlns:pp="http://www.kite9.org/schema/post-processor" pp:width="$width"
     />
-      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 33px;" transform="translate(7.1,43.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=233.0, h=39.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@1a865273; "
-    ><text x="0.0px" y="0.0px"
+      <svg:g xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: text; font-family:  opensans-light-webfont; font-size: 33px;" transform="translate(6.8,43.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=252.0, h=39.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@2436ea2f; "
+    >
+        
+      <text x="0.0px" y="0.0px"
       >hello something</text
     ></svg:g
     >
-      <svg:g style="--kite9-usage: decal; --kite9-type: svg; --kite9-transform: none; " k9-info="painter: org.kite9.diagram.batik.painter.BatikLeafPainter@6c008c24; " xmlns:svg="http://www.w3.org/2000/svg"
+      <svg:g style="--kite9-usage: decal; --kite9-type: svg; --kite9-transform: none; " k9-info="painter: org.kite9.diagram.batik.painter.BatikLeafPainter@4c777e7b; " xmlns:svg="http://www.w3.org/2000/svg"
     >
-        <svg:circle pp:cx="$width - (5 * $px)" fill="red" xmlns:svg="http://www.w3.org/2000/svg" r="15" cx="248" cy="5" xmlns:pp="http://www.kite9.org/schema/post-processor"
+        <svg:circle pp:cx="$width - (5 * $px)" fill="red" xmlns:svg="http://www.w3.org/2000/svg" r="15" cx="267" cy="5" xmlns:pp="http://www.kite9.org/schema/post-processor"
       /> 
       </svg:g
       >

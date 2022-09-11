@@ -93,6 +93,7 @@ public class PathContentController extends AbstractContentController {
 		} catch (Exception e) {
 			String properCause = getProperCause(e);
 			LOG.info("User error {}", properCause);
+			LOG.error("trace", e);
 			ModifiableDiagramAPI api = (ModifiableDiagramAPI) getSourceAPI(update, authentication);
 			ADLDom dom = api.getCurrentRevisionContent(authentication, headers).parse();
 			dom.setError(properCause);

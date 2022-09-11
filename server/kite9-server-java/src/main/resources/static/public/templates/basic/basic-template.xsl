@@ -18,6 +18,7 @@
   <xsl:template match="/" mode="diagram-font-families">
     <adl:font-family weights="100 200 300 400 500 600 700 800 900" styles="regular italic">Metropolis</adl:font-family>
     <adl:font-family weights="400 500 700 900" styles="regular">Chirp</adl:font-family>
+    <adl:font-family weights="400 900">Font Awesome 5 Free</adl:font-family>
   </xsl:template>
   
   <xsl:template match="/" mode="diagram-script">

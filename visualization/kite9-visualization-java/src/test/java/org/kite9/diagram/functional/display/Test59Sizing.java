@@ -217,6 +217,23 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 							"font-family: opensans-bold-webfont; font-size: 25px; --kite9-text-bounds-size: 200px 150px; --kite9-margin: 0; "),
 						"--kite9-padding: 0px; --kite9-layout: down; ")));
 	}
+
+	/**
+	 * Make sure that we keep the &lt;g&gt; structure within the text element
+	 * @return
+	 */
+	@Test
+	public void test_59_24_TestTextWrapWithGroups() throws Exception {
+		renderDiagram(basicDiagram(
+				glyphContainer(
+						text("<svg:g wrap=\"true\">" +
+									    "<svg:g style=\"font-size: 25px;\"> "+
+										    "<svg:text>a b c d e f g h i j k      </svg:text>"+
+								          "</svg:g><svg:g style=\"font-size: 45px;\">"+
+										    "<svg:text>1 2 3 4 5 6 7</svg:text>"+
+										  "</svg:g>" +
+										"</svg:g>", "--kite9-text-bounds-size: 200px 650px;"),"")));
+	}
 	
 	private String para() {
 		return "<svg:text>Search the world's information, including webpages, images, videos and more.\n"+

@@ -64,6 +64,7 @@ interface CSSConstants {
 
         // direction a connection goes in
         const val CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"
+        const val ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX + "arrival-side"
 
         // distance between edge of connection and terminator it joins to (space for marker)
         const val MARKER_RESERVE = KITE9_CSS_PROPERTY_PREFIX + "marker-reserve"

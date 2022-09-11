@@ -28,10 +28,6 @@
 	stroke-opacity: 1;
 }
 
-[k9-texture=background]>g>text {
-	fill: black;
-}
-
 /**
  * This texture is used when none is provided.  It basically defaults to the same thing as
  * background.
