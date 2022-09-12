@@ -41,7 +41,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
             // replace original svg
             removeAllContent(n)
-            replaceContents(n.ownerDocument, simplifiedLines, align, lines.map { it.second }.maxOfOrNull { it } ?: 0.0, replaceZero(height), "text")
+            replaceContents(n.ownerDocument!!, simplifiedLines, align, lines.map { it.second }.maxOfOrNull { it } ?: 0.0, replaceZero(height), "text")
 
             return n
         } else {
@@ -154,7 +154,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     private fun getNonTextParent(n: Node): Element {
         var n = n
         while (isTextNode(n) || isImageNode(n)) {
-            n = n.parentNode
+            n = n.parentNode!!
         }
 
         return n as Element

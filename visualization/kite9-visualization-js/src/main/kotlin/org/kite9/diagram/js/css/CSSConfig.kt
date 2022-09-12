@@ -69,7 +69,8 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.TRAVERSAL_RIGHT_PROPERTY,syntax<BorderTraversal>()+" | none", "none", false))
 
     // CONNECTION SIDES
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTIONS_PROPERTY,syntax<ConnectionsSeparation>(), lower(ConnectionsSeparation.SAME_SIDE), false))css.registerProperty( CSSProperty(CSSConstants.ARRIVAL_SIDE,syntax<Direction>()+" | none","none", false))
+    css.registerProperty( CSSProperty(CSSConstants.CONNECTIONS_PROPERTY,syntax<ConnectionsSeparation>(), lower(ConnectionsSeparation.SAME_SIDE), false))
+    css.registerProperty( CSSProperty(CSSConstants.ARRIVAL_SIDE,syntax<Direction>()+" | none","none", false))
 
     // ALIGNMENT
     css.registerProperty( CSSProperty(CSSConstants.VERTICAL_ALIGNMENT,syntax<VerticalAlignment>(), lower(VerticalAlignment.CENTER), false))
