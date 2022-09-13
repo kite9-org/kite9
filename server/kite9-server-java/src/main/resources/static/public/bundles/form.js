@@ -117,7 +117,7 @@ export function hidden(placeholder, value) {
 	return create('input', {'type': 'hidden', 'value': value, 'id': id, 'name': id })
 }
 
-export function numeric(placeholder, value, clear, atts) {
+export function numeric(placeholder, value, atts) {
 	return input(placeholder, 'number', value, atts);
 }
 

@@ -4,6 +4,7 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.ns.Kite9Namespaces
 import org.kite9.diagram.model.style.DiagramElementType
+import org.kite9.diagram.model.style.TextAlign
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.Node
@@ -32,7 +33,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             // parameters to use
             val width = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_WIDTH, n)
             val height = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, n)
-            val align = ctx.getCssStyleStringProperty("text-align", n) ?: "start"
+            val align = toAlignEnum(ctx.getCssStyleStringProperty("text-align", n))
 
             // build the layout
             val spans = splitIntoSpans(n)
@@ -46,6 +47,16 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             return n
         } else {
             return super.processTag(n)
+        }
+    }
+
+    private fun toAlignEnum(s: String?): TextAlign {
+        return when (s) {
+            "start" -> TextAlign.START
+            "middle" -> TextAlign.MIDDLE
+            "end" -> TextAlign.END
+            "full" -> TextAlign.FULL
+            else -> TextAlign.START
         }
     }
 
@@ -64,12 +75,10 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     fun removeAllContent(e: Element) {
         val childNodes : NodeList = e.childNodes
         var kept = 0
-        var removed = 0
-        while (childNodes.length > kept + removed) {
+        while (childNodes.length > kept) {
             val item = childNodes.item(kept)!!
             if (isTextNode(item) || isImageNode(item)) {
                 e.removeChild(item)
-                removed++
             } else {
                 if (item is Element) {
                     removeAllContent(item)
@@ -79,12 +88,12 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         }
     }
 
-    fun replaceContents(od: Document, lines: List<Pair<List<Span>, Double>>, align: String, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
+    fun replaceContents(od: Document, lines: List<Pair<List<Span>, Double>>, align: TextAlign, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
 
         for ((lineNumber, t) in lines.withIndex()) {
             var sx =  when (align) {
-                "end" ->  maxLineWidth - t.second
-                "middle" -> (maxLineWidth - t.second) / 2.0
+                TextAlign.END ->  maxLineWidth - t.second
+                TextAlign.MIDDLE -> (maxLineWidth - t.second) / 2.0
                 else -> 0.0
             }
 

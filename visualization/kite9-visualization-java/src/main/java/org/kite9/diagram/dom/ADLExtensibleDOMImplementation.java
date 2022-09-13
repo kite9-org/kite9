@@ -80,7 +80,6 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		// ALIGNMENT
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.CENTER, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER, false));
-		
 		registerCustomCSSValueManager(new PlacementManager(CSSConstants.VERTICAL_ALIGN_POSITION));
 		registerCustomCSSValueManager(new PlacementManager(CSSConstants.HORIZONTAL_ALIGN_POSITION));
 

@@ -99,7 +99,7 @@ interface CSSConstants {
         const val TEXT_BOUNDS_SIZE = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ SIZE
         const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ WIDTH
         const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ HEIGHT
-
+        const val TEXT_ALIGN = "text-align"
 
     }
 }

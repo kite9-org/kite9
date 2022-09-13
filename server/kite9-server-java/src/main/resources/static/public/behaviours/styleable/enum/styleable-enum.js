@@ -1,12 +1,46 @@
 import { hasLastSelected } from '/public/bundles/api.js'
 import { parseStyle, formatStyle } from '/public/bundles/css.js'
 import { textarea, form, ok, cancel, inlineButtons, formValues, fieldset, select, numeric } from '/public/bundles/form.js'
-import { getMainSvg, canRenderClientSide } from '/public/bundles/screen.js';
+import { getMainSvg, getElementHTMLBBox, canRenderClientSide } from '/public/bundles/screen.js';
 
 
-export function initEnumContextMenuCallback(command, overlay, icon, name, buildControlsCallback, selector, initChangeEvent) {
+
+
+function moveContextMenuAway(cm, e, event) {
+	const hbbox = getElementHTMLBBox(e);
+	// move context menu out of the way
+	const menuDiv = cm.get(event);
+	menuDiv.style.left = (hbbox.x + hbbox.width + 5)+"px";
+	menuDiv.style.top = (hbbox.y + hbbox.height - 25)+"px";
+}
+
+export function initEnumContextMenuCallback(command, overlay, icon, name, buildControlsCallback, selector, styleSuffix) {
 
 	var originalStyleMap, style;
+	
+	
+	
+	if (selector == undefined) {
+		selector = function() {
+			return getMainSvg().querySelectorAll("[id][k9-ui].selected");
+		}
+	}
+	
+	if (styleSuffix == undefined) {
+		styleSuffix = function(prop) {
+			 if ((prop.indexOf("length") > -1) || 
+				(prop.indexOf("width")  > -1) ||
+				(prop.indexOf("height")  > -1) ||
+				(prop.indexOf("left")  > -1) ||
+				(prop.indexOf("right")  > -1) ||
+				(prop.indexOf("top")  > -1) ||
+				(prop.indexOf("bottom")  > -1)) {
+				return "px";
+			} else {
+				return '';
+			}
+		}
+	}
 	
 	function extractFormValues(formName) {
 		const asArray = Object.entries(formValues(formName));
@@ -15,21 +49,29 @@ export function initEnumContextMenuCallback(command, overlay, icon, name, buildC
 	}
 	
 	function createStyleSteps(e, oldValues, newValues) {
-		function styleEqual(a, b) {
+		function styleEqual(a, b, suffix) {
 			if (((!a) || (a.length == 0)) && ((!b) || (b.length == 0))) {
 				return true;
 			} else {
-				return a == b;
+				return a+suffix == b;
+			}
+		}
+		
+		function addSuffix(p, v) {
+			if ((v) && (v.length > 0)) {
+				return v + styleSuffix(p);
+			} else {
+				return v;
 			}
 		}
 		
 		const out = Object.keys(newValues)
-			.filter(s => !styleEqual(oldValues[s],newValues[s]))
+			.filter(s => !styleEqual(oldValues[s],newValues[s], styleSuffix(s)))
 			.map(f =>  { return {
 			fragmentId: e.getAttribute("id"),
 			type: 'ReplaceStyle',
 			name: f,
-			to: newValues[f],
+			to: addSuffix(f, newValues[f]),
 			from: oldValues[f]
 		}});
 		
@@ -47,22 +89,14 @@ export function initEnumContextMenuCallback(command, overlay, icon, name, buildC
 		return out;
 	}
 	
-	if (initChangeEvent == undefined) {
-		initChangeEvent = function(selectedElement, svgStyle) {
-			return e => {
-				const values = extractFormValues('enum');
-				const newStyle = {...svgStyle, ...values};
-				const formatted = formatStyle(newStyle);
-	
-				selectedElement.setAttribute("style", formatted);
-			};	
-		}
-	} 
-	
-	if (selector == undefined) {
-		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui].selected");
-		}
+	function initChangeEvent(selectedElement, svgStyle) {
+		return e => {
+			const values = extractFormValues('enum');
+			const newStyle = {...svgStyle, ...values};
+			const formatted = formatStyle(newStyle);
+
+			selectedElement.setAttribute("style", formatted);
+		};	
 	}
 
 	return function(event, cm) {
@@ -82,7 +116,7 @@ export function initEnumContextMenuCallback(command, overlay, icon, name, buildC
 				
 				
 				const theForm = form([				
-					...buildControlsCallback(selectedElement, style),
+					...buildControlsCallback(selectedElement, style, overlay),
 					inlineButtons([
 						ok('ok', {}, (e) => {
 							const values = extractFormValues('enum');
@@ -107,6 +141,8 @@ export function initEnumContextMenuCallback(command, overlay, icon, name, buildC
 				], 'enum');
 				
 				const changeEvent = initChangeEvent(selectedElement, svgStyle);
+				
+				moveContextMenuAway(cm, selectedElement, event);
 				
 				theForm.addEventListener("change", changeEvent);
 				theForm.addEventListener("textInput", changeEvent);

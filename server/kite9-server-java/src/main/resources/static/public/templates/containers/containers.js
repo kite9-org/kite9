@@ -37,7 +37,7 @@ function initContainers() {
 		stylemenu.push(initMarginContextMenuCallback(command, overlay));
 		stylemenu.push(initPaddingContextMenuCallback(command, overlay));
 		stylemenu.push(initMinimumSizeContextMenuCallback(command, overlay));
-		
+
 		const sizing = initEnumContextMenuCallback(command, overlay,  
 			sizingIcon,
 			'Sizing Rules',
