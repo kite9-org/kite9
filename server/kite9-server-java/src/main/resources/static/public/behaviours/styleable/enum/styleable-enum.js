@@ -61,7 +61,7 @@ export function initEnumContextMenuCallback(command, overlay, icon, name, buildC
 			if ((v) && (v.length > 0)) {
 				return v + styleSuffix(p);
 			} else {
-				return v;
+				return undefined;
 			}
 		}
 		
