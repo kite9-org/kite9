@@ -2,7 +2,7 @@ import { hasLastSelected } from '/public/bundles/api.js'
 import { textarea, form, ok, cancel, inlineButtons, formValues } from '/public/bundles/form.js'
 import { getMainSvg } from '/public/bundles/screen.js';
 
-export function initStyleContextMenuCallback(submenu, selector) {
+export function initStyleMenuContextMenuCallback(submenu, selector) {
 	
 	if (selector == undefined) {
 		selector = function() {
@@ -16,7 +16,7 @@ export function initStyleContextMenuCallback(submenu, selector) {
 
 		if (selectedElements.length > 0) {
 			
-			cm.addControl(event, "/public/behaviours/styleable/style/style.svg", 'Styles', () => {
+			cm.addControl(event, "/public/behaviours/styleable/menu/style.svg", 'Styles', () => {
 				cm.clear();
 				submenu.forEach(item => {
 					item(event, cm);

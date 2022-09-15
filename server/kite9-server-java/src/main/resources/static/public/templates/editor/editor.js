@@ -37,10 +37,10 @@ import { initEditContextMenuCallback } from '/public/behaviours/editable/text/ed
 import { initEditableImageContextMenuCallback } from '/public/behaviours/editable/image/editable-image.js'
 
 // style
-import { initStyleContextMenuCallback } from '/public/behaviours/styleable/style/styleable-style.js'
+import { initStyleMenuContextMenuCallback } from '/public/behaviours/styleable/menu/styleable-menu.js'
 import { initFillContextMenuCallback } from '/public/behaviours/styleable/fill/styleable-fill.js'
 import { initAlignBuildControls, alignSelector, alignIcon } from '/public/behaviours/styleable/align/styleable-align.js'
-import { initEnumContextMenuCallback } from '/public/behaviours/styleable/enum/styleable-enum.js'
+import { initStyleContextMenuCallback } from '/public/behaviours/styleable/styleable.js'
 import { initFontBuildControls, fontSelector, fontIcon} from '/public/behaviours/styleable/font/styleable-font.js'
 import { initTextBuildControls, textSelector, textIcon} from '/public/behaviours/styleable/text/styleable-text.js'
 
@@ -89,12 +89,12 @@ function initEditor() {
 		contextMenu.add(initXMLContextMenuCallback(command));
 		contextMenu.add(initEditableImageContextMenuCallback(command, metadata));
 		contextMenu.add(initPaletteContextMenuCallback(palette));
-		contextMenu.add(initStyleContextMenuCallback(stylemenu));
+		contextMenu.add(initStyleMenuContextMenuCallback(stylemenu));
 		
 		stylemenu.push(initFillContextMenuCallback(command, overlay));
-		stylemenu.push(initEnumContextMenuCallback(command, overlay, alignIcon, 'Align', initAlignBuildControls(), alignSelector));
-		stylemenu.push(initEnumContextMenuCallback(command, overlay, fontIcon, 'Font', initFontBuildControls(), fontSelector));
-		stylemenu.push(initEnumContextMenuCallback(command, overlay, textIcon, 'Text Layout', initTextBuildControls(), textSelector));
+		stylemenu.push(initStyleContextMenuCallback(command, overlay, alignIcon, 'Align', initAlignBuildControls(), alignSelector));
+		stylemenu.push(initStyleContextMenuCallback(command, overlay, fontIcon, 'Font', initFontBuildControls(), fontSelector));
+		stylemenu.push(initStyleContextMenuCallback(command, overlay, textIcon, 'Text Layout', initTextBuildControls(), textSelector));
 		
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'drawDirection'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));

@@ -42,7 +42,8 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
             // replace original svg
             removeAllContent(n)
-            replaceContents(n.ownerDocument!!, simplifiedLines, align, lines.map { it.second }.maxOfOrNull { it } ?: 0.0, replaceZero(height), "text")
+            val maxLineWidth = lines.maxOf { it.sumOf { it.width } }
+            replaceContents(n.ownerDocument!!, simplifiedLines, align, maxLineWidth ?: 0.0, replaceZero(height), "text")
 
             return n
         } else {
@@ -88,18 +89,18 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         }
     }
 
-    fun replaceContents(od: Document, lines: List<Pair<List<Span>, Double>>, align: TextAlign, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
+    fun replaceContents(od: Document, lines: List<List<Span>>, align: TextAlign, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
 
         for ((lineNumber, t) in lines.withIndex()) {
             var sx =  when (align) {
-                TextAlign.END ->  maxLineWidth - t.second
-                TextAlign.MIDDLE -> (maxLineWidth - t.second) / 2.0
+                TextAlign.END ->  maxLineWidth - t.sumOf { it.width }
+                TextAlign.MIDDLE -> (maxLineWidth - t.sumOf { it.width }) / 2.0
                 else -> 0.0
             }
 
-            val lineHeight = t.first.maxOfOrNull { it.height } ?: 0.0
+            val lineHeight = t.maxOfOrNull { it.height } ?: 0.0
 
-            t.first.forEach {
+            t.forEach {
                 val cspan = if (it is StringSpan) {
                     val tag = od.createElementNS(Kite9Namespaces.SVG_NAMESPACE, tagName)
                     val text = od.createTextNode(it.s)
@@ -238,8 +239,8 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     }
 
 
-    fun buildLines(spans: List<Span>, width: Double): List<Pair<List<Span>, Double>> {
-        val out = mutableListOf<Pair<List<Span>, Double>>()
+    fun buildLines(spans: List<Span>, width: Double): List<List<Span>> {
+        val out = mutableListOf<List<Span>>()
         var line = 0
         var currentSpan = mutableListOf<Span>()
         var currentLineLength = 0.0
@@ -250,7 +251,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                 line++
                 currentSpan.add(span)
                 currentParent = span.parent
-                out.add(Pair(currentSpan, currentLineLength))
+                out.add(currentSpan)
                 currentSpan = mutableListOf()
                 currentLineLength = 0.0
             }
@@ -299,8 +300,8 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         return out
     }
 
-    fun simplifyLines(lines: List<Pair<List<Span>, Double>>) : List<Pair<List<Span>, Double>> {
-        return lines.map { Pair( mergeSpans(it.first), it.second) }
+    fun simplifyLines(lines: List<List<Span>>) : List<List<Span>> {
+        return lines.map { mergeSpans(it) }
     }
 
     fun mergeSpans(spans: List<Span>) : List<Span> {

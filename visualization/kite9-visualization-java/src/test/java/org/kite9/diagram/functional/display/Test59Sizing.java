@@ -92,9 +92,9 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 	public void test_59_14_TextAlign() throws Exception {
 		renderDiagram(basicDiagram(glyphContainer(
 				text("<svg:text>hello something else</svg:text>", "font-size: 25px; line-height: 120%;")+
-				text("<svg:text>hello 2</svg:text>", "font-size: 25px;")+
-				text("<svg:text>bette\nmiddler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; text-align: middle; ")+
-				text("<svg:text>hello\n bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; text-align: end;"),
+				text("<svg:text>hello 2 things</svg:text>", "font-size: 15px; --kite9-text-bounds-width: 50px; --kite9-horizontal-align: left;")+
+				text("<svg:text>bette middler</svg:text>", "font-size: 15px;--kite9-vertical-align: center; --kite9-horizontal-align: center; text-align: middle; --kite9-text-bounds-width: 50px; ")+
+				text("<svg:text>hello bottom</svg:text>", "font-size: 15px; --kite9-vertical-align: bottom; --kite9-horizontal-align: right; text-align: end; --kite9-text-bounds-width: 50px;"),
 			"--kite9-padding: 10px; --kite9-layout: down; --kite9-min-size: 150px 150px")));
 	}
 

@@ -10,8 +10,8 @@ import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initCon
 import { initChildContextMenuCallback } from '/public/behaviours/containers/child/containers-child.js'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '/public/behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '/public/behaviours/containers/rules/containers-rules.js'
-import { initMarginContextMenuCallback, initPaddingContextMenuCallback, initMinimumSizeContextMenuCallback, sizingEnumProperties, sizingEnumValues, containerSizingSelector, sizingIcon } from '/public/behaviours/styleable/size/styleable-size.js'
-import { initEnumContextMenuCallback, initBasicBuildControls } from '/public/behaviours/styleable/enum/styleable-enum.js'
+import { initMarginsBuildControls, marginsIcon,  initPaddingBuildControls, paddingIcon,   initMinSizeBuildControls, minSizeIcon, sizingEnumProperties, sizingEnumValues, containerSizingSelector, sizingIcon } from '/public/behaviours/styleable/size/styleable-size.js'
+import { initStyleContextMenuCallback, initBasicBuildControls } from '/public/behaviours/styleable/styleable.js'
 import { traversalEnumProperties, traversalEnumValues, traversalIcon } from '/public/behaviours/containers/traversal/containers-traversal.js';
 
 function initContainers() {
@@ -34,23 +34,44 @@ function initContainers() {
 		paletteContextMenu.add(initContainContextMenuCallback(palette, command, containment)); 
 		paletteContextMenu.add(initInsertContextMenuCallback(palette, command, containment));
 
-		stylemenu.push(initMarginContextMenuCallback(command, overlay));
-		stylemenu.push(initPaddingContextMenuCallback(command, overlay));
-		stylemenu.push(initMinimumSizeContextMenuCallback(command, overlay));
+		const margins = initStyleContextMenuCallback(command, overlay,  
+			marginsIcon,
+			'Margins',
+			initMarginsBuildControls(),
+			containerSizingSelector
+			);
 
-		const sizing = initEnumContextMenuCallback(command, overlay,  
+		const padding = initStyleContextMenuCallback(command, overlay,  
+			paddingIcon,
+			'Padding',
+			initPaddingBuildControls(),
+			containerSizingSelector
+			);
+
+		const minSize = initStyleContextMenuCallback(command, overlay,  
+			minSizeIcon,
+			'Minimum Size',
+			initMinSizeBuildControls(),
+			containerSizingSelector
+			);
+
+		const sizing = initStyleContextMenuCallback(command, overlay,  
 			sizingIcon,
 			'Sizing Rules',
 			initBasicBuildControls(sizingEnumProperties, sizingEnumValues),
 			containerSizingSelector
 			);
 			
-		const traversal = initEnumContextMenuCallback(command, overlay, 
+		const traversal = initStyleContextMenuCallback(command, overlay, 
 			traversalIcon,
 			'Link Traversal Rules',
 			initBasicBuildControls(traversalEnumProperties, traversalEnumValues),
-			containerSizingSelector);
+			containerSizingSelector,
+			(r) => '');
 		
+		stylemenu.push(margins);
+		stylemenu.push(padding);
+		stylemenu.push(minSize);
 		stylemenu.push(sizing);
 		stylemenu.push(traversal);
 	}
