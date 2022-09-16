@@ -135,7 +135,7 @@ export function select(placeholder, value, atts, options) {
 	return create('div', {}, [
 		create('label', { "for" : id }, [ txt(placeholder) ]),
 		create('div', { 'class' : 'select-dropdown' }, [
-			create('select', {'id': id, 'name': id}, 
+			create('select', {'id': id, 'name': id, ...atts}, 
 				options.map((o, i) => create('option', 
 						{'selected' : (value != undefined) ? (value==o) : (i==0) }, [txt(o)])))
 		])

@@ -21,7 +21,7 @@ import { initTerminatorContainmentCallback, initLabelContainmentCallback } from 
 import { initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
 import { initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js';
 import { initStyleContextMenuCallback } from '/public/behaviours/styleable/styleable.js';
-import { initPortsPositionBuildControls, portsSelector, portsPositionIcon } from '/public/behaviours/ports/position/ports-position.js'
+import { initPortsPositionBuildControls, portsSelector, portsPositionIcon, initPortsPositionChangeEvent } from '/public/behaviours/ports/position/ports-position.js'
 
 const linker = new Linker(updateLink);
 
@@ -71,7 +71,8 @@ function initLinks() {
 			'Port Position',
 			initPortsPositionBuildControls(),
 			portsSelector,
-			(r) => '');
+			(r) => '', 
+			initPortsPositionChangeEvent);
 		
 		stylemenu.push(portPosition);
 	}
