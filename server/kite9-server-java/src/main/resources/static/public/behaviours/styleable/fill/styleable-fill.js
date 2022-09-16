@@ -1,7 +1,10 @@
 import { hasLastSelected } from '/public/bundles/api.js'
 import { parseStyle, formatStyle } from '/public/bundles/css.js'
-import { textarea, form, ok, cancel, inlineButtons, formValues, fieldset, colour, numeric } from '/public/bundles/form.js'
+import { formObject, fieldset, colour, numeric } from '/public/bundles/form.js'
 import { getMainSvg, canRenderClientSide } from '/public/bundles/screen.js';
+import { extractFormValues } from '/public/behaviours/styleable/styleable.js';
+
+export const fillIcon = "/public/behaviours/styleable/fill/paintbrush.svg";
 
 const rgba2hex = (rgba) => `#${rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/).slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
 
@@ -29,137 +32,53 @@ function getIntegerPx(propName, e) {
 	}
 }
 
-
-export function initFillContextMenuCallback(command, overlay, selector) {
+export function initFillBuildControls() {
+	return function(selectedElement, style, overlay, cm, event) {
+		const fill = colour("fill", style['fill']);
+		const stroke = colour("stroke", style['stroke']);
+		const inheritedFillOpacity = getOpacity('stroke-opacity', selectedElement);
+		const fillOpacity = numeric('fill-opacity', style['fill-opacity'], {min: 0, max: 1, step: 0.1});
+		const inheritedStrokeOpacity = getOpacity('stroke-opacity', selectedElement);
+		const strokeOpacity = numeric('stroke-opacity', style['stroke-opacity'],  {min: 0, max: 1, step: 0.1});
+		const strokeWidth = numeric('stroke-width', style['stroke-width'], getIntegerPx('stroke-width', selectedElement), {min: 0});
+		
+		const fillControls = [
+			fill,
+			fillOpacity
+		];
+		const strokeControls = [
+			stroke,
+			strokeOpacity,
+			strokeWidth
+		];
 	
-	if (selector == undefined) {
-		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected");
+		return [ 
+			fieldset("Fill", fillControls),
+			fieldset("Stroke", strokeControls) ];
+	}	
+}
+
+export function fillSelector() {
+	return getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected");
+}
+
+export function initFillChangeEvent(selectedElement, svgStyle) {
+	return e => {
+		const values = extractFormValues();
+		const newStyle = {...svgStyle, ...values};
+		const formatted = formatStyle(newStyle);
+		if (newStyle['fill']) {
+			selectedElement.classList.remove('selected');
+			selectedElement.classList.remove('mouseover');
 		}
-	}
-	
-	function extractFormValues(formName) {
-		const asArray = Object.entries(formValues(formName));
-		const filtered = asArray.filter(([key, value]) => !((value == '') || (key=='ok') || (key=='cancel')));
-		return Object.fromEntries(filtered);
-	}
-	
-	function createStyleSteps(e, oldValues, newValues) {
-		function styleEqual(a, b) {
-			if (((!a) || (a.length == 0)) && ((!b) || (b.length == 0))) {
-				return true;
-			} else {
-				return a == b;
-			}
-		}
-		
-		const out = Object.keys(newValues)
-			.filter(s => !styleEqual(oldValues[s],newValues[s]))
-			.map(f =>  { return {
-			fragmentId: e.getAttribute("id"),
-			type: 'ReplaceStyle',
-			name: f,
-			to: newValues[f],
-			from: oldValues[f]
-		}});
-		
-		return out;
-	}
-	
-	function createStyleMap(command, selectedElements) {
-		const out = {};
-		selectedElements.forEach(e => {
-			const adlElement = command.getADLDom(e.getAttribute("id"))
-			const style = parseStyle(adlElement.getAttribute("style"));
-			out[e.getAttribute("id")] = style;
-		})
-		
-		return out;
-	}
 
-	return function(event, cm) {
+		selectedElement.setAttribute("style", formatted);
 		
-		const selectedElement = hasLastSelected(selector(), true);
-
-		if (selectedElement) {
-			
-			cm.addControl(event, "/public/behaviours/styleable/fill/paintbrush.svg", 'Fill & Stroke', () => {
-				cm.clear();
-				overlay.ensureOverlay();
-				const selectedElements = Array.from(hasLastSelected(selector()));
-				const originalStyleMap = createStyleMap(command, selectedElements);
-				const style = originalStyleMap[selectedElement.getAttribute("id")];
-				const originalSvgStyle = selectedElement.getAttribute("style")
-				const svgStyle = parseStyle(originalSvgStyle);
-				
-				const fill = colour("fill", style['fill']);
-				const stroke = colour("stroke", style['stroke']);
-				const fillOpacity = numeric('fill-opacity', style['fill-opacity'], getOpacity('fill-opacity', selectedElement), {min: 0, max: 1, step: 0.1});
-				const strokeOpacity = numeric('stroke-opacity', style['stroke-opacity'], getOpacity('stroke-opacity', selectedElement), {min: 0, max: 1, step: 0.1});
-				const strokeWidth = numeric('stroke-width', style['stroke-width'], getIntegerPx('stroke-width', selectedElement), {min: 0});
-				
-				const fillControls = [
-					fill,
-					fillOpacity
-				];
-				const strokeControls = [
-					stroke,
-					strokeOpacity,
-					strokeWidth
-				];
-				
-				const theForm = form([				
-					fieldset("Fill", fillControls),
-					fieldset("Stroke", strokeControls),
-					inlineButtons([
-						ok('ok', {}, (e) => {
-							const values = extractFormValues('fill');
-							const steps = selectedElements
-								.flatMap(e => createStyleSteps(e, originalStyleMap[e.getAttribute("id")], values));
-							selectedElement.classList.add('selected');
-							command.pushAllAndPerform(steps);
-							cm.destroy();
-							overlay.destroy()
-							event.stopPropagation();
-  				 			event.preventDefault();
-						}),
-						cancel('cancel', [], () => {
-							selectedElement.setAttribute("style", originalSvgStyle);
-							selectedElement.classList.add('selected');
-							cm.destroy()
-							overlay.destroy();
-							event.stopPropagation();
-  				 			event.preventDefault();
-						})
-					])
-				], 'fill');
-				
-				const changeEvent = e=> {
-					const values = extractFormValues('fill');
-					const newStyle = {...svgStyle, ...values};
-					const formatted = formatStyle(newStyle);
-					if (newStyle['fill']) {
-						selectedElement.classList.remove('selected');
-						selectedElement.classList.remove('mouseover');
-					}
-
-					selectedElement.setAttribute("style", formatted);
-					
-					// update swatches
-					fill.children[1].children[0].value = getColour('fill', selectedElement);
-					stroke.children[1].children[0].value = getColour('stroke', selectedElement);
-					
-				};
-				
-				theForm.addEventListener("change", changeEvent);
-				theForm.addEventListener("textInput", changeEvent);
-				theForm.addEventListener("input", changeEvent);
-				
-				const htmlElement = cm.get(event);
-				htmlElement.appendChild(theForm);	
-				changeEvent();
-			});
-				
-		}
+		// update swatches
+		const form = formObject('enum');
+		const fill = form.querySelector('#fill-patch');
+		const stroke = form.querySelector('#stroke-patch');
+		fill.value = getColour('fill', selectedElement);
+		stroke.value = getColour('stroke', selectedElement);
 	}
 }

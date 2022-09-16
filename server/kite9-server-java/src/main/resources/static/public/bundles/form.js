@@ -93,7 +93,8 @@ export function colour(placeholder, value, atts = {}) {
 	const patch = create('input', { 
 		'class' : 'form-control', 
 		'type': 'color', 
-		...atts })
+		...atts,
+		'id' : id+"-patch" })
 	const label = create('label', {"for" : id}, [ txt(placeholder)]);
 	const controlDiv = div({"class": "inline-buttons"}, [patch, text]);
 	

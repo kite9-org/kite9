@@ -38,7 +38,7 @@ import { initEditableImageContextMenuCallback } from '/public/behaviours/editabl
 
 // style
 import { initStyleMenuContextMenuCallback } from '/public/behaviours/styleable/menu/styleable-menu.js'
-import { initFillContextMenuCallback } from '/public/behaviours/styleable/fill/styleable-fill.js'
+import { initFillBuildControls, fillSelector, fillIcon, initFillChangeEvent} from '/public/behaviours/styleable/fill/styleable-fill.js'
 import { initAlignBuildControls, alignSelector, alignIcon } from '/public/behaviours/styleable/align/styleable-align.js'
 import { initStyleContextMenuCallback } from '/public/behaviours/styleable/styleable.js'
 import { initFontBuildControls, fontSelector, fontIcon} from '/public/behaviours/styleable/font/styleable-font.js'
@@ -91,7 +91,7 @@ function initEditor() {
 		contextMenu.add(initPaletteContextMenuCallback(palette));
 		contextMenu.add(initStyleMenuContextMenuCallback(stylemenu));
 		
-		stylemenu.push(initFillContextMenuCallback(command, overlay));
+		stylemenu.push(initStyleContextMenuCallback(command, overlay, fillIcon, 'Fill & Style', initFillBuildControls(), fillSelector, () => "", initFillChangeEvent));
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, alignIcon, 'Align', initAlignBuildControls(), alignSelector));
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, fontIcon, 'Font', initFontBuildControls(), fontSelector));
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, textIcon, 'Text Layout', initTextBuildControls(), textSelector));

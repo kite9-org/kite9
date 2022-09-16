@@ -41,11 +41,15 @@ export function addNumericControl(overlay, cssAttribute, style, horiz, inverse, 
 	return box;
 }
 
-export function initStyleContextMenuCallback(command, overlay, icon, name, buildControlsCallback, selector, styleSuffix) {
+export function extractFormValues() {
+	const asArray = Object.entries(formValues("enum"));
+	const filtered = asArray.filter(([key, value]) => !((key=='ok') || (key=='cancel')));
+	return Object.fromEntries(filtered);
+}
+
+export function initStyleContextMenuCallback(command, overlay, icon, name, buildControlsCallback, selector, styleSuffix, initChangeEvent) {
 
 	var originalStyleMap, style;
-	
-	
 	
 	if (selector == undefined) {
 		selector = function() {
@@ -67,13 +71,7 @@ export function initStyleContextMenuCallback(command, overlay, icon, name, build
 				return '';
 			}
 		}
-	}
-	
-	function extractFormValues(formName) {
-		const asArray = Object.entries(formValues(formName));
-		const filtered = asArray.filter(([key, value]) => !((key=='ok') || (key=='cancel')));
-		return Object.fromEntries(filtered);
-	}
+	}	
 	
 	function createStyleSteps(e, oldValues, newValues) {
 		function styleEqual(a, b, suffix) {
@@ -116,16 +114,18 @@ export function initStyleContextMenuCallback(command, overlay, icon, name, build
 		return out;
 	}
 	
-	function initChangeEvent(selectedElement, svgStyle) {
-		return e => {
-			const values = extractFormValues('enum');
-			const newStyle = {...svgStyle, ...values};
-			const formatted = formatStyle(newStyle);
-
-			selectedElement.setAttribute("style", formatted);
-		};	
+	if (initChangeEvent == undefined) {
+		initChangeEvent = function(selectedElement, svgStyle) {
+			return e => {
+				const values = extractFormValues('enum');
+				const newStyle = {...svgStyle, ...values};
+				const formatted = formatStyle(newStyle);
+	
+				selectedElement.setAttribute("style", formatted);
+			};	
+		}
 	}
-
+	
 	return function(event, cm) {
 		
 		const selectedElement = hasLastSelected(selector(), true);
