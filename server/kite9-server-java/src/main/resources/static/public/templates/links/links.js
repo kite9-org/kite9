@@ -5,7 +5,7 @@ import { once } from '/public/bundles/ensure.js'
 import { Linker } from '/public/classes/linker/linker.js'
 
 
-import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette } from '/public/templates/editor/editor.js'
+import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette, overlay, stylemenu } from '/public/templates/editor/editor.js'
 
 // Links
 import { initLinkable, updateLink, initLinkerDropCallback } from '/public/behaviours/links/linkable.js'
@@ -20,6 +20,8 @@ import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/l
 import { initTerminatorContainmentCallback, initLabelContainmentCallback } from '/public/behaviours/links/rules/links-rules.js'
 import { initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
 import { initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js';
+import { initStyleContextMenuCallback } from '/public/behaviours/styleable/styleable.js';
+import { initPortsPositionBuildControls, portsSelector, portsPositionIcon } from '/public/behaviours/ports/position/ports-position.js'
 
 const linker = new Linker(updateLink);
 
@@ -62,7 +64,16 @@ function initLinks() {
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", linkFinder, p => p.querySelectorAll("[k9-elem=link]")));
 		
 		initLinkable(linker);
-
+		
+			
+		const portPosition = initStyleContextMenuCallback(command, overlay, 
+			portsPositionIcon,
+			'Port Position',
+			initPortsPositionBuildControls(),
+			portsSelector,
+			(r) => '');
+		
+		stylemenu.push(portPosition);
 	}
 	
 }

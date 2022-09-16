@@ -5,7 +5,7 @@
 
 	<xsl:attribute-set name="ports">
 		<xsl:attribute name="k9-texture">none</xsl:attribute>
-		<xsl:attribute name="k9-ui">connect delete fill size</xsl:attribute>
+		<xsl:attribute name="k9-ui">connect delete fill size port</xsl:attribute>
 		<xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
 	</xsl:attribute-set>
 
@@ -14,7 +14,7 @@
 			<xsl:copy-of select="@*" />
 			<g>
 				<xsl:attribute name="k9-highlight">fill grab</xsl:attribute>
-				<rect x="-8" y="-8" width="16" height="16" />
+				<rect x="-12" y="-12" width="24" height="24" />
 			</g>
 		</g>
 	</xsl:template>
