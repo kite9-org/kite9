@@ -5,7 +5,8 @@
 
 	<xsl:attribute-set name="ports">
 		<xsl:attribute name="k9-texture">none</xsl:attribute>
-		<xsl:attribute name="k9-ui">connect delete port</xsl:attribute>
+		<xsl:attribute name="k9-palette">connected</xsl:attribute>
+		<xsl:attribute name="k9-ui">connect delete drag port</xsl:attribute>
 		<xsl:attribute name="k9-elem"><xsl:value-of select="local-name()" /></xsl:attribute>
 	</xsl:attribute-set>
 

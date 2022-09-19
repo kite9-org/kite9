@@ -2,7 +2,7 @@
   xmlns="http://www.kite9.org/schema/adl" 
   xmlns:svg="http://www.w3.org/2000/svg"
   title="Link Ends"
-  icon="/public/templates/links/arrowhead.svg"
+  icon="/public/templates/links/ends.svg"
   style="--kite9-layout: down; ">
 
 		<group style="--kite9-layout: right; --kite9-margin-right: 30pt; ">

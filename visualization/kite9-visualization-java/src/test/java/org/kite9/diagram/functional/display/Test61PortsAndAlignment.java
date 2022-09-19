@@ -277,4 +277,23 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		renderDiagram(d);
 	}
 
+	@Test
+	publci void test_61
+			<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia" xslt:template="/public/templates/basic/basic-template.xsl">
+   <box id="b1">
+      <textarea id="t1" style="fill: red">y</textarea>
+   </box>
+   <container id="bigbox" layout="horizontal" style="fill: green; fill-opacity: 0.8; --kite9-margin-left: 50px; ">
+      <box id="b3">
+         <port id="p1" style="--kite9-port-side: top; "/>
+         <textarea id="t3">b3 line</textarea>
+      </box>
+      <label id="l1">Box title</label>
+   </container>
+   <link drawDirection="DOWN" id="link2">
+      <from id="link2-from" reference="b1"/>
+      <to id="link2-to" reference="p1"/>
+   </link>
+
+</diagram>
 }

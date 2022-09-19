@@ -1,7 +1,7 @@
 <diagram xmlns="http://www.kite9.org/schema/adl"
 	xmlns:svg="http://www.w3.org/2000/svg" 
 	title="Links" 
-	icon="/public/behaviours/links/link/link.svg"
+	icon="/public/templates/links/link.svg"
 	style="--kite9-layout: right; ">
 
 	<svg:defs>
