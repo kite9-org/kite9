@@ -324,7 +324,7 @@ export function initCellDropCallback(command) {
 							command.push({
 								type: 'ReplaceStyle',
 								fragmentId:  id,
-								name: 'kite9-occupies-x',
+								name: '--kite9-occupies-x',
 								from: oldPositionX,
 								to: positionX
 							});
@@ -334,7 +334,7 @@ export function initCellDropCallback(command) {
 							command.push({
 								type: 'ReplaceStyle',
 								fragmentId:  id,
-								name: 'kite9-occupies-y',
+								name: '--kite9-occupies-y',
 								from: oldPositionY,
 								to: positionY
 							})

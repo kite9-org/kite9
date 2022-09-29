@@ -1,4 +1,4 @@
-import { hasLastSelected, isConnected } from '/public/bundles/api.js'
+import { hasLastSelected, isConnected, parseInfo } from '/public/bundles/api.js'
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js'
 import { drawBar, clearBar } from  '/public/bundles/ordering.js'
 
@@ -6,9 +6,9 @@ function getLayout(e) {
 	if (e==null) {
 		return 'none';
 	} else {
-		var l = e.getAttribute("layout");
-		l = l == null ? "none" : l;
-		return l;
+		const info = parseInfo(e);
+		const l = info['layout'];
+		return l == null ? "none" : l.toLowerCase();
 	}
 }
 
@@ -63,10 +63,10 @@ export function initContainerLayoutPropertySetCallback(command) {
 			if (LAYOUTS.includes(layout)) {
 				command.push({
 					fragmentId: id,
-					type: 'ReplaceAttr',
-					name: 'layout',
+					type: 'ReplaceStyle',
+					name: '--kite9-layout',
 					to: layout == 'none' ? null : layout,
-					from: e.getAttribute('layout')
+					from: existing
 				});
 			}
 		});
@@ -132,15 +132,15 @@ export function initContainerLayoutMoveCallback() {
 			
 			if (connectedDropTargets.length == 1) {
 				const dropInto = connectedDropTargets[0];
-				const layout = getLayout(dropInto).toUpperCase();
+				const layout = getLayout(dropInto).toLowerCase();
 				if (barDirectionOverrideHoriz != undefined) {
 					updateBar(event, dropInto, barDirectionOverrideHoriz);
 					return;
-				} else if ((layout == 'UP') || (layout == 'DOWN') || (layout == "VERTICAL")) {
+				} else if ((layout == 'up') || (layout == 'down') || (layout == "vertical")) {
 					// draw the horizontal bar
 					updateBar(event, dropInto, true);
 					return;
-				} else if ((layout == 'LEFT') || (layout == 'RIGHT') || (layout == 'HORIZONTAL')) {
+				} else if ((layout == 'left') || (layout == 'right') || (layout == 'horizontal')) {
 					updateBar(event, dropInto, false);
 					return;
 				} 

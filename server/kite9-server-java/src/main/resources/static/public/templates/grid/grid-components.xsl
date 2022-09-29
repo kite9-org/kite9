@@ -31,6 +31,9 @@
     <xsl:call-template name="grid-cell-basic" />
   </xsl:template>
   
+  <xsl:template name="grid-diagram-constants">
+	<adl:constant name="cell-template-uri" url="/public/templates/grid/palette.adl#t1" />
+  </xsl:template>
   
   <xsl:template name="grid-diagram-element-css">
     <adl:css>@import url('/public/templates/grid/grid-elements.css');</adl:css>

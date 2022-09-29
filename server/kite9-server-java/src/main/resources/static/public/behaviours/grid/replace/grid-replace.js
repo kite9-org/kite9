@@ -48,7 +48,7 @@ export function initGridTemporaryReplacePaletteCallback(command, replaceChoiceSe
 			command.push({
 				"type" : "ReplaceStyle",
 				"fragmentId" : newId,
-				"name" : "kite9-occupies",
+				"name" : "--kite9-occupies",
 				"to" : newOccupies
 			});
 			

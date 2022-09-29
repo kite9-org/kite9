@@ -42,9 +42,7 @@ abstract class AbstractGroupingStrategy(
             log.send(if (log.go()) null else "Merging: $mo")
         }
         val combined = createCompoundGroup(ms, mo)
-        if (combined != null) {
-            doCompoundGroupInsertion(ms, combined, false)
-        }
+        doCompoundGroupInsertion(ms, combined, false)
     }
 
     protected open fun doCompoundGroupInsertion(
@@ -218,7 +216,7 @@ abstract class AbstractGroupingStrategy(
                 if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT else GroupContainerState.NO_CONTENT
             )
         }
-        leaves?.add(toAdd)
+        leaves.add(toAdd)
     }
 
     /**
@@ -248,7 +246,7 @@ abstract class AbstractGroupingStrategy(
         for (g in allGroups) {
             initContained(ms, mutableListOf(), g as LeafGroup)
         }
-        val bottomLevelContainers: List<Container> = ArrayList(ms.containers)
+        val bottomLevelContainers = ArrayList(ms.containers)
         if (bottomLevelContainers.size > 0) {
             for (c in bottomLevelContainers) {
                 if (isContainerMergeable(c, ms)) {

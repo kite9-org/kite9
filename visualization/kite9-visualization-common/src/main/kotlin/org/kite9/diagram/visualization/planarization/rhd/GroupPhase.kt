@@ -158,6 +158,10 @@ abstract class GroupPhase(
             for (o2 in o.getContents()) {
                 setupLinks(o2)
             }
+            val portsBySide = o.getContents()
+                .filterIsInstance<Port>()
+                .groupBy { it.getPortDirection() }
+
         }
     }
 
@@ -259,7 +263,6 @@ abstract class GroupPhase(
                 Direction.LEFT -> Layout.LEFT
                 Direction.DOWN -> Layout.DOWN
                 Direction.UP -> Layout.UP
-                else -> null
             }
         }
 

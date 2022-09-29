@@ -97,9 +97,9 @@ export function initCellAppendContextMenuCallback(command, selector) {
 				command.push({
 					type: 'ReplaceStyle',
 					fragmentId:  newId,
-					name: 'kite9-occupies',
+					name: '--kite9-occupies',
 					to: newPos[0] + ' ' + newPos[1] + ' ' + newPos[2] + ' ' + newPos[3],
-					from: item.style['kite9-occupies']
+					from: item.style['--kite9-occupies']
 				})
 			});
 		})

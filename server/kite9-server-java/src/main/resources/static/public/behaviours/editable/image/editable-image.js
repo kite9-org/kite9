@@ -78,9 +78,6 @@ export function initEditableImageContextMenuCallback(command, metadata, selector
 		}, []);
 	}
 		
-	/**
-	 * Provides a layout option for the context menu
-	 */
 	return function (event, contextMenu) {
 
 		const elements = hasLastSelected(selector());

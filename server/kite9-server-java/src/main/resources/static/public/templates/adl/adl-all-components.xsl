@@ -43,6 +43,7 @@
   <xsl:template name="adl-diagram-constants">
   	<xsl:call-template name="links-diagram-constants" />
   	<xsl:call-template name="labels-diagram-constants" />
+  	<xsl:call-template name="grid-diagram-constants" />
   </xsl:template>
   
   <xsl:template name="adl-diagram-palettes">

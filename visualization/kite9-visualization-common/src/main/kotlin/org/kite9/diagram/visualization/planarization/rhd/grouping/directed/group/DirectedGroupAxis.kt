@@ -60,7 +60,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             out = if (parent != null) {
                 if (parent.axis.isLayoutRequired) {
                     val l = getLayoutFor(parent, g)
-                    rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz)!!, horiz, true)
+                    rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz), horiz, true)
                 } else {
                     (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz)
                 }
@@ -69,21 +69,21 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
                 rh.getTopLevelBounds(horiz)
             }
 
-            var port = getPortGroup(g!!)
+            var port = getPortGroup(g)
             if (port != null) {
                 out = rh.edge(port.getPortDirection(), out, horiz)
             }
 
             //log.send("Setting "+(temp? "temp" : "real") + (horiz ? "horiz" : "vert")+" position for "+g+"\n\t"+out);
             if (temp) {
-                rh.setTempPosition(g, out!!, horiz)
+                rh.setTempPosition(g, out, horiz)
             } else {
-                log.send("Placed: " + g!!.groupNumber + " " + horiz + " " + out)
-                rh.setPlacedPosition(g, out!!, horiz)
+                log.send("Placed: " + g.groupNumber + " " + horiz + " " + out)
+                rh.setPlacedPosition(g, out, horiz)
             }
             if (!temp && g is LeafGroup) {
                 // this means the routable handler also has final positions for each contained element
-                rh.setPlacedPosition((g as LeafGroup).connected, out, horiz)
+                rh.setPlacedPosition(g.connected, out, horiz)
             }
             out
         } else {

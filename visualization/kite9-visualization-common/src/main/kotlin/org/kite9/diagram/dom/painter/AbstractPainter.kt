@@ -8,7 +8,6 @@ import org.kite9.diagram.dom.processors.XMLProcessor
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
-import org.w3c.dom.Attr
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
@@ -49,18 +48,17 @@ abstract class AbstractPainter : Painter {
                 "min-size: " + sr.getMinimumSize().width() + " "+sr.getMinimumSize().height()+ "; "
             )
             debug.append(
-                "sizing: " + (r as SizedRectangular).getSizing(false) + " " + (r as SizedRectangular).getSizing(
-                    true
-                ) + "; "
+                "sizing: " + lowercase((r as SizedRectangular).getSizing(false)) + " " +
+                        lowercase((r as SizedRectangular).getSizing(true)) + "; "
             )
         }
         if (r is AlignedRectangular) {
-            debug.append("horiz: " + (r as AlignedRectangular).getHorizontalAlignment() + "; ")
-            debug.append("vert: " + (r as AlignedRectangular).getVerticalAlignment() + "; ")
+            debug.append("horiz: " + lowercase((r as AlignedRectangular).getHorizontalAlignment()) + "; ")
+            debug.append("vert: " + lowercase((r as AlignedRectangular).getVerticalAlignment()) + "; ")
         }
         if (r is Container) {
             val c = r as Container
-            debug.append("layout: " + (r as Container).getLayout() + "; ")
+            debug.append("layout: " + lowercase((r as Container).getLayout()) + "; ")
             if (c.getLayout() === Layout.GRID) {
                 val rri = c.getRenderingInformation()
                 debug.append("grid-size: [" + rri.gridXSize() + ", " + rri.gridYSize() + "]; ")
@@ -81,12 +79,12 @@ abstract class AbstractPainter : Painter {
                 val parent = c.getParent() as Container?
                 val prri = parent!!.getRenderingInformation()
                 val l = parent.getLayout()
-//                if (l === Layout.GRID) {
-//                    val scaledX = scale(rri.gridXPosition(), prri.gridXSize())
-//                    val scaledY = scale(rri.gridYPosition(), prri.gridYSize())
-//                    debug.append("grid-x: $scaledX; ")
-//                    debug.append("grid-y: $scaledY; ")
-//                }
+                if (l === Layout.GRID) {
+                    val scaledX = scale(rri.gridXPosition(), prri.gridXSize())
+                    val scaledY = scale(rri.gridYPosition(), prri.gridYSize())
+                    debug.append("grid-x: $scaledX; ")
+                    debug.append("grid-y: $scaledY; ")
+                }
             }
         }
         if (r is Terminator) {
@@ -112,7 +110,7 @@ abstract class AbstractPainter : Painter {
         if (r is Label) {
             val labelPlacement = (r as Label).getLabelPlacement()
             if (labelPlacement!=null) {
-                debug.append("placement: " + labelPlacement + ";")
+                debug.append("placement: " + labelPlacement.toString().lowercase() + ";")
             }
             val end = (r as Label).getEnd()
             if (end != null) {
@@ -123,6 +121,10 @@ abstract class AbstractPainter : Painter {
         debug.append("painter: "+this.toString()+"; ")
 
         out.setAttribute("k9-info", debug.toString())
+    }
+
+    fun lowercase(e: Any?): String {
+        return if (e == null) "null" else e.toString().lowercase();
     }
 
     private fun commaIntList(p: DoubleArray?): String {

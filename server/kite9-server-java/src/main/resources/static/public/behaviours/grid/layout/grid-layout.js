@@ -1,5 +1,5 @@
 import { icon, numeric, change, form } from '/public/bundles/form.js'
-import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren } from '/public/bundles/api.js'
+import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren, isConnected, getParentElement } from '/public/bundles/api.js'
 import { getMainSvg } from '/public/bundles/screen.js'
 import { getOrdinals } from '/public/behaviours/grid/common-grid.js'
 
@@ -27,7 +27,9 @@ export function initGridLayoutPropertySetCallback(command, cellCreator, cellSele
 	
 	if (cellSelector == undefined) {
 		cellSelector = function (e) {
-			return getMainSvg().querySelectorAll("[id='" + e.getAttribute("id") + "'] > [k9-info~='connected;']");
+			return Array.from(e.querySelectorAll("[id]"))
+				.filter(ee => isConnected(ee))
+				.filter(ee => getParentElement(ee) == e);
 		}
 	}
 	
@@ -82,21 +84,21 @@ export function initGridLayoutPropertySetCallback(command, cellCreator, cellSele
 					command.push({
 						fragmentId: id,
 						type: 'ReplaceStyle',
-						name: 'kite9-grid-size',
+						name: '--kite9-grid-size',
 						from: gridSize[0]+ ' ' + gridSize[1]
 					});
 					
 					command.push({
 						fragmentId: id,
 						type: 'ReplaceStyle',
-						name: 'kite9-grid-rows',
+						name: '--kite9-grid-rows',
 						from: gridSize[1]
 					});
 					
 					command.push({
 						fragmentId: id,
 						type: 'ReplaceStyle',
-						name: 'kite9-grid-columns',
+						name: '--kite9-grid-columns',
 						from: gridSize[0]
 					});
 				}

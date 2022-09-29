@@ -11,27 +11,24 @@ interface CSSConstants {
         const val HEIGHT = "height"
         const val SIZE = "size"
 
-
         private const val KITE9_CSS_PROPERTY_PREFIX = "--kite9-"
+
         const val ELEMENT_TYPE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "type"
         const val ELEMENT_USAGE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "usage"
         const val CONTENT_TRANSFORM = KITE9_CSS_PROPERTY_PREFIX + "transform"
         const val ELEMENT_SIZING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "sizing"
         const val ELEMENT_HORIZONTAL_SIZING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "horizontal-sizing"
         const val ELEMENT_VERTICAL_SIZING_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "vertical-sizing"
-        const val LAYOUT_PROPERTY =
-            KITE9_CSS_PROPERTY_PREFIX + "layout" // for containers, to decide how to layout their contents
+
+        // for containers, to decide how to layout their contents
+        const val LAYOUT_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "layout"
         const val LABEL_PLACEMENT = KITE9_CSS_PROPERTY_PREFIX + "label-placement"
 
-        // grid property
-        const val GRID_OCCUPIES_X_PROPERTY =
-            KITE9_CSS_PROPERTY_PREFIX + "occupies-x" // for containers, to decide how to layout their contents
-        const val GRID_OCCUPIES_Y_PROPERTY =
-            KITE9_CSS_PROPERTY_PREFIX + "occupies-y" // for containers, to decide how to layout their contents
-        const val GRID_ROWS_PROPERTY =
-            KITE9_CSS_PROPERTY_PREFIX + "grid-rows" // for containers, to decide how to layout their contents
-        const val GRID_COLUMNS_PROPERTY =
-            KITE9_CSS_PROPERTY_PREFIX + "grid-columns" // for containers, to decide how to layout their contents
+        // grid property (part of layout)
+        const val GRID_OCCUPIES_X_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "occupies-x"
+        const val GRID_OCCUPIES_Y_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "occupies-y"
+        const val GRID_ROWS_PROPERTY =  KITE9_CSS_PROPERTY_PREFIX + "grid-rows"
+        const val GRID_COLUMNS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "grid-columns"
         const val GRID_SIZE_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "grid-size"
         const val GRID_OCCUPIES_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "occupies"
 
@@ -87,8 +84,8 @@ interface CSSConstants {
 
         // Rectangular Sizing 
         const val RECT_MINIMUM_SIZE = KITE9_CSS_PROPERTY_PREFIX + "min-" + SIZE
-        const val RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "min-"+ WIDTH
-        const val RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "min-"+ HEIGHT
+        const val RECT_MINIMUM_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "min-" + WIDTH
+        const val RECT_MINIMUM_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "min-" + HEIGHT
 
         // for link dynamics
         const val LINK_FROM_XPATH = KITE9_CSS_PROPERTY_PREFIX + "link-from-xpath"
@@ -96,9 +93,9 @@ interface CSSConstants {
         const val LINK_END = KITE9_CSS_PROPERTY_PREFIX + "link-end"
 
         // text bounding
-        const val TEXT_BOUNDS_SIZE = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ SIZE
-        const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ WIDTH
-        const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-"+ HEIGHT
+        const val TEXT_BOUNDS_SIZE = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-" + SIZE
+        const val TEXT_BOUNDS_WIDTH = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-" + WIDTH
+        const val TEXT_BOUNDS_HEIGHT = KITE9_CSS_PROPERTY_PREFIX + "text-bounds-" + HEIGHT
         const val TEXT_ALIGN = "text-align"
 
     }

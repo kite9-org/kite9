@@ -144,7 +144,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
     fun nextMergeOption(): MergeOption? {
         //log.send("Merge options:", optionQueue);
         val mo = optionQueue.remove()
-        bestOptions!!.remove(mo!!.mk)
+        bestOptions.remove(mo!!.mk)
         return mo
     }
 

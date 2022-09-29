@@ -19,14 +19,14 @@ export function initCellCreator(command, templateUri) {
 		command.push({
 			type: 'ReplaceStyle',
 			fragmentId: newId,
-			name: "kite9-occupies-x",
+			name: "--kite9-occupies-x",
 			to: x + ' ' + x,
 		}); 
 		
 		command.push({
 			type: 'ReplaceStyle',
 			fragmentId: newId,
-			name: "kite9-occupies-y",
+			name: "--kite9-occupies-y",
 			to: y + ' ' + y,
 		}); 
 
