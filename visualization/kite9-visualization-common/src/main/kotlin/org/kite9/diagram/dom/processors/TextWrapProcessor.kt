@@ -42,8 +42,8 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
             // replace original svg
             removeAllContent(n)
-            val maxLineWidth = lines.maxOf { it.sumOf { it.width } }
-            replaceContents(n.ownerDocument!!, simplifiedLines, align, maxLineWidth ?: 0.0, replaceZero(height), "text")
+            val maxLineWidth = lines.maxOfOrNull { it.sumOf { it.width } } ?: 0.0
+            replaceContents(n.ownerDocument!!, simplifiedLines, align, maxLineWidth, replaceZero(height), "text")
 
             return n
         } else {
