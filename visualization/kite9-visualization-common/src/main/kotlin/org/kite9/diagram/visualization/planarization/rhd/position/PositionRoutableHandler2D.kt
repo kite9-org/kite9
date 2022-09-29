@@ -53,18 +53,23 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         }
     }
 
-    override fun edge(d: Direction, b: Bounds, horiz: Boolean): Bounds {
+    /**
+     * Limits to a given side of the parent container.  Since ports don't occupy
+     * corners (i.e. they are on a given side) this also applies a haircut in other directions
+     * too.
+     */
+    override fun portEdge(d: Direction, b: Bounds, horiz: Boolean): Bounds {
         return if (horiz) {
             when (d) {
                 Direction.LEFT -> BasicBounds(b.distanceMin, b.distanceMin)
                 Direction.RIGHT -> BasicBounds(b.distanceMax, b.distanceMax)
-                else -> b
+                else -> b.narrow(b.size() * 0.01)
             }
         } else {
             when (d) {
                 Direction.UP -> BasicBounds(b.distanceMin, b.distanceMin)
                 Direction.DOWN -> BasicBounds(b.distanceMax, b.distanceMax)
-                else -> b
+                else -> b.narrow(b.size() * 0.01)
             }
         }
     }

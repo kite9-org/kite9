@@ -4,7 +4,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 
 import org.kite9.diagram.common.elements.RoutingInfo
-import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.LogicException
@@ -71,7 +70,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
             var port = getPortGroup(g)
             if (port != null) {
-                out = rh.edge(port.getPortDirection(), out, horiz)
+                out = rh.portEdge(port.getPortDirection(), out, horiz)
             }
 
             //log.send("Setting "+(temp? "temp" : "real") + (horiz ? "horiz" : "vert")+" position for "+g+"\n\t"+out);
