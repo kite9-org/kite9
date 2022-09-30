@@ -4,7 +4,9 @@ on: [push]
 
 jobs:
   build:
-
+     env:
+      kite9.logging: off
+      
     runs-on: ubuntu-latest
 
     steps:
