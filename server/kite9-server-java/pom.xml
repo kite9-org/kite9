@@ -117,11 +117,6 @@
  
         <!-- webjars -->
         <dependency>
-            <groupId>org.webjars.npm</groupId>
-            <artifactId>animejs</artifactId>
-            <version>3.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
             <version>4.3.1</version>

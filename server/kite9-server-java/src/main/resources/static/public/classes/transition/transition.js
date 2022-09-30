@@ -1,5 +1,3 @@
-import * as anime from '/webjars/animejs/3.0.1/lib/anime.es.js';
-
 /*
  * This class handles the loading of new versions of the svg document 
  * and orchestrates animation between the versions.
