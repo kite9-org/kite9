@@ -228,11 +228,27 @@ public class Test59Sizing extends AbstractDisplayFunctionalTest {
 				glyphContainer(
 						text("<svg:g wrap=\"true\">" +
 									    "<svg:g style=\"font-size: 25px;\"> "+
-										    "<svg:text>a b c d e f g h i j k      </svg:text>"+
+										    "<svg:text>a b c d e f g h i j k</svg:text>"+
 								          "</svg:g><svg:g style=\"font-size: 45px;\">"+
 										    "<svg:text>1 2 3 4 5 6 7</svg:text>"+
 										  "</svg:g>" +
 										"</svg:g>", "--kite9-text-bounds-size: 200px 650px;"),"")));
+	}
+
+	/**
+	 * Make sure that we keep the &lt;g&gt; structure within the text element
+	 * @return
+	 */
+	@Test
+	public void test_59_25_TestTextWrapWithoutGroups() throws Exception {
+		renderDiagram(basicDiagram(
+				glyphContainer(
+						text("<svg:g wrap=\"true\">" +
+								"<svg:g style=\"font-size: 25px;\"> "+
+								"<svg:text>a b c d e f g h i j k</svg:text>"+
+								"<svg:text>1 2 3 4 5 6 7</svg:text>"+
+								"</svg:g>" +
+								"</svg:g>", "--kite9-text-bounds-size: 200px 650px;"),"")));
 	}
 	
 	private String para() {
