@@ -1,3 +1,5 @@
+import { Timeline } from '/public/classes/timeline/timeline.js'
+
 /*
  * This class handles the loading of new versions of the svg document 
  * and orchestrates animation between the versions.
@@ -24,11 +26,7 @@ export class Transition {
 		this.documentCallbacks.forEach(cb => cb(doc));
 		
 		// create the animation timeline
-		var tl = anime.default.timeline({
-			easing: 'easeOutExpo',
-			duration: 10000,
-			autoplay: false,
-		});
+		var tl = new Timeline(1000);
 
     	this.animationCallbacks.forEach(cb => cb(doc.documentElement, tl))
 		tl.play();

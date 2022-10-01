@@ -7,14 +7,14 @@ import { getMainSvg } from '/public/bundles/screen.js'
 const numeric = ['width', 'height', 'x', 'y', 'rx', 'ry'];
 const editorClasses = ['selected', 'lastSelected'];
 
-function reconcileTransform(fromValue, toValue, start, end) {
+function reconcileTransform(fromElement, tl, fromValue, toValue) {
   var fromT = parseTransform(fromValue);
   var toT = parseTransform(toValue);
   for (var i in fromT) start[i] = fromT[i];
   for (var i in toT) end[i] = toT[i];
 }
 
-function reconcileStyles(fromElement, toElement, tl, start, end) {
+function reconcileStyles(fromElement, toElement, tl) {
   var toStyles = Array.from(toElement.style);
   var fromStyles = Array.from(fromElement.style);
   var toRemove = fromStyles.filter(a => -1 == toStyles.indexOf(a));
@@ -28,10 +28,9 @@ function reconcileStyles(fromElement, toElement, tl, start, end) {
 
     if (fromValue !== toValue) {
       if (numeric.indexOf(a) != -1) {
-        end[a] = number(toValue);
-        start[a] = number(fromValue);
+	    tl.style(fromElement, a, number(fromValue), number(toValue));
       } else if (a == 'transform') {
-        reconcileTransform(fromValue, toValue, start, end);
+        reconcileTransform(fromElement, tl, fromValue, toValue);
       } else {
         // just change text
         fromElement.style[a] = toValue;
@@ -95,10 +94,7 @@ function reconcileAttributes(fromElement, toElement, tl) {
   });
 
   if (fromElement.style){
-    tl.add({
-      targets: fromElement,
-      keyframes: [start, end],
-    }, 0);
+    tl.multiAttribute(fromElement, start, end);
   }
 
 }

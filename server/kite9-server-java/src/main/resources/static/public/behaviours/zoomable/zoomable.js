@@ -140,33 +140,15 @@ export function zoomableTransitionCallback(newDocument, animationTimeline) {
   const maxWidth =  Math.max(oldWidth, newWidth);
   const maxHeight = Math.max(oldHeight, newHeight);
   
+  svg.setAttribute('width', maxWidth+"px");
+  svg.setAttribute('height', maxHeight+"px");
+  main.setAttribute('width', (maxWidth*magnification)+"px");
+  main.setAttribute('height', (maxHeight*magnification)+"px");
+
 
   // having done that, animate to the new size
-  animationTimeline.add({
-      targets: svg,
-      keyframes: [{
-        delay: 0,
-        duration: 0,
-        'width' : maxWidth+"px",
-        'height' : maxHeight+"px",
-      }, {
-        duration: 1000,
-        'width' : newWidth+"px",
-        'height' : newHeight+"px",
-      }],
-    }, 0);
-    
-  animationTimeline.add({
-      targets: main,
-      keyframes: [{
-        delay: 0,
-        duration: 0,
-        'width' : (maxWidth * magnification)+"px",
-        'height' : (maxHeight * magnification)+"px"
-      }, {
-        duration: 1000,
-        'width' : (newWidth * magnification)+"px",
-        'height' : (newHeight * magnification)+"px"
-      }],
-    }, 0);
+  animationTimeline.attribute(svg, "width", newWidth);
+  animationTimeline.attribute(svg, "height", newHeight);
+  animationTimeline.attribute(main, "width", newWidth*magnification);
+  animationTimeline.attribute(main, "height", newHeight*magnification);
 }
