@@ -5,7 +5,7 @@ import kotlin.math.roundToLong
 
 class SVGRoute : Route {
 
-`    val sb = StringBuilder()
+    val sb = StringBuilder()
 
     override fun moveTo(x1: Double, y1: Double) {
         sb.append("M${toString(x1)} ${toString(y1)} ")
@@ -42,4 +42,4 @@ class SVGRoute : Route {
         var lx = d.roundToLong()
         return lx.toString()
     }
-`}
+}
