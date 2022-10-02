@@ -10,8 +10,7 @@ const editorClasses = ['selected', 'lastSelected'];
 function reconcileTransform(fromElement, tl, fromValue, toValue) {
   var fromT = parseTransform(fromValue);
   var toT = parseTransform(toValue);
-  for (var i in fromT) start[i] = fromT[i];
-  for (var i in toT) end[i] = toT[i];
+  tl.transform(fromElement, fromT, toT);
 }
 
 function reconcileStyles(fromElement, toElement, tl) {
@@ -63,6 +62,10 @@ function reconcileAttributes(fromElement, toElement, tl) {
   var end = {
     duration: 1000
   };
+  
+  if (!fromElement.style) {
+	return;
+  }
 
   toRemove.forEach(a => fromElement.removeAttribute(a));
   toAtts.forEach(a => {
@@ -75,28 +78,21 @@ function reconcileAttributes(fromElement, toElement, tl) {
       fromElement.setAttribute(a, toValue);
     } else if (fromValue !== toValue) {
       if (numeric.indexOf(a) != -1) {
-        end[a] = number(toValue);
-        start[a] = number(fromValue);
+	    tl.attribute(fromElement, a, number(fromValue), number(toValue));
       } else if (a == 'style') {
         if (fromElement.tagName != 'svg') {
-          reconcileStyles(fromElement, toElement, tl, start, end);
+          reconcileStyles(fromElement, toElement, tl);
         }
       } else if (a == 'class') {
-        reconcileClasses(fromElement, toElement, tl, start, end); 
+        reconcileClasses(fromElement, toElement, tl); 
       } else if (a == 'd') {
-        end[a] = toValue;
-        start[a] = fromValue;
+	    tl.path(fromElement, fromValue, toValue);
       } else {
         fromElement.setAttribute(a, toValue);
       }
     }
 
   });
-
-  if (fromElement.style){
-    tl.multiAttribute(fromElement, start, end);
-  }
-
 }
 
 function reconcileText(fromElement, toElement) {

@@ -147,8 +147,8 @@ export function zoomableTransitionCallback(newDocument, animationTimeline) {
 
 
   // having done that, animate to the new size
-  animationTimeline.attribute(svg, "width", newWidth);
-  animationTimeline.attribute(svg, "height", newHeight);
-  animationTimeline.attribute(main, "width", newWidth*magnification);
-  animationTimeline.attribute(main, "height", newHeight*magnification);
+  animationTimeline.attribute(svg, "width", oldWidth, newWidth);
+  animationTimeline.attribute(svg, "height", oldHeight, newHeight);
+  animationTimeline.attribute(main, "width", oldWidth*magnification,newWidth*magnification);
+  animationTimeline.attribute(main, "height", oldHeight*magnification, newHeight*magnification);
 }

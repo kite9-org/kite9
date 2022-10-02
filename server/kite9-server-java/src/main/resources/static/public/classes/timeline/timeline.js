@@ -41,6 +41,7 @@ export class Timeline {
 	attribute(target, attribute, from, to) {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
+			console.log(attribute+" "+newVal)
 			target.setAttribute(attribute, newVal);
 		});
 	}
@@ -72,11 +73,14 @@ export class Timeline {
 			const sx = interp(f, from.scaleX, to.scaleX);
 			const sy = interp(f, from.scaleY, to.scaleY);
 			
-			const newTrans = (((tx != 0) || (ty != 0)) ? "translate("+tx+","+ty+") " : "")+
-				(((sx != 1) || (sy != 1)) ? "scale("+sx+","+sy+") " : "");
+			const newTrans = 
+				(tx != 0 ? "translateX("+tx+"px) " : "")+
+				(ty != 0 ? "translateY("+ty+"px) " : "")+
+				(sx != 1 ? "scaleX("+sx+") " : "")+
+				(sy != 1 ? "scaleY("+sy+") " : "");
+
 			
-			
-			target.setAttribute("transform", newTrans);		
+			target.style["transform"] = newTrans;		
 		});		
 	}
 
@@ -84,7 +88,7 @@ export class Timeline {
 	 * The path assumes that:
 	 * - All parts are upper-case operations.
 	 * - A path consists of a move (M) followed by a number of
-	 * - L, Q steps, ending in an L.
+	 * - L, (Q/A) steps, ending in an L.
 	 */
 	path(target, from, to) {
 		
@@ -98,18 +102,28 @@ export class Timeline {
 				});
 		}
 		
+		// arc changes from clockwise to anti
+		function specialArcCase(fromEl, toEl) {
+			return (fromEl.step == 'A') && (toEl.step == 'A') && (fromEl.values[4]!= toEl.values[4])
+		}
+		
+		function lastTwo(array) {
+			return array.slice(-2);
+		}
+		
 		const fromArray = buildList(from);
 		const toArray = buildList(to);
 		var fromI = 0;
 		var toI = 0;
+		var lastFrom, lastTo;
 		
 		const mapping = [];
 		
 		while ((fromI < fromArray.length) || (toI < toArray.length)) {
-			const fromEl = fromI < fromArray.length ? fromArray[fromI] : fromArray[fromI-1];
-			const toEl = toI < toArray.length ? toArray[toI] : toArray[toI-1];
+			const fromEl = fromI < fromArray.length ? fromArray[fromI] : fromArray[fromArray.length-1];
+			const toEl = toI < toArray.length ? toArray[toI] : toArray[toArray.length-1];
 			
-			if (fromEl.step == toEl.step) {
+			if ((fromEl.step == toEl.step) && (!specialArcCase(fromEl, toEl))) {
 				mapping.push({
 					"step" : fromEl.step,
 					"from" : fromEl.values,
@@ -117,19 +131,43 @@ export class Timeline {
 				});
 				fromI++;
 				toI++;
+				lastFrom = lastTwo(fromEl.values);
+				lastTo = lastTwo(toEl.values);
 			} else if (fromEl.step == 'Q') {
+				// removing the q
 				mapping.push({
 					"step" : fromEl.step,
 					"from" : fromEl.values,
-					"to": [ ...toEl.values, ...toEl.values ]
+					"to": [ ...lastTo, ...lastTo ]
 				});
 				fromI++;
-			} else if (toEl.step = 'Q') {
+				lastFrom = lastTwo(fromEl.values);
+			} else if (toEl.step == 'Q') {
+				// adding the q
 				mapping.push({
 					"step" : toEl.step,
-					"from" : [ ...fromEl.values, ...fromEl.values ],
+					"from" : [ ...lastTwo(fromEl.values), ...lastTwo(fromEl.values) ],
 					"to": toEl.values
 				});
+				toI++;
+				lastTo = lastTwo(toEl.values);
+			} else if (fromEl.step == 'A') {
+				// removing the a
+				mapping.push({
+					"step" : fromEl.step,
+					"from" : fromEl.values,
+					"to": [ 0,0,0,0, fromEl.values[4], ...lastTo ]
+				});
+				lastFrom = lastTwo(fromEl.values);
+				fromI++;
+			} else if (toEl.step == 'A') {
+				// adding the a
+				mapping.push({
+					"step" : toEl.step,
+					"from" : [ 0,0,0,0, toEl.values[4], ...lastFrom ],
+					"to": toEl.values
+				});
+				lastTo = lastTwo(toEl.values);
 				toI++;
 			}
 		}

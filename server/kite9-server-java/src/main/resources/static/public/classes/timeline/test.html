@@ -10,6 +10,7 @@
 		  tl.attribute(attributes, "width", 100, 300);
 		  tl.style(attributes, "fill-opacity", 1, .5);
 		  tl.style(attributes, "stroke-width", 1, 5);
+		  tl.transform(scale, {translateX: 200, translateY: 0, scaleX: 1, scaleY: 1}, {translateX: 100, translateY: 0, scaleX: 2, scaleY: 1});
  		
 		  tl.path(straight, "M10 10 L 60 10", "M60 60 L 10 10");
 		  tl.path(straighttobend, "M210 10 L 260 10", "M210 10 L 240 60 L 260 10");
@@ -17,9 +18,10 @@
 		
 		  tl.path(curve2, "M10 210 L 50 210 Q 60 210 60 220 L 60 250 Q60 260 70 260 L 100 260", "M10 260 L 50 260 Q 60 260 60 250 L 60 210"); 
 		  tl.path(curve1, "M110 260 L 150 260 Q 160 260 160 250 L 160 210", "M110 210 L 150 210 Q 160 210 160 220 L 160 250 Q160 260 170 260 L 200 260"); 
-
-		  tl.transform(scale, {translateX: 200, translateY: 0, scaleX: 1, scaleY: 1}, {translateX: 100, translateY: 0, scaleX: 2, scaleY: 1});
-
+		  tl.path(arc1, "M667 318 L667 300 A8 8 0 0 0 659 292 L324 292 A8 8 0 0 0 316 300 L316 318", "M667 282 L317 282"); 
+		  tl.path(arc2, "M0 0 L108 30", "M0 0 L100 0 A8 8 0 0 1 108 8 L108 30"); 
+		  tl.path(arc3, "M0 0 L100 0 A8 8 0 0 1 108 8 L108 30", "M0 0 L0 22 A8 8 0 0 0 8 30 L108 30"); 
+		
 		  tl.play();
         }
     </script>
@@ -27,16 +29,20 @@
   </head>
   
   <svg width="500" height="300">
-    <rect id="attributes" width="100" height="60" x="10" y="100" stroke="black"/>
-    <rect id="scale" width="100" height="60" x="110" y="100" stroke="black" transform="translate(200,0)"/>
     <path id="straight" d="M10 10 L 60 10" stroke="black" stroke-width="2px" fill="none" />
     <path id="straighttobend" d="M210 10 L 260 10" stroke="black" stroke-width="2px" fill="none" />
     <path id="bendtostraight" d="M410 10 L 460 10 L 460 60" stroke="black" stroke-width="2px" fill="none"/>
     
+    <rect id="attributes" width="100" height="60" x="10" y="100" stroke="black"/>
+    <rect id="scale" width="100" height="60" x="110" y="100" stroke="black" transform="translate(200,0)"/>
+    
     <path id="curve2" d="M10 210 L 50 210 Q 60 210 60 220 L 60 250 Q60 260 70 260 L 100 260" stroke="black" stroke-width="2px" fill="none"/>
-    <path id="curve1" d="M110 260 L 150 260 Q 160 260 160 250 L 160 210" stroke="black" stroke-width="2px" fill="none"/>
+    <path id="curve1" d="M110 260 L 150 260 Q 160 260 160 250 L 160 210" stroke="black" stroke-width="2px" fill="none"/>    
+    <path id="arc1" d="M667 318 L667 300 A8 8 0 0 0 659 292 L324 292 A8 8 0 0 0 316 300 L316 318" stroke="black" stroke-width="2px" fill="none" style="transform: translateX(-308px)"/>
+    <path id="arc2" d="M0 0 L108 30" stroke="black" stroke-width="2px" fill="none" style="transform: translateX(210px) translateY(210px)"></path>
+    <path id="arc3" d="M0 0 L100 0 A8 8 0 0 1 108 8 L108 30" stroke="black" stroke-width="2px" fill="none" style="transform: translateX(360px) translateY(210px)"></path>
   </svg>
-  
+
   <button onclick="go()">Go</button>
 </html>
 
