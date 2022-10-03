@@ -1,6 +1,7 @@
 import { hasLastSelected, isConnected, parseInfo } from '/public/bundles/api.js'
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js'
 import { drawBar, clearBar } from  '/public/bundles/ordering.js'
+import { svg } from '/public/bundles/screen.js'
 
 function getLayout(e) {
 	if (e==null) {
@@ -12,12 +13,16 @@ function getLayout(e) {
 	}
 }
 
+function getLayoutImage(layout) {
+	return "/public/behaviours/containers/layout/" + layout.toLowerCase() + ".svg";
+}
+
 function drawLayout(event, cm, layout, selected) {
 	if (layout == "null") {
 		layout = "none";
 	}
 	
-	var out = cm.addControl(event, "/public/behaviours/containers/layout/" + layout.toLowerCase() + ".svg",
+	var out = cm.addControl(event, getLayoutImage(layout),
 			 "Layout (" + layout + ")",
 			 undefined);
 	
@@ -73,7 +78,6 @@ export function initContainerLayoutPropertySetCallback(command) {
 
 	}
 }
-
 
 export function initLayoutContextMenuCallback(layoutProperty, selector) {
 	
@@ -151,4 +155,66 @@ export function initContainerLayoutMoveCallback() {
 
 	}
 
+}
+
+export function initLayoutAnimationCallback(selector) {
+	
+	if (selector == undefined) {
+		selector = function() { return getMainSvg().querySelectorAll("[id][k9-ui~=layout]"); }
+	}
+	
+	function removeLayoutIndicator(e) {
+		var indicator = e.querySelector(":scope > g.k9-decoration > g.k9-layout");
+		if (indicator) {
+			indicator.removeChild(existingIndicator);
+		}
+	}
+	
+	function ensureLayoutIndicator(e, layout) {
+		const bbox = e.getBBox();
+		const width = bbox.width;
+		const height = bbox.height;
+		const style = `transform: translateX(${width-25}px) translateY(${height-25}px);`;
+		
+		var indicator = e.querySelector(":scope > g.k9-layout");
+		if ((indicator != null) && (indicator.getAttribute("layout")!=layout)) {
+			e.removeChild(indicator);
+		} else if (indicator != null) {
+			indicator.setAttribute('style', style)
+			return;
+		} 
+		
+		indicator = svg('g', {
+			'class' : 'k9-layout',
+			'k9-highlight' : 'stroke',
+			'layout' : layout,
+			'style' : style
+		}, [ 
+			svg('image', {
+				x: 0,
+				y: 0,
+				width: 20,
+				height: 20,
+				href: getLayoutImage(layout)
+			}) 
+		]);
+		
+		e.appendChild(indicator)
+	}
+	
+	window.addEventListener('DOMContentLoaded', function() {
+		selector().forEach(function(v) {
+			const layout = getLayout(v);
+						
+			if (layout != 'none') {
+				ensureLayoutIndicator(v, layout)
+ 			} else {
+				removeLayoutIndicator(v);
+			}
+		})
+	})
+	
+	return function(doc, tl) {
+		alert('hi');
+	}
 }

@@ -39,6 +39,10 @@
 	stroke-dasharray: none;
 }
 
+.indicators-on [id] > [k9-highlight~=stroke] > image {
+	filter: url(#highlight-visible);
+}
+
 .indicators-on [id] > [k9-highlight~=fill] {
 	fill: #b7c0fe;
 	fill-opacity: .6;
@@ -51,6 +55,12 @@
 .indicators-off [id] > [k9-highlight~=stroke] {
 	stroke-opacity: 0;
 }
+
+.indicators-off [id] > [k9-highlight~=stroke] > image {
+	filter: url(#highlight-invisible);
+}
+
+
 
 /* show default elements (default label, link etc) */
 

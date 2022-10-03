@@ -20,6 +20,7 @@
   <xsl:import href="../grid/grid-components.xsl" />
   <xsl:import href="../links/links-components.xsl" />
   <xsl:import href="../textarea/textarea-components.xsl" /> 
+  <xsl:import href="../highlight/highlight-components.xsl" />
   <xsl:import href="../diagram/diagram-components.xsl" />
 
   <!-- this rule matches and passes through any svg elements -->
@@ -38,6 +39,7 @@
   	<xsl:call-template name="grid-diagram-element-css" />
   	<xsl:call-template name="links-diagram-element-css" />
   	<xsl:call-template name="textarea-diagram-element-css" />
+  	<xsl:call-template name="highlight-diagram-element-css" />
   </xsl:template>
   
   <xsl:template name="adl-diagram-constants">
@@ -55,7 +57,7 @@
   
   <xsl:template name="adl-diagram-defs">
   	<xsl:call-template name="links-diagram-defs" />
-  	<xsl:call-template name="containers-diagram-defs" />
+  	<xsl:call-template name="highlight-diagram-defs" />
   </xsl:template>
  
 </xsl:stylesheet>

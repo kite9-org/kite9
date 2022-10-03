@@ -21,7 +21,6 @@ export class Timeline {
 
 			if (fraction <= 1) {
 				const f2 = this.ease(fraction);
-				console.log(fraction+" "+f2)
 				this.elements.forEach(f => f(f2));
 				requestAnimationFrame((x) => this.perform(x));
 			} else {
@@ -41,7 +40,6 @@ export class Timeline {
 	attribute(target, attribute, from, to) {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
-			console.log(attribute+" "+newVal)
 			target.setAttribute(attribute, newVal);
 		});
 	}

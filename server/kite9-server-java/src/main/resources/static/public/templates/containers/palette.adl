@@ -20,10 +20,10 @@
         <container id="c1" class="solid">
         </container>
 
-        <container id="c2" layout="right" class="solid">
+        <container id="c2" style="--kite9-layout: right" class="solid">
         </container>
 
-        <container id="c3" layout="down" class="solid">
+        <container id="c3" style="--kite9-layout: down" class="solid">
         </container>
     </group>
 
@@ -32,10 +32,10 @@
         <container id="c4" class="dotted">
         </container>
 
-        <container id="c5" layout="right" class="dotted">
+        <container id="c5" style="--kite9-layout: right" class="dotted">
         </container>
 
-        <container id="c6" layout="down" class="dotted">
+        <container id="c6" style="--kite9-layout: down" class="dotted">
         </container>
     </group>
 
@@ -44,11 +44,11 @@
 
         </group>
 
-        <group id="g1" layout="right">
+        <group id="g1" style="--kite9-layout: right">
 
         </group>
 
-        <group id="g2" layout="down">
+        <group id="g2" style="--kite9-layout: down">
 
         </group>
     </group>

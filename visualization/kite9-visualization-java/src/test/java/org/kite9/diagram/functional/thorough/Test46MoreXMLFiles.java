@@ -67,6 +67,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	public void test_46_10_PushingRect() throws Exception {
 		generate("label_push_error.xml");
 	}
+
+	@Test
+	public void test_46_11_OddPortClash() throws Exception {
+		generate("odd_port_clash.xml");
+	}
 	
 	@Test
 	public void test_46_11_KeyTooSmall() throws Exception {
