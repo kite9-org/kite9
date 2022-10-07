@@ -37,17 +37,17 @@ export class Timeline {
 		requestAnimationFrame(() => this.perform());
 	}
 
-	attribute(target, attribute, from, to) {
+	attribute(target, attribute, from, to, suffix = '') {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
-			target.setAttribute(attribute, newVal);
+			target.setAttribute(attribute, newVal + suffix);
 		});
 	}
 	
-	style(target, style, from, to) {
+	style(target, style, from, to, suffix = '') {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
-			target.style[style] = newVal;			
+			target.style[style] = newVal + suffix;			
 		});
 	}
 

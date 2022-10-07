@@ -139,16 +139,10 @@ export function zoomableTransitionCallback(newDocument, animationTimeline) {
   // to ensure we can always see the animation, set the svg area to be the largest of both diagrams.
   const maxWidth =  Math.max(oldWidth, newWidth);
   const maxHeight = Math.max(oldHeight, newHeight);
-  
-  svg.setAttribute('width', maxWidth+"px");
-  svg.setAttribute('height', maxHeight+"px");
-  main.setAttribute('width', (maxWidth*magnification)+"px");
-  main.setAttribute('height', (maxHeight*magnification)+"px");
-
 
   // having done that, animate to the new size
-  animationTimeline.attribute(svg, "width", oldWidth, newWidth);
-  animationTimeline.attribute(svg, "height", oldHeight, newHeight);
-  animationTimeline.attribute(main, "width", oldWidth*magnification,newWidth*magnification);
-  animationTimeline.attribute(main, "height", oldHeight*magnification, newHeight*magnification);
+  animationTimeline.attribute(svg, "width", maxWidth, newWidth);
+  animationTimeline.attribute(svg, "height", maxHeight, newHeight);
+  animationTimeline.style(main, "width", maxWidth*magnification, newWidth*magnification, 'px');
+  animationTimeline.style(main, "height", maxHeight*magnification,newHeight*magnification, 'px');
 }
