@@ -231,7 +231,7 @@ export class Palette {
       if (dot != null) {
         dot.classList.add("selected");
       }
-      _this.updateCallbacks.forEach(cb => cb());
+      _this.updateCallbacks.forEach(cb => cb(e));
     }
     
     function getTitle(palette) {

@@ -80,7 +80,8 @@ export function initNewLinkPaletteCallback(dragger, dragableSelector) {
 				const boundBox = getElementPageBBox(droppingElement);
 				const nx = mousePos.x - (boundBox.width / 2);
 				const ny = mousePos.y - (boundBox.height / 2);
-				droppingElement.setAttribute("transform", "translateX("+nx+"px) translateY("+ny+"px)")
+				const nt = "translate("+nx+","+ny+")"
+				droppingElement.setAttribute("transform", nt);
 				droppingElement.classList.remove("selected");
 				
 				palette.destroy();	

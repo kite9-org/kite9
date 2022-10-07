@@ -9,16 +9,16 @@ function getLayout(e) {
 	} else {
 		const info = parseInfo(e);
 		const l = info['layout'];
-		return l == null ? "none" : l.toLowerCase();
+		return ((l == 'null') || (l == undefined)) ? undefined : l.toLowerCase();
 	}
 }
 
 function getLayoutImage(layout) {
-	return "/public/behaviours/containers/layout/" + layout.toLowerCase() + ".svg";
+	return "/public/behaviours/containers/layout/" + layout + ".svg";
 }
 
 function drawLayout(event, cm, layout, selected) {
-	if (layout == "null") {
+	if (layout == undefined) {
 		layout = "none";
 	}
 	
@@ -136,7 +136,7 @@ export function initContainerLayoutMoveCallback() {
 			
 			if (connectedDropTargets.length == 1) {
 				const dropInto = connectedDropTargets[0];
-				const layout = getLayout(dropInto).toLowerCase();
+				const layout = getLayout(dropInto);
 				if (barDirectionOverrideHoriz != undefined) {
 					updateBar(event, dropInto, barDirectionOverrideHoriz);
 					return;
@@ -157,64 +157,82 @@ export function initContainerLayoutMoveCallback() {
 
 }
 
-export function initLayoutAnimationCallback(selector) {
+const INDICATOR_SELECTOR = ":scope > g.k9-layout";
+
+
+function removeLayoutIndicator(e) {
+	var indicator = e.querySelector(INDICATOR_SELECTOR);
+	if (indicator) {
+		indicator.removeChild(existingIndicator);
+	}
+}
+
+function ensureLayoutIndicator(e, layout) {		
+	var indicator = e.querySelector(INDICATOR_SELECTOR);
+	if ((indicator != null) && (indicator.getAttribute("layout")!=layout)) {
+		e.removeChild(indicator);
+	} else if (indicator != null) {
+		return;
+	} 
+	
+	indicator = svg('g', {
+		'class' : 'k9-layout',
+		'k9-highlight' : 'stroke',
+		'layout' : layout,
+	}, [ 
+		svg('image', {
+			x: 5,
+			y: 5,
+			width: 15,
+			height: 15,
+			href: getLayoutImage(layout)
+		}) 
+	]);
+	
+	e.appendChild(indicator)
+}
+
+export function initLayoutIndicator(selector) {
+	
 	
 	if (selector == undefined) {
-		selector = function() { return getMainSvg().querySelectorAll("[id][k9-ui~=layout]"); }
-	}
-	
-	function removeLayoutIndicator(e) {
-		var indicator = e.querySelector(":scope > g.k9-decoration > g.k9-layout");
-		if (indicator) {
-			indicator.removeChild(existingIndicator);
+		selector = function() { 
+			return getMainSvg().querySelectorAll("[id][k9-ui~=layout]"); 
 		}
-	}
-	
-	function ensureLayoutIndicator(e, layout) {
-		const bbox = e.getBBox();
-		const width = bbox.width;
-		const height = bbox.height;
-		const style = `transform: translateX(${width-25}px) translateY(${height-25}px);`;
-		
-		var indicator = e.querySelector(":scope > g.k9-layout");
-		if ((indicator != null) && (indicator.getAttribute("layout")!=layout)) {
-			e.removeChild(indicator);
-		} else if (indicator != null) {
-			indicator.setAttribute('style', style)
-			return;
-		} 
-		
-		indicator = svg('g', {
-			'class' : 'k9-layout',
-			'k9-highlight' : 'stroke',
-			'layout' : layout,
-			'style' : style
-		}, [ 
-			svg('image', {
-				x: 0,
-				y: 0,
-				width: 20,
-				height: 20,
-				href: getLayoutImage(layout)
-			}) 
-		]);
-		
-		e.appendChild(indicator)
 	}
 	
 	window.addEventListener('DOMContentLoaded', function() {
 		selector().forEach(function(v) {
 			const layout = getLayout(v);
 						
-			if (layout != 'none') {
+			if (layout) {
 				ensureLayoutIndicator(v, layout)
  			} else {
 				removeLayoutIndicator(v);
 			}
 		})
 	})
+}
+
+export function initLayoutIndicatorPaletteCallback(selector) {
 	
-	return function(doc, tl) {
-		alert('hi');
+	if (selector == undefined) {
+		selector = function(e) {
+	 		return e.querySelectorAll("[id][k9-ui~=layout]"); 
+	 	}
+	}
+	
+	return function(palettePanel) {
+		if (palettePanel) {
+			selector(palettePanel).forEach(function(v) {
+				const layout = getLayout(v);
+							
+				if (layout) {
+					ensureLayoutIndicator(v, layout)
+	 			} else {
+					removeLayoutIndicator(v);
+				}
+			})
+		}
 	}
 }

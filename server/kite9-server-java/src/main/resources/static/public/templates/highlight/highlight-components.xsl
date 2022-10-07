@@ -15,8 +15,8 @@
 		<filter id="highlight-visible">
 		    <feColorMatrix
 		      type="matrix"
-		      values="0 0 0 0 .714
-		              0 0 0 0 .75
+		      values="0 0 0 0 .214
+		              0 0 0 0 .25
 		              0 0 0 0 1
 		              0 0 0 1 0 "/>
 		  </filter>
@@ -24,8 +24,8 @@
 		    <feColorMatrix
 		      type="matrix"
 		      values="0 0 0 0 0
-		              0 1.0 0 0 0
-		              0 0.6 0 0 0
+		              0 0 0 0 0
+		              0 0 0 0 0
 		              0 0 0 0 0 "/>
 		  </filter>
       </defs>
