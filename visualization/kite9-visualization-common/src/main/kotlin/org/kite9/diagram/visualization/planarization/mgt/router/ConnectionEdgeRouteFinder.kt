@@ -97,15 +97,15 @@ class ConnectionEdgeRouteFinder(
         var to: Container? = getCorrentParent(to)
         val out: MutableSet<Container> = HashSet()
         while (from !== to) {
-            val fromDepth = from!!.getDepth()
-            val toDepth = to!!.getDepth()
-            if (fromDepth >= toDepth) {
-                out.add(from)
+            val fromDepth = from?.getDepth() ?: -1
+            val toDepth = to?.getDepth()  ?: -1
+            if ((fromDepth >= toDepth) && (fromDepth >= 0)) {
+                out.add(from!!)
                 from = from.getContainer()
             }
 
-            if (toDepth >= fromDepth) {
-                out.add(to)
+            if ((toDepth >= fromDepth) && (toDepth >= 0)) {
+                out.add(to!!)
                 to = to.getContainer()
             }
         }

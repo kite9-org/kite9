@@ -325,4 +325,13 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, middle, i2), null);
 		renderDiagram(d);
 	}
+
+	@Test
+	public void test_61_14_DiagramPort() throws Exception {
+		Glyph middle = createGlyph("middle");
+		BasicSocket up1s = new BasicSocket("up1socket", BasicSocket.TESTING_DOCUMENT, CSSConstants.BOTTOM, "50%");
+		new Link(middle, up1s);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(middle, up1s), null);
+		renderDiagram(d);
+	}
 }
