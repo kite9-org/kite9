@@ -9,12 +9,9 @@ import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
 import org.kite9.diagram.common.elements.mapping.ConnectionEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
+import org.kite9.diagram.common.elements.vertex.*
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMax
 import org.kite9.diagram.common.elements.vertex.MultiCornerVertex.Companion.isMin
-import org.kite9.diagram.common.elements.vertex.MultiElementVertex
-import org.kite9.diagram.common.elements.vertex.NoElementVertex
-import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
@@ -353,7 +350,9 @@ abstract class AbstractBiDiEdgeRouteFinder(
             from: Boolean
         ): RoutingInfo? {
             val v = if (from) ci.getFrom() else ci.getTo()
-            if (v is MultiElementVertex) {
+            if (v is PortVertex) {
+                return v.routingInfo
+            } else if (v is MultiElementVertex) {
                 // we don't care about the vertex specifically, it could be one of a number...
                     // so return the whole area containing all the vertices
                 return rh.getPlacedPosition((if (from) ci.fromUnderlying else ci.toUnderlying)!!)
