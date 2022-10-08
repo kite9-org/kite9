@@ -8,6 +8,8 @@
   <xsl:template match="adl:container">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected port label</xsl:with-param>
+      <xsl:with-param name="k9-palette">connected</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete align connect insert autoconnect layout label fill stroke size align</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
@@ -16,6 +18,8 @@
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-rounding">10pt</xsl:with-param>
       <xsl:with-param name="k9-texture">none</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected label</xsl:with-param>
+      <xsl:with-param name="k9-palette">connected</xsl:with-param>
       <xsl:with-param name="k9-highlight">pulse stroke</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete align connect insert autoconnect layout label fill stroke size align</xsl:with-param>
     </xsl:call-template>

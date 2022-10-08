@@ -11,7 +11,7 @@
     <xsl:param name="id" select="@id" />
 
     <xsl:param name="k9-containers"></xsl:param>
-    <xsl:param name="k9-contains">connected</xsl:param>
+    <xsl:param name="k9-contains"></xsl:param>
     <xsl:param name="k9-elem" select="local-name()" />
     <xsl:param name="k9-format">image</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>

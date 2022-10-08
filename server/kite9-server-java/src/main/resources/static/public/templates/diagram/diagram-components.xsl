@@ -74,6 +74,7 @@
       <xsl:with-param name="k9-texture">none</xsl:with-param>
       <xsl:with-param name="k9-ui">layout label fill size</xsl:with-param>
       <xsl:with-param name="k9-rounding">0</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected label</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 

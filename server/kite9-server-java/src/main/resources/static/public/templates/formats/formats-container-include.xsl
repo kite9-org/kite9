@@ -11,11 +11,11 @@
 
     <xsl:param name="k9-child"></xsl:param>
     <xsl:param name="k9-containers"></xsl:param>
-    <xsl:param name="k9-contains">connected</xsl:param>
     <xsl:param name="k9-elem" select="local-name()" />
     <xsl:param name="k9-format">container</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="k9-palette">connected</xsl:param>
+    <xsl:param name="k9-contains"></xsl:param>
+    <xsl:param name="k9-palette"></xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">background</xsl:param>
     <xsl:param name="k9-ui">drag delete align connect insert autoconnect fill stroke size align</xsl:param>
