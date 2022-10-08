@@ -34,32 +34,42 @@ function getIntegerPx(propName, e) {
 
 export function initFillBuildControls() {
 	return function(selectedElement, style, overlay, cm, event) {
-		const fill = colour("fill", style['fill']);
-		const stroke = colour("stroke", style['stroke']);
-		const inheritedFillOpacity = getOpacity('stroke-opacity', selectedElement);
-		const fillOpacity = numeric('fill-opacity', style['fill-opacity'], {min: 0, max: 1, step: 0.1});
-		const inheritedStrokeOpacity = getOpacity('stroke-opacity', selectedElement);
-		const strokeOpacity = numeric('stroke-opacity', style['stroke-opacity'],  {min: 0, max: 1, step: 0.1});
-		const strokeWidth = numeric('stroke-width', style['stroke-width'], getIntegerPx('stroke-width', selectedElement), {min: 0});
+		const needsFill = selectedElement.getAttribute('k9-ui').includes('fill');
+		const needsStroke = selectedElement.getAttribute('k9-ui').includes('stroke');
+		const out = []
 		
-		const fillControls = [
-			fill,
-			fillOpacity
-		];
-		const strokeControls = [
-			stroke,
-			strokeOpacity,
-			strokeWidth
-		];
+		if (needsFill) {
+			const fill = colour("fill", style['fill']);
+			const inheritedFillOpacity = getOpacity('stroke-opacity', selectedElement);
+			const fillOpacity = numeric('fill-opacity', style['fill-opacity'], {min: 0, max: 1, step: 0.1});
+			const fillControls = [
+				fill,
+				fillOpacity
+			];
+		}
+		
+		if (needsStroke) {
+			const stroke = colour("stroke", style['stroke']);
+			const inheritedStrokeOpacity = getOpacity('stroke-opacity', selectedElement);
+			const strokeOpacity = numeric('stroke-opacity', style['stroke-opacity'],  {min: 0, max: 1, step: 0.1});
+			const strokeWidth = numeric('stroke-width', style['stroke-width'], {min: 0});
+			
+			const strokeControls = [
+				stroke,
+				strokeOpacity,
+				strokeWidth
+			];
+			
+			out.push(fieldset("stroke", strokeControls));
+
+		}
 	
-		return [ 
-			fieldset("Fill", fillControls),
-			fieldset("Stroke", strokeControls) ];
+		return out;
 	}	
 }
 
 export function fillSelector() {
-	return getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected");
+	return getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected,[id][k9-ui~=stroke].selected");
 }
 
 export function initFillChangeEvent(selectedElement, svgStyle) {
@@ -78,7 +88,11 @@ export function initFillChangeEvent(selectedElement, svgStyle) {
 		const form = formObject('enum');
 		const fill = form.querySelector('#fill-patch');
 		const stroke = form.querySelector('#stroke-patch');
-		fill.value = getColour('fill', selectedElement);
-		stroke.value = getColour('stroke', selectedElement);
+		if (fill) {
+			fill.value = getColour('fill', selectedElement);
+		}
+		if (stroke) {
+			stroke.value = getColour('stroke', selectedElement);
+		}
 	}
 }

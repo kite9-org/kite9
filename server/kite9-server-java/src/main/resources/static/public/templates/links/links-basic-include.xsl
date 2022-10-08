@@ -13,7 +13,7 @@
     <xsl:param name="k9-format">link-basic</xsl:param>
     <xsl:param name="k9-highlight">bar stroke</xsl:param>
     <xsl:param name="k9-texture">background</xsl:param>
-    <xsl:param name="k9-ui">delete link cascade drop fill</xsl:param>
+    <xsl:param name="k9-ui">delete link cascade drop stroke</xsl:param>
     
     <xsl:param name="shape">
    		<g k9-elem="link-grab">

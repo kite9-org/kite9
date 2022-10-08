@@ -17,7 +17,7 @@
     <xsl:param name="k9-palette">connected</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">background</xsl:param>
-    <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect fill size align font</xsl:param>
+    <xsl:param name="k9-ui">drag edit delete align connect insert autoconnect fill stroke size align font</xsl:param>
     
     <xsl:param name="shape">
       <xsl:apply-templates mode="shape" select=".">
