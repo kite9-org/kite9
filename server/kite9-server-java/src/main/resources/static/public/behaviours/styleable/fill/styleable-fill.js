@@ -1,4 +1,4 @@
-import { hasLastSelected } from '/public/bundles/api.js'
+import { hasLastSelected, getAffordances } from '/public/bundles/api.js'
 import { parseStyle, formatStyle } from '/public/bundles/css.js'
 import { formObject, fieldset, colour, numeric } from '/public/bundles/form.js'
 import { getMainSvg, canRenderClientSide } from '/public/bundles/screen.js';
@@ -34,8 +34,9 @@ function getIntegerPx(propName, e) {
 
 export function initFillBuildControls() {
 	return function(selectedElement, style, overlay, cm, event) {
-		const needsFill = selectedElement.getAttribute('k9-ui').includes('fill');
-		const needsStroke = selectedElement.getAttribute('k9-ui').includes('stroke');
+		const affordances = getAffordances(selectedElement);
+		const needsFill = affordances.includes('fill');
+		const needsStroke = affordances.includes('stroke');
 		const out = []
 		
 		if (needsFill) {

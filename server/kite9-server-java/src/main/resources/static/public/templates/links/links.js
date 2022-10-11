@@ -22,6 +22,7 @@ import { initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/t
 import { initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js';
 import { initStyleContextMenuCallback } from '/public/behaviours/styleable/styleable.js';
 import { initPortsPositionBuildControls, portsSelector, portsPositionIcon, initPortsPositionChangeEvent } from '/public/behaviours/ports/position/ports-position.js'
+import { initPortDropCallback, initPortMoveCallback } from '/public/behaviours/ports/drag/ports-drag.js';
 
 const linker = new Linker(updateLink);
 
@@ -40,8 +41,10 @@ function initLinks() {
 	
 		dragger.dropLocatorFn(initTerminatorDropLocatorFunction());
 		dragger.dropLocator(initLinkDropLocator());
+		dragger.dropWith(initPortDropCallback(command, containment));
 
 		dragger.moveWith(initTerminatorMoveCallback());
+		dragger.moveWith(initPortMoveCallback(containment));
 	
 		dragger.moveWith(initAutoConnectMoveCallback(linker, 
 				linkFinder, 

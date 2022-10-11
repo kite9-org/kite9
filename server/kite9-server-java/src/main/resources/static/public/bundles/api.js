@@ -468,4 +468,9 @@ export function addQueryParam(url, name, value) {
 	}
 }
 
+export function getAffordances(element) {
+	const ui = element.getAttribute("k9-ui").split(" ");
+	return ui;
+}
+
 
