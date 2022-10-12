@@ -34,7 +34,7 @@ function initLinks() {
 	if (metadata.isEditor()) {
 	
 		const getAlignTemplateUri = () => document.params['align-template-uri'];
-		const linkFinder = initPaletteFinder();
+		const paletteFinder = initPaletteFinder();
 	
     	linker.add(initLinkLinkerCallback(command));
 		linker.add(initAutoConnectLinkerCallback(command));
@@ -47,7 +47,7 @@ function initLinks() {
 		dragger.moveWith(initPortMoveCallback(containment));
 	
 		dragger.moveWith(initAutoConnectMoveCallback(linker, 
-				linkFinder, 
+				paletteFinder, 
 				initAutoConnectTemplateSelector(getAlignTemplateUri, getLinkTemplateUri)));
 		
 		dragger.dropWith(initLinkDropCallback(command));
@@ -64,7 +64,8 @@ function initLinks() {
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());
 		
-		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", linkFinder, p => p.querySelectorAll("[k9-elem=link]")));
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => p.querySelectorAll("[k9-elem=link]")));
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, p => p.querySelectorAll("[k9-elem=port]")));
 		
 		initLinkable(linker);
 		

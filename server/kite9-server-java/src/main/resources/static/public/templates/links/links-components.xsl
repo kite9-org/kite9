@@ -25,6 +25,7 @@
   <xsl:template name="links-diagram-constants">
      <adl:constant name="link-template-uri" url="/public/templates/links/links-palette.adl#l2" />
      <adl:constant name="align-template-uri" url="/public/templates/links/links-palette.adl#align" />
+     <adl:constant name="port-template-uri" url="/public/templates/links/ports-palette.adl#p-top" />
   </xsl:template>
   
   <xsl:template name="links-diagram-palettes">

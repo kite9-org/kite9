@@ -45,7 +45,7 @@ export function initSetDefaultContextMenuCallback(palette, paramName, descriptio
 			const alreadySelected = linkFinder(currentSelectionId);
 			const active = lastSelectedElement == alreadySelected;
 			const title = active ? "Default "+description : "Make default "+description;
-			const ctrl = contextMenu.addControl(event, "/public/behaviours/palettes/template/linkmenu.svg", title,
+			const ctrl = contextMenu.addControl(event, "/public/behaviours/palettes/template/default.svg", title,
 				function(e2, selector) {
 					contextMenu.destroy();
 					document.params[paramName] = id;
