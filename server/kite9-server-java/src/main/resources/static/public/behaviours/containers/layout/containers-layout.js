@@ -131,11 +131,15 @@ export function initContainerLayoutMoveCallback() {
 	}
 	
 	return function (dragTargets, event, dropTargets, barDirectionOverrideHoriz) {
+		if (dragTargets.filter(dt => isConnected(dt)).length == 0) {
+			// not dragging a connected, so we don't need a layout indicator
+			return;
+		}
+		
 		if (dropTargets) {
 			var connectedDropTargets = dropTargets.filter(dt => isConnected(dt));
-			var connectedDragTargets = dragTargets.filter(dt => isConnected(dt));
 			
-			if ((connectedDropTargets.length == 1) && (connectedDragTargets.length > 0)) {
+			if ((connectedDropTargets.length == 1)) {
 				const dropInto = connectedDropTargets[0];
 				const layout = getLayout(dropInto);
 				if (barDirectionOverrideHoriz != undefined) {

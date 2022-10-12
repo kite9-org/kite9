@@ -110,13 +110,17 @@ export function initPortMoveCallback(containment) {
 	}
 	
 	return function (dragTargets, event, dropTargets, barDirectionOverrideHoriz) {
+		if (dragTargets.filter(dt => isPort(dt)).length == 0) {
+			// not dragging a port
+			return;
+		}
+		
 		if (dropTargets) {
 			const connectedDropTargets = dropTargets.filter(t => {
 					return containment.canContainAll(dragTargets, t);
 				}).filter(onlyUnique);
-			var dragTargets = dragTargets.filter(dt => isPort(dt));
 			
-			if ((dragTargets.length > 0) && (connectedDropTargets.length > 0)) {
+			if ((connectedDropTargets.length > 0)) {
 				const dropInto = connectedDropTargets[0];
 				const side = closestSide(dropInto, event);
 				updateBar(dropInto, side);

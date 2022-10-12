@@ -98,7 +98,11 @@ export function clearBar() {
 }
 
 export function drawBar(fx, fy, tx, ty, container) {
-	if ((bar == null) || (bar.parentNode.parentNode == null)) {
+	if ((bar != null) && (bar.parentNmde != container))  {
+		clearBar();
+	}
+	
+	if (bar == null) {
 		var svg = container == undefined ? getMainSvg() : container;
 		bar = document.createElementNS("http://www.w3.org/2000/svg", "g");
 		bar.setAttributeNS(null, 'k9-highlight', 'bar outline');
