@@ -36,17 +36,17 @@ export function getBefore(container, evt, ignore) {
 
 	switch (layout) {
 		case 'null':
-		case 'RIGHT':
-		case 'HORIZONTAL':
+		case 'right':
+		case 'horizontal':
 			return doSort(allChildren, true, pos.x, ignore);
-		case 'LEFT':
+		case 'left':
 			return doSort(allChildren, true, -pos.x, ignore);
-		case 'UP':
+		case 'up':
 			return doSort(allChildren, false, -pos.y, ignore);
-		case 'DOWN':
-		case 'VERTICAL':
+		case 'down':
+		case 'vertical':
 			return doSort(allChildren, false, pos.y, ignore);
-		case 'GRID': 
+		case 'grid': 
 			// just compare with elements on the current line.
 			const intersectingChildren = allChildren
 				.filter(e => {
