@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.Kite9Log
@@ -31,7 +32,8 @@ abstract class GroupPhase(
     val elements: Int,
     val ch: ContradictionHandler,
     val gp: GridPositioner,
-    val em: ElementMapper
+    val em: ElementMapper,
+    var ef: DiagramElementFactory<*>
 ) : GroupBuilder, Logable {
 
     val log = Kite9Log.instance(this)
@@ -118,13 +120,23 @@ abstract class GroupPhase(
                 }
             } else {
                 var prev: ConnectedRectangular? = null
+                var hasPorts = false
+                var hasRectangulars = false
                 for (c in (ord as Container).getContents()) {
                     if (c is Connected) {
                         populateLeafGroups(c, prev, pMap)
                         if (c is ConnectedRectangular) {
                             prev = c
+                            hasRectangulars = true
+                        } else if (c is Port) {
+                            hasPorts = true
                         }
                     }
+                }
+
+                if (hasPorts && !hasRectangulars) {
+                    val tc = ef.createTemporaryConnected(ord, "-port-placeholder")
+                    populateLeafGroups(tc, null, pMap)
                 }
             }
         }
@@ -158,10 +170,6 @@ abstract class GroupPhase(
             for (o2 in o.getContents()) {
                 setupLinks(o2)
             }
-            val portsBySide = o.getContents()
-                .filterIsInstance<Port>()
-                .groupBy { it.getPortDirection() }
-
         }
     }
 

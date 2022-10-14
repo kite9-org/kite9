@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.basic
 
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.model.Container
@@ -29,8 +30,9 @@ abstract class AbstractGroupingStrategy(
     elements: Int,
     ch: ContradictionHandler,
     gp: GridPositioner,
-    em: ElementMapper
-) : GroupPhase(top, elements, ch, gp, em), GroupingStrategy {
+    em: ElementMapper,
+    ef: DiagramElementFactory<*>
+) : GroupPhase(top, elements, ch, gp, em, ef), GroupingStrategy {
 
     /**
      * Actually does the merge suggested by the merge option, replacing the individual groups with a compound group.

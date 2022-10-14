@@ -27,7 +27,7 @@
 					<!-- <testFailureIgnore>true</testFailureIgnore> -->
 					<forkMode>pertest</forkMode>
 					<printSummary>true</printSummary>
-					<argLine>-Xms500M -Xmx500M -Dkite9.logging=off
+					<argLine>-Xms500M -Xmx500M -Dkite9.logging=stream
 						-Djava.awt.headless=true -DignoreNotAddressed=true</argLine>
 				</configuration>
 			</plugin>

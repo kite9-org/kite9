@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.mgt.builder
 
 import org.kite9.diagram.common.BiDirectional
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.Vertex
@@ -8,7 +9,6 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.Table
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization
@@ -22,8 +22,7 @@ import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder
  *
  * @author moffatr
  */
-abstract class MGTPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : RHDPlanarizationBuilder(em, gp), Logable {
-
+abstract class MGTPlanarizationBuilder(em: ElementMapper, gp: GridPositioner, ef: DiagramElementFactory<*>) : RHDPlanarizationBuilder(em, ef, gp), Logable {
 
 	protected var log = Kite9Log.instance(this)
 

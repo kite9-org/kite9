@@ -38,7 +38,6 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
         return getMaxY() - getMinY()
     }
 
-
     override fun compareTo(arg0: RoutingInfo): Int {
         val bbri = arg0 as BoundsBasedPositionRoutingInfo
         val yc = y.compareTo(bbri.y)

@@ -4,6 +4,7 @@ import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.elements.edge.BiDirectionalPlanarizationEdge
 import org.kite9.diagram.common.elements.edge.Edge
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ContainerLayoutEdge
 import org.kite9.diagram.common.elements.mapping.ElementMapper
@@ -31,7 +32,7 @@ import org.kite9.diagram.visualization.planarization.ordering.EdgeOrdering
  *
  * @author robmoffat
  */
-class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : DirectedEdgePlanarizationBuilder(em, gp) {
+class HierarchicalPlanarizationBuilder(em: ElementMapper, gp: GridPositioner, ef: DiagramElementFactory<*>) : DirectedEdgePlanarizationBuilder(em, gp, ef) {
 
     override fun completeEmbedding(p: MGTPlanarization) {
         setupElementBorderEdges(p, p.diagram)

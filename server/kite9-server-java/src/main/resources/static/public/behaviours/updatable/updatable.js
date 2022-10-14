@@ -64,9 +64,13 @@ export function initHttpUpdater(uri, contentType, contentTypeResolver) {
 	/** Really basic error handler */
 	function handleErrors(response) {
 		if (!response.ok) {
-			return response.json().then(j => {
-				//console.log(JSON.stringify(j));
-				throw new Error(j.message);
+			return response.text().then(j => {
+				try {
+					const json = JSON.parse(str);
+					
+				} catch (e) {	
+					throw new Error(j.message);
+				}
 			});
 		}
 		return response;

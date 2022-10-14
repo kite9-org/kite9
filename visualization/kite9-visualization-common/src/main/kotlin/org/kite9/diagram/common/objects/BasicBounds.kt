@@ -65,7 +65,7 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
     }
 
     override fun keep(buffer: Double, width: Double, fraction: Double): Bounds {
-        val span = distanceMax - distanceMin - buffer * 2.0
+        val span = (distanceMax - distanceMin - buffer * 2.0).coerceAtLeast(0.0)
         val pos = fraction * span
         var lower = distanceMin + pos - width / 2.0 + buffer
         var upper = distanceMin + pos + width / 2.0 + buffer
@@ -88,7 +88,13 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
     }
 
     init {
-        if (distanceMin > distanceMax) {
+        if ((distanceMin == -1.0) && (distanceMax == -1.0)) {
+            // empty bounds, fine
+        } else if ((distanceMin < 0) || (distanceMin > 1)) {
+            throw LogicException("Illegal Bounds")
+        } else if ((distanceMax < 0) || (distanceMax > 1)) {
+            throw LogicException("Illegal Bounds")
+        } else if (distanceMin > distanceMax) {
             throw LogicException("Illegal Bounds")
         }
     }

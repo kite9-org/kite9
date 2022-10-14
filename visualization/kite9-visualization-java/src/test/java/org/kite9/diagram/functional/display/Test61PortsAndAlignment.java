@@ -54,11 +54,11 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_61_2_SimpleLinkToPort() throws Exception {
 		Glyph one = createGlyph("One");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "130px");
+		BasicSocket oneSocket = new BasicSocket("port1", BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "130px");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");
-		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "10px");
+		BasicSocket twoSocket = new BasicSocket("port2", BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "10px");
 		two.appendChild(twoSocket);
 		Link l4 = new Link(oneSocket, twoSocket);
 

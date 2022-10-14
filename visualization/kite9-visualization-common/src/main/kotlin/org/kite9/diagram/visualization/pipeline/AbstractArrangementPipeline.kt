@@ -47,14 +47,13 @@ abstract class AbstractArrangementPipeline : ArrangementPipeline {
     var orth: Orthogonalization? = null
     var c: Compaction? = null
     var em: ElementMapper? = null
-    var factory: DiagramElementFactory<*>? = null
 
     protected fun createPlanarization(d: Diagram?): Planarization {
         return createPlanarizer().planarize(d!!)
     }
 
     fun createPlanarizer(): Planarizer {
-        planarizer = MGTPlanarizer(elementMapper)
+        planarizer = MGTPlanarizer(elementMapper, diagramElementFactory)
         return planarizer!!
     }
 

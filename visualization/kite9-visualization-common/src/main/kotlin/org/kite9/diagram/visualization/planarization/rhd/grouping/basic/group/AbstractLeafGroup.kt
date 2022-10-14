@@ -20,7 +20,7 @@ abstract class AbstractLeafGroup(
     AbstractGroup(groupNumber, hc), LeafGroup {
 
     override fun toString(): String {
-        return "[" + groupNumber + connected + "(" + (if (container is Diagram) "" else " c: " + container) + "," + axis + ")]"
+        return "[" + groupNumber + connected + "(" + (if (occupiesSpace()) "*" else ".") + (if (container is Diagram) "" else " c: " + container) + "," + axis + ")]"
     }
 
     override fun contains(lg: Group): Boolean {
@@ -55,6 +55,6 @@ abstract class AbstractLeafGroup(
     }
 
     override fun occupiesSpace(): Boolean {
-        return connected is Rectangular
+        return (connected is Rectangular)
     }
 }

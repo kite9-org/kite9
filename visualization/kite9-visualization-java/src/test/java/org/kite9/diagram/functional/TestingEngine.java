@@ -137,6 +137,8 @@ public class TestingEngine extends TestingHelp {
 			}
 		} catch (AssertionError afe) {
 			throw afe;
+		} finally {
+
 		}
 	}
 

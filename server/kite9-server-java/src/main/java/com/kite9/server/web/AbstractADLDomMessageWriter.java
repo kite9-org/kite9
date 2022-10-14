@@ -64,6 +64,7 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 			}
 
 		} catch (Exception e) {
+			LOG.error("Couldn't process: "+t.getAsString());
 			throw new HttpMessageNotWritableException("Caused by: " + e.getMessage(), e);
 		}
 	}

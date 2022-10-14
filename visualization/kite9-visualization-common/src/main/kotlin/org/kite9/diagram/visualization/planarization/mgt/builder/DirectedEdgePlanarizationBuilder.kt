@@ -2,13 +2,13 @@ package org.kite9.diagram.visualization.planarization.mgt.builder
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.elements.edge.PlanarizationEdge
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.elements.vertex.PortVertex
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -31,7 +31,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter
  *
  * @author robmoffat
  */
-abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPositioner) : MGTPlanarizationBuilder(em, gp) {
+abstract class DirectedEdgePlanarizationBuilder(em: ElementMapper, gp: GridPositioner, ef: DiagramElementFactory<*>) : MGTPlanarizationBuilder(em, gp, ef) {
 
     protected val edgeRouter: EdgeRouter by lazy {
         MGTEdgeRouter(routableReader, em)

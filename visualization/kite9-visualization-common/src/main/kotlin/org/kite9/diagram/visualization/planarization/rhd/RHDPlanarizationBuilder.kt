@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.elements.RoutingInfo
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.CornerVertices
 import org.kite9.diagram.common.elements.mapping.ElementMapper
@@ -58,7 +59,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.VertexPosition
  *
  * @author moffatr
  */
-abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protected var gridHelp: GridPositioner) : PlanarizationBuilder, Logable {
+abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, val ef: DiagramElementFactory<*>, protected var gridHelp: GridPositioner) : PlanarizationBuilder, Logable {
 
     private val log: Kite9Log = Kite9Log.instance(this)
 	protected var routableReader: RoutableHandler2D = PositionRoutableHandler2D()
@@ -99,7 +100,7 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             routableReader = PositionRoutableHandler2D()
             vp = newVertexPositioner()
             val ch: ContradictionHandler = BasicContradictionHandler(em)
-            val strategy = GeneratorBasedGroupingStrategyImpl(c, elements, ch, gridHelp, em)
+            val strategy = GeneratorBasedGroupingStrategyImpl(c, elements, ch, gridHelp, em, ef)
             strategy.buildInitialGroups()
             val mr = strategy.group()
             if (!log.go()) {
@@ -314,16 +315,18 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, protecte
             // g is a leaf group.  can we place it?
             val l: Connected? = lg.connected
             val c: Container? = lg.container
+            val ri: RoutingInfo = lg.axis.getPosition((routableReader), false)
 
-            // sizing
             if (l !is Port) {
-                val ri: RoutingInfo = lg.axis.getPosition((routableReader), false)
+                // ports don't have edge vertices
                 vp.checkMinimumGridSizes(ri)
-                if (lg.occupiesSpace()) {
-                    routableReader.setPlacedPosition(l as Rectangular, ri)
-                }
-                ensureContainerBoundsAreLargeEnough(ri, c, lg)
             }
+
+            if (lg.occupiesSpace()) {
+                routableReader.setPlacedPosition(l!!, ri)
+            }
+
+            ensureContainerBoundsAreLargeEnough(ri, c, lg)
 
             // leaf groups shouldn't have connections, so these won't get rendered
             connections.handleLinks(lg)

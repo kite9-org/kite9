@@ -97,6 +97,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 		generate("weird_port_routing.xml");
 	}
 
+	@Test
+	public void test_46_14_PortException() throws Exception {
+		generate("port_exception.xml");
+	}
+
 
 	@Test
 	@Ignore("Missing stylesheet")

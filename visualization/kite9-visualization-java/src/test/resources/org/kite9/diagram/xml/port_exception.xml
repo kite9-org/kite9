@@ -1,0 +1,10 @@
+<diagram id="dia">
+    <glyph id="b1">
+        <socket id="socket" style="--kite9-port-side: right; "/>
+    </glyph>
+    <glyph id="b3"/>
+    <link id="28">
+        <from id="28-0" reference="b3"/>
+        <to id="28-1" reference="socket" shape="arrow"/>
+    </link>
+</diagram>

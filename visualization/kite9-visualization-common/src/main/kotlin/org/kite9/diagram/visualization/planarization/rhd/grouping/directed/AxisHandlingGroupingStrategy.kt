@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
@@ -38,8 +39,9 @@ abstract class AxisHandlingGroupingStrategy(
     ch: ContradictionHandler,
     gp: GridPositioner,
     em: ElementMapper,
+    ef: DiagramElementFactory<*>,
     val ms: DirectedMergeState
-) : AbstractRuleBasedGroupingStrategy(top, elements, ch, gp, em) {
+) : AbstractRuleBasedGroupingStrategy(top, elements, ch, gp, em, ef) {
 
     override fun groupChangedContainer(ms: BasicMergeState, g: Group) {
         g.linkManager.notifyContainerChange()

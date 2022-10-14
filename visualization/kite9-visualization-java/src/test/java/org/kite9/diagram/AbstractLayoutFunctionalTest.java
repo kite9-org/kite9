@@ -142,27 +142,29 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	}
 	
 	public void generate(String name) throws Exception {
-		InputStream is = this.getClass().getResourceAsStream("/org/kite9/diagram/xml/"+name);
-		InputStreamReader isr = new InputStreamReader(is);
-		StringWriter sw = new StringWriter();
-		StreamHelp.streamCopy(isr, sw, true);
-		String s = sw.toString();
-		XMLHelper xmlHelper = new XMLHelper();
-		Document dxe = xmlHelper.fromXML(s);
-		convertOldStructure(dxe.getDocumentElement());
-		dxe.getDocumentElement().setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xslt", Kite9Namespaces.XSL_TEMPLATE_NAMESPACE);
-		dxe.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", AbstractMutableXMLElement.TRANSFORM);
-		
-		// fix for old-style <allLinks> tag
-		String theXML = xmlHelper.toXML(dxe, true);
-		//Kite9Log.setLogging(false);
-		transcodeSVG(theXML);
-		copyTo(getOutputFile(".svg"), "svg-output");
-		boolean addressed = isAddressed();
-		Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
-		AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
-		new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
-		
+		try {
+			InputStream is = this.getClass().getResourceAsStream("/org/kite9/diagram/xml/"+name);
+			InputStreamReader isr = new InputStreamReader(is);
+			StringWriter sw = new StringWriter();
+			StreamHelp.streamCopy(isr, sw, true);
+			String s = sw.toString();
+			XMLHelper xmlHelper = new XMLHelper();
+			Document dxe = xmlHelper.fromXML(s);
+			convertOldStructure(dxe.getDocumentElement());
+			dxe.getDocumentElement().setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xslt", Kite9Namespaces.XSL_TEMPLATE_NAMESPACE);
+			dxe.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", AbstractMutableXMLElement.TRANSFORM);
+
+			// fix for old-style <allLinks> tag
+			String theXML = xmlHelper.toXML(dxe, true);
+			//Kite9Log.setLogging(false);
+			transcodeSVG(theXML);
+			copyTo(getOutputFile(".svg"), "svg-output");
+		} finally {
+			boolean addressed = isAddressed();
+			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
+			AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
+		}
 	}
 
 	private void convertOldStructure(Element dxe) {

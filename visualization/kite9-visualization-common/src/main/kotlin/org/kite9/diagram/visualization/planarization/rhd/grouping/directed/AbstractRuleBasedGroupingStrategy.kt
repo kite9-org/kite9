@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
 
+import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
@@ -48,8 +49,9 @@ abstract class AbstractRuleBasedGroupingStrategy(
     elements: Int,
     ch: ContradictionHandler,
     gp: GridPositioner,
-    em: ElementMapper
-) : AbstractGroupingStrategy(top, elements, ch, gp, em) {
+    em: ElementMapper,
+    ef: DiagramElementFactory<*>
+) : AbstractGroupingStrategy(top, elements, ch, gp, em, ef) {
 
     override fun canGroupsMerge(
         a: Group,
