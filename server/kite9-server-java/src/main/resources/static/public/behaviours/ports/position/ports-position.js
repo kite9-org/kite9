@@ -2,7 +2,7 @@ import { getMainSvg } from '/public/bundles/screen.js'
 import { fieldset, select, numeric, hidden, formObject } from '/public/bundles/form.js' 
 import { extractFormValues } from '/public/behaviours/styleable/styleable.js'
 
-export const portsPositionIcon = '/public/behaviours/ports/position/port.svg'
+export const portsPositionIcon = '/public/behaviours/ports/port.svg'
 
 const portSideOptions = [ 'top', 'left', 'bottom', 'right' ]
 

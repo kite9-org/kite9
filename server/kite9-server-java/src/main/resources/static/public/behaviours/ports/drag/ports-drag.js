@@ -1,5 +1,5 @@
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js'
-import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected, isPort, getAffordances } from '/public/bundles/api.js'
+import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected, isPort, getAffordances, parseInfo } from '/public/bundles/api.js'
 import { parseStyle } from '/public/bundles/css.js'
 import { drawBar, clearBar } from  '/public/bundles/ordering.js'
 
@@ -90,9 +90,9 @@ export function initPortDropCallback(command, containment) {
 export function initPortMoveCallback(containment) {
 
 	function updateBar(inside, side) {
-
-		var { x, y, width, height } = getElementPageBBox(inside);
-		
+		const shape = inside.querySelector('.k9-shape');
+		const { x, y, width, height } = getElementPageBBox(shape); 
+	
 		switch(side) {
 			case 'top':
 				drawBar(0, 0, width, 0, inside);

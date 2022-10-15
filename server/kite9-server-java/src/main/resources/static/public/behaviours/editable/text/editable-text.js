@@ -1,5 +1,5 @@
 import { hasLastSelected } from '/public/bundles/api.js'
-import { textarea, form, ok, cancel, inlineButtons, formValues } from '/public/bundles/form.js'
+import { textarea, fieldset, ok, cancel, inlineButtons, formValues } from '/public/bundles/form.js'
 import { getMainSvg } from '/public/bundles/screen.js';
 
 export function initEditContextMenuCallback(command, selector, textCollector) {
@@ -42,7 +42,7 @@ export function initEditContextMenuCallback(command, selector, textCollector) {
 				const defaultText = textCollector(hasLastSelected(selectedElements, true));
 				cm.clear();
 				var htmlElement = cm.get(event);
-				htmlElement.appendChild(form([
+				htmlElement.appendChild(fieldset('Edit Text', [
 					textarea('Enter Text', defaultText, { rows: 10 }),
 					inlineButtons([
 						ok('ok', {}, (e) => {
@@ -53,7 +53,7 @@ export function initEditContextMenuCallback(command, selector, textCollector) {
 						}),
 						cancel('cancel', [], () => cm.destroy())
 					])
-				], 'editText'));
+				]));
 				
 			});
 		}

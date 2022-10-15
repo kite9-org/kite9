@@ -136,3 +136,4 @@ export function svg(tag, atts, contents) {
 export function canRenderClientSide() {
 	return (window.CSS.registerProperty != null);
 }
+

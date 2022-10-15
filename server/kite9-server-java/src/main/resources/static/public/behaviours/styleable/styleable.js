@@ -176,7 +176,7 @@ export function initStyleContextMenuCallback(command, overlay, icon, name, build
 				const htmlElement = cm.get(event);
 				htmlElement.appendChild(theForm);	
 				changeEvent();
-			});
+			}, 'Style');
 				
 		}
 	}

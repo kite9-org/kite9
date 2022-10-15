@@ -31,7 +31,7 @@ import { initDragable, initMainHoverableAllowed } from '/public/behaviours/draga
 import { initActionable } from '/public/behaviours/actionable/actionable.js' 
 
 //hoverable
-import { initHoverable } from '/public/behaviours/hoverable/hoverable.js'
+import { initHoverable, Hover } from '/public/behaviours/hoverable/hoverable.js'
 
 import { once } from '/public/bundles/ensure.js'
 

@@ -23,6 +23,8 @@ import { initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-men
 import { initStyleContextMenuCallback } from '/public/behaviours/styleable/styleable.js';
 import { initPortsPositionBuildControls, portsSelector, portsPositionIcon, initPortsPositionChangeEvent } from '/public/behaviours/ports/position/ports-position.js'
 import { initPortDropCallback, initPortMoveCallback } from '/public/behaviours/ports/drag/ports-drag.js';
+import { initPortsAddContextMenuCallback } from '/public/behaviours/ports/add/ports-add.js';
+import { singleSelect } from '/public/behaviours/selectable/selectable.js';
 
 const linker = new Linker(updateLink);
 
@@ -35,7 +37,7 @@ function initLinks() {
 	
 		const getAlignTemplateUri = () => document.params['align-template-uri'];
 		const paletteFinder = initPaletteFinder();
-	
+			
     	linker.add(initLinkLinkerCallback(command));
 		linker.add(initAutoConnectLinkerCallback(command));
 	
@@ -60,6 +62,7 @@ function initLinks() {
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
 		contextMenu.add(initDirectionContextMenuCallback(command));
+		contextMenu.add(initPortsAddContextMenuCallback(command, (e) => singleSelect(e)));
 		
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());

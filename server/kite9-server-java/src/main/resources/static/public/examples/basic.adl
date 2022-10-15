@@ -15,7 +15,7 @@
    
    <link id="link1" r="r">
     <from id="link1-from" reference="b2" shape="arrow"></from>
-    <to id="link1-to" shape="arrow" reference="b3"></to>
+    <to id="link1-to" shape="arrow" reference="p1"></to>
    </link>
    
    <link drawDirection="RIGHT" id="link2">

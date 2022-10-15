@@ -17,7 +17,7 @@ import { initDeleteContextMenuCallback } from '/public/behaviours/selectable/del
 import { initReplaceContextMenuCallback } from '/public/behaviours/selectable/replace/selectable-replace.js'
 import { initPaletteContextMenuCallback, initMenuPaletteCallback, initPaletteFinder } from '/public/behaviours/palettes/menu/palettes-menu.js'
 import { initXCPContextMenuCallback } from '/public/behaviours/selectable/xcp/xcp.js'
-import { initSelectable, clearSelectable } from '/public/behaviours/selectable/selectable.js'
+import { initSelectable, clearLastSelected } from '/public/behaviours/selectable/selectable.js'
 
 // indication
 import { initToggleInstrumentationCallback } from '/public/behaviours/indication/toggle/toggle.js'
@@ -78,7 +78,7 @@ function initEditor() {
 		
 		palette.add(initMenuPaletteCallback(paletteContextMenu));
 		palette.addUpdate(() => paletteContextMenu.destroy());
-		palette.addUpdate(() => clearSelectable(palette.get()));
+		palette.addUpdate(() => clearLastSelected(palette.get()));
 		palette.addUpdate(initPaletteUpdateDefaults(palette, initPaletteFinder()));
 
 		

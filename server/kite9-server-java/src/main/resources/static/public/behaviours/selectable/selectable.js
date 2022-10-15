@@ -2,10 +2,55 @@ import { getMainSvg, currentTarget } from '/public/bundles/screen.js'
 import { getKite9Target } from '/public/bundles/api.js'
 
 
-export function clearSelectable(within) {
+export function clearLastSelected(within) {
 	within.querySelectorAll(".lastSelected").forEach(c => {
 		c.classList.remove("lastSelected")
 	})
+}
+
+export function lastSelected(element) {
+	element.classList.add("lastSelected");
+}
+
+export function select(element, within = getMainSvg()) {
+	const classes= element.classList;
+	classes.add("selected");
+
+	// unselect nested elements
+	element.querySelectorAll(".selected").forEach(c => {
+		c.classList.remove("selected")
+	})
+	
+	// unselect parent elements
+	var v = element;
+	while (v) {
+		v = v.parentElement;
+		if (v != null) {
+			v.classList.remove("selected")
+		}
+	}
+	
+	clearLastSelected(within);
+	lastSelected(element);
+}
+
+export function isSelected(element) {
+	return element.classList.contains("selected");
+}
+
+export function singleSelect(element, within = getMainSvg()) {
+	within.querySelectorAll(".selected").forEach(c => {
+		element.classList.remove("selected");
+	})
+	
+	element.classList.add("selected");
+	
+	clearLastSelected(within);
+	lastSelected(element);
+}
+
+export function unselect(element) {
+	element.classList.remove("selected")
 }
 
 // Adds .selected class when the user mouseups over an element.
@@ -28,39 +73,16 @@ export function initSelectable(selector, within, singleSelect) {
 			return;
 		}
 		
-		var classes = v.classList;
-		if (!classes.contains("selected")) {
-			
+		if (!isSelected(v)) {
 			if (singleSelect) {
 				// unselect all other elements
-				within.querySelectorAll(".selected").forEach(c => {
-					c.classList.remove("selected");
-				})
-				
-				classes.add("selected");
+				singleSelect(v, within);
 			} else {
-				classes.add("selected");
-
-				// unselect nested elements
-				v.querySelectorAll(".selected").forEach(c => {
-					c.classList.remove("selected")
-				})
-				
-				// unselect parent elements
-				while (v) {
-					v = v.parentElement;
-					if (v != null) {
-						v.classList.remove("selected")
-					}
-				}
+				select(v, within);
 			}
 		} else {
-			classes.remove("selected")
+			unselect(v, within);
 		}
-		
-		clearSelectable(within);
-
-		classes.add("lastSelected")
 		
 		event.handledSelect = true;
 	}

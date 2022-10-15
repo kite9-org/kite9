@@ -1,6 +1,6 @@
 import { getHtmlCoords } from '/public/bundles/screen.js'
 import { ensureCss } from '/public/bundles/ensure.js'
-import { icon } from '/public/bundles/form.js'
+import { icon, fieldset, form } from '/public/bundles/form.js'
 import { number } from '/public/bundles/api.js'
 
 /**
@@ -22,8 +22,6 @@ export class ContextMenu {
 		document.addEventListener("mousemove", (e) => this.move(e));
 		document.addEventListener("touchend", (e) => this.moving = undefined);
 		document.addEventListener("touchmove", (e) => this.move(e), { passive: false });
-		
-	
 	}
 	
 	move(e) {
@@ -67,14 +65,16 @@ export class ContextMenu {
 	 * positioning it relative to the event that created it.
 	 */
 	get(event) {
-		var ctxMenu = document.querySelector("#contextMenu");
-		if (ctxMenu) {
-			return ctxMenu;
+		var theForm = document.querySelector("#contextMenu-form");
+		if (theForm) {
+			return theForm;
 		} else {
-			ctxMenu = document.createElement("div");
+			const ctxMenu = document.createElement("div");
 			ctxMenu.setAttribute("id", "contextMenu");
 			ctxMenu.setAttribute("class", "contextMenu");
 			ctxMenu.setAttribute("draggable", "false");
+			theForm = form([], 'contextMenu-form');
+			ctxMenu.appendChild(theForm);
 
 			const coords = getHtmlCoords(event);
 			coords.x += 15;
@@ -90,7 +90,7 @@ export class ContextMenu {
 			
 			document.querySelector("body").appendChild(ctxMenu);
 			this.menu = ctxMenu;
-			return ctxMenu;
+			return theForm;
 		}
 	}
 	
@@ -111,13 +111,18 @@ export class ContextMenu {
 		}
 	}
 
-	addControl(event, imageUrl, title, clickListener) {
+	/** 
+	 * Short-hand way of adding a single control to the context menu
+	 */
+	addControl(event, imageUrl, title, clickListener, set = "Actions", imageAtts) {
 		var htmlElement = this.get(event);
-		var out = icon('_cm-'+title, title, imageUrl, clickListener)
-		htmlElement.appendChild(out);
-		
-		const row = Math.min(htmlElement.children.length, 5);
-		htmlElement.style.width = (1.5 + 4.4 * row) + 'rem';
+		var fs = document.getElementById("#contextMenu-"+set);
+		if (!fs) {
+			fs = fieldset(set, [], {'id' : "#contextMenu-"+set});
+			htmlElement.appendChild(fs);			
+		}
+		var out = icon('_cm-'+title, title, imageUrl, clickListener, imageAtts)
+		fs.appendChild(out);
 		
 		return out;
 	}
@@ -130,8 +135,6 @@ export class ContextMenu {
 		Array.from(htmlElement.children).forEach(e => {
 			htmlElement.removeChild(e);
 		});
-		
-		htmlElement.style.width = '';
 	}
 
 }

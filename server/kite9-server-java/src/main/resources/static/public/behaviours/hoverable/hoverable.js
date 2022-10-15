@@ -1,13 +1,41 @@
 import { getMainSvg, getHtmlCoords, currentTarget } from '/public/bundles/screen.js'
 import { getKite9Target } from '/public/bundles/api.js'
 
+export class Hover {
+	
+	constructor() {
+		this.selectedElement = null;
+		
+	}
+
+	hover(v) {
+		if (v != this.selectedElement) {
+			v.classList.add("mouseover");
+				
+			if (this.selectedElement != undefined) {
+				this.selectedElement.classList.remove("mouseover");
+			}
+	
+			this.selectedElement = v;
+		}
+	}
+
+	unhover(v) {
+		v.classList.remove("mouseover");
+		if (this.selectedElement == v) {
+			this.selectedElement = undefined;
+		}
+	}
+
+	isHover(v) {
+		return v.classList.contains("mouseover")
+	}
+}
 
 /**
  * Adds hoverable behaviour
  */
-export function initHoverable(selector, allowed) {
-	
-	var selectedElement;
+export function initHoverable(selector, allowed, ctx = new Hover()) {
 	
 	if (allowed == undefined) {
 		allowed = function(v) {
@@ -22,31 +50,18 @@ export function initHoverable(selector, allowed) {
 		
 		var v = getKite9Target(currentTarget(event));
 		
-		if ((v != null) && (allowed(v)) && (v != selectedElement)) {
-			var classes = v.classList;
-			if (!classes.contains("mouseover")) {
-				classes.add("mouseover");
-				
-				if (selectedElement != undefined) {
-					selectedElement.classList.remove("mouseover")
-				}
-
-				selectedElement = v;
-
-				// prevents parent elements from highlighting too.
-				event.handledHover = true;
-			}
+		if ((v != null) && (allowed(v))) {
+			ctx.hover(v);
+		
+			// prevents parent elements from highlighting too.
+			event.handledHover = true;	
 		}
 	}
 
 	function mouseout(event) {
-		var v = currentTarget(event);
+		var v = getKite9Target(currentTarget(event));
 		if (allowed(v)) {
-			var classes = v.classList;
-			classes.remove("mouseover");
-			if (selectedElement == v) {
-				selectedElement = undefined;
-			}
+			ctx.unhover(v);
 		}
 	}
 	

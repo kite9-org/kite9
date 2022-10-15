@@ -238,7 +238,14 @@ function create(tag, atts, contents) {
 	}
 	
 	var e = document.createElement(tag);
-	objectEach(atts, (k, v) => e.setAttribute(k, v));
+	objectEach(atts, (k, v) => {
+		if (k.startsWith("on")) {
+			const event = k.substring(2);
+			e.addEventListener(event, v);
+		} else {
+			e.setAttribute(k, v);
+		}
+	});
 	
 	if (contents) {
 		contents.forEach(c => e.appendChild(c));

@@ -21,6 +21,13 @@
    --kite9-min-height: 50pt;
 }  
 
+/**
+ * Used to highlight on-screen elements at times
+ */
+[k9-elem].attention {
+	stroke: #ff5956 !important;
+	stroke-opacity: 1 !important;
+}
 
 /* 
  * Prevents the original selection process 
