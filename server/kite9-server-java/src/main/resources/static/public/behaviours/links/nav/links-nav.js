@@ -1,9 +1,10 @@
-import { hasLastSelected, parseInfo, isLink, isTerminator, getContainedChildren, getParentElement } from "/public/bundles/api.js";
+import { hasLastSelected, parseInfo, isLink, isTerminator, isPort, getContainedChildren, getParentElement, getDependentElements, connectedPort } from "/public/bundles/api.js";
 import { getMainSvg, getElementHTMLBBox, getElementPageBBox } from '/public/bundles/screen.js';
 
 /**
- * If you select a terminator, allows you to select the link
+ * If you select a terminator, allows you to select the link or port.
  * If you select a link, allows you to select the terminator
+ * If you select a port, you can select the links.
  */
 export function initLinksNavContextMenuCallback(singleSelect, selector) {
 	
@@ -31,6 +32,12 @@ export function initLinksNavContextMenuCallback(singleSelect, selector) {
 			element.classList.remove("attention");		
 		}
 	}
+	
+	function leftToRightSort(a, b) {
+		const aPos = getElementPageBBox(a);
+		const bPos = getElementPageBBox(b);
+		return (aPos.x + (aPos.width / 2)) - (bPos.x + (bPos.width / 2));
+	}
 
 	return function(event, cm) {
 		
@@ -44,18 +51,25 @@ export function initLinksNavContextMenuCallback(singleSelect, selector) {
 					{ 
 						"onmouseover" : (e) => highlight(link, true), 
 						"onmouseout" : (e) => highlight(link, false)
-					});			
+					});	
+					
+				
+				const portForElement = connectedPort(lastElement, getMainSvg())
+				if (portForElement) {
+					cm.addControl(event, "/public/behaviours/links/nav/port.svg", 'Containing Port', 
+						() => selectElement(portForElement, cm, event), 'Related', 
+						{ 
+							"onmouseover" : (e) => highlight(portForElement, true), 
+							"onmouseout" : (e) => highlight(portForElement, false)
+						});		
+				}		
+							
 			} else if (isLink(lastElement)) {
 				const deps = getContainedChildren(lastElement, e => isTerminator(e))
-					.map(id => getMainSvg().getElementById(id));
-				
-				const sortedDeps = deps.sort((a, b) => {
-					const aPos = getElementPageBBox(a);
-					const bPos = getElementPageBBox(b);
-					return (aPos.x + (aPos.width / 2)) - (bPos.x + (bPos.width / 2));
-				})
-				
-				sortedDeps.forEach(element => {
+					.map(id => getMainSvg().getElementById(id))
+					.sort(leftToRightSort);
+								
+				deps.forEach(element => {
 					cm.addControl(event, "/public/behaviours/links/nav/ends.svg", 'Link', 
 						() => selectElement(element, cm, event), 'Related', 
 						{ 
@@ -63,6 +77,20 @@ export function initLinksNavContextMenuCallback(singleSelect, selector) {
 							"onmouseout" : (e) => highlight(element, false)
 						});	
 				})
+			} else if (isPort(lastElement)) {
+				const deps = getDependentElements([lastElement.getAttribute("id")])
+					.sort(leftToRightSort);
+
+				deps.forEach(dep => {
+					cm.addControl(event, "/public/behaviours/links/link.svg", 'Link To Port', 
+						() => selectElement(dep, cm, event), 'Related', 
+						{ 
+							"onmouseover" : (e) => highlight(dep, true), 
+							"onmouseout" : (e) => highlight(dep, false)
+						});		
+					
+					
+				});
 			} 
 		}
  	}

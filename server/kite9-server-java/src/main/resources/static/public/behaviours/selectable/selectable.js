@@ -56,7 +56,7 @@ export function unselect(element) {
 // Adds .selected class when the user mouseups over an element.
 // Adds .lastSelected class to a single element, which is the last one clicked on
 
-export function initSelectable(selector, within, singleSelect) {
+export function initSelectable(selector, within, isSingleSelect) {
 	
 	if (within == undefined) {
 		within = getMainSvg();
@@ -74,7 +74,7 @@ export function initSelectable(selector, within, singleSelect) {
 		}
 		
 		if (!isSelected(v)) {
-			if (singleSelect) {
+			if (isSingleSelect) {
 				// unselect all other elements
 				singleSelect(v, within);
 			} else {

@@ -414,6 +414,18 @@ export function isGrid(e) {
 	return false;
 }
 
+
+export function connectedPort(terminator, within) {
+	const info = parseInfo(terminator)
+	const at = info['terminates-at']
+	const end = within.getElementById(at);
+	if (isPort(end)) {
+		return end;
+	} else {
+		return null;
+	}
+}
+
 export function getContainerChildren(container, ignore = []) {
 	const allChildren = Array.from(container.querySelectorAll("[id][k9-info]"))
 		.filter(e => getParentElement(e) == container)
