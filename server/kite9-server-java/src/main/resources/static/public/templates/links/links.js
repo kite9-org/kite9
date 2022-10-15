@@ -16,6 +16,7 @@ import { initAlignContextMenuCallback } from '/public/behaviours/links/align/ali
 import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/public/behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/links/drag/links-drag.js'
 import { initNewLinkPaletteCallback } from '/public/behaviours/links/new/links-new.js'
+import { initLinksNavContextMenuCallback } from '/public/behaviours/links/nav/links-nav.js'
 import { initLinksCheckerDropCallback } from '/public/behaviours/links/checker/links-checker.js'
 import { initTerminatorContainmentCallback, initLabelContainmentCallback } from '/public/behaviours/links/rules/links-rules.js'
 import { initSetDefaultContextMenuCallback } from '/public/behaviours/palettes/template/palettes-template.js';
@@ -62,7 +63,8 @@ function initLinks() {
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
 		contextMenu.add(initDirectionContextMenuCallback(command));
-		contextMenu.add(initPortsAddContextMenuCallback(command, (e) => singleSelect(e)));
+		contextMenu.add(initPortsAddContextMenuCallback(command, singleSelect));
+		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
 		
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());

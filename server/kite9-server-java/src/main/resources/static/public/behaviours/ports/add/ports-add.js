@@ -1,5 +1,5 @@
 import { hasLastSelected, parseInfo, isTerminator, isPort, getDependentElements } from "/public/bundles/api.js";
-import { getMainSvg, getElementPageBBox } from '/public/bundles/screen.js';
+import { getMainSvg, getElementHTMLBBox, getElementPageBBox } from '/public/bundles/screen.js';
 
 /**
  * If you select a container, this adds the default port to the container (if allowed)
@@ -27,8 +27,13 @@ export function initPortsAddContextMenuCallback(command, singleSelect, selector)
 	
 	function selectElement(element, cm, event) {
 		singleSelect(element);
+		const { x, y, width, height } = getElementHTMLBBox(element);
+		const event2 = new Event('mouseup');
+		event2.pageX = x + (width / 2);
+		event2.pageY = y + (height / 2);
 		cm.destroy();
-		cm.handle(event);
+		cm.handle(event2);			
+		element.classList.remove("attention");		
 	}
 	
 	function highlight(port, active) {
@@ -61,7 +66,12 @@ export function initPortsAddContextMenuCallback(command, singleSelect, selector)
 				}
 			} else if (isPort(lastElement)) {
 				const deps = getDependentElements([lastElement.getAttribute("id")]);
-				deps.forEach(dep => {
+				const sortedDeps = deps.sort((a, b) => {
+					const aPos = getElementPageBBox(a);
+					const bPos = getElementPageBBox(b);
+					return (aPos.x + (aPos.width / 2)) - (bPos.x + (bPos.width / 2));
+				})
+				sortedDeps.forEach(dep => {
 					cm.addControl(event, "/public/behaviours/ports/add/link.svg", 'Link To Port', 
 						() => selectElement(dep, cm, event), 'Related', 
 						{ 
