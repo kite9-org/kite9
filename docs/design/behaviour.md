@@ -107,7 +107,7 @@ Dictates the things you can choose from the context menu / gestures within the c
 - **size**: allows you to set minimum size, margins, padding.
 - **align**: allows you to set the horizontal and vertical align for an element.
 - **font**: allows you to change `font-family`, `font-weight`, `font-size`, `font-style`.
-- **port**: Allows you to change `--kite9-port-side` and `--kite9-port-position`.
+- **port**: Allows you to change `--kite9-port-side` and `--kite9-port-position`. _Also allows element to be selected as a default port_
 
 #### Other
 

@@ -63,14 +63,14 @@ function initLinks() {
 		contextMenu.add(initLinkContextMenuCallback(command, linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
 		contextMenu.add(initDirectionContextMenuCallback(command));
-		contextMenu.add(initPortsAddContextMenuCallback(command, singleSelect));
+		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
 		
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());
 		
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => p.querySelectorAll("[k9-elem=link]")));
-		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, p => p.querySelectorAll("[k9-elem=port]")));
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, portsSelector));
 		
 		initLinkable(linker);
 		

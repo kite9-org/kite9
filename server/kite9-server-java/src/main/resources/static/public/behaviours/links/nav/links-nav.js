@@ -1,4 +1,4 @@
-import { hasLastSelected, parseInfo, isLink, isTerminator, isPort, getContainedChildren, getParentElement, getDependentElements, connectedPort } from "/public/bundles/api.js";
+import { hasLastSelected, parseInfo, isLink, isTerminator, isPort, getContainedChildren, getParentElement, getDependentElements, connectedElement } from "/public/bundles/api.js";
 import { getMainSvg, getElementHTMLBBox, getElementPageBBox } from '/public/bundles/screen.js';
 
 /**
@@ -54,8 +54,8 @@ export function initLinksNavContextMenuCallback(singleSelect, selector) {
 					});	
 					
 				
-				const portForElement = connectedPort(lastElement, getMainSvg())
-				if (portForElement) {
+				const portForElement = connectedElement(lastElement, getMainSvg())
+				if (isPort(portForElement)) {
 					cm.addControl(event, "/public/behaviours/links/nav/port.svg", 'Containing Port', 
 						() => selectElement(portForElement, cm, event), 'Related', 
 						{ 

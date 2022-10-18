@@ -1,0 +1,14 @@
+<diagram xmlns="http://www.kite9.org/schema/adl"
+         style="--kite9-layout: vertical; "
+         title="Ports"
+         allow-drag="true"
+         icon="/public/templates/basic/palette-icon2.svg">
+
+	<container
+		style=" --kite9-min-width: 200px;  ">
+		<socket id="p-1" class="circle" style="--kite9-port-side: top; --kite9-port-position: 30px" />
+		<socket id="p-2" class="square" style="--kite9-port-side: top;  "/>
+		<socket id="p-3" class="hexagon" style="--kite9-port-side: top; --kite9-port-position: -30px" />
+	</container>
+  
+</diagram>

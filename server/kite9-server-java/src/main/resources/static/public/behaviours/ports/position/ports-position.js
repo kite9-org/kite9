@@ -27,8 +27,8 @@ function parsePosition(str) {
 	}
 }
 
-export function portsSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=port].selected"));
+export function portsSelector(doc = getMainSvg()) {
+	return Array.from(doc.querySelectorAll("[id][k9-ui~=port].selected"));
 }
 
 export function initPortsPositionBuildControls() {

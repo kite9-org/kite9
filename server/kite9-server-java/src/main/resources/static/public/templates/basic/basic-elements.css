@@ -14,3 +14,7 @@
 	--kite9-min-size: 100px 100px;
 	--kite9-connection-align: 50%;
 }
+
+[k9-elem=socket] {
+	--kite9-type: port;
+}

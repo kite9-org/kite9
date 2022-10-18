@@ -40,7 +40,7 @@ export function isSelected(element) {
 
 export function singleSelect(element, within = getMainSvg()) {
 	within.querySelectorAll(".selected").forEach(c => {
-		element.classList.remove("selected");
+		c.classList.remove("selected");
 	})
 	
 	element.classList.add("selected");

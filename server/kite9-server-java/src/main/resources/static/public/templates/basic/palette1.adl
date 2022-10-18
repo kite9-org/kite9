@@ -2,7 +2,7 @@
          style="--kite9-layout: vertical; "
          title="Basic"
          allow-drag="true"
-         icon="/public/templates/basic/icon.svg">
+         icon="/public/templates/basic/palette-icon1.svg">
 
     <box id="b1">
       <textarea id="fs1">Box</textarea>

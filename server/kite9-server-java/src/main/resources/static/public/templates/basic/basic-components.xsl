@@ -10,6 +10,26 @@
    			<xsl:with-param name="k9-contains">port</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
+	
+	<xsl:template match="adl:socket">
+		<xsl:call-template name="links-port-basic">
+			<xsl:with-param name="shape">
+				<ellipse x="0" y="0" rx="10" ry="10" />
+ 			</xsl:with-param>
+ 			<xsl:with-param name="k9-texture">background</xsl:with-param>
+ 			<xsl:with-param name="k9-highlight">pulse</xsl:with-param>
+		</xsl:call-template>
+	</xsl:template>
+	
+	<xsl:template match="adl:socket[@class='square']">
+		<xsl:call-template name="links-port-basic">
+			<xsl:with-param name="shape">
+				<rect x="-10" y="-10" width="20" height="20" />
+ 			</xsl:with-param>
+ 			<xsl:with-param name="k9-texture">background</xsl:with-param>
+ 			<xsl:with-param name="k9-highlight">pulse</xsl:with-param>
+		</xsl:call-template>
+	</xsl:template>
  
 </xsl:stylesheet>
         

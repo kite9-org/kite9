@@ -415,7 +415,7 @@ export function isGrid(e) {
 }
 
 
-export function connectedPort(terminator, within) {
+export function connectedElement(terminator, within) {
 	const info = parseInfo(terminator)
 	const at = info['terminates-at']
 	const end = within.getElementById(at);
