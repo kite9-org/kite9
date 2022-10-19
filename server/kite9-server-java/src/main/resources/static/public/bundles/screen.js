@@ -137,3 +137,30 @@ export function canRenderClientSide() {
 	return (window.CSS.registerProperty != null);
 }
 
+
+/**
+ * Returns the string 'top', 'bottom','left','right' 
+ * for a given point on the screen related to a target.
+ */
+export function closestSide(dropTarget, eventCoords = {x :0, y: 0}) {
+	const OUT_OF_BOUNDS = 100000;
+	const boxCoords = getElementPageBBox(dropTarget);
+	
+	const topDist = Math.abs(eventCoords.y - boxCoords.y); 
+	const leftDist = Math.abs(eventCoords.x - boxCoords.x); 
+	const bottomDist = Math.abs(boxCoords.y +  boxCoords.height - eventCoords.y);
+	const rightDist = Math.abs(boxCoords.x + boxCoords.width - eventCoords.x);
+	
+	const dists = {
+		'top': topDist,
+		'right': rightDist, 
+		'bottom': bottomDist, 
+		'left': leftDist 
+	};
+	
+	const bestSide = ['top', 'right', 'bottom', 'left']
+		.reduce((a, b) => dists[a] < dists[b] ? a : b, 'top');
+		
+	return bestSide;
+}
+

@@ -73,13 +73,24 @@ public class BatikCommandContext implements CommandContext {
                 .ignoreComments()
                 .withDifferenceListeners((a, b) ->
                 {
-                    // fix for when batik reformats the style and adds newlines.
                     if (a.getType() == ComparisonType.ATTR_VALUE) {
-                        String s1 = (String) a.getTestDetails().getValue();
-                        String s2 = (String) a.getControlDetails().getValue();
-                        if (s1.replaceAll("\\s", "").equals(s2.replaceAll("\\s", ""))) {
-                            return;
-                        }
+                    	boolean isStyleAttribute = a.getControlDetails().getXPath().endsWith("@style");
+				        String s1 = (String) a.getTestDetails().getValue();
+				        String s2 = (String) a.getControlDetails().getValue();
+        
+        				if (!isStyleAttribute) {
+	                        // fix for when batik reformats the xml and adds newlines.
+	                        if (s1.replaceAll("\\s", "").equals(s2.replaceAll("\\s", ""))) {
+	                            return;
+	                        }
+        				} else {
+        					// in this case, we are comparing styles.  
+                        	// sometimes, there can be a slight difference, e.g. "color: red;" vs "color:red"
+                        	// this is a hack to fix that
+                        	if (s1.replaceAll("[\\s;]", "").equals(s2.replaceAll("[\\s;]", ""))) {
+                                return;
+                            }
+        				}
                     }
 
                     out.add(a);

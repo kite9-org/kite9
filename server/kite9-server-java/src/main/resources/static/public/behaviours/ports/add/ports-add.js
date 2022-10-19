@@ -1,5 +1,6 @@
-import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId } from "/public/bundles/api.js";
-import { getMainSvg } from '/public/bundles/screen.js';
+import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances } from "/public/bundles/api.js";
+import { getMainSvg, closestSide, getElementPageBBox } from '/public/bundles/screen.js';
+import { parseStyle } from '/public/bundles/css.js'
 
 /**
  * If you select a container, this adds the default port to the container (if allowed)
@@ -29,21 +30,82 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 		}
 	}
 	
+	/**
+	 * For a given set of elements, some will be containers, some will be terminators.
+	 * THese need to be dealt with separately.  containers will all just create a port
+	 * within the container.  terminators need to be grouped by the container they are on, and
+	 * the side of the container they are on.  
+	 */
 	function addPorts(elements, contextMenu) {
 		const portUri = document.params['port-template-uri'];
-		elements.forEach(e => {
-			if (isTerminator(e)) {
-
-			} else if (isConnected(e)) {
+		const palettePort = paletteFinder(portUri);
+		const setPortSide = getAffordances(palettePort).includes("port")
+		const portStyle = parseStyle(palettePort.getAttribute("style"))
+		
+		function newPort(newId, insideId) {
+			command.push({
+				"type": 'InsertUrl',
+				"fragmentId": insideId,
+				"uriStr": portUri,
+				"newId" : newId,
+			});
+		}
+		
+		elements.filter(e => isConnected(e))
+			.forEach(e => {
 				const newId = createUniqueId();
+				newPort(newId, e.getAttribute("id"));
+			});
+		
+		const groups = {}
+		const sides = {}
+		
+		elements.filter(e => isTerminator(e))
+			.forEach(e => {
+				const coords = getElementPageBBox(e);
+				const pos = { x: coords.x + coords.width / 2, y: coords.y + coords.height / 2 };
+				const container = connectedElement(e, getMainSvg());
+				const side = closestSide(container, pos);
+				const containerId = container.getAttribute("id");
+				
+				if (!groups[containerId]) {
+					groups[containerId] = [ e ];
+				} else {
+					groups[containerId].push(e);
+				}
+				
+				sides[containerId] = side;
+			});
+			
+		for (const [key, value] of Object.entries(groups)) {
+			const insideId = key;
+			const newId = createUniqueId();
+			newPort(newId, insideId);
+			
+			if (setPortSide) {
+				const side = sides[key]
 				command.push({
-					"type": 'InsertUrl',
-					"fragmentId": e.getAttribute("id"),
-					"uriStr": portUri,
-					"newId" : newId,
-				});
+					fragmentId: newId,
+					type: 'ReplaceStyle',
+					name: '--kite9-port-side',
+					to: side,
+					from: portStyle['--kite9-port-side']
+				})
 			}
- 		});
+
+			// point the terminator at the new port
+			value.forEach(t => {
+				command.push({
+					"fragmentId": t.getAttribute("id"),
+					"type": 'ReplaceAttr',
+					"to": newId,
+					"name": "reference",
+					"from": insideId,
+				})
+			})
+
+		}
+		
  		contextMenu.destroy();
 
  		command.perform();

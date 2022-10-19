@@ -1,32 +1,8 @@
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js'
+import { getSVGCoords, getElementPageBBox, getMainSvg, closestSide } from '/public/bundles/screen.js'
 import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected, isPort, getAffordances, parseInfo } from '/public/bundles/api.js'
 import { parseStyle } from '/public/bundles/css.js'
 import { drawBar, clearBar } from  '/public/bundles/ordering.js'
 
-
-function closestSide(dropTarget, event) {
-	const OUT_OF_BOUNDS = 100000;
-	const eventCoords = getSVGCoords(event);
-	const boxCoords = getElementPageBBox(dropTarget);
-	
-	const topDist = eventCoords.y - boxCoords.y; 
-	const leftDist = eventCoords.x - boxCoords.x; 
-	const bottomDist = boxCoords.y +  boxCoords.height - eventCoords.y;
-	const rightDist = boxCoords.x + boxCoords.width - eventCoords.x;
-	
-	const dists = {
-		'top': topDist,
-		'right': rightDist, 
-		'bottom': bottomDist, 
-		'left': leftDist 
-	};
-	
-	const bestSide = ['top', 'right', 'bottom', 'left']
-		.filter(o => dists[o] > 0)
-		.reduce((a, b) => dists[a] < dists[b] ? a : b, 'top');
-		
-	return bestSide;
-}
 
 /**
  * Essentially the same as initContainerDropCallback, except that
@@ -42,7 +18,7 @@ export function initPortDropCallback(command, containment) {
 		
 		if (connectedDropTargets.length > 0) {
 			const dropTarget = connectedDropTargets[0];
-			const side = closestSide(dropTarget, evt);
+			const side = closestSide(dropTarget, getSVGCoords(evt));
 			Array.from(dragState).forEach(s => {
 				if (s.dragParentId) {
 					// we are moving this from somewhere else in the diagram
@@ -122,7 +98,7 @@ export function initPortMoveCallback(containment) {
 			
 			if ((connectedDropTargets.length > 0)) {
 				const dropInto = connectedDropTargets[0];
-				const side = closestSide(dropInto, event);
+				const side = closestSide(dropInto, getSVGCoords(event));
 				updateBar(dropInto, side);
 				return
 			}

@@ -189,6 +189,17 @@ public class CommandsTest {
 		testDoAndUndo(setAttr, "replaceAttr");
 		
 	}
+
+	@Test
+	public void testReplaceStyleSemanticEquivalentCommand() throws Exception {
+		ReplaceAttr setAttr = new ReplaceAttr();
+		setAttr.name =  "style";
+		setAttr.to = "value";
+		setAttr.fragmentId="two";
+
+		testDoAndUndo(setAttr, "replaceAttr");
+
+	}
 	
 	@Test
 	public void testReplaceStyleCommand() throws Exception {

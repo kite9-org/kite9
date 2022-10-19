@@ -419,11 +419,7 @@ export function connectedElement(terminator, within) {
 	const info = parseInfo(terminator)
 	const at = info['terminates-at']
 	const end = within.getElementById(at);
-	if (isPort(end)) {
-		return end;
-	} else {
-		return null;
-	}
+	return end;
 }
 
 export function getContainerChildren(container, ignore = []) {
