@@ -1,5 +1,5 @@
-import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances } from "/public/bundles/api.js";
-import { getMainSvg, closestSide, getElementPageBBox } from '/public/bundles/screen.js';
+import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances, getKite9Target } from "/public/bundles/api.js";
+import { getMainSvg, closestSide, getElementPageBBox, currentTarget, getSVGCoords } from '/public/bundles/screen.js';
 import { parseStyle } from '/public/bundles/css.js'
 
 /**
@@ -36,11 +36,12 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 	 * within the container.  terminators need to be grouped by the container they are on, and
 	 * the side of the container they are on.  
 	 */
-	function addPorts(elements, contextMenu) {
+	function addPorts(elements, contextMenu, event) {
 		const portUri = document.params['port-template-uri'];
 		const palettePort = paletteFinder(portUri);
-		const setPortSide = getAffordances(palettePort).includes("port")
+		const canSetPortSide = getAffordances(palettePort).includes("port")
 		const portStyle = parseStyle(palettePort.getAttribute("style"))
+		const eventElement = getKite9Target(currentTarget(event));
 		
 		function newPort(newId, insideId) {
 			command.push({
@@ -51,10 +52,25 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 			});
 		}
 		
+		function setPortSide(id, side) {
+			command.push({
+				fragmentId: id,
+				type: 'ReplaceStyle',
+				name: '--kite9-port-side',
+				to: side,
+				from: portStyle['--kite9-port-side']
+			})
+		}
+		
 		elements.filter(e => isConnected(e))
 			.forEach(e => {
 				const newId = createUniqueId();
 				newPort(newId, e.getAttribute("id"));
+				
+				if ((eventElement == e) && canSetPortSide) {
+					const side = closestSide(e, getSVGCoords(event));	
+					setPortSide(newId, side);
+				}
 			});
 		
 		const groups = {}
@@ -82,15 +98,9 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 			const newId = createUniqueId();
 			newPort(newId, insideId);
 			
-			if (setPortSide) {
+			if (canSetPortSide) {
 				const side = sides[key]
-				command.push({
-					fragmentId: newId,
-					type: 'ReplaceStyle',
-					name: '--kite9-port-side',
-					to: side,
-					from: portStyle['--kite9-port-side']
-				})
+				setPortSide(newId, side);
 			}
 
 			// point the terminator at the new port
@@ -118,7 +128,7 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 		
 		const elements = hasLastSelected(selector());
 		if (elements.length > 0) {
-			cm.addControl(event, "/public/behaviours/ports/port.svg", 'Add Port', () => addPorts(elements, cm));							
+			cm.addControl(event, "/public/behaviours/ports/port.svg", 'Add Port', () => addPorts(elements, cm, event));							
 		}
  	}
 }

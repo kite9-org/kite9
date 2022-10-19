@@ -38,6 +38,10 @@ export function isSelected(element) {
 	return element.classList.contains("selected");
 }
 
+export function isLastSelected(element) {
+	return element.classList.contains("lastSelected");
+}
+
 export function singleSelect(element, within = getMainSvg()) {
 	within.querySelectorAll(".selected").forEach(c => {
 		c.classList.remove("selected");
