@@ -23,6 +23,7 @@ export class Dragger {
 		this.mouseDown = false;
 		this.delta = null;
 		this.dropTargets = [];
+		this.draggingWithButtonDown = true;
 
 		// plugged-in functionality.
 		this.moveCallbacks = []; 
@@ -103,7 +104,8 @@ export class Dragger {
 		
 	}
 	
-	beginMove(evt) {
+	beginMove(evt, draggingWithButtonDown = true) {
+		this.draggingWithButtonDown = draggingWithButtonDown;
 		const elements = this.dragLocators.flatMap(dl => dl(evt));
 		const uniqueElements = [...new Set(elements)];
 		const out = this.beginMoveWithElements(uniqueElements);
@@ -158,11 +160,14 @@ export class Dragger {
 
 	grab(evt) {
 		this.mouseDown = true;
+		this.draggingWithButtonDown = true;
 	}
 	 
 	drag(evt) {
-		if (!this.mouseDown) {
-			return;
+		if (this.draggingWithButtonDown) {
+			if (!this.mouseDown) {
+				return;
+			}
 		}
 		
 		if (!this.state) {
@@ -282,6 +287,7 @@ export class Dragger {
 		}
 		
 		this.mouseDown = false;
+		this.draggingWithButtonDown = true;
 		this.svg.style.cursor = undefined;
 	}	
 	

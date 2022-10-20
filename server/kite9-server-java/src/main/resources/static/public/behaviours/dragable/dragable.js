@@ -1,11 +1,14 @@
 import { getMainSvg, is_touch_device4 } from '/public/bundles/screen.js'
+import { hasLastSelected } from '/public/bundles/api.js'
+
+function defaultDragableSelector() {
+	return getMainSvg().querySelectorAll("[k9-info][k9-ui~=drag]");
+}
 
 export function initDragable(dragger, selector) {
 	
 	if (selector == undefined) {
-		selector = function() {
-			return getMainSvg().querySelectorAll("[k9-info][k9-ui~=drag]");
-		}
+		selector = defaultDragableSelector;
 	}
 	
 	const drag = (e) => dragger.drag(e);
@@ -90,5 +93,30 @@ export function initCompleteDragable(command) {
 	return function() {
 		command.perform();
 	}
+}
+
+/**
+ * Provides an icon in the context menu to move things 
+ * without needing to hold the mouse down
+ */
+export function initDragContextMenuCallback(dragger, selector) {
+	
+	if (selector == undefined) {
+		selector = defaultDragableSelector;
+	}
+	
+	/**
+	 * Provides move option in context menu
+	 */
+	return function(event, cm) {
+		
+		const elements = hasLastSelected(selector());
+		if (elements.length > 0) {
+			cm.addControl(event, "/public/behaviours/dragable/drag.svg", 'Drag Selected Elements', () => {
+				cm.destroy();
+				dragger.beginMove(event, false)
+			});							
+		}
+ 	}
 }
 

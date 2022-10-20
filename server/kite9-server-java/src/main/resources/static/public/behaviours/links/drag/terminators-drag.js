@@ -2,8 +2,8 @@
  * This handles moving a block from one place to another on the diagram, via drag and drop.
  * You can't drop into an element unless it has 
  */
-import { parseInfo, isTerminator, getKite9Target, isConnected, getParentElement } from "/public/bundles/api.js";
-import { getSVGCoords, getElementPageBBox } from '/public/bundles/screen.js'
+import { parseInfo, isTerminator, getKite9Target, isConnected, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd } from "/public/bundles/api.js";
+import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js'
 import { getBeforeId } from '/public/bundles/ordering.js'
 
 /**
@@ -46,13 +46,37 @@ export function initTerminatorDropLocatorFunction() {
 		if (dragTarget==dropTarget) {
 			return false;
 		}
-		
-		var terminator = isTerminator(dragTarget);
-		
-		var out = dropTarget.getAttribute("k9-ui");
-		if ((out == null) || (!out.includes("connect"))) {
-			return false;
+				
+		if (isTerminator(dragTarget)) {
+			if (isLink(dropTarget)) {
+				return false;
+			}
+
+			
+			if (!getAffordances(dropTarget).includes("connect")) {
+				return false;
+			}
+			
+			const otherEnd = connectedElementOtherEnd(dragTarget, getMainSvg());
+			
+			if (otherEnd == dropTarget) {
+				// linking to itself
+				return false;
+			}
+			
+			if (isPort(dropTarget)) {
+				if (getParentElement(dropTarget) == dragTarget) {
+					return false;
+				}
+			}
+			
+			if (isPort(otherEnd)) {
+				if (getParentElement(otherEnd) == dropTarget) {
+					return false;
+				}
+			}
 		}
+
 
 		return true;
 		

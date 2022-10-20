@@ -422,6 +422,20 @@ export function connectedElement(terminator, within) {
 	return end;
 }
 
+export function connectedElementOtherEnd(terminator, within) {
+	const info = parseInfo(terminator)
+	const parent = within.getElementById(info['terminates']);
+	const otherTerminators = getContainerChildren(parent)
+		.filter(c => c != terminator)
+		.filter(c => isTerminator(c));
+		
+	if (otherTerminators.length != 1) {
+		throw Error("Links should only have two terminators : "+parent.getAttribute('id'));
+	}
+	
+	return connectedElement(otherTerminators[0], within);	
+}
+
 export function getContainerChildren(container, ignore = []) {
 	const allChildren = Array.from(container.querySelectorAll("[id][k9-info]"))
 		.filter(e => getParentElement(e) == container)

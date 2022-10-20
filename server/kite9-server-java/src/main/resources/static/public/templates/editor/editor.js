@@ -10,7 +10,7 @@ import { Property } from '/public/classes/property/property.js'
 // Behaviours
 
 // dragable
-import { initCompleteDragable, initDragableDragLocator } from '/public/behaviours/dragable/dragable.js' 
+import { initCompleteDragable, initDragableDragLocator, initDragContextMenuCallback } from '/public/behaviours/dragable/dragable.js' 
 
 // selectable
 import { initDeleteContextMenuCallback } from '/public/behaviours/selectable/delete/selectable-delete.js'
@@ -84,12 +84,13 @@ function initEditor() {
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		
+		contextMenu.add(initDragContextMenuCallback(dragger));
+		contextMenu.add(initPaletteContextMenuCallback(palette));
+		contextMenu.add(initStyleMenuContextMenuCallback(stylemenu));
 		contextMenu.add(initDeleteContextMenuCallback(command));
 		contextMenu.add(initEditContextMenuCallback(command));
 		contextMenu.add(initXMLContextMenuCallback(command));
 		contextMenu.add(initEditableImageContextMenuCallback(command, metadata));
-		contextMenu.add(initPaletteContextMenuCallback(palette));
-		contextMenu.add(initStyleMenuContextMenuCallback(stylemenu));
 		
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, fillIcon, 'Fill & Style', initFillBuildControls(), fillSelector, () => "", initFillChangeEvent));
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, alignIcon, 'Align', initAlignBuildControls(), alignSelector));
