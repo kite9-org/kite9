@@ -21,8 +21,8 @@ class PortImpl(
     t: ContentTransform
 ) : AbstractModelDiagramElement (el, parent, ctx, rp, t), Port {
 
-    private val portSide : PortSide by lazy {
-        val out : PortSide = ctx.getCssStyleEnumProperty(CSSConstants.PORT_SIDE, theElement, PortSide::class) ?: PortSide.BOTTOM
+    private val portSide : Direction by lazy {
+        val out = ctx.getCssStyleEnumProperty(CSSConstants.DIRECTION, theElement, Direction::class) ?: Direction.DOWN
         out
     }
 
@@ -32,7 +32,7 @@ class PortImpl(
 
     override fun getPortDirection(): Direction {
         ensureInitialized()
-        return portSide.getDirection()
+        return portSide
     }
 
     override fun getPortPosition(): Placement {

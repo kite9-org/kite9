@@ -21,7 +21,7 @@ public class Test62PortContradictions extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_62_1_ComplexArrivalSides() throws Exception {
 		Glyph one = createGlyph("One");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.LEFT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");
@@ -45,7 +45,7 @@ public class Test62PortContradictions extends AbstractDisplayFunctionalTest {
 	public void test_62_2_DirectedPortSideContradiction() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50%");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");
@@ -59,7 +59,7 @@ public class Test62PortContradictions extends AbstractDisplayFunctionalTest {
 	public void test_62_3_ImpossibleDirectedLinks() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY+": "+ BorderTraversal.PREVENT+";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, CSSConstants.RIGHT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50%");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");

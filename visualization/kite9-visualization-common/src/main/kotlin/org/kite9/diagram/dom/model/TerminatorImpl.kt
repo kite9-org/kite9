@@ -33,7 +33,7 @@ class TerminatorImpl(
 
     override fun initialize() {
         super.initialize()
-        arrivalSide = ctx.getCssStyleEnumProperty(CSSConstants.ARRIVAL_SIDE, theElement, Direction::class)
+        arrivalSide = ctx.getCssStyleEnumProperty(CSSConstants.DIRECTION, theElement, Direction::class)
         end = ctx.getCssStyleEnumProperty(CSSConstants.LINK_END, theElement, End::class)
         markerReserve = ctx.getCssStyleDoubleProperty(CSSConstants.MARKER_RESERVE, theElement)
     }

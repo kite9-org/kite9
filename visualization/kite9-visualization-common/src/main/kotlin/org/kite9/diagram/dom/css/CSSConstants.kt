@@ -59,16 +59,14 @@ interface CSSConstants {
         // controls which side connections will go into a connected
         const val CONNECTIONS_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "connections"
 
-        // direction a connection goes in
-        const val CONNECTION_DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"
-        const val ARRIVAL_SIDE = KITE9_CSS_PROPERTY_PREFIX + "arrival-side"
+        // direction a connection goes in (used by ports, links, terminators)
+        const val DIRECTION = KITE9_CSS_PROPERTY_PREFIX + "direction"
+        const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
 
         // distance between edge of connection and terminator it joins to (space for marker)
         const val MARKER_RESERVE = KITE9_CSS_PROPERTY_PREFIX + "marker-reserve"
 
         // controls whether we try and align connections along the mid-point of the connected.
-        const val PORT_SIDE = KITE9_CSS_PROPERTY_PREFIX + "port-side"
-        const val PORT_POSITION = KITE9_CSS_PROPERTY_PREFIX + "port-position"
         const val VERTICAL_ALIGN_POSITION = KITE9_CSS_PROPERTY_PREFIX + "vertical-align-position"
         const val HORIZONTAL_ALIGN_POSITION = KITE9_CSS_PROPERTY_PREFIX + "horizontal-align-position"
 

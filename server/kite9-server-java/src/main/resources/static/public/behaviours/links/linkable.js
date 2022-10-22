@@ -7,10 +7,9 @@ import { getExistingConnections, parseInfo, reverseDirection } from '/public/bun
  * 
  * There are some basic expectations about the way links work embedded in this behaviour:
  * 
- * 1.  drawDirection is an attribute on the link which indicates the direction it must go in (if any).  
- * 2.  <from> and <to> elements are present, and have reference="" to indicate where they link to.\
- * 3.  Labels are embedded within <from> and <to>.
- * 4.  Align links (links that the editor can remove) have the class "align".  
+ * 1.  <from> and <to> elements are present, and have reference="" to indicate where they link to.\
+ * 2.  Labels are embedded within <from> and <to>.
+ * 3.  Align links (links that the editor can remove) have the class "align".  
  * 
  * All of these are in any case defaults that can be overridden.
  */

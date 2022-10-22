@@ -1,7 +1,27 @@
-import { getMainSvg } from '/public/bundles/screen.js'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId } from '/public/bundles/api.js'
+import { getMainSvg, svg } from '/public/bundles/screen.js'
+import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId, isTerminator, isLink } from '/public/bundles/api.js'
 
-export function initDirectionContextMenuCallback(command, selector) {
+function directionSelector() {
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction]"))
+			.filter(e => isTerminator(e)); 
+}
+
+function terminatorSelector() {
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-info*=terminator]"))
+			.filter(e => isTerminator(e)); 
+}
+
+function getDirection(e) {
+	if (e==null) {
+		return 'none';
+	} else {
+		const info = parseInfo(e);
+		const l = info['direction'];
+		return ((l == 'null') || (l == undefined)) ? undefined : l.toLowerCase();
+	}
+}
+
+export function initDirectionContextMenuCallback(command, selector = directionSelector) {
 	
 	function setDirection(e, direction, contextMenu) {
 		contextMenu.destroy();
@@ -59,12 +79,6 @@ export function initDirectionContextMenuCallback(command, selector) {
 		return img;
 	}
 	
-	if (selector == undefined) {
-		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-info~='link:'].selected");
-		}
-	}
-	
 	/**
 	 * Provides a link option for the context menu
 	 */
@@ -100,4 +114,43 @@ export function initDirectionContextMenuCallback(command, selector) {
 			}
 		}
 	};
+}
+
+export function initTerminatorDirectionIndicator(selector = terminatorSelector) {
+	
+	
+	const INDICATOR_SELECTOR = ":scope > g.k9-direction";
+	
+	const drawingFunctions = {
+		"up" : () => svg("polygon", {"points" : "-10 12, 0 -8, 10 12"}),
+		"down": () => svg("polygon", {"points" : "10 -12, 0 8, -10 -12"}),
+		"left": () => svg("polygon", {"points" : "12 -10, -8 0, 12 10"}),
+		"right":  () => svg("polygon", {"points" : "-12 -10, 8 0, -12 10"})
+	}  
+	
+	const noneFunction = () => svg("ellipse", {"cx" : "0", "cy": 0, "rx": 8, "ry": 8});
+	
+	function ensureDirectionIndicator(e, direction) {		
+		var indicator = e.querySelector(INDICATOR_SELECTOR);
+		if ((indicator != null) && (indicator.getAttribute("direction")!=direction)) {
+			e.removeChild(indicator);
+		} else if (indicator != null) {
+			return;
+		} 
+		
+		indicator = svg('g', {
+			'class' : 'k9-direction',
+			'k9-highlight' : 'fill',
+			'direction' : direction,
+		}, [ direction ? drawingFunctions[direction]() : noneFunction() ]);
+		
+		e.appendChild(indicator)
+	}
+	
+	window.addEventListener('DOMContentLoaded', function() {
+		selector().forEach(function(v) {
+			const direction = getDirection(v);
+			ensureDirectionIndicator(v, direction)
+		})
+	})
 }

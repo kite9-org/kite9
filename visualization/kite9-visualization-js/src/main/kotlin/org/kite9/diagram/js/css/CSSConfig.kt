@@ -80,7 +80,7 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION,"<length-percentage>", "50%", false))
 
     // LINK DIRECTION
-    css.registerProperty( CSSProperty(CSSConstants.CONNECTION_DIRECTION,syntax<Direction>()+" | none","none", true))
+    css.registerProperty( CSSProperty(CSSConstants.DIRECTION,syntax<Direction>()+" | none","none", true))
 
     // LINK LENGTHS
     css.registerProperty( CSSProperty(CSSConstants.LINK_INSET,"<length>","0", false))

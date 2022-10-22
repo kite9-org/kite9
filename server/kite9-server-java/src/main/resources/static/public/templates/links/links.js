@@ -9,10 +9,10 @@ import { command, metadata, dragger, contextMenu, paletteContextMenu, containmen
 
 // Links
 import { initLinkable, updateLink, initLinkerDropCallback } from '/public/behaviours/links/linkable.js'
-import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/public/behaviours/links/autoconnect/autoconnect.js'
-import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '/public/behaviours/links/link/link.js'
-import { initDirectionContextMenuCallback } from '/public/behaviours/links/direction/direction.js'
-import { initAlignContextMenuCallback } from '/public/behaviours/links/align/align.js'
+import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '/public/behaviours/links/autoconnect/links-autoconnect.js'
+import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '/public/behaviours/links/link/links-link.js'
+import { initDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '/public/behaviours/links/direction/links-direction.js'
+import { initAlignContextMenuCallback } from '/public/behaviours/links/align/links-align.js'
 import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '/public/behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '/public/behaviours/links/drag/links-drag.js'
 import { initNewLinkPaletteCallback } from '/public/behaviours/links/new/links-new.js'
@@ -73,6 +73,7 @@ function initLinks() {
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, portsSelector));
 		
 		initLinkable(linker);
+		initTerminatorDirectionIndicator();
 		
 			
 		const portPosition = initStyleContextMenuCallback(command, overlay, 

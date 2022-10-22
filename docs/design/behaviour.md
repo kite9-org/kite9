@@ -79,11 +79,7 @@ Dictates the things you can choose from the context menu / gestures within the c
 * **edit**: we can edit the text  _Implemented by **editable/text**_
   -  **text** content that should be in the editor
 * **(none)**: Provides an XML editor for editing the xml of the element  _Implemented by **editable/xml**._  All elements have this (for) now.
-* **image**: You can set the image url.  _Implemented by **editable/image**._
-
-#### Attributes
-
-* **layout**: you can set the layout.    _Implemented by **containers/layout**._
+* **image**: You can set the image url.  _Implemented by **editable/image**._  
   
 #### Navigation
 
@@ -101,13 +97,15 @@ Dictates the things you can choose from the context menu / gestures within the c
 
 #### Styling
 
-- **layout**:  allows you to set up `--kite9-layout`
+- **layout**:  allows you to set up `--kite9-layout`   _Implemented by **containers/layout**._
 - **fill**: allows you to set, `fill`, `fill-opacity`
 - **stroke**: allows you to set, `stroke`, `stroke-opacity`, `stroke-width`, and later `stroke-dasharray` etc.
 - **size**: allows you to set minimum size, margins, padding.
 - **align**: allows you to set the horizontal and vertical align for an element.
 - **font**: allows you to change `font-family`, `font-weight`, `font-size`, `font-style`.
 - **port**: Allows you to change `--kite9-port-side` and `--kite9-port-position`. _Also allows element to be selected as a default port_
+* **direction**: you can set the direction of the link / terminator.
+
 
 #### Other
 

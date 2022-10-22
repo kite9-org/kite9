@@ -2,7 +2,6 @@ package org.kite9.diagram.dom;
 
 import org.apache.batik.css.engine.value.FloatValue;
 import org.apache.batik.css.engine.value.RGBColorValue;
-import org.apache.batik.css.engine.value.svg.MarkerManager;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.managers.*;
@@ -73,10 +72,9 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_LEFT_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.TRAVERSAL_TOP_PROPERTY, BorderTraversal.class, BorderTraversal.LEAVING, false));
 		
-		// CONNECTION SIDES
+		// CONNECTION/PORT/TERMINATOR SIDES
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTIONS_PROPERTY, ConnectionsSeparation.class, ConnectionsSeparation.SAME_SIDE, false));
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.ARRIVAL_SIDE, Direction.class, null, false));
-		
+
 		// ALIGNMENT
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.VERTICAL_ALIGNMENT, VerticalAlignment.class, VerticalAlignment.CENTER, false));
 		registerCustomCSSValueManager(new EnumManager(CSSConstants.HORIZONTAL_ALIGNMENT, HorizontalAlignment.class, HorizontalAlignment.CENTER, false));
@@ -84,7 +82,7 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new PlacementManager(CSSConstants.HORIZONTAL_ALIGN_POSITION));
 
 		// LINK DIRECTION
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.CONNECTION_DIRECTION, Direction.class, null, true));
+		registerCustomCSSValueManager(new EnumManager(CSSConstants.DIRECTION, Direction.class, null, true));
 
 		// LINK LENGTHS
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_INSET, 0f));
@@ -114,7 +112,6 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new WidthHeightManager(CSSConstants.TEXT_BOUNDS_HEIGHT, 0f, true));
 
 		// PORTS
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.PORT_SIDE, PortSide.class, PortSide.BOTTOM, false));
 		registerCustomCSSValueManager(new PlacementManager(CSSConstants.PORT_POSITION));
 
 	}

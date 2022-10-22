@@ -30,7 +30,7 @@ abstract class AbstractPainter : Painter {
         if (r is Port) {
             var pr = r as Port
             val rri = pr.getRenderingInformation()
-            debug.append("port: "+pr.getPortDirection()+";");
+            debug.append("direction: "+pr.getPortDirection()+";");
             debug.append("pos: " + rri.position + "; ")
         }
 
@@ -90,14 +90,20 @@ abstract class AbstractPainter : Painter {
         if (r is Terminator) {
             val link = (r as Terminator).getConnection()
             val from = link.getDecorationForEnd(link.getFrom()) === r
+            val direction = if (link.getDrawDirection() != null)
+                if (from) Direction.reverse(link.getDrawDirection()) else link.getDrawDirection()
+            else
+                (r as Terminator).getArrivalSide()
+
             debug.append("terminates: " + link.getID() + "; ")
             debug.append("terminates-at: " + (if (from) link.getFrom().getID() else link.getTo().getID()) + "; ")
             debug.append("end: " + if (from) "from; " else "to; ")
+            debug.append("direction: "+lowercase(direction)+"; ")
         }
         if (r is Connection) {
             val link = r as Connection
             debug.append("link: ['" + link.getFrom().getID() + "','" + link.getTo().getID() + "']; ")
-            debug.append("direction: " + (r as Connection).getDrawDirection() + "; ")
+            debug.append("direction: " + lowercase((r as Connection).getDrawDirection()) + "; ")
             if ((r as Connection).getRenderingInformation().isContradicting) {
                 debug.append("contradicting: yes; ")
             }
@@ -110,7 +116,7 @@ abstract class AbstractPainter : Painter {
         if (r is Label) {
             val labelPlacement = (r as Label).getLabelPlacement()
             if (labelPlacement!=null) {
-                debug.append("placement: " + labelPlacement.toString().lowercase() + ";")
+                debug.append("placement: " + lowercase(labelPlacement) + ";")
             }
             val end = (r as Label).getEnd()
             if (end != null) {
