@@ -35,22 +35,22 @@ class JSElementContext : ElementContext {
      */
     private fun getUndirectedVersion(prop: String) : Pair<String?, Int> {
         if (prop.endsWith(CSSConstants.TOP)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.TOP.length - 1),0)
+            return Pair(prop.substring(0, prop.length - 3 - 1),0)
         }
         if (prop.endsWith(CSSConstants.RIGHT)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.RIGHT.length - 1),1)
+            return Pair(prop.substring(0, prop.length - 5 - 1),1)
         }
         if (prop.endsWith(CSSConstants.BOTTOM)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.BOTTOM.length - 1),2)
+            return Pair(prop.substring(0, prop.length - 6 - 1),2)
         }
         if (prop.endsWith(CSSConstants.LEFT)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.LEFT.length - 1),3)
+            return Pair(prop.substring(0, prop.length - 4 - 1),3)
         }
         if (prop.endsWith(CSSConstants.WIDTH)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.WIDTH.length) + CSSConstants.SIZE, 0)
+            return Pair(prop.substring(0, prop.length - 5) + CSSConstants.SIZE, 0)
         }
         if (prop.endsWith(CSSConstants.HEIGHT)) {
-            return Pair(prop.substring(0, prop.length - CSSConstants.HEIGHT.length) + CSSConstants.SIZE,1)
+            return Pair(prop.substring(0, prop.length -6) + CSSConstants.SIZE,1)
         }
 
         return Pair(null, 0);

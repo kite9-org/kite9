@@ -70,7 +70,6 @@ fun init() {
 
     // CONNECTION SIDES
     css.registerProperty( CSSProperty(CSSConstants.CONNECTIONS_PROPERTY,syntax<ConnectionsSeparation>(), lower(ConnectionsSeparation.SAME_SIDE), false))
-    css.registerProperty( CSSProperty(CSSConstants.ARRIVAL_SIDE,syntax<Direction>()+" | none","none", false))
 
     // ALIGNMENT
     css.registerProperty( CSSProperty(CSSConstants.VERTICAL_ALIGNMENT,syntax<VerticalAlignment>(), lower(VerticalAlignment.CENTER), false))
@@ -113,7 +112,7 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_WIDTH, "<length>", "10000px", true))
     css.registerProperty( CSSProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, "<length>", "10000px", true))
 
-    css.registerProperty(CSSProperty(CSSConstants.PORT_SIDE, syntax<PortSide>(), lower(PortSide.BOTTOM), inherits = false))
+    // PORT SPECIFIC
     css.registerProperty(CSSProperty(CSSConstants.PORT_POSITION, "<length-percentage>", "50%", false))
 
 }
