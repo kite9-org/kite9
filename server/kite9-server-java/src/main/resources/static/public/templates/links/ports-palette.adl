@@ -7,10 +7,10 @@
   style="--kite9-layout: down; ">
 
 	<container style="--kite9-layout: right; --kite9-margin-right: 30pt; --kite9-min-width: 200px; --kite9-min-height: 200px; ">
-		<port id="p-top" style="--kite9-port-side: top" />
-		<port id="p-right" style="--kite9-port-side: right" />
-		<port id="p-bottom" style="--kite9-port-side: bottom" />
-		<port id="p-left" style="--kite9-port-side: left" />
+		<port id="p-top" style="--kite9-direction: up;" />
+		<port id="p-right" style="--kite9-direction: right" />
+		<port id="p-bottom" style="--kite9-direction: down" />
+		<port id="p-left" style="--kite9-direction: left" />
 	</container>
 
 </diagram>

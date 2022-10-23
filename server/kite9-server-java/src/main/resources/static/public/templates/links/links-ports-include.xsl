@@ -13,7 +13,7 @@
 		<xsl:param name="k9-format">formats-shape</xsl:param>
 		<xsl:param name="k9-highlight">fill grab</xsl:param>
 		<xsl:param name="k9-texture">none</xsl:param>
-		<xsl:param name="k9-ui">connect delete drag port insert orphan</xsl:param>
+		<xsl:param name="k9-ui">connect delete drag port direction insert orphan</xsl:param>
 	    
 	    <xsl:param name="shape">
 			<rect x="-12" y="-12" width="24" height="24" />

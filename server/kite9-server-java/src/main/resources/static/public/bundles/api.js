@@ -1,3 +1,6 @@
+/**
+ * @type {function(Element, boolean ): boolean}
+ */
 export function hasLastSelected(e, onlyLastSelected) {
 	for (var i = 0; i < e.length; i++) {
 		var item = e[i];

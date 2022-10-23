@@ -1,4 +1,4 @@
-import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances, getKite9Target } from "/public/bundles/api.js";
+import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances, getKite9Target } from "../../../bundles/api.js";
 import { getMainSvg, closestSide, getElementPageBBox, currentTarget, getSVGCoords } from '/public/bundles/screen.js';
 import { parseStyle } from '/public/bundles/css.js'
 
@@ -56,9 +56,9 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 			command.push({
 				fragmentId: id,
 				type: 'ReplaceStyle',
-				name: '--kite9-port-side',
+				name: '--kite9-direction',
 				to: side,
-				from: portStyle['--kite9-port-side']
+				from: portStyle['--kite9-direction']
 			})
 		}
 		

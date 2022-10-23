@@ -39,9 +39,9 @@ export function initPortDropCallback(command, containment) {
 						command.push({
 							fragmentId: s.dragTarget.getAttribute("id"),
 							type: 'ReplaceStyle',
-							name: '--kite9-port-side',
+							name: '--kite9-direction',
 							to: side,
-							from: style['--kite9-port-side']
+							from: style['--kite9-direction']
 						});
 					}
 					

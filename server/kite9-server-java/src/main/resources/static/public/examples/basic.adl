@@ -4,7 +4,7 @@
 
    <box id="b1" >
    	<textarea id="t1" style="fill: red" >y</textarea>
-   	<port id="p1" style="--kite9-port-side: top; " />
+   	<port id="p1" style="--kite9-direction: up; " />
    </box>
    
    <container id="bigbox" style="fill: green; fill-opacity: 0.8; --kite9-margin-left: 50px; --kite9-layout: horizontal; ">

@@ -1,0 +1,15 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"compilerOptions": {
+		"disableSizeLimit": true,
+		"allowJs": true,
+		"outDir": "dist",
+		"target": "es2015",
+		"strict": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true
+	},
+	"include": [
+		"**/*"
+	]
+}

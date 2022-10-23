@@ -139,7 +139,7 @@ export function canRenderClientSide() {
 
 
 /**
- * Returns the string 'top', 'bottom','left','right' 
+ * Returns the string 'up', 'down','left','right' 
  * for a given point on the screen related to a target.
  */
 export function closestSide(dropTarget, eventCoords = {x :0, y: 0}) {
@@ -152,13 +152,13 @@ export function closestSide(dropTarget, eventCoords = {x :0, y: 0}) {
 	const rightDist = Math.abs(boxCoords.x + boxCoords.width - eventCoords.x);
 	
 	const dists = {
-		'top': topDist,
+		'up': topDist,
 		'right': rightDist, 
-		'bottom': bottomDist, 
+		'down': bottomDist, 
 		'left': leftDist 
 	};
 	
-	const bestSide = ['top', 'right', 'bottom', 'left']
+	const bestSide = ['up', 'right', 'down', 'left']
 		.reduce((a, b) => dists[a] < dists[b] ? a : b, 'top');
 		
 	return bestSide;

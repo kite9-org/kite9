@@ -4,9 +4,7 @@ import { extractFormValues } from '/public/behaviours/styleable/styleable.js'
 
 export const portsPositionIcon = '/public/behaviours/ports/port.svg'
 
-const portSideOptions = [ 'top', 'left', 'bottom', 'right' ]
-
-const props = [ '--kite9-port-side', '--kite9-port-position' ]
+const props = [ '--kite9-port-position' ]
 
 const positionRegex = /^([0-9\-\.]+)(px|\%)$/
 
@@ -37,7 +35,6 @@ export function initPortsPositionBuildControls() {
 		const { amount, unit } = parsePosition(position);
 		
 		return [ fieldset('Port Position', [
-			select(props[0], style[props[0]], {}, [ '', ...portSideOptions ]) ,
 			numeric('amount', amount, {name: undefined, id: 'amount'}),
 			select('unit', unit, {name: undefined, id: 'unit'}, [ '%', 'px' ]),
 			hidden(props[1], style[props[1]], {})
