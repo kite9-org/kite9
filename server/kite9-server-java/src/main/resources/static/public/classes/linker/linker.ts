@@ -49,7 +49,7 @@ export class Linker {
 	start(selectedElements : Element[], template: Element) {
 		if (template == undefined) {
 			alert("Link Template Not Loaded");
-			return;
+			return; 
 		}
 		
 		Array.from(selectedElements)
