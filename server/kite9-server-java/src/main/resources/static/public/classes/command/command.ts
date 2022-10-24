@@ -1,32 +1,47 @@
-import { getMainSvg } from "/public/bundles/screen.js";
-import { encodeADLElement } from '/public/bundles/api.js'
+import { getMainSvg } from "../../bundles/screen.js";
+import { encodeADLElement } from '../../bundles/api.js'
+
+export type command = {
+	type: string
+}
+
+export type update = {
+	type: string,
+	base64adl: string,
+	commands: command[]	
+}
+
+type callback = (u: update) => void
 
 /**
  * Command handles the flow of commands through the system, and the undo/redo log and
  * keeps track of the ADL for the current document.
  */
 export class Command {
+
+	commandList : command[] = []
+	callbacks  : callback[] = []
+	history : update[] = []
+	version = 0
+	base64adl = ''
+	doc : Document | null = null
 	
 	constructor() {
-		this.commandList = [];
-		this.history = [];
-		this.callbacks = [];
-		this.version = 0;
 		this.base64adl = getMainSvg().getElementById("adl:markup").textContent;
 		this.doc = undefined;
 	}
 	
-	add(cb) {
+	add(cb : callback) {
 		// NB: additions go at the start of the callback structure.
 		this.callbacks.unshift(cb);
 	}
 	
-	adlUpdated(base64adl) {
+	adlUpdated(base64adl : string) {
 		this.base64adl = base64adl;
 		this.doc = undefined;
 	}
 	
-	getAdl(id) {
+	getAdl(id : string) {
 		const el = this.getADLDom(id);
 		if (el == undefined) {
 			return undefined;
@@ -35,10 +50,10 @@ export class Command {
 		return encodeADLElement(elText);
 	}
 	
-	getADLDom(id) {
+	getADLDom(id : string) {
 		if (this.doc == undefined) {
-			var text = atob(this.base64adl);
-			var parser = new DOMParser();
+			const text = atob(this.base64adl);
+			const parser = new DOMParser();
 			this.doc = parser.parseFromString(text, "application/xml");
 		}
 		
@@ -80,11 +95,11 @@ export class Command {
 		}
 	}
 	
-	push(command) {
+	push(command : command) {
 		this.commandList.push(command);
 	}
 	
-	pushAllAndPerform(commands) {
+	pushAllAndPerform(commands : command[]) {
 		this.commandList = this.commandList.concat(commands);
 		this.perform();
 	}
@@ -111,9 +126,9 @@ export class Command {
  * If the SVG document is returned containing the base64-encoded ADL
  * markup, make sure to update it here.
  */
-export function initCommandTransitionCallback(command) {
+export function initCommandTransitionCallback(command : Command) {
 	
-	return function(doc) {
+	return function(doc : Document) {
 		const adl = doc.getElementById("adl:markup");
 		if (adl) {
 			command.adlUpdated(adl.textContent);
