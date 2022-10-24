@@ -1,7 +1,14 @@
-import { getHtmlCoords } from '/public/bundles/screen.js'
-import { ensureCss } from '/public/bundles/ensure.js'
-import { icon, fieldset, form } from '/public/bundles/form.js'
-import { number } from '/public/bundles/api.js'
+import { getHtmlCoords } from '../../bundles/screen.js'
+import { ensureCss } from '../../bundles/ensure.js'
+import { icon, fieldset, form } from '../../bundles/form.js'
+import { number } from '../../bundles/api.js'
+
+type coords = {
+	x: number,
+	y: number
+}
+
+type callback = (e: Event, cm: ContextMenu) => void
 
 /**
  * Provides functionality for populating the context menu.  Takes a number of callbacks
@@ -9,24 +16,26 @@ import { number } from '/public/bundles/api.js'
  */
 export class ContextMenu {
 
-	constructor(instrumentation) {
-		this.instrumentation = instrumentation;
-		this.callbacks = [];
+	menu : HTMLElement | null = undefined
+	moving: HTMLElement | null = undefined
+	callbacks : callback[] = []
+	offsetCoords: coords | null = undefined
+	eventCoords: coords | null = undefined
+
+	constructor() {
 		ensureCss('/public/classes/context-menu/context-menu.css');
 		
-		this.moving = undefined;
-		this.offsetCoords = undefined;
 		this.eventCoords = undefined;
 	
-		document.addEventListener("mouseup", (e) => this.moving = undefined);
+		document.addEventListener("mouseup", () => this.moving = undefined);
 		document.addEventListener("mousemove", (e) => this.move(e));
-		document.addEventListener("touchend", (e) => this.moving = undefined);
+		document.addEventListener("touchend", () => this.moving = undefined);
 		document.addEventListener("touchmove", (e) => this.move(e), { passive: false });
 	}
 	
-	move(e) {
+	move(e : Event) {
 		if (this.moving) {
-			var ec = getHtmlCoords(e)
+			const ec = getHtmlCoords(e)
 			this.moving.style.left = (ec.x + this.offsetCoords.x) +"px";
 			this.moving.style.top = (ec.y + this.offsetCoords.y)+"px";
 			e.stopPropagation();
@@ -35,7 +44,7 @@ export class ContextMenu {
 		}
 	}
 	
-	start(e) {
+	start(e : Event) {
 		if (e.target == this.menu) {
 			this.eventCoords = getHtmlCoords(e)
 			this.offsetCoords = {
@@ -46,9 +55,9 @@ export class ContextMenu {
 		}
 	}
 
-	end(e) {
+	end(e : Event) {
 		if (this.moving) {
-			var cc = getHtmlCoords(e);
+			const cc = getHtmlCoords(e);
 			if ((this.eventCoords.x == cc.x) && (this.eventCoords.y == cc.y)) {
 				this.destroy();
 				e.stopPropagation();
@@ -56,7 +65,7 @@ export class ContextMenu {
 		}
 	}
 	
-	add(cb) {
+	add(cb : callback) {
 		this.callbacks.push(cb);
 	}
 	
@@ -64,8 +73,8 @@ export class ContextMenu {
 	 * Creates the context menu within the main svg element,
 	 * positioning it relative to the event that created it.
 	 */
-	get(event) {
-		var theForm = document.querySelector("#contextMenu-form");
+	get(event: Event) {
+		let theForm = document.querySelector("#contextMenu-form");
 		if (theForm) {
 			return theForm;
 		} else {
@@ -97,7 +106,7 @@ export class ContextMenu {
 	/**
 	 * Call this when the user clicks on an element that might need a context menu.
 	 */
-	handle(event) {
+	handle(event : Event) {
 		this.callbacks.forEach(cb => cb(event, this));	
 	}
 	
@@ -114,14 +123,14 @@ export class ContextMenu {
 	/** 
 	 * Short-hand way of adding a single control to the context menu
 	 */
-	addControl(event, imageUrl, title, clickListener, set = "Actions", imageAtts) {
-		var htmlElement = this.get(event);
-		var fs = document.getElementById("#contextMenu-"+set);
+	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void, set = "Actions", imageAtts: object) {
+		const htmlElement = this.get(event);
+		let fs = document.getElementById("#contextMenu-"+set);
 		if (!fs) {
 			fs = fieldset(set, [], {'id' : "#contextMenu-"+set});
 			htmlElement.appendChild(fs);			
 		}
-		var out = icon('_cm-'+title, title, imageUrl, clickListener, imageAtts)
+		const out = icon('_cm-'+title, title, imageUrl, clickListener, imageAtts)
 		fs.appendChild(out);
 		
 		return out;
@@ -130,8 +139,8 @@ export class ContextMenu {
 	/**
 	 * Removes all the content from the context menu
 	 */
-	clear(event) {
-		var htmlElement = this.get(event);
+	clear(event: Event) {
+		const htmlElement = this.get(event);
 		Array.from(htmlElement.children).forEach(e => {
 			htmlElement.removeChild(e);
 		});

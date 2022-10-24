@@ -74,7 +74,7 @@ export function parseInfo(t : Element) : object {
 			const colon = p.indexOf(":");
 			if (colon > -1) {
 				const name = p.substring(0, colon).trim();
-				let value = p.substring(colon+1).trim();
+				const value = p.substring(colon+1).trim();
 				
 				if (value.startsWith("[") && value.endsWith("]")) {
 					const v2 = value.substring(1, value.length-1)
@@ -111,9 +111,9 @@ export function getParentElements(elements : Element[]) : Element[] {
 
 
 export function getNextSiblingElement(elem : Element) : Element | null {
-	var p = elem;
-	var children = Array.from(p.parentElement.children).filter(e => e.hasAttribute("k9-elem"));
-	var thisOne = children.indexOf(elem);
+	const p = elem;
+	const children = Array.from(p.parentElement.children).filter(e => e.hasAttribute("k9-elem"));
+	const thisOne = children.indexOf(elem);
 	if (thisOne < children.length-1) {
 		return children[thisOne+1];
 	} else {
@@ -132,7 +132,7 @@ export function getContainedChildren(elem : Element, criteria : (e: Element) => 
 	const out = [];
 	
 	function traverse(e) {
-		for (let c of e.children) {
+		for (const c of e.children) {
 			
 			if (c.hasAttribute("id") && c.hasAttribute("k9-elem")) {
 				const id = c.getAttribute("id");
@@ -175,7 +175,7 @@ type transform = {
 }
 
 export function transformToCss(a : transform) : string {
-	var out = '';
+	let out = '';
 	if ((a.scaleX) && (a.scaleX != 1 )) {
 		out = out + "scaleX("+a.scaleX+") ";
 	}
@@ -221,10 +221,10 @@ export function parseTransform(a: string): transform {
 		return b;
 	}
 	
-	let arr = a.match(/(\w+\((\-?\d*\.?\d*e?\-?\d*[(px),\ ]*)+\))+/g)
-	for (var i in arr) {
-		var c = arr[i].match(/[\w\.\-]+/g);
-		var name = c.shift();
+	const arr = a.match(/(\w+\((-?\d*\.?\d*e?-?\d*[(px), ]*)+\))+/g)
+	for (const i in arr) {
+		const c = arr[i].match(/[\w.-]+/g);
+		const name = c.shift();
 		if (c.length > 1) {
 			b[name] = c.map(e => number(e));
 		} else {
@@ -266,7 +266,7 @@ export function changeId(e: Element, oldId: string, newId: string) {
 				newId = id.replace(oldId, newId);
 				e.setAttribute("id", newId+"@"+part);
 			} else if (oldId.indexOf(id) == 0) {
-				
+				// do nothing
 			} else {
 				descend = false;
 			}
@@ -282,8 +282,8 @@ export function changeId(e: Element, oldId: string, newId: string) {
 	}
 	
 	if (descend) {
-		var cntr = 0;
-		for (var i = 0; i < e.children.length; i++) {
+		let cntr = 0;
+		for (let i = 0; i < e.children.length; i++) {
 			const c = e.children[i];
 			const cOld = c.getAttribute("id");
 			const cNew = cOld == undefined ? newId : newId + "-" + (cntr ++);
@@ -489,7 +489,7 @@ export function getCommonContainer(a : Node, b : Node) : Element {
 	return a as Element;
 }
 
-export function onlyUnique(value : any, index: number, self: any[]) { 
+export function onlyUnique(value : unknown, index: number, self: unknown[]) { 
     return self.indexOf(value) === index;
 }
 

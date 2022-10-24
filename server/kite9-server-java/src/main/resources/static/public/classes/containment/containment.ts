@@ -1,15 +1,17 @@
 export const WILDCARD = "*";
 
+type WcElement = string | Element
+
+type callback = (elements: WcElement[], parents?: WcElement[], children?: WcElement[]) => Element[]
+
 /** 
  * Handles drag and drop rules, as well as surround/contain and insert.  Replace is handled elsewhere.
  */
 export class Containment {
-		
-	constructor() {
-		this.callbacks = [];
-	}
+
+	callbacks : callback[] = []
 	
-	add(cb) {
+	add(cb: callback) {
 		this.callbacks.push(cb);
 	}
 	
@@ -19,7 +21,7 @@ export class Containment {
 	 * Generally, these are SVG (kite9) elements, but you can also supply "*" ( a string-star), which acts as a wildcard.
 	 * Parents and children are optional, and will "limit" the elements returned in the reduction.
 	 */
-	allowed(elements, parents, children) {
+	allowed(elements : WcElement[], parents? :Element[], children?: Element[]) : Element[] {
 		// run each callback.  return the union of allowed elements from all callbacks.
 		
 		return this.callbacks
@@ -30,7 +32,7 @@ export class Containment {
 	/**
 	 * Helper function
 	 */
-	canContain(element, parent) {
+	canContain(element: Element[], parent: Element) {
 		return this.allowed(
 			Array.isArray(element) ? element : [element], 
 			Array.isArray(parent) ? parent : [parent]).length == 1;
@@ -39,23 +41,22 @@ export class Containment {
 	/**
 	 * Helper function
 	 */
-	canContainAll(elements, parent) {
+	canContainAll(elements: Element[], parent: Element) : boolean {
 		return this.allowed(elements, 
 			Array.isArray(parent) ? parent : [parent]
 			).length == elements.length;
 	}
 	
-	canSurroundAll(elements, parents, children) {
+	canSurroundAll(elements: Element[], parents: Element[], children: Element[]) : boolean {
 		return this.allowed(elements, parents, children).length == elements.length;
 	}
 	
 	/**
 	 * Can insert into this container
 	 */
-	canInsert(containers, children) {
+	canInsert(containers: Element[], children : Element[]) : boolean {
 		return this.allowed([ WILDCARD ], 
 			Array.isArray(containers) ? containers : [ containers], 
 			Array.isArray(children) ? children : [ children ]).length == 1;
 	}
 }
-

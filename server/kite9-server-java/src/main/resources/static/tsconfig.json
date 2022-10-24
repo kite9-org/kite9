@@ -3,7 +3,7 @@
 	"compilerOptions": {
 		"disableSizeLimit": true,
 		"allowJs": true,
-		"outDir": "../../../../target/classes/static",
+		"outDir": "../../../../target/classes/static/public",
 		"target": "es2021",
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
