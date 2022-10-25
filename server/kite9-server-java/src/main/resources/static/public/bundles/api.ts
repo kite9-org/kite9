@@ -65,7 +65,13 @@ export function reverseDirection(d : string) : string {
     return d;
 }
 
-export function parseInfo(t : Element) : object {
+type info = {
+	'link'?: string[],
+	'terminates-at': string
+	
+}
+
+export function parseInfo(t : Element) : info  {
 	if ((t!= null) &&(t.hasAttribute("k9-info"))) {
 		const parts = t.getAttribute("k9-info").split(';');
 		const out = {}
@@ -86,9 +92,9 @@ export function parseInfo(t : Element) : object {
 				}
 			}
 		});
-		return out;
+		return out as info;
 	} else {
-		return {};
+		return {} as info;
 	}
 }
 

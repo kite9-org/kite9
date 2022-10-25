@@ -1,15 +1,15 @@
-import { ensureCss } from '/public/bundles/ensure.js'
+import { ensureCss } from '../../bundles/ensure.js'
 
 export class Modal {
 
-	constructor(id, cb) {
+	id : string
+
+	constructor(id) {
 		this.id = id;
-		this.callbacks = cb == undefined ? [] : cb;
-		this.expanded = {};
 
 		ensureCss('/public/classes/modal/modal.css');
 		
-		var darken = document.getElementById("_darken");
+		let darken = document.getElementById("_darken");
 		if (!darken) {
 			darken = document.createElement("div");
 			darken.setAttribute("id", "_darken");
@@ -18,7 +18,7 @@ export class Modal {
 			darken.style.display = 'none';
 		}
 		
-		var modal = document.getElementById(this.id);
+		let modal = document.getElementById(this.id);
 		if (!modal) {
 			// create modal
 			modal = document.createElement("div");
@@ -27,42 +27,33 @@ export class Modal {
 			document.querySelector("body").appendChild(modal);
 						
 			// create content area
-			var content = document.createElement("div");
+			const content = document.createElement("div");
 			content.setAttribute("class", "content");
 			modal.appendChild(content);
 		}
 	}
 	
-	getId() {
+	getId() : string {
 		return this.id;
 	}
 	
-	get(event) {
-	}
-	
-	getContent(event) {
+	getContent() : Element {
 		return document.getElementById(this.id).querySelector("div.content");		
-	}
-	
-	getOpenEvent() {
-		return this.openEvent;
 	}
 	
 	/**
 	 * Removes all the content
 	 */
-	clear(event) {
-		var content = this.getContent(event);
+	clear() {
+		const content = this.getContent();
 		Array.from(content.children).forEach(e => {
 			content.removeChild(e);
 		});
 	}
 		
-	open(event) {
-		this.openEvent = event;
-		
-		var darken = document.getElementById("_darken");
-		var modal = document.getElementById(this.id);
+	open() {
+		const darken = document.getElementById("_darken");
+		const modal = document.getElementById(this.id);
 								
 		modal.style.visibility = 'visible';
 		darken.style.display = 'block';
@@ -71,8 +62,8 @@ export class Modal {
 	}
 	
 	destroy() {
-		var modal = document.getElementById(this.id);
-		var darken = document.getElementById("_darken");
+		const modal = document.getElementById(this.id);
+		const darken = document.getElementById("_darken");
 		modal.style.visibility = 'hidden';
 		darken.style.display = 'none';
 	}

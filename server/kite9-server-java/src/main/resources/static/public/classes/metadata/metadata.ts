@@ -1,17 +1,18 @@
-import { onlyUnique } from '/public/bundles/api.js'
+type callback = (md: object) => void
 
 /**
  * Handles monitoring of document metadata, and callbacks for when it changes.
  */
 export class Metadata {
+	
+	callbacks : callback[] = [];
+	metadata : object = {};
 
 	constructor() {
-		this.callbacks = [];
-		this.metadata = {};
 		this.process(document);
 	}
 	
-	convert(e) {
+	convert(e: Element) {
 		if (e == null) {
 			return {};
 		}
@@ -32,7 +33,7 @@ export class Metadata {
 		}
 	}
 	
-	process(d) {
+	process(d : Document) {
 		const olds = this.metadata;
 		
 		// remove these transient metadata elements.
@@ -53,16 +54,16 @@ export class Metadata {
 		});	
 	}
 	
-	add(cb) {
+	add(cb : callback) {
 		this.callbacks.push(cb);
 		cb(this.metadata);
 	}
 	
-	get(item) {
+	get(item : string) {
 		return this.metadata[item];
 	}
 	
-	isEditor() {
+	isEditor() : boolean {
 		const role = this.get('role');
 		
 		// by only strictly ignoring viewers, we allow people to edit the public templates, 
