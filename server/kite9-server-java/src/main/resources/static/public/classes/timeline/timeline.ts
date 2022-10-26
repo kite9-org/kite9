@@ -1,21 +1,38 @@
+/**
+ * This is a function that takes a 0-1 value as input 
+ * and linearly updates a property to reflect the transition
+ * at that point.
+ */
+type Transition = (fraction : number) => void
+type Transform = {
+	translateX : number,
+	translateY: number,
+	scaleX: number,
+	scaleY: number
+}
 
 
-const PATH_PARSE = /([A-Za-z])([0-9\-\.\s]+)*/g;
+const PATH_PARSE = /([A-Za-z])([0-9\-.\s]+)*/g;
 
-
+/**
+ * Timeline is used to tweening between two different diagram states.
+ */
 export class Timeline {
 
+	duration: number;
+	elements: Transition[];
+	startTime: number;
 
-	constructor(duration) {
+	constructor(duration: number) {
 		this.duration = duration;
 		this.elements = [];
 	}
 	
-	ease(x) {
+	ease(x : number) {
 		return (-Math.cos(x * Math.PI))/2 + .5;
 	}
 
-	perform(time) {
+	perform(time?: number) {
 		if (this.startTime) {
 			const fraction = (time - this.startTime) / this.duration;
 
@@ -37,14 +54,20 @@ export class Timeline {
 		requestAnimationFrame(() => this.perform());
 	}
 
-	attribute(target, attribute, from, to, suffix = '') {
+	/**
+	 * Animates an attribute
+	 */
+	attribute(target: SVGGraphicsElement, attribute: string, from: number, to: number, suffix = '') {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
 			target.setAttribute(attribute, newVal + suffix);
 		});
 	}
 	
-	style(target, style, from, to, suffix = '') {
+	/**
+	 * Animates a css style in the style declaration.
+	 */
+	style(target : SVGGraphicsElement, style: string, from: number, to: number, suffix = '') {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
 			target.style[style] = newVal + suffix;			
@@ -53,15 +76,9 @@ export class Timeline {
 
 	/**
 	 * animates the transform for an element, using scale and translate only.
-	 * Format of from, to is: { 
-     *	translateX: 0,
-     *	translateY: 0,
-     *	scaleX: 1,
-     *	scaleY: 1
-     * };
 	 */
-	transform(target, from, to) {
-		function interp(f, from, to) {
+	transform(target: SVGGraphicsElement, from : Transform, to: Transform) {
+		function interp(f : number, from: number, to : number) {
 			return (to - from) * f + from;
 		}
 		
@@ -88,7 +105,7 @@ export class Timeline {
 	 * - A path consists of a move (M) followed by a number of
 	 * - L, (Q/A) steps, ending in an L.
 	 */
-	path(target, from, to) {
+	path(target: SVGGraphicsElement, from: string, to : string) {
 		
 		function buildList(s) {
 			return Array.from(s.matchAll(PATH_PARSE))
@@ -111,9 +128,9 @@ export class Timeline {
 		
 		const fromArray = buildList(from);
 		const toArray = buildList(to);
-		var fromI = 0;
-		var toI = 0;
-		var lastFrom, lastTo;
+		let fromI = 0;
+		let toI = 0;
+		let lastFrom, lastTo;
 		
 		const mapping = [];
 		

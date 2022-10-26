@@ -13,6 +13,7 @@ type SetCallback = (p: Property,
 
 /**
  * Handles property functions where there might need to be pluggable behaviour.
+ * A property is represented as a subset of the context menu for controlling a single property.
  */
 export class Property {
 

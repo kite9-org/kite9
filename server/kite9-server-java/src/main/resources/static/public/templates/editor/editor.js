@@ -5,7 +5,7 @@
 // classes
 
 import { Containment } from '/public/classes/containment/containment.js'
-import { Property } from '/public/classes/property/property.js'
+import { Property } from '/public/classes/context-menu/property.js'
 
 // Behaviours
 
