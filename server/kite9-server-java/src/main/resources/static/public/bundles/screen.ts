@@ -1,31 +1,41 @@
 import { parseTransform } from './api.js';
 
-var _svg;
+type Coords = {
+	x: number, 
+	y: number
+}
 
-export function getMainSvg() {
+type BBox = Coords & {
+	width: number,
+	height: number
+}
+
+let _svg : SVGSVGElement;
+
+export function getMainSvg() : SVGSVGElement {
 	if (_svg == undefined) {
 		_svg = document.querySelector("div.main svg");
 	}
 	return _svg;
 }
 
-export function getHtmlCoords(evt) {
-	var out =  {x: evt.pageX, y: evt.pageY};
+export function getHtmlCoords(evt: MouseEvent) : Coords {
+	const out =  {x: evt.pageX, y: evt.pageY};
 	
 	return out;
 }
 
-export function getSVGCoords(evt, draw) {
-	var out = getHtmlCoords(evt);
-	var transform = getMainSvg().style.transform;
-	var t = parseTransform(transform);
+export function getSVGCoords(evt : MouseEvent, draw = false) {
+	const out = getHtmlCoords(evt);
+	const transform = getMainSvg().style.transform;
+	const t = parseTransform(transform);
 	out.x = out.x / t.scaleX;
 	out.y = out.y / t.scaleY;
 	
 	if (draw) {
-		var el = document.createElementNS("http://www.w3.org/2000/svg", "ellipse")
-		el.setAttribute("cx", out.x);
-		el.setAttribute("cy", out.y);
+		const el = document.createElementNS("http://www.w3.org/2000/svg", "ellipse")
+		el.setAttribute("cx", ""+ out.x);
+		el.setAttribute("cy", ""+ out.y);
 		el.setAttribute("rx", "4px");
 		el.setAttribute("ry", "4px");
 		getMainSvg().appendChild(el);
@@ -34,7 +44,7 @@ export function getSVGCoords(evt, draw) {
 	return out;
 }
 
-export function getElementPageBBox(e) {
+export function getElementPageBBox(e : SVGGraphicsElement) : BBox {
 	const mtrx = e.getCTM();
 	const bbox = e.getBBox();
 	return {
@@ -45,10 +55,10 @@ export function getElementPageBBox(e) {
 	}
 }
 
-export function getElementHTMLBBox(e) {
-	var transform = getMainSvg().style.transform;
-	var t = parseTransform(transform);
-	var out = getElementPageBBox(e);
+export function getElementHTMLBBox(e : SVGGraphicsElement) : BBox {
+	const transform = getMainSvg().style.transform;
+	const t = parseTransform(transform);
+	const out = getElementPageBBox(e);
 	out.x = out.x * t.scaleX;
 	out.y = out.y * t.scaleY;
 	out.width = out.width * t.scaleX;
@@ -56,7 +66,7 @@ export function getElementHTMLBBox(e) {
 	return out;
 }
 
-export function getElementsPageBBox(elements) {
+export function getElementsPageBBox(elements : SVGGraphicsElement[]) : BBox {
 	return elements
 		.map(e => getElementPageBBox(e))
 		.reduce((a, b) => { return {
@@ -70,62 +80,42 @@ export function getElementsPageBBox(elements) {
 /**
  * This is from https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript#4819886
  */
-export function is_touch_device4() {
-    
-    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
-    
-    var mq = function (query) {
-        return window.matchMedia(query).matches;
-    }
-
-    if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-        return true;
-    }
-
-    // include the 'heartz' as a way to have a non matching MQ to help terminate the join
-    // https://git.io/vznFH
-    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
-    return mq(query);
+export function is_touch_device4() : boolean {
+  return (('ontouchstart' in window) ||
+     (navigator.maxTouchPoints > 0));
 }
-
 
 /**
  * More reliable method of getting current target, which works with touch events. 
  */
-export function currentTarget(event) {
-	if (event.touchTarget) {
-		return event.touchTarget;
+export function currentTarget(event: MouseEvent) : SVGGraphicsElement {
+	if ((event as any).touchTarget) {
+		return (event as any).touchTarget;
 	}
 	
 	const coords = getHtmlCoords(event);		
-	var v = document.elementFromPoint(coords.x - window.pageXOffset, coords.y - window.pageYOffset);
-	event.touchTarget = v;
-	return event.touchTarget;
+	const v = document.elementFromPoint(coords.x - window.pageXOffset, coords.y - window.pageYOffset);
+	(event as any).touchTarget = v;
+	return v as SVGGraphicsElement;
 }
 
 /** 
  * SVG Element builder
  */
-export function svg(tag, atts, contents) {
-	function objectEach(m, action) {
-		for (var key in m) {
-		    // skip loop if the property is from prototype
-		    if (m.hasOwnProperty(key)) {
-		    	const val = m[key];
-		    	if (val) {
-			        action(key, val);
-		    	}
-		    }
-		}	
-	}
-	
-	var e = document.createElementNS("http://www.w3.org/2000/svg", tag);
-	objectEach(atts, (k, v) => e.setAttribute(k, v));
-	
+export function svg(tag: string, atts: object, contents: Element[]) {
+	const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+	Object.keys(atts).forEach(key => {
+		const val = atts[key];
+		if (val) {
+			e.setAttribute(key, val);
+		}
+
+	});
+
 	if (contents) {
 		contents.forEach(c => e.appendChild(c));
 	}
-	
+
 	return e;
 }
 
@@ -134,7 +124,7 @@ export function svg(tag, atts, contents) {
  * Detect whether we can render on the client side
  */
 export function canRenderClientSide() {
-	return (window.CSS.registerProperty != null);
+	return ((window.CSS as any).registerProperty != null);
 }
 
 
@@ -142,8 +132,7 @@ export function canRenderClientSide() {
  * Returns the string 'up', 'down','left','right' 
  * for a given point on the screen related to a target.
  */
-export function closestSide(dropTarget, eventCoords = {x :0, y: 0}) {
-	const OUT_OF_BOUNDS = 100000;
+export function closestSide(dropTarget: SVGGraphicsElement, eventCoords : Coords = {x :0, y: 0}) {
 	const boxCoords = getElementPageBBox(dropTarget);
 	
 	const topDist = Math.abs(eventCoords.y - boxCoords.y); 
