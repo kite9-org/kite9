@@ -1,15 +1,15 @@
-import { icon, fieldset, form, cancel } from '/public/bundles/form.js'
-import { ensureCss } from '/public/bundles/ensure.js'
+import { icon, fieldset, form, cancel } from '../../bundles/form.js'
+import { ensureCss } from '../../bundles/ensure.js'
 
 const NO_USER = {
 	name: "Anonymous",
 	icon:  '/public/behaviours/identity/user.svg',
 }
 
-var currentUser = NO_USER;
-var navigator;
-var metadata;
-var collaborators = undefined;
+let currentUser = NO_USER;
+let navigator;
+let metadata;
+let collaborators = undefined;
 
 export function identityMetadataCallback(md) {
 	
@@ -64,11 +64,11 @@ function popupCollaborators(event, ownerIcon) {
 
 function updateUser(user, alert, notification) {
 	if (navigator) {
-		var avatar = navigator.querySelector("#_avatar");
-		var attrs = alert ? {'style' : 'filter: brightness(120%); '} : null;
-		var pop = notification ? notification : user['name'];
+		const avatar = navigator.querySelector("#_avatar");
+		const attrs = alert ? {'style' : 'filter: brightness(120%); '} : {};
+		const pop = notification ? notification : user['name'];
 		
-		var newAvatar = icon('_avatar', pop, user['icon'], undefined, attrs);
+		const newAvatar = icon('_avatar', pop, user['icon'], undefined, attrs);
 		
 		if (metadata['collaborators']) {
 			newAvatar.addEventListener('click', function (e) {
