@@ -1,5 +1,6 @@
 import { icon, fieldset, form, cancel } from '../../bundles/form.js'
 import { ensureCss } from '../../bundles/ensure.js'
+import { Metadata } from '../../classes/metadata/metadata.js'
 
 const NO_USER = {
 	name: "Anonymous",
@@ -7,11 +8,11 @@ const NO_USER = {
 }
 
 let currentUser = NO_USER;
-let navigator;
-let metadata;
+let navigator : HTMLElement;
+let metadata : object;
 let collaborators = undefined;
 
-export function identityMetadataCallback(md) {
+export function identityMetadataCallback(md: Metadata) {
 	
 	metadata = md;
 	
@@ -33,7 +34,7 @@ export function identityMetadataCallback(md) {
 	}
 }
 
-function popupCollaborators(event, ownerIcon) {
+function popupCollaborators(event: Event, ownerIcon : HTMLElement) {
 	collaborators = document.querySelector("#_collaborators");
 	if (collaborators) {
 		collaborators.parentElement.removeChild(collaborators);
@@ -62,7 +63,7 @@ function popupCollaborators(event, ownerIcon) {
 	}
 }
 
-function updateUser(user, alert, notification) {
+function updateUser(user : object, alert = false, notification = false) {
 	if (navigator) {
 		const avatar = navigator.querySelector("#_avatar");
 		const attrs = alert ? {'style' : 'filter: brightness(120%); '} : {};
@@ -72,7 +73,7 @@ function updateUser(user, alert, notification) {
 		
 		if (metadata['collaborators']) {
 			newAvatar.addEventListener('click', function (e) {
-				popupCollaborators(e, newAvatar, metadata);
+				popupCollaborators(e, newAvatar);
 			});
 		}
 		
@@ -90,7 +91,7 @@ function updateUser(user, alert, notification) {
 
 
 export function initIdentityInstrumentationCallback() {
-	return function(nav) {
+	return function(nav : HTMLElement) {
 		navigator = nav;
 		ensureCss('/public/behaviours/identity/collaborators.css');
 		updateUser(currentUser);
