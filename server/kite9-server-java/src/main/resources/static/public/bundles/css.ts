@@ -1,21 +1,25 @@
 /** From: https://github.com/joshwnj/style-attr */
 
-export function parseStyle(raw, opts) {
-  opts = opts || {}
+type ParseOptions = {
+	preserveNumbers: boolean
+}
+
+export function parseStyle(raw : string, opts : ParseOptions = {
+	preserveNumbers: false}) {
   raw = raw || ""
 
-  var preserveNumbers = opts.preserveNumbers;
-  var trim = function (s) { return s.trim(); };
-  var obj = {};
+  const preserveNumbers = opts.preserveNumbers;
+  const trim = function (s) { return s.trim(); };
+  const obj = {};
 
   getKeyValueChunks(raw)
     .map(trim)
     .filter(Boolean)
     .forEach(function (item) {
       // split with `.indexOf` rather than `.split` because the value may also contain colons.
-      var pos = item.indexOf(':');
-      var key = item.substr(0, pos).trim();
-      var val = item.substr(pos + 1).trim();
+      const pos = item.indexOf(':');
+      const key = item.substr(0, pos).trim();
+      let val = item.substr(pos + 1).trim();
       if (preserveNumbers && isNumeric(val)) {
         val = Number(val);
       }
@@ -31,12 +35,12 @@ function isNumeric(n) {
 }
 
 function getKeyValueChunks(raw) {
-  var chunks = [];
-  var offset = 0;
-  var sep = ';';
-  var hasUnclosedUrl = /url\([^\)]+$/;
-  var chunk = '';
-  var nextSplit;
+  const chunks = [];
+  let offset = 0;
+  const sep = ';';
+  const hasUnclosedUrl = /url\([^)]+$/;
+  let chunk = '';
+  let nextSplit;
   while (offset < raw.length) {
     nextSplit = raw.indexOf(sep, offset);
     if (nextSplit === -1) { nextSplit = raw.length; }
@@ -58,6 +62,6 @@ function getKeyValueChunks(raw) {
   return chunks;
 }
 
-export function formatStyle(map) {
+export function formatStyle(map : object) {
 	return Object.keys(map).map(k => k +": "+map[k]+";").reduce((a, b) => a+" "+b, "");
 }

@@ -187,6 +187,7 @@ export function checkbox(placeholder: string, value: string, atts: object) : HTM
 	]);
 }
 
+/*
 export function radios(placeholder: string, value: string, atts: object = {}, options : string[]) : HTMLElement {
 	const id = idFrom(placeholder);
 	return create('div', {}, options.map(o => {
@@ -197,6 +198,7 @@ export function radios(placeholder: string, value: string, atts: object = {}, op
 		])
 	}));
 }
+*/
 
 export function textarea(placeholder: string, value: string, atts: object = {}) : HTMLElement {
 	const id = idFrom(placeholder);
