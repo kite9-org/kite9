@@ -1,10 +1,13 @@
-import { parseInfo, getContainerChildren } from "/public/bundles/api.js";
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '/public/bundles/screen.js'
+import { parseInfo, getContainerChildren } from "./api.js";
+import { getSVGCoords, getElementPageBBox, getMainSvg } from './screen.js'
 
-function doSort(contents, horiz, c, ignore) {
-	var sorted = contents
+/**
+ * Works out the closest element to the point at c.  
+ */
+function doSort(contents: Element[], horiz : boolean, c: number) : Element | null {
+	let sorted = contents
 		.map((e, i) => {
-			const box = getElementPageBBox(e);
+			const box = getElementPageBBox(e as SVGGraphicsElement);
 			const pos = horiz ? (box.x + box.width/2) : (box.y + box.height/2);
 			const val = c < 0 ? (0 - c - pos) : (pos - c);
 			const out = {
@@ -26,7 +29,7 @@ function doSort(contents, horiz, c, ignore) {
 	}
 }
 
-export function getBefore(container, evt, ignore) {
+export function getBefore(container : Element, evt : Event, ignore : Element[] = []) {
 	
 	const info = parseInfo(container);
 	const layout = info.layout;
@@ -38,15 +41,15 @@ export function getBefore(container, evt, ignore) {
 		case 'null':
 		case 'right':
 		case 'horizontal':
-			return doSort(allChildren, true, pos.x, ignore);
+			return doSort(allChildren, true, pos.x);
 		case 'left':
-			return doSort(allChildren, true, -pos.x, ignore);
+			return doSort(allChildren, true, -pos.x);
 		case 'up':
-			return doSort(allChildren, false, -pos.y, ignore);
+			return doSort(allChildren, false, -pos.y);
 		case 'down':
 		case 'vertical':
-			return doSort(allChildren, false, pos.y, ignore);
-		case 'grid': 
+			return doSort(allChildren, false, pos.y);
+		case 'grid': {
 			// just compare with elements on the current line.
 			const intersectingChildren = allChildren
 				.filter(e => {
@@ -54,7 +57,7 @@ export function getBefore(container, evt, ignore) {
 					return (box.y <= pos.y) && (box.y + box.height >= pos.y);
 				});
 			
-			const out = doSort(intersectingChildren, true, pos.x, ignore);
+			const out = doSort(intersectingChildren, true, pos.x);
 			
 			if (out == null) {
 				const lastOnLine = intersectingChildren[intersectingChildren.length-1];
@@ -66,14 +69,15 @@ export function getBefore(container, evt, ignore) {
 			} else {
 				return out;
 			}
-			
+			break;
+		}
 		default:
 			return null;
 	}
 }
 
 
-export function getBeforeId(container, evt, ignore) {
+export function getBeforeId(container: Element, evt: Event, ignore: Element[] = []) {
 	if (evt == undefined) {
 		return undefined;
 	}
@@ -87,8 +91,8 @@ export function getBeforeId(container, evt, ignore) {
 }
 
 
-var bar = null;
-var path = null;
+let bar : Element = null;
+let path : Element = null;
 
 export function clearBar() {
 	if (bar != null) {
@@ -97,13 +101,12 @@ export function clearBar() {
 	}
 }
 
-export function drawBar(fx, fy, tx, ty, container) {
-	if ((bar != null) && (bar.parentNmde != container))  {
+export function drawBar(fx: number, fy: number, tx: number, ty: number, container: Element = getMainSvg()) {
+	if ((bar != null) && (bar.parentNode != container))  {
 		clearBar();
 	}
 	
 	if (bar == null) {
-		var svg = container == undefined ? getMainSvg() : container;
 		bar = document.createElementNS("http://www.w3.org/2000/svg", "g");
 		bar.setAttributeNS(null, 'k9-highlight', 'bar outline');
 		bar.classList.add('selected');
@@ -111,7 +114,7 @@ export function drawBar(fx, fy, tx, ty, container) {
 		
 		path = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		path.setAttributeNS(null, "stroke", "blue");
-		svg.appendChild(bar);
+		container.appendChild(bar);
 		bar.appendChild(path);
 	}
 

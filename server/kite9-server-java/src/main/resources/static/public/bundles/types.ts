@@ -1,0 +1,1 @@
+export type Selector = () => Element[] | NodeListOf<Element>

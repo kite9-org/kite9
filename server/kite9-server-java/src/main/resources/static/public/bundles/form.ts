@@ -17,6 +17,8 @@ import { ensureCss } from './ensure.js'
 ensureCss('/public/external/normform-2.0.css');
 ensureCss('/webjars/hint.css/2.3.2/hint.css');
 
+export const DEFAULT_FORM_ID = 'default-form';
+
 export function icon(id: string, title: string, image: string, onClick: (e: Event) => void = undefined, atts: object = {}): HTMLElement {
 	const a = create('a', { 'class': 'hint--bottom hint--bounce icon', 'aria-label': title, 'id': id }, [
 		create('img', { 'src': image, ...atts })
@@ -45,7 +47,7 @@ export function change(e: HTMLElement, f : (e: Event) => void) : HTMLElement {
 }
 
 export function formObject(id : string) : HTMLElement {
-	return id != undefined ? document.forms[id] : document.forms['no-form-id'];
+	return id != undefined ? document.forms[id] : document.forms[DEFAULT_FORM_ID];
 }
 
 export function formValues(id: string) : object {
@@ -74,8 +76,8 @@ export function formValues(id: string) : object {
 	return out;
 }
 
-export function form(contents: Element[], id: string, action : string = undefined) : HTMLElement {
-	id = id == undefined ? 'no-form-id' : id;
+export function form(contents: Element[], id: string, action? : '') : HTMLElement {
+	id = id == undefined ? DEFAULT_FORM_ID : id;
 	return create("form", {"class": "normform", "style": "background: #fff; ", "id": id, "action" : action }, contents);
 }
 

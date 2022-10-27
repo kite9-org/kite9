@@ -123,8 +123,8 @@ export class Overlay {
 			const ey = horiz ? fy : (inverse ? fy - length : fy + length);
 			const end = " L"+ex+" "+ey;
 			line.setAttribute("d",start + end);
-			handle.setAttribute("cx", ex);
-			handle.setAttribute("cy", ey);
+			handle.setAttribute("cx", "" + ex);
+			handle.setAttribute("cy", "" + ey);
 			initial = {x : ex, y: ey };
 		}
 		

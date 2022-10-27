@@ -45,8 +45,9 @@ export function initEditContextMenuCallback(command, selector, textCollector) {
 				htmlElement.appendChild(fieldset('Edit Text', [
 					textarea('Enter Text', defaultText, { rows: 10 }),
 					inlineButtons([
-						ok('ok', {}, (e) => {
-							const values = formValues('editText');
+						ok('ok', {}, (e) => {              
+							e.preventDefault();
+							const values = formValues();
 							const steps = Array.from(selectedElements).map(e => createEditStep(e, values.enterText, defaultText));
 							command.pushAllAndPerform(steps);
 							cm.destroy();

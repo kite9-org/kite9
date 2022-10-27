@@ -19,13 +19,20 @@ export function getMainSvg() : SVGSVGElement {
 	return _svg;
 }
 
-export function getHtmlCoords(evt: MouseEvent) : Coords {
-	const out =  {x: evt.pageX, y: evt.pageY};
-	
-	return out;
+export function getHtmlCoords(evt: Event) : Coords {
+	if (evt instanceof MouseEvent) {
+		const out =  {x: evt.pageX, y: evt.pageY};
+		return out;
+	} else if (evt instanceof TouchEvent) {
+		const t = evt.changedTouches[0];
+		const out =  {x: t.pageX, y: t.pageY};
+		return out;		
+	} else {
+		throw Error("Unsupported event type");
+	}
 }
 
-export function getSVGCoords(evt : MouseEvent, draw = false) {
+export function getSVGCoords(evt : Event, draw = false) {
 	const out = getHtmlCoords(evt);
 	const transform = getMainSvg().style.transform;
 	const t = parseTransform(transform);
@@ -44,18 +51,27 @@ export function getSVGCoords(evt : MouseEvent, draw = false) {
 	return out;
 }
 
-export function getElementPageBBox(e : SVGGraphicsElement) : BBox {
-	const mtrx = e.getCTM();
-	const bbox = e.getBBox();
-	return {
-		x: mtrx.e + bbox.x,
-		y: mtrx.f + bbox.y,
-		width: bbox.width,
-		height: bbox.height
+export function getElementPageBBox(e : Element) : BBox {
+	if (e instanceof SVGGraphicsElement) {
+		const mtrx = e.getCTM();
+		const bbox = e.getBBox();
+		return {
+			x: mtrx.e + bbox.x,
+			y: mtrx.f + bbox.y,
+			width: bbox.width,
+			height: bbox.height
+		}
+	} else {
+		return {
+			x: 0,
+			y: 0,
+			width: 0,
+			height: 0
+		}
 	}
 }
 
-export function getElementHTMLBBox(e : SVGGraphicsElement) : BBox {
+export function getElementHTMLBBox(e : Element) : BBox {
 	const transform = getMainSvg().style.transform;
 	const t = parseTransform(transform);
 	const out = getElementPageBBox(e);
@@ -66,7 +82,7 @@ export function getElementHTMLBBox(e : SVGGraphicsElement) : BBox {
 	return out;
 }
 
-export function getElementsPageBBox(elements : SVGGraphicsElement[]) : BBox {
+export function getElementsPageBBox(elements : Element[]) : BBox {
 	return elements
 		.map(e => getElementPageBBox(e))
 		.reduce((a, b) => { return {
@@ -88,7 +104,7 @@ export function is_touch_device4() : boolean {
 /**
  * More reliable method of getting current target, which works with touch events. 
  */
-export function currentTarget(event: MouseEvent) : SVGGraphicsElement {
+export function currentTarget(event: Event) : SVGGraphicsElement {
 	if ((event as any).touchTarget) {
 		return (event as any).touchTarget;
 	}
@@ -102,7 +118,7 @@ export function currentTarget(event: MouseEvent) : SVGGraphicsElement {
 /** 
  * SVG Element builder
  */
-export function svg(tag: string, atts: object, contents: Element[]) {
+export function svg(tag: string, atts: object = {}, contents: Element[] = []) {
 	const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
 	Object.keys(atts).forEach(key => {
 		const val = atts[key];
@@ -132,7 +148,7 @@ export function canRenderClientSide() {
  * Returns the string 'up', 'down','left','right' 
  * for a given point on the screen related to a target.
  */
-export function closestSide(dropTarget: SVGGraphicsElement, eventCoords : Coords = {x :0, y: 0}) {
+export function closestSide(dropTarget: Element, eventCoords : Coords = {x :0, y: 0}) {
 	const boxCoords = getElementPageBBox(dropTarget);
 	
 	const topDist = Math.abs(eventCoords.y - boxCoords.y); 

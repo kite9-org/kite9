@@ -46,7 +46,7 @@ export class Linker {
 		this.callbacks.unshift(cb);
 	}
 	
-	start(selectedElements : Element[], template: Element) {
+	start(selectedElements : SVGGraphicsElement[], template: Element) {
 		if (template == undefined) {
 			alert("Link Template Not Loaded");
 			return; 

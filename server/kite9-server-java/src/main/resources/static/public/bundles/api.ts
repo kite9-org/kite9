@@ -67,7 +67,8 @@ export function reverseDirection(d : string) : string {
 
 type info = {
 	'link'?: string[],
-	'terminates-at': string
+	'terminates-at'?: string,
+	'layout'? : string
 	
 }
 

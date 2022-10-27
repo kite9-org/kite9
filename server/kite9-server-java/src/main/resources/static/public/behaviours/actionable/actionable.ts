@@ -1,14 +1,16 @@
-import { getMainSvg } from '/public/bundles/screen.js'
+import { getMainSvg } from '../../bundles/screen.js'
+import { ContextMenu } from '../../classes/context-menu/context-menu.js'
+import { Selector } from '../../bundles/types.js'
 
 /**
  * Allows the context menu to appear when the user clicks an element with an id
  */    
-export function initActionable(contextMenu, selector) {
+export function initActionable(contextMenu : ContextMenu, selector : Selector) {
 
 	/**
 	 * Displays a context menu when the user clicks on an element.
 	 */
-	function click(event) {
+	function click(event : Event) {
 		contextMenu.destroy();
 		
 		if (getMainSvg().style.cursor =='wait') {
@@ -26,12 +28,12 @@ export function initActionable(contextMenu, selector) {
 	}
 
 	window.addEventListener('DOMContentLoaded', function() {
-		
-		selector().forEach(function(v) {
-	    	// set up listeners
-	    	v.removeEventListener("click", click);
-	    	v.addEventListener("click", click);
-	    })
+
+		selector().forEach(function(v : Element) {
+			// set up listeners
+			v.removeEventListener("click", click);
+			v.addEventListener("click", click);
+		})
 	});
 
 }

@@ -1,6 +1,6 @@
 import { getHtmlCoords } from '../../bundles/screen.js'
 import { ensureCss } from '../../bundles/ensure.js'
-import { icon, fieldset, form } from '../../bundles/form.js'
+import { icon, fieldset, form, DEFAULT_FORM_ID } from '../../bundles/form.js'
 import { number } from '../../bundles/api.js'
 
 type coords = {
@@ -74,7 +74,7 @@ export class ContextMenu {
 	 * positioning it relative to the event that created it.
 	 */
 	get(event: Event) {
-		let theForm = document.querySelector("#contextMenu-form");
+		let theForm = document.querySelector("#"+DEFAULT_FORM_ID);
 		if (theForm) {
 			return theForm;
 		} else {
@@ -82,7 +82,7 @@ export class ContextMenu {
 			ctxMenu.setAttribute("id", "contextMenu");
 			ctxMenu.setAttribute("class", "contextMenu");
 			ctxMenu.setAttribute("draggable", "false");
-			theForm = form([], 'contextMenu-form');
+			theForm = form([], DEFAULT_FORM_ID);
 			ctxMenu.appendChild(theForm);
 
 			const coords = getHtmlCoords(event);
@@ -137,12 +137,13 @@ export class ContextMenu {
 	}
 	
 	/**
-	 * Removes all the content from the context menu
+	 * Removes all the content from the context menu form
 	 */
-	clear(event: Event) {
-		const htmlElement = this.get(event);
-		Array.from(htmlElement.children).forEach(e => {
-			htmlElement.removeChild(e);
+	clear() {
+		const theForm = document.querySelector('#'+DEFAULT_FORM_ID);
+
+		Array.from(theForm.children).forEach(e => {
+			theForm.removeChild(e);
 		});
 	}
 
