@@ -65,14 +65,14 @@ export function reverseDirection(d : string) : string {
     return d;
 }
 
-type info = {
+type Info = {
 	'link'?: string[],
 	'terminates-at'?: string,
 	'layout'? : string
 	
 }
 
-export function parseInfo(t : Element) : info  {
+export function parseInfo(t : Element) : Info  {
 	if ((t!= null) &&(t.hasAttribute("k9-info"))) {
 		const parts = t.getAttribute("k9-info").split(';');
 		const out = {}
@@ -93,9 +93,9 @@ export function parseInfo(t : Element) : info  {
 				}
 			}
 		});
-		return out as info;
+		return out as Info;
 	} else {
-		return {} as info;
+		return {} as Info;
 	}
 }
 
@@ -171,7 +171,7 @@ export function getContainingDiagram(elem? : Element) : Element {
 	}
 }
 
-type transform = {
+type Transform = {
 	scaleX: number,
 	scaleY: number,
 	translateX: number,
@@ -181,7 +181,7 @@ type transform = {
 	matrix?: number[] 
 }
 
-export function transformToCss(a : transform) : string {
+export function transformToCss(a : Transform) : string {
 	let out = '';
 	if ((a.scaleX) && (a.scaleX != 1 )) {
 		out = out + "scaleX("+a.scaleX+") ";
@@ -216,8 +216,8 @@ export function number(value: string) : number {
 	} 
 }
 
-export function parseTransform(a: string): transform {
-	const b: transform = {
+export function parseTransform(a: string): Transform {
+	const b: Transform = {
 		translateX: 0,
 		translateY: 0,
 		scaleX: 1,
@@ -317,11 +317,11 @@ export function suffixIds(elements: Element[], suffix : string) {
 }
 
 
-export function handleTransformAsStyle(e : SVGElement) : transform | null {
+export function handleTransformAsStyle(e : Element) : Transform | null {
 	if (e.hasAttribute('transform')) {
 		const t = parseTransform(e.getAttribute('transform'));
 		const css = transformToCss(t);
-		if (e.style) {
+		if (e instanceof SVGGraphicsElement) {
 			e.style.setProperty('transform', css, '');
 		} else {
 			e.setAttribute("style", "transform: "+css+";");
