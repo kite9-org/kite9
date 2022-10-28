@@ -1,16 +1,29 @@
-export function hasLastSelected(e: Element[], onlyLastSelected : boolean ) : Element[] | Element | null {
+/**
+ * Returns the collection of elements so long as one of them has the lastSelected class.
+ */
+export function hasLastSelected(e: Element[]) : Element[] {
 	for (let i = 0; i < e.length; i++) {
 		const item = e[i];
 		if (item.classList.contains("lastSelected")) {
-			if (onlyLastSelected) {
-				return item;
-			} else {
-				return e;
-			}
+			return e;
 		}
 	}
 	
-	return onlyLastSelected ? null : [];
+	return [];
+}
+
+/**
+ * Returns the element from the collection with the lastSelected class, or null.
+ */
+export function onlyLastSelected(e: Element[]) : Element | null {
+	for (let i = 0; i < e.length; i++) {
+		const item = e[i];
+		if (item.classList.contains("lastSelected")) {
+			return item;
+		}
+	}
+	
+	return null;
 }
 
 /**

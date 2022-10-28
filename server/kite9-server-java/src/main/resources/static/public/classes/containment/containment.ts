@@ -2,16 +2,16 @@ export const WILDCARD = "*";
 
 type WcElement = string | Element
 
-type callback = (elements: WcElement[], parents?: WcElement[], children?: WcElement[]) => Element[]
+export type ContainmentCallback = (elements: WcElement[], parents?: WcElement[], children?: WcElement[]) => Element[]
 
 /** 
  * Handles drag and drop rules, as well as surround/contain and insert.  Replace is handled elsewhere.
  */
 export class Containment {
 
-	callbacks : callback[] = []
+	callbacks : ContainmentCallback[] = []
 	
-	add(cb: callback) {
+	add(cb: ContainmentCallback) {
 		this.callbacks.push(cb);
 	}
 	
@@ -32,7 +32,7 @@ export class Containment {
 	/**
 	 * Helper function
 	 */
-	canContain(element: Element[], parent: Element) {
+	canContain(element: Element[] | Element, parent: Element[] | Element) {
 		return this.allowed(
 			Array.isArray(element) ? element : [element], 
 			Array.isArray(parent) ? parent : [parent]).length == 1;
@@ -41,7 +41,7 @@ export class Containment {
 	/**
 	 * Helper function
 	 */
-	canContainAll(elements: Element[], parent: Element) : boolean {
+	canContainAll(elements: Element[], parent: Element[] | Element) : boolean {
 		return this.allowed(elements, 
 			Array.isArray(parent) ? parent : [parent]
 			).length == elements.length;

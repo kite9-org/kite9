@@ -50,12 +50,13 @@ export function formObject(id : string) : HTMLElement {
 	return id != undefined ? document.forms[id] : document.forms[DEFAULT_FORM_ID];
 }
 
-export function formValues(id: string) : object {
+export function formValues(id: string = DEFAULT_FORM_ID) : { [key: string]: string  } {
 	const e = formObject(id);
 	
 	const out = {};
 	
-	function getValue(e) {
+	function getValue(e: Element) {
+		let name = '';
 		switch (e.tagName.toLowerCase()) {
 		case 'fieldset':
 		case 'form':
@@ -65,8 +66,9 @@ export function formValues(id: string) : object {
 		case 'input':
 		case 'textarea':
 		case 'select':
-			if (e.name) {
-				out[e.name] = e.value;
+			name = (e as HTMLInputElement).name
+			if (name) {
+				out[name] = (e as HTMLInputElement).value;
 			}
 			break;
 		}
@@ -113,7 +115,7 @@ export function text(placeholder:string, value: string, atts: object = {}) : HTM
 	return input(placeholder, 'text', value, atts);
 }
 
-export function p(text: string, atts: object) : HTMLElement {
+export function p(text: string, atts: object = {}) : HTMLElement {
 	return create('p', atts, [ txt(text)]);
 }
 

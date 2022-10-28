@@ -23,7 +23,7 @@ export function initActionable(contextMenu : ContextMenu, selector : Selector) {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id]");
+			return Array.from(getMainSvg().querySelectorAll("[id]"));
 		}
 	}
 

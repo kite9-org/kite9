@@ -176,7 +176,7 @@ export class Palette {
 		return this.openEvent;
 	}
 
-	getOpenPanel(): Element | null {
+	getOpenPanel(): HTMLDivElement | null {
 		return this.expanded;
 	}
 
@@ -342,7 +342,7 @@ export function initPaletteHoverableAllowed(palette: Palette) {
 /**
  * For the purposes of referencing the ADL of an element on a palette
  */
-export function getElementUri(e: SVGElement, palettePanel: HTMLDivElement) {
+export function getElementUri(e: Element, palettePanel: HTMLDivElement) {
 	const paletteId = palettePanel.getAttribute("id");
 	const id = e.getAttribute("id");
 	return addQueryParam(palettePanel.getAttribute("k9-palette-uri"), "format", "adl") + "#" + id.substring(0, id.length - paletteId.length);

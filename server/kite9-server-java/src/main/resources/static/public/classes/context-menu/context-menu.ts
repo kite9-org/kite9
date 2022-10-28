@@ -123,7 +123,7 @@ export class ContextMenu {
 	/** 
 	 * Short-hand way of adding a single control to the context menu
 	 */
-	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void, set = "Actions", imageAtts: object) {
+	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void, set = "Actions", imageAtts: object = {}) {
 		const htmlElement = this.get(event);
 		let fs = document.getElementById("#contextMenu-"+set);
 		if (!fs) {

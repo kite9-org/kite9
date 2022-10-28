@@ -1,14 +1,18 @@
 import { getMainSvg } from "../../bundles/screen.js";
 import { encodeADLElement } from '../../bundles/api.js'
 
-export type command = {
-	type: string
+export type SingleCommand = {
+	type: string,
+	fragmentId? : string,
+	from?: string,
+	to?: string,
+	name?: string
 }
 
 export type update = {
 	type: string,
 	base64adl: string,
-	commands: command[]	
+	commands: SingleCommand[]	
 }
 
 type callback = (u: update) => void
@@ -19,7 +23,7 @@ type callback = (u: update) => void
  */
 export class Command {
 
-	commandList : command[] = []
+	commandList : SingleCommand[] = []
 	callbacks  : callback[] = []
 	history : update[] = []
 	version = 0
@@ -95,11 +99,11 @@ export class Command {
 		}
 	}
 	
-	push(command : command) {
+	push(command : SingleCommand) {
 		this.commandList.push(command);
 	}
 	
-	pushAllAndPerform(commands : command[]) {
+	pushAllAndPerform(commands : SingleCommand[]) {
 		this.commandList = this.commandList.concat(commands);
 		this.perform();
 	}
