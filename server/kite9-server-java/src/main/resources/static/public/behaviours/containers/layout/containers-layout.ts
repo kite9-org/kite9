@@ -2,10 +2,12 @@ import { hasLastSelected, onlyLastSelected, isConnected, parseInfo } from '../..
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '../../../bundles/screen.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { svg } from '../../../bundles/screen.js'
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
-import { Property } from '../../../classes/context-menu/property.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { FormCallback, Property, SetCallback } from '../../../classes/context-menu/property.js';
 import { Command } from '../../../classes/command/command.js';
 import { PaletteSelector, Selector } from '../../../bundles/types.js';
+import { MoveCallback } from '../../../classes/dragger/dragger.js';
+import { Palette, PaletteCallback } from '../../../classes/palette/palette.js';
 
 function getLayout(e: Element) {
 	if (e == null) {
@@ -43,7 +45,7 @@ function drawLayout(event: Event, cm: ContextMenu, layout : string, selected = u
 const LAYOUTS = ["none", "right", "down", "horizontal", "vertical", "left", "up"];
 
 
-export function initContainerLayoutPropertyFormCallback() {
+export function initContainerLayoutPropertyFormCallback() : FormCallback {
 
 	return function(propertyOwner: Property, contextEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
 		const ls = onlyLastSelected(selectedElements);
@@ -59,9 +61,9 @@ export function initContainerLayoutPropertyFormCallback() {
 	}
 }
 
-export function initContainerLayoutPropertySetCallback(command: Command) {
+export function initContainerLayoutPropertySetCallback(command: Command) : SetCallback {
 
-	return function(propertyOwner: Property, formEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
+	return function(propertyOwner: Property, contextEvent: Event, formEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
 
 		const layout = (formEvent.currentTarget as Element).getAttribute("title");
 		selectedElements.forEach(e => {
@@ -83,7 +85,7 @@ export function initContainerLayoutPropertySetCallback(command: Command) {
 	}
 }
 
-export function initLayoutContextMenuCallback(layoutProperty: Property, selector: Selector) {
+export function initLayoutContextMenuCallback(layoutProperty: Property, selector: Selector) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {
@@ -111,7 +113,7 @@ export function initLayoutContextMenuCallback(layoutProperty: Property, selector
 	};
 }
 
-export function initContainerLayoutMoveCallback() {
+export function initContainerLayoutMoveCallback() : MoveCallback {
 
 	function updateBar(event: Event, inside: Element, horiz: boolean) {
 		let fx: number, fy: number, tx: number, ty: number;
@@ -134,7 +136,7 @@ export function initContainerLayoutMoveCallback() {
 		drawBar(fx, fy, tx, ty, inside);
 	}
 
-	return function(dragTargets: Element[], event: Event, dropTargets: Element[], barDirectionOverrideHoriz: boolean) {
+	return function(dragTargets: Element[], event: Event, dropTargets: Element[]) {
 		if (dragTargets.filter(dt => isConnected(dt)).length == 0) {
 			// not dragging a connected, so we don't need a layout indicator
 			return;
@@ -146,10 +148,7 @@ export function initContainerLayoutMoveCallback() {
 			if ((connectedDropTargets.length == 1)) {
 				const dropInto = connectedDropTargets[0];
 				const layout = getLayout(dropInto);
-				if (barDirectionOverrideHoriz != undefined) {
-					updateBar(event, dropInto, barDirectionOverrideHoriz);
-					return;
-				} else if ((layout == 'up') || (layout == 'down') || (layout == "vertical")) {
+				if ((layout == 'up') || (layout == 'down') || (layout == "vertical")) {
 					// draw the horizontal bar
 					updateBar(event, dropInto, true);
 					return;
@@ -223,7 +222,7 @@ export function initLayoutIndicator(selector: Selector) {
 	})
 }
 
-export function initLayoutIndicatorPaletteCallback(selector: PaletteSelector) {
+export function initLayoutIndicatorPaletteCallback(selector: PaletteSelector) : PaletteCallback {
 
 	if (selector == undefined) {
 		selector = function(e) {
@@ -231,7 +230,7 @@ export function initLayoutIndicatorPaletteCallback(selector: PaletteSelector) {
 		}
 	}
 
-	return function(palettePanel: Element) {
+	return function(p: Palette, palettePanel: Element) {
 		if (palettePanel) {
 			selector(palettePanel).forEach(function(v) {
 				const layout = getLayout(v);

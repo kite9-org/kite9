@@ -1,5 +1,8 @@
 import { getMainSvg, svg } from '../../../bundles/screen.js'
 import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId, isTerminator, isLink } from '../../../bundles/api.js'
+import { Command } from '../../../classes/command/command.js';
+import { Selector } from '../../../bundles/types.js';
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 function directionSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction]"))
@@ -21,7 +24,9 @@ function getDirection(e) {
 	}
 }
 
-export function initDirectionContextMenuCallback(command, selector = directionSelector) {
+export function initDirectionContextMenuCallback(
+	command: Command, 
+	selector : Selector = directionSelector) : ContextMenuCallback {
 	
 	function setDirection(e, direction, contextMenu) {
 		contextMenu.destroy();

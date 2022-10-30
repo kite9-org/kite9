@@ -2,13 +2,9 @@ import { getHtmlCoords } from '../../bundles/screen.js'
 import { ensureCss } from '../../bundles/ensure.js'
 import { icon, fieldset, form, DEFAULT_FORM_ID } from '../../bundles/form.js'
 import { number } from '../../bundles/api.js'
+import { Point } from '../../bundles/types.js'
 
-type coords = {
-	x: number,
-	y: number
-}
-
-type callback = (e: Event, cm: ContextMenu) => void
+export type ContextMenuCallback = (e: Event, cm: ContextMenu) => void
 
 /**
  * Provides functionality for populating the context menu.  Takes a number of callbacks
@@ -18,9 +14,9 @@ export class ContextMenu {
 
 	menu : HTMLElement | null = undefined
 	moving: HTMLElement | null = undefined
-	callbacks : callback[] = []
-	offsetCoords: coords | null = undefined
-	eventCoords: coords | null = undefined
+	callbacks : ContextMenuCallback[] = []
+	offsetCoords: Point | null = undefined
+	eventCoords: Point | null = undefined
 
 	constructor() {
 		ensureCss('/public/classes/context-menu/context-menu.css');
@@ -65,7 +61,7 @@ export class ContextMenu {
 		}
 	}
 	
-	add(cb : callback) {
+	add(cb : ContextMenuCallback) {
 		this.callbacks.push(cb);
 	}
 	

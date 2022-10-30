@@ -2,7 +2,7 @@ import { hasLastSelected, createUniqueId } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js'
 import { Selector } from '../../../bundles/types.js'
 import { Command } from '../../../classes/command/command.js';
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
 const defaultChildSelector : Selector = function() {
@@ -14,7 +14,7 @@ const defaultChildSelector : Selector = function() {
  */
 export function initChildContextMenuCallback(
 	command: Command, 
-	selector: Selector = defaultChildSelector) {
+	selector: Selector = defaultChildSelector) : ContextMenuCallback {
 
 	function getElementUri(e: Element) {
 		return e.getAttribute("k9-child");

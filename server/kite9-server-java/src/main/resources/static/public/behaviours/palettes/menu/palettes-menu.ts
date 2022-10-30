@@ -1,14 +1,20 @@
 import { hasLastSelected, getParentElements } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js'
+import { Finder, PaletteSelector, Selector } from '../../../bundles/types.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { Palette, PaletteCallback } from '../../../classes/palette/palette.js';
 
 /**
  * Provides the palette-menu option for the context menu on the main diagram.
  */
-export function initPaletteContextMenuCallback(palette, selector, paletteSelector) {
+export function initPaletteContextMenuCallback(
+	palette: Palette, 
+	selector: Selector = undefined, 
+	paletteSelector: PaletteSelector = undefined) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id].selected");
+			return Array.from(getMainSvg().querySelectorAll("[id].selected"));
 		}
 	}
 	
@@ -43,14 +49,14 @@ export function initPaletteContextMenuCallback(palette, selector, paletteSelecto
 /**
  * Given a URI, returns the element itself, which we can use as the template
  */
-export function initPaletteFinder() {
+export function initPaletteFinder() : Finder {
 	
-	return function(uri) {
+	return function(uri: string) : Element {
 		const options = Array.from(document.querySelectorAll("div.palette-item"))
 			.filter(pDiv => uri.startsWith(pDiv.getAttribute("k9-palette-uri")))
 			.map(pDiv => {
 				const paletteId = pDiv.getAttribute("id");
-				const elementId = uri.substr(uri.lastIndexOf("#")+1) + paletteId;
+				const elementId = uri.substring(uri.lastIndexOf("#")+1) + paletteId;
 				return pDiv.querySelector('#'+elementId);
 			});
 		
@@ -62,15 +68,17 @@ export function initPaletteFinder() {
 /**
  * Allows elements on the palette to open up a context menu when clicked.
  */
-export function initMenuPaletteCallback(paletteContextMenu, menuChoiceSelector) {
+export function initMenuPaletteCallback(
+	paletteContextMenu: ContextMenu, 
+	menuChoiceSelector: PaletteSelector = undefined) : PaletteCallback {
 	
 	if (menuChoiceSelector == undefined) {
 		menuChoiceSelector = function(palettePanel) {
-			return palettePanel.querySelectorAll("[id]");
+			return Array.from(palettePanel.querySelectorAll("[id]"));
 		}
 	}
 	
-	return function(palette, palettePanel, type) {
+	return function(palette, palettePanel) {
 		function click(event) {
 			if (palette.getCurrentAction() == "menu") {
 				paletteContextMenu.destroy();

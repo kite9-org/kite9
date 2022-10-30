@@ -5,6 +5,7 @@ import { initAddLabelContextMenuCallback } from '../../behaviours/labels/add/lab
 import { initPlaceLabelContextMenuCallback, initLabelPlacementPropertyFormCallback, initLabelPlacementPropertySetCallback } from '../../behaviours/labels/place/labels-place.js' 
 import { initSetDefaultContextMenuCallback } from '../../behaviours/palettes/template/palettes-template.js';
 import { initPaletteFinder } from '../../behaviours/palettes/menu/palettes-menu.js';
+import { getDocumentParam } from '../../bundles/api.js';
 
 
 function initLabels() {
@@ -14,7 +15,7 @@ function initLabels() {
 		placement.formCallback(initLabelPlacementPropertyFormCallback(command)); 
 		placement.setCallback(initLabelPlacementPropertySetCallback(command)); 
 		
-		contextMenu.add(initAddLabelContextMenuCallback(command, document.params['label-template-uri']));
+		contextMenu.add(initAddLabelContextMenuCallback(command, getDocumentParam('label-template-uri')));
 		contextMenu.add(initPlaceLabelContextMenuCallback(placement, command));
 	
 	

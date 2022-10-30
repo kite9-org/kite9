@@ -1,16 +1,20 @@
-import { hasLastSelected, parseInfo, isLink, isTerminator, isPort, getContainedChildren, getParentElement, getDependentElements, connectedElement } from "/public/bundles/api.js";
+import { isLink, isTerminator, isPort, getContainedChildren, getParentElement, getDependentElements, connectedElement } from "../../../bundles/api.js";
 import { getMainSvg, getElementHTMLBBox, getElementPageBBox } from '../../../bundles/screen.js';
+import { Selector } from "../../../bundles/types.js";
+import { ContextMenuCallback } from "../../../classes/context-menu/context-menu.js";
 
 /**
  * If you select a terminator, allows you to select the link or port.
  * If you select a link, allows you to select the terminator
  * If you select a port, you can select the links.
  */
-export function initLinksNavContextMenuCallback(singleSelect, selector) {
+export function initLinksNavContextMenuCallback(
+	singleSelect = false, 
+	selector: Selector = undefined) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id].selected")
+			return Array.from(getMainSvg().querySelectorAll("[id].selected"))
 		}
 	}
 	

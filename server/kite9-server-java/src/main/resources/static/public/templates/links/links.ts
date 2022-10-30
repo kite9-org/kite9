@@ -26,6 +26,7 @@ import { initPortsPositionBuildControls, portsSelector, portsPositionIcon, initP
 import { initPortDropCallback, initPortMoveCallback } from '../../behaviours/ports/drag/ports-drag.js';
 import { initPortsAddContextMenuCallback } from '../../behaviours/ports/add/ports-add.js';
 import { singleSelect } from '../../behaviours/selectable/selectable.js';
+import { getDocumentParam } from '../../bundles/api.js'
 
 const linker = new Linker(updateLink);
 
@@ -36,7 +37,7 @@ function initLinks() {
 	
 	if (metadata.isEditor()) {
 	
-		const getAlignTemplateUri = () => document.params['align-template-uri'];
+		const getAlignTemplateUri = () => getDocumentParam('align-template-uri');
 		const paletteFinder = initPaletteFinder();
 			
     	linker.add(initLinkLinkerCallback(command));

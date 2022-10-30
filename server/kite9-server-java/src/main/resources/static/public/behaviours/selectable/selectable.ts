@@ -1,18 +1,19 @@
-import { getMainSvg, currentTarget } from '../../../bundles/screen.js'
-import { getKite9Target } from '../../../bundles/api.js'
+import { getMainSvg, currentTarget } from '../../bundles/screen.js'
+import { getKite9Target } from '../../bundles/api.js'
+import { Selector } from '../../bundles/types.js';
 
 
-export function clearLastSelected(within) {
+export function clearLastSelected(within: Element) : void {
 	within.querySelectorAll(".lastSelected").forEach(c => {
 		c.classList.remove("lastSelected")
 	})
 }
 
-export function lastSelected(element) {
+export function lastSelected(element: Element) : void {
 	element.classList.add("lastSelected");
 }
 
-export function select(element, within = getMainSvg()) {
+export function select(element: Element, within : Element = getMainSvg()) : void {
 	const classes= element.classList;
 	classes.add("selected");
 
@@ -22,7 +23,7 @@ export function select(element, within = getMainSvg()) {
 	})
 	
 	// unselect parent elements
-	var v = element;
+	let v = element;
 	while (v) {
 		v = v.parentElement;
 		if (v != null) {
@@ -34,15 +35,15 @@ export function select(element, within = getMainSvg()) {
 	lastSelected(element);
 }
 
-export function isSelected(element) {
+export function isSelected(element : Element) : boolean {
 	return element.classList.contains("selected");
 }
 
-export function isLastSelected(element) {
+export function isLastSelected(element : Element) : boolean {
 	return element.classList.contains("lastSelected");
 }
 
-export function singleSelect(element, within = getMainSvg()) {
+export function singleSelect(element : Element , within : Element = getMainSvg()) : void {
 	within.querySelectorAll(".selected").forEach(c => {
 		c.classList.remove("selected");
 	})
@@ -53,25 +54,28 @@ export function singleSelect(element, within = getMainSvg()) {
 	lastSelected(element);
 }
 
-export function unselect(element) {
+export function unselect(element : Element) : void {
 	element.classList.remove("selected")
 }
 
 // Adds .selected class when the user mouseups over an element.
 // Adds .lastSelected class to a single element, which is the last one clicked on
 
-export function initSelectable(selector, within, isSingleSelect) {
+export function initSelectable(
+	selector : Selector = undefined, 
+	within :Element = undefined, 
+	isSingleSelect = false) {
 	
 	if (within == undefined) {
 		within = getMainSvg();
 	}
 	
-	function mouseup(event) {
-		if (event.handledSelect) {
+	function mouseup(event: Event) {
+		if (event['handledSelect']) {
 			return;
 		}
 		
-		var v = getKite9Target(currentTarget(event));
+		const v = getKite9Target(currentTarget(event));
 		
 		if (v == undefined) {
 			return;
@@ -85,15 +89,15 @@ export function initSelectable(selector, within, isSingleSelect) {
 				select(v, within);
 			}
 		} else {
-			unselect(v, within);
+			unselect(v);
 		}
 		
-		event.handledSelect = true;
+		event['handledSelect'] = true;
 	}
 	
 	if (selector == undefined) {
 		selector = function() {
-			return within.querySelectorAll("[id]");
+			return Array.from(within.querySelectorAll("[id]"));
 		}
 	}
 	

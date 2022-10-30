@@ -10,7 +10,7 @@ export function initPaletteUpdateDefaults(palette, linkFinder) {
 	
 	return function() {
 		palette.get().querySelectorAll("[default]").forEach(e => e.removeAttribute("default"));
-		const map = document.params;
+		const map = document['params'];
 	
 		for(var k in map) {
 			if (Object.prototype.hasOwnProperty.call(map, k)) {

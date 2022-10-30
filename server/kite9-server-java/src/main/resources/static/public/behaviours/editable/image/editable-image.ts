@@ -4,13 +4,16 @@ import { icon, form, text, p, inlineButtons, ok, cancel, formValues, img, fields
 import { Command } from '../../../classes/command/command.js';
 import { Metadata } from '../../../classes/metadata/metadata.js';
 import { Selector } from '../../../bundles/types.js';
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 const LOADING = '/public/behaviours/editable/image/loading.svg';
 const SUCCESS = '/public/behaviours/editable/image/success.svg';
 const FAIL = '/public/behaviours/editable/image/fail.svg';
 
-export function initEditableImageContextMenuCallback(command: Command, metadata: Metadata, selector: Selector) {
+export function initEditableImageContextMenuCallback(
+	command: Command, 
+	metadata: Metadata, 
+	selector: Selector = null) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {

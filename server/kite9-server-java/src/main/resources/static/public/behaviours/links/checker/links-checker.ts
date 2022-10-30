@@ -1,15 +1,20 @@
 import { getMainSvg } from '../../../bundles/screen.js'
 import { parseInfo, getParentElement, getNextSiblingId, getContainedChildren } from '../../../bundles/api.js'
+import { DropCallback } from '../../../classes/dragger/dragger.js';
+import { Command } from '../../../classes/command/command.js';
+import { Selector } from '../../../bundles/types.js';
 
 /**
  * This is added to drag-and-drop to make sure that any time we move an object
  * that we check it's links.  Specifically, you can't have a link to a parent object.
  */
-export function initLinksCheckerDropCallback(command, selector) {
+export function initLinksCheckerDropCallback(
+	command: Command, 
+	selector: Selector = undefined) : DropCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-info~='link:']");
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-info~='link:']"));
 		}
 	}
 	

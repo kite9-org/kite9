@@ -1,13 +1,15 @@
 import { getMainSvg, is_touch_device4 } from '../../bundles/screen.js'
 import { hasLastSelected } from '../../bundles/api.js'
 import { Selector } from '../../bundles/types.js';
-import { Dragger } from '../../classes/dragger/dragger.js';
+import { Dragger, DragLocatorCallback, DropCallback } from '../../classes/dragger/dragger.js';
+import { Command } from '../../classes/command/command.js';
+import { ContextMenuCallback } from '../../classes/context-menu/context-menu.js';
 
 function defaultDragableSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[k9-info][k9-ui~=drag]"));
 }
 
-export function initDragable(dragger: Dragger, selector: Selector) {
+export function initDragable(dragger: Dragger, selector: Selector = undefined) {
 
 	if (selector == undefined) {
 		selector = defaultDragableSelector;
@@ -52,7 +54,7 @@ export function initDragable(dragger: Dragger, selector: Selector) {
 /**
  * Returns the objects that are selected being dragged
  */
-export function initDragableDragLocator(selector: Selector) {
+export function initDragableDragLocator(selector: Selector) : DragLocatorCallback {
 
 	if (selector == undefined) {
 		selector = function() {
@@ -90,7 +92,7 @@ export function initMainHoverableAllowed() {
 	}
 }
 
-export function initCompleteDragable(command) {
+export function initCompleteDragable(command: Command) : DropCallback {
 
 	return function() {
 		command.perform();
@@ -101,7 +103,7 @@ export function initCompleteDragable(command) {
  * Provides an icon in the context menu to move things 
  * without needing to hold the mouse down
  */
-export function initDragContextMenuCallback(dragger, selector) {
+export function initDragContextMenuCallback(dragger: Dragger, selector: Selector = null) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = defaultDragableSelector;

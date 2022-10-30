@@ -2,17 +2,17 @@ import { suffixIds, addQueryParam } from '../../bundles/api.js'
 import { icon } from '../../bundles/form.js'
 import { ensureCss } from '../../bundles/ensure.js'
 
-type Callback = (p: Palette, e: Element) => void
-type UpdateCallback = (e?: Element) => void
+export type PaletteCallback = (p: Palette, e: Element) => void
+export type UpdateCallback = (e?: Element) => void
 
-type PaletteProps = {
+export type PaletteProps = {
 	number: number,
 	uri: string,
 	selector: string
 }
 
-type SelectorFunction = (p: SVGElement | HTMLDivElement) => boolean
-type ActionFunction = (e: Event) => void
+export type SelectorFunction = (p: SVGElement | HTMLDivElement) => boolean
+export type ActionFunction = (e: Event) => void
 
 /**
  * Provides functionality for populating/ showing/ hiding a palette.  
@@ -20,7 +20,7 @@ type ActionFunction = (e: Event) => void
 export class Palette {
 
 	id: string
-	callbacks: Callback[] = [];
+	callbacks: PaletteCallback[] = [];
 	paletteMap: PaletteProps[] = [];
 	expanded: HTMLDivElement | null = null;
 	updateCallbacks: UpdateCallback[] = [];
@@ -156,7 +156,7 @@ export class Palette {
 	}
 
 
-	add(cb: Callback) {
+	add(cb: PaletteCallback) {
 		this.callbacks.push(cb);
 	}
 
@@ -168,7 +168,7 @@ export class Palette {
 		return this.id;
 	}
 
-	get(event: Event) {
+	get() {
 		return document.getElementById(this.id);
 	}
 

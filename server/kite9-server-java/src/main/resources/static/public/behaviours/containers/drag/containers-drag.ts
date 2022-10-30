@@ -1,6 +1,7 @@
 import { getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
 import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique } from '../../../bundles/api.js'
 import { getBeforeId } from '../../../bundles/ordering.js'
+import { DropCallback } from '../../../classes/dragger/dragger.js';
 
 export function initContainerDropLocatorFunction(containment) {
 
@@ -21,7 +22,7 @@ export function initContainerDropLocatorFunction(containment) {
 	}
 }
 
-export function initContainerDropCallback(command, containment) {
+export function initContainerDropCallback(command, containment) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
 		const dragTargets = dragState.map(s => s.dragTarget);

@@ -43,7 +43,7 @@ export function getDependentElements(ids : string[]) : Element[] {
 /**
  * Returns a connection linking to id1 and (if provided) also id2.
  */
-export function getExistingConnections(id1: string, id2: string | null): Element[] {
+export function getExistingConnections(id1: string, id2: string | null = undefined): Element[] {
 	return Array.from(document.querySelectorAll("div.main svg [id][k9-info*='link:']")).filter(e => {
 		const parsed = parseInfo(e);
 		const ids = parsed['link'];
@@ -81,8 +81,11 @@ export function reverseDirection(d : string) : string {
 type Info = {
 	'link'?: string[],
 	'terminates-at'?: string,
-	'layout'? : string
-	
+	'layout'? : string,
+	'end'? : string,
+	'terminates'?: string,
+	'direction'?: string,
+	'temporary'?: boolean
 }
 
 export function parseInfo(t : Element) : Info  {
@@ -147,13 +150,12 @@ export function getNextSiblingId(elem : Element) : string | null {
 }
 
 
-export function getContainedChildren(elem : Element, criteria : (e: Element) => boolean = () => true) : Element[] {
+export function getContainedChildIds(elem : Element, criteria : (e: Element) => boolean = () => true) : string[] {
 	
-	const out = [];
+	const out : string[] = [];
 	
-	function traverse(e) {
-		for (const c of e.children) {
-			
+	function traverse(e: ParentNode) {
+		for (const c of Array.from(e.children)) {
 			if (c.hasAttribute("id") && c.hasAttribute("k9-elem")) {
 				const id = c.getAttribute("id");
 				if ((!out.includes(id)) && (criteria(c))) {
@@ -450,14 +452,14 @@ export function isGrid(e? : Element) : boolean {
 }
 
 
-export function connectedElement(terminator : Element, within : Document) : Element {
+export function connectedElement(terminator : Element, within : SVGSVGElement) : Element {
 	const info = parseInfo(terminator)
 	const at = info['terminates-at']
 	const end = within.getElementById(at);
 	return end;
 }
 
-export function connectedElementOtherEnd(terminator : Element, within : Document) : Element {
+export function connectedElementOtherEnd(terminator : Element, within : SVGSVGElement) : Element {
 	const info = parseInfo(terminator)
 	const parent = within.getElementById(info['terminates']);
 	const otherTerminators = getContainerChildren(parent)
@@ -526,8 +528,10 @@ export function addQueryParam(url : string, name: string, value: string) : strin
 }
 
 export function getAffordances(element: Element) : string[] {
-	const ui = element.getAttribute("k9-ui").split(" ");
+	const ui = element?.getAttribute("k9-ui")?.split(" ") ?? [];
 	return ui;
 }
 
-
+export function getDocumentParam(p: string): string {
+	return document['params'][p];
+}

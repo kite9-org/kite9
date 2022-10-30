@@ -2,11 +2,11 @@ import { getSVGCoords, getMainSvg, currentTarget } from '../../bundles/screen.js
 import { handleTransformAsStyle, getKite9Target, getParentElement, onlyUnique, getNextSiblingId, isLink, isConnected } from '../../bundles/api.js'
 
 
-type dropLocatorCallback = (dragTargets : Element[], target: Element) => Element[]
-type dragLocatorCallback = (e: Event) => Element[]
-type moveCallback = (dragTargets : Element[], e?: Event, dropTargets?: Element[]) => void
-type dropCallback = (state: unknown, e: Event, dropTargets: Element[]) => void
-type stateItem = { dragTarget: Element, dragParent: Element, dragParentId: string, dragBefore? : Element, embeddedShapeOrigin: {x : number, y: number} }
+export type DropLocatorCallback = (dragTargets : Element[], target: Element) => Element[]
+export type DragLocatorCallback = (e: Event) => Element[]
+export type MoveCallback = (dragTargets : Element[], e?: Event, dropTargets?: Element[]) => void
+export type DropCallback = (state: unknown, e: Event, dropTargets: Element[]) => void
+export type StateItem = { dragTarget: Element, dragParent: Element, dragParentId: string, dragBefore? : Element, embeddedShapeOrigin: {x : number, y: number} }
 
 /**
  * Manages state while dragging, as well as maintaining a _moveLayer <g> which holds all the elements
@@ -24,7 +24,7 @@ export class Dragger {
 
 	// keeps track of the current drag
 	dragOrigin = null;
-	state : stateItem[] | null = null;
+	state : StateItem[] | null = null;
 	shapeLayer = null;
 	mouseDown = false;
 	delta = null;
@@ -32,29 +32,29 @@ export class Dragger {
 	draggingWithButtonDown = true;
 
 	// plugged-in functionality.
-	moveCallbacks : moveCallback[] = []; 
-	dropCallbacks : dropCallback[] = []; 
-	dropLocators : dropLocatorCallback[] = []; 
-	dragLocators : dragLocatorCallback[] = []; 
+	moveCallbacks : MoveCallback[] = []; 
+	dropCallbacks : DropCallback[] = []; 
+	dropLocators : DropLocatorCallback[] = []; 
+	dragLocators : DragLocatorCallback[] = []; 
 	
 	constructor() {
 		this.svg = getMainSvg();
 	}	
 	
-	moveWith(cb: moveCallback) {
+	moveWith(cb: MoveCallback) {
 		this.moveCallbacks.push(cb);
 	}
 	
-	dropWith(cb : dropCallback) {
+	dropWith(cb : DropCallback) {
 		// nb: additions are added to front of array
 		this.dropCallbacks.unshift(cb);
 	}
 	
-	dragLocator(cb : dragLocatorCallback) {
+	dragLocator(cb : DragLocatorCallback) {
 		this.dragLocators.push(cb);
 	}
 	
-	dropLocator(cb : dropLocatorCallback) {
+	dropLocator(cb : DropLocatorCallback) {
 		this.dropLocators.push(cb);
 	}
 

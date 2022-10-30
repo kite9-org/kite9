@@ -11,7 +11,7 @@ import { ContainmentCallback } from '../../../classes/containment/containment.js
  */
 export function initAttributeContainmentCallback() : ContainmentCallback {
 	
-	function layoutIsOk(parents) {
+	function layoutIsOk(parents: Element[]) {
 		return Array.from(parents)
 			.map(p => !isGrid(p))
 			.reduce((a, b) => a && b, true);
@@ -54,7 +54,7 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		return out;
 	}
 	
-	return function(elements, parents, children) {
+	return function(elements: Element[], parents: Element[], children: Element[]) {
 		if (!layoutIsOk(parents)) {
 			// containers-rules only works for general layouts.
 			return [];
@@ -66,7 +66,7 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		elements = Array.isArray(elements) ? elements : Array.from(elements);
 		
 		const out = elements.filter(e => {
-			const elementTypes = getTypes(e, 'k9-palette');
+			let elementTypes = getTypes(e, 'k9-palette');
 			
 			if (parentBoundsOnElement) {
 				elementTypes = intersectionRule(parentBoundsOnElement, elementTypes);

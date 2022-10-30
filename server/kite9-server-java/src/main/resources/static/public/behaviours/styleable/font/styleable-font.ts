@@ -1,5 +1,5 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { isConnected } from '../../../bundles/api.js'
+import { getDocumentParam, isConnected } from '../../../bundles/api.js'
 import { fieldset, select, numeric } from '../../../bundles/form.js' 
 
 
@@ -20,7 +20,7 @@ export function initFontBuildControls() {
 		const fontStyle = style['font-style'];
 		const fontSize = style['font-size'];
 		
-		const availableFamilies = document.params['font-families'];
+		const availableFamilies = getDocumentParam('font-families');
 		const allStyles = ['', ...Object.values(availableFamilies)
 			.map(e => e.styles)
 			.flatMap(e => e.split(" "))

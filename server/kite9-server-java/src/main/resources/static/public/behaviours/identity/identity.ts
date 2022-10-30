@@ -1,6 +1,7 @@
 import { icon, fieldset, form, cancel } from '../../bundles/form.js'
 import { ensureCss } from '../../bundles/ensure.js'
-import { Metadata } from '../../classes/metadata/metadata.js'
+import { Metadata, MetadataCallback } from '../../classes/metadata/metadata.js'
+import { InstrumentationCallback } from '../../classes/instrumentation/instrumentation.js';
 
 const NO_USER = {
 	name: "Anonymous",
@@ -12,7 +13,7 @@ let navigator : HTMLElement;
 let metadata : object;
 let collaborators = undefined;
 
-export function identityMetadataCallback(md: Metadata) {
+export const identityMetadataCallback: MetadataCallback = (md: Metadata) => {
 	
 	metadata = md;
 	
@@ -90,7 +91,7 @@ function updateUser(user : object, alert = false, notification = false) {
 }
 
 
-export function initIdentityInstrumentationCallback() {
+export function initIdentityInstrumentationCallback() : InstrumentationCallback {
 	return function(nav : HTMLElement) {
 		navigator = nav;
 		ensureCss('/public/behaviours/identity/collaborators.css');

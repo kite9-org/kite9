@@ -1,24 +1,32 @@
 import { getMainSvg, getElementPageBBox, currentTarget } from '../../../bundles/screen.js'
-import { parseInfo, createUniqueId, getContainingDiagram, reverseDirection, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId } from '../../../bundles/api.js'
+import { parseInfo, createUniqueId, getContainingDiagram, reverseDirection, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId, getAffordances } from '../../../bundles/api.js'
+import { Linker, LinkerCallback } from '../../../classes/linker/linker.js';
+import { Command } from '../../../classes/command/command.js';
+import { Selector } from '../../../bundles/types.js';
+import { LinkDirection } from '../linkable.js';
+import { MoveCallback } from '../../../classes/dragger/dragger.js';
 
-var link = null;
-var link_to = undefined;
-var link_d = undefined;
-var draggingElement = undefined;
-var templateUri = undefined;
+let link = null;
+let link_to = undefined;
+let link_d : string = undefined;
+let draggingElement = undefined;
+let templateUri = undefined;
 
+export type UriCallback = () => string
 
-export function initAutoConnectTemplateSelector(alignTemplateUriCallback, linkTemplateUriCallback) {
+export function initAutoConnectTemplateSelector(
+	alignTemplateUriCallback: UriCallback, 
+	linkTemplateUriCallback: UriCallback) {
 
-	return function(element) {
-		const alignLink = (element != null) && (!element.hasAttribute("autoconnect"));
+	return function(element: Element) : string {
+		const alignLink = (element != null) && (!getAffordances(element).includes("autoconnect"));
 		return alignLink ? alignTemplateUriCallback() : linkTemplateUriCallback();
 	}
 }
 
-export function initAutoConnectLinkerCallback(command) {
+export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback {
 	
-	function undoAlignment(command, e) {
+	function undoAlignment(e: Element) {
 		const alignOnly = e.classList.contains("kite9-align");
 		const id =  e.getAttribute("id");
 		if (alignOnly) {
@@ -39,7 +47,7 @@ export function initAutoConnectLinkerCallback(command) {
 		}		
 	}
 	
-	function ensureNoDirectedLeavers(id, d1) {
+	function ensureNoDirectedLeavers(id: string, d1: string) {
 		getExistingConnections(id).forEach(e => {
 			const parsed = parseInfo(e);
 			const d = parsed['direction'];
@@ -48,22 +56,22 @@ export function initAutoConnectLinkerCallback(command) {
 			const dUse = reversed ? reverseDirection(d1) : d1;
 			
 			if (d==dUse) {
-				undoAlignment(command, e);
+				undoAlignment(e);
 			} 
 		});
 	}
 		
-	return function(linker, event) {		
+	return function(linker) {		
 		if (link_to) {
 			// create links between the selected object and the link_to one
-			var id_from = draggingElement.getAttribute("id");
-			var id_to = link_to.getAttribute("id");
-			var existingLinks = getExistingConnections(id_from, id_to);
+			const id_from = draggingElement.getAttribute("id");
+			const id_to = link_to.getAttribute("id");
+			let existingLinks = getExistingConnections(id_from, id_to);
 
 			ensureNoDirectedLeavers(id_from, link_d);
 			const diagramId = getContainingDiagram(link_to).getAttribute("id");
 			
-			existingLinks = existingLinks.filter(e => undoAlignment(command, e));
+			existingLinks = existingLinks.filter(e => undoAlignment(e));
 			
 			if (existingLinks.length == 0) {
 				// create a new link
@@ -116,27 +124,31 @@ export function initAutoConnectLinkerCallback(command) {
 	}
 }
 
-export function initAutoConnectMoveCallback(linker, linkFinder, linkTemplateSelector, selector, autoConnectWith) {
+export function initAutoConnectMoveCallback(
+	linker: Linker, 
+	linkFinder, linkTemplateSelector, 
+	selector: Selector = undefined, 
+	autoConnectWith) : MoveCallback {
 	
-	var maxDistance = 100;
-	var width, height;
+	let maxDistance = 100;
+	let width, height;
 	
 	function clearLink() {
 		linker.removeDrawingLinks();
 		link = null;
 	}
 
-	function updateLink(topos, frompos, link_d, e) {
+	function updateLink(topos: number, frompos: number, link_d: LinkDirection, e: Element) {
 	    var fx, fy, tx, ty;
 	    const mx = topos.x + topos.width / 2;
 	    const my = topos.y + topos.height / 2;
 	    
-	    if (link_d == 'LEFT') {
+	    if (link_d == 'left') {
 	        fy = my;
 	        ty = my;
 	        fx = frompos.x;
 	        tx = topos.x + topos.width;
-	    } else if (link_d == 'RIGHT') {
+	    } else if (link_d == 'ight') {
 	        fy = my;
 	        ty = my;
 	        fx = frompos.x + frompos.width;  

@@ -5,7 +5,7 @@ import { getElementUri, Palette } from '../../../classes/palette/palette.js';
 import { PaletteSelector, Selector } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { Containment } from '../../../classes/containment/containment.js';
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
 function defaultInsertSelector() {
@@ -25,7 +25,7 @@ export function initInsertContextMenuCallback(
 	command: Command,
 	containment: Containment,
 	insertableSelector?: PaletteSelector,
-	insertSelector?: Selector) {
+	insertSelector?: Selector) : ContextMenuCallback {
 
 	if (insertableSelector == undefined) {
 		insertableSelector = defaultInsertableSelector;

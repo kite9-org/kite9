@@ -5,7 +5,7 @@ import { Selector } from '../../bundles/types.js'
 /**
  * Allows the context menu to appear when the user clicks an element with an id
  */    
-export function initActionable(contextMenu : ContextMenu, selector : Selector) {
+export function initActionable(contextMenu : ContextMenu, selector : Selector = undefined) {
 
 	/**
 	 * Displays a context menu when the user clicks on an element.

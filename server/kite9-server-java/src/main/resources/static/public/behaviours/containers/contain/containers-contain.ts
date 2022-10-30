@@ -3,7 +3,7 @@ import { getMainSvg } from '../../../bundles/screen.js'
 import { Selector } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { Containment } from '../../../classes/containment/containment.js';
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { getElementUri, Palette } from '../../../classes/palette/palette.js';
 
 
@@ -19,7 +19,7 @@ export function initContainContextMenuCallback(
 	palette: Palette, 
 	command: Command, 
 	containment: Containment, 
-	containSelector: Selector) {
+	containSelector: Selector) :ContextMenuCallback {
 
 	if (containSelector == undefined) {
 		containSelector = defaultContainSelector;

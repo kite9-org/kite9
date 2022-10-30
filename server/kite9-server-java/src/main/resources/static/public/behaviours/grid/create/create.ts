@@ -1,10 +1,11 @@
+import { getDocumentParam } from "../../../bundles/api";
 
 
 
 export function initCellCreator(command, templateUri) {
 	
 	if (templateUri == undefined) {
-		templateUri = document.params['cell-template-uri'];
+		templateUri = getDocumentParam('cell-template-uri');
 	}
 
 	return function (parentId, x, y, newId) {

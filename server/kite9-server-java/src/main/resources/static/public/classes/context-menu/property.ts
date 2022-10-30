@@ -1,11 +1,13 @@
 import { ContextMenu } from '../context-menu/context-menu.js'
 
-type FormCallback = (p: Property,
+export type FormCallback = (
+	p: Property,
 	e: Event,
 	c: ContextMenu,
 	s: Element[]) => void
 	
-type SetCallback = (p: Property,
+export type SetCallback = (
+	p: Property,
 	contextEvent: Event,
 	formEvent: Event,
 	c: ContextMenu,

@@ -3,11 +3,14 @@ import { textarea, fieldset, ok, cancel, inlineButtons, formValues } from '../..
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Selector } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 type TextCollector = (e: Element) => string
 
-export function initEditContextMenuCallback(command: Command, selector: Selector, textCollector: TextCollector) {
+export function initEditContextMenuCallback(
+	command: Command, 
+	selector: Selector, 
+	textCollector: TextCollector) : ContextMenuCallback {
 	
 	function createEditStep(e: Element, newText: string, oldText: string) {
 		return {

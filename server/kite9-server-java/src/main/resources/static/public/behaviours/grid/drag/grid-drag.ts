@@ -1,6 +1,7 @@
 import { parseInfo, isCell, isGrid } from '../../../bundles/api.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
+import { DropCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
 import { getOrdinal, getOrdinals  } from '/public/behaviours/grid/common-grid.js' 
 
 function isEmptyGrid(e) {
@@ -90,7 +91,7 @@ function calculateOccupation(container) {
 	return occupation;
 }
 
-export function initCellMoveCallback() {
+export function initCellMoveCallback() : MoveCallback {
 	
 	function calculateArea(dragTargets) {
 		
@@ -238,7 +239,7 @@ export function initCellMoveCallback() {
 }
 
 
-export function initCellDropCallback(command) {
+export function initCellDropCallback(command) : DropCallback {
 	
 	function getPush(area, to, xOrdinals, yOrdinals) {
 		if ((moveCache.side == UP) || (moveCache.side==DOWN)) {

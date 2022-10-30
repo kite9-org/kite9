@@ -1,11 +1,11 @@
-type callback = (md: object) => void
+export type MetadataCallback = (md: object) => void
 
 /**
  * Handles monitoring of document metadata, and callbacks for when it changes.
  */
 export class Metadata {
 	
-	callbacks : callback[] = [];
+	callbacks : MetadataCallback[] = [];
 	metadata : object = {};
 
 	constructor() {
@@ -54,7 +54,7 @@ export class Metadata {
 		});	
 	}
 	
-	add(cb : callback) {
+	add(cb : MetadataCallback) {
 		this.callbacks.push(cb);
 		cb(this.metadata);
 	}

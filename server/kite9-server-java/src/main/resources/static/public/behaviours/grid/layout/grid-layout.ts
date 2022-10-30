@@ -1,7 +1,8 @@
-import { icon, numeric, change, form } from '../../../bundles/form.js'
-import { hasLastSelected, parseInfo, number, createUniqueId, getContainedChildren, isConnected, getParentElement } from '../../../bundles/api.js'
-import { getMainSvg } from '../../../bundles/screen.js'
-import { getOrdinals } from '/public/behaviours/grid/common-grid.js'
+import { numeric, change, form } from '../../../bundles/form.js'
+import { parseInfo, number, createUniqueId, getContainedChildren, isConnected, getParentElement } from '../../../bundles/api.js'
+import { getOrdinals } from '../../grid/common-grid.js'
+import { Command } from '../../../classes/command/command.js';
+import { FormCallback, SetCallback } from '../../../classes/context-menu/property.js';
 
 function getMinGridSize(e) {
 	const info = parseInfo(e);
@@ -23,7 +24,10 @@ function getLayout(e) {
 }
 
 
-export function initGridLayoutPropertySetCallback(command, cellCreator, cellSelector) {
+export function initGridLayoutPropertySetCallback(
+	command: Command, 
+	cellCreator, 
+	cellSelector) : SetCallback {
 	
 	if (cellSelector == undefined) {
 		cellSelector = function (e) {
@@ -149,7 +153,7 @@ export function initGridLayoutPropertySetCallback(command, cellCreator, cellSele
 var rows = 2;
 var cols = 2;
 
-export function initGridLayoutPropertyFormCallback() {
+export function initGridLayoutPropertyFormCallback() : FormCallback {
 
 	return function(propertyOwner, contextEvent, contextMenu, selectedElements) {
 		const ls = onlyLastSelected(selectedElements);

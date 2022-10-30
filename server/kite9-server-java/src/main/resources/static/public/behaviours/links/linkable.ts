@@ -1,5 +1,8 @@
-import { getMainSvg } from '../../../bundles/screen.js'
-import { getExistingConnections, parseInfo, reverseDirection } from '../../../bundles/api.js'
+import { getMainSvg } from '../../bundles/screen.js'
+import { getExistingConnections, parseInfo, reverseDirection } from '../../bundles/api.js'
+import { Linker } from '../../classes/linker/linker.js';
+
+export type LinkDirection = "up" | "down" | "left" | "right"
 
 /**
  * Contains the functionality for linking drawing links between selected elements 
@@ -13,7 +16,7 @@ import { getExistingConnections, parseInfo, reverseDirection } from '../../../bu
  * 
  * All of these are in any case defaults that can be overridden.
  */
-export function initLinkable(linker, selector)  {
+export function initLinkable(linker: Linker, selector; Selector)  {
 	
 	function move(event) {
 		linker.move(event);

@@ -1,23 +1,38 @@
-import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElement, parseInfo, isLink, isTerminator, isLabel, isConnected } from '../../../bundles/api.js'
+import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElement, parseInfo, isLink, isTerminator, isLabel, isConnected, onlyLastSelected } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js'
-import { getElementUri } from '../../../classes/palette/palette.js';
+import { PaletteSelector, Selector } from '../../../bundles/types.js';
+import { Command, SingleCommand } from '../../../classes/command/command.js';
+import { Containment } from '../../../classes/containment/containment.js';
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { getElementUri, Palette } from '../../../classes/palette/palette.js';
 
 /**
  * k9-palette attribute says which type of element this is.  The element can be replaced with another element of the same type.
  */
 function initDefaultReplaceSelector() {
 	return function() {
-		return getMainSvg().querySelectorAll("[id].selected");
+		return Array.from(getMainSvg().querySelectorAll("[id].selected"));
 	}
 }
 
 function initDefaultReplaceChoiceSelector() {
-	return function(palettePanel) {
-		return palettePanel.querySelectorAll("[id][k9-palette]"); //  ~="+type+"]");	
+	return function(palettePanel: Element) {
+		return Array.from(palettePanel.querySelectorAll("[id][k9-palette]")); //  ~="+type+"]");	
 	}
 }
 
-export function initReplaceContextMenuCallback(palette, command, rules, containment, replaceChoiceSelector, replaceSelector, createReplaceStep, replaceChecker) {
+export type CreateReplaceStep = (command: Command, e: Element, drop: Element, palettePanel: HTMLDivElement) => boolean;
+
+export function initReplaceContextMenuCallback(
+	palette: Palette, 
+	command: Command, 
+	rules: SingleCommand, 
+	containment: Containment, 
+	replaceChoiceSelector : PaletteSelector = undefined, 
+	replaceSelector: Selector = undefined, 
+	createReplaceStep: CreateReplaceStep = undefined , 
+	replaceChecker : (e1: Element, e2: Element) => boolean = undefined)
+		: ContextMenuCallback {
 	
 	if (replaceChoiceSelector == undefined) {
 		replaceChoiceSelector = initDefaultReplaceChoiceSelector();
@@ -41,7 +56,7 @@ export function initReplaceContextMenuCallback(palette, command, rules, containm
 				(isConnected(oldElement) && isConnected(newElement))) {
 				const oldParent = getParentElement(oldElement);
 				const children = getContainerChildren(oldElement);
-				return containment.allowed([newElement], [oldParent], children);
+				return containment.allowed([newElement], [oldParent], children).length > 0;
 			}
 		}
 		
@@ -100,9 +115,9 @@ export function initReplaceContextMenuCallback(palette, command, rules, containm
 			if (replaceChecker(lastSelectedElement, droppingElement)) {
 				contextMenu.addControl(event, "/public/behaviours/selectable/replace/replace.svg",
 					"Replace", 
-					function(e2, selector) {
+					function() {
 						contextMenu.destroy();
-						 
+					
 						const result = Array.from(selectedElements)
 							.filter(e => replaceChecker(e, droppingElement))
 							.map(e => createReplaceStep(command, e, droppingElement, palettePanel))

@@ -1,10 +1,14 @@
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '../../bundles/screen.js' ;
 import { createUniqueId, onlyUnique, changeId } from '../../bundles/api.js' 
+import { Point } from '../../bundles/types.js';
 
-type point = {x : number, y: number}
-type animate = (e: Element, x: point, y: point) => void
-type callback = (l: Linker, e: Event, perform: boolean) => void
-type getLinkTarget = (v: Element) => Element
+export type Animate = (e: Element, x: Point, y: Point) => void
+export type GetLinkTarget = (v: Element) => Element
+export type LinkerCallback = (l: Linker, e: Event, perform: boolean) => void
+
+export interface ElementWithStart extends Element {
+	start: Point
+}
 
 /**
  * Provides functionality for drawing links on the diagram, and keeping track of them.
@@ -13,12 +17,12 @@ export class Linker {
 
 	svg = getMainSvg();
 	drawing = [];
-	animate : animate;
-	getLinkTarget : getLinkTarget;
-	callbacks : callback[] = [];
-	mouseCoords : point
+	animate : Animate;
+	getLinkTarget : GetLinkTarget;
+	callbacks : LinkerCallback[] = [];
+	mouseCoords : Point
 
-	constructor(animate : animate, getLinkTarget: getLinkTarget = undefined) {
+	constructor(animate : Animate, getLinkTarget: GetLinkTarget = undefined) {
 		this.animate = animate;
 		
 		if (getLinkTarget == undefined) {
@@ -41,12 +45,12 @@ export class Linker {
 		
 	}
 	
-	add(cb : callback) {
+	add(cb : LinkerCallback) {
 		// nb. additions go to the start
 		this.callbacks.unshift(cb);
 	}
 	
-	start(selectedElements : SVGGraphicsElement[], template: Element) {
+	start(selectedElements : Element[], template: Element) {
 		if (template == undefined) {
 			alert("Link Template Not Loaded");
 			return; 
@@ -67,7 +71,7 @@ export class Linker {
 				const from = { x: bbox.x + bbox.width/2, y: bbox.y + bbox.height/2 };
 				this.drawing.push(newLink);
 				// not sure this is really allowed, but works in js 
-				(newLink as any).start = from;
+				(newLink as ElementWithStart).start = from;
 				newLink.setAttributeNS(null, 'pointer-events', 'none');
 				this.animate(newLink, from, this.mouseCoords);
 			});
@@ -76,7 +80,7 @@ export class Linker {
 	move(evt : Event) {
 		this.mouseCoords = getSVGCoords(evt);
 		this.drawing.forEach(e => {
-			this.animate(e, e.start, this.mouseCoords);
+			this.animate(e, (e as ElementWithStart).start, this.mouseCoords);
 		});
 		
 	}

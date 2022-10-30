@@ -1,6 +1,7 @@
 import { parseTransform, number, handleTransformAsStyle } from '../../bundles/api.js'
 import { getMainSvg } from '../../bundles/screen.js'
-import { Timeline } from '../../classes/timeline/timeline.js';
+import { Timeline } from '../../classes/transition/timeline.js';
+import { TransitionAnimationCallback } from '../../classes/transition/transition.js';
 
 /**
  * Somehow, someday, make these extensible
@@ -240,7 +241,7 @@ function reconcileElement(inFrom: Element, inTo: Element, toDelete: Element, tl:
 /**
  * This handles the process of loading new SVG and animating between the old one and the new one.
  */
-export function initTransitionAnimationCallback() {
+export function initTransitionAnimationCallback() : TransitionAnimationCallback {
 
 	return function(changeTo: SVGSVGElement, animationTimeline: Timeline) {
 		document.body.style.cursor = null;

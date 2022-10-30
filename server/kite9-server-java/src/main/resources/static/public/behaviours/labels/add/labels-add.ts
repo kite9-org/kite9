@@ -1,13 +1,14 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo,  createUniqueId } from '../../../bundles/api.js'
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { Command } from '../../../classes/command/command.js';
 
-
-export function labelableSelector() {
+export function labelableSelector() : Element[] {
 	const labelables = Array.from(getMainSvg().querySelectorAll("[k9-ui~=label].selected"));
 	return labelables;
 }
 
-export function createInsertLabelStep(e, templateUri, command) {
+export function createInsertLabelStep(e: Element, templateUri: string, command: Command) {
 	const info = parseInfo(e);
 	const end = info.end;
 	const linkId = info.terminates ? info.terminates : e.getAttribute("id");
@@ -34,7 +35,11 @@ export function createInsertLabelStep(e, templateUri, command) {
 }
 
 
-export function initAddLabelContextMenuCallback(command, templateUri, selector, action) {
+export function initAddLabelContextMenuCallback(
+	command: Command, 
+	templateUri: string, 
+	selector = labelableSelector, 
+	action = createInsertLabelStep) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = labelableSelector;
@@ -47,13 +52,13 @@ export function initAddLabelContextMenuCallback(command, templateUri, selector, 
 	/**
 	 * Provides a label option for the context menu
 	 */
-	return function(event, contextMenu) {
+	return function(event: Event, contextMenu: ContextMenu) {
 		
 		const selectedElements = hasLastSelected(selector());
 		
 		if (selectedElements.length > 0) {
 			contextMenu.addControl(event, "/public/behaviours/labels/add/add.svg", "Add Label", 
-				function(e2, selector) {
+				function() {
 					contextMenu.destroy();
 					selectedElements.forEach(e => action(e, templateUri, command));
 					command.perform();

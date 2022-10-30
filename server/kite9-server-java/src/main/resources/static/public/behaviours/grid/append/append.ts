@@ -1,30 +1,35 @@
-import { hasLastSelected, onlyLastSelected, getParentElement, parseInfo, createUniqueId, getContainedChildren } from '../../../bundles/api.js'
-import { nextOrdinal, getOrdinals  } from '/public/behaviours/grid/common-grid.js' 
+import { hasLastSelected, onlyLastSelected, parseInfo, createUniqueId, getContainedChildren } from '../../../bundles/api.js'
+import { nextOrdinal, getOrdinals  } from '../../../behaviours/grid/common-grid.js' 
 import { getMainSvg } from '../../../bundles/screen.js';
+import { Command } from '../../../classes/command/command.js';
+import { Selector } from '../../../bundles/types.js';
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
+type Side = 'up' | "down" | "left" | "right"
 
-export function initCellAppendContextMenuCallback(command, selector) {
+export function initCellAppendContextMenuCallback(
+	command: Command, 
+	selector: Selector = undefined) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-palette~='cell'].selected")
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-palette~='cell'].selected"))
 		}
 	}
 	
-	function doAppend(container, selectedElements, side) {
+	function doAppend(container: Element, selectedElements: Element[], side: Side) {
 		const { xOrdinals, yOrdinals } = getOrdinals(container);
-		const lastSelected = onlyLastSelected(selectedElements);
 		
-		var ordinalChangeMap = {};
-		var ordinalItems = {};
-		var itemPositions = {}; 
-		var horiz = false;
+		const ordinalChangeMap = { [key in number] : number};
+		const ordinalItems = {};
+		const itemPositions = {}; 
+		let horiz = false;
 		
 		selectedElements.forEach(e => {
 			const info = parseInfo(e);
 			const position = info['position'];
 			itemPositions[e.getAttribute("id")] = position;
-			var pos; 
+			let pos; 
 			switch (side) {
 			case 'up':
 				pos = position[2];

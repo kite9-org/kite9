@@ -1,19 +1,23 @@
 import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, reverseDirection } from '../../../bundles/api.js'
 import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js'
+import { Selector } from '../../../bundles/types.js';
+import { Command, SingleCommand } from '../../../classes/command/command.js';
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
-export function initAlignContextMenuCallback(command, templateUri, selector) {
-	
-	
+export function initAlignContextMenuCallback(
+	command: Command, 
+	templateUri: string, 
+	selector: Selector) : ContextMenuCallback{
 	
 	/**
 	 * Aligns the two elements
 	 */
-	function createAlignStep(from, to, direction, steps ,linkId) {
+	function createAlignStep(from: Element, to: Element, direction: string, steps: SingleCommand[] ,linkId: string) {
 		
 		const conns = getExistingConnections(from.getAttribute("id"), to.getAttribute("id"));
-		var toUseId = null;
-		var existingDirection;
+		let toUseId : string = null;
+		let existingDirection : string;
 		
 		// tidy up any existing connections between these elements.
 		conns.forEach(c => {
@@ -80,27 +84,25 @@ export function initAlignContextMenuCallback(command, templateUri, selector) {
 	}
 
 	function performAlign(cm, horiz) {
-		var selectedElements = Array.from(selector());
+		const selectedElements = selector();
 		
 		selectedElements.sort((a, b) => {
-			var apos = getElementPageBBox(a);
-			var bpos = getElementPageBBox(b);
+			const apos = getElementPageBBox(a);
+			const bpos = getElementPageBBox(b);
 			
 			if (horiz) {
-				var d = (apos.x + (apos.width / 2)) - ( bpos.x + (bpos.width / 2))
+				return (apos.x + (apos.width / 2)) - ( bpos.x + (bpos.width / 2))
 			} else {
-				var d = (apos.y + (apos.height / 2)) - ( bpos.y + (bpos.height / 2))
+				return (apos.y + (apos.height / 2)) - ( bpos.y + (bpos.height / 2))
 			}
-			
-			return d;
 		});
 		
-		var steps = [];
+		const steps = [];
 		const linkId = createUniqueId();
 		
-		for (var i = 0; i < selectedElements.length-1; i++) {
-			var from = selectedElements[i];
-			var to = selectedElements[i+1];
+		for (let i = 0; i < selectedElements.length-1; i++) {
+			const from = selectedElements[i];
+			const to = selectedElements[i+1];
 			createAlignStep(from, to, horiz ? "RIGHT" : "DOWN", steps, linkId+"-"+i);
 		}
 		
@@ -110,12 +112,12 @@ export function initAlignContextMenuCallback(command, templateUri, selector) {
 		
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui~='align'].selected");
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='align'].selected"));
 		}
 	}
 	
 	if (templateUri == undefined) {
-		templateUri = document.params['align-template-uri'];
+		templateUri = (document as any).params['align-template-uri'];
 	}
 	
 	/**

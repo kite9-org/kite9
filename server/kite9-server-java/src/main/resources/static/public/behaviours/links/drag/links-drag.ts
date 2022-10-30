@@ -1,10 +1,12 @@
 import { isLink, isConnected, isTerminator, getKite9Target, parseInfo, createUniqueId, onlyUnique, getContainingDiagram } from '../../../bundles/api.js'
+import { Command } from '../../../classes/command/command.js';
+import { DropCallback, DropLocatorCallback } from '../../../classes/dragger/dragger.js';
 
 
 /**
  * Allows you to drop a single element onto a link
  */
-export function initLinkDropLocator() {
+export function initLinkDropLocator() : DropLocatorCallback {
 	
 	return function(dragTargets, target) {
 		if (dragTargets.length != 1) {
@@ -33,7 +35,7 @@ export function initLinkDropLocator() {
 /**
  * Handles dropping an element onto a link
  */
-export function initLinkDropCallback(command) {
+export function initLinkDropCallback(command: Command) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
 		const connectionDropTargets = dropTargets

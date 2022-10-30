@@ -1,21 +1,33 @@
 import { getMainSvg } from "../../bundles/screen.js";
 import { encodeADLElement } from '../../bundles/api.js'
+import { TransitionDocumentCallback } from "../transition/transition.js";
 
 export type SingleCommand = {
-	type: string,
+	type?: string,
 	fragmentId? : string,
 	from?: string,
+	fromBefore?: string,
 	to?: string,
-	name?: string
+	name?: string,
+	horiz?: string,
+	uriStr?: string,
+	newId?: string,
+	xpathToValue?: object,
+	base64Element?: string,
+	moveId?: string,
+	containedIds?: string[],
+	beforeId?: string,
+	keptAttributes?: string[],
+	keptTags?: string[]
 }
 
-export type update = {
+export type Update = {
 	type: string,
 	base64adl: string,
 	commands: SingleCommand[]	
 }
 
-type callback = (u: update) => void
+export type CommandCallback = (u: Update) => void
 
 /**
  * Command handles the flow of commands through the system, and the undo/redo log and
@@ -24,8 +36,8 @@ type callback = (u: update) => void
 export class Command {
 
 	commandList : SingleCommand[] = []
-	callbacks  : callback[] = []
-	history : update[] = []
+	callbacks  : CommandCallback[] = []
+	history : Update[] = []
 	version = 0
 	base64adl = ''
 	doc : Document | null = null
@@ -35,7 +47,7 @@ export class Command {
 		this.doc = undefined;
 	}
 	
-	add(cb : callback) {
+	add(cb : CommandCallback) {
 		// NB: additions go at the start of the callback structure.
 		this.callbacks.unshift(cb);
 	}
@@ -130,7 +142,7 @@ export class Command {
  * If the SVG document is returned containing the base64-encoded ADL
  * markup, make sure to update it here.
  */
-export function initCommandTransitionCallback(command : Command) {
+export function initCommandTransitionCallback(command : Command) : TransitionDocumentCallback {
 	
 	return function(doc : Document) {
 		const adl = doc.getElementById("adl:markup");

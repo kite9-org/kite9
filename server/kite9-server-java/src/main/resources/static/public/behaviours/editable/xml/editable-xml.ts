@@ -7,13 +7,15 @@ import '/webjars/codemirror/5.58.3/lib/codemirror.js';
 import '/webjars/codemirror/5.58.3/mode/xml/xml.js';
 import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
-import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import * as CodeMirror from 'codemirror';
-import * from 'codemirror/mode/xml'
 
 type XMLCollector = (e: Element) => string
 
-export function initXMLContextMenuCallback(command: Command, selector: Selector, xmlCollector: XMLCollector) {
+export function initXMLContextMenuCallback(
+	command: Command, 
+	selector: Selector, 
+	xmlCollector: XMLCollector) : ContextMenuCallback {
 
   const xmlModal = new Modal('_xml-editor');
 

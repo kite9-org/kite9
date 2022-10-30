@@ -1,14 +1,18 @@
-import { parseInfo } from '../../../bundles/api.js'
+import { parseInfo } from '../../bundles/api.js'
 
+export interface Ordinals extends Array<number> {
+	max: number, 
+	min: number
+}
 
-export function getOrdinal(index, ordinals) {
+export function getOrdinal(index: number, ordinals: Ordinals) : number {
 	
 	if (index < ordinals.min) {
 		return ordinals[ordinals.min] - (index + ordinals.min);
 	} else if (index >= ordinals.max) {
 		return ordinals[ordinals.max] + (index - ordinals.max);
 	} else {
-		var carry = 0;
+		let carry = 0;
 		while (ordinals[index] == undefined) {
 			index--;
 			carry++;
@@ -29,17 +33,19 @@ export function nextOrdinal(o, ordinals) {
 	return getOrdinal(index+1, ordinals);
 }
 
-export function getOrdinals(container) {
-	var xOrdinals = [];
+export function getOrdinals(container) : {xOrdinals: Ordinals, yOrdinals: Ordinals } {
+	const xOrdinals = [] as Ordinals;
 	xOrdinals.max = Number.MIN_SAFE_INTEGER;
 	xOrdinals.min = Number.MAX_SAFE_INTEGER;
 	
-	var yOrdinals = [];
+	const yOrdinals = [] as Ordinals;
 	yOrdinals.max = Number.MIN_SAFE_INTEGER;
 	yOrdinals.min = Number.MAX_SAFE_INTEGER;
 	
-	Array.from(container.children).forEach(e => {
-		const details = parseInfo(e);
+	Array.from(container.children)
+		.filter(e => e instanceof Element)
+		.forEach(e => {
+		const details = parseInfo(e as Element);
 		if ((details != null) && (details['position']) && details['grid-x']) {
 			const position = details['position'];
 			const gridX = details['grid-x'];

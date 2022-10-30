@@ -5,6 +5,7 @@
 import { parseInfo, isTerminator, getKite9Target, isConnected, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd } from "/public/bundles/api.js";
 import { getSVGCoords, getElementPageBBox, getMainSvg } from '../../../bundles/screen.js'
 import { getBeforeId } from '../../../bundles/ordering.js'
+import { DropCallback, MoveCallback } from "../../../classes/dragger/dragger.js";
 
 /**
  * Keeps track of any links we've animated moving.
@@ -13,7 +14,7 @@ var moveLinks = [];
 
 const SVG_PATH_REGEX = /[MLQTCSAZ][^MLQTCSAZ]*/gi;
 
-export function initTerminatorDropCallback(command) {
+export function initTerminatorDropCallback(command) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
 		if (dropTargets.length == 1) {
@@ -89,7 +90,7 @@ export function initTerminatorDropLocatorFunction() {
 /**
  * This shows the user where links will go.
  */
-export function initTerminatorMoveCallback() {
+export function initTerminatorMoveCallback() : MoveCallback {
 
 	return function(dragTargets, evt) {
 		

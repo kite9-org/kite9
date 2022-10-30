@@ -1,18 +1,20 @@
-import { hasLastSelected, getParentElement, parseInfo } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js';
+import { Selector } from '../../../bundles/types.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
-export function initSelectContextMenuCallback(selector) {
+export function initSelectContextMenuCallback(selector: Selector = undefined) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui~='grid'].selected")
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='grid'].selected"))
 		}
 	}
 	
-	function performSelect(cm, event, horiz, elements) {
+	function performSelect(cm: ContextMenu, event: Event, horiz: boolean, elements: Element[]) {
 		
-		function intersects(r1, r2) {
+		function intersects(r1 : number, r2: number) {
 			const startIn = (r1[0] >= r2[0]) && (r1[0] < r2[1]);
 			const endIn = (r1[1] > r2[0]) && (r1[1] <= r2[1]);
 			return startIn || endIn;
@@ -24,13 +26,13 @@ export function initSelectContextMenuCallback(selector) {
 			const container = e.parentElement;
 			
 			Array.from(container.children).forEach(f => {
-				const details = parseInfo(f);
+				const details = parseInfo(f as Element);
 				if ((details != null) && details['grid-x']) {
 					const intersect = horiz ? intersects(details['grid-y'], range) :
 						intersects(details['grid-x'], range);
 				
 					if (intersect) { //&& (!f.classList.contains('grid-temporary'))) {
-						f.classList.add("selected");
+						(f as Element).classList.add("selected");
 					}
 				}
 			});

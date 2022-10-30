@@ -34,6 +34,7 @@ import { initActionable } from '../../behaviours/actionable/actionable.js'
 import { initHoverable, Hover } from '../../behaviours/hoverable/hoverable.js'
 
 import { once } from '../../bundles/ensure.js'
+import { getDocumentParam } from "../../bundles/api.js"
 
 export const 
 	command = new Command(), 
@@ -43,7 +44,7 @@ export const
 	dragger  = new Dragger(), 
 	contextMenu = new ContextMenu(),
 	containment = new Containment(),
-	palette =  new Palette("_palette", document.params['palettes']),
+	palette =  new Palette("_palette", getDocumentParam('palettes'),
 	paletteContextMenu = new ContextMenu(),
 	overlay = new Overlay();
 	
@@ -70,7 +71,7 @@ function initCommon() {
 
 	initHoverable(undefined, initMainHoverableAllowed());		// init for main svg area
 
-	initHoverable(() => palette.get().querySelectorAll("[k9-elem][id]"), initPaletteHoverableAllowed(palette)); // init for palette
+	initHoverable(() => Array.from(palette.get().querySelectorAll("[k9-elem][id]")), initPaletteHoverableAllowed(palette)); // init for palette
 
 	initZoomable();
 

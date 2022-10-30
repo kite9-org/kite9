@@ -1,4 +1,4 @@
-import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances, getKite9Target } from "../../../bundles/api.js";
+import { hasLastSelected, parseInfo, isTerminator, isPort, isConnected, getDependentElements, connectedElement, createUniqueId, getAffordances, getKite9Target, getDocumentParam } from "../../../bundles/api.js";
 import { getMainSvg, closestSide, getElementPageBBox, currentTarget, getSVGCoords } from '../../../bundles/screen.js';
 import { parseStyle } from '../../../bundles/css.js'
 
@@ -10,7 +10,7 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 	
 	if (selector == undefined) {
 		selector = function() {
-			const palettePort = paletteFinder(document.params['port-template-uri']);
+			const palettePort = paletteFinder(getDocumentParam('port-template-uri'));
 			return Array.from(getMainSvg()
 				.querySelectorAll("[id].selected"))
 				.filter(e => {
@@ -37,7 +37,7 @@ export function initPortsAddContextMenuCallback(command, containment, paletteFin
 	 * the side of the container they are on.  
 	 */
 	function addPorts(elements, contextMenu, event) {
-		const portUri = document.params['port-template-uri'];
+		const portUri = getDocumentParam('port-template-uri');
 		const palettePort = paletteFinder(portUri);
 		const canSetPortSide = getAffordances(palettePort).includes("port")
 		const portStyle = parseStyle(palettePort.getAttribute("style"))

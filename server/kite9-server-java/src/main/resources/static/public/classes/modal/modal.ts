@@ -4,7 +4,7 @@ export class Modal {
 
 	id : string
 
-	constructor(id) {
+	constructor(id: string) {
 		this.id = id;
 
 		ensureCss('/public/classes/modal/modal.css');
