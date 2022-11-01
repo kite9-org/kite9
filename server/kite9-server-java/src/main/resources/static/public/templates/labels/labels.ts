@@ -19,7 +19,7 @@ function initLabels() {
 		contextMenu.add(initPlaceLabelContextMenuCallback(placement, command));
 	
 	
-		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'label-template-uri', "Label", initPaletteFinder(), p => p.querySelectorAll("[k9-elem=label]")));
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'label-template-uri', "Label", initPaletteFinder(), p => Array.from(p.querySelectorAll("[k9-elem=label]"))));
 	
 	}
 }

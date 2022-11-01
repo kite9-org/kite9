@@ -2,7 +2,7 @@ import { hasLastSelected, getParentElements } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js'
 import { Finder, PaletteSelector, Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { Palette, PaletteCallback } from '../../../classes/palette/palette.js';
+import { Palette, PaletteCallback, PaletteLoadCallback } from '../../../classes/palette/palette.js';
 
 /**
  * Provides the palette-menu option for the context menu on the main diagram.
@@ -70,7 +70,7 @@ export function initPaletteFinder() : Finder {
  */
 export function initMenuPaletteCallback(
 	paletteContextMenu: ContextMenu, 
-	menuChoiceSelector: PaletteSelector = undefined) : PaletteCallback {
+	menuChoiceSelector: PaletteSelector = undefined) : PaletteLoadCallback {
 	
 	if (menuChoiceSelector == undefined) {
 		menuChoiceSelector = function(palettePanel) {

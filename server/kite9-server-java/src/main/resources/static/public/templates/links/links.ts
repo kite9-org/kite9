@@ -15,7 +15,7 @@ import { initDirectionContextMenuCallback, initTerminatorDirectionIndicator } fr
 import { initAlignContextMenuCallback } from '../../behaviours/links/align/links-align.js'
 import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '../../behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '../../behaviours/links/drag/links-drag.js'
-import { initNewLinkPaletteCallback } from '../../behaviours/links/new/links-new.js'
+import { initNewLinkPaletteLoadCallback } from '../../behaviours/links/new/links-new.js'
 import { initLinksNavContextMenuCallback } from '../../behaviours/links/nav/links-nav.js'
 import { initLinksCheckerDropCallback } from '../../behaviours/links/checker/links-checker.js'
 import { initTerminatorContainmentCallback, initLabelContainmentCallback } from '../../behaviours/links/rules/links-rules.js'
@@ -59,7 +59,7 @@ function initLinks() {
 		dragger.dropWith(initLinkerDropCallback(command, linker));
 		dragger.dropWith(initLinksCheckerDropCallback(command));
 
-		palette.add(initNewLinkPaletteCallback(dragger));
+		palette.addLoad(initNewLinkPaletteLoadCallback(dragger));
 
 		contextMenu.add(initLinkContextMenuCallback(linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
@@ -70,7 +70,7 @@ function initLinks() {
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());
 
-		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => p.querySelectorAll("[k9-elem=link]")));
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => Array.from(p.querySelectorAll("[k9-elem=link]"))));
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, portsSelector));
 
 		initLinkable(linker);

@@ -6,7 +6,7 @@ import { command, metadata, dragger, contextMenu, layout, containment, palette, 
 //Containers
 import { initInsertContextMenuCallback, initInsertDragLocator } from '../../behaviours/containers/insert/containers-insert.js'
 import { initContainContextMenuCallback } from '../../behaviours/containers/contain/containers-contain.js'
-import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback, initLayoutIndicator, initLayoutIndicatorPaletteCallback } from '../../behaviours/containers/layout/containers-layout.js'
+import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback, initLayoutIndicator, initLayoutIndicatorPaletteRevealCallback } from '../../behaviours/containers/layout/containers-layout.js'
 import { initChildContextMenuCallback } from '../../behaviours/containers/child/containers-child.js'
 import { initContainerDropLocatorFunction, initContainerDropCallback } from '../../behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '../../behaviours/containers/rules/containers-rules.js'
@@ -67,7 +67,7 @@ function initContainers() {
 			'Link Traversal Rules',
 			initBasicBuildControls(traversalEnumProperties, traversalEnumValues),
 			containerSizingSelector,
-			(r) => '');
+			() => '');
 		
 		stylemenu.push(margins);
 		stylemenu.push(padding);
@@ -75,7 +75,7 @@ function initContainers() {
 		stylemenu.push(sizing);
 		stylemenu.push(traversal);
 		
-		palette.addUpdate(initLayoutIndicatorPaletteCallback())
+		palette.addReveal(initLayoutIndicatorPaletteRevealCallback())
 		initLayoutIndicator();
 	}
 	

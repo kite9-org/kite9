@@ -9,7 +9,7 @@ import { Transition } from '../../classes/transition/transition.js'
 import { Dragger } from '../../classes/dragger/dragger.js'
 import { Containment } from '../../classes/containment/containment.js'
 import { Command, initCommandTransitionCallback } from '../../classes/command/command.js'
-import { Palette, initPaletteHoverableAllowed } from '../../classes/palette/palette.js'
+import { Palette } from '../../classes/palette/palette.js'
 import { Overlay } from '../../classes/overlay/overlay.js'
 
 //updatable
@@ -31,7 +31,7 @@ import { initDragable, initMainHoverableAllowed } from '../../behaviours/dragabl
 import { initActionable } from '../../behaviours/actionable/actionable.js' 
 
 //hoverable
-import { initHoverable, Hover } from '../../behaviours/hoverable/hoverable.js'
+import { initHoverable } from '../../behaviours/hoverable/hoverable.js'
 
 import { once } from '../../bundles/ensure.js'
 import { getDocumentParam } from "../../bundles/api.js"
@@ -71,7 +71,7 @@ function initCommon() {
 
 	initHoverable(undefined, initMainHoverableAllowed());		// init for main svg area
 
-	initHoverable(() => Array.from(palette.get().querySelectorAll("[k9-elem][id]")), initPaletteHoverableAllowed(palette)); // init for palette
+	initHoverable(() => Array.from(palette.get().querySelectorAll("[k9-elem][id]"))); // init for palette
 
 	initZoomable();
 

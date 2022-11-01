@@ -2,7 +2,7 @@ import { getKite9Target, createUniqueId, changeId } from '../../../bundles/api.j
 import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '../../../bundles/screen.js'
 import { PaletteSelector, Point } from '../../../bundles/types.js';
 import { Dragger } from '../../../classes/dragger/dragger.js';
-import { getElementUri, PaletteCallback } from '../../../classes/palette/palette.js';
+import { getElementUri, PaletteLoadCallback } from '../../../classes/palette/palette.js';
 
 function defaultDragableSelector(palettePanel: Element): Element[] {
 	return Array.from(palettePanel.querySelectorAll("[allow-drag=true] [id][k9-palette]"));
@@ -17,7 +17,7 @@ let mouseDown = false;
 /**
  * Allows users to drag off the palette and link to items in the main document.
  */
-export function initNewLinkPaletteCallback(dragger: Dragger, dragableSelector: PaletteSelector = undefined): PaletteCallback {
+export function initNewLinkPaletteLoadCallback(dragger: Dragger, dragableSelector: PaletteSelector = undefined): PaletteLoadCallback {
 
 	const DRAG_INTERVAL = 700;  // 700ms for drag to start
 	const DRAG_DIST = 3;

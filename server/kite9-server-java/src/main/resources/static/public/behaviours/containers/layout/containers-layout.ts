@@ -7,7 +7,7 @@ import { FormCallback, Property, SetCallback } from '../../../classes/context-me
 import { Command } from '../../../classes/command/command.js';
 import { PaletteSelector, Selector } from '../../../bundles/types.js';
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
-import { Palette, PaletteCallback } from '../../../classes/palette/palette.js';
+import { PaletteRevealCallback } from '../../../classes/palette/palette.js';
 
 function getLayout(e: Element) {
 	if (e == null) {
@@ -222,7 +222,7 @@ export function initLayoutIndicator(selector: Selector = undefined) {
 	})
 }
 
-export function initLayoutIndicatorPaletteCallback(selector: PaletteSelector) : PaletteCallback {
+export function initLayoutIndicatorPaletteRevealCallback(selector: PaletteSelector = undefined) : PaletteRevealCallback {
 
 	if (selector == undefined) {
 		selector = function(e) {
@@ -230,7 +230,7 @@ export function initLayoutIndicatorPaletteCallback(selector: PaletteSelector) : 
 		}
 	}
 
-	return function(p: Palette, palettePanel: Element) {
+	return function(palettePanel: Element) {
 		if (palettePanel) {
 			selector(palettePanel).forEach(function(v) {
 				const layout = getLayout(v);

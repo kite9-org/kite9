@@ -38,7 +38,7 @@ export class Hover {
 /**
  * Adds hoverable behaviour
  */
-export function initHoverable(selector: Selector, allowed : (v: Element) => boolean, ctx = new Hover()) {
+export function initHoverable(selector: Selector = undefined, allowed : (v: Element) => boolean = undefined, ctx = new Hover()) {
 	
 	if (allowed == undefined) {
 		allowed = function(v) {

@@ -75,11 +75,10 @@ function initEditor() {
 		dragger.dragLocator(initDragableDragLocator());
 	
 		
-		palette.add(initMenuPaletteCallback(paletteContextMenu));
-		palette.addUpdate(() => paletteContextMenu.destroy());
-		palette.addUpdate(() => clearLastSelected(palette.get()));
-		palette.addUpdate(initPaletteUpdateDefaults(palette, initPaletteFinder()));
-
+		palette.addLoad(initMenuPaletteCallback(paletteContextMenu));
+		palette.addReveal(() => paletteContextMenu.destroy());
+		palette.addReveal(() => clearLastSelected(palette.get()));
+		palette.addReveal(initPaletteUpdateDefaults(palette, initPaletteFinder()));
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
 		

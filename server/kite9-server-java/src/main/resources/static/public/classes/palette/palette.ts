@@ -2,8 +2,13 @@ import { suffixIds, addQueryParam } from '../../bundles/api.js'
 import { icon } from '../../bundles/form.js'
 import { ensureCss } from '../../bundles/ensure.js'
 
-export type PaletteCallback = (p: Palette, e: HTMLDivElement) => void
-export type UpdateCallback = (e?: Element) => void
+export type PaletteLoadCallback = (p: Palette, e: HTMLDivElement) => void
+
+/**
+ * Called with an element when a palette is revealed on screen, and with
+ * no element when it is removed
+ */
+export type PaletteRevealCallback = (e?: Element) => void
 
 export type PaletteProps = {
 	number: number,
@@ -12,7 +17,6 @@ export type PaletteProps = {
 }
 
 export type SelectorFunction = (p: SVGElement | HTMLDivElement) => boolean
-export type ActionFunction = (e: Event) => void
 
 /**
  * Provides functionality for populating/ showing/ hiding a palette.  
@@ -20,15 +24,13 @@ export type ActionFunction = (e: Event) => void
 export class Palette {
 
 	id: string
-	callbacks: PaletteCallback[] = [];
+	loadCallbacks: PaletteLoadCallback[] = [];
 	paletteMap: PaletteProps[] = [];
 	expanded: HTMLDivElement | null = null;
-	updateCallbacks: UpdateCallback[] = [];
+	revealCallbacks: PaletteRevealCallback[] = [];
 
 	// state
 	openEvent: Event
-	currentSelector: SelectorFunction;
-	currentAction: ActionFunction;
 
 	constructor(id: string, uriList: string[]) {
 		const done = [];
@@ -142,7 +144,7 @@ export class Palette {
 				item.appendChild(doc.documentElement);
 				item.removeChild(loading);
 
-				this.callbacks.forEach(cb => {
+				this.loadCallbacks.forEach(cb => {
 					cb(this, item);
 				})
 
@@ -156,12 +158,12 @@ export class Palette {
 	}
 
 
-	add(cb: PaletteCallback) {
-		this.callbacks.push(cb);
+	addLoad(cb: PaletteLoadCallback) {
+		this.loadCallbacks.push(cb);
 	}
 
-	addUpdate(cb: UpdateCallback) {
-		this.updateCallbacks.push(cb);
+	addReveal(cb: PaletteRevealCallback) {
+		this.revealCallbacks.push(cb);
 	}
 
 	getId(): string {
@@ -180,18 +182,8 @@ export class Palette {
 		return this.expanded;
 	}
 
-	getCurrentSelector(): SelectorFunction {
-		return this.currentSelector;
-	}
-
-	getCurrentAction(): ActionFunction {
-		return this.currentAction;
-	}
-
-	open(event: Event, selectorFunction: SelectorFunction, actionFunction: ActionFunction) {
+	open(event: Event, selectorFunction: SelectorFunction) {
 		this.openEvent = event;
-		this.currentSelector = selectorFunction;
-		this.currentAction = actionFunction;
 
 		const darken = document.getElementById("_darken");
 		const palette = document.getElementById(this.id);
@@ -253,7 +245,7 @@ export class Palette {
 			if (dot != null) {
 				dot.classList.add("selected");
 			}
-			p.updateCallbacks.forEach(cb => cb(e));
+			p.revealCallbacks.forEach(cb => cb(e));
 		}
 
 		function getTitle(palette: Element): string {
@@ -311,12 +303,11 @@ export class Palette {
 	}
 
 	destroy() {
-		this.currentAction = undefined;
 		const palette = document.getElementById(this.id);
 		const darken = document.getElementById("_darken");
 		palette.style.visibility = 'hidden';
 		darken.style.display = 'none';
-		this.updateCallbacks.forEach(cb => cb());
+		this.revealCallbacks.forEach(cb => cb());
 		this.expanded = undefined;
 	}
 }
@@ -328,15 +319,6 @@ export class Palette {
  */
 function removeScripts(doc: Document) {
 	doc.querySelectorAll("script,style,defs").forEach(n => n.parentElement.removeChild(n));
-}
-
-export function initPaletteHoverableAllowed(palette: Palette) {
-
-	return function(v: SVGElement) {
-		const currentSelector = palette.getCurrentSelector();
-		return currentSelector(v);
-	}
-
 }
 
 /**
