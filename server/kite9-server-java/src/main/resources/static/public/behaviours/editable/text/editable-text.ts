@@ -9,8 +9,8 @@ type TextCollector = (e: Element) => string
 
 export function initEditContextMenuCallback(
 	command: Command, 
-	selector: Selector, 
-	textCollector: TextCollector) : ContextMenuCallback {
+	selector: Selector = undefined, 
+	textCollector: TextCollector = undefined) : ContextMenuCallback {
 	
 	function createEditStep(e: Element, newText: string, oldText: string) {
 		return {

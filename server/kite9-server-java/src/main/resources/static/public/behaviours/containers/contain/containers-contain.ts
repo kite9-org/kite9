@@ -19,7 +19,7 @@ export function initContainContextMenuCallback(
 	palette: Palette, 
 	command: Command, 
 	containment: Containment, 
-	containSelector: Selector) :ContextMenuCallback {
+	containSelector: Selector = undefined) :ContextMenuCallback {
 
 	if (containSelector == undefined) {
 		containSelector = defaultContainSelector;
@@ -35,7 +35,7 @@ export function initContainContextMenuCallback(
 		const lastSelectedElement = onlyLastSelected(containSelector());
 
 		// this is the palette element we are going to contain them with
-		const droppingElement = palette.get(event).querySelector("[id].lastSelected");
+		const droppingElement = palette.get().querySelector("[id].lastSelected");
 		const palettePanel = palette.getOpenPanel();
 
 		function createInsertStep(e: Element, drop: Element, newId: string) {

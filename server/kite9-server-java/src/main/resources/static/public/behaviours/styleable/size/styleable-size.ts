@@ -1,9 +1,10 @@
-import { hasLastSelected, isRectangular, parseInfo } from '../../../bundles/api.js'
-import { parseStyle } from '../../../bundles/css.js'
-import { textarea, form, ok, cancel, inlineButtons, formValues } from '../../../bundles/form.js'
-import { getMainSvg, getElementPageBBox, getElementHTMLBBox, canRenderClientSide } from '../../../bundles/screen.js';
-import { numeric, fieldset } from '../../../bundles/form.js'
-import { addNumericControl, moveContextMenuAway } from '/public/behaviours/styleable/styleable.js'
+import { isRectangular, parseInfo } from '../../../bundles/api.js'
+import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js';
+import { fieldset } from '../../../bundles/form.js'
+import { addNumericControl, BuildControlsCallback, moveContextMenuAway } from '../styleable.js'
+import { ContextMenu } from '../../../classes/context-menu/context-menu.js';
+import { Overlay } from '../../../classes/overlay/overlay.js';
+import { Styles } from '../../../bundles/css.js';
 
 
 export function containerSizingSelector() {
@@ -13,7 +14,7 @@ export function containerSizingSelector() {
 
 export const marginsIcon = "/public/behaviours/styleable/size/margins.svg";
 
-export function initMarginsBuildControls() {
+export function initMarginsBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style, overlay, cm, event) {
 		const margins = parseInfo(selectedElement)['margin'].split(" ").map(x => parseFloat(x));
 		const bbox = getElementPageBBox(selectedElement);
@@ -39,7 +40,7 @@ export const paddingIcon = "/public/behaviours/styleable/size/padding.svg";
 
 
 export function initPaddingBuildControls() {
-	return function(selectedElement, style, overlay, cm, event) {
+	return function(selectedElement: Element, style: Styles, overlay: Overlay, cm: ContextMenu, event: Event) {
 		const padding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
 		const bbox = getElementPageBBox(selectedElement);
 		const ibox = {
@@ -49,7 +50,7 @@ export function initPaddingBuildControls() {
 			height: bbox.height - padding[0] - padding[2]
 		}
 		
-		const innerMove = overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height, 
+		overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height, 
 			0, 0, 0, 0);
 			
 		const outerMove = overlay.createSizingRect(ibox.x, ibox.y, ibox.width, ibox.height,
@@ -75,12 +76,11 @@ export const minSizeIcon = "/public/behaviours/styleable/size/size.svg";
 export function initMinSizeBuildControls() {
 	return function(selectedElement, style, overlay, cm, event) {
 		const minSize = parseInfo(selectedElement)['min-size'].split(" ").map(x => parseFloat(x));
-		const htmlElement = cm.get(event);
 		const bbox = getElementPageBBox(selectedElement);
 		
 		const numericControls = [
-			addNumericControl(overlay, '--kite9-min-width', style, true, false, bbox.x,bbox.y, minSize[0], () => {}),
-			addNumericControl(overlay, '--kite9-min-height', style, false, false, bbox.x, bbox.y, minSize[1],  () => {}),
+			addNumericControl(overlay, '--kite9-min-width', style, true, false, bbox.x,bbox.y, minSize[0], () => { /* no op */ }),
+			addNumericControl(overlay, '--kite9-min-height', style, false, false, bbox.x, bbox.y, minSize[1],  () => { /* no op */ }),
 		]
 				
 		moveContextMenuAway(cm, selectedElement, event)

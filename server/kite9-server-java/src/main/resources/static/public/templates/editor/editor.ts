@@ -16,14 +16,13 @@ import { initCompleteDragable, initDragableDragLocator, initDragContextMenuCallb
 import { initDeleteContextMenuCallback } from '../../behaviours/selectable/delete/selectable-delete.js'
 import { initReplaceContextMenuCallback } from '../../behaviours/selectable/replace/selectable-replace.js'
 import { initPaletteContextMenuCallback, initMenuPaletteCallback, initPaletteFinder } from '../../behaviours/palettes/menu/palettes-menu.js'
-import { initXCPContextMenuCallback } from '../../behaviours/selectable/xcp/xcp.js'
 import { initSelectable, clearLastSelected } from '../../behaviours/selectable/selectable.js'
 
 // indication
 import { initToggleInstrumentationCallback } from '../../behaviours/indication/toggle/toggle.js'
 
 // defaults
-import { initPaletteUpdateDefaults, initSetDefaultContextMenuCallback } from '../../behaviours/palettes/template/palettes-template.js';
+import { initPaletteUpdateDefaults } from '../../behaviours/palettes/template/palettes-template.js';
 
 // navigation
 import { closeMetadataCallback, initCloseInstrumentationCallback } from "../../behaviours/navigable/close/close.js";
@@ -100,7 +99,7 @@ function initEditor() {
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'style'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
 		
-		initSelectable(() => palette.get().querySelectorAll("[k9-elem][id]"), palette.get(), true);
+		initSelectable(() => Array.from(palette.get().querySelectorAll("[k9-elem][id]")), palette.get(), true);
 
 	}
 	

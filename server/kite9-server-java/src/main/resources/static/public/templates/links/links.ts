@@ -34,60 +34,60 @@ export { linker }
 
 
 function initLinks() {
-	
+
 	if (metadata.isEditor()) {
-	
+
 		const getAlignTemplateUri = () => getDocumentParam('align-template-uri');
 		const paletteFinder = initPaletteFinder();
-			
-    	linker.add(initLinkLinkerCallback(command));
+
+		linker.add(initLinkLinkerCallback(command));
 		linker.add(initAutoConnectLinkerCallback(command));
-	
+
 		dragger.dropLocatorFn(initTerminatorDropLocatorFunction());
 		dragger.dropLocator(initLinkDropLocator());
 		dragger.dropWith(initPortDropCallback(command, containment));
 
 		dragger.moveWith(initTerminatorMoveCallback());
 		dragger.moveWith(initPortMoveCallback(containment));
-	
-		dragger.moveWith(initAutoConnectMoveCallback(linker, 
-				paletteFinder, 
-				initAutoConnectTemplateSelector(getAlignTemplateUri, getLinkTemplateUri)));
-		
+
+		dragger.moveWith(initAutoConnectMoveCallback(linker,
+			paletteFinder,
+			initAutoConnectTemplateSelector(getAlignTemplateUri, getLinkTemplateUri)));
+
 		dragger.dropWith(initLinkDropCallback(command));
 		dragger.dropWith(initTerminatorDropCallback(command));
 		dragger.dropWith(initLinkerDropCallback(command, linker));
 		dragger.dropWith(initLinksCheckerDropCallback(command));
-		
+
 		palette.add(initNewLinkPaletteCallback(dragger));
 
-		contextMenu.add(initLinkContextMenuCallback(command, linker));
+		contextMenu.add(initLinkContextMenuCallback(linker));
 		contextMenu.add(initAlignContextMenuCallback(command));
 		contextMenu.add(initDirectionContextMenuCallback(command));
 		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
-		
+
 		containment.add(initLabelContainmentCallback());
 		containment.add(initTerminatorContainmentCallback());
-		
+
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => p.querySelectorAll("[k9-elem=link]")));
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, portsSelector));
-		
+
 		initLinkable(linker);
 		initTerminatorDirectionIndicator();
-		
-			
-		const portPosition = initStyleContextMenuCallback(command, overlay, 
+
+
+		const portPosition = initStyleContextMenuCallback(command, overlay,
 			portsPositionIcon,
 			'Port Position',
 			initPortsPositionBuildControls(),
 			portsSelector,
-			(r) => '', 
+			(r) => '',
 			initPortsPositionChangeEvent);
-		
+
 		stylemenu.push(portPosition);
 	}
-	
+
 }
 
 once(() => initLinks());

@@ -1,5 +1,5 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, createUniqueId, encodeADLElement } from '../../../bundles/api.js'
+import { createUniqueId, encodeADLElement } from '../../../bundles/api.js'
 
 
 export function voteableSelector() {

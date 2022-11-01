@@ -1,11 +1,12 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { getDocumentParam, isConnected } from '../../../bundles/api.js'
 import { fieldset, select, numeric } from '../../../bundles/form.js' 
+import { Selector } from '../../../bundles/types.js';
+import { BuildControlsCallback } from '../styleable.js';
 
 
 export const fontIcon = '/public/behaviours/styleable/font/font.svg';
 
-export function fontSelector() {
+export const fontSelector: Selector = () => {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=font].selected"));
 }
 
@@ -13,14 +14,19 @@ function onlyUnique(value, index, self) {
 	return self.indexOf(value) === index;
 }		
 
-export function initFontBuildControls() {
+export type FontDeclaration = {
+	styles: string,
+	weights: string
+}
+	
+export function initFontBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style) {
 		const fontFamily = style['font-family'];
 		const fontWeight = style['font-weight'];
 		const fontStyle = style['font-style'];
 		const fontSize = style['font-size'];
 		
-		const availableFamilies = getDocumentParam('font-families');
+		const availableFamilies = document['params']['font-families'] as { [index: string] : FontDeclaration };
 		const allStyles = ['', ...Object.values(availableFamilies)
 			.map(e => e.styles)
 			.flatMap(e => e.split(" "))
@@ -38,7 +44,7 @@ export function initFontBuildControls() {
 		const fontSizeField = numeric('font-size', fontSize);
 		
 		
-		function updateWeightAndStyle(selected) {
+		function updateWeightAndStyle(selected: string) {
 			const goodWeights = selected ? [ '', ...availableFamilies[selected].weights.split(" ") ] : allWeights;
 			const goodStyles = selected ? [ '', ...availableFamilies[selected].styles.split(" ") ] : allStyles;	
 			fontWeightSelect.querySelectorAll("option")
@@ -52,7 +58,7 @@ export function initFontBuildControls() {
 		}
 		
 		const dd = fontFamilySelect.querySelector("select");
-		dd.addEventListener("input", e => {
+		dd.addEventListener("input", () => {
 				const newFamily = dd.options[dd.selectedIndex].value;
 				updateWeightAndStyle(newFamily)
 			});

@@ -1,12 +1,13 @@
 import { hasLastSelected } from '../../../bundles/api.js'
-import { textarea, form, ok, cancel, inlineButtons, formValues } from '../../../bundles/form.js'
 import { getMainSvg } from '../../../bundles/screen.js';
+import { Selector } from '../../../bundles/types.js';
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
-export function initStyleMenuContextMenuCallback(submenu, selector) {
+export function initStyleMenuContextMenuCallback(submenu, selector: Selector = undefined) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui].selected");
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui].selected"));
 		}
 	}
 

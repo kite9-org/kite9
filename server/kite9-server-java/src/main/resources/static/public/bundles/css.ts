@@ -1,14 +1,10 @@
 /** From: https://github.com/joshwnj/style-attr */
 
-type ParseOptions = {
-	preserveNumbers: boolean
-}
+export type Styles = { [key: string] : string }
 
-export function parseStyle(raw : string, opts : ParseOptions = {
-	preserveNumbers: false}) {
+export function parseStyle(raw : string) : Styles {
   raw = raw || ""
 
-  const preserveNumbers = opts.preserveNumbers;
   const trim = function (s) { return s.trim(); };
   const obj = {};
 
@@ -19,28 +15,20 @@ export function parseStyle(raw : string, opts : ParseOptions = {
       // split with `.indexOf` rather than `.split` because the value may also contain colons.
       const pos = item.indexOf(':');
       const key = item.substr(0, pos).trim();
-      let val = item.substr(pos + 1).trim();
-      if (preserveNumbers && isNumeric(val)) {
-        val = Number(val);
-      }
-
+      const val = item.substr(pos + 1).trim();
       obj[key] = val;
     });
 
   return obj;
 }
 
-function isNumeric(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
-
-function getKeyValueChunks(raw) {
+function getKeyValueChunks(raw : string) : string[] {
   const chunks = [];
   let offset = 0;
   const sep = ';';
   const hasUnclosedUrl = /url\([^)]+$/;
   let chunk = '';
-  let nextSplit;
+  let nextSplit : number;
   while (offset < raw.length) {
     nextSplit = raw.indexOf(sep, offset);
     if (nextSplit === -1) { nextSplit = raw.length; }

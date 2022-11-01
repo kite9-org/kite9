@@ -14,6 +14,20 @@ export type PaletteSelector = (e: Element) => Element[]
 export type Point = {x : number, y: number}
 
 /**
+ * Point with width, height
+ */
+export type Area = Point & {
+	width: number,
+	height: number
+}
+
+/**
  * Given an id, returns the element
  */
 export type Finder = (u: string) => Element
+
+/**
+ * Used everywhere, e.g. css values.
+ */
+export type Direction = "up" | "down" | "left" | "right" 
+

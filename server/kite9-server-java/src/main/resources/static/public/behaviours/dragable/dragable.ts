@@ -54,7 +54,7 @@ export function initDragable(dragger: Dragger, selector: Selector = undefined) {
 /**
  * Returns the objects that are selected being dragged
  */
-export function initDragableDragLocator(selector: Selector) : DragLocatorCallback {
+export function initDragableDragLocator(selector: Selector = undefined) : DragLocatorCallback {
 
 	if (selector == undefined) {
 		selector = function() {

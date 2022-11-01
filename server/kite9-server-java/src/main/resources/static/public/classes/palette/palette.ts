@@ -2,7 +2,7 @@ import { suffixIds, addQueryParam } from '../../bundles/api.js'
 import { icon } from '../../bundles/form.js'
 import { ensureCss } from '../../bundles/ensure.js'
 
-export type PaletteCallback = (p: Palette, e: Element) => void
+export type PaletteCallback = (p: Palette, e: HTMLDivElement) => void
 export type UpdateCallback = (e?: Element) => void
 
 export type PaletteProps = {

@@ -14,8 +14,8 @@ type XMLCollector = (e: Element) => string
 
 export function initXMLContextMenuCallback(
 	command: Command, 
-	selector: Selector, 
-	xmlCollector: XMLCollector) : ContextMenuCallback {
+	selector: Selector = undefined, 
+	xmlCollector: XMLCollector = undefined) : ContextMenuCallback {
 
   const xmlModal = new Modal('_xml-editor');
 

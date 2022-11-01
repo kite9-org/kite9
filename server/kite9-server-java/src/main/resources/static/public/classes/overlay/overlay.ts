@@ -113,8 +113,7 @@ export class Overlay {
 		
 		let initial = {x : 0, y: 0};
 		
-		function setSize(l: string) {
-			length = parseFloat(l)
+		function setSize(l: number) {
 			if (isNaN(length)) {
 				length = 0;
 			}
@@ -134,11 +133,11 @@ export class Overlay {
 			const newLength = Math.round(horiz ? (inverse ? length - delta.x : length + delta.x) :
 				(inverse ? length - delta.y : length + delta.y));
 			if (newLength >= 0) {
-				setSize(""+newLength);
+				setSize(newLength);
 				cb(newLength);
 				length = newLength;
 			} else {
-				setSize(""+ 0);
+				setSize(0);
 				cb(0);
 				length = 0;
 			}
@@ -156,7 +155,7 @@ export class Overlay {
 		handle.addEventListener("touchstart", (e) => startSize(this, e));
 		handle.addEventListener("mousedown", (e) => startSize(this, e));
 		
-		setSize(''+length);
+		setSize(length);
 	
 		return setSize;
 	}

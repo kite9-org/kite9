@@ -38,7 +38,7 @@ function drawPlacement(event: Event, cm: ContextMenu, placement: string, selecte
 export function initPlaceLabelContextMenuCallback(
 	placementProperty: Property, 
 	command: Command, 
-	selector: Selector) : ContextMenuCallback {
+	selector: Selector = undefined) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {

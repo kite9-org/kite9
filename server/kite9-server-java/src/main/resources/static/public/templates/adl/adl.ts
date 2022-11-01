@@ -44,7 +44,7 @@ export const
 	dragger  = new Dragger(), 
 	contextMenu = new ContextMenu(),
 	containment = new Containment(),
-	palette =  new Palette("_palette", getDocumentParam('palettes'),
+	palette =  new Palette("_palette", getDocumentParam('palettes')),
 	paletteContextMenu = new ContextMenu(),
 	overlay = new Overlay();
 	

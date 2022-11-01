@@ -1,12 +1,20 @@
 import { getSVGCoords, getMainSvg, currentTarget } from '../../bundles/screen.js'
 import { handleTransformAsStyle, getKite9Target, getParentElement, onlyUnique, getNextSiblingId, isLink, isConnected } from '../../bundles/api.js'
 
-
+export type DropLocatorFunction = (dragTarget: Element, dropTarget: Element) => boolean
 export type DropLocatorCallback = (dragTargets : Element[], target: Element) => Element[]
 export type DragLocatorCallback = (e: Event) => Element[]
 export type MoveCallback = (dragTargets : Element[], e?: Event, dropTargets?: Element[]) => void
-export type DropCallback = (state: unknown, e: Event, dropTargets: Element[]) => void
-export type StateItem = { dragTarget: Element, dragParent: Element, dragParentId: string, dragBefore? : Element, embeddedShapeOrigin: {x : number, y: number} }
+export type DropCallback = (state: StateItem[], e: Event, dropTargets: Element[]) => void
+export type StateItem = { 
+	dragTarget: Element, 
+	dragParent: Element, 
+	dragParentId: string, 
+	dragBefore? : Element, 
+	dragBeforeId?: string,
+	embeddedShapeOrigin: {x : number, y: number},
+	url?: string
+}
 
 /**
  * Manages state while dragging, as well as maintaining a _moveLayer <g> which holds all the elements
@@ -304,7 +312,7 @@ export class Dragger {
 	 * locators, so that you just supply canDropHere(dragTarget, dropTarget).
 	 * It worries about handling the fact that you can multi-drag.
 	 */
-	dropLocatorFn(canDropHere : (dragTarget: Element, dropTarget: Element) => boolean) {
+	dropLocatorFn(canDropHere : DropLocatorFunction) {
 		
 		let lastDropTarget = null;
 		let lastDragIds = null;

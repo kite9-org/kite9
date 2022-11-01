@@ -1,14 +1,17 @@
-import { getSVGCoords, getElementPageBBox, getMainSvg, closestSide } from '../../../bundles/screen.js'
-import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique, isLink, isConnected, isPort, getAffordances, parseInfo } from '../../../bundles/api.js'
+import { getSVGCoords, getElementPageBBox, closestSide } from '../../../bundles/screen.js'
+import { onlyUnique, isPort, getAffordances } from '../../../bundles/api.js'
 import { parseStyle } from '../../../bundles/css.js'
 import { drawBar, clearBar } from  '../../../bundles/ordering.js'
-
+import { DropCallback, MoveCallback } from '../../../classes/dragger/dragger.js'
+import { Containment } from '../../../classes/containment/containment.js'
+import { Command } from '../../../classes/command/command.js'
+import { Direction } from '../../../bundles/types.js'
 
 /**
  * Essentially the same as initContainerDropCallback, except that
  * you can also position the port at the same time.
  */
-export function initPortDropCallback(command, containment) {
+export function initPortDropCallback(command: Command, containment: Containment) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
 		const dragTargets = dragState.map(s => s.dragTarget);
@@ -63,20 +66,20 @@ export function initPortDropCallback(command, containment) {
 }
 
 
-export function initPortMoveCallback(containment) {
+export function initPortMoveCallback(containment: Containment) : MoveCallback {
 
-	function updateBar(inside, side) {
+	function updateBar(inside: Element, side: Direction) {
 		const shape = inside.querySelector('.k9-shape');
-		const { x, y, width, height } = getElementPageBBox(shape); 
+		const { width, height } = getElementPageBBox(shape); 
 	
 		switch(side) {
-			case 'top':
+			case 'up':
 				drawBar(0, 0, width, 0, inside);
 				return;
 			case 'right':
 				drawBar(width, 0, width, height, inside);			
 				return;
-			case 'bottom':
+			case 'down':
 				drawBar(0, height, width, height, inside);			
 				return;
 			case 'left':
@@ -85,7 +88,7 @@ export function initPortMoveCallback(containment) {
 		}
 	}
 	
-	return function (dragTargets, event, dropTargets, barDirectionOverrideHoriz) {
+	return function (dragTargets, event, dropTargets) {
 		if (dragTargets.filter(dt => isPort(dt)).length == 0) {
 			// not dragging a port
 			return;

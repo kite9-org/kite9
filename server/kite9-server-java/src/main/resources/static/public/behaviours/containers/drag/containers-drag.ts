@@ -1,9 +1,10 @@
-import { getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
-import { handleTransformAsStyle, getKite9Target, getParentElement, getNextSiblingId, onlyUnique } from '../../../bundles/api.js'
+import { onlyUnique } from '../../../bundles/api.js'
 import { getBeforeId } from '../../../bundles/ordering.js'
-import { DropCallback } from '../../../classes/dragger/dragger.js';
+import { DropCallback, DropLocatorFunction } from '../../../classes/dragger/dragger.js';
+import { Command } from '../../../classes/command/command.js';
+import { Containment } from '../../../classes/containment/containment.js';
 
-export function initContainerDropLocatorFunction(containment) {
+export function initContainerDropLocatorFunction(containment: Containment) : DropLocatorFunction {
 
 	return function (dragTarget, dropTarget) {
 		if (dropTarget == null) {
@@ -22,7 +23,7 @@ export function initContainerDropLocatorFunction(containment) {
 	}
 }
 
-export function initContainerDropCallback(command, containment) : DropCallback {
+export function initContainerDropCallback(command: Command, containment: Containment) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
 		const dragTargets = dragState.map(s => s.dragTarget);
@@ -32,7 +33,7 @@ export function initContainerDropCallback(command, containment) : DropCallback {
 		
 		if (connectedDropTargets.length > 0) {
 			const dropTarget = connectedDropTargets[0];
-			var beforeId = getBeforeId(dropTarget, evt, dragTargets);
+			const beforeId = getBeforeId(dropTarget, evt, dragTargets);
 			Array.from(dragState).forEach(s => {
 				if (s.dragParentId) {
 					// we are moving this from somewhere else in the diagram

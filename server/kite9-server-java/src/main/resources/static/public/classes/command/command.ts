@@ -4,21 +4,28 @@ import { TransitionDocumentCallback } from "../transition/transition.js";
 
 export type SingleCommand = {
 	type?: string,
+
+	// insert
 	fragmentId? : string,
+	beforeId?: string,
+	containedIds?: string[],
+	newId?: string,
+	base64Element?: string,
+	xpathToValue?: object,
+	uriStr?: string,
+
+	// moves
 	from?: string,
 	fromBefore?: string,
 	to?: string,
+	toBefore?: string
+	moveId?: string,
+
 	name?: string,
 	horiz?: string,
-	uriStr?: string,
-	newId?: string,
-	xpathToValue?: object,
-	base64Element?: string,
-	moveId?: string,
-	containedIds?: string[],
-	beforeId?: string,
 	keptAttributes?: string[],
-	keptTags?: string[]
+	keptTags?: string[],
+	cascade?: true
 }
 
 export type Update = {

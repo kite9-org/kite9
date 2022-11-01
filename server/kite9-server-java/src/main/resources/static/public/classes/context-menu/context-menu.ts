@@ -69,7 +69,7 @@ export class ContextMenu {
 	 * Creates the context menu within the main svg element,
 	 * positioning it relative to the event that created it.
 	 */
-	get(event: Event) {
+	get(event: Event) : HTMLFormElement {
 		let theForm = document.querySelector("#"+DEFAULT_FORM_ID);
 		if (theForm) {
 			return theForm;
@@ -119,7 +119,7 @@ export class ContextMenu {
 	/** 
 	 * Short-hand way of adding a single control to the context menu
 	 */
-	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void, set = "Actions", imageAtts: object = {}) {
+	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void = () => { /* no op */ }, set = "Actions", imageAtts: object = {}) {
 		const htmlElement = this.get(event);
 		let fs = document.getElementById("#contextMenu-"+set);
 		if (!fs) {

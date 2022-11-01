@@ -1,8 +1,9 @@
 import { getMainSvg, svg } from '../../../bundles/screen.js'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId, isTerminator, isLink } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId, isTerminator, isLink, onlyLastSelected } from '../../../bundles/api.js'
 import { Command } from '../../../classes/command/command.js';
-import { Selector } from '../../../bundles/types.js';
-import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { Direction, Selector } from '../../../bundles/types.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { LinkDirection } from '../linkable.js';
 
 function directionSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction]"))
@@ -37,7 +38,7 @@ export function initDirectionContextMenuCallback(
 		
 		if (alignOnly && (direction == 'null')) {
 			command.pushAllAndPerform([{
-					type: 'ADLDelete',
+					type: 'Delete',
 					fragmentId: e.getAttribute("id"),
 					cascade: true
 			}]);
@@ -63,8 +64,12 @@ export function initDirectionContextMenuCallback(
 		}
 	}
 	
-	function drawDirection(event, cm, direction, selected) {
-		var title, src;
+	function drawDirection(
+		event: Event, 
+		cm: ContextMenu, 
+		direction: LinkDirection, 
+		selected: LinkDirection = undefined) : HTMLImageElement {
+		let title: string, src: string;
 		
 		if (direction != "null") {
 			title= "Link Direction ("+direction+")";
@@ -74,8 +79,8 @@ export function initDirectionContextMenuCallback(
 			src =  "/public/behaviours/links/direction/undirected.svg";				
 		}
 
-		var a = cm.addControl(event, src, title);
-		var img = a.children[0];
+		const a = cm.addControl(event, src, title) as HTMLDivElement; 
+		const img = a.children[0] as HTMLImageElement;
 		
 		if (selected == direction) {
 			img.setAttribute("class", "selected");
@@ -96,26 +101,23 @@ export function initDirectionContextMenuCallback(
 			
 			if (debug.link) {
 				const contradicting = debug.contradicting == "yes";
-				const reverse = contradicting ? false : (debug.direction == 'LEFT' || debug.direction == 'UP');
+				const reverse = contradicting ? false : (debug.direction == 'left' || debug.direction == 'up');
 				
-				var htmlElement = contextMenu.get(event);
 				const d2 = reverse ? reverseDirection(direction) : direction;
-				var img = drawDirection(event, contextMenu, d2);
+				const img = drawDirection(event, contextMenu, d2);
 				if (contradicting) {
 					img.style.backgroundColor = "#ff5956";
 				}
 				
-				function handleClick() {
-					contextMenu.clear(event);
+				img.addEventListener("click", () => {
+					contextMenu.clear();
 					
-					["null", "UP", "DOWN", "LEFT", "RIGHT"].forEach(s => {
-						var img2 = drawDirection(event, contextMenu, s, d2);
-						var s2 = reverse ? reverseDirection(s) : s;
+					["null", "up", "down", "left", "right"].forEach((s : LinkDirection) => {
+						const img2 = drawDirection(event, contextMenu, s, d2);
+						const s2 = reverse ? reverseDirection(s) : s;
 						img2.addEventListener("click", () => setDirection(e, s2, contextMenu));
 					});
-				}
-				
-				img.addEventListener("click", handleClick);
+				});
 			}
 		}
 	};

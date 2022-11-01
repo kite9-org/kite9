@@ -5,7 +5,6 @@ import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
-type Side = 'up' | "down" | "left" | "right"
 
 export function initCellAppendContextMenuCallback(
 	command: Command, 
@@ -130,13 +129,13 @@ export function initCellAppendContextMenuCallback(
 		const e = hasLastSelected(selector());
 		
 		if (e.length > 0) {
-			var htmlElement = cm.get(event);
+			const htmlElement = cm.get();
 			
 			function handleClick() {
 				// remove the other stuff from the context menu
 				cm.clear(event);
 
-				["right", "down", "left", "up"].forEach(s => {
+				Direction.forEach(s => {
 					cm.addControl(event, "/public/behaviours/grid/append/" + s.toLowerCase() + ".svg", 
 							"Append (" + s + ")", () => appendsCells(selector(), s, cm));
 				});

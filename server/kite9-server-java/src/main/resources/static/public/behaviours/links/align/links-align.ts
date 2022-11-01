@@ -7,8 +7,8 @@ import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.
 
 export function initAlignContextMenuCallback(
 	command: Command, 
-	templateUri: string, 
-	selector: Selector) : ContextMenuCallback{
+	templateUri: string = undefined, 
+	selector: Selector = undefined) : ContextMenuCallback{
 	
 	/**
 	 * Aligns the two elements

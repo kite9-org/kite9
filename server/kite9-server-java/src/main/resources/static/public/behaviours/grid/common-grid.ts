@@ -21,7 +21,7 @@ export function getOrdinal(index: number, ordinals: Ordinals) : number {
 	}
 }
 
-export function nextOrdinal(o, ordinals) {
+export function nextOrdinal(o: number, ordinals: Ordinals) {
 	const index = ordinals.indexOf(o);
 	if (index == -1) {
 		if (o < ordinals.min) {
@@ -33,7 +33,7 @@ export function nextOrdinal(o, ordinals) {
 	return getOrdinal(index+1, ordinals);
 }
 
-export function getOrdinals(container) : {xOrdinals: Ordinals, yOrdinals: Ordinals } {
+export function getOrdinals(container: Element) : {xOrdinals: Ordinals, yOrdinals: Ordinals } {
 	const xOrdinals = [] as Ordinals;
 	xOrdinals.max = Number.MIN_SAFE_INTEGER;
 	xOrdinals.min = Number.MAX_SAFE_INTEGER;
@@ -45,7 +45,7 @@ export function getOrdinals(container) : {xOrdinals: Ordinals, yOrdinals: Ordina
 	Array.from(container.children)
 		.filter(e => e instanceof Element)
 		.forEach(e => {
-		const details = parseInfo(e as Element);
+		const details = parseInfo(e);
 		if ((details != null) && (details['position']) && details['grid-x']) {
 			const position = details['position'];
 			const gridX = details['grid-x'];

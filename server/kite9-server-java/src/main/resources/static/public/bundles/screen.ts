@@ -1,14 +1,5 @@
 import { parseTransform } from './api.js';
-
-type Coords = {
-	x: number, 
-	y: number
-}
-
-type BBox = Coords & {
-	width: number,
-	height: number
-}
+import { Area, Direction, Point } from './types.js';
 
 let _svg : SVGSVGElement;
 
@@ -19,7 +10,7 @@ export function getMainSvg() : SVGSVGElement {
 	return _svg;
 }
 
-export function getHtmlCoords(evt: Event) : Coords {
+export function getHtmlCoords(evt: Event) : Point {
 	if (evt instanceof MouseEvent) {
 		const out =  {x: evt.pageX, y: evt.pageY};
 		return out;
@@ -32,7 +23,7 @@ export function getHtmlCoords(evt: Event) : Coords {
 	}
 }
 
-export function getSVGCoords(evt : Event, draw = false) {
+export function getSVGCoords(evt : Event, draw = false) : Point {
 	const out = getHtmlCoords(evt);
 	const transform = getMainSvg().style.transform;
 	const t = parseTransform(transform);
@@ -51,7 +42,7 @@ export function getSVGCoords(evt : Event, draw = false) {
 	return out;
 }
 
-export function getElementPageBBox(e : Element) : BBox {
+export function getElementPageBBox(e : Element) : Area {
 	if (e instanceof SVGGraphicsElement) {
 		const mtrx = e.getCTM();
 		const bbox = e.getBBox();
@@ -71,7 +62,7 @@ export function getElementPageBBox(e : Element) : BBox {
 	}
 }
 
-export function getElementHTMLBBox(e : Element) : BBox {
+export function getElementHTMLBBox(e : Element) : Area {
 	const transform = getMainSvg().style.transform;
 	const t = parseTransform(transform);
 	const out = getElementPageBBox(e);
@@ -82,7 +73,7 @@ export function getElementHTMLBBox(e : Element) : BBox {
 	return out;
 }
 
-export function getElementsPageBBox(elements : Element[]) : BBox {
+export function getElementsPageBBox(elements : Element[]) : Area {
 	return elements
 		.map(e => getElementPageBBox(e))
 		.reduce((a, b) => { return {
@@ -139,7 +130,7 @@ export function svg(tag: string, atts: object = {}, contents: Element[] = []) {
 /** 
  * Detect whether we can render on the client side
  */
-export function canRenderClientSide() {
+export function canRenderClientSide() : boolean {
 	return ((window.CSS as any).registerProperty != null);
 }
 
@@ -148,7 +139,7 @@ export function canRenderClientSide() {
  * Returns the string 'up', 'down','left','right' 
  * for a given point on the screen related to a target.
  */
-export function closestSide(dropTarget: Element, eventCoords : Coords = {x :0, y: 0}) {
+export function closestSide(dropTarget: Element, eventCoords : Point = {x :0, y: 0}) : Direction {
 	const boxCoords = getElementPageBBox(dropTarget);
 	
 	const topDist = Math.abs(eventCoords.y - boxCoords.y); 
@@ -156,14 +147,14 @@ export function closestSide(dropTarget: Element, eventCoords : Coords = {x :0, y
 	const bottomDist = Math.abs(boxCoords.y +  boxCoords.height - eventCoords.y);
 	const rightDist = Math.abs(boxCoords.x + boxCoords.width - eventCoords.x);
 	
-	const dists = {
-		'up': topDist,
-		'right': rightDist, 
-		'down': bottomDist, 
-		'left': leftDist 
+	const dists : Record<Direction,number> = {
+		UP: topDist,
+		RIGHT: rightDist,
+		DOWN: bottomDist,
+		LEFT: leftDist
 	};
 	
-	const bestSide = ['up', 'right', 'down', 'left']
+	const bestSide = Object.keys(Direction)
 		.reduce((a, b) => dists[a] < dists[b] ? a : b, 'top');
 		
 	return bestSide;

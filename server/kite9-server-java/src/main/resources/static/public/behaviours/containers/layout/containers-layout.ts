@@ -85,7 +85,7 @@ export function initContainerLayoutPropertySetCallback(command: Command) : SetCa
 	}
 }
 
-export function initLayoutContextMenuCallback(layoutProperty: Property, selector: Selector) : ContextMenuCallback {
+export function initLayoutContextMenuCallback(layoutProperty: Property, selector: Selector = undefined) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {
@@ -200,7 +200,7 @@ function ensureLayoutIndicator(e: Element, layout: string) {
 	e.appendChild(indicator)
 }
 
-export function initLayoutIndicator(selector: Selector) {
+export function initLayoutIndicator(selector: Selector = undefined) {
 
 
 	if (selector == undefined) {

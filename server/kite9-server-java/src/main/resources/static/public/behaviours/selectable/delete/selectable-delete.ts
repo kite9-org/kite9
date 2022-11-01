@@ -10,7 +10,7 @@ export function initDeleteContextMenuCallback(
 	command: Command,
 	selector: Selector = undefined,
 	cascade: (e: Element) => boolean = undefined,
-	orphan: (e: Element) => boolean) : ContextMenuCallback {
+	orphan: (e: Element) => boolean = undefined) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {

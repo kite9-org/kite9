@@ -1,3 +1,5 @@
+import { Direction } from "./types";
+
 /**
  * Returns the collection of elements so long as one of them has the lastSelected class.
  */
@@ -63,29 +65,15 @@ export function getExistingConnections(id1: string, id2: string | null = undefin
 	});
 }
 
-export function reverseDirection(d : string) : string {
-    switch (d) {
-    case "LEFT":
-            return "RIGHT";
-    case "UP":
-            return "DOWN";
-    case "DOWN":
-            return "UP";
-    case "RIGHT":
-            return "LEFT";
-    }
-
-    return d;
-}
-
 type Info = {
 	'link'?: string[],
 	'terminates-at'?: string,
 	'layout'? : string,
 	'end'? : string,
 	'terminates'?: string,
-	'direction'?: string,
-	'temporary'?: boolean
+	'direction'?: Direction,
+	'temporary'?: boolean,
+	'contradicting'?: 'yes'
 }
 
 export function parseInfo(t : Element) : Info  {
@@ -532,6 +520,7 @@ export function getAffordances(element: Element) : string[] {
 	return ui;
 }
 
-export function getDocumentParam(p: string): string {
+export function getDocumentParam(p: string) {
 	return document['params'][p];
 }
+

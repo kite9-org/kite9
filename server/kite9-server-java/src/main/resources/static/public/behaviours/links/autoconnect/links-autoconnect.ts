@@ -1,34 +1,35 @@
 import { getMainSvg, getElementPageBBox, currentTarget } from '../../../bundles/screen.js'
-import { parseInfo, createUniqueId, getContainingDiagram, reverseDirection, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId, getAffordances } from '../../../bundles/api.js'
+import { parseInfo, createUniqueId, getContainingDiagram, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId, getAffordances } from '../../../bundles/api.js'
 import { Linker, LinkerCallback } from '../../../classes/linker/linker.js';
 import { Command } from '../../../classes/command/command.js';
-import { Selector } from '../../../bundles/types.js';
-import { LinkDirection } from '../linkable.js';
+import { Area, Finder, Selector } from '../../../bundles/types.js';
+import { LinkDirection, reverseDirection } from '../linkable.js';
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
 
 let link = null;
 let link_to = undefined;
-let link_d : string = undefined;
+let link_d: LinkDirection = 'null';
 let draggingElement = undefined;
 let templateUri = undefined;
 
 export type UriCallback = () => string
+export type TemplateSelector = (e: Element) => string
 
 export function initAutoConnectTemplateSelector(
-	alignTemplateUriCallback: UriCallback, 
-	linkTemplateUriCallback: UriCallback) {
+	alignTemplateUriCallback: UriCallback,
+	linkTemplateUriCallback: UriCallback): TemplateSelector {
 
-	return function(element: Element) : string {
+	return function(element: Element): string {
 		const alignLink = (element != null) && (!getAffordances(element).includes("autoconnect"));
 		return alignLink ? alignTemplateUriCallback() : linkTemplateUriCallback();
 	}
 }
 
-export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback {
-	
+export function initAutoConnectLinkerCallback(command: Command): LinkerCallback {
+
 	function undoAlignment(e: Element) {
 		const alignOnly = e.classList.contains("kite9-align");
-		const id =  e.getAttribute("id");
+		const id = e.getAttribute("id");
 		if (alignOnly) {
 			command.push({
 				type: 'Delete',
@@ -42,26 +43,26 @@ export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback
 				name: 'direction',
 				from: e.getAttribute('direction')
 			})
-			
+
 			return true;
-		}		
+		}
 	}
-	
-	function ensureNoDirectedLeavers(id: string, d1: string) {
+
+	function ensureNoDirectedLeavers(id: string, d1: LinkDirection) {
 		getExistingConnections(id).forEach(e => {
 			const parsed = parseInfo(e);
 			const d = parsed['direction'];
 			const ids = parsed['link'];
 			const reversed = ids[0] == id;
 			const dUse = reversed ? reverseDirection(d1) : d1;
-			
-			if (d==dUse) {
+
+			if (d == dUse) {
 				undoAlignment(e);
-			} 
+			}
 		});
 	}
-		
-	return function(linker) {		
+
+	return function(linker) {
 		if (link_to) {
 			// create links between the selected object and the link_to one
 			const id_from = draggingElement.getAttribute("id");
@@ -70,9 +71,9 @@ export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback
 
 			ensureNoDirectedLeavers(id_from, link_d);
 			const diagramId = getContainingDiagram(link_to).getAttribute("id");
-			
+
 			existingLinks = existingLinks.filter(e => undoAlignment(e));
-			
+
 			if (existingLinks.length == 0) {
 				// create a new link
 				const linkId = createUniqueId();
@@ -84,9 +85,9 @@ export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback
 						"*[local-name()='from']/@reference": id_to,
 						"*[local-name()='to']/@reference": id_from
 					},
-					uriStr: templateUri,	
+					uriStr: templateUri,
 				});
-				
+
 				command.push({
 					fragmentId: linkId,
 					type: 'ReplaceAttr',
@@ -106,7 +107,7 @@ export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback
 					to: direction,
 					from: firstLink.getAttribute('drawDirection')
 				});
-				
+
 				// moves it to the last in the list
 				command.push({
 					type: 'Move',
@@ -115,8 +116,8 @@ export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback
 					to: diagramId,
 					moveId: firstLink.getAttribute("id"),
 				})
-			}	
-			
+			}
+
 			linker.clear();
 			link = null;
 			link_to = null;
@@ -125,87 +126,89 @@ export function initAutoConnectLinkerCallback(command: Command) : LinkerCallback
 }
 
 export function initAutoConnectMoveCallback(
-	linker: Linker, 
-	linkFinder, linkTemplateSelector, 
-	selector: Selector = undefined, 
-	autoConnectWith) : MoveCallback {
-	
-	let maxDistance = 100;
-	let width, height;
-	
+	linker: Linker,
+	linkFinder: Finder,
+	linkTemplateSelector: TemplateSelector,
+	selector: Selector = undefined,
+	autoConnectWith: (moving: Element, inside: Element, linkTo?: Element) => Element = undefined
+	): MoveCallback {
+
+	const maxDistance = 100;
+
 	function clearLink() {
 		linker.removeDrawingLinks();
 		link = null;
 	}
 
-	function updateLink(topos: number, frompos: number, link_d: LinkDirection, e: Element) {
-	    var fx, fy, tx, ty;
-	    const mx = topos.x + topos.width / 2;
-	    const my = topos.y + topos.height / 2;
-	    
-	    if (link_d == 'left') {
-	        fy = my;
-	        ty = my;
-	        fx = frompos.x;
-	        tx = topos.x + topos.width;
-	    } else if (link_d == 'ight') {
-	        fy = my;
-	        ty = my;
-	        fx = frompos.x + frompos.width;  
-	        tx = topos.x;
-	    } else if (link_d == 'UP') {
-	    	fx = mx;
-	    	tx = mx;
-	    	fy = frompos.y;
-	    	ty = topos.y + topos.height;
-	    } else {
-	    	fx = mx;
-	    	tx = mx;
-	    	fy = frompos.y + frompos.height;
-	    	ty = topos.y;
-	    }
-	   
-	    
-	    
+	function updateLink(topos: Area, frompos: Area, link_d: LinkDirection, e: Element) {
+		let fx, fy, tx, ty;
+		const mx = topos.x + topos.width / 2;
+		const my = topos.y + topos.height / 2;
+
+		if (link_d == 'left') {
+			fy = my;
+			ty = my;
+			fx = frompos.x;
+			tx = topos.x + topos.width;
+		} else if (link_d == 'right') {
+			fy = my;
+			ty = my;
+			fx = frompos.x + frompos.width;
+			tx = topos.x;
+		} else if (link_d == 'up') {
+			fx = mx;
+			tx = mx;
+			fy = frompos.y;
+			ty = topos.y + topos.height;
+		} else if (link_d == 'down') {
+			fx = mx;
+			tx = mx;
+			fy = frompos.y + frompos.height;
+			ty = topos.y;
+		} else {
+			return;
+		}
+
+
+
 		if (link == null) {
-			var representation = linkFinder(templateUri);
+			const representation = linkFinder(templateUri);
 			if (representation) {
 				linker.start([e], representation);
 				link = linker.get()[0];
 			}
 		}
-		
+
 		if (link != null) {
-			linker.moveCoords(fx,fy,tx,ty);
+			linker.moveCoords(fx, fy, tx, ty);
 		}
 	}
-	
+
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui~='autoconnect']");
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='autoconnect']"));
 		}
 	}
-	
+
 	if (autoConnectWith == undefined) {
-		autoConnectWith = function(moving, inside, linkTo) {
-			
+		autoConnectWith = function(moving: Element, inside: Element, linkTo: Element): Element {
+
 			if (moving) {
-				var ui = moving.getAttribute("k9-ui");
-				ui == undefined ? "" : ui;
-				
+				const ui = getAffordances(moving);
+
 				if (!ui.includes("autoconnect")) {
-					
+
 					// ok, we can try for a child to autoconnect to
-					var options = moving.querySelectorAll("[id][k9-ui~='autoconnect']");
+					const options = moving.querySelectorAll("[id][k9-ui~='autoconnect']");
 					if (options.length > 0) {
 						moving = options[0];
 					} else {
 						return null;
 					}
-					
+
 				}
 			}
-			
+
 			if (inside) {
 				// check that we are allowed to auto-connect inside
 				const target = getKite9Target(inside);
@@ -214,8 +217,8 @@ export function initAutoConnectMoveCallback(
 				if ((layout != null) && (layout != 'null')) {
 					return null;
 				}
-				
-				
+
+
 				if (linkTo) {
 					const commonContainer = getCommonContainer(inside, linkTo);
 					const commonInfo = parseInfo(commonContainer);
@@ -225,132 +228,132 @@ export function initAutoConnectMoveCallback(
 					}
 				}
 			}
-		
+
 			return moving;
 		}
 	}
-	
-	function getElementsInAxis(coords, horiz) {
-		
+
+	function getElementsInAxis(coords: number, horiz: boolean) : Element[] {
+
 		const out = Array.from(selector())
 			.filter(e => {
-				var {x, y, width, height} = getElementPageBBox(e);
-				
+				const { x, y, width, height } = getElementPageBBox(e);
+
 				if (!horiz) {
-					return ((y <= coords) && (y+height >= coords));
+					return ((y <= coords) && (y + height >= coords));
 				} else {
-					return ((x <= coords) && (x+width >= coords));
+					return ((x <= coords) && (x + width >= coords));
 				}
 			});
-		
+
 		return out;
 	}
-	
-    /**
+
+	/**
 	 * This function looks for stuff to connect to and shows links on screen to demonstrate this
 	 */
 	return function(dragTargets, event, dropTargets) {
-		
+
 		function alreadyDragging(e) {
 			if (dragTargets.indexOf(e) != -1) {
 				return true;
-			} 
-			
+			}
+
 			if (e.parentNode == null) {
 				return false;
 			} else {
 				return alreadyDragging(e.parentNode);
-			}			
+			}
 		}
-		
+
 		function outside(a, b) {
-			return ((a.x + a.width < b.x) 
-					|| (a.x > b.x + b.width)
-					|| (a.y + a.height < b.y) 
-					|| (a.y > b.y + b.height));
+			return ((a.x + a.width < b.x)
+				|| (a.x > b.x + b.width)
+				|| (a.y + a.height < b.y)
+				|| (a.y > b.y + b.height));
 		}
-		
-		
-		var cancelEarly = (dropTargets == undefined) || (dragTargets.length > 1)
+
+
+		let cancelEarly : boolean = (dropTargets == undefined) || (dragTargets.length > 1)
 			|| (dropTargets.filter(dt => isLink(dt)).length > 0);
-			
+
 		if (!cancelEarly) {
 			templateUri = linkTemplateSelector(dragTargets[0]);
 			draggingElement = autoConnectWith(dragTargets[0], currentTarget(event));
 			cancelEarly = draggingElement == null;
 		}
-		
+
 		if (cancelEarly) {
 			clearLink();
 			link_to = undefined;
 			return;
 		}
 
-		var pos = getElementPageBBox(draggingElement);
-		
-		var x = pos.x + (pos.width / 2);
-		var y = pos.y + (pos.height /2);
+		const pos = getElementPageBBox(draggingElement);
 
-		var best = undefined;
-		var best_dist = undefined;
-		var best_d  = undefined;
-		
-		getElementsInAxis(y, false).forEach(function(k, c) {
+		const x = pos.x + (pos.width / 2);
+		const y = pos.y + (pos.height / 2);
+
+		let best : Element = undefined;
+		let best_dist : number = undefined;
+		let best_d : LinkDirection = 'null';
+
+		getElementsInAxis(y, false).forEach(function(k) {
 			if (!alreadyDragging(k)) {
-				var v = getElementPageBBox(k);
-				
+				const v = getElementPageBBox(k);
+
 				if (outside(pos, v) && (y <= v.y + v.height) && (y >= v.y)) {
 					// intersection on y position
-					var d, dist;
+					let d : LinkDirection, dist: number;
 					if (v.x + v.width < x) {
 						dist = pos.x - v.x - v.width;
-						d = 'RIGHT';
+						d = 'right';
 					} else if (v.x > x) {
 						dist = v.x - pos.x - pos.width;
-						d = 'LEFT';
+						d = 'left';
 					} else {
-						dist = maxDistance +1;
+						dist = maxDistance + 1;
 						d = null;
 					}
-								
+
 					if (best_dist) {
 						if (dist > best_dist) {
 							return;
 						}
 					}
-						
+
 					best = k;
 					best_dist = dist;
 					best_d = d;
 				}
 			}
 		});
-			
-		getElementsInAxis(x, true).forEach(function(k, c) {
-			if (!alreadyDragging(k)) {
-				var v = getElementPageBBox(k);
 
-				if (outside(pos, v) && (x <= v.x+v.width) && (x >= v.x)) {
+		getElementsInAxis(x, true).forEach(function(k) {
+			if (!alreadyDragging(k)) {
+				const v = getElementPageBBox(k);
+
+				if (outside(pos, v) && (x <= v.x + v.width) && (x >= v.x)) {
 					// intersection on x position
-					var d, dist;
+					let d : LinkDirection, dist: number;
 					if (v.y + v.height < y) {
 						dist = pos.y - v.y - v.height;
-						d = 'DOWN';
+						d = 'down';
 					} else if (v.y > y) {
 						dist = v.y - pos.y - pos.height;
-						d = 'UP';
+						d = 'up';
 					} else {
-						dist = maxDistance +1;
+						dist = maxDistance + 1;
 						d = null;
 					}
-					
+
 					if (best_dist) {
 						if (dist > best_dist) {
 							return;
 						}
 					}
-						
-						
+
+
 					best = k;
 					best_dist = dist;
 					best_d = d;
@@ -358,11 +361,11 @@ export function initAutoConnectMoveCallback(
 			}
 		});
 
-		
-		if (best_dist > maxDistance){
+
+		if (best_dist > maxDistance) {
 			best = undefined;
 		}
-				
+
 		if (best === undefined) {
 			clearLink();
 			link_to = undefined;
@@ -371,7 +374,7 @@ export function initAutoConnectMoveCallback(
 			link_to = undefined;
 		} else if (best === link_to) {
 			link_d = best_d;
-			updateLink(pos, getElementPageBBox(best), link_d, draggingElement);	
+			updateLink(pos, getElementPageBBox(best), link_d, draggingElement);
 		} else {
 			clearLink();
 			link_to = best;
