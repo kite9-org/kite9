@@ -1,5 +1,9 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { createUniqueId, encodeADLElement } from '../../../bundles/api.js'
+import { createUniqueId, encodeADLElement, onlyLastSelected } from '../../../bundles/api.js'
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { Command } from '../../../classes/command/command.js';
+import { Metadata, MetadataUser } from '../../../classes/metadata/metadata.js';
+import { Selector } from '../../../bundles/types.js';
 
 
 export function voteableSelector() {
@@ -7,25 +11,28 @@ export function voteableSelector() {
 	return votables;
 }
 
-export function initVoteContextMenuCallback(command, metadata, selector) {
+export function initVoteContextMenuCallback(
+	command: Command, 
+	metadata: Metadata, 
+	selector: Selector = null) : ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = voteableSelector;
 	}
 	
-	function canVote(e, up) {
+	function canVote(e: Element, up: boolean) {
 		const adl = command.getADLDom(e.getAttribute("id"));
-		const user = metadata.get('user');
+		const user = metadata.get('user') as MetadataUser;
 		if (!user) {
 			return false;
 		}
-		const name = user.login;
+		const name = user.login as string;
 		const exists = adl.querySelector('vote[from='+name+']');
 		return up ? exists == null : exists != null;
 	}
 	
-	function addVote(e) {
-		const name = metadata.get('user').login;
+	function addVote(e: Element) {
+		const name = (metadata.get('user') as MetadataUser).login;
 		const voteId = createUniqueId();
 		const theVote = '<vote from="'+name+'" id="'+voteId+'" />';
 		const base64Vote = encodeADLElement(theVote);
@@ -44,9 +51,9 @@ export function initVoteContextMenuCallback(command, metadata, selector) {
 		voteTag.setAttribute("count", ""+(votes+1));
 	}
 	
-	function removeVote(e) {
+	function removeVote(e: Element) {
 		const adl = command.getADLDom(e.getAttribute("id"));
-		const name = metadata.get('user').login;
+		const name = (metadata.get('user') as MetadataUser).login;
 		const existing = adl.querySelector('vote[from='+name+']');
 		const voteId = existing.getAttribute("id");
 		const voteAdl = command.getAdl(voteId);
@@ -75,14 +82,14 @@ export function initVoteContextMenuCallback(command, metadata, selector) {
 		if (selectedElement) {
 			if (canVote(selectedElement, true)) {
 				contextMenu.addControl(event, "/public/behaviours/voting/vote/up.svg", "Vote Up", 
-					function(e2, selector) {
+					function() {
 						contextMenu.destroy();
 						addVote(selectedElement);
 						command.perform();
 					});
 			} else if (canVote(selectedElement, false)) {
 				contextMenu.addControl(event, "/public/behaviours/voting/vote/down.svg", "Vote Down", 
-					function(e2, selector) {
+					function() {
 						contextMenu.destroy();
 						removeVote(selectedElement);
 						command.perform();

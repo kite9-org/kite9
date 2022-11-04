@@ -19,18 +19,18 @@ export function initGrid() {
 	
 	if (metadata.isEditor()) {
 		
-		layout.formCallback(initGridLayoutPropertyFormCallback());
-		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
-
-		dragger.dropWith(initCellDropCallback(command));
-		dragger.moveWith(initCellMoveCallback());
-
-		dragger.dragLocator(initCellDragLocator());
-		dragger.dropLocatorFn(initCellDropLocatorFunction())
-		contextMenu.add(initCellAppendContextMenuCallback(command));
-		
-		palette.add(initGridTemporaryReplacePaletteCallback(command));
-		contextMenu.add(initSelectContextMenuCallback());
+//		layout.formCallback(initGridLayoutPropertyFormCallback());
+//		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
+//
+//		dragger.dropWith(initCellDropCallback(command));
+//		dragger.moveWith(initCellMoveCallback());
+//
+//		dragger.dragLocator(initCellDragLocator());
+//		dragger.dropLocatorFn(initCellDropLocatorFunction())
+//		contextMenu.add(initCellAppendContextMenuCallback(command));
+//		
+//		palette.add(initGridTemporaryReplacePaletteCallback(command));
+//		contextMenu.add(initSelectContextMenuCallback());
   
     containment.add(initGridContainmentCallback());
 	}	

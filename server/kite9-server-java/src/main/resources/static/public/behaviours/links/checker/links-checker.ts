@@ -1,5 +1,5 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { parseInfo, getParentElement, getNextSiblingId, getContainedChildren } from '../../../bundles/api.js'
+import { parseInfo, getParentElement, getNextSiblingId, getContainedChildIds } from '../../../bundles/api.js'
 import { DropCallback } from '../../../classes/dragger/dragger.js';
 import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
@@ -19,14 +19,14 @@ export function initLinksCheckerDropCallback(
 	}
 	
 	return function(dragState, evt, dropTargets) {
-		var movingIds = [];
+		let movingIds = [];
 		dragState.forEach(s => {
-			const c = getContainedChildren(s.dragTarget);
+			const c = getContainedChildIds(s.dragTarget);
 			movingIds = movingIds.concat(c);
 			movingIds.push(s.dragTarget.getAttribute("id"));
 		});
 		
-		var droppingIds = [];
+		const droppingIds = [];
 		dropTargets.forEach(d => {
 			do {
 				droppingIds.push(d.getAttribute("id"));
@@ -44,9 +44,9 @@ export function initLinksCheckerDropCallback(
 			if ((movingIds.includes(from) && droppingIds.includes(to)) ||
 				(movingIds.includes(to) && droppingIds.includes(from))) {
 			
-				var id = link.getAttribute("id");
-				var parent = getParentElement(link);
-				var parentId = parent == undefined ? undefined : parent.getAttribute("id");
+				const id = link.getAttribute("id");
+				const parent = getParentElement(link);
+				const parentId = parent == undefined ? undefined : parent.getAttribute("id");
 				
 				command.push({
 					fragmentId: parentId,

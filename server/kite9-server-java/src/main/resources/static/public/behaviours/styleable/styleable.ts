@@ -32,7 +32,7 @@ export function addNumericControl(
 		placeholderText = "default (" + inheritedLength.toFixed(1) + ")"
 	}
 
-	const box = numeric(cssAttribute, val, { "min": "0", "placeholder": placeholderText });
+	const box = numeric(cssAttribute, length, { "min": "0", "placeholder": placeholderText });
 	const input: HTMLInputElement = box.children[1] as HTMLInputElement;
 
 	const sizer = overlay.createSizingArrow(sx, sy, length, horiz, inverse, (v) => {
@@ -68,6 +68,8 @@ export type BuildControlsCallback = (
 	overlay: Overlay,
 	cm: ContextMenu,
 	event: Event) => Element[]
+	
+export type InitChangeEvent = (selectedElement: Element, svgStyle: Styles) => EventListener
 
 export function initStyleContextMenuCallback(
 	command: Command,
@@ -77,7 +79,7 @@ export function initStyleContextMenuCallback(
 	buildControlsCallback: BuildControlsCallback,
 	selector: Selector = undefined,
 	styleSuffix: (s: string) => string = undefined,
-	initChangeEvent: (selectedElement: Element, svgStyle: Styles) => EventListener = undefined) 
+	initChangeEvent: InitChangeEvent = undefined) 
 		: ContextMenuCallback {
 
 	let originalStyleMap: { [index: string] : Styles };
@@ -230,6 +232,7 @@ export function moveContextMenuAway(
 }
 
 export function initBasicBuildControls(
+	name: string,
 	properties: { [index: string]: string },
 	values: string[]): BuildControlsCallback {
 	

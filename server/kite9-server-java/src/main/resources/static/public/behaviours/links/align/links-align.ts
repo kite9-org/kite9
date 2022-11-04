@@ -1,8 +1,9 @@
-import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, reverseDirection } from '../../../bundles/api.js'
+import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, getDocumentParam } from '../../../bundles/api.js'
 import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js'
 import { Selector } from '../../../bundles/types.js';
 import { Command, SingleCommand } from '../../../classes/command/command.js';
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { LinkDirection, reverseDirection } from '../linkable.js';
 
 
 export function initAlignContextMenuCallback(
@@ -13,7 +14,7 @@ export function initAlignContextMenuCallback(
 	/**
 	 * Aligns the two elements
 	 */
-	function createAlignStep(from: Element, to: Element, direction: string, steps: SingleCommand[] ,linkId: string) {
+	function createAlignStep(from: Element, to: Element, direction: LinkDirection, steps: SingleCommand[] ,linkId: string) {
 		
 		const conns = getExistingConnections(from.getAttribute("id"), to.getAttribute("id"));
 		let toUseId : string = null;
@@ -103,7 +104,7 @@ export function initAlignContextMenuCallback(
 		for (let i = 0; i < selectedElements.length-1; i++) {
 			const from = selectedElements[i];
 			const to = selectedElements[i+1];
-			createAlignStep(from, to, horiz ? "RIGHT" : "DOWN", steps, linkId+"-"+i);
+			createAlignStep(from, to, horiz ? "right" : "down", steps, linkId+"-"+i);
 		}
 		
 		cm.destroy();
@@ -117,7 +118,7 @@ export function initAlignContextMenuCallback(
 	}
 	
 	if (templateUri == undefined) {
-		templateUri = (document as any).params['align-template-uri'];
+		templateUri = getDocumentParam('align-template-uri');
 	}
 	
 	/**

@@ -8,7 +8,7 @@ import { MoveCallback } from '../../../classes/dragger/dragger.js';
 
 let link = null;
 let link_to = undefined;
-let link_d: LinkDirection = 'null';
+let link_d: LinkDirection = undefined;
 let draggingElement = undefined;
 let templateUri = undefined;
 
@@ -141,7 +141,7 @@ export function initAutoConnectMoveCallback(
 	}
 
 	function updateLink(topos: Area, frompos: Area, link_d: LinkDirection, e: Element) {
-		let fx, fy, tx, ty;
+		let fx : number, fy : number, tx : number, ty : number;
 		const mx = topos.x + topos.width / 2;
 		const my = topos.y + topos.height / 2;
 
@@ -254,7 +254,7 @@ export function initAutoConnectMoveCallback(
 	 */
 	return function(dragTargets, event, dropTargets) {
 
-		function alreadyDragging(e) {
+		function alreadyDragging(e: Element) {
 			if (dragTargets.indexOf(e) != -1) {
 				return true;
 			}
@@ -262,11 +262,11 @@ export function initAutoConnectMoveCallback(
 			if (e.parentNode == null) {
 				return false;
 			} else {
-				return alreadyDragging(e.parentNode);
+				return alreadyDragging(e.parentNode as Element);
 			}
 		}
 
-		function outside(a, b) {
+		function outside(a: Area, b: Area) {
 			return ((a.x + a.width < b.x)
 				|| (a.x > b.x + b.width)
 				|| (a.y + a.height < b.y)
@@ -296,7 +296,7 @@ export function initAutoConnectMoveCallback(
 
 		let best : Element = undefined;
 		let best_dist : number = undefined;
-		let best_d : LinkDirection = 'null';
+		let best_d : LinkDirection =  undefined;
 
 		getElementsInAxis(y, false).forEach(function(k) {
 			if (!alreadyDragging(k)) {

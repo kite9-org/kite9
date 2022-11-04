@@ -5,7 +5,7 @@ import { Direction, Point, Selector } from '../../bundles/types.js';
 import { Command } from '../../classes/command/command.js';
 import { StateItem } from '../../classes/dragger/dragger.js';
 
-export type LinkDirection = Direction | 'null'
+export type LinkDirection = Direction | undefined
 
 export function reverseDirection(d: LinkDirection): LinkDirection {
 	switch (d) {
@@ -17,9 +17,9 @@ export function reverseDirection(d: LinkDirection): LinkDirection {
 			return "up";
 		case "right":
 			return "left";
+		case undefined:
+			return undefined;
 	}
-	
-	return d;
 }
 
 /**

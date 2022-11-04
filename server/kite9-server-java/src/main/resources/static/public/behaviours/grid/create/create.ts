@@ -1,8 +1,10 @@
 import { getDocumentParam } from "../../../bundles/api";
+import { Command } from "../../../classes/command/command";
+import { CellCreator } from "../layout/grid-layout";
 
 
 
-export function initCellCreator(command, templateUri) {
+export function initCellCreator(command: Command, templateUri: string) : CellCreator {
 	
 	if (templateUri == undefined) {
 		templateUri = getDocumentParam('cell-template-uri');

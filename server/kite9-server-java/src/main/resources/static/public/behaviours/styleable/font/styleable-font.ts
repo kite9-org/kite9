@@ -3,7 +3,6 @@ import { fieldset, select, numeric } from '../../../bundles/form.js'
 import { Selector } from '../../../bundles/types.js';
 import { BuildControlsCallback } from '../styleable.js';
 
-
 export const fontIcon = '/public/behaviours/styleable/font/font.svg';
 
 export const fontSelector: Selector = () => {
@@ -41,8 +40,7 @@ export function initFontBuildControls() : BuildControlsCallback {
 		const fontFamilySelect = select('font-family', fontFamily, {}, [ '', ...Object.keys(availableFamilies) ]);
 		const fontWeightSelect = select('font-weight', fontWeight, {}, allWeights)
 		const fontStyleSelect = select('font-style', fontStyle, {}, allStyles)
-		const fontSizeField = numeric('font-size', fontSize);
-		
+		const fontSizeField = numeric('font-size', parseFloat(fontSize));
 		
 		function updateWeightAndStyle(selected: string) {
 			const goodWeights = selected ? [ '', ...availableFamilies[selected].weights.split(" ") ] : allWeights;

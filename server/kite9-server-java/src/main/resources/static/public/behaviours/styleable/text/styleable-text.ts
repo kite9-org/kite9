@@ -1,7 +1,6 @@
-import { isConnected } from '../../../bundles/api.js'
-import { fieldset, select, formValues } from '../../../bundles/form.js' 
-import { addNumericControl } from '/public/behaviours/styleable/styleable.js'
-import { getMainSvg, getElementPageBBox, getElementHTMLBBox } from '../../../bundles/screen.js';
+import { fieldset, select } from '../../../bundles/form.js' 
+import { addNumericControl, BuildControlsCallback } from '../styleable.js'
+import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js';
 
 
 export const textIcon = '/public/behaviours/styleable/text/text.svg';
@@ -21,7 +20,7 @@ const props = [
 	'text-align'
 ]
 
-export function initTextBuildControls() {
+export function initTextBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style, overlay) {
 		const bbox = getElementPageBBox(selectedElement);
 		return [ fieldset('Text', [

@@ -22,7 +22,7 @@ import { initTerminatorContainmentCallback, initLabelContainmentCallback } from 
 import { initSetDefaultContextMenuCallback } from '../../behaviours/palettes/template/palettes-template.js';
 import { initPaletteFinder } from '../../behaviours/palettes/menu/palettes-menu.js';
 import { initStyleContextMenuCallback } from '../../behaviours/styleable/styleable.js';
-import { initPortsPositionBuildControls, portsSelector, portsPositionIcon, initPortsPositionChangeEvent } from '../../behaviours/ports/position/ports-position.js'
+import { initPortsPositionBuildControls, initPortsSelector, portsPositionIcon, initPortsPositionChangeEvent } from '../../behaviours/ports/position/ports-position.js'
 import { initPortDropCallback, initPortMoveCallback } from '../../behaviours/ports/drag/ports-drag.js';
 import { initPortsAddContextMenuCallback } from '../../behaviours/ports/add/ports-add.js';
 import { singleSelect } from '../../behaviours/selectable/selectable.js';
@@ -71,7 +71,7 @@ function initLinks() {
 		containment.add(initTerminatorContainmentCallback());
 
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => Array.from(p.querySelectorAll("[k9-elem=link]"))));
-		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, portsSelector));
+		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, initPortsSelector()));
 
 		initLinkable(linker);
 		initTerminatorDirectionIndicator();
@@ -81,8 +81,8 @@ function initLinks() {
 			portsPositionIcon,
 			'Port Position',
 			initPortsPositionBuildControls(),
-			portsSelector,
-			(r) => '',
+			initPortsSelector(),
+			() => '',
 			initPortsPositionChangeEvent);
 
 		stylemenu.push(portPosition);

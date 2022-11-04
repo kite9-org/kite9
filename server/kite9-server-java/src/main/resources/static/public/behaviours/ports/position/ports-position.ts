@@ -1,12 +1,13 @@
 import { getMainSvg } from '../../../bundles/screen.js'
 import { fieldset, select, numeric, hidden, formObject } from '../../../bundles/form.js' 
-import { extractFormValues } from '/public/behaviours/styleable/styleable.js'
+import { BuildControlsCallback, InitChangeEvent } from '../../styleable/styleable.js'
+import { Selector } from '../../../bundles/types.js'
 
 export const portsPositionIcon = '/public/behaviours/ports/port.svg'
 
 const props = [ '--kite9-port-position' ]
 
-const positionRegex = /^([0-9\-\.]+)(px|\%)$/
+const positionRegex = /^([0-9\-.]+)(px|%)$/
 
 function parsePosition(str) {
 	if (str) {
@@ -25,11 +26,13 @@ function parsePosition(str) {
 	}
 }
 
-export function portsSelector(doc = getMainSvg()) {
-	return Array.from(doc.querySelectorAll("[id][k9-ui~=port].selected"));
+export function initPortsSelector(doc = getMainSvg()) : Selector {
+	return () => {
+		return Array.from(doc.querySelectorAll("[id][k9-ui~=port].selected"));
+	}
 }
 
-export function initPortsPositionBuildControls() {
+export function initPortsPositionBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style) {
 		const position = style[props[1]];
 		const { amount, unit } = parsePosition(position);
@@ -37,20 +40,19 @@ export function initPortsPositionBuildControls() {
 		return [ fieldset('Port Position', [
 			numeric('amount', amount, {name: undefined, id: 'amount'}),
 			select('unit', unit, {name: undefined, id: 'unit'}, [ '%', 'px' ]),
-			hidden(props[1], style[props[1]], {})
+			hidden(props[1], style[props[1]])
 		]) ];
 	}
 }
 
 
-export function initPortsPositionChangeEvent(selectedElement, svgStyle) {
-	return e => {
+export const initPortsPositionChangeEvent: InitChangeEvent = () => {
+	return () => {
 		// update hidden field
 		const form = formObject('enum');
-		const side = form.querySelector('#'+props[0]);
-		const amount = form.querySelector('#amount').value;
-		const unit = form.querySelector('#unit').value;
-		const pos = form.querySelector('#'+props[1]);
+		const amount = (form.querySelector('#amount') as HTMLFormElement).value;
+		const unit = (form.querySelector('#unit') as HTMLFormElement).value;
+		const pos = (form.querySelector('#'+props[1])  as HTMLFormElement);
 		if (amount) {
 			pos.value = amount+unit;
 		} else {

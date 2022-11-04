@@ -27,7 +27,9 @@ export type Area = Point & {
 export type Finder = (u: string) => Element
 
 /**
- * Used everywhere, e.g. css values.
+ * Used everywhere, e.g. css values.  Weird there's no proper enum 
+ * support for this..
  */
-export type Direction = "up" | "down" | "left" | "right" 
+export const directions =  ["up" , "down", "left" , "right" ] 
+export type Direction  = "up" | "down" | "left" | "right"
 

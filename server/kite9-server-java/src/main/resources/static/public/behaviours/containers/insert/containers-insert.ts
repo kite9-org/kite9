@@ -44,7 +44,7 @@ export function initInsertContextMenuCallback(
 		const lastSelectedElement = onlyLastSelected(insertSelector());
 
 		// this is the palette element we are going to insert into them
-		const droppingElement = palette.get(event).querySelector("[id].lastSelected") as SVGGraphicsElement;
+		const droppingElement = palette.get().querySelector("[id].lastSelected") as SVGGraphicsElement;
 		const palettePanel = palette.getOpenPanel();
 
 		function createInsertStep(e, drop, newId, beforeId) {

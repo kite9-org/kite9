@@ -1,6 +1,6 @@
 import { icon, fieldset, form, cancel } from '../../bundles/form.js'
 import { ensureCss } from '../../bundles/ensure.js'
-import { Metadata, MetadataCallback } from '../../classes/metadata/metadata.js'
+import { MetadataCallback, MetadataUser, MetadataValue } from '../../classes/metadata/metadata.js'
 import { InstrumentationCallback } from '../../classes/instrumentation/instrumentation.js';
 
 const NO_USER = {
@@ -8,25 +8,25 @@ const NO_USER = {
 	icon:  '/public/behaviours/identity/user.svg',
 }
 
-let currentUser = NO_USER;
+let currentUser : MetadataUser = NO_USER;
 let navigator : HTMLElement;
-let metadata : object;
+let metadata : MetadataValue
 let collaborators = undefined;
 
-export const identityMetadataCallback: MetadataCallback = (md: Metadata) => {
+export const identityMetadataCallback: MetadataCallback = (md) => {
 	
 	metadata = md;
 	
 	if (metadata['user']) {
 		if (currentUser != metadata['user']) {
-			currentUser = metadata['user'];
+			currentUser = metadata['user'] as MetadataUser;
 			updateUser(currentUser, false);
 		}
 	}
 	
 	if (metadata['notification']) {
-		const from = metadata['author'] == undefined ? currentUser : metadata['author'];
-		updateUser(from, true, metadata['notification']);
+		const from = metadata['author'] == undefined ? currentUser : metadata['author'] as MetadataUser;
+		updateUser(from, true, metadata['notification'] as string);
 		setTimeout(() => updateUser(currentUser, false), 1000)
 	}
 	
@@ -64,7 +64,7 @@ function popupCollaborators(event: Event, ownerIcon : HTMLElement) {
 	}
 }
 
-function updateUser(user : object, alert = false, notification = false) {
+function updateUser(user : MetadataUser, alert = false, notification : string = undefined) {
 	if (navigator) {
 		const avatar = navigator.querySelector("#_avatar");
 		const attrs = alert ? {'style' : 'filter: brightness(120%); '} : {};

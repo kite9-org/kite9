@@ -58,14 +58,14 @@ function initContainers() {
 		const sizing = initStyleContextMenuCallback(command, overlay,  
 			sizingIcon,
 			'Sizing Rules',
-			initBasicBuildControls(sizingEnumProperties, sizingEnumValues),
+			initBasicBuildControls('Sizing', sizingEnumProperties, sizingEnumValues),
 			containerSizingSelector
 			);
 			
 		const traversal = initStyleContextMenuCallback(command, overlay, 
 			traversalIcon,
 			'Link Traversal Rules',
-			initBasicBuildControls(traversalEnumProperties, traversalEnumValues),
+			initBasicBuildControls('Traversal', traversalEnumProperties, traversalEnumValues),
 			containerSizingSelector,
 			() => '');
 		

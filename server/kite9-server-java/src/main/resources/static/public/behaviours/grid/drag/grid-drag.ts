@@ -1,6 +1,7 @@
 import { parseInfo, isCell, isGrid } from '../../../bundles/api.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
+import { Selector } from '../../../bundles/types.js';
 import { DropCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
 import { getOrdinal, getOrdinals  } from '/public/behaviours/grid/common-grid.js' 
 
@@ -26,7 +27,7 @@ export function initCellDropLocatorFunction() {
 /**
  * This will only allow you to drag cells from the container which is the mover.
  */
-export function initCellDragLocator(selector) {
+export function initCellDragLocator(selector: Selector = undefined) {
 	
 	if (selector == undefined) {
 		selector = function() {

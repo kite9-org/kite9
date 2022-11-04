@@ -1,6 +1,6 @@
 import { ensureCss } from '../../bundles/ensure.js'
 
-export type InstrumentationCallback = (n: Element) => void
+export type InstrumentationCallback = (n: HTMLElement) => void
 
 /**
  * Provides functionality for populating the instrumentation menu, keyboard shortcuts and interaction state (keys/mouse/touch etc).
@@ -8,7 +8,7 @@ export type InstrumentationCallback = (n: Element) => void
 export class Instrumentation {
 	
 	callbacks : InstrumentationCallback[] = [];
-	nav : Element | null = undefined
+	nav : HTMLElement | null = undefined
 	
 	constructor() {
 

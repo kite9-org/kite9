@@ -1,4 +1,18 @@
-export type MetadataCallback = (md: object) => void
+export type MetadataMap = { [index: string ] : MetadataValue } 
+export type MetadataValue = string | MetadataMap | MetadataValue[]
+export type MetadataCallback = (md: MetadataMap) => void
+
+/** 
+ * See UserMeta.java
+ */
+export type MetadataUser = MetadataValue & {
+	name?: string,
+	icon?: string,
+	id?: string,
+    displayName?: string,
+    page?: string,
+    login?: string
+}
 
 /**
  * Handles monitoring of document metadata, and callbacks for when it changes.
@@ -6,13 +20,13 @@ export type MetadataCallback = (md: object) => void
 export class Metadata {
 	
 	callbacks : MetadataCallback[] = [];
-	metadata : object = {};
+	metadata : MetadataMap;
 
 	constructor() {
 		this.process(document);
 	}
 	
-	convert(e: Element) {
+	convert(e: Element) : MetadataValue {
 		if (e == null) {
 			return {};
 		}
@@ -41,7 +55,7 @@ export class Metadata {
 		delete olds['error'];
 		
 		const md_element = d.querySelector("metadata");
-		const news = this.convert(md_element);
+		const news = this.convert(md_element) as MetadataMap;
 		this.metadata = { ...olds, ...news };
 		
 		if ((md_element != null) && (md_element.parentElement != null)) {

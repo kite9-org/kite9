@@ -57,7 +57,7 @@ export class Timeline {
 	/**
 	 * Animates an attribute
 	 */
-	attribute(target: SVGGraphicsElement, attribute: string, from: number, to: number, suffix = '') {
+	attribute(target: SVGGraphicsElement | HTMLElement, attribute: string, from: number, to: number, suffix = '') {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
 			target.setAttribute(attribute, newVal + suffix);
@@ -67,7 +67,7 @@ export class Timeline {
 	/**
 	 * Animates a css style in the style declaration.
 	 */
-	style(target : SVGGraphicsElement, style: string, from: number, to: number, suffix = '') {
+	style(target : SVGGraphicsElement | HTMLElement, style: string, from: number, to: number, suffix = '') {
 		this.elements.push(function(f) {
 			const newVal = (to - from) * f + from;
 			target.style[style] = newVal + suffix;			

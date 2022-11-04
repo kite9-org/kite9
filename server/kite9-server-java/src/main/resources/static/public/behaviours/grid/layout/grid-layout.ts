@@ -1,8 +1,9 @@
-import { numeric, change, form } from '../../../bundles/form.js'
-import { parseInfo, number, createUniqueId, getContainedChildren, isConnected, getParentElement } from '../../../bundles/api.js'
+import { numeric, change } from '../../../bundles/form.js'
+import { parseInfo, number, createUniqueId, getContainedChildIds, isConnected, getParentElement, onlyLastSelected, getAffordances } from '../../../bundles/api.js'
 import { getOrdinals } from '../../grid/common-grid.js'
 import { Command } from '../../../classes/command/command.js';
 import { FormCallback, SetCallback } from '../../../classes/context-menu/property.js';
+import { PaletteSelector } from '../../../bundles/types.js';
 
 function getMinGridSize(e) {
 	const info = parseInfo(e);
@@ -17,17 +18,18 @@ function getLayout(e) {
 	if (e==null) {
 		return 'none';
 	} else {
-		var l = e.getAttribute("layout");
+		let l = e.getAttribute("layout");
 		l = l == null ? "none" : l;
 		return l;
 	}
 }
 
+export type CellCreator = (parentId: string, x: number, y: number, newId: string) => string
 
 export function initGridLayoutPropertySetCallback(
 	command: Command, 
-	cellCreator, 
-	cellSelector) : SetCallback {
+	cellCreator: CellCreator, 
+	cellSelector: PaletteSelector) : SetCallback {
 	
 	if (cellSelector == undefined) {
 		cellSelector = function (e) {
@@ -54,10 +56,10 @@ export function initGridLayoutPropertySetCallback(
 					const maxOrdX = ordinals.xOrdinals[ordinals.xOrdinals.length - 1];
 					const maxOrdY = ordinals.yOrdinals[ordinals.yOrdinals.length - 1];
 					
-					var newId = createUniqueId();
-					var num = 0;
-					for (var x = 0; x < cols; x++) {
-						for (var y = 0; y < rows; y++) {
+					const newId = createUniqueId();
+					let num = 0;
+					for (let x = 0; x < cols; x++) {
+						for (let y = 0; y < rows; y++) {
 							if ((x >= gridSize[0]) || (y >= gridSize[1])) {
 								const ordX = x >= gridSize[0] ? maxOrdX + x - gridSize[0] + 1 : ordinals.xOrdinals[x];
 								const ordY = y >= gridSize[1] ? maxOrdY + y - gridSize[1] + 1 : ordinals.yOrdinals[y];
@@ -74,9 +76,9 @@ export function initGridLayoutPropertySetCallback(
 						command.push({
 							type: 'Delete',
 							fragmentId: id,
-							containedIds: getContainedChildren(f, x => {
-								var ui = x.getAttribute("k9-ui");
-								return !(ui == undefined ? "" : ui).includes('orphan');
+							containedIds: getContainedChildIds(f, x => {
+								const ui = getAffordances(x);
+								return ui.includes('orphan');
 							}),
 							base64Element: command.getAdl(cellId)
 						});
@@ -110,12 +112,12 @@ export function initGridLayoutPropertySetCallback(
 				if (layout == 'grid') {
 					// introduction of grid
 					
-					var firstCellId;
-					var newId = createUniqueId();
-					var num = 0;
-					for (var x = 0; x < cols; x++) {
-						for (var y = 0; y < rows; y++) {
-							var cellId = cellCreator(id, x, y, newId+"-"+(num++));
+					let firstCellId;
+					const newId = createUniqueId();
+					let num = 0;
+					for (let x = 0; x < cols; x++) {
+						for (let y = 0; y < rows; y++) {
+							const cellId = cellCreator(id, x, y, newId+"-"+(num++));
 							if (firstCellId == null) {
 								firstCellId = cellId;
 							}
@@ -150,8 +152,8 @@ export function initGridLayoutPropertySetCallback(
 	
 }
 
-var rows = 2;
-var cols = 2;
+let rows = 2;
+let cols = 2;
 
 export function initGridLayoutPropertyFormCallback() : FormCallback {
 
@@ -160,24 +162,25 @@ export function initGridLayoutPropertyFormCallback() : FormCallback {
 		const layout = getLayout(ls);
 		const minGridSize = getMinGridSize(ls);
 		
-		var htmlElement = contextMenu.get(event);
-		var hr = document.createElement("hr");
+		const htmlElement = contextMenu.get(contextEvent);
+		const hr = document.createElement("hr");
 		htmlElement.appendChild(hr);
 	
 		rows = Math.max(2, minGridSize[1]);
 		cols = Math.max(cols, minGridSize[0]);
 		
-		htmlElement.appendChild(form([
+		htmlElement.appendChild(
 			change(
 				numeric('Rows', rows, { 'min' : ''+minGridSize[1]}), 
-				(evt) => rows = number(evt.target.value)),
+				(evt) => rows = number(contextEvent.target.value)));
+				
+		htmlElement.appendChild(
 			change(
 				numeric('Cols', cols, { 'min' : ''+minGridSize[0]}), 
-				(evt) => cols = number(evt.target.value))
-			]));
+				(evt) => cols = number(contextEvent.target.value)));
 		
-		var img2 = contextMenu.addControl(event, "/public/behaviours/containers/layout/grid.svg","Grid", undefined);
-		img2.children[0].style.borderRadius = "0px";
+		const img2 = contextMenu.addControl(event, "/public/behaviours/containers/layout/grid.svg","Grid", undefined);
+		(img2.children[0] as HTMLElement).style.borderRadius = "0px";
 		img2.setAttribute("title", "grid");
 		img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));
 	}

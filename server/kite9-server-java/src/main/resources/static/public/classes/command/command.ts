@@ -25,10 +25,12 @@ export type SingleCommand = {
 	horiz?: string,
 	keptAttributes?: string[],
 	keptTags?: string[],
-	cascade?: true
+	cascade?: true,
+	
 }
 
 export type Update = {
+	uri?: URL,
 	type: string,
 	base64adl: string,
 	commands: SingleCommand[]	

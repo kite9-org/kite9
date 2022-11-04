@@ -2,7 +2,7 @@ import { hasLastSelected, onlyLastSelected, parseInfo, createUniqueId, getContai
 import { nextOrdinal, getOrdinals  } from '../../../behaviours/grid/common-grid.js' 
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Command } from '../../../classes/command/command.js';
-import { Selector } from '../../../bundles/types.js';
+import { Direction, Selector } from '../../../bundles/types.js';
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
@@ -16,7 +16,7 @@ export function initCellAppendContextMenuCallback(
 		}
 	}
 	
-	function doAppend(container: Element, selectedElements: Element[], side: Side) {
+	function doAppend(container: Element, selectedElements: Element[], side: Direction) {
 		const { xOrdinals, yOrdinals } = getOrdinals(container);
 		
 		const ordinalChangeMap = { [key in number] : number};

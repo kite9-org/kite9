@@ -70,7 +70,7 @@ export class ContextMenu {
 	 * positioning it relative to the event that created it.
 	 */
 	get(event: Event) : HTMLFormElement {
-		let theForm = document.querySelector("#"+DEFAULT_FORM_ID);
+		let theForm = document.querySelector("#"+DEFAULT_FORM_ID) as HTMLFormElement;
 		if (theForm) {
 			return theForm;
 		} else {

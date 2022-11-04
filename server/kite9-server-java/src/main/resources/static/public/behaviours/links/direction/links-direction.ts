@@ -1,9 +1,9 @@
 import { getMainSvg, svg } from '../../../bundles/screen.js'
-import { hasLastSelected, parseInfo, getContainingDiagram, reverseDirection, getNextSiblingId, isTerminator, isLink, onlyLastSelected } from '../../../bundles/api.js'
+import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected } from '../../../bundles/api.js'
 import { Command } from '../../../classes/command/command.js';
-import { Direction, Selector } from '../../../bundles/types.js';
+import { Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { LinkDirection } from '../linkable.js';
+import { LinkDirection, reverseDirection } from '../linkable.js';
 
 function directionSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction]"))
@@ -15,13 +15,13 @@ function terminatorSelector() {
 			.filter(e => isTerminator(e)); 
 }
 
-function getDirection(e) {
+function getDirection(e: Element) : LinkDirection {
 	if (e==null) {
-		return 'none';
+		return undefined;
 	} else {
 		const info = parseInfo(e);
 		const l = info['direction'];
-		return ((l == 'null') || (l == undefined)) ? undefined : l.toLowerCase();
+		return l;
 	}
 }
 
@@ -29,29 +29,25 @@ export function initDirectionContextMenuCallback(
 	command: Command, 
 	selector : Selector = directionSelector) : ContextMenuCallback {
 	
-	function setDirection(e, direction, contextMenu) {
+	function setDirection(e:Element, direction: LinkDirection, contextMenu: ContextMenu) {
+	
 		contextMenu.destroy();
 		const diagramId = getContainingDiagram(e).getAttribute("id");
 		const id = e.getAttribute("id")
 
 		const alignOnly = e.classList.contains("kite9-align");
 		
-		if (alignOnly && (direction == 'null')) {
+		if (alignOnly && (direction == undefined)) {
 			command.pushAllAndPerform([{
 					type: 'Delete',
 					fragmentId: e.getAttribute("id"),
 					cascade: true
 			}]);
 		} else {
-			if (direction == 'null') {
-				// causes the attribute to be removed.
-				direction = null;	
-			} 
-			
 			command.pushAllAndPerform([{
 				fragmentId: id,
-				type: 'ReplaceAttr',
-				name: 'drawDirection',
+				type: 'ReplaceStyle',
+				name: '--kite9-direction',
 				to: direction,
 				from: e.getAttribute('drawDirection')
 			},{
@@ -71,7 +67,7 @@ export function initDirectionContextMenuCallback(
 		selected: LinkDirection = undefined) : HTMLImageElement {
 		let title: string, src: string;
 		
-		if (direction != "null") {
+		if (direction != undefined) {
 			title= "Link Direction ("+direction+")";
 			src = "/public/behaviours/links/direction/"+direction.toLowerCase()+".svg";
 		} else {
@@ -137,8 +133,8 @@ export function initTerminatorDirectionIndicator(selector = terminatorSelector) 
 	
 	const noneFunction = () => svg("ellipse", {"cx" : "0", "cy": 0, "rx": 8, "ry": 8});
 	
-	function ensureDirectionIndicator(e, direction) {		
-		var indicator = e.querySelector(INDICATOR_SELECTOR);
+	function ensureDirectionIndicator(e: Element, direction: LinkDirection) {		
+		let indicator = e.querySelector(INDICATOR_SELECTOR);
 		if ((indicator != null) && (indicator.getAttribute("direction")!=direction)) {
 			e.removeChild(indicator);
 		} else if (indicator != null) {

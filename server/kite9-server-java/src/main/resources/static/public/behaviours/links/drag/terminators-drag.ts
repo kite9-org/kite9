@@ -2,26 +2,25 @@
  * This handles moving a block from one place to another on the diagram, via drag and drop.
  * You can't drop into an element unless it has 
  */
-import { parseInfo, isTerminator, getKite9Target, isConnected, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd } from "/public/bundles/api.js";
-import { getSVGCoords, getElementPageBBox, getMainSvg } from '../../../bundles/screen.js'
-import { getBeforeId } from '../../../bundles/ordering.js'
-import { DropCallback, MoveCallback } from "../../../classes/dragger/dragger.js";
+import { parseInfo, isTerminator, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd } from "../../../bundles/api.js";
+import { getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
+import { Command } from "../../../classes/command/command.js";
+import { DropCallback, DropLocatorFunction, MoveCallback } from "../../../classes/dragger/dragger.js";
 
 /**
  * Keeps track of any links we've animated moving.
  */
-var moveLinks = [];
+let moveLinks = [];
 
 const SVG_PATH_REGEX = /[MLQTCSAZ][^MLQTCSAZ]*/gi;
 
-export function initTerminatorDropCallback(command) : DropCallback {
+export function initTerminatorDropCallback(command : Command) : DropCallback {
 	
-	return function(dragState, evt, dropTargets) {
+	return function(dragState, _evt, dropTargets) {
 		if (dropTargets.length == 1) {
 			const dragTargets = dragState.map(s => s.dragTarget);
 			Array.from(dragTargets).forEach(dt => {
 				if (isTerminator(dt)) {
-					const dropId = 
 					command.push(  {
 						type: 'ReplaceAttr',
 						fragmentId: dt.getAttribute('id'),
@@ -36,7 +35,7 @@ export function initTerminatorDropCallback(command) : DropCallback {
 	}
 }
 
-export function initTerminatorDropLocatorFunction() {
+export function initTerminatorDropLocatorFunction() : DropLocatorFunction {
 	
 	return function (dragTarget, dropTarget) {
 		
@@ -109,14 +108,14 @@ export function initTerminatorMoveCallback() : MoveCallback {
 						
 						if (moveLinks.indexOf(path) == -1) {
 							moveLinks.push(path);
-							path.oldPath = d;
+							path['oldPath'] = d;
 						}
 						
 						path.setAttributeNS(null, 'pointer-events', 'none');
 						
 						const coords = getSVGCoords(evt);
 						const commands = d.match(SVG_PATH_REGEX);
-						var from, to;
+						let from, to;
 						if (debug.end == 'from') {
 							from = 'M'+coords.x+" "+coords.y; 
 							to = commands[commands.length-1];
@@ -132,8 +131,8 @@ export function initTerminatorMoveCallback() : MoveCallback {
 		} else {
 			// no event means reset
 			moveLinks.forEach(path => {
-				path.setAttribute("d", path.oldPath);
-				delete path.oldPath;
+				path.setAttribute("d", path['oldPath']);
+				delete path['oldPath'];
 			});
 			
 			moveLinks = [];

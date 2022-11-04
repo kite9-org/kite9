@@ -63,7 +63,7 @@ export function initContainerLayoutPropertyFormCallback() : FormCallback {
 
 export function initContainerLayoutPropertySetCallback(command: Command) : SetCallback {
 
-	return function(propertyOwner: Property, contextEvent: Event, formEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
+	return function(_propertyOwner: Property, _contextEvent: Event, formEvent: Event, _contextMenu: ContextMenu, selectedElements: Element[]) {
 
 		const layout = (formEvent.currentTarget as Element).getAttribute("title");
 		selectedElements.forEach(e => {

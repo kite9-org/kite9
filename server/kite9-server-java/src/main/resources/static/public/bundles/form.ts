@@ -78,9 +78,9 @@ export function formValues(id: string = DEFAULT_FORM_ID) : { [key: string]: stri
 	return out;
 }
 
-export function form(contents: Element[], id: string, action? : '') : HTMLElement {
+export function form(contents: Element[], id: string, action? : '') : HTMLFormElement {
 	id = id == undefined ? DEFAULT_FORM_ID : id;
-	return create("form", {"class": "normform", "style": "background: #fff; ", "id": id, "action" : action }, contents);
+	return create("form", {"class": "normform", "style": "background: #fff; ", "id": id, "action" : action }, contents) as HTMLFormElement;
 }
 
 export function fieldset(legend: string, contents: Node[], atts : object = {} ) : HTMLElement {
@@ -124,8 +124,8 @@ export function hidden(placeholder:string, value: string) : HTMLElement {
 	return create('input', {'type': 'hidden', 'value': value, 'id': id, 'name': id })
 }
 
-export function numeric(placeholder:string, value: string, atts: object = {}) : HTMLElement {
-	return input(placeholder, 'number', value, atts);
+export function numeric(placeholder:string, value: number, atts: object = {}) : HTMLElement {
+	return input(placeholder, 'number', ""+value, atts);
 }
 
 export function email(placeholder:string, value: string, atts: object = {}) : HTMLElement {
