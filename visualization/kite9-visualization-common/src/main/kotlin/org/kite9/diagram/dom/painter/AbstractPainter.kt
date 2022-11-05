@@ -48,8 +48,8 @@ abstract class AbstractPainter : Painter {
                 "min-size: " + sr.getMinimumSize().width() + " "+sr.getMinimumSize().height()+ "; "
             )
             debug.append(
-                "sizing: " + lowercase((r as SizedRectangular).getSizing(false)) + " " +
-                        lowercase((r as SizedRectangular).getSizing(true)) + "; "
+                "sizing: [" + lowercase((r as SizedRectangular).getSizing(false)) + ", " +
+                        lowercase((r as SizedRectangular).getSizing(true)) + "]; "
             )
         }
         if (r is AlignedRectangular) {
