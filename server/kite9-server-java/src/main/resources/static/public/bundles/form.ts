@@ -46,7 +46,7 @@ export function change(e: HTMLElement, f : (e: Event) => void) : HTMLElement {
 	return e;
 }
 
-export function formObject(id : string) : HTMLElement {
+export function formObject(id : string) : HTMLFormElement {
 	return id != undefined ? document.forms[id] : document.forms[DEFAULT_FORM_ID];
 }
 
@@ -226,7 +226,7 @@ function idFrom(str: string) : string {
 	return str.replace(/[^a-zA-Z0-9-]/g, '');
 }
 
-function txt(str) : Text {
+function txt(str: string) : Text {
 	const e = document.createTextNode(str ? str : '');
 	return e;
 }

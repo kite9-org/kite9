@@ -31,7 +31,6 @@ export function ensureJs(js: string) {
 			script.src = js
 			script.id = js
 			document.head.append(script)
-			resolve(true);
 		} else {
 			resolve(true)
 		}

@@ -20,7 +20,7 @@ export type MetadataUser = MetadataValue & {
 export class Metadata {
 	
 	callbacks : MetadataCallback[] = [];
-	metadata : MetadataMap;
+	metadata : MetadataMap = {}
 
 	constructor() {
 		this.process(document);

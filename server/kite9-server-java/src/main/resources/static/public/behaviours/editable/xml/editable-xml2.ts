@@ -1,13 +1,17 @@
+// attempt to migrate to codemirror 6
+
 import { Modal } from '../../../classes/modal/modal.js'
 import { hasLastSelected, encodeADLElement } from '../../../bundles/api.js'
 import { form, ok, cancel, inlineButtons, formFields } from '../../../bundles/form.js'
 import { getMainSvg } from '../../../bundles/screen.js';
 import { ensureCss } from '../../../bundles/ensure.js'
-import '/webjars/codemirror/5.58.3/lib/codemirror.js';
-import '/webjars/codemirror/5.58.3/mode/xml/xml.js';
 import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { EditorView } from "../../../../node_modules/@codemirror/view/dist/index.js"
+import { basicSetup } from "../../../../node_modules/@codemirror/basic-setup/dist/index.js"
+import { xml } from  "../../../../node_modules/@codemirror/lang-xml/dist/index.js"
+import { EditorState, Text } from "../../../../node_modules/@codemirror/state/dist/index.js"
 
 type XMLCollector = (e: Element) => string
 
@@ -45,6 +49,28 @@ export function initXMLContextMenuCallback(
 		}
 	}
 
+
+	function createXMLEditor(inside: Element, value: string) {
+		const state = EditorState.create({
+			doc: Text.of(value.split("\n")),
+			extensions: [
+				basicSetup,
+				xml(),
+				EditorState.tabSize.of(8)
+			]
+		})
+		
+		const view = new EditorView({
+			state,
+			parent: inside
+		})
+		
+		return view;
+	}
+
+
+
+
 	/**
 	 * Provides a text-edit option for the context menu
 	 */
@@ -66,7 +92,7 @@ export function initXMLContextMenuCallback(
 					inlineButtons([
 						ok('ok', {}, (e) => {
 							e.preventDefault();
-							const steps = [createUpdateStep(theElement, mirror.getValue())];
+							const steps = [createUpdateStep(theElement, mirror.state.doc.toString())];
 							command.pushAllAndPerform(steps);
 							xmlModal.destroy();
 						}),
@@ -75,15 +101,8 @@ export function initXMLContextMenuCallback(
 				], 'editXml'));
 
 				xmlModal.open()
-				
-				// @ts-ignore: This module resolved a different way
-				const mirror = CodeMirror(editableArea, {
-					mode: "application/xml",
-					lineNumbers: true,
-					value: defaultText
-				});
-
-				mirror.setSize(editableArea.clientWidth, editableArea.clientHeight);
+				const mirror = createXMLEditor(editableArea, defaultText);
+				//mirror.setSize(editableArea.clientWidth, editableArea.clientHeight);
 			});
 		}
 	}

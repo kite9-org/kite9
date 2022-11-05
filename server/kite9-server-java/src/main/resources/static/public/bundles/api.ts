@@ -92,6 +92,8 @@ export function parseInfo(t : Element) : Info  {
 						.split(",")
 						.map(s => s.startsWith("'") ? s.substring(1, s.length-1) : parseFloat(s.trim()));
 					out[name]=v2;
+				} else if (value == 'null') {
+					out[name] = null;
 				} else {
 					out[name]=value;
 				}

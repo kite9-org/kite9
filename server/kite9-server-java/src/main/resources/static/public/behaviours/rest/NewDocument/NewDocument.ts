@@ -1,6 +1,9 @@
-import { hasLastSelected } from "/public/bundles/api.js";
-import { form, ok, cancel, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '../../../bundles/form.js'
+import { form, ok, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '../../../bundles/form.js'
 import { getMainSvg } from '../../../bundles/screen.js';
+import { Metadata } from "../../../classes/metadata/metadata.js";
+import { ContextMenuCallback } from "../../../classes/context-menu/context-menu.js";
+import { Selector } from "../../../bundles/types.js";
+import { onlyLastSelected } from "../../../bundles/api.js";
 
 const LOADING = '/public/behaviours/rest/loading.svg';
 
@@ -51,11 +54,13 @@ const DEFAULT_TEMPLATES = {
   ]
 };
 
-export function initTemplateSource() {
+export type TemplateSource = (uri: URL) => Promise<unknown>
+
+export function initTemplateSource() : TemplateSource {
   
   return (currentUri) => {
     const parts = currentUri.pathname.split("/");
-    if (parts < 4) {
+    if (parts.length < 4) {
       return new Promise(() => DEFAULT_TEMPLATES);
     } else {
       const templatePath = "/" + parts[1]+"/" +parts[2]+"/"+parts[3]+"/.kite9/templates";
@@ -78,27 +83,30 @@ export function initTemplateSource() {
   }
 }
 
-export function initNewDocumentContextMenuCallback(command, metadata, templateSource, selector) {
+export function initNewDocumentContextMenuCallback(
+	metadata: Metadata, 
+	templateSource: TemplateSource, selector: Selector = undefined) 
+	: ContextMenuCallback {
 
   if (selector == undefined) {
     selector = function() {
-      return getMainSvg().querySelectorAll("[id][k9-ui~='NewDocument']")
+      return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='NewDocument']"))
     }
   }
   
-  function fullUri(target) {
-     var currentUri = new URL(target, metadata.get("self"));
+  function fullUri(target: string) {
+     const currentUri = new URL(target, metadata.get("self") as string);
      return currentUri;
   }
 
-  function loadTemplates(into, templateField, uri) {
-    var selected = null;
+  function loadTemplates(into: HTMLElement, templateField: HTMLInputElement, uri: string) {
+    let selected = null;
     const spinner = img('status', LOADING, { width: '80px' });
     into.appendChild(spinner);
     
     templateSource(fullUri(uri))
       .then(json => {
-        json.documents.forEach(d => {
+        json['documents'].forEach(d => {
         
           if (templateField.value == '') {
             templateField.value = d._links.self.href;
@@ -122,8 +130,9 @@ export function initNewDocumentContextMenuCallback(command, metadata, templateSo
       });    
   }
 
-  function createDiv(id) {
+  function createDiv(id: string) {
     return div({
+      'id': id,
       'style': 'overflow: scroll; display: block; height: 140px; '
     }, []);
   }
@@ -138,16 +147,16 @@ export function initNewDocumentContextMenuCallback(command, metadata, templateSo
     function createNewDocument() {
       if (formObject('newDocumentForm').checkValidity()) {
         const values = formValues('newDocumentForm');
-        var newUri = fullUri(e.getAttribute('subject-uri') + "/" + values['fileName'] + "." + values['format']);
+        const newUri = fullUri(e.getAttribute('subject-uri') + "/" + values['fileName'] + "." + values['format']);
         cm.destroy();
-        window.location = newUri + "?templateUri=" + fullUri(values.templateUri);
+        window.location.href = newUri + "?templateUri=" + fullUri(values.templateUri);
       }
     }
 
     if (e) {
       cm.addControl(event, "/public/behaviours/rest/NewDocument/add.svg", "New Document",
-        function(e2, selector) {
-          cm.clear(event);
+        function() {
+          cm.clear();
           const templateUri = text('Template Uri', undefined, { 'required': true });
           const templates = createDiv('templates');
     
@@ -167,7 +176,7 @@ export function initNewDocumentContextMenuCallback(command, metadata, templateSo
             'newDocumentForm'));
     
           // populate templates
-          loadTemplates(templates, templateUri.children[1], e.getAttribute("subject-uri"));
+          loadTemplates(templates, templateUri.children[1] as HTMLInputElement, e.getAttribute("subject-uri"));
      
         });
     }

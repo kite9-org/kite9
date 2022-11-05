@@ -9,7 +9,8 @@
 		"forceConsistentCasingInFileNames": true,
 		"lib": [
 		      "es2019","DOM"
-		]
+		],
+		"moduleResolution": "node"
 	},
 	"include": [
 		"**/*"

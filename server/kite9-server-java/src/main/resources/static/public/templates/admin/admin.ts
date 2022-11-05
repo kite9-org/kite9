@@ -16,15 +16,14 @@ import { initSelectable } from '../../behaviours/selectable/selectable.js'
 
 import { once } from '../../bundles/ensure.js'
 
-
 once(function() {
 	metadata.add(initFocusMetadataCallback());
 			
 	contextMenu.add(initFocusContextMenuCallback(transition));
 	contextMenu.add(initOpenContextMenuCallback(transition));
-	contextMenu.add(initNewDocumentContextMenuCallback(transition, metadata, initTemplateSource()));
+	contextMenu.add(initNewDocumentContextMenuCallback(metadata, initTemplateSource()));
 	
-	initFocus(transition)
+	initFocus(transition);
 	
-	initSelectable(undefined, true);
+	initSelectable(undefined, undefined, true);
 });

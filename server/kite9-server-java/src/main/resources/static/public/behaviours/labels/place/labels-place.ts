@@ -6,22 +6,21 @@ import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/
 import { FormCallback, Property, SetCallback } from '../../../classes/context-menu/property.js';
 import { Selector } from '../../../bundles/types.js';
 
-const PLACEMENTS = ["top-left", "top", "top-right", "left", "none", "right", "bottom-left", "bottom", "bottom-right"];
+const PLACEMENTS = ["top-left", "top", "top-right", "left", null, "right", "bottom-left", "bottom", "bottom-right"];
+type Placement = "top-left" | "top"| "top-right" | "left" | "right" | "bottom-left"| "bottom" | "bottom-right" | null;
 const STYLE_NAME = '--kite9-label-placement'
 
-function getPlacement(command: Command, e: Element) {
+function getPlacement(command: Command, e: Element) : Placement {
 	const adlElement = command.getADLDom(e.getAttribute("id"));
 	const style = parseStyle(adlElement.getAttribute("style"));
-	const l = style[STYLE_NAME];
+	const l = style[STYLE_NAME] as Placement; 
 	return l;
 }
 
-function drawPlacement(event: Event, cm: ContextMenu, placement: string, selected ='') {
-	if (placement == null) {
-		placement = "none";
-	}
+function drawPlacement(event: Event, cm: ContextMenu, placement: Placement, selected: Placement = null) {
+	const icon = placement == null ? "none" : placement;
 
-	const out = cm.addControl(event, "/public/behaviours/labels/place/" + placement.toLowerCase().replace("_", "-") + ".svg",
+	const out = cm.addControl(event, "/public/behaviours/labels/place/" + icon + ".svg",
 		"placement (" + placement + ")",
 		undefined);
 
@@ -73,7 +72,7 @@ export function initLabelPlacementPropertyFormCallback(command: Command): FormCa
 		const placement = getPlacement(command, ls);
 
 		PLACEMENTS.forEach(s => {
-			const img2 = drawPlacement(event, contextMenu, s, placement);
+			const img2 = drawPlacement(contextEvent, contextMenu, s as Placement, placement);
 			if (placement != s) {
 				img2.setAttribute("title", s);
 				img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));

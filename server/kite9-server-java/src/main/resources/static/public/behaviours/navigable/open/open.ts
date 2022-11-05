@@ -1,12 +1,16 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { hasLastSelected } from '../../../bundles/api.js'
+import { onlyLastSelected } from '../../../bundles/api.js'
+import { Selector } from '../../../bundles/types.js';
+import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
-export function initOpenContextMenuCallback(command, selector) {
+export function initOpenContextMenuCallback(
+	selector: Selector = undefined) 
+	: ContextMenuCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
-			return getMainSvg().querySelectorAll("[id][k9-ui~=open]");
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=open]"));
 		}
 	}
 	
@@ -19,9 +23,9 @@ export function initOpenContextMenuCallback(command, selector) {
 		
 		if (e) {
 			contextMenu.addControl(event, "/public/behaviours/navigable/open/open.svg", "Open",
-				function(e2, selector) {
+				function() {
 					contextMenu.destroy();
-					var url = e.getAttribute("id");
+					const url = e.getAttribute("id");
 					window.location.href = url;
 			});
 		}

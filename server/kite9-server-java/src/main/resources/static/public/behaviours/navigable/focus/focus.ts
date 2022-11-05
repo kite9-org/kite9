@@ -1,5 +1,5 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { hasLastSelected, onlyLastSelected } from '../../../bundles/api.js'
+import { onlyLastSelected } from '../../../bundles/api.js'
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
@@ -77,7 +77,7 @@ export function initFocus(transition : Transition) {
 	function popState(event: Event) {
 		state = event.state;
 		document.title = event.state.title;
-		transition.get(event.state.page);
+		command.get(event.state.page);
 	}
 
 	window.removeEventListener('popstate', popState);
