@@ -1,9 +1,7 @@
 package org.kite9.diagram.model
 
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.End
-import org.kite9.diagram.model.style.HorizontalAlignment
-import org.kite9.diagram.model.style.LabelPlacement
-import org.kite9.diagram.model.style.VerticalAlignment
 
 /**
  * DiagramElement to contain a label for an edge, container or diagram.
@@ -19,6 +17,45 @@ interface Label : Rectangular {
      */
     fun getEnd(): End?
 
-    fun getLabelPlacement(): LabelPlacement?
+    fun getLabelPlacement(): Direction?
 
+    companion object {
+        /**
+         * Same as above, but defaults to down
+         */
+        fun getLabelPlacementDefaulted(l: Label) = l.getLabelPlacement() ?: Direction.DOWN;
+
+        /**
+         * @param d Direction of link
+         * @param default usual direction of link, (down or right)
+         */
+        fun connectionLabelPlacementDirection(l: Label, d: Direction, default: Direction): Direction {
+            return if (d === Direction.UP || d === Direction.DOWN) {
+                when (l.getLabelPlacement()) {
+                    Direction.LEFT -> Direction.RIGHT
+                    else -> default
+                }
+            } else {
+                when (l.getLabelPlacement()) {
+                    Direction.UP -> Direction.DOWN
+                    else -> default
+                }
+            }
+        }
+
+        /**
+         * Works out whether a given edge will host a label, given the placement of the
+         * label.
+         */
+        fun containerLabelPlacement(l: Label, d: Direction, default: Direction): Boolean {
+            return when (l.getLabelPlacement()) {
+                Direction.UP -> d === Direction.UP
+                Direction.DOWN -> d === Direction.DOWN
+                Direction.LEFT -> d === Direction.LEFT
+                Direction.RIGHT -> d === Direction.RIGHT
+                else -> d === default
+            }
+        }
+    }
 }
+

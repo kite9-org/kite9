@@ -52,7 +52,7 @@ svg {
 	--kite9-padding: 3px 6px 3px 6px; 
 	--kite9-horizontal-sizing: maximize;
 	--kite9-vertical-sizing: minimize;
-    --kite9-label-placement: bottom;
+    --kite9-label-placement: down;
 }
 
 [k9-elem=key] [k9-elem=body] {
@@ -153,7 +153,7 @@ svg {
 	--kite9-type: container; 
 	--kite9-sizing: minimize;
 	--kite9-padding: 4px;
-    --kite9-label-placement: bottom;
+    --kite9-label-placement: down;
 }
 
 [k9-elem=grid] {

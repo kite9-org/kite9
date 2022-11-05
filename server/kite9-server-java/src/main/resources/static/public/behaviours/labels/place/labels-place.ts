@@ -17,7 +17,7 @@ function getPlacement(command: Command, e: Element) : Placement {
 	return l;
 }
 
-function drawPlacement(event: Event, cm: ContextMenu, placement: Placement, selected: Placement = null) {
+function drawPlacement(event: Event, cm: ContextMenu, placement: Placement, selected: Placement | 'ignore' = 'ignore') {
 	const icon = placement == null ? "none" : placement;
 
 	const out = cm.addControl(event, "/public/behaviours/labels/place/" + icon + ".svg",

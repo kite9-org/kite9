@@ -7,10 +7,10 @@ import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.End
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.HorizontalAlignment
-import org.kite9.diagram.model.style.LabelPlacement
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
 
@@ -25,12 +25,12 @@ abstract class AbstractLabel(
 ), Label, LayoutAligns {
 
     private var end: End? = null
-    private var labelPlacement: LabelPlacement? = null
+    private var labelPlacement: Direction? = null
 
     override fun initialize() {
         super.initialize()
         end = ctx.getCssStyleEnumProperty(CSSConstants.LINK_END, theElement, End::class)
-        labelPlacement = ctx.getCssStyleEnumProperty(CSSConstants.LABEL_PLACEMENT, theElement, LabelPlacement::class)
+        labelPlacement = ctx.getCssStyleEnumProperty(CSSConstants.LABEL_PLACEMENT, theElement, Direction::class)
     }
 
     override fun isConnectionLabel(): Boolean {
@@ -73,7 +73,7 @@ abstract class AbstractLabel(
         return end
     }
 
-    override fun getLabelPlacement(): LabelPlacement? {
+    override fun getLabelPlacement(): Direction? {
         ensureInitialized()
         return labelPlacement
     }

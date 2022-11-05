@@ -14,10 +14,8 @@ import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.functional.TestingEngine;
-import org.kite9.diagram.functional.TestingEngine.LayoutErrorException;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 
 import java.io.InputStreamReader;
@@ -63,7 +61,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		
 		LinkBody i1 = new LinkBody("arrow1", "i1asdas ");
 		
-		TextLabel fromLabel = new TextLabel("from (down)", LabelPlacement.BOTTOM);
+		TextLabel fromLabel = new TextLabel("from (down)", Direction.DOWN);
 		fromLabel.setID("fromLabel");
 //		TextLabel toLabel = new TextLabel("to dsdsfds f ds f (up)", LabelPlacement.TOP);
 //		toLabel.setID("toLabel");
@@ -83,8 +81,8 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		
 		LinkBody i1 = new LinkBody("i1", "i1");
 		
-		new Link(i1, a, null, null, null, new TextLabel("from (right)", LabelPlacement.RIGHT), Direction.UP);
-		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to (left)", LabelPlacement.LEFT), Direction.DOWN);
+		new Link(i1, a, null, null, null, new TextLabel("from (right)", Direction.RIGHT), Direction.UP);
+		new Link(i1, b, null, null, LinkEndStyle.ARROW, new TextLabel("to (left)", Direction.LEFT), Direction.DOWN);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);

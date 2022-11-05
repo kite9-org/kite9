@@ -31,7 +31,7 @@ function ensureCorrectScheme(uri: string, contentType: string) {
  * there are three ways of processing updates:
  * 1.  Send the update as XML to the server via HTTP
  * 2.  Send the update over the web-socket, retrieving XML/SVG.
- * 2.  Apply the update locally to the XML, using javascript commands, retrieving XML/SVG.
+ * 3.  Apply the update locally to the XML, using javascript commands, retrieving XML/SVG.
  *
  * All the methods return a function returning a promise.
  */
@@ -72,10 +72,10 @@ export function initWebsocketUpdater(
 export function initHttpUpdater(uri: string, contentType: string, contentTypeResolver: UpdateableResolver): Updater {
 
 	/** Really basic error handler */
-	function handleErrors(response: Response) {
-	
+	function handleErrors(response: Response) : Response {
+
 		function collectErrorCode(response: Response) {
-			return response.text().then(j => {
+			response.text().then(j => {
 				try {
 					// if it's json, return the error from that
 					JSON.parse(j);
@@ -85,7 +85,7 @@ export function initHttpUpdater(uri: string, contentType: string, contentTypeRes
 				}
 			});
 		}
-	
+
 		if (!response.ok) {
 			collectErrorCode(response);
 		} else {
@@ -96,21 +96,20 @@ export function initHttpUpdater(uri: string, contentType: string, contentTypeRes
 	return (update) => {
 		update.uri = new URL(uri);
 
-		try {
-			return fetch(uri, {
-				method: 'POST',
-				body: JSON.stringify(update),
-				headers: {
-					"Content-Type": "application/json",
-					"Accept": contentType
-				}
+		return fetch(uri, {
+			method: 'POST',
+			body: JSON.stringify(update),
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": contentType
+			}
+		})
+			.then(handleErrors)
+			.then(response => response.text())
+			.then(text => contentTypeResolver(text))
+			.catch(error => {
+				alert(error)
 			})
-				.then(handleErrors)
-				.then(response => response.text())
-				.then(text => contentTypeResolver(text))
-		} catch (e) {
-			alert(e);
-		}
 	}
 
 }
@@ -136,7 +135,7 @@ export function initMetadataBasedUpdater(
 		"image/svg+xml;purpose=editable" :
 		"text/xml;purpose=editable_adl";
 
-	let delegate;
+	let delegate : Updater;
 
 	if (processViaWebSocket) {
 		// logged in, use websockets

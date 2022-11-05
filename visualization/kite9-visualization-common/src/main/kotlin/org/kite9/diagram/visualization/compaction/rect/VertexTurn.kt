@@ -212,10 +212,7 @@ class VertexTurn(
             .map { it.diagramElement }
             .filterIsInstance<Label>()
             .filter { l: Label -> !l.isConnectionLabel() }
-            .filter { l: Label ->
-                l.getLabelPlacement()!!
-                    .sameAxis(d)
-            }
+            .filter { l: Label -> Label.getLabelPlacementDefaulted(l) == d }
             .count()
         return (labels > 0)
     }

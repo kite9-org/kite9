@@ -16,7 +16,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.testing.DiagramChecker;
 import org.kite9.diagram.common.HelpMethods;
 
@@ -108,11 +107,11 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 		Glyph g5 = new Glyph("g5", "", "g5", null, null);
 		Glyph g6 = new Glyph("g6", "", "g6", null, null);
 		
-		Context con1 = new Context("con1", HelpMethods.listOf(g0, g1, g2, g3), true, new TextLabel("c1", LabelPlacement.RIGHT), conl);
+		Context con1 = new Context("con1", HelpMethods.listOf(g0, g1, g2, g3), true, new TextLabel("c1", Direction.RIGHT), conl);
 		
-		Context cona = new Context("cona", HelpMethods.listOf(a6, a5, a4, a3, a2, a1), true, new TextLabel("con a", LabelPlacement.RIGHT), conl);
+		Context cona = new Context("cona", HelpMethods.listOf(a6, a5, a4, a3, a2, a1), true, new TextLabel("con a", Direction.RIGHT), conl);
 		
-		Context con2 = new Context("con2", HelpMethods.listOf(g4, g5, g6), true, new TextLabel("c2", LabelPlacement.RIGHT), conl);
+		Context con2 = new Context("con2", HelpMethods.listOf(g4, g5, g6), true, new TextLabel("c2", Direction.RIGHT), conl);
 		
 		new Link(g0, a1, null, null, null, null, going);
 		new Link(g1, a2, null, null, null, null, going);

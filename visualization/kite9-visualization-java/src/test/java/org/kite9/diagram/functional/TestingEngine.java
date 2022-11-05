@@ -7,7 +7,6 @@ import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.LabelPlacement;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.testing.TestingHelp;
@@ -606,9 +605,8 @@ public class TestingEngine extends TestingHelp {
 
 			private boolean isLabelOn(Direction d, DiagramElement inner) {
 				return (inner instanceof Label) &&
-						LabelPlacement.Companion.containerLabelPlacement(((Label)inner).getLabelPlacement(), d, Direction.UP);
+						Label.Companion.containerLabelPlacement(((Label)inner), d, Direction.UP);
 			}
-
 
 			private String createExceptionText(Rectangular outer, String string, DiagramElement inner, double d, Rectangle2D outerRect, Rectangle2D innerRect) {
 				return "Too Close on "+string+" dist: "+d+" side: \n"+

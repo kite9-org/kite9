@@ -89,7 +89,7 @@ fun init() {
 
 
     // LABELS
-    css.registerProperty( CSSProperty(CSSConstants.LABEL_PLACEMENT,syntax<LabelPlacement>()+" | none ","none", false))
+    css.registerProperty( CSSProperty(CSSConstants.LABEL_PLACEMENT,syntax<Direction>()+" | none ","none", false))
 
 
     // LINK DYNAMICS

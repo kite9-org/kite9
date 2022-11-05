@@ -14,7 +14,6 @@ import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Direction.Companion.rotateAntiClockwise
 import org.kite9.diagram.model.position.Direction.Companion.rotateClockwise
 import org.kite9.diagram.model.style.HorizontalAlignment
-import org.kite9.diagram.model.style.LabelPlacement
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
@@ -75,9 +74,8 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         incident: Direction,
         fan: Direction?
     ): Direction {
-        val lp = l.getLabelPlacement()
         val defaultDirection = getDefaultLabelDirection(incident, fan)
-        val labelSide = lp?.connectionLabelPlacementDirection(incident, defaultDirection) ?: defaultDirection
+        val labelSide = Label.connectionLabelPlacementDirection(l, incident, defaultDirection)
         return labelSide
     }
 
@@ -94,13 +92,13 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
 
 
     open protected fun getDefaultLabelDirection(incident: Direction, fan: Direction?): Direction {
-        return if (!Direction.isHorizontal(incident)) Direction.RIGHT else Direction.DOWN
+        return if (!Direction.isHorizontal(incident)) Direction.LEFT else Direction.UP
     }
 
     private fun findUnprocessedLabel(c: Container, side: Direction): Label? {
         for (de in c.getContents()) {
             if (de is Label) {
-                if (LabelPlacement.containerLabelPlacement(de.getLabelPlacement(), side, Direction.UP)) {
+                if (Label.containerLabelPlacement(de, side, Direction.UP)) {
                     if (!em.hasOuterCornerVertices(de)) {
                         return de
                     }
@@ -114,7 +112,7 @@ open class LabellingEdgeConverter(cc: ContentsConverter, val em: ElementMapper) 
         return con.getContents()
             .filterIsInstance<Label>()
             .filter { c ->
-                LabelPlacement.containerLabelPlacement(c.getLabelPlacement(), side, Direction.UP)
+                Label.containerLabelPlacement(c, side, Direction.UP)
             }
             .count() > 0
     }
