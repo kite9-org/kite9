@@ -30,7 +30,7 @@
   </xsl:template>
     
   <xsl:template name="labels-diagram-palettes">
-     <adl:palette contains="label" url="/public/templates/labels/palette.adl" />
+     <adl:palette url="/public/templates/labels/palette.adl" />
   </xsl:template>  
   
 </xsl:stylesheet>

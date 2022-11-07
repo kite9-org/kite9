@@ -29,9 +29,9 @@
   </xsl:template>
   
   <xsl:template name="links-diagram-palettes">
-     <adl:palette contains="link" url="/public/templates/links/links-palette.adl" />
-     <adl:palette contains="end" url="/public/templates/links/ends-palette.adl" />
-     <adl:palette contains="port" url="/public/templates/links/ports-palette.adl" />
+     <adl:palette url="/public/templates/links/links-palette.adl" />
+     <adl:palette url="/public/templates/links/ends-palette.adl" />
+     <adl:palette url="/public/templates/links/ports-palette.adl" />
   </xsl:template>
   
   <xsl:template name="links-diagram-defs">

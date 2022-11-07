@@ -11,10 +11,9 @@ import { ContainmentCallback, WcElement } from '../../../classes/containment/con
  */
 export function initAttributeContainmentCallback() : ContainmentCallback {
 	
-	function layoutIsOk(parents: Element[]) {
+	function regularLayoutOnly(parents: WcElement[]) : WcElement[] {
 		return Array.from(parents)
-			.map(p => !isGrid(p))
-			.reduce((a, b) => a && b, true);
+			.filter(p => p instanceof Element ? !isGrid(p) : p)
 	}
 	
 	function intersectionRule(set1: string[], set2: string[]) {
@@ -49,15 +48,12 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 	function getTypesIntersection(elements: WcElement[], attr : string) : string[] {
 		const out = elements
 			.map(e => getTypes(e, attr))
-			.reduce((a, b) => intersectionRule(a, b));
+			.reduce((a, b) => intersectionRule(a, b), ['*']);
 		return out;
 	}
 	
-	return function(elements: Element[], parents: Element[], children: Element[]) {
-		if (!layoutIsOk(parents)) {
-			// containers-rules only works for general layouts.
-			return [];
-		}
+	return function(elements: Element[], p: WcElement[], children: WcElement[]) {
+		const parents = regularLayoutOnly(p)
 		
 		const parentBoundsOnElement = parents ? getTypesIntersection(parents, 'k9-contains') : undefined;
 		const childBoundsOnElement = children ? getTypesIntersection(children, 'k9-containers') : undefined;

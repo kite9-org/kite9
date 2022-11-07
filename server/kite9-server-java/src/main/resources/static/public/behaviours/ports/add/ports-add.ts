@@ -29,10 +29,10 @@ export function initPortsAddContextMenuCallback(
 							return false;
 						} else {
 							// only allow containers that can contain the palette port
-							return containment.canContain(palettePort, connected);
+							return containment.canContainAll(palettePort, connected);
 						}
 					} else if (isConnected(e)) {
-						return containment.canContain(palettePort, e);
+						return containment.canContainAll(palettePort, e);
 					}
 				});
 		}

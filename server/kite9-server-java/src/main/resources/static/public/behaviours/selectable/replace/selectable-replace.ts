@@ -80,7 +80,7 @@ export function initReplaceContextMenuCallback(
 				
 				// delete any incompatible contents
 				getContainerChildren(e)
-					.filter(c => !containment.canContain(c, e))
+					.filter(c => !containment.canContainAll(c, e))
 					.forEach(c => {
 						const deleteId = c.getAttribute("id");
 						command.push({

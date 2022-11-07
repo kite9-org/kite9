@@ -61,7 +61,7 @@ export function initContainContextMenuCallback(
 
 		if (lastSelectedElement) {
 			const parentElement = getParentElement(lastSelectedElement);
-			const allowed = containment.canContain(droppingElement, parentElement);
+			const allowed = containment.canContainAny(droppingElement, parentElement);
 			const newId = createUniqueId();
 
 			if (allowed) {
@@ -73,7 +73,7 @@ export function initContainContextMenuCallback(
 
 						// now move everything else into it
 						Array.from(selectedElements)
-							.filter(e => containment.canContain(e, droppingElement))
+							.filter(e => containment.canContainAll(e, droppingElement))
 							.forEach(e => command.push(createContainStep(e, newId)));
 
 						palette.destroy();

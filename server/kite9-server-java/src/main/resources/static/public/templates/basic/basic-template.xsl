@@ -34,8 +34,8 @@
   </xsl:template> 
   
   <xsl:template match="/" mode="diagram-palettes">
-    <adl:palette contains="connected" url="/public/templates/basic/palette1.adl" />
-    <adl:palette contains="port" url="/public/templates/basic/palette2.adl" />
+    <adl:palette url="/public/templates/basic/palette1.adl" />
+    <adl:palette url="/public/templates/basic/palette2.adl" />
   	<xsl:call-template name="adl-diagram-palettes" />
   </xsl:template>
   

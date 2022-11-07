@@ -2,7 +2,7 @@ export const WILDCARD = "*";
 
 export type WcElement = '*' | Element | null
 
-export type ContainmentCallback = (elements: WcElement[], parents?: WcElement[], children?: WcElement[]) => Element[]
+export type ContainmentCallback = (elements: Element[], parents?: WcElement[], children?: WcElement[]) => Element[]
 
 /** 
  * Handles drag and drop rules, as well as surround/contain and insert.  Replace is handled elsewhere.
@@ -21,7 +21,7 @@ export class Containment {
 	 * Generally, these are SVG (kite9) elements, but you can also supply "*" ( a string-star), which acts as a wildcard.
 	 * Parents and children are optional, and will "limit" the elements returned in the reduction.
 	 */
-	allowed(elements : Element[], parents? :Element[], children?: Element[]) : Element[] {
+	allowed(elements : Element[], parents? :WcElement[], children: WcElement[] = []) : Element[] {
 		// run each callback.  return the union of allowed elements from all callbacks.
 		
 		return this.callbacks
@@ -32,34 +32,21 @@ export class Containment {
 	/**
 	 * Helper function
 	 */
-	canContain(element: Element[] | Element, parent: Element[] | Element) {
+	canContainAny(element: Element[] | Element, parent: Element[] | Element) : boolean {
 		return this.allowed(
 			Array.isArray(element) ? element : [element], 
 			Array.isArray(parent) ? parent : [parent]).length == 1;
 	}
-//	
-//	/**
-//	 * Helper function
-//	 */
-//	canContainAll(elements: Element[], parent: Element[] | Element) : boolean {
-//		return this.allowed(elements, 
-//			Array.isArray(parent) ? parent : [parent]
-//			).length == elements.length;
-//	}
-//	
-//	/**
-//	 * Helper function
-//	 */
-//	canSurroundAll(elements: Element[], parents: Element[], children: Element[]) : boolean {
-//		return this.allowed(elements, parents, children).length == elements.length;
-//	}
-//	
-//	/**
-//	 * Can insert into this container
-//	 */
-//	canInsert(containers: Element[] | Element, children : Element[] | Element) : boolean {
-//		return this.allowed([ WILDCARD ], 
-//			Array.isArray(containers) ? containers : [ containers], 
-//			Array.isArray(children) ? children : [ children ]).length == 1;
-//	}
+	
+	/**
+	 * Helper function
+	 */
+	canContainAll(element: Element[] | Element, parent: Element[] | Element) : boolean {
+		const needed = Array.isArray(element) ? element.length : 1;
+		return this.allowed(
+			Array.isArray(element) ? element : [element], 
+			Array.isArray(parent) ? parent : [parent]
+			).length == needed;
+	}
+
 }

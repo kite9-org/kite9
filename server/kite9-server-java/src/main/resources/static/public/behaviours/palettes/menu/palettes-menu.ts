@@ -2,25 +2,18 @@ import { hasLastSelected } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js'
 import { Finder, PaletteSelector, Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { Palette, PaletteLoadCallback, SelectorFunction } from '../../../classes/palette/palette.js';
+import { Palette, PaletteLoadCallback } from '../../../classes/palette/palette.js';
 
 /**
  * Provides the palette-menu option for the context menu on the main diagram.
  */
 export function initPaletteContextMenuCallback(
 	palette: Palette,
-	selector: Selector = undefined,
-	paletteSelector: SelectorFunction = undefined): ContextMenuCallback {
+	selector: Selector = undefined): ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {
 			return Array.from(getMainSvg().querySelectorAll("[id].selected"));
-		}
-	}
-
-	if (paletteSelector == undefined) {
-		paletteSelector = function(e) {
-			return e != undefined;  // all palettes shown and all elements active
 		}
 	}
 
@@ -36,9 +29,7 @@ export function initPaletteContextMenuCallback(
 				"Open Palette",
 				function() {
 					contextMenu.destroy();
-					palette.open(event,
-						paletteSelector,
-					);
+					palette.open(event);
 				});
 		}
 	}

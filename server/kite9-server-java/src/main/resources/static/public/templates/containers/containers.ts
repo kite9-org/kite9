@@ -23,7 +23,6 @@ function initContainers() {
 		layout.formCallback(initContainerLayoutPropertyFormCallback()); 
 		layout.setCallback(initContainerLayoutPropertySetCallback(command)); 
 
-		dragger.dragLocator(initInsertDragLocator());
 		dragger.moveWith(initContainerLayoutMoveCallback());
 		dragger.dropWith(initContainerDropCallback(command, containment));
 		dragger.dropLocatorFn(initContainerDropLocatorFunction(containment));

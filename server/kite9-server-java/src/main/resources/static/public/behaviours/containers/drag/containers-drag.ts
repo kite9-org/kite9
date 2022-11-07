@@ -15,7 +15,7 @@ export function initContainerDropLocatorFunction(containment: Containment) : Dro
 			return false;
 		}
 		
-		if (!containment.canContain(dragTarget, dropTarget)) {
+		if (!containment.canContainAll(dragTarget, dropTarget)) {
 			return false;
 		}
 

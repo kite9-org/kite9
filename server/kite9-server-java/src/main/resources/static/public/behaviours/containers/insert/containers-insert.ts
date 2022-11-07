@@ -60,7 +60,7 @@ export function initInsertContextMenuCallback(
 		function handleInsert(paletteElement: SVGGraphicsElement, selectedElements : Element[]) {
 			const ownBBox = getElementPageBBox(paletteElement);
 			Array.from(selectedElements)
-				.filter(e => containment.canContain(paletteElement, e))
+				.filter(e => containment.canContainAll(paletteElement, e))
 				.map(e => {
 					const newId = createUniqueId();
 					e.classList.remove("selected");
@@ -97,7 +97,7 @@ export function initInsertContextMenuCallback(
 
 
 		if (lastSelectedElement) {
-			const allowed = containment.canContain(droppingElement, lastSelectedElement);
+			const allowed = containment.canContainAll(droppingElement, lastSelectedElement);
 			if (allowed) {
 				contextMenu.addControl(event, "/public/behaviours/containers/insert/insert.svg", "Insert",
 					function() {
