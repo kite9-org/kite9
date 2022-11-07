@@ -135,7 +135,7 @@ export function initMetadataBasedUpdater(
 		"image/svg+xml;purpose=editable" :
 		"text/xml;purpose=editable_adl";
 
-	let delegate : Updater;
+	let delegate : Updater; 
 
 	if (processViaWebSocket) {
 		// logged in, use websockets

@@ -90,22 +90,23 @@ export function initAutoConnectLinkerCallback(command: Command): LinkerCallback 
 
 				command.push({
 					fragmentId: linkId,
-					type: 'ReplaceAttr',
-					name: 'drawDirection',
+					type: 'ReplaceStyle',
+					name: '--kite9-direction',
 					to: link_d,
 				});
 			} else {
 				const firstLink = existingLinks[0];
 				const parsed = parseInfo(firstLink);
+				const oldDirection = parsed['direction']
 				const ids = parsed['link'];
 				const reversed = ids[0] == id_to;
 				const direction = reversed ? link_d : reverseDirection(link_d);
 				command.push({
 					fragmentId: firstLink.getAttribute("id"),
-					type: 'ReplaceAttr',
-					name: 'drawDirection',
+					type: 'ReplaceStyle',
+					name: '--kite9-direction',
 					to: direction,
-					from: firstLink.getAttribute('drawDirection')
+					from: oldDirection
 				});
 
 				// moves it to the last in the list

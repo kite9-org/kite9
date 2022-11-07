@@ -30,32 +30,32 @@
     </title>
   </risk>
 
-  <link id="id_1" drawDirection="RIGHT">
+  <link id="id_1" style="--kite9-direction: right; ">
     <from id="e1" reference="id_0" class="space"/>
     <to id="e2" reference="id_2"/>
   </link>
 
-  <link id="id_3" drawDirection="RIGHT">
+  <link id="id_3" style="--kite9-direction: right; ">
     <from id="e3" reference="id_2"/>
     <to id="e4" reference="praco" shape="arrow" class="space"/>
   </link>
 
-  <link id="id_5" drawDirection="RIGHT">
+  <link id="id_5" style="--kite9-direction: right; ">
     <from id="e5" reference="praco" class="space"/>
     <to id="e6" reference="id_6"/>
   </link>
 
-  <link id="id_7" drawDirection="RIGHT">
+  <link id="id_7" style="--kite9-direction: right; ">
     <from id="e7" reference="id_6"/>
     <to id="e8" reference="id_8" shape="arrow" class="space"/>
   </link>
 
-  <link id="id_15" drawDirection="RIGHT">
+  <link id="id_15" style="--kite9-direction: right; ">
     <from id="e9" reference="id_8" class="space"/>
     <to id="e10" reference="id_9"/>
   </link>
   
-  <link id="id_17" drawDirection="RIGHT">
+  <link id="id_17" style="--kite9-direction: right; ">
     <from id="e11" reference="id_9"/>
     <to id="e12" reference="id_10" shape="arrow" class="space"/>
   </link>

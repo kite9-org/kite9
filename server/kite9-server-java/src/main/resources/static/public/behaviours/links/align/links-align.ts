@@ -39,8 +39,8 @@ export function initAlignContextMenuCallback(
 				if (existingDirection != 'null') {
 					steps.push({
 						fragmentId: c.getAttribute("id"),
-						type: 'ReplaceAttr',
-						name: 'drawDirection',
+						type: 'ReplaceStyle',
+						name: '--kite-direction',
 						from: existingDirection,
 						to: null
 					})	
@@ -75,8 +75,8 @@ export function initAlignContextMenuCallback(
 				
 		steps.push({
 			fragmentId: linkId,
-			type: 'ReplaceAttr',
-			name: 'drawDirection',
+			type: 'ReplaceStyle',
+			name: '--kite9-direction',
 			from: existingDirection,
 			to: direction
 		});

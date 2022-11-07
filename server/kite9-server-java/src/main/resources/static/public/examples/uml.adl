@@ -34,7 +34,7 @@
     <from reference="c5" id="l2-from"/>
     <to reference="p1" id="l2-to"/>
   </link>
-  <link id="l3" drawDirection="UP">
+  <link id="l3" style="--kite9-direction: up; ">
     <from reference="c" id="l3-from"/>
     <to reference="i1@dep" id="l3-to"/>
   </link> 

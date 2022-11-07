@@ -34,6 +34,8 @@ export function initDirectionContextMenuCallback(
 		contextMenu.destroy();
 		const diagramId = getContainingDiagram(e).getAttribute("id");
 		const id = e.getAttribute("id")
+		const info = parseInfo(e);
+		const oldDirection = info.direction
 
 		const alignOnly = e.classList.contains("kite9-align");
 		
@@ -49,7 +51,7 @@ export function initDirectionContextMenuCallback(
 				type: 'ReplaceStyle',
 				name: '--kite9-direction',
 				to: direction,
-				from: e.getAttribute('drawDirection')
+				from: oldDirection
 			},{
 				type: 'Move',
 				from: diagramId,

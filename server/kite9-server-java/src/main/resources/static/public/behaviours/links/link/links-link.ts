@@ -92,9 +92,9 @@ export function initLinkLinkerCallback(command: Command): LinkerCallback {
 						base64Element: command.getAdl(id)
 					});
 					command.push({
-						type: 'ReplaceAttr',
+						type: 'ReplaceStyle',
 						fragmentId: linkId,
-						name: 'drawDirection',
+						name: '--kite9-direction',
 						to: direction
 					})
 				}
