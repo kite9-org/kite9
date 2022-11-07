@@ -6,7 +6,7 @@ import { PaletteSelector, Selector } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { Containment } from '../../../classes/containment/containment.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-
+import { DragLocatorCallback } from '../../../classes/dragger/dragger.js';
 
 function defaultInsertSelector() {
 	return Array.from(getMainSvg().querySelectorAll('[k9-contains].selected:not([k9-contains=""])'));
@@ -59,7 +59,6 @@ export function initInsertContextMenuCallback(
 
 		function handleInsert(paletteElement: SVGGraphicsElement, selectedElements : Element[]) {
 			const ownBBox = getElementPageBBox(paletteElement);
-			(event as any).droppingElements = [];
 			Array.from(selectedElements)
 				.filter(e => containment.canContain(paletteElement, e))
 				.map(e => {
@@ -100,7 +99,6 @@ export function initInsertContextMenuCallback(
 		if (lastSelectedElement) {
 			const allowed = containment.canContain(droppingElement, lastSelectedElement);
 			if (allowed) {
-				// console.log("Allowing insert with types: "+allowedTypes);
 				contextMenu.addControl(event, "/public/behaviours/containers/insert/insert.svg", "Insert",
 					function() {
 						contextMenu.destroy();
@@ -112,14 +110,6 @@ export function initInsertContextMenuCallback(
 			}
 		}
 	}
-}
-
-export function initInsertDragLocator() {
-
-	return function(event) {
-		return event.droppingElements ? event.droppingElements : [];
-	}
-
 }
 
 

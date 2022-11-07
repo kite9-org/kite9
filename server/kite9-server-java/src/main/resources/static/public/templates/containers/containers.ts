@@ -4,7 +4,7 @@ import { once } from '../../bundles/ensure.js'
 import { command, metadata, dragger, contextMenu, layout, containment, palette, paletteContextMenu, overlay, stylemenu } from '../../templates/editor/editor.js'
 
 //Containers
-import { initInsertContextMenuCallback, initInsertDragLocator } from '../../behaviours/containers/insert/containers-insert.js'
+import { initInsertContextMenuCallback } from '../../behaviours/containers/insert/containers-insert.js'
 import { initContainContextMenuCallback } from '../../behaviours/containers/contain/containers-contain.js'
 import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback, initLayoutIndicator, initLayoutIndicatorPaletteRevealCallback } from '../../behaviours/containers/layout/containers-layout.js'
 import { initChildContextMenuCallback } from '../../behaviours/containers/child/containers-child.js'

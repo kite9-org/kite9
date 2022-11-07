@@ -1,5 +1,5 @@
 import { isGrid } from '../../../bundles/api.js'
-import { ContainmentCallback } from '../../../classes/containment/containment.js';
+import { ContainmentCallback, WcElement } from '../../../classes/containment/containment.js';
 
 /**
  * Three attributes:
@@ -17,7 +17,7 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 			.reduce((a, b) => a && b, true);
 	}
 	
-	function intersectionRule(set1, set2) {
+	function intersectionRule(set1: string[], set2: string[]) {
 		if (set1.includes("*") && (set2.includes("*"))) {
 			return [ ...set1, ...set2 ];
 		} else if (set1.includes("*")) {
@@ -29,13 +29,13 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		}
 	}
 	
-	function getTypes(element, attr) {
+	function getTypes(element: WcElement, attr: string)  : string[] {
 		if (element == '*') {
 			return [ '*' ]; 	// wildcard
-		} else if (element != undefined) {
+		} else if (element instanceof Element) {
 			const attrValue = element.getAttribute(attr);
 			if (attrValue) {
-				return attrValue.match(/\S+/g) || [];
+				return attrValue.split(/\S+/g) || [];
 			}
 		}
 
@@ -46,8 +46,7 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		}
 	}
 	
-	function getTypesIntersection(elements, attr) {
-		elements = Array.isArray(elements) ? elements : Array.from(elements);
+	function getTypesIntersection(elements: WcElement[], attr : string) : string[] {
 		const out = elements
 			.map(e => getTypes(e, attr))
 			.reduce((a, b) => intersectionRule(a, b));
@@ -62,9 +61,7 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		
 		const parentBoundsOnElement = parents ? getTypesIntersection(parents, 'k9-contains') : undefined;
 		const childBoundsOnElement = children ? getTypesIntersection(children, 'k9-containers') : undefined;
-		
-		elements = Array.isArray(elements) ? elements : Array.from(elements);
-		
+				
 		const out = elements.filter(e => {
 			let elementTypes = getTypes(e, 'k9-palette');
 			
