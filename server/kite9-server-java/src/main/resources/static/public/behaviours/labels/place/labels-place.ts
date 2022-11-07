@@ -4,20 +4,21 @@ import { hasLastSelected, onlyLastSelected } from '../../../bundles/api.js'
 import { Command } from '../../../classes/command/command.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { FormCallback, Property, SetCallback } from '../../../classes/context-menu/property.js';
-import { Selector } from '../../../bundles/types.js';
+import { Direction, directions, Selector } from '../../../bundles/types.js';
 
-const PLACEMENTS = ["top-left", "top", "top-right", "left", null, "right", "bottom-left", "bottom", "bottom-right"];
-type Placement = "top-left" | "top"| "top-right" | "left" | "right" | "bottom-left"| "bottom" | "bottom-right" | null;
+type LabelDirection = Direction | null;
+const placements = [...directions , null ];
+
 const STYLE_NAME = '--kite9-label-placement'
 
-function getPlacement(command: Command, e: Element) : Placement {
+function getPlacement(command: Command, e: Element) : LabelDirection {
 	const adlElement = command.getADLDom(e.getAttribute("id"));
 	const style = parseStyle(adlElement.getAttribute("style"));
-	const l = style[STYLE_NAME] as Placement; 
+	const l = style[STYLE_NAME] as LabelDirection; 
 	return l;
 }
 
-function drawPlacement(event: Event, cm: ContextMenu, placement: Placement, selected: Placement | 'ignore' = 'ignore') {
+function drawPlacement(event: Event, cm: ContextMenu, placement: LabelDirection, selected: LabelDirection | 'ignore' = 'ignore') {
 	const icon = placement == null ? "none" : placement;
 
 	const out = cm.addControl(event, "/public/behaviours/labels/place/" + icon + ".svg",
@@ -71,10 +72,12 @@ export function initLabelPlacementPropertyFormCallback(command: Command): FormCa
 		const ls = onlyLastSelected(selectedElements);
 		const placement = getPlacement(command, ls);
 
-		PLACEMENTS.forEach(s => {
-			const img2 = drawPlacement(contextEvent, contextMenu, s as Placement, placement);
+		placements.forEach(s => {
+			const img2 = drawPlacement(contextEvent, contextMenu, s as LabelDirection, placement);
 			if (placement != s) {
-				img2.setAttribute("title", s);
+				if (s != null) {
+					img2.setAttribute("title", s);
+				}
 				img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));
 			}
 		});
@@ -83,14 +86,14 @@ export function initLabelPlacementPropertyFormCallback(command: Command): FormCa
 
 export function initLabelPlacementPropertySetCallback(command: Command): SetCallback {
 
-	return function(propertyOwner, contextEvent, formEvent, contextMenu, selectedElements) {
+	return function(_propertyOwner, _contextEvent, formEvent, _contextMenu, selectedElements) {
 
 		const placement = (formEvent.currentTarget as Element).getAttribute("title");
 		selectedElements.forEach(e => {
 
 			const id = e.getAttribute("id");
 
-			if (PLACEMENTS.includes(placement)) {
+			if (placements.includes(placement)) {
 				command.push({
 					fragmentId: id,
 					type: 'ReplaceStyle',
