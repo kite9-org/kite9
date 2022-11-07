@@ -30,7 +30,7 @@
   </xsl:template>
   
   <xsl:template name="containers-diagram-palettes">
-     <adl:palette contains="connected" url="/public/templates/containers/palette.adl" />
+     <adl:palette url="/public/templates/containers/palette.adl" />
   </xsl:template>
   
   <xsl:template name="containers-diagram-defs">

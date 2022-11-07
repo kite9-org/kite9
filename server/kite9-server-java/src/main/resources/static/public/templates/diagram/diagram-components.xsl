@@ -46,7 +46,7 @@
                  document.params = {
                  "palettes" : [
                 	<xsl:for-each select="exslt:node-set($palettes)/*">
-                        "<xsl:value-of select="@url"/>",  "<xsl:value-of select="@contains"/>",                  
+                        "<xsl:value-of select="@url"/>",                  
                     </xsl:for-each>  
                    ],
                  "font-families" : {

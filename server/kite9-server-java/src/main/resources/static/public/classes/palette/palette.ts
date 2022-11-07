@@ -13,10 +13,7 @@ export type PaletteRevealCallback = (e?: Element) => void
 export type PaletteProps = {
 	number: number,
 	uri: string,
-	selector: string
 }
-
-export type SelectorFunction = (p: SVGElement | HTMLDivElement) => boolean
 
 /**
  * Provides functionality for populating/ showing/ hiding a palette.  
@@ -37,33 +34,17 @@ export class Palette {
 
 		uriList = uriList == undefined ? [] : uriList;
 
-		for (let i = 0; i < uriList.length; i += 2) {
-			const uri = uriList[i];
-			const selector = uriList[(i + 1)];
-
+		uriList.forEach((uri, i) => {
 			if (!done.includes(uri)) {
 				this.paletteMap.push({
-					number: i / 2,
+					number: i,
 					uri: uri,
-					selector: selector
 				});
 				done.push(uri);
 			}
-		}
+		})
 
 		this.id = (id == undefined) ? "_palette" : id;
-
-		/* const cssId = 'palette';
-		 if (!document.getElementById(cssId)) {
-		   const head = document.getElementsByTagName('head')[0];
-		   const link = document.createElement('link');
-		   link.id = cssId;
-		   link.rel = 'stylesheet';
-		   link.type = 'text/css';
-		   link.href = '/public/classes/palette/palette.css';
-		   link.media = 'all';
-		   head.appendChild(link);
-		 }*/
 
 		ensureCss('/public/classes/palette/palette.css')
 
@@ -101,7 +82,6 @@ export class Palette {
 	loadPalette(p: PaletteProps, concertina: Element) {
 		const id = "_palette-" + p.number;
 		const item = document.createElement("div");
-		item.setAttribute("k9-palette", p.selector);
 		item.setAttribute("class", "palette-item");
 		item.setAttribute("k9-palette-uri", p.uri);
 		item.setAttribute("id", id);
@@ -147,6 +127,13 @@ export class Palette {
 				this.loadCallbacks.forEach(cb => {
 					cb(this, item);
 				})
+				
+				// hover styling
+				diagramElements.forEach(de2 => {
+					const de = (de2 as SVGGraphicsElement)
+					de.style.cursor = 'grab';
+					de.classList.remove('inactive');
+				})
 
 				const evt = document.createEvent('Event');
 				evt.initEvent('DOMContentLoaded', false, false);
@@ -182,46 +169,13 @@ export class Palette {
 		return this.expanded;
 	}
 
-	open(event: Event, selectorFunction: SelectorFunction) {
+	open(event: Event) {
 		this.openEvent = event;
 
 		const darken = document.getElementById("_darken");
 		const palette = document.getElementById(this.id);
 		const concertina = palette.querySelector("div.concertina");
 		const control = palette.querySelector("div.control");
-
-		// hide palettes without the selector
-		const toShow: HTMLDivElement[] = [];
-
-		palette.querySelectorAll("div.palette-item")
-			.forEach(f => {
-				const e = (f as HTMLDivElement)
-				if (selectorFunction(e)) {
-					e.style.display = 'block';
-					toShow.push(e);
-
-					// highlight selectable items on the palette
-					const diagramElements = e.querySelectorAll("[k9-palette][id]");
-					diagramElements.forEach(de2 => {
-						const de = (de2 as SVGGraphicsElement)
-						if (selectorFunction(de)) {
-							de.style.cursor = 'grab';
-							de.classList.remove('inactive');
-						} else {
-							de.classList.add('inactive');
-							de.style.cursor = 'not-allowed';
-						}
-					})
-
-				} else {
-					e.style.display = 'none';
-				}
-			});
-
-		// keep track of which palette we are showing
-		if (this.expanded == undefined) {
-			this.expanded = toShow[0];
-		}
 
 		// remove old control buttons
 		while (control.firstChild) {
@@ -243,7 +197,7 @@ export class Palette {
 			p.expanded = e;
 			control.querySelectorAll("img").forEach(e => e.classList.remove("selected"));
 			if (dot != null) {
-				dot.classList.add("selected");
+				dot.children[0].classList.add("selected");
 			}
 			p.revealCallbacks.forEach(cb => cb(e));
 		}
@@ -264,26 +218,27 @@ export class Palette {
 
 
 		// display new control buttons and size the overall thing
-		toShow.forEach((e) => {
-			e.style.maxHeight = "0px";
-			e.style.visibility = 'show';
-			e.style.display = 'block';
+		Array.from(palette.querySelectorAll("div.palette-item")).forEach((e, i) => {
+			const elem = e as HTMLDivElement;
+			elem.style.maxHeight = "0px";
+			elem.style.visibility = 'show';
+			elem.style.display = 'block';
 			const svg = e.querySelector(":first-child") as SVGSVGElement;
 			if (!(svg.tagName.toLowerCase() == 'img')) {
 				paletteWidth = Math.max(svg.width.baseVal.valueInSpecifiedUnits, paletteWidth);
 				paletteHeight = Math.max(svg.height.baseVal.valueInSpecifiedUnits, paletteHeight);
 			}
 
-			if (toShow.length > 1) {
-				const dot = icon('', getTitle(e), getIcon(e), () => expandPanel(this, e, dot));
-				dot.classList.remove("hint--bottom");
-				dot.classList.add("hint--right");
+			const dot = icon('', getTitle(e), getIcon(e), () => expandPanel(this, elem, dot));
+			dot.classList.remove("hint--bottom");
+			dot.classList.add("hint--right");
 
-				if (e == this.expanded) {
-					selectedDot = dot;
-				}
-				control.appendChild(dot);
+			if ((e == this.expanded) || ((this.expanded == null) && i == 0)){
+				this.expanded = elem;
+				selectedDot = dot;
 			}
+			control.appendChild(dot);
+			
 		});
 
 		// ensure the palette appears in the centre of the screen
@@ -308,7 +263,6 @@ export class Palette {
 		palette.style.visibility = 'hidden';
 		darken.style.display = 'none';
 		this.revealCallbacks.forEach(cb => cb());
-		this.expanded = undefined;
 	}
 }
 
