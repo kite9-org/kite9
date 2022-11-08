@@ -51,15 +51,10 @@ export class ContextMenu {
 		}
 	}
 
-	end(e : Event) {
-		if (this.moving) {
-			const cc = getHtmlCoords(e);
-			if ((this.eventCoords.x == cc.x) && (this.eventCoords.y == cc.y)) {
-				this.destroy();
-				e.stopPropagation();
-			}					
-		}
+	end() {
+		// used to close the context menu, wasn't helpful.
 	}
+	
 	
 	add(cb : ContextMenuCallback) {
 		this.callbacks.push(cb);
@@ -89,9 +84,9 @@ export class ContextMenu {
 			ctxMenu.style.top = coords.y+"px";
 	
 			ctxMenu.addEventListener("mousedown", (e) => this.start(e)); 
-			ctxMenu.addEventListener("mouseup", (e) => this.end(e)); 
+			ctxMenu.addEventListener("mouseup", () => this.end()); 
 			ctxMenu.addEventListener("touchstart", (e) => this.start(e)); 
-			ctxMenu.addEventListener("touchend", (e) => this.end(e)); 
+			ctxMenu.addEventListener("touchend", () => this.end()); 
 			
 			document.querySelector("body").appendChild(ctxMenu);
 			this.menu = ctxMenu;
