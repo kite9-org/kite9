@@ -71,7 +71,7 @@ export function initFillChangeEvent(selectedElement: Element, svgStyle: Styles) 
 		selectedElement.setAttribute("style", formatted);
 		
 		// update swatches
-		const form = formObject('enum');
+		const form = formObject();
 		const fill = form.querySelector('#fill-patch') as HTMLInputElement;
 		const stroke = form.querySelector('#stroke-patch') as HTMLInputElement;
 		

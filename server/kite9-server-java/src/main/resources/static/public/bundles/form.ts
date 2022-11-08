@@ -46,8 +46,8 @@ export function change(e: HTMLElement, f : (e: Event) => void) : HTMLElement {
 	return e;
 }
 
-export function formObject(id : string) : HTMLFormElement {
-	return id != undefined ? document.forms[id] : document.forms[DEFAULT_FORM_ID];
+export function formObject(id : string = DEFAULT_FORM_ID) : HTMLFormElement {
+	return document.forms[id];
 }
 
 export function formValues(id: string = DEFAULT_FORM_ID) : { [key: string]: string  } {

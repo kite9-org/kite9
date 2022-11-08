@@ -39,7 +39,7 @@ export function initMarginsBuildControls() : BuildControlsCallback {
 export const paddingIcon = "/public/behaviours/styleable/size/padding.svg";
 
 
-export function initPaddingBuildControls() {
+export function initPaddingBuildControls() : BuildControlsCallback {
 	return function(selectedElement: Element, style: Styles, overlay: Overlay, cm: ContextMenu, event: Event) {
 		const padding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
 		const bbox = getElementPageBBox(selectedElement);
@@ -73,7 +73,7 @@ export function initPaddingBuildControls() {
 export const minSizeIcon = "/public/behaviours/styleable/size/size.svg";
 
 
-export function initMinSizeBuildControls() {
+export function initMinSizeBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style, overlay, cm, event) {
 		const minSize = parseInfo(selectedElement)['min-size'].split(" ").map(x => parseFloat(x));
 		const bbox = getElementPageBBox(selectedElement);

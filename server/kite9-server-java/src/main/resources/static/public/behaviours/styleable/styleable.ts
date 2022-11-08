@@ -57,7 +57,7 @@ export function addNumericControl(
 }
 
 export function extractFormValues() {
-	const asArray = Object.entries(formValues("enum"));
+	const asArray = Object.entries(formValues());
 	const filtered = asArray.filter(([key]) => !((key == 'ok') || (key == 'cancel')));
 	return Object.fromEntries(filtered);
 }
@@ -83,7 +83,7 @@ export function initStyleContextMenuCallback(
 		: ContextMenuCallback {
 
 	let originalStyleMap: { [index: string] : Styles };
-	let style;
+	let style: Styles;
 
 	if (selector == undefined) {
 		selector = function() {
@@ -176,9 +176,8 @@ export function initStyleContextMenuCallback(
 				style = originalStyleMap[selectedElement.getAttribute("id")];
 				const originalSvgStyle = selectedElement.getAttribute("style")
 				const svgStyle = parseStyle(originalSvgStyle);
-
-
-				const theForm = form([
+				const theForm = cm.get(event);
+				[
 					...buildControlsCallback(selectedElement, style, overlay, cm, event),
 					inlineButtons([
 						ok('ok', {}, () => {
@@ -201,16 +200,13 @@ export function initStyleContextMenuCallback(
 							event.preventDefault();
 						})
 					])
-				], 'enum');
+				].forEach(c => theForm.appendChild(c));
 
 				const changeEvent = initChangeEvent(selectedElement, svgStyle);
 
 				theForm.addEventListener("change", changeEvent);
 				theForm.addEventListener("textInput", changeEvent);
 				theForm.addEventListener("input", changeEvent);
-
-				const htmlElement = cm.get(event);
-				htmlElement.appendChild(theForm);
 				changeEvent(undefined);
 			}, 'Style');
 
@@ -236,7 +232,7 @@ export function initBasicBuildControls(
 	properties: { [index: string]: string },
 	values: string[]): BuildControlsCallback {
 	
-	return function(selectedElement, style, overlay, cm, event) {
+	return function(_selectedElement, style) {
 		return [fieldset(name, Object.keys(properties).map(p => select(p, style[p], {}, ['', ...values])))];
 	}
 }

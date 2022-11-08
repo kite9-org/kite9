@@ -6,7 +6,7 @@ import { Command } from '../../classes/command/command.js';
 import { ContextMenuCallback } from '../../classes/context-menu/context-menu.js';
 
 function defaultDragableSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[k9-info][k9-ui~=drag]"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-info][k9-ui~=drag].selected"));
 }
 
 export function initDragable(dragger: Dragger, selector: Selector = undefined) {

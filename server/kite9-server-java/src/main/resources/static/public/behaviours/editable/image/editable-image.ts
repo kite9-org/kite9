@@ -167,20 +167,20 @@ export function initEditableImageContextMenuCallback(
 				}
 
 
-				htmlElement.appendChild(form([
+				htmlElement.appendChild(fieldset('Image Properties', [
 					hrefField,
 					fieldset('New Image', [pasteField], { style: 'padding: 2px;' }),
 					fieldset('Existing Images', [existingField], { style: 'padding: 2px; ' }),
 					inlineButtons([
 						ok('ok', {}, () => {
-							const newValues = formValues('imageProperties');
+							const newValues = formValues();
 							Array.from(elements).forEach(e => setAttribute(e, 'href', href, newValues.imageURI));
 							command.perform();
 							contextMenu.destroy();
 						}),
 						cancel('cancel', [], () => contextMenu.destroy())
 					])
-				], 'imageProperties'));
+				]));
 			});
 		}
 	};

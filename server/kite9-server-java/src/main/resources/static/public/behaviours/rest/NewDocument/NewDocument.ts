@@ -145,7 +145,7 @@ export function initNewDocumentContextMenuCallback(
     const e = onlyLastSelected(selector());
 
     function createNewDocument() {
-      if (formObject('newDocumentForm').checkValidity()) {
+      if (formObject().checkValidity()) {
         const values = formValues('newDocumentForm');
         const newUri = fullUri(e.getAttribute('subject-uri') + "/" + values['fileName'] + "." + values['format']);
         cm.destroy();
@@ -164,7 +164,7 @@ export function initNewDocumentContextMenuCallback(
           const formArea = cm.get(event);
           formArea.style.width = '500px';
           formArea.appendChild(
-            form([
+            fieldset('New Document', [
               text('File Name', undefined, { 'required': true, 'pattern': '[A-Za-z0-9_-]+', title: 'Please use alphanumeric characters, _ or - and no spaces' }),
               templateUri,
               fieldset('Templates', [ templates, ], { style: 'padding: 2px; ' }),
@@ -172,8 +172,7 @@ export function initNewDocumentContextMenuCallback(
               select('Format', 'png', {}, ['svg', 'png', 'adl']),
               hidden('type', 'NewDocument'),
               ok('ok', {}, () => createNewDocument())
-            ],
-            'newDocumentForm'));
+            ]));
     
           // populate templates
           loadTemplates(templates, templateUri.children[1] as HTMLInputElement, e.getAttribute("subject-uri"));
