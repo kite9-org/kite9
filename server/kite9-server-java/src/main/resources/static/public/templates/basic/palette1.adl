@@ -12,7 +12,7 @@
       <textarea id="fs1" style="fill: #990055; ">Box 2</textarea>
     </box>
     
-    <box id="b3" k9-child="/public/templates/basic/palette.adl#fs2" style="--kite9-layout: down">
+    <box id="b3" k9-child="/public/templates/basic/palette1.adl#fs2" style="--kite9-layout: down">
       <textarea id="fs2" k9-ui="orphan edit delete">Text Lines Box</textarea>	
     </box>
 
