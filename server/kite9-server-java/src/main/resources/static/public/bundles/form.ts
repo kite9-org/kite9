@@ -138,12 +138,18 @@ export function password(placeholder:string, value: string, atts: object = {}) :
 
 export function select(placeholder: string, value: string, atts: object = {}, options: string[]) : HTMLElement {
 	const id = idFrom(placeholder);
+	const selected = { "selected": "true" } 
+	const unselected = {}
+	
+	function isSelected(o: string, i: number) {
+		return (value != undefined) ? (value == o) : (i == 0);
+	}
+	
 	return create('div', {}, [
 		create('label', { "for" : id }, [ txt(placeholder) ]),
 		create('div', { 'class' : 'select-dropdown' }, [
 			create('select', {'id': id, 'name': id, ...atts}, 
-				options.map((o, i) => create('option', 
-						{'selected' : (value != undefined) ? (value==o) : (i==0) }, [txt(o)])))
+				options.map((o, i) => create('option', isSelected(o, i) ? selected : unselected, [txt(o)])))
 		])
 	]);
 	

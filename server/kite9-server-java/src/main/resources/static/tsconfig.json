@@ -1,7 +1,6 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"sourceMap" : true,
 		"allowJs": true,
 		"outDir": "../../../../target/classes/static/public",
 		"target": "es2021",
