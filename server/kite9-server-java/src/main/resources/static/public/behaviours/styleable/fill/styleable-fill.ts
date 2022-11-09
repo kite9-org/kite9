@@ -1,20 +1,10 @@
 import { getAffordances } from '../../../bundles/api.js'
 import { formatStyle, Styles } from '../../../bundles/css.js'
-import { formObject, fieldset, colour, numeric } from '../../../bundles/form.js'
-import { getMainSvg, canRenderClientSide } from '../../../bundles/screen.js';
+import { formObject, fieldset, colour, numeric, hexColour } from '../../../bundles/form.js'
+import { getMainSvg } from '../../../bundles/screen.js';
 import { BuildControlsCallback, extractFormValues } from '../styleable.js';
 
 export const fillIcon = "/public/behaviours/styleable/fill/paintbrush.svg";
-
-const rgba2hex = (rgba : string) => `#${rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+\.{0,1}\d*))?\)$/).slice(1).map((n, i) => (i === 3 ? Math.round(parseFloat(n) * 255) : parseFloat(n)).toString(16).padStart(2, '0').replace('NaN', '')).join('')}`
-
-function getColour(propName: string, e: Element) {
-	if (canRenderClientSide()) {
-		return rgba2hex(e['computedStyleMap']().get(propName).toString());
-	} else {
-		return '';
-	}
-}
 
 export function initFillBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style) {
@@ -76,11 +66,11 @@ export function initFillChangeEvent(selectedElement: Element, svgStyle: Styles) 
 		const stroke = form.querySelector('#stroke-patch') as HTMLInputElement;
 		
 		if (fill) {
-			fill.value = getColour('fill', selectedElement);
+			fill.value = hexColour(newStyle['fill']);
 		}
 		
 		if (stroke) {
-			stroke.value = getColour('stroke', selectedElement);
+			stroke.value = hexColour(newStyle['stroke']);
 		}
 	}
 }

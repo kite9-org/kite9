@@ -129,15 +129,12 @@ export class Overlay {
 		
 		function move(e : Event) {
 			const newCoords = getSVGCoords(e);
-			console.log("SVG Coords: "+newCoords.x+ " "+newCoords.y)
-			console.log("INitial: "+initial.x+ " "+initial.y)
 			const delta = { x: newCoords.x - initial.x, y: newCoords.y - initial.y }
 			const newLength = Math.round(horiz ? (inverse ? length - delta.x : length + delta.x) :
 				(inverse ? length - delta.y : length + delta.y));
 			if (newLength >= 0) {
 				setSize(newLength);
 				cb(newLength);
-				console.log("Moving from "+length+" to "+newLength)
 				length = newLength;
 			} else {
 				setSize(0);

@@ -87,6 +87,18 @@ export function fieldset(legend: string, contents: Node[], atts : object = {} ) 
 	return create("fieldset", atts, [ create("legend", {}, [ txt(legend) ] ), ...contents] )
 }
 
+/**
+ * From https://stackoverflow.com/questions/1573053/javascript-function-to-convert-color-names-to-hex-codes
+ */
+export function hexColour(str: string | null) : string | null {
+	if (str == undefined) {
+		return undefined;
+	}
+    const ctx = document.createElement('canvas').getContext('2d');
+    ctx.fillStyle = str;
+    return ctx.fillStyle;
+}
+
 export function colour(placeholder:string, value: string, atts: object = {}) : HTMLElement {
 	const id = idFrom(placeholder);
 	const text = create('input', { 
@@ -105,7 +117,7 @@ export function colour(placeholder:string, value: string, atts: object = {}) : H
 	const controlDiv = div({"class": "inline-buttons"}, [patch, text]);
 	
 	patch.addEventListener("input", () => 
-		text.value = patch.value
+		text.value = hexColour(patch.value)
 	);
 
 	return div({"class": ""}, [ label, controlDiv]);
