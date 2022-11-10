@@ -3,7 +3,7 @@ import { parseInfo, createUniqueId, getContainingDiagram, getExistingConnections
 import { Linker, LinkerCallback } from '../../../classes/linker/linker.js';
 import { Command } from '../../../classes/command/command.js';
 import { Area, Finder, Selector } from '../../../bundles/types.js';
-import { LinkDirection, reverseDirection } from '../linkable.js';
+import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
 
 let link = null;
@@ -25,10 +25,10 @@ export function initAutoConnectTemplateSelector(
 	}
 }
 
-export function initAutoConnectLinkerCallback(command: Command): LinkerCallback {
+export function initAutoConnectLinkerCallback(command: Command, alignmentIdentifier: AlignmentIdentifier): LinkerCallback {
 
 	function undoAlignment(e: Element) {
-		const alignOnly = e.classList.contains("kite9-align");
+		const alignOnly = alignmentIdentifier(e);
 		const id = e.getAttribute("id");
 		if (alignOnly) {
 			command.push({

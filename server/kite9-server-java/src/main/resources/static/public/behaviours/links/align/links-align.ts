@@ -1,13 +1,13 @@
-import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, getDocumentParam } from '../../../bundles/api.js'
+import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, getDocumentParam, getParentElement } from '../../../bundles/api.js'
 import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js'
 import { Selector } from '../../../bundles/types.js';
 import { Command, SingleCommand } from '../../../classes/command/command.js';
-import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { LinkDirection, reverseDirection } from '../linkable.js';
-
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
 
 export function initAlignContextMenuCallback(
 	command: Command, 
+	alignmentIndentifier: AlignmentIdentifier, 
 	templateUri: string = undefined, 
 	selector: Selector = undefined) : ContextMenuCallback{
 	
@@ -22,14 +22,14 @@ export function initAlignContextMenuCallback(
 		
 		// tidy up any existing connections between these elements.
 		conns.forEach(c => {
-			const alignOnly = c.classList.contains("kite9-align");
+			const alignOnly = alignmentIndentifier(c);
 			const id = c.getAttribute("id");
 			
 			if (alignOnly) {
 				// remove the old alignment
 				steps.push({
 					type: 'Delete',
-					fragmentId: id,
+					fragmentId: getParentElement(c).getAttribute("id"),
 					base64Element: command.getAdl(id)
 				});
 			} else {
@@ -84,7 +84,7 @@ export function initAlignContextMenuCallback(
 		return linkId;
 	}
 
-	function performAlign(cm, horiz) {
+	function performAlign(cm: ContextMenu, horiz: boolean) {
 		const selectedElements = selector();
 		
 		selectedElements.sort((a, b) => {

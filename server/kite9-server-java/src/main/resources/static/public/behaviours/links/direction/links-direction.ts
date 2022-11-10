@@ -3,7 +3,7 @@ import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLa
 import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { LinkDirection, reverseDirection } from '../linkable.js';
+import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
 
 function directionSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction]"))
@@ -27,6 +27,7 @@ function getDirection(e: Element) : LinkDirection {
 
 export function initDirectionContextMenuCallback(
 	command: Command, 
+	alignmentIdentifier: AlignmentIdentifier,
 	selector : Selector = directionSelector) : ContextMenuCallback {
 	
 	function setDirection(e:Element, direction: LinkDirection, contextMenu: ContextMenu) {
@@ -37,7 +38,7 @@ export function initDirectionContextMenuCallback(
 		const info = parseInfo(e);
 		const oldDirection = info.direction
 
-		const alignOnly = e.classList.contains("kite9-align");
+		const alignOnly = alignmentIdentifier(e);
 		
 		if (alignOnly && (direction == undefined)) {
 			command.pushAllAndPerform([{

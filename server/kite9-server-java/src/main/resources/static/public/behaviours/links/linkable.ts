@@ -66,9 +66,9 @@ export function initLinkable(linker: Linker, selector: Selector = undefined) {
 }
 
 
-export function initLinkerDropCallback(command: Command, linker: Linker) {
+export function initLinkerDropCallback(_command: Command, linker: Linker) {
 
-	return function(dragState: StateItem[], event: Event) {
+	return function(_dragState: StateItem[], event: Event) {
 		linker.end(event, false);  // this false means that changes don't get performed immediately
 	}
 
@@ -83,17 +83,36 @@ export function updateLink(e:Element, from: Point, to: Point) {
 	});
 }
 
-export function getAlignElementsAndDirections(id1: string, id2: string) {
-	return getExistingConnections(id1, id2)
-		.filter(e => e.getAttribute("k9-elem") == "align")
-		.map(e => {
-			const parsed = parseInfo(e);
-			const d = parsed['direction'];
-			const ids = parsed['link'];
-			const reversed = ids[0] == id2;
-			return {
-				element: e,
-				direction: reversed ? reverseDirection(d) : d
-			}
-		});
+
+
+/**
+ * All of this allows us to identify links on the diagram which are just for the 
+ * purposes of alignment.  These can be deleted / changed when needed.
+ */
+export type AlignmentIdentifier = (e: Element) => boolean
+
+export type AlignmentInfo = {
+	element: Element,
+	direction: LinkDirection
+}
+
+export type AlignmentCollector = (id1: string, id2: string) => AlignmentInfo[]
+
+export function initAlignmentCollector(ai: AlignmentIdentifier)  : AlignmentCollector {
+	
+	return function getAlignElementsAndDirections(id1: string, id2: string) {
+		return getExistingConnections(id1, id2)
+			.filter(ai)
+			.map(e => {
+				const parsed = parseInfo(e);
+				const d = parsed['direction'];
+				const ids = parsed['link'];
+				const reversed = ids[0] == id2;
+				return {
+					element: e,
+					direction: reversed ? reverseDirection(d) : d
+				} as AlignmentInfo
+			});
+		
+	}
 }

@@ -1,16 +1,11 @@
 import { getContainingDiagram, hasLastSelected, getParentElement, getDocumentParam } from '../../../bundles/api.js'
 import { getMainSvg, currentTarget } from '../../../bundles/screen.js'
-import { getAlignElementsAndDirections } from '../linkable.js'
 import { Command } from '../../../classes/command/command.js';
 import { Linker, LinkerCallback } from '../../../classes/linker/linker.js';
 import { Finder, Selector } from '../../../bundles/types.js';
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { initPaletteFinder } from '../../palettes/menu/palettes-menu.js';
-
-
-function defaultLinkableSelector(palettePanel) {
-	return palettePanel.querySelectorAll("[id][k9-palette~=link]");
-}
+import { AlignmentCollector } from '../linkable.js';
 
 export function getLinkTemplateUri() {
 	return getDocumentParam('link-template-uri');
@@ -40,7 +35,7 @@ export function initLinkContextMenuCallback(
 
 		if (elements.length > 0) {
 			contextMenu.addControl(event, "/public/behaviours/links/link/link.svg",
-				"Draw Link", e => {
+				"Draw Link", () => {
 					contextMenu.destroy();
 					linker.start(elements, linkFinder(getLinkTemplateUri()));
 				});
@@ -52,7 +47,7 @@ export function initLinkContextMenuCallback(
  * This is called when the user finishes doing a link operation, 
  * which will end up creating the link.
  */
-export function initLinkLinkerCallback(command: Command): LinkerCallback {
+export function initLinkLinkerCallback(command: Command, alignmentCollector: AlignmentCollector): LinkerCallback {
 
 	return function(linker, evt, perform = true) {
 		const linkTarget = linker.getLinkTarget(currentTarget(evt));
@@ -65,7 +60,7 @@ export function initLinkLinkerCallback(command: Command): LinkerCallback {
 			const linkTargetId = linkTarget.getAttribute("id");
 			linker.get().forEach(e => {
 				const fromId = e.getAttribute("temp-from");
-				const aligns = getAlignElementsAndDirections(fromId, linkTargetId);
+				const aligns = alignmentCollector(fromId, linkTargetId);
 				const linkId = e.getAttribute("id");
 
 				command.push({

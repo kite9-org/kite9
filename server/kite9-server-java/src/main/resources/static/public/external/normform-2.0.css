@@ -51,8 +51,8 @@ form.normform fieldset {
     border: 1px solid lightgrey;
     border-radius: 2px;
     box-shadow: 0 2px 8px 0 rgba(0,0,0,0.05);
-    margin: 20px 0;
-    padding: 20px 20px 0;
+	padding: 20px;
+	margin: 0 0 10px 0px;
 }
 
 /* Legend */
@@ -104,7 +104,7 @@ form.normform input:focus,
 form.normform input[type=checkbox]:focus + label,
 form.normform input[type=radio]:focus + label,
 form.normform textarea:focus,
-form.normform select:focus, {
+form.normform select:focus {
     border-color: var(--nf-main-color);
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.1);
 }

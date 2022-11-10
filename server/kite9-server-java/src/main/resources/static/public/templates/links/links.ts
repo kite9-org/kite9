@@ -8,7 +8,7 @@ import { Linker } from '../../classes/linker/linker.js'
 import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette, overlay, stylemenu } from '../../templates/editor/editor.js'
 
 // Links
-import { initLinkable, updateLink, initLinkerDropCallback } from '../../behaviours/links/linkable.js'
+import { initLinkable, updateLink, initLinkerDropCallback, initAlignmentCollector, AlignmentIdentifier } from '../../behaviours/links/linkable.js'
 import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '../../behaviours/links/autoconnect/links-autoconnect.js'
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '../../behaviours/links/link/links-link.js'
 import { initDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
@@ -39,9 +39,11 @@ function initLinks() {
 
 		const getAlignTemplateUri = () => getDocumentParam('align-template-uri');
 		const paletteFinder = initPaletteFinder();
+		const alignmentIdentifier : AlignmentIdentifier = (e) => e.getAttribute("k9-elem") == "align";
+		const alignmentCollector = initAlignmentCollector(alignmentIdentifier);
 
-		linker.add(initLinkLinkerCallback(command));
-		linker.add(initAutoConnectLinkerCallback(command));
+		linker.add(initLinkLinkerCallback(command, alignmentCollector));
+		linker.add(initAutoConnectLinkerCallback(command, alignmentIdentifier));
 
 		dragger.dropLocatorFn(initTerminatorDropLocatorFunction());
 		dragger.dropLocator(initLinkDropLocator());
@@ -62,8 +64,8 @@ function initLinks() {
 		palette.addLoad(initNewLinkPaletteLoadCallback(dragger));
 
 		contextMenu.add(initLinkContextMenuCallback(linker));
-		contextMenu.add(initAlignContextMenuCallback(command));
-		contextMenu.add(initDirectionContextMenuCallback(command));
+		contextMenu.add(initAlignContextMenuCallback(command, alignmentIdentifier));
+		contextMenu.add(initDirectionContextMenuCallback(command, alignmentIdentifier));
 		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
 
