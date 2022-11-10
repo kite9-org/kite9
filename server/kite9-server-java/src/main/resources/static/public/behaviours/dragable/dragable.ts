@@ -6,7 +6,7 @@ import { Command } from '../../classes/command/command.js';
 import { ContextMenuCallback } from '../../classes/context-menu/context-menu.js';
 
 function defaultDragableSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-info][k9-ui~=drag].selected"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=drag]"));
 }
 
 export function initDragable(dragger: Dragger, selector: Selector = undefined) {
@@ -106,7 +106,10 @@ export function initCompleteDragable(command: Command) : DropCallback {
 export function initDragContextMenuCallback(dragger: Dragger, selector: Selector = null) : ContextMenuCallback {
 
 	if (selector == undefined) {
-		selector = defaultDragableSelector;
+		selector = function() {
+			return defaultDragableSelector()
+				.filter(e => e.classList.contains("selected"));
+		}
 	}
 
 	/**

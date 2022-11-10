@@ -105,7 +105,7 @@ export function colour(placeholder:string, value: string, atts: object = {}) : H
 		'class' : 'form-control', 
 		'placeholder': 'default', 
 		'type': 'text', 
-		'value': value, 
+		'value': value ? value : '', 
 		'id': id, 
 		'name': id, ...atts }) as HTMLInputElement;
 	const patch = create('input', { 
