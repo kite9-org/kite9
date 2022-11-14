@@ -27,4 +27,9 @@ class SVGRectPainter(private val classes: String) : AbstractPainter() {
             null
         }
     }
+
+    override fun shortPainterName(): String {
+        return "svg-rect-painter"
+    }
+
 }

@@ -26,7 +26,8 @@ import { initPortsPositionBuildControls, initPortsSelector, portsPositionIcon, i
 import { initPortDropCallback, initPortMoveCallback } from '../../behaviours/ports/drag/ports-drag.js';
 import { initPortsAddContextMenuCallback } from '../../behaviours/ports/add/ports-add.js';
 import { singleSelect } from '../../behaviours/selectable/selectable.js';
-import { getDocumentParam } from '../../bundles/api.js'
+import { getDocumentParam, isPort } from '../../bundles/api.js'
+import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
 
 const linker = new Linker(updateLink);
 
@@ -47,7 +48,14 @@ function initLinks() {
 
 		dragger.dropLocatorFn(initTerminatorDropLocatorFunction());
 		dragger.dropLocator(initLinkDropLocator());
-		dragger.dropWith(initPortDropCallback(command, containment));
+		
+		const portDropCallback = initContainmentDropCallback(
+			command, 
+			containment,
+			isPort,
+			initPortDropCallback(command));
+					
+		dragger.dropWith(portDropCallback);
 
 		dragger.moveWith(initTerminatorMoveCallback());
 		dragger.moveWith(initPortMoveCallback(containment));

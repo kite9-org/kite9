@@ -3,6 +3,7 @@ import { getBeforeId } from '../../../bundles/ordering.js'
 import { DropCallback, DropLocatorFunction } from '../../../classes/dragger/dragger.js';
 import { Command } from '../../../classes/command/command.js';
 import { Containment } from '../../../classes/containment/containment.js';
+import { ElementFilter } from '../../../bundles/types.js';
 
 export function initContainerDropLocatorFunction(containment: Containment) : DropLocatorFunction {
 
@@ -23,18 +24,30 @@ export function initContainerDropLocatorFunction(containment: Containment) : Dro
 	}
 }
 
-export function initContainerDropCallback(command: Command, containment: Containment) : DropCallback {
+/**
+ * Extensible function that supports filtering and adding an onwards-chain drop callback.
+ */
+export function initContainmentDropCallback(
+	command: Command, 
+	containment: Containment,
+	filter: ElementFilter = () => true,
+	chain: DropCallback = () => { /* do nothing */ }) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
-		const dragTargets = dragState.map(s => s.dragTarget);
-		const connectedDropTargets = dropTargets.filter(t => {
-			return containment.canContainAll(dragTargets, t);
-		}).filter(onlyUnique);
+		const relevantState = dragState
+			.filter(si => filter(si.dragTarget));
+			
+		const dragTargets = relevantState
+			.map(s => s.dragTarget)
+
+		const connectedDropTargets = dropTargets
+			.filter(t => containment.canContainAll(dragTargets, t))
+			.filter(onlyUnique);
 		
 		if (connectedDropTargets.length > 0) {
 			const dropTarget = connectedDropTargets[0];
 			const beforeId = getBeforeId(dropTarget, evt, dragTargets);
-			Array.from(dragState).forEach(s => {
+			Array.from(relevantState).forEach(s => {
 				if (s.dragParentId) {
 					// we are moving this from somewhere else in the diagram
 					command.push( {
@@ -56,9 +69,8 @@ export function initContainerDropCallback(command: Command, containment: Contain
 					});
 				}
 			});
-			return true;
-		} else {
-			return false;
+			
+			chain(relevantState, evt, connectedDropTargets);
 		}
 	}
 }

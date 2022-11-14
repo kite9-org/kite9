@@ -1,4 +1,4 @@
-import { Direction } from "./types";
+import { Direction, ElementFilter } from "./types";
 
 /**
  * Returns the collection of elements so long as one of them has the lastSelected class.
@@ -140,7 +140,7 @@ export function getNextSiblingId(elem : Element) : string | null {
 }
 
 
-export function getContainedChildIds(elem : Element, criteria : (e: Element) => boolean = () => true) : string[] {
+export function getContainedChildIds(elem : Element, criteria : ElementFilter = () => true) : string[] {
 	
 	const out : string[] = [];
 	

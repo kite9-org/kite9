@@ -6,6 +6,7 @@ import org.kite9.diagram.common.objects.Pair
 import org.kite9.diagram.dom.model.HasSVGRepresentation
 import org.kite9.diagram.dom.processors.XMLProcessor
 import org.kite9.diagram.model.*
+import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.w3c.dom.Document
@@ -24,28 +25,31 @@ abstract class AbstractPainter : Painter {
         r = de
     }
 
+    abstract fun shortPainterName() : String
+
     protected fun addInfoAttributes(out: Element) {
         val debug = StringBuilder()
 
         if (r is Port) {
-            var pr = r as Port
+            val pr = r as Port
             val rri = pr.getRenderingInformation()
-            debug.append("direction: "+pr.getPortDirection()+";");
-            debug.append("pos: " + rri.position + "; ")
+            debug.append("port: true; ")
+            debug.append("direction: "+lowercase(pr.getPortDirection())+"; ");
+            debug.append("pos: " + xy(rri.position) + "; ")
         }
 
         if (r is SizedRectangular) {
             val sr = r as SizedRectangular
             debug.append(
-                "margin: " + sr.getMargin(Direction.UP) + " " + sr.getMargin(Direction.RIGHT) + " "
-                        + sr.getMargin(Direction.DOWN) + " " + sr.getMargin(Direction.LEFT) + "; "
+                "margin: [" + sr.getMargin(Direction.UP) + " " + sr.getMargin(Direction.RIGHT) + " "
+                        + sr.getMargin(Direction.DOWN) + " " + sr.getMargin(Direction.LEFT) + "]; "
             )
             debug.append(
-                "padding: " + sr.getPadding(Direction.UP) + " " + sr.getPadding(Direction.RIGHT) + " "
-                        + sr.getPadding(Direction.DOWN) + " " + sr.getPadding(Direction.LEFT) + "; "
+                "padding: [" + sr.getPadding(Direction.UP) + " " + sr.getPadding(Direction.RIGHT) + " "
+                        + sr.getPadding(Direction.DOWN) + " " + sr.getPadding(Direction.LEFT) + "]; "
             )
             debug.append(
-                "min-size: " + sr.getMinimumSize().width() + " "+sr.getMinimumSize().height()+ "; "
+                "min-size: [" + sr.getMinimumSize().width() + " "+sr.getMinimumSize().height()+ "]; "
             )
             debug.append(
                 "sizing: [" + lowercase((r as SizedRectangular).getSizing(false)) + ", " +
@@ -71,8 +75,8 @@ abstract class AbstractPainter : Painter {
             val rri = c.getRenderingInformation()
             val usage = getUsage(r as Rectangular)
             debug.append("rectangular: $usage; ")
-            debug.append("rect-pos: " + rri.position + "; ")
-            debug.append("rect-size: " + rri.size + "; ")
+            debug.append("rect-pos: " + xy(rri.position) + "; ")
+            debug.append("rect-size: " + xy(rri.size) + "; ")
             debug.append("position: " + (r as Rectangular).getContainerPosition() + "; ")
 
             if (c.getParent() is Container) {
@@ -120,17 +124,17 @@ abstract class AbstractPainter : Painter {
             }
             val end = (r as Label).getEnd()
             if (end != null) {
-                debug.append("end: " + end + ";")
+                debug.append("end: " + lowercase(end) + ";")
             }
         }
 
-        debug.append("painter: "+this.toString()+"; ")
+        debug.append("painter: "+this.shortPainterName()+"; ")
 
         out.setAttribute("k9-info", debug.toString())
     }
 
     fun lowercase(e: Any?): String {
-        return if (e == null) "null" else e.toString().lowercase();
+        return e?.toString()?.lowercase() ?: "null";
     }
 
     private fun commaIntList(p: DoubleArray?): String {
@@ -148,6 +152,10 @@ abstract class AbstractPainter : Painter {
         val b = p.b
         val bs = b.multiply(s)
         return Pair(`as`.intValue(), bs.intValue())
+    }
+
+    private fun xy(d: Dimension2D?) : String {
+        return if (d == null) "" else "[" + d.x() + ", "+d.y()+"]"
     }
 
     private fun getUsage(rect: Rectangular): String {

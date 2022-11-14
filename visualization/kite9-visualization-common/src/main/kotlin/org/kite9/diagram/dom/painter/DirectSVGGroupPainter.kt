@@ -9,6 +9,11 @@ import org.w3c.dom.Element
  * source to the destination.
  */
 open class DirectSVGGroupPainter(protected var theElement: Element) : AbstractPainter() {
+
+    override fun shortPainterName(): String {
+        return "direct-svg"
+    }
+
     /**
      * The basic output approach is to turn any DiagramElement into a <g> tag, with the same ID set
      * as the DiagramElement.

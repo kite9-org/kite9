@@ -1,6 +1,6 @@
 import { getMainSvg, currentTarget } from '../../bundles/screen.js'
 import { getKite9Target } from '../../bundles/api.js'
-import { Selector } from '../../bundles/types.js';
+import { ElementFilter, Selector } from '../../bundles/types.js';
 
 export class Hover {
 
@@ -38,7 +38,7 @@ export class Hover {
 /**
  * Adds hoverable behaviour
  */
-export function initHoverable(selector: Selector = undefined, allowed : (v: Element) => boolean = undefined, ctx = new Hover()) {
+export function initHoverable(selector: Selector = undefined, allowed : ElementFilter = undefined, ctx = new Hover()) {
 	
 	if (allowed == undefined) {
 		allowed = function(v) {

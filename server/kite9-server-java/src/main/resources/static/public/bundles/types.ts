@@ -4,6 +4,11 @@
 export type Selector = () => Element[]
 
 /**
+ * For filtering elements in a selection
+ */
+export type ElementFilter = (e?: Element) => boolean
+
+/**
  * For definining a selection from a palette (e.g. all links)
  */
 export type PaletteSelector = (e: Element) => Element[]

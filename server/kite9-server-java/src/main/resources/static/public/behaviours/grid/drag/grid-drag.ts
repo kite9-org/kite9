@@ -56,7 +56,6 @@ const UP = 2;
 const DOWN = 3;
 const LEFT = 4;
 
-
 var moveCache = {
 	area: null,
 	mover: null, 

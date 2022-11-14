@@ -1,7 +1,7 @@
 import { getMainSvg } from '../../bundles/screen.js'
 import { getExistingConnections, parseInfo } from '../../bundles/api.js'
 import { Linker } from '../../classes/linker/linker.js';
-import { Direction, Point, Selector } from '../../bundles/types.js';
+import { Direction, ElementFilter, Point, Selector } from '../../bundles/types.js';
 import { Command } from '../../classes/command/command.js';
 import { StateItem } from '../../classes/dragger/dragger.js';
 
@@ -89,7 +89,7 @@ export function updateLink(e:Element, from: Point, to: Point) {
  * All of this allows us to identify links on the diagram which are just for the 
  * purposes of alignment.  These can be deleted / changed when needed.
  */
-export type AlignmentIdentifier = (e: Element) => boolean
+export type AlignmentIdentifier = ElementFilter
 
 export type AlignmentInfo = {
 	element: Element,

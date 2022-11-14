@@ -22,7 +22,7 @@ export function initGrid() {
 //		layout.formCallback(initGridLayoutPropertyFormCallback());
 //		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
 //
-//		dragger.dropWith(initCellDropCallback(command));
+//		dragger.dropWith(initContainmentDropCallback? (..., initCellDropCallback(command)));
 //		dragger.moveWith(initCellMoveCallback());
 //
 //		dragger.dragLocator(initCellDragLocator());

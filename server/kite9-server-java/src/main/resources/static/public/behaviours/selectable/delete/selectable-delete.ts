@@ -1,7 +1,7 @@
 import { hasLastSelected, getContainedChildIds, getNextSiblingId, getParentElement, getDependentElements } from "../../../bundles/api.js";
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Command, SingleCommand } from "../../../classes/command/command.js";
-import { Selector } from "../../../bundles/types.js";
+import { ElementFilter, Selector } from "../../../bundles/types.js";
 import { getAffordances } from "../../../bundles/api.js";
 import { ContextMenu, ContextMenuCallback } from "../../../classes/context-menu/context-menu.js";
 
@@ -9,8 +9,8 @@ import { ContextMenu, ContextMenuCallback } from "../../../classes/context-menu/
 export function initDeleteContextMenuCallback(
 	command: Command,
 	selector: Selector = undefined,
-	cascade: (e: Element) => boolean = undefined,
-	orphan: (e: Element) => boolean = undefined) : ContextMenuCallback {
+	cascade: ElementFilter = undefined,
+	orphan: ElementFilter = undefined) : ContextMenuCallback {
 
 	if (selector == undefined) {
 		selector = function() {
