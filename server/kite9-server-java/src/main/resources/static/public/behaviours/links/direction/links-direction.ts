@@ -34,24 +34,32 @@ export function initLinkDirectionContextMenuCallback(
 	
 		contextMenu.destroy();
 		
-		es.forEach(e => {
-			e = isTerminator(e) ? getParentElement(e) : e
-			const diagramId = getContainingDiagram(e).getAttribute("id");
-			const id = e.getAttribute("id")
-			const info = parseInfo(e);
-			const oldDirection = info.direction
+		es.forEach(e1 => {
+			const link = isTerminator(e1) ? getParentElement(e1) : e1
+			const diagramId = getContainingDiagram(link).getAttribute("id");
+			const id = link.getAttribute("id")
+			const linkInfo = parseInfo(link);
+			const oldDirection = linkInfo.direction
+			let relativeDirection = direction;
+			
+			if (e1 != link) {
+				// deal with terminator
+				const termInfo = parseInfo(e1);
+				const reverse = termInfo.end == 'from'
+				relativeDirection = reverse ? reverseDirection(relativeDirection) : relativeDirection;
+			}
 	
 			command.push({
 				fragmentId: id,
 				type: 'ReplaceStyle',
 				name: '--kite9-direction',
-				to: direction,
+				to: relativeDirection,
 				from: oldDirection
 			})
 			command.push({
 				type: 'Move',
 				from: diagramId,
-				fromBefore: getNextSiblingId(e),
+				fromBefore: getNextSiblingId(link),
 				moveId: id,
 				to: diagramId
 			});
