@@ -69,7 +69,7 @@ type Info = {
 	'link'?: string[],
 	'terminates-at'?: string,
 	'layout'? : string,
-	'end'? : string,
+	'end'? : 'from' | 'to',
 	'terminates'?: string,
 	'direction'?: Direction,
 	'temporary'?: boolean,

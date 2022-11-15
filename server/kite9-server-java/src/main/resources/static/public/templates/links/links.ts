@@ -11,7 +11,7 @@ import { command, metadata, dragger, contextMenu, paletteContextMenu, containmen
 import { initLinkable, updateLink, initLinkerDropCallback, initAlignmentCollector, AlignmentIdentifier } from '../../behaviours/links/linkable.js'
 import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '../../behaviours/links/autoconnect/links-autoconnect.js'
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '../../behaviours/links/link/links-link.js'
-import { initDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
+import { initLinkDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
 import { initAlignContextMenuCallback } from '../../behaviours/links/align/links-align.js'
 import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '../../behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '../../behaviours/links/drag/links-drag.js'
@@ -65,7 +65,7 @@ function initLinks() {
 			initAutoConnectTemplateSelector(getAlignTemplateUri, getLinkTemplateUri)));
 
 		dragger.dropWith(initLinkDropCallback(command));
-		dragger.dropWith(initTerminatorDropCallback(command));
+		dragger.dropWith(initTerminatorDropCallback(command, containment));
 		dragger.dropWith(initLinkerDropCallback(command, linker));
 		dragger.dropWith(initLinksCheckerDropCallback(command));
 
@@ -73,7 +73,7 @@ function initLinks() {
 
 		contextMenu.add(initLinkContextMenuCallback(linker));
 		contextMenu.add(initAlignContextMenuCallback(command, alignmentIdentifier));
-		contextMenu.add(initDirectionContextMenuCallback(command, alignmentIdentifier));
+		contextMenu.add(initLinkDirectionContextMenuCallback(command, alignmentIdentifier));
 		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
 

@@ -1,13 +1,13 @@
 import { getMainSvg, svg } from '../../../bundles/screen.js'
-import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected } from '../../../bundles/api.js'
+import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected, isLink, getParentElement } from '../../../bundles/api.js'
 import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
 
-function directionSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction]"))
-			.filter(e => isTerminator(e)); 
+function linkDirectionSelector() {
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction].selected"))
+			.filter(e => isLink(e) || isTerminator(e)); 
 }
 
 function terminatorSelector() {
@@ -25,45 +25,43 @@ function getDirection(e: Element) : LinkDirection {
 	}
 }
 
-export function initDirectionContextMenuCallback(
+export function initLinkDirectionContextMenuCallback(
 	command: Command, 
 	alignmentIdentifier: AlignmentIdentifier,
-	selector : Selector = directionSelector) : ContextMenuCallback {
+	selector : Selector = linkDirectionSelector) : ContextMenuCallback {
 	
-	function setDirection(e:Element, direction: LinkDirection, contextMenu: ContextMenu) {
+	function setDirections(es: Element[], direction: LinkDirection, contextMenu: ContextMenu) {
 	
 		contextMenu.destroy();
-		const diagramId = getContainingDiagram(e).getAttribute("id");
-		const id = e.getAttribute("id")
-		const info = parseInfo(e);
-		const oldDirection = info.direction
-
-		const alignOnly = alignmentIdentifier(e);
 		
-		if (alignOnly && (direction == undefined)) {
-			command.pushAllAndPerform([{
-					type: 'Delete',
-					fragmentId: e.getAttribute("id"),
-					cascade: true
-			}]);
-		} else {
-			command.pushAllAndPerform([{
+		es.forEach(e => {
+			e = isTerminator(e) ? getParentElement(e) : e
+			const diagramId = getContainingDiagram(e).getAttribute("id");
+			const id = e.getAttribute("id")
+			const info = parseInfo(e);
+			const oldDirection = info.direction
+	
+			command.push({
 				fragmentId: id,
 				type: 'ReplaceStyle',
 				name: '--kite9-direction',
 				to: direction,
 				from: oldDirection
-			},{
+			})
+			command.push({
 				type: 'Move',
 				from: diagramId,
 				fromBefore: getNextSiblingId(e),
 				moveId: id,
 				to: diagramId
-			}]);
-		}
+			});
+			
+		});
+		
+		command.perform();
 	}
 	
-	function drawDirection(
+	function drawDirectionImage(
 		event: Event, 
 		cm: ContextMenu, 
 		direction: LinkDirection, 
@@ -94,31 +92,45 @@ export function initDirectionContextMenuCallback(
 	return function(event, contextMenu) {
 		
 		const e = onlyLastSelected(selector());
-		if (e) {
+		
+		let link: Element, contradicting: boolean, direction: LinkDirection, reverse = false;
+		
+		if (isTerminator(e)) {
+			link = getParentElement(e);
+			const debugLink = parseInfo(link);
+			const debugTerm = parseInfo(e);
+
+			direction = debugLink.direction;
+			contradicting = debugLink.contradicting == "yes";
+			reverse = debugTerm.end == 'from'
+		
+		} else if (isLink(e)) {
 			const debug = parseInfo(e);
-			const direction = debug.direction;
 			
-			if (debug.link) {
-				const contradicting = debug.contradicting == "yes";
-				const reverse = contradicting ? false : (debug.direction == 'left' || debug.direction == 'up');
-				
-				const d2 = reverse ? reverseDirection(direction) : direction;
-				const img = drawDirection(event, contextMenu, d2);
-				if (contradicting) {
-					img.style.backgroundColor = "#ff5956";
-				}
-				
-				img.addEventListener("click", () => {
-					contextMenu.clear();
-					
-					["null", "up", "down", "left", "right"].forEach((s : LinkDirection) => {
-						const img2 = drawDirection(event, contextMenu, s, d2);
-						const s2 = reverse ? reverseDirection(s) : s;
-						img2.addEventListener("click", () => setDirection(e, s2, contextMenu));
-					});
-				});
-			}
+			direction = debug.direction;
+			contradicting = debug.contradicting == "yes";
+			reverse = contradicting ? false : (debug.direction == 'left' || debug.direction == 'up');
+			
+		} else {
+			return 	
 		}
+		
+		const d2 = reverse ? reverseDirection(direction) : direction;
+		const img = drawDirectionImage(event, contextMenu, d2);
+		if (contradicting) {
+			img.style.backgroundColor = "#ff5956";
+		}
+		
+		img.addEventListener("click", () => {
+			contextMenu.clear();
+			
+			[null, "up", "down", "left", "right"].forEach((s : LinkDirection) => {
+				const img2 = drawDirectionImage(event, contextMenu, s, d2);
+				const s2 = reverse ? reverseDirection(s) : s;
+				img2.addEventListener("click", () => setDirections(selector(), s2, contextMenu));
+			});
+		});
+		
 	};
 }
 

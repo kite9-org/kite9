@@ -2,9 +2,11 @@
  * This handles moving a block from one place to another on the diagram, via drag and drop.
  * You can't drop into an element unless it has 
  */
-import { parseInfo, isTerminator, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd } from "../../../bundles/api.js";
+import { parseInfo, isTerminator, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd, onlyUnique } from "../../../bundles/api.js";
 import { getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
+import { ElementFilter } from "../../../bundles/types.js";
 import { Command } from "../../../classes/command/command.js";
+import { Containment } from "../../../classes/containment/containment.js";
 import { DropCallback, DropLocatorFunction, MoveCallback } from "../../../classes/dragger/dragger.js";
 
 /**
@@ -14,11 +16,23 @@ let moveLinks = [];
 
 const SVG_PATH_REGEX = /[MLQTCSAZ][^MLQTCSAZ]*/gi;
 
-export function initTerminatorDropCallback(command : Command) : DropCallback {
+export function initTerminatorDropCallback(
+	command : Command,
+	containment: Containment, 
+	filter: ElementFilter = isTerminator) : DropCallback {
 	
 	return function(dragState, _evt, dropTargets) {
-		if (dropTargets.length == 1) {
-			const dragTargets = dragState.map(s => s.dragTarget);
+		const relevantState = dragState
+			.filter(si => filter(si.dragTarget));
+			
+		const dragTargets = relevantState
+			.map(s => s.dragTarget)
+
+		const validDropTargets = dropTargets
+			.filter(t => containment.canContainAll(dragTargets, t))
+			.filter(onlyUnique);
+			
+		if (validDropTargets.length == 1) {
 			Array.from(dragTargets).forEach(dt => {
 				if (isTerminator(dt)) {
 					command.push(  {
@@ -30,7 +44,6 @@ export function initTerminatorDropCallback(command : Command) : DropCallback {
 					});
 				}	
 			});
-			return true;
 		} 
 	}
 }
