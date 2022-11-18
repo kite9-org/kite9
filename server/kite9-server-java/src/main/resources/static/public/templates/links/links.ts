@@ -73,7 +73,7 @@ function initLinks() {
 
 		contextMenu.add(initLinkContextMenuCallback(linker));
 		contextMenu.add(initAlignContextMenuCallback(command, alignmentIdentifier));
-		contextMenu.add(initLinkDirectionContextMenuCallback(command, alignmentIdentifier));
+		contextMenu.add(initLinkDirectionContextMenuCallback(command));
 		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
 

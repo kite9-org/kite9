@@ -1,9 +1,9 @@
 import { getMainSvg, svg } from '../../../bundles/screen.js'
 import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected, isLink, getParentElement } from '../../../bundles/api.js'
 import { Command } from '../../../classes/command/command.js';
-import { Selector } from '../../../bundles/types.js';
+import { rotateAntiClockwise, rotateClockwise, Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
+import { LinkDirection, reverseDirection } from '../linkable.js';
 
 function linkDirectionSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction].selected"))
@@ -27,10 +27,11 @@ function getDirection(e: Element) : LinkDirection {
 
 export function initLinkDirectionContextMenuCallback(
 	command: Command, 
-	alignmentIdentifier: AlignmentIdentifier,
 	selector : Selector = linkDirectionSelector) : ContextMenuCallback {
 	
-	function setDirections(es: Element[], direction: LinkDirection, contextMenu: ContextMenu) {
+	type Turn = "cw" | "acw";
+		
+	function setDirections(es: Element[], direction: LinkDirection | Turn, contextMenu: ContextMenu) {
 	
 		contextMenu.destroy();
 		
@@ -40,13 +41,35 @@ export function initLinkDirectionContextMenuCallback(
 			const id = link.getAttribute("id")
 			const linkInfo = parseInfo(link);
 			const oldDirection = linkInfo.direction
-			let relativeDirection = direction;
+			let relativeDirection : LinkDirection
 			
 			if (e1 != link) {
 				// deal with terminator
 				const termInfo = parseInfo(e1);
 				const reverse = termInfo.end == 'from'
-				relativeDirection = reverse ? reverseDirection(relativeDirection) : relativeDirection;
+				switch (direction) {
+					case 'cw':
+						relativeDirection = rotateClockwise(oldDirection);
+						break;
+					case 'acw':
+						relativeDirection = rotateAntiClockwise(oldDirection);
+						break;
+					default:
+						relativeDirection = reverse ? reverseDirection(direction) : direction;
+				}
+				
+			} else {
+				// deal with link
+				switch (direction) {
+					case 'cw':
+						relativeDirection = rotateClockwise(oldDirection);
+						break;
+					case 'acw':
+						relativeDirection = rotateAntiClockwise(oldDirection);
+						break;
+					default:
+						relativeDirection = direction;
+				}
 			}
 	
 			command.push({
@@ -72,22 +95,24 @@ export function initLinkDirectionContextMenuCallback(
 	function drawDirectionImage(
 		event: Event, 
 		cm: ContextMenu, 
-		direction: LinkDirection, 
-		selected: LinkDirection = undefined) : HTMLImageElement {
+		text: string,
+		icon: string, 
+		selected: LinkDirection = undefined,
+		cb: () => void) : HTMLImageElement {
 		let title: string, src: string;
 		
-		if (direction != undefined) {
-			title= "Link Direction ("+direction+")";
-			src = "/public/behaviours/links/direction/"+direction.toLowerCase()+".svg";
+		if (text != undefined) {
+			title= "Link Direction ("+text+")";
+			src = "/public/behaviours/links/direction/"+icon+".svg";
 		} else {
 			title =  "Link Direction (undirected)";
 			src =  "/public/behaviours/links/direction/undirected.svg";				
 		}
 
-		const a = cm.addControl(event, src, title) as HTMLDivElement; 
+		const a = cm.addControl(event, src, title, cb) as HTMLDivElement; 
 		const img = a.children[0] as HTMLImageElement;
 		
-		if (selected == direction) {
+		if (selected == text) {
 			img.setAttribute("class", "selected");
 		}
 		
@@ -124,21 +149,22 @@ export function initLinkDirectionContextMenuCallback(
 		}
 		
 		const d2 = reverse ? reverseDirection(direction) : direction;
-		const img = drawDirectionImage(event, contextMenu, d2);
-		if (contradicting) {
-			img.style.backgroundColor = "#ff5956";
-		}
-		
-		img.addEventListener("click", () => {
+		const img = drawDirectionImage(event, contextMenu, d2, d2, undefined, () => {
 			contextMenu.clear();
 			
 			[null, "up", "down", "left", "right"].forEach((s : LinkDirection) => {
-				const img2 = drawDirectionImage(event, contextMenu, s, d2);
-				const s2 = reverse ? reverseDirection(s) : s;
-				img2.addEventListener("click", () => setDirections(selector(), s2, contextMenu));
+				drawDirectionImage(event, contextMenu, s, s, d2, () => setDirections(selector(), s, contextMenu));
 			});
+			
+			if (d2) {
+				drawDirectionImage(event, contextMenu, "Turn Clockwise", 'turn-cw', d2, () => setDirections(selector(), 'cw', contextMenu));
+				drawDirectionImage(event, contextMenu, "Turn Anti-Clockwise", 'turn-acw', d2, () => setDirections(selector(), 'acw', contextMenu));
+			}
 		});
 		
+		if (contradicting) {
+			img.style.backgroundColor = "#ff5956";
+		}
 	};
 }
 

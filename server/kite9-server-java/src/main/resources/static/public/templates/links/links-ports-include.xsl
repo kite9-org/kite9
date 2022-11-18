@@ -14,6 +14,7 @@
 		<xsl:param name="k9-highlight">fill grab</xsl:param>
 		<xsl:param name="k9-texture">none</xsl:param>
 		<xsl:param name="k9-ui">connect delete drag port direction insert orphan</xsl:param>
+		<xsl:param name="k9-contains">terminator</xsl:param>
 	    
 	    <xsl:param name="shape">
 			<rect x="-12" y="-12" width="24" height="24" />
@@ -29,6 +30,7 @@
 			<xsl:with-param name="k9-highlight" select="$k9-highlight"  />
 			<xsl:with-param name="k9-texture" select="$k9-texture"  />
 			<xsl:with-param name="k9-palette">port</xsl:with-param>
+			<xsl:with-param name="k9-contains" select="$k9-contains" />
 			<xsl:with-param name="k9-ui" select="$k9-ui" />
 			<xsl:with-param name="id" select="$id"  />
 			<xsl:with-param name="style" select="$style" />

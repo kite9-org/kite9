@@ -38,3 +38,33 @@ export type Finder = (u: string) => Element
 export const directions =  ["up" , "down", "left" , "right" ] 
 export type Direction  = "up" | "down" | "left" | "right"
 
+export function rotateClockwise(d: Direction | undefined) : Direction {
+	switch(d) {
+		case 'up':
+			return 'right';
+		case 'down':
+			return 'left';
+		case 'left':
+			return 'up';
+		case 'right':
+			return 'down';
+		case undefined:
+			return undefined;
+	}
+}
+
+export function rotateAntiClockwise(d: Direction | undefined) : Direction {
+	switch(d) {
+		case 'up':
+			return 'left';
+		case 'down':
+			return 'right';
+		case 'left':
+			return 'down';
+		case 'right':
+			return 'up';
+		case undefined:
+			return undefined;
+	}
+}
+
