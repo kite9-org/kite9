@@ -29,7 +29,7 @@ export function initLinkDirectionContextMenuCallback(
 	command: Command, 
 	selector : Selector = linkDirectionSelector) : ContextMenuCallback {
 	
-	type Turn = "cw" | "acw";
+	type Turn = "cw" | "acw" | "180";
 		
 	function setDirections(es: Element[], direction: LinkDirection | Turn, contextMenu: ContextMenu) {
 	
@@ -54,6 +54,9 @@ export function initLinkDirectionContextMenuCallback(
 					case 'acw':
 						relativeDirection = rotateAntiClockwise(oldDirection);
 						break;
+					case '180':
+						relativeDirection = reverseDirection(oldDirection);
+						break;	
 					default:
 						relativeDirection = reverse ? reverseDirection(direction) : direction;
 				}
@@ -67,6 +70,9 @@ export function initLinkDirectionContextMenuCallback(
 					case 'acw':
 						relativeDirection = rotateAntiClockwise(oldDirection);
 						break;
+					case '180':
+						relativeDirection = reverseDirection(oldDirection);
+						break;	
 					default:
 						relativeDirection = direction;
 				}
@@ -159,6 +165,7 @@ export function initLinkDirectionContextMenuCallback(
 			if (d2) {
 				drawDirectionImage(event, contextMenu, "Turn Clockwise", 'turn-cw', d2, () => setDirections(selector(), 'cw', contextMenu));
 				drawDirectionImage(event, contextMenu, "Turn Anti-Clockwise", 'turn-acw', d2, () => setDirections(selector(), 'acw', contextMenu));
+				drawDirectionImage(event, contextMenu, "Turn 180", 'turn-180', d2, () => setDirections(selector(), '180', contextMenu));
 			}
 		});
 		

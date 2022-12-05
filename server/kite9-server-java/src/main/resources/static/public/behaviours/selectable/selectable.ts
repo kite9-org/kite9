@@ -43,15 +43,15 @@ export function isLastSelected(element : Element) : boolean {
 	return element.classList.contains("lastSelected");
 }
 
-export function singleSelect(element : Element , within : Element = getMainSvg()) : void {
+export function singleSelect(elements : Element[], within : Element = getMainSvg()) : void {
 	within.querySelectorAll(".selected").forEach(c => {
 		c.classList.remove("selected");
 	})
 	
-	element.classList.add("selected");
+	elements.forEach(e => e.classList.add("selected"));
 	
 	clearLastSelected(within);
-	lastSelected(element);
+	lastSelected(elements[0]);
 }
 
 export function unselect(element : Element) : void {
@@ -84,7 +84,7 @@ export function initSelectable(
 		if (!isSelected(v)) {
 			if (isSingleSelect) {
 				// unselect all other elements
-				singleSelect(v, within);
+				singleSelect([v], within);
 			} else {
 				select(v, within);
 			}

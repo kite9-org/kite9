@@ -73,17 +73,40 @@ export function getElementHTMLBBox(e: Element): Area {
 	return out;
 }
 
-export function getElementsPageBBox(elements: Element[]): Area {
-	return elements
-		.map(e => getElementPageBBox(e))
-		.reduce((a, b) => {
+export function maxArea(elements: Area[]): Area {
+	if (elements.length == 0) {
+		throw new Error("No elements provided")
+	} else if (elements.length == 1) {
+		return elements[0];
+	} else {
+		type Bound = {x: number, y: number, x2: number, y2: number }
+	
+		const bounds: Bound[] = elements
+			.map(bb => {
+				return {
+					x: bb.x,
+					y: bb.y,
+					x2: bb.x + bb.width,
+					y2: bb.y + bb.height
+				}
+			});
+
+		const bound: Bound = bounds.reduce((a, b) => {
 			return {
 				x: Math.min(a.x, b.x),
 				y: Math.min(a.y, b.y),
-				width: Math.max(a.x + a.width, b.x + b.width) - Math.min(a.x, b.x),
-				height: Math.max(a.y + a.height, b.y + b.height) - Math.min(a.y, b.y)
+				x2: Math.max(a.x2, b.x2),
+				y2: Math.max(a.y2, b.y2)
 			}
 		});
+
+		return  {
+				x: bound.x,
+				y: bound.y,
+				width: bound.x2 - bound.x,
+				height: bound.y2 - bound.y
+		}
+	}
 }
 
 /**

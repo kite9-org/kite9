@@ -93,7 +93,7 @@ export function initHttpUpdater(uri: string, contentType: string, contentTypeRes
 		}
 	}
 
-	return (update) => {
+	return async (update) => {
 		update.uri = new URL(uri);
 
 		return fetch(uri, {

@@ -1,5 +1,5 @@
-import { isLink, isTerminator, isPort, getContainedChildIds, getParentElement, getDependentElements, connectedElement, onlyLastSelected } from "../../../bundles/api.js";
-import { getMainSvg, getElementHTMLBBox, getElementPageBBox } from '../../../bundles/screen.js';
+import { isLink, isTerminator, isPort, getContainedChildIds, getParentElement, getDependentElements, connectedElement, onlyLastSelected, isConnected } from "../../../bundles/api.js";
+import { getMainSvg, getElementHTMLBBox, getElementPageBBox, maxArea } from '../../../bundles/screen.js';
 import { Selector } from "../../../bundles/types.js";
 import { ContextMenu, ContextMenuCallback } from "../../../classes/context-menu/context-menu.js";
 
@@ -7,9 +7,10 @@ import { ContextMenu, ContextMenuCallback } from "../../../classes/context-menu/
  * If you select a terminator, allows you to select the link or port.
  * If you select a link, allows you to select the terminator
  * If you select a port, you can select the links.
+ * If you select a connected, allows you to select links
  */
 export function initLinksNavContextMenuCallback(
-	singleSelect: (e: Element, within?: Element) => void,
+	singleSelect: (e: Element[], within?: Element) => void,
 	selector: Selector = undefined): ContextMenuCallback {
 
 	if (selector == undefined) {
@@ -17,13 +18,13 @@ export function initLinksNavContextMenuCallback(
 			return Array.from(getMainSvg().querySelectorAll("[id].selected"))
 		}
 	}
-
-	function selectElement(element: Element, cm: ContextMenu) {
-		singleSelect(element);
-		const { x, y, width, height } = getElementHTMLBBox(element);
+	
+	function selectElements(elements: Element[], cm: ContextMenu) {
+		singleSelect(elements);
+		const { x, y, width, height } = maxArea(elements.map(e => getElementHTMLBBox(e)));
 		const event2 = new MouseEvent("mouseup", {
-			clientX: x + (width / 2),
-			clientY: y + (height / 2),
+			clientX: x + width,
+			clientY: y + height,
 			bubbles: true,
 			cancelable: true,
 			view: window
@@ -31,15 +32,17 @@ export function initLinksNavContextMenuCallback(
 
 		cm.destroy();
 		cm.handle(event2);
-		element.classList.remove("attention");
+		elements.forEach(e => e.classList.remove("attention"));
 	}
 
-	function highlight(element, active) {
-		if (active) {
-			element.classList.add("attention");
-		} else {
-			element.classList.remove("attention");
-		}
+	function highlight(elements: Element[], active: boolean) {
+		elements.forEach(element => {
+			if (active) {
+				element.classList.add("attention");
+			} else {
+				element.classList.remove("attention");
+			}
+		});
 	}
 
 	function leftToRightSort(a, b) {
@@ -56,20 +59,19 @@ export function initLinksNavContextMenuCallback(
 			if (isTerminator(lastElement)) {
 				const link = getParentElement(lastElement)
 				cm.addControl(event, "/public/behaviours/links/link.svg", 'Link',
-					() => selectElement(link, cm), 'Related',
+					() => selectElements([link], cm), 'Related',
 					{
-						"onmouseover": () => highlight(link, true),
-						"onmouseout": () => highlight(link, false)
+						"onmouseover": () => highlight([link], true),
+						"onmouseout": () => highlight([link], false)
 					});
-
 
 				const portForElement = connectedElement(lastElement, getMainSvg())
 				if (isPort(portForElement)) {
 					cm.addControl(event, "/public/behaviours/links/nav/port.svg", 'Containing Port',
-						() => selectElement(portForElement, cm), 'Related',
+						() => selectElements([portForElement], cm), 'Related',
 						{
-							"onmouseover": () => highlight(portForElement, true),
-							"onmouseout": () => highlight(portForElement, false)
+							"onmouseover": () => highlight([portForElement], true),
+							"onmouseout": () => highlight([portForElement], false)
 						});
 				}
 
@@ -79,28 +81,36 @@ export function initLinksNavContextMenuCallback(
 					.sort(leftToRightSort);
 
 				deps.forEach(element => {
-					cm.addControl(event, "/public/behaviours/links/nav/ends.svg", 'Link',
-						() => selectElement(element, cm), 'Related',
+					cm.addControl(event, "/public/behaviours/links/nav/ends.svg", 'Terminator',
+						() => selectElements([element], cm), 'Related',
 						{
-							"onmouseover": () => highlight(element, true),
-							"onmouseout": () => highlight(element, false)
+							"onmouseover": () => highlight([element], true),
+							"onmouseout": () => highlight([element], false)
 						});
 				})
-			} else if (isPort(lastElement)) {
+			} else if (isPort(lastElement) || isConnected(lastElement)) {
 				const deps = getDependentElements([lastElement.getAttribute("id")])
 					.sort(leftToRightSort);
 
 				deps.forEach(dep => {
-					cm.addControl(event, "/public/behaviours/links/link.svg", 'Link To Port',
-						() => selectElement(dep, cm), 'Related',
+					cm.addControl(event, "/public/behaviours/links/link.svg", 'Link',
+						() => selectElements([dep], cm), 'Related',
 						{
-							"onmouseover": () => highlight(dep, true),
-							"onmouseout": () => highlight(dep, false)
+							"onmouseover": () => highlight([dep], true),
+							"onmouseout": () => highlight([dep], false)
 						});
-
-
 				});
-			}
+				
+				if (deps.length > 1) {
+					cm.addControl(event, "/public/behaviours/links/link.svg", 'Link',
+						() => selectElements(deps, cm), 'Related',
+						{
+							"onmouseover": () => highlight(deps, true),
+							"onmouseout": () => highlight(deps, false)
+						});
+					
+				}
+			} 
 		}
 	}
 }
