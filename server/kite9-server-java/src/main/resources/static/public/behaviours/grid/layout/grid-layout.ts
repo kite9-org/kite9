@@ -5,7 +5,7 @@ import { Command } from '../../../classes/command/command.js';
 import { FormCallback, SetCallback } from '../../../classes/context-menu/property.js';
 import { PaletteSelector } from '../../../bundles/types.js';
 
-function getMinGridSize(e) {
+function getMinGridSize(e: Element) : [number, number] {
 	const info = parseInfo(e);
 	if (info['layout'] == 'GRID') {
 		return info['grid-size'];
@@ -14,7 +14,7 @@ function getMinGridSize(e) {
 	}
 }
 
-function getLayout(e) {
+function getLayout(e: Element) {
 	if (e==null) {
 		return 'none';
 	} else {
@@ -29,7 +29,7 @@ export type CellCreator = (parentId: string, x: number, y: number, newId: string
 export function initGridLayoutPropertySetCallback(
 	command: Command, 
 	cellCreator: CellCreator, 
-	cellSelector: PaletteSelector) : SetCallback {
+	cellSelector: PaletteSelector = undefined) : SetCallback {
 	
 	if (cellSelector == undefined) {
 		cellSelector = function (e) {
@@ -39,9 +39,9 @@ export function initGridLayoutPropertySetCallback(
 		}
 	}
 	
-	return function(propertyOwner, contextEvent, formEvent, contextMenu, selectedElements) {
-		const layout = formEvent.target.parentElement.getAttribute("title");
-		
+	return function(_propertyOwner, _contextEvent, formEvent, _contextMenu, selectedElements) {
+		const layout = (formEvent.currentTarget as Element).getAttribute("title");
+
 		Array.from(selectedElements).forEach(e => {
 			const existing = getLayout(e);
 			const id = e.getAttribute("id");
@@ -139,7 +139,7 @@ export function initGridLayoutPropertySetCallback(
 						fragmentId: id,
 						type: 'ReplaceAttr',
 						name: 'layout',
-						to: layout == 'none' ? null : layout,
+						to: layout,
 						from: e.getAttribute('layout')
 					});
 				} else {
@@ -159,7 +159,6 @@ export function initGridLayoutPropertyFormCallback() : FormCallback {
 
 	return function(propertyOwner, contextEvent, contextMenu, selectedElements) {
 		const ls = onlyLastSelected(selectedElements);
-		const layout = getLayout(ls);
 		const minGridSize = getMinGridSize(ls);
 		
 		const htmlElement = contextMenu.get(contextEvent);
@@ -169,17 +168,19 @@ export function initGridLayoutPropertyFormCallback() : FormCallback {
 		rows = Math.max(2, minGridSize[1]);
 		cols = Math.max(cols, minGridSize[0]);
 		
+		
+		
 		htmlElement.appendChild(
 			change(
 				numeric('Rows', rows, { 'min' : ''+minGridSize[1]}), 
-				(evt) => rows = number(contextEvent.target.value)));
+				() => rows = number((contextEvent.target as HTMLFormElement).value)));
 				
 		htmlElement.appendChild(
 			change(
 				numeric('Cols', cols, { 'min' : ''+minGridSize[0]}), 
-				(evt) => cols = number(contextEvent.target.value)));
+				() => cols = number((contextEvent.target as HTMLFormElement).value)));
 		
-		const img2 = contextMenu.addControl(event, "/public/behaviours/containers/layout/grid.svg","Grid", undefined);
+		const img2 = contextMenu.addControl(contextEvent, "/public/behaviours/containers/layout/grid.svg","Grid", undefined);
 		(img2.children[0] as HTMLElement).style.borderRadius = "0px";
 		img2.setAttribute("title", "grid");
 		img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));

@@ -1,9 +1,10 @@
 import { parseInfo, isCell, isGrid } from '../../../bundles/api.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
-import { Selector } from '../../../bundles/types.js';
-import { DropCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
-import { getOrdinal, getOrdinals  } from '/public/behaviours/grid/common-grid.js' 
+import { Direction, Selector, Point, Area } from '../../../bundles/types.js';
+import { Command } from '../../../classes/command/command.js';
+import { DragLocatorCallback, DropCallback, DropLocatorFunction, MoveCallback } from '../../../classes/dragger/dragger.js';
+import { getOrdinal, getOrdinals, Ordinals  } from '../common-grid.js' 
 
 function isEmptyGrid(e) {
 	if (isGrid(e)) {
@@ -13,7 +14,7 @@ function isEmptyGrid(e) {
 	return false;
 }
 
-export function initCellDropLocatorFunction() {
+export function initCellDropLocatorFunction() : DropLocatorFunction {
 	
 	// we allow cells to be dropped onto other cells, as this instigates the 
 	// re-arrage functionality
@@ -24,10 +25,37 @@ export function initCellDropLocatorFunction() {
 	
 }
 
+type Occupation = {
+	x: number[],
+	y: number[]
+}[]
+
+type GridArea = {
+	x: [number, number],
+	y: [number, number],
+	items: { [ index: string] : { dx: [number, number], dy: [number, number] }}
+}
+
+type MoveCache = {
+	area?: GridArea,
+	mover?: Element,
+	container?: Element
+	occupation?: Occupation,
+	side?: Direction
+}
+
+let moveCache : MoveCache = {
+	area: null,
+	mover: null, 
+	container: null,
+	occupation: [],
+	side: null
+}
+
 /**
  * This will only allow you to drag cells from the container which is the mover.
  */
-export function initCellDragLocator(selector: Selector = undefined) {
+export function initCellDragLocator(selector: Selector = undefined) : DragLocatorCallback {
 	
 	if (selector == undefined) {
 		selector = function() {
@@ -45,32 +73,18 @@ export function initCellDragLocator(selector: Selector = undefined) {
 	}
 	
 	return function() {
-		var out = selector();
+		const out = selector();
 		return out;
 	}
 }
 
-
-const RIGHT = 1;
-const UP = 2;
-const DOWN = 3;
-const LEFT = 4;
-
-var moveCache = {
-	area: null,
-	mover: null, 
-	container: null,
-	occupation: [],
-	side: null
-}
-
-function calculateOccupation(container) {
+function calculateOccupation(container: Element) : Occupation {
 	
 	if (moveCache.container == container) {
 		return moveCache.occupation;
 	}
 	
-	var occupation = [];
+	const occupation = [];
 	
 	Array.from(container.children).forEach(e => {
 		const details = parseInfo(e);
@@ -93,9 +107,9 @@ function calculateOccupation(container) {
 
 export function initCellMoveCallback() : MoveCallback {
 	
-	function calculateArea(dragTargets) {
+	function calculateArea(dragTargets: Element[]) {
 		
-		function up1(area, change) {
+		function up1(area: [number, number], change: [number, number]) {
 			area[0] = Math.min(area[0], change[0]);
 			area[1] = Math.max(area[1], change[1]);
 		}
@@ -110,7 +124,7 @@ export function initCellMoveCallback() : MoveCallback {
 		const moverX = moverInfo ? moverInfo['grid-x'][0] : 0;
 		const moverY = moverInfo ? moverInfo['grid-y'][0] : 0;
 		
-		var out = {
+		const out: GridArea = {
 			x: [10000, -10000],
 			y: [10000, -10000],
 			items: {}
@@ -118,7 +132,7 @@ export function initCellMoveCallback() : MoveCallback {
 		
 		dragTargets.forEach(dt => {
 			const id = dt.getAttribute("id");
-			if (dt.container == mover.container) {
+			if (dt['container'] == mover['container']) {
 				const dragInfo = parseInfo(dt);
 				const dragX = dragInfo['grid-x'];
 				const dragY = dragInfo['grid-y'];
@@ -136,12 +150,11 @@ export function initCellMoveCallback() : MoveCallback {
 		moveCache.mover = mover;
 		moveCache.area = out;
 		
-		// console.log("Area: "+JSON.stringify(out));
 		return out;
 		
 	}
 
-	function overlaps(dragTargets, dropTargets) {
+	function overlaps(dragTargets: Element[], dropTargets: Element[]) : boolean {
 		
 		function intersects(r1, r2) {
 			const startIn = (r1[0] >= r2[0]) && (r1[0] < r2[1]);
@@ -150,15 +163,14 @@ export function initCellMoveCallback() : MoveCallback {
 		}
 		
 		const container = dropTargets[0].parentElement;
-		const containerId = container.getAttribute("id");
-		var area = calculateArea(dragTargets);
-		var occupation = calculateOccupation(container);
+		const area = calculateArea(dragTargets);
+		const occupation = calculateOccupation(container);
 		
 		const dropInfo = parseInfo(dropTargets[0]);
 		const dropX = dropInfo['grid-x'];
 		const dropY = dropInfo['grid-y'];
 		
-		for(var i = 0; i < dragTargets.length; i++) {
+		for(let i = 0; i < dragTargets.length; i++) {
 			const dt = dragTargets[i];
 			const id = dt.getAttribute("id");
 			const item = area.items[id];
@@ -167,7 +179,7 @@ export function initCellMoveCallback() : MoveCallback {
 					dy: [item.dy[0] + dropY[0], item.dy[1] + dropY[0]]
 			}
 			if (item != undefined) {
-				for(var j = 0; j < occupation.length; j++) {
+				for(let j = 0; j < occupation.length; j++) {
 					const occ = occupation[j];
 					const out = intersects(movedItem.dx, occ.x) && 
 						intersects(movedItem.dy, occ.y);
@@ -181,20 +193,20 @@ export function initCellMoveCallback() : MoveCallback {
 		return false;
 	}
 	
-	function closestSide(pos, box) {
+	function closestSide(pos: Point, box: Area) : Direction {
 		const ld = pos.x - box.x;
 		const rd = box.x + box.width - pos.x;
 		const ud = pos.y - box.y;
 		const dd = box.y + box.height - pos.y;
 		
 		if ((ld <= rd) && (ld <= ud) && (ld <= dd)) {
-			return LEFT;
+			return 'left';
 		} else if ((rd <= ud) && (rd <= dd)) {
-			return RIGHT;
+			return 'right';
 		} else if ((ud <= dd)) {
-			return UP;
+			return 'up';
 		} else {
-			return DOWN;
+			return 'down';
 		}		
 	}
 	
@@ -215,13 +227,13 @@ export function initCellMoveCallback() : MoveCallback {
 					const box = getElementPageBBox(cellDropTargets[0]);
 					moveCache.side = closestSide(pos, box);
 					switch (moveCache.side) {
-					case UP:
+					case 'up':
 						return drawBar(box.x, box.y, box.x + box.width, box.y);
-					case DOWN:
+					case 'down':
 						return drawBar(box.x, box.y+box.height, box.x + box.width, box.y+box.height);
-					case LEFT:
+					case 'left':
 						return drawBar(box.x, box.y, box.x, box.y+box.height);
-					case RIGHT:
+					case 'right':
 						return drawBar(box.x + box.width, box.y, box.x + box.width, box.y+box.height);
 					}			
 				} else {
@@ -238,20 +250,26 @@ export function initCellMoveCallback() : MoveCallback {
 	
 }
 
+type Push = {
+	from: number,
+	horiz: boolean,
+	push: number
+}
 
-export function initCellDropCallback(command) : DropCallback {
+
+export function initCellDropCallback(command: Command) : DropCallback {
 	
-	function getPush(area, to, xOrdinals, yOrdinals) {
-		if ((moveCache.side == UP) || (moveCache.side==DOWN)) {
+	function getPush(area: GridArea, to, xOrdinals: Ordinals, yOrdinals: Ordinals) : Push {
+		if ((moveCache.side == 'up') || (moveCache.side=='down')) {
 			const d = area.y[1]- area.y[0];
-			const place = (moveCache.side == DOWN) ? to.y+1 : to.y;
+			const place = (moveCache.side == 'down') ? to.y+1 : to.y;
 			to.y = place - area.y[0];
 			const from = getOrdinal(place, yOrdinals);
 			const dist = getOrdinal(place + d, yOrdinals) - from;
 			return { from: from, horiz: false, push: dist};
 		} else {
 			const d = area.x[1]- area.x[0];
-			const place = (moveCache.side == RIGHT) ? to.x+1 : to.x;
+			const place = (moveCache.side == 'right') ? to.x+1 : to.x;
 			to.x = place - area.x[0];
 			const from = getOrdinal(place, xOrdinals);
 			const dist = getOrdinal(place + d, xOrdinals) - from;
@@ -259,7 +277,7 @@ export function initCellDropCallback(command) : DropCallback {
 		}
 	}
 	
-	return function(dragState, evt, dropTargets) {
+	return function(dragState, _evt, dropTargets) {
 		const dragTargets = dragState.map(s => s.dragTarget);
 		const dragTargetIds = dragTargets.map(s => s.getAttribute("id"));
 		const cellDropTargets = dropTargets.filter(dt => isCell(dt));
@@ -281,20 +299,21 @@ export function initCellDropCallback(command) : DropCallback {
 			const dropInfo = cellDrop ? parseInfo(cellDropTargets[0]) : {};
 			const dropX = cellDrop ? dropInfo['grid-x'] : [ 0, 0 ];
 			const dropY = cellDrop ? dropInfo['grid-y'] : [ 0, 0 ];
-			var to = {x: dropX[0],y: dropY[0] };
+			const to = {x: dropX[0], y: dropY[0] };
 			
 			if ((moveCache.side) && (container == moveCache.container)) {
-				var { from, horiz, push } = getPush(moveCache.area, to, xOrdinals, yOrdinals);
+				const { from, horiz, push } = getPush(moveCache.area, to, xOrdinals, yOrdinals);
 				// console.log("Push: "+from+" "+horiz+" "+push);
 				
-				command.push({
-					type: 'ADLMoveCells',
-					fragmentId: containerId,
-					from: from,
-					horiz: horiz,
-					push: push,
-					excludedIds: dragTargetIds
-				})
+				// TODO: fix this up
+//				command.push({
+//					type: 'ADLMoveCells',
+//					fragmentId: containerId,
+//					from: from,
+//					horiz: horiz,
+//					push: push,
+//					excludedIds: dragTargetIds
+//				})
 			}
 			
 			dragState.forEach(ds => {

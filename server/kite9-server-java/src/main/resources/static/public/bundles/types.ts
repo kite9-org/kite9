@@ -35,8 +35,8 @@ export type Finder = (u: string) => Element
  * Used everywhere, e.g. css values.  Weird there's no proper enum 
  * support for this..
  */
-export const directions =  ["up" , "down", "left" , "right" ] 
 export type Direction  = "up" | "down" | "left" | "right"
+export const directions : Direction[] =  ["up" , "down", "left" , "right" ] 
 
 export function rotateClockwise(d: Direction | undefined) : Direction {
 	switch(d) {

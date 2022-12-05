@@ -126,8 +126,8 @@ Define a token to define the type of the object.  Then use **k9-palette** to mar
 When declaring palettes, you need to tell Kite9 which types each palette contains:
 
 ```xsl
- <xsl:template name="containers-diagram-palettes">
-     <adl:palette contains="connected" url="/public/templates/containers/palette.adl" />
+  <xsl:template name="containers-diagram-palettes">
+     <adl:palette url="/public/templates/containers/palette.adl" />
   </xsl:template>
 ```
 Later, we should add:

@@ -34,7 +34,7 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		} else if (element instanceof Element) {
 			const attrValue = element.getAttribute(attr);
 			if (attrValue) {
-				return attrValue.split(/\S+/g) || [];
+				return attrValue.split(" ") || [];
 			}
 		}
 
@@ -55,17 +55,17 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 	return function(elements: Element[], p: WcElement[], children: WcElement[]) {
 		const parents = regularLayoutOnly(p)
 		
-		const parentBoundsOnElement = parents ? getTypesIntersection(parents, 'k9-contains') : undefined;
-		const childBoundsOnElement = children ? getTypesIntersection(children, 'k9-containers') : undefined;
+		const parentBoundsOnElement = parents.length > 0 ? getTypesIntersection(parents, 'k9-contains') : [];
+		const childBoundsOnElement = children.length > 0 ? getTypesIntersection(children, 'k9-containers') : [];
 				
 		const out = elements.filter(e => {
 			let elementTypes = getTypes(e, 'k9-palette');
 			
-			if (parentBoundsOnElement) {
+			if (parentBoundsOnElement.length > 0) {
 				elementTypes = intersectionRule(parentBoundsOnElement, elementTypes);
 			}
 			
-			if (childBoundsOnElement) {
+			if (childBoundsOnElement.length > 0) {
 				elementTypes = intersectionRule(childBoundsOnElement, elementTypes);
 			}
 			

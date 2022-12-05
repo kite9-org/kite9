@@ -1,9 +1,9 @@
-import { hasLastSelected, onlyLastSelected, parseInfo, createUniqueId, getContainedChildren } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo, createUniqueId, getContainedChildIds } from '../../../bundles/api.js'
 import { nextOrdinal, getOrdinals  } from '../../../behaviours/grid/common-grid.js' 
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Command } from '../../../classes/command/command.js';
-import { Direction, Selector } from '../../../bundles/types.js';
-import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { Direction, directions, Selector } from '../../../bundles/types.js';
+import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
 export function initCellAppendContextMenuCallback(
@@ -19,7 +19,7 @@ export function initCellAppendContextMenuCallback(
 	function doAppend(container: Element, selectedElements: Element[], side: Direction) {
 		const { xOrdinals, yOrdinals } = getOrdinals(container);
 		
-		const ordinalChangeMap = { [key in number] : number};
+		const ordinalChangeMap : { [ index : number] : number } = {};
 		const ordinalItems = {};
 		const itemPositions = {}; 
 		let horiz = false;
@@ -50,11 +50,12 @@ export function initCellAppendContextMenuCallback(
 		})
 		
 		// 2. Perform move operations to make space with
-		const order = Object.keys(ordinalChangeMap).sort((a,b) => a-b);
+		const keys : number[] = Object.keys(ordinalChangeMap).map(s => parseInt(s))
+		const order = keys.sort((a,b) => a-b);
 		const ordinals = horiz ? xOrdinals : yOrdinals;
 		
 		order.forEach(o => {
-			const from = ordinalChangeMap[o];
+//			const from = ordinalChangeMap[o];
 			const containerId = container.getAttribute("id");
 
 			// first, move the other ordinals down.
@@ -67,13 +68,14 @@ export function initCellAppendContextMenuCallback(
 			});
 			
 			// apply the move command on the server
-			command.push({
-				type: 'ADLMoveCells',
-				fragmentId: containerId,
-				from: from,
-				horiz: horiz,
-				push: change
-			})
+			// TODO: replace this with JS
+//			command.push({
+//				type: 'ADLMoveCells',
+//				fragmentId: containerId,
+//				from: from,
+//				horiz: horiz,
+//				push: change
+//			})
 			
 			// now, introduce a line of cells in position
 			ordinalItems[o].forEach(item => {
@@ -85,7 +87,7 @@ export function initCellAppendContextMenuCallback(
 					type: 'InsertXML',   
 					fragmentId: containerId,
 					base64Element: command.getAdl(itemId),
-					containedIds: getContainedChildren(item),
+					containedIds: getContainedChildIds(item),
 					newId: newId,
 				})
 				
@@ -109,9 +111,8 @@ export function initCellAppendContextMenuCallback(
 		})
 	}
 	
-	function appendsCells(e, s, cm) {
+	function appendsCells(e: Element[], s: Direction, cm: ContextMenu) {
 		cm.destroy();
-		e = Array.from(e);
 		const parents = e.map(i => i.parentElement);
 		const containers = [...new Set(parents)];
 		containers.forEach(c => {
@@ -129,19 +130,18 @@ export function initCellAppendContextMenuCallback(
 		const e = hasLastSelected(selector());
 		
 		if (e.length > 0) {
-			const htmlElement = cm.get();
 			
-			function handleClick() {
+			const handleClick = () => {
 				// remove the other stuff from the context menu
-				cm.clear(event);
+				cm.clear();
 
-				Direction.forEach(s => {
+				directions.forEach(s => {
 					cm.addControl(event, "/public/behaviours/grid/append/" + s.toLowerCase() + ".svg", 
 							"Append (" + s + ")", () => appendsCells(selector(), s, cm));
 				});
 			}
 			
-			cm.addControl(event, "/public/behaviours/grid/append/append.svg", 'Append', () => handleClick());
+			cm.addControl(event, "/public/behaviours/grid/append/append.svg", 'Append', handleClick);
 		}
 	}
 	

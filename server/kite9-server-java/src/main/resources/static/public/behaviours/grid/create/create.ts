@@ -4,7 +4,7 @@ import { CellCreator } from "../layout/grid-layout";
 
 
 
-export function initCellCreator(command: Command, templateUri: string) : CellCreator {
+export function initCellCreator(command: Command, templateUri: string = undefined) : CellCreator {
 	
 	if (templateUri == undefined) {
 		templateUri = getDocumentParam('cell-template-uri');

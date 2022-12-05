@@ -88,7 +88,7 @@ export function initLabelPlacementPropertySetCallback(command: Command): SetCall
 
 	return function(_propertyOwner, _contextEvent, formEvent, _contextMenu, selectedElements) {
 
-		const placement = (formEvent.currentTarget as Element).getAttribute("title");
+		const placement = (formEvent.currentTarget as Element).getAttribute("title") as Direction;
 		selectedElements.forEach(e => {
 
 			const id = e.getAttribute("id");

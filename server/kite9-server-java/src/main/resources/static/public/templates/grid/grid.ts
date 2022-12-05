@@ -15,25 +15,25 @@ import { initCellCreator } from '../../behaviours/grid/create/create.js'
 import { command, metadata, dragger, contextMenu, layout, palette, containment } from '../../templates/editor/editor.js'
 
 export function initGrid() {
-	
-	
+
+
 	if (metadata.isEditor()) {
-		
-//		layout.formCallback(initGridLayoutPropertyFormCallback());
-//		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
-//
-//		dragger.dropWith(initContainmentDropCallback? (..., initCellDropCallback(command)));
-//		dragger.moveWith(initCellMoveCallback());
-//
-//		dragger.dragLocator(initCellDragLocator());
-//		dragger.dropLocatorFn(initCellDropLocatorFunction())
-//		contextMenu.add(initCellAppendContextMenuCallback(command));
-//		
-//		palette.add(initGridTemporaryReplacePaletteCallback(command));
-//		contextMenu.add(initSelectContextMenuCallback());
-  
-    containment.add(initGridContainmentCallback());
-	}	
+
+		layout.formCallback(initGridLayoutPropertyFormCallback());
+		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
+
+		//dragger.dropWith(initContainmentDropCallback(..., initCellDropCallback(command)));
+		dragger.moveWith(initCellMoveCallback());
+
+		dragger.dragLocator(initCellDragLocator());
+		dragger.dropLocatorFn(initCellDropLocatorFunction())
+		contextMenu.add(initCellAppendContextMenuCallback(command));
+
+		palette.addLoad(initGridTemporaryReplacePaletteCallback(command));
+		contextMenu.add(initSelectContextMenuCallback());
+
+		containment.add(initGridContainmentCallback());
+	}
 }
 
 once(() => initGrid());

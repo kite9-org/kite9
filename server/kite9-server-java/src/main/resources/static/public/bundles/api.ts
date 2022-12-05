@@ -73,7 +73,9 @@ type Info = {
 	'terminates'?: string,
 	'direction'?: Direction,
 	'temporary'?: boolean,
-	'contradicting'?: 'yes'
+	'contradicting'?: 'yes',
+	'grid-x'?: number, 
+	'grid-y'?: number
 }
 
 export function parseInfo(t : Element) : Info  {

@@ -12,7 +12,7 @@ export function initSelectContextMenuCallback(selector: Selector = undefined) : 
 		}
 	}
 	
-	function performSelect(cm: ContextMenu, event: Event, horiz: boolean, elements: Element[]) {
+	function performSelect(_cm: ContextMenu, _event: Event, horiz: boolean, elements: Element[]) {
 		
 		function intersects(r1 : number, r2: number) {
 			const startIn = (r1[0] >= r2[0]) && (r1[0] < r2[1]);
