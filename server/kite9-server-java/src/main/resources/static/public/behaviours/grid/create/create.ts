@@ -1,6 +1,6 @@
-import { getDocumentParam } from "../../../bundles/api";
-import { Command } from "../../../classes/command/command";
-import { CellCreator } from "../layout/grid-layout";
+import { getDocumentParam } from "../../../bundles/api.js";
+import { Command } from "../../../classes/command/command.js";
+import { CellCreator } from "../layout/grid-layout.js";
 
 
 

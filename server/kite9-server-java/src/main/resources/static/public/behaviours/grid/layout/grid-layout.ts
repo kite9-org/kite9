@@ -18,7 +18,8 @@ function getLayout(e: Element) {
 	if (e==null) {
 		return 'none';
 	} else {
-		let l = e.getAttribute("layout");
+		const info = parseInfo(e);
+		const layout = ''
 		l = l == null ? "none" : l;
 		return l;
 	}
@@ -137,8 +138,8 @@ export function initGridLayoutPropertySetCallback(
 					
 					command.push({
 						fragmentId: id,
-						type: 'ReplaceAttr',
-						name: 'layout',
+						type: 'ReplaceStyle',
+						name: '--kite9-layout',
 						to: layout,
 						from: e.getAttribute('layout')
 					});
