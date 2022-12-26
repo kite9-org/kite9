@@ -79,7 +79,7 @@ abstract class AbstractPainter : Painter {
             debug.append("rect-size: " + xy(rri.size) + "; ")
             debug.append("position: " + (r as Rectangular).getContainerPosition() + "; ")
 
-            if (c.getParent() is Container) {
+            if ((c.getParent() is Container) && (c is Connected)) {
                 val parent = c.getParent() as Container?
                 val prri = parent!!.getRenderingInformation()
                 val l = parent.getLayout()

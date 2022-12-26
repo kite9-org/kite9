@@ -1,0 +1,15 @@
+<diagram id="dia">
+    <context id="bigbox"
+               style="fill: green; fill-opacity: 0.8; --kite9-margin-left: 50px; --kite9-layout: grid; ">
+        <label id="l1">Box title</label>
+        <cell id="2-0" style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 0 0; ">
+            <glyph id="b2" label="b2">
+            </glyph>
+            <glyph id="b3" label="b3">
+            </glyph>
+        </cell>
+        <cell id="2-1" style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 1 1; "/>
+        <cell id="2-2" style="--kite9-occupies-x: 1 1; --kite9-occupies-y: 0 0; "/>
+        <cell id="2-3" style="--kite9-occupies-x: 1 1; --kite9-occupies-y: 1 1; "/>
+    </context>
+</diagram>

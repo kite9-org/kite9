@@ -105,8 +105,13 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 
 	@Test
 	@Ignore("Missing stylesheet")
-	public void test_46_13_WonkyTable() throws Exception {
+	public void test_46_15_WonkyTable() throws Exception {
 		generate("wonky_table.xml");
+	}
+
+	@Test
+	public void test_46_16_GridProblem() throws Exception {
+		generate("broken_grid.xml");
 	}
 	
 	protected DiagramKite9XMLElement createDiagram() {

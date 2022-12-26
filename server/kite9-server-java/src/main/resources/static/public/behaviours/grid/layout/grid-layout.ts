@@ -15,14 +15,8 @@ function getMinGridSize(e: Element) : [number, number] {
 }
 
 function getLayout(e: Element) {
-	if (e==null) {
-		return 'none';
-	} else {
-		const info = parseInfo(e);
-		const layout = ''
-		l = l == null ? "none" : l;
-		return l;
-	}
+	const info = parseInfo(e);
+	return info.layout;
 }
 
 export type CellCreator = (parentId: string, x: number, y: number, newId: string) => string
@@ -113,7 +107,7 @@ export function initGridLayoutPropertySetCallback(
 				if (layout == 'grid') {
 					// introduction of grid
 					
-					let firstCellId;
+					let firstCellId : string;
 					const newId = createUniqueId();
 					let num = 0;
 					for (let x = 0; x < cols; x++) {
@@ -141,7 +135,7 @@ export function initGridLayoutPropertySetCallback(
 						type: 'ReplaceStyle',
 						name: '--kite9-layout',
 						to: layout,
-						from: e.getAttribute('layout')
+						from: getLayout(e)
 					});
 				} else {
 					// normal layout change, doesn't concern us
