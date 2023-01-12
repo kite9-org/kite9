@@ -23,23 +23,17 @@ function getLayoutImage(layout: string) {
 	return "/public/behaviours/containers/layout/" + layout + ".svg";
 }
 
-function drawLayout(event: Event, cm: ContextMenu, layout : string, selected = undefined) {
+function drawLayout(event: Event, cm: ContextMenu, layout : string, cb: (e: Event) => void, set = undefined, selected = undefined) {
 	if (layout == undefined) {
 		layout = "none";
 	}
-
-	const out = cm.addControl(event, getLayoutImage(layout),
-		"Layout (" + layout + ")",
-		undefined);
-
-	const img = out.children[0] as HTMLImageElement;
-	img.style.borderRadius = "0px";
-
+	
+	const atts = {"style": "border-radius: 0px"}
 	if (selected == layout) {
-		img.setAttribute("class", "selected");
+		atts['class'] = "selected";
 	}
 
-	return img;
+	cm.addControl(event, getLayoutImage(layout), layout, cb, set, atts);
 }
 
 const LAYOUTS = ["none", "right", "down", "horizontal", "vertical", "left", "up"];
@@ -52,11 +46,9 @@ export function initContainerLayoutPropertyFormCallback() : FormCallback {
 		const layout = getLayout(ls);
 
 		LAYOUTS.forEach(s => {
-			const img2 = drawLayout(contextEvent, contextMenu, s, layout);
-			if (layout != s) {
-				img2.setAttribute("title", s);
-				img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));
-			}
+			drawLayout(contextEvent, contextMenu, s, (formEvent) => {
+				propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements)
+			}, "Layout", layout);
 		});
 	}
 }
@@ -65,7 +57,7 @@ export function initContainerLayoutPropertySetCallback(command: Command) : SetCa
 
 	return function(_propertyOwner: Property, _contextEvent: Event, formEvent: Event, _contextMenu: ContextMenu, selectedElements: Element[]) {
 
-		const layout = (formEvent.currentTarget as Element).getAttribute("title");
+		const layout = (formEvent.currentTarget as Element).getAttribute("aria-label");
 		selectedElements.forEach(e => {
 
 			const existing = getLayout(e);
@@ -103,9 +95,7 @@ export function initLayoutContextMenuCallback(layoutProperty: Property, selector
 		if (e.length > 0) {
 			const ls = onlyLastSelected(e);
 			const layout = getLayout(ls);
-			const img = drawLayout(event, contextMenu, layout);
-
-			img.addEventListener("click", formEvent => {
+			drawLayout(event, contextMenu, layout, formEvent => {
 				contextMenu.clear();
 				layoutProperty.populateForm(formEvent, contextMenu, e);
 			});

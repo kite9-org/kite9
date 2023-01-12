@@ -1,18 +1,19 @@
 package org.kite9.diagram.dom.css;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+
 import org.apache.batik.css.parser.ExtendedParser;
 import org.apache.batik.css.parser.Parser;
 import org.apache.batik.css.parser.Scanner;
 import org.apache.batik.util.CSSConstants;
 import org.apache.batik.util.ParsedURL;
 import org.w3c.css.sac.CSSException;
+import org.w3c.css.sac.CSSParseException;
 import org.w3c.css.sac.InputSource;
 import org.w3c.css.sac.LexicalUnit;
 import org.w3c.css.sac.SelectorList;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 
 /**
  * Makes use of the HoudiniScanner, for reading kite9 css directives.
@@ -26,7 +27,7 @@ public class Kite9CSSParser extends Parser {
 	
 	public Kite9CSSParser() {
 	}
-
+	
 	/**
 	 * This allows proper error reporting within style declarations.
 	 */
@@ -101,6 +102,21 @@ public class Kite9CSSParser extends Parser {
         scanner = new HoudiniScanner(source);
         return parsePriorityInternal();
     }
-
+    
+    /**
+     * Creates a parse exception.
+     */
+    protected CSSParseException createCSSParseException(String key,
+                                                        Object[] params) {
+    	int currentLine = scanner.getLine();
+    	int currentColumn = scanner.getColumn();
+    	String contents = ((HoudiniScanner) scanner).getReadContents();
+    	
+        return new ContextualCSSParseException(formatMessage(key, params),
+                                     documentURI,
+                                     contents,
+                                     currentLine,
+                                     currentColumn);
+    }
 }
 

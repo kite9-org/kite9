@@ -110,20 +110,25 @@ export class ContextMenu {
 			ctxMenu.parentElement.removeChild(ctxMenu);
 		}
 	}
-
-	/** 
-	 * Short-hand way of adding a single control to the context menu
-	 */
-	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void = () => { /* no op */ }, set = "Actions", imageAtts: object = {}) {
+	
+	fieldset(event: Event, set: string) : HTMLElement {
 		const htmlElement = this.get(event);
 		let fs = document.getElementById("#contextMenu-"+set);
 		if (!fs) {
 			fs = fieldset(set, [], {'id' : "#contextMenu-"+set});
 			htmlElement.appendChild(fs);			
 		}
+		
+		return fs;
+	}
+
+	/** 
+	 * Short-hand way of adding a single control to the context menu
+	 */
+	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void = () => { /* no op */ }, set = "Actions", imageAtts: object = {}) {
+		const fs = this.fieldset(event, set);
 		const out = icon('_cm-'+title, title, imageUrl, clickListener, imageAtts)
 		fs.appendChild(out);
-		
 		return out;
 	}
 	

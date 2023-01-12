@@ -1,5 +1,7 @@
 package org.kite9.diagram.dom.css;
 
+import java.io.IOException;
+
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.SVG12CSSEngine;
 import org.apache.batik.css.engine.StyleSheet;
@@ -10,8 +12,6 @@ import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
 import org.w3c.css.sac.InputSource;
 import org.w3c.dom.Document;
-
-import java.io.IOException;
 
 /**
  * Provides functionality for caching loaded stylesheets
@@ -33,16 +33,19 @@ public class CachingCSSEngine extends SVG12CSSEngine {
 	@Override
 	protected void parseStyleSheet(StyleSheet ss, InputSource is, ParsedURL uri) throws IOException {
 		String cssUri = is.getURI();
-		StyleSheet existing = cache.getStylesheet(cssUri);
+		StyleSheet existing = cssUri != null ? cache.getStylesheet(cssUri) : null;
 		if (existing != null) {
 			for (int i = 0; i < existing.getSize(); i++) {
 				ss.append(existing.getRule(i));
 			}
 		} else {
+			if (cssUri == null) {
+				is.setURI(uri.toString());
+			}
+			
 			super.parseStyleSheet(ss, is, uri);
 			cache.set(cssUri, Cache.STYLESHEET, ss);
 		}
 	}
-	
 	
 }

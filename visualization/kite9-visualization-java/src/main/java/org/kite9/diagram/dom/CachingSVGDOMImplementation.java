@@ -12,6 +12,7 @@ import org.apache.batik.dom.AbstractStylableDocument;
 import org.apache.batik.util.ParsedURL;
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.dom.css.CachingCSSEngine;
+import org.kite9.diagram.dom.css.ContextualCSSParseException;
 import org.kite9.diagram.dom.css.Kite9CSSParser;
 import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
@@ -77,23 +78,30 @@ public class CachingSVGDOMImplementation extends SVG12DOMImplementation  impleme
 			
 			@Override
 			public void warning(CSSParseException arg0) throws CSSException {
-				sendLogMessage("Warning:", arg0);
+				sendErrorMessage("Warning:", arg0);
 			}
 
-			protected void sendLogMessage(String prefix, CSSParseException arg0) {
-				String out = prefix+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI();
-				log.send(out);
-				System.err.println(out);
+			protected void sendErrorMessage(String prefix, CSSParseException arg0) {
+				String out = prefix+getLocation(arg0)+" "+arg0.getLocalizedMessage()+" "+arg0.getURI()+": \n"+getContextIfAvailable(arg0);
+				log.error(out);
 			}
 			
+			private String getContextIfAvailable(CSSParseException arg0) {
+				if (arg0 instanceof ContextualCSSParseException) {
+					return ((ContextualCSSParseException) arg0).getContext();
+				} else {
+					return "--no context--";
+				}
+			}
+
 			@Override
 			public void fatalError(CSSParseException arg0) throws CSSException {
-				sendLogMessage("Fatal:", arg0);
+				sendErrorMessage("Fatal:", arg0);
 			}
 			
 			@Override
 			public void error(CSSParseException arg0) throws CSSException {
-				sendLogMessage("Error: ", arg0);
+				sendErrorMessage("Error: ", arg0);
 			}
 		});
 

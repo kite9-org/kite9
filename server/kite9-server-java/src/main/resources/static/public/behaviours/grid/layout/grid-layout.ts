@@ -156,28 +156,25 @@ export function initGridLayoutPropertyFormCallback() : FormCallback {
 		const ls = onlyLastSelected(selectedElements);
 		const minGridSize = getMinGridSize(ls);
 		
-		const htmlElement = contextMenu.get(contextEvent);
-		const hr = document.createElement("hr");
-		htmlElement.appendChild(hr);
+		const fieldset = contextMenu.fieldset(contextEvent, "Grid");
 	
 		rows = Math.max(2, minGridSize[1]);
 		cols = Math.max(cols, minGridSize[0]);
 		
 		
 		
-		htmlElement.appendChild(
+		fieldset.appendChild(
 			change(
 				numeric('Rows', rows, { 'min' : ''+minGridSize[1]}), 
 				() => rows = number((contextEvent.target as HTMLFormElement).value)));
 				
-		htmlElement.appendChild(
+		fieldset.appendChild(
 			change(
 				numeric('Cols', cols, { 'min' : ''+minGridSize[0]}), 
 				() => cols = number((contextEvent.target as HTMLFormElement).value)));
 		
-		const img2 = contextMenu.addControl(contextEvent, "/public/behaviours/containers/layout/grid.svg","Grid", undefined);
-		(img2.children[0] as HTMLElement).style.borderRadius = "0px";
-		img2.setAttribute("title", "grid");
-		img2.addEventListener("click", (formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements));
+		contextMenu.addControl(contextEvent, "/public/behaviours/containers/layout/grid.svg","Grid", 
+			(formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements),
+			"Grid", {"title": "grid", "style" : "border-radius: 0px; "});
 	}
 }

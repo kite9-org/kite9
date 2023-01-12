@@ -28,9 +28,12 @@ import java.io.InputStream;
 import java.io.Reader;
 
 /**
- * Extends scanner so it can handle houdini properties.
+ * Extends scanner so it can handle houdini properties and keep track 
+ * of the string it has scanned for debugging purposes.
  */
 public class HoudiniScanner extends Scanner {
+
+    private StringBuilder processed;
 
     public HoudiniScanner(Reader r) throws ParseException {
         super(r);
@@ -43,8 +46,25 @@ public class HoudiniScanner extends Scanner {
     public HoudiniScanner(String source) {
         super(source);
     }
+    
 
-    /**
+    @Override
+	protected int nextChar() throws IOException {
+		int out = super.nextChar();
+		if (processed == null) {
+			processed = new StringBuilder();
+		}
+		if (out != -1) {
+			this.processed.append((char) out);
+		}
+		return out;
+	}
+
+    public String getReadContents() {
+    	return processed == null ? "" : processed.toString();
+    }
+   
+	/**
      * Returns the next token.
      */
     @Override
