@@ -30,7 +30,7 @@ public class EnumValue extends AbstractValue {
 
 	@Override
 	public String toString() {
-		return (this.theValue != null) ? this.theValue.toString() : "<null>";
+		return (this.theValue != null) ? this.theValue.toString() : "none";
 	}
 
 	@Override
