@@ -1,6 +1,7 @@
 import { getMainSvg, currentTarget } from '../../bundles/screen.js'
 import { getKite9Target } from '../../bundles/api.js'
 import { Selector } from '../../bundles/types.js';
+import { addMonikaEventListener } from '../../bundles/monika.js';
 
 
 export function clearLastSelected(within: Element) : void {
@@ -62,7 +63,6 @@ export function unselect(element : Element) : void {
 // Adds .lastSelected class to a single element, which is the last one clicked on
 
 export function initSelectable(
-	selector : Selector = undefined, 
 	within :Element = undefined, 
 	isSingleSelect = false) {
 	
@@ -95,13 +95,7 @@ export function initSelectable(
 		event['handledSelect'] = true;
 	}
 	
-	if (selector == undefined) {
-		selector = function() {
-			return Array.from(within.querySelectorAll("[id]"));
-		}
-	}
-	
-	within.addEventListener("mousedown", mouseup);
+	addMonikaEventListener(within, "mousedown", "selectable", mouseup);
 
 }
 

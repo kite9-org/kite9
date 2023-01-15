@@ -1,0 +1,26 @@
+<diagram xslt:template="/public/templates/integration-test/basic-integration.xsl"
+         xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
+
+   <box id="b1" >
+   	<textarea id="t1" style="fill: red" >y</textarea>
+   	<port id="p1" style="--kite9-direction: up; " />
+   </box>
+   
+   <container id="bigbox" style="fill: green; fill-opacity: 0.8; --kite9-margin-left: 50px; --kite9-layout: horizontal; ">
+     <box id="b2" ><textarea id="t2">,</textarea></box>
+     <box id="b3" ><textarea id="t3">b3 line</textarea></box>
+     <label id="l1">Box title</label>
+   </container>
+   
+   <link id="link1" r="r">
+    <from id="link1-from" reference="b2" shape="arrow"></from>
+    <to id="link1-to" shape="arrow" reference="p1"></to>
+   </link>
+   
+   <link style="--kite9-direction: right; " id="link2">
+    <from id="link2-from" reference="b1"></from>
+    <to id="link2-to" reference="b2"></to>
+   </link> 
+
+</diagram>

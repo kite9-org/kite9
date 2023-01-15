@@ -17,10 +17,10 @@ export function initLinkDropLocator() : DropLocatorCallback {
 			return [];
 		}
 		
-		var dropTarget = getKite9Target(target);
+		const dropTarget = getKite9Target(target);
 		
 		if (isLink(dropTarget)) {
-			var out = dropTarget.getAttribute("k9-ui");
+			const out = dropTarget.getAttribute("k9-ui");
 			if (!out.includes("drop")) {
 				return [];
 			} else if (!isTerminator(dragTargets[0])) {

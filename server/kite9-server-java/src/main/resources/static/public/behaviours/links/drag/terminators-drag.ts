@@ -2,7 +2,7 @@
  * This handles moving a block from one place to another on the diagram, via drag and drop.
  * You can't drop into an element unless it has 
  */
-import { parseInfo, isTerminator, isPort, isLink, getParentElement, getAffordances, connectedElementOtherEnd, onlyUnique } from "../../../bundles/api.js";
+import { parseInfo, isTerminator, isPort, isLink, isConnected, getParentElement, getAffordances, connectedElementOtherEnd, onlyUnique, connectedElement } from "../../../bundles/api.js";
 import { getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
 import { ElementFilter } from "../../../bundles/types.js";
 import { Command } from "../../../classes/command/command.js";
@@ -29,6 +29,13 @@ export function initTerminatorDropCallback(
 			.map(s => s.dragTarget)
 
 		const validDropTargets = dropTargets
+			.map(t => {
+				if (isTerminator(t)) {
+					return connectedElement(t, getMainSvg());
+				} else {
+					return t;
+				}
+			})
 			.filter(t => containment.canContainAll(dragTargets, t))
 			.filter(onlyUnique);
 			
@@ -48,7 +55,7 @@ export function initTerminatorDropCallback(
 	}
 }
 
-export function initTerminatorDropLocatorFunction() : DropLocatorFunction {
+export function initTerminatorDropLocatorFunction(containment: Containment) : DropLocatorFunction {
 	
 	return function (dragTarget, dropTarget) {
 		
@@ -61,6 +68,11 @@ export function initTerminatorDropLocatorFunction() : DropLocatorFunction {
 		}
 				
 		if (isTerminator(dragTarget)) {
+			if (isTerminator(dropTarget)) {
+				// you can't drop on a terminator, but you can drop on whatever it terminates on
+				dropTarget = connectedElement(dropTarget, getMainSvg());
+			}
+		
 			if (isLink(dropTarget)) {
 				return false;
 			}
@@ -88,8 +100,13 @@ export function initTerminatorDropLocatorFunction() : DropLocatorFunction {
 					return false;
 				}
 			}
+			
+			if (isConnected(dropTarget)) {
+				if (!containment.canContainAll(dragTarget, dropTarget)) {
+					return false;
+				}
+			}
 		}
-
 
 		return true;
 		

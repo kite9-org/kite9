@@ -64,6 +64,9 @@
               <script type="module">
                   <xsl:copy-of select="$script"/>
               </script>
+             
+			  <script type="module">import '/public/tests/containment.js'; </script>
+			
           </defs>
       </svg>
   </xsl:template>

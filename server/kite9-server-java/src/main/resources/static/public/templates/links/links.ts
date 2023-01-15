@@ -46,7 +46,7 @@ function initLinks() {
 		linker.add(initLinkLinkerCallback(command, alignmentCollector));
 		linker.add(initAutoConnectLinkerCallback(command, alignmentIdentifier));
 
-		dragger.dropLocatorFn(initTerminatorDropLocatorFunction());
+		dragger.dropLocatorFn(initTerminatorDropLocatorFunction(containment));
 		dragger.dropLocator(initLinkDropLocator());
 		
 		const portDropCallback = initContainmentDropCallback(

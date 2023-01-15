@@ -98,12 +98,12 @@ function initEditor() {
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'style'], keptTags: ['from', 'to' ]}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
 		
-		initSelectable(() => Array.from(palette.get().querySelectorAll("[k9-elem][id]")), palette.get(), true);
+		initSelectable(palette.get(), true);
 
 	}
 	
 	instrumentation.add(initToggleInstrumentationCallback());
-	initSelectable();  // for main svg agrea
+	initSelectable();  // for main svg area
 
 }
 

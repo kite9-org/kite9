@@ -71,28 +71,6 @@ export function initWebsocketUpdater(
 
 export function initHttpUpdater(uri: string, contentType: string, contentTypeResolver: UpdateableResolver): Updater {
 
-	/** Really basic error handler */
-	function handleErrors(response: Response) : Response {
-
-		function collectErrorCode(response: Response) {
-			response.text().then(j => {
-				try {
-					// if it's json, return the error from that
-					JSON.parse(j);
-					throw new Error(j);
-				} catch (e) {
-					throw new Error(j);
-				}
-			});
-		}
-
-		if (!response.ok) {
-			collectErrorCode(response);
-		} else {
-			return response;
-		}
-	}
-
 	return async (update) => {
 		update.uri = new URL(uri);
 
@@ -104,12 +82,28 @@ export function initHttpUpdater(uri: string, contentType: string, contentTypeRes
 				"Accept": contentType
 			}
 		})
-			.then(handleErrors)
-			.then(response => response.text())
+			.then(response => {
+				if (!response.ok) {
+					return Promise.reject(response)
+				} else {
+					return response.text()
+				}
+			})
 			.then(text => contentTypeResolver(text))
 			.catch(error => {
-				alert(error)
-			})
+				if (typeof error.json === "function") {
+					error.json().then(jsonError => {
+						console.log("Json error from API");
+						console.log(jsonError);
+					}).catch(genericError => {
+						console.log("Generic error from API");
+						console.log(error.statusText);
+					});
+				} else {
+					console.log("Fetch error");
+					console.log(error);
+				}
+			});
 	}
 
 }

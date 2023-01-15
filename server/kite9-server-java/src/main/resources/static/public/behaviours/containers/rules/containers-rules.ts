@@ -69,6 +69,8 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 				elementTypes = intersectionRule(childBoundsOnElement, elementTypes);
 			}
 			
+			console.log(`Parent Bounds: ${parentBoundsOnElement}, Child Bounds: ${childBoundsOnElement}, Element Types: ${elementTypes}`)
+			
 			return elementTypes.length > 0;
 		});
 		
