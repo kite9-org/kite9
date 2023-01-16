@@ -47,13 +47,15 @@ export const containmentTest = describe("Containment Tests", async () => {
 		label
 	}
 	
-	const containerRules = {
+	const containerRules : Rules<Rules<boolean>> = {
 		box: createRule(false, false, false, false, true, false, true, false),
 		bigBox: createRule(true, true, false, false, true, true, true, true),
 		diagram: createRule(true, true, false, false, false, true, false, true),
 		link: createRule(false, false, false, false, false, false, false, false),
 		terminator: createRule(false, false, false, false, false, false, false, true),
-		text: createRule(false, false, false, false, false, false, false, false)
+		text: createRule(false, false, false, false, false, false, false, false),
+		port: createRule(false, false, false, false, true, false, false, false),
+		label: createRule(false, false, false, false, false, false, false, false)
 	}
 	
 	function singleTest(parent: string, child: string) : void {
