@@ -14,6 +14,7 @@
     <xsl:param name="k9-highlight">bar stroke</xsl:param>
     <xsl:param name="k9-texture">background</xsl:param>
     <xsl:param name="k9-ui">delete link cascade drop stroke direction</xsl:param>
+    <xsl:param name="k9-contains">none</xsl:param>
     
     <xsl:param name="shape">
    		<g k9-elem="link-grab">
@@ -44,6 +45,7 @@
       <xsl:with-param name="k9-format" select="$k9-format"  />
       <xsl:with-param name="k9-highlight" select="$k9-highlight"  />
       <xsl:with-param name="k9-texture" select="$k9-texture"  />
+      <xsl:with-param name="k9-contains" select="$k9-contains"  />
       <xsl:with-param name="k9-ui" select="$k9-ui" />
       <xsl:with-param name="id" select="$id"  />
       <xsl:with-param name="style" select="$style" />

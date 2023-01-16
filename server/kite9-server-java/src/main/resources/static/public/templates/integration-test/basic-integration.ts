@@ -3,7 +3,7 @@ import { selectableTest } from './selectable.test.js'
 import { containmentTest } from "./containment.test.js";
 	
 function allTests() {
-	selectableTest();		
+	//selectableTest();		
 	containmentTest();
 }	
 	

@@ -1,9 +1,9 @@
-import { parseInfo, getParentElement, isConnected, isDiagram, isGrid, getContainerChildren, getNextSiblingId, } from '../../../bundles/api.js'
-import { getMainSvg } from '../../../bundles/screen.js'
+import { isGrid } from '../../../bundles/api.js'
+import { ContainmentCallback } from '../../../classes/containment/containment.js';
 
-export function initGridContainmentCallback() {
+export function initGridContainmentCallback() : ContainmentCallback {
 	
-	function paletteIsCell(e) {
+	function paletteIsCell(e: Element) : boolean {
 		if (e == undefined) {
 			return false;
 		}
@@ -23,14 +23,9 @@ export function initGridContainmentCallback() {
 	/**
 	 * Overrides the elements if we're in grid mode.
 	 */
-	return function(elements, parents, children) {
-		parents = Array.isArray(parents) ? parents: Array.from(parents);
-		
-		const grids = parents.filter(p => isGrid(p)); 
-
-		if (grids.length > 0) {
-			elements = Array.isArray(elements) ? elements: Array.from(elements);
-			const cells = elements.filter(e => e == "*" || paletteIsCell(e));
+	return function(elements, parent) {
+		if (isGrid(parent)) {
+			const cells = elements.filter(e => paletteIsCell(e));
 			return cells;
 		}
 

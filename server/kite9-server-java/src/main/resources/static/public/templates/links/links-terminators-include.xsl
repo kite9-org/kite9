@@ -9,6 +9,7 @@
     <xsl:attribute name="k9-ui">drag label direction</xsl:attribute>
     <xsl:attribute name="k9-elem"><xsl:value-of select="local-name()"/></xsl:attribute>
     <xsl:attribute name="k9-palette">terminator</xsl:attribute>
+    <xsl:attribute name="k9-contains">label</xsl:attribute>
   </xsl:attribute-set>
 
   <xsl:template name="terminator">

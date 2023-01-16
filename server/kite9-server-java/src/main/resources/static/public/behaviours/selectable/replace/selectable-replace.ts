@@ -56,7 +56,9 @@ export function initReplaceContextMenuCallback(
 				(isConnected(oldElement) && isConnected(newElement))) {
 				const oldParent = getParentElement(oldElement);
 				const children = getContainerChildren(oldElement);
-				return containment.allowed([newElement], [oldParent], children).length > 0;
+				const parentCanContainElement = containment.canContainAll([newElement], oldParent);
+				const elementCanContainChildren = containment.canContainAll(children, newElement);
+				return parentCanContainElement && elementCanContainChildren;
 			}
 		}
 		

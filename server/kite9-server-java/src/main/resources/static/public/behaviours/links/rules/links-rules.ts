@@ -1,23 +1,28 @@
-import { isLink, isLabel, isTerminator } from '../../../bundles/api.js';
-import { ContainmentCallback, WILDCARD } from '../../../classes/containment/containment.js';
+import { isLink, isLabel, isTerminator, getAffordances } from '../../../bundles/api.js';
+import { ContainmentCallback } from '../../../classes/containment/containment.js';
 
-
+/**
+ * This says that a terminator can be dropped on any parent that has the 
+ * connect behaviour set.
+ */
 export function initTerminatorContainmentCallback() : ContainmentCallback {
 	
-	return function(elements, parents) {
-		const okParents = parents.filter(e => (e == WILDCARD) || isLink(e));
-		
-		if (okParents.length == 0) {
+	return function(elements, parent) {
+		if (!getAffordances(parent).includes('connect')) {
 			return [];
 		}
 		
-		return elements.filter(e => e instanceof Element ? isTerminator(e) : false);
+		const out = elements.filter(e => isTerminator(e));
+		return out;
 	}
 }
 
-export function initLabelContainmentCallback() : ContainmentCallback {
+/**
+ * This says a link can contain a label?
+ */
+/*export function initLabelContainmentCallback() : ContainmentCallback {
 	
-	return function(elements, parents) {
+	return function(elements, parent) {
 		const okParents = parents.filter(e => e instanceof Element ? isLink(e) : e);
 		
 		if (okParents.length == 0) {
@@ -27,4 +32,4 @@ export function initLabelContainmentCallback() : ContainmentCallback {
 		return elements.filter(e => isLabel(e));
 	}
 	
-}
+}*/

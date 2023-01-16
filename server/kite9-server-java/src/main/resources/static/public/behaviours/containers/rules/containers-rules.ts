@@ -1,5 +1,5 @@
 import { isGrid } from '../../../bundles/api.js'
-import { ContainmentCallback, WcElement } from '../../../classes/containment/containment.js';
+import { ContainmentCallback } from '../../../classes/containment/containment.js';
 
 /**
  * Three attributes:
@@ -10,11 +10,6 @@ import { ContainmentCallback, WcElement } from '../../../classes/containment/con
  * 
  */
 export function initAttributeContainmentCallback() : ContainmentCallback {
-	
-	function regularLayoutOnly(parents: WcElement[]) : WcElement[] {
-		return Array.from(parents)
-			.filter(p => p instanceof Element ? !isGrid(p) : p)
-	}
 	
 	function intersectionRule(set1: string[], set2: string[]) {
 		if (set1.includes("*") && (set2.includes("*"))) {
@@ -28,14 +23,10 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		}
 	}
 	
-	function getTypes(element: WcElement, attr: string)  : string[] {
-		if (element == '*') {
-			return [ '*' ]; 	// wildcard
-		} else if (element instanceof Element) {
-			const attrValue = element.getAttribute(attr);
-			if (attrValue) {
-				return attrValue.split(" ") || [];
-			}
+	function getTypes(element: Element, attr: string)  : string[] {
+		const attrValue = element.getAttribute(attr);
+		if (attrValue) {
+			return attrValue.split(" ") || [];
 		}
 
 		if (attr == 'k9-containers') {
@@ -45,18 +36,13 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 		}
 	}
 	
-	function getTypesIntersection(elements: WcElement[], attr : string) : string[] {
-		const out = elements
-			.map(e => getTypes(e, attr))
-			.reduce((a, b) => intersectionRule(a, b), ['*']);
-		return out;
-	}
-	
-	return function(elements: Element[], p: WcElement[], children: WcElement[]) {
-		const parents = regularLayoutOnly(p)
-		
-		const parentBoundsOnElement = parents.length > 0 ? getTypesIntersection(parents, 'k9-contains') : [];
-		const childBoundsOnElement = children.length > 0 ? getTypesIntersection(children, 'k9-containers') : [];
+	return function(elements: Element[], parent: Element) {
+		if (isGrid(parent)) {
+			// grid handled elsewhere
+			return []
+		}
+				
+		const parentBoundsOnElement = getTypes(parent, 'k9-contains');
 				
 		const out = elements.filter(e => {
 			let elementTypes = getTypes(e, 'k9-palette');
@@ -64,12 +50,6 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 			if (parentBoundsOnElement.length > 0) {
 				elementTypes = intersectionRule(parentBoundsOnElement, elementTypes);
 			}
-			
-			if (childBoundsOnElement.length > 0) {
-				elementTypes = intersectionRule(childBoundsOnElement, elementTypes);
-			}
-			
-			console.log(`Parent Bounds: ${parentBoundsOnElement}, Child Bounds: ${childBoundsOnElement}, Element Types: ${elementTypes}`)
 			
 			return elementTypes.length > 0;
 		});

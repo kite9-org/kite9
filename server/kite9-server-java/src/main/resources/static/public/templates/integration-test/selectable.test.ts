@@ -2,7 +2,7 @@ import { describe, it, expect, getMonikaEventListener } from '../../bundles/moni
 import { getElementHTMLBBox, getMainSvg } from '../../bundles/screen.js';
 import { isLastSelected, isSelected } from '../../behaviours/selectable/selectable.js';
 
-export const selectableTest = describe("hello", async () => {
+export const selectableTest = describe("Selectable Tests", async () => {
 
 	it("select an element", async () => {
 		const t1 = document.getElementById("t1");

@@ -8,10 +8,11 @@ type Rules<X> = {
 	link: X,
 	terminator: X,
 	text: X,
-	port: X
+	port: X,
+	label: X
 }
 
-export const containmentTest = describe("hello", async () => {
+export const containmentTest = describe("Containment Tests", async () => {
 
 	const box = document.getElementById("b1");
 	const bigBox = document.getElementById("bigbox");
@@ -20,8 +21,9 @@ export const containmentTest = describe("hello", async () => {
 	const terminator = document.getElementById("link2-from");
 	const text = document.getElementById("t1");
 	const port = document.getElementById("p1");
+	const label = document.getElementById("l1");
 	
-	function createRule(box: boolean, bigBox: boolean, diagram: boolean, link: boolean, terminator: boolean, text: boolean, port: boolean) : Rules<boolean> {
+	function createRule(box: boolean, bigBox: boolean, diagram: boolean, link: boolean, terminator: boolean, text: boolean, port: boolean, label: boolean) : Rules<boolean> {
 		return {
 			box,
 			bigBox,
@@ -29,7 +31,8 @@ export const containmentTest = describe("hello", async () => {
 			link,
 			terminator,
 			text,
-			port
+			port, 
+			label
 		}
 	}
 	
@@ -40,34 +43,37 @@ export const containmentTest = describe("hello", async () => {
 		link,
 		terminator,
 		text,
-		port
+		port,
+		label
 	}
 	
 	const containerRules = {
-		box: createRule(false, false, false, false, false, false, true),
-		bigBox: createRule(true, true, false, false, true, true, true),
-		diagram: createRule(true, true, false, true, true, true, false),
-		link: createRule(true, true, false, false, false, false, false),
-		terminator: createRule(false, false, false, false, false, false, false),
-		text: createRule(false, false, false, false, false, false, false)
+		box: createRule(false, false, false, false, true, false, true, false),
+		bigBox: createRule(true, true, false, false, true, true, true, true),
+		diagram: createRule(true, true, false, false, false, true, false, true),
+		link: createRule(false, false, false, false, false, false, false, false),
+		terminator: createRule(false, false, false, false, false, false, false, true),
+		text: createRule(false, false, false, false, false, false, false, false)
+	}
+	
+	function singleTest(parent: string, child: string) : void {
+		const parentElem = containers[parent];
+		const childElem = containers[child];
+		const allowed = containerRules[parent][child];
+		if (allowed) {
+			it (`${parent} can contain ${child}`, async() => {
+				expect(containment.allowed([childElem], parentElem)).toEqual([childElem]);
+			});
+		} else {
+			it (`${parent} can't contain ${child}`, async() => {
+				expect(containment.allowed([childElem], parentElem)).toEqual([]);
+			});
+		}
 	}
 	
 	Object.keys(containers).forEach(k => {
-		const elem1 = containers[k];
-		const rules = containerRules[k];
-		
-		Object.keys(rules).forEach(l => {
-			const allowed = rules[l];
-			const elem2 = containers[l];
-			if (allowed) {
-				it (`${k} can contain ${l}`, async() => {
-					expect(containment.allowed([elem2], [elem1])).toEqual([elem2]);
-				});
-			} else {
-				it (`${k} can't contain ${l}`, async() => {
-					expect(containment.allowed([elem2], [elem1])).toEqual([]);
-				});
-			}
+		Object.keys(containers).forEach(l => {
+			singleTest(k, l);
 		});
 	})
 

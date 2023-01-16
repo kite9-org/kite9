@@ -1,8 +1,4 @@
-export const WILDCARD = "*";
-
-export type WcElement = '*' | Element | null
-
-export type ContainmentCallback = (elements: Element[], parents?: WcElement[], children?: WcElement[]) => Element[]
+export type ContainmentCallback = (elements: Element[], parent: Element) => Element[]
 
 /** 
  * Handles drag and drop rules, as well as surround/contain and insert.  Replace is handled elsewhere.
@@ -18,34 +14,32 @@ export class Containment {
 	
 	/**
 	 * This is the main function.  elements is the set of elements that will be reduced and returned.  
-	 * Generally, these are SVG (kite9) elements, but you can also supply "*" ( a string-star), which acts as a wildcard.
-	 * Parents and children are optional, and will "limit" the elements returned in the reduction.
 	 */
-	allowed(elements : Element[], parents? :WcElement[], children: WcElement[] = []) : Element[] {
+	allowed(elements : Element[], parent : Element) : Element[] {
 		// run each callback.  return the union of allowed elements from all callbacks.
 		
 		return this.callbacks
-			.map(cb => cb(elements, parents, children))
+			.map(cb => cb(elements, parent))
 			.reduce((a, b) => [...new Set([...a, ...b])]);
 	}
 
 	/**
 	 * Helper function
 	 */
-	canContainAny(element: Element[] | Element, parent: Element[] | Element) : boolean {
+	canContainAny(element: Element[] | Element, parent: Element) : boolean {
 		return this.allowed(
 			Array.isArray(element) ? element : [element], 
-			Array.isArray(parent) ? parent : [parent]).length == 1;
+			parent).length == 1;
 	}
 	
 	/**
 	 * Helper function
 	 */
-	canContainAll(element: Element[] | Element, parent: Element[] | Element) : boolean {
+	canContainAll(element: Element[] | Element, parent: Element) : boolean {
 		const needed = Array.isArray(element) ? element.length : 1;
 		return this.allowed(
 			Array.isArray(element) ? element : [element], 
-			Array.isArray(parent) ? parent : [parent]
+			parent
 			).length == needed;
 	}
 
