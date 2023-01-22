@@ -5,7 +5,8 @@ import { box, box2, container, diagram, link,terminator, text, port, label, mous
 import { mouseEvent } from './fixture.js';
 import { DRAGABLE_END_EVENT, DRAGABLE_MOVE_EVENT, DRAGABLE_START_EVENT } from '../../behaviours/dragable/dragable.js';
 import { Area, sharedArea } from '../../bundles/types.js';
-import { command } from '../editor/editor.js';
+import { command, dragger } from '../editor/editor.js';
+import { Command, CommandCallback } from '../../classes/command/command.js';
 
 type Rule = {
  drag: string, 
@@ -29,6 +30,13 @@ function denied(drag: string, over: string) : Rule {
 	}
 }
 
+let _commandCallbacks : CommandCallback[];
+
+function replaceCommandStuff(command: Command) {
+	_commandCallbacks = [ ...command.callbacks ];
+	command.callbacks.length = 0;
+}
+
 export const dragableTest = describe("Dragable Tests", async () => {
 
 	const elements = {
@@ -44,12 +52,14 @@ export const dragableTest = describe("Dragable Tests", async () => {
 //		allowed('terminator', 'container')		
 	];
 	
-	let delay = 1000;
+	let delay = 10;
 	
 	function doDelay(f: () => void) {
 		setTimeout(f, delay);
-		delay +=1000;
+		delay +=10;
 	}
+	
+	replaceCommandStuff(command);
 	
 	rules.forEach(r => {
 		const dragging = elements[r.drag];
@@ -73,7 +83,8 @@ export const dragableTest = describe("Dragable Tests", async () => {
 		doDelay(() => move(mouseDrag1));
 		doDelay(() => move(mouseDrag2));
 		doDelay(() => end(mouseUp));
-		
+		doDelay(() => dragger.endMove(true));
+
 	});
 	
 });

@@ -1,12 +1,11 @@
 import { createSVGResolver } from './svgResolver.js'
 import { createAdlToSVGResolver } from './adlResolver.js'
 import { canRenderClientSide } from '../../bundles/screen.js'
-import { Command, Update } from '../../classes/command/command.js';
+import { Command, CommandCallback, Update } from '../../classes/command/command.js';
 import { Metadata } from '../../classes/metadata/metadata.js';
 import { Transition } from '../../classes/transition/transition.js';
 
 export type UpdateableResolver = (text: string) => void;
-export type Updater = (u: Update) => void;
 
 /**
  * Makes sure that the websocket uses ws/wss where needed
@@ -40,7 +39,7 @@ export function initWebsocketUpdater(
 	socketUri: string,
 	pageUri: string,
 	contentTypeResolver: UpdateableResolver,
-	contentType: string): Updater {
+	contentType: string): CommandCallback {
 
 	const socket = new WebSocket(ensureCorrectScheme(socketUri, contentType));
 
@@ -69,7 +68,7 @@ export function initWebsocketUpdater(
 
 }
 
-export function initHttpUpdater(uri: string, contentType: string, contentTypeResolver: UpdateableResolver): Updater {
+export function initHttpUpdater(uri: string, contentType: string, contentTypeResolver: UpdateableResolver): CommandCallback {
 
 	return async (update) => {
 		update.uri = new URL(uri);
@@ -114,7 +113,7 @@ export function initHttpUpdater(uri: string, contentType: string, contentTypeRes
 export function initMetadataBasedUpdater(
 	command: Command,
 	metadata: Metadata,
-	transition: Transition): Updater {
+	transition: Transition): CommandCallback {
 
 	const processViaWebSocket = metadata.get("topic") != null;
 
@@ -129,7 +128,7 @@ export function initMetadataBasedUpdater(
 		"image/svg+xml;purpose=editable" :
 		"text/xml;purpose=editable_adl";
 
-	let delegate : Updater; 
+	let delegate : CommandCallback; 
 
 	if (processViaWebSocket) {
 		// logged in, use websockets
