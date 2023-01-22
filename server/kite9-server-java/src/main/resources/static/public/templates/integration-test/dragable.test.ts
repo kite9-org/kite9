@@ -5,8 +5,8 @@ import { box, box2, container, diagram, link,terminator, text, port, label, mous
 import { mouseEvent } from './fixture.js';
 import { DRAGABLE_END_EVENT, DRAGABLE_MOVE_EVENT, DRAGABLE_START_EVENT } from '../../behaviours/dragable/dragable.js';
 import { Area, sharedArea } from '../../bundles/types.js';
-import { command, dragger } from '../editor/editor.js';
-import { Command, CommandCallback } from '../../classes/command/command.js';
+import { command, dragger, transition } from '../editor/editor.js';
+import { Command, CommandCallback, Update } from '../../classes/command/command.js';
 
 type Rule = {
  drag: string, 
@@ -32,9 +32,33 @@ function denied(drag: string, over: string) : Rule {
 
 let _commandCallbacks : CommandCallback[];
 
-function replaceCommandStuff(command: Command) {
+function initResetAndCheckCommandCallback() : CommandCallback {
+	
+	const original = "d"+ getMainSvg().outerHTML;
+	
+	const expected = [{
+		from: "dia",
+		fromBefore: "bigbox",
+		moveId: "b1",
+		to: "bigbox",
+		toBefore: "b2",
+		type: "Move"
+	}]
+	
+	return (u: Update) => {
+		expect(u.commands).toEqual(expected)
+		const parser = new DOMParser();
+		const doc = parser.parseFromString(original, "image/svg+xml");
+		transition.change(doc);
+	};
+
+}
+
+function replaceCommandStuff(command: Command, ) {
 	_commandCallbacks = [ ...command.callbacks ];
 	command.callbacks.length = 0;
+	
+	command.add(initResetAndCheckCommandCallback());
 }
 
 export const dragableTest = describe("Dragable Tests", async () => {

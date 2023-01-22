@@ -4,8 +4,12 @@ import { Linker } from '../../classes/linker/linker.js';
 import { Direction, ElementFilter, Point, Selector } from '../../bundles/types.js';
 import { Command } from '../../classes/command/command.js';
 import { StateItem } from '../../classes/dragger/dragger.js';
+import { addNamedEventListener } from '../../bundles/monika.js';
 
 export type LinkDirection = Direction | undefined
+
+export const LINKER_MOVE = "linker-move";
+export const LINKER_END = "linker-end";
 
 export function reverseDirection(d: LinkDirection): LinkDirection {
 	switch (d) {
@@ -52,15 +56,21 @@ export function initLinkable(linker: Linker, selector: Selector = undefined) {
 
 	window.addEventListener('DOMContentLoaded', function() {
 		selector().forEach(function(v) {
-			v.removeEventListener("mousemove", move);
-			v.removeEventListener("touchmove", move);
-			v.removeEventListener("mouseup", end);
-			v.removeEventListener("touchend", end);
+			//v.removeEventListener("mousemove", move);
+			//v.removeEventListener("touchmove", move);
+			//v.removeEventListener("mouseup", end);
+			//v.removeEventListener("touchend", end);
 
-			v.addEventListener("mousemove", move);
-			v.addEventListener("touchmove", move, { passive: false });
-			v.addEventListener("mouseup", end);
-			v.addEventListener("touchend", end);
+			//v.addEventListener("mousemove", move);
+			//v.addEventListener("touchmove", move, { passive: false });
+			//v.addEventListener("mouseup", end);
+		//	v.addEventListener("touchend", end);
+			
+			addNamedEventListener(v, "mousemove", LINKER_MOVE, move);
+			addNamedEventListener(v, "touchmove", LINKER_MOVE, move, { passive: false });
+			addNamedEventListener(v, "mouseup", LINKER_END, end);
+			addNamedEventListener(v, "touchend", LINKER_END, end);
+			
 		})
 	})
 }

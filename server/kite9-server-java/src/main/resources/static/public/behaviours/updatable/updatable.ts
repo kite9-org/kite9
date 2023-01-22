@@ -1,7 +1,7 @@
 import { createSVGResolver } from './svgResolver.js'
 import { createAdlToSVGResolver } from './adlResolver.js'
 import { canRenderClientSide } from '../../bundles/screen.js'
-import { Command, CommandCallback, Update } from '../../classes/command/command.js';
+import { Command, CommandCallback } from '../../classes/command/command.js';
 import { Metadata } from '../../classes/metadata/metadata.js';
 import { Transition } from '../../classes/transition/transition.js';
 

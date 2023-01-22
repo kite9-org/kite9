@@ -28,7 +28,7 @@ export function initDragable(dragger: Dragger, selector: Selector = undefined) {
 
 		document.querySelectorAll("svg").forEach(svg => {
 			addNamedEventListener(svg, "mousemove", DRAGABLE_MOVE_EVENT, drag);
-			addNamedEventListener(svg, "mousemove", DRAGABLE_MOVE_EVENT, drag,  { passive: false });
+			addNamedEventListener(svg, "touchmove", DRAGABLE_MOVE_EVENT, drag,  { passive: false });
 		})
 
 		addNamedEventListener(document, "mouseup", DRAGABLE_END_EVENT, drop);
