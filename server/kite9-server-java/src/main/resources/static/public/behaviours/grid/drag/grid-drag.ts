@@ -1,9 +1,9 @@
-import { parseInfo, isCell, isGrid } from '../../../bundles/api.js'
+import { parseInfo, isCell, isGrid, getKite9Target, isConnected } from '../../../bundles/api.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
-import { getElementPageBBox, getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
+import { getElementPageBBox, getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
 import { Direction, Selector, Point, Area } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
-import { DragLocatorCallback, DropCallback, DropLocatorFunction, MoveCallback } from '../../../classes/dragger/dragger.js';
+import { DragLocatorCallback, DropCallback, DropLocatorCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
 import { getOrdinal, getOrdinals, Ordinals  } from '../common-grid.js' 
 
 function isEmptyGrid(e) {
@@ -14,13 +14,21 @@ function isEmptyGrid(e) {
 	return false;
 }
 
-export function initCellDropLocatorFunction() : DropLocatorFunction {
+export function initCellDropLocatorCallback() : DropLocatorCallback {
 	
 	// we allow cells to be dropped onto other cells, as this instigates the 
 	// re-arrage functionality
 	
-	return function(dragTarget, dropTarget) {
-		return isCell(dragTarget) && isCell(dropTarget);
+	return function(dragTargets, e) {
+		const containerDropTargets = currentTargets(e)
+				.map(t => getKite9Target(t))
+				.filter(t => isConnected(t));
+				
+		if (isCell(dragTargets[0]) && isCell(containerDropTargets[0])) {
+			return containerDropTargets[0];
+		} else {
+			return null;
+		}
 	}
 	
 }

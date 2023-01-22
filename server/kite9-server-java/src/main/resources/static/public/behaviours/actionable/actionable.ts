@@ -1,7 +1,7 @@
 import { getMainSvg } from '../../bundles/screen.js'
 import { ContextMenu } from '../../classes/context-menu/context-menu.js'
 import { Selector } from '../../bundles/types.js'
-import { addMonikaEventListener } from '../../bundles/monika.js';
+import { addNamedEventListener } from '../../bundles/monika.js';
 
 /**
  * Allows the context menu to appear when the user clicks an element with an id
@@ -32,7 +32,7 @@ export function initActionable(contextMenu : ContextMenu, selector : Selector = 
 
 		selector().forEach(function(v : Element) {
 			v.removeEventListener("click", click);
-			addMonikaEventListener(v, "click", "actionable", click);
+			addNamedEventListener(v, "click", "actionable", click);
 		})
 	});
 

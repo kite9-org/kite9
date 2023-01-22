@@ -68,3 +68,18 @@ export function rotateAntiClockwise(d: Direction | undefined) : Direction {
 	}
 }
 
+export function sharedArea(a1: Area, a2: Area) : Area {
+	const x1= Math.max(a1.x, a2.x);
+	const y1= Math.max(a1.y, a2.y);
+	const x2= Math.min(a1.x+a1.width, a2.x+a2.width);
+	const y2= Math.min(a1.y+a1.height, a2.y+a2.height);
+	
+	return {
+		x: x1,
+		y: y1,
+		width: Math.max(0, x2-x1),
+		height: Math.max(0, y2-y1)
+	} as Area
+	
+}
+

@@ -8,7 +8,7 @@ import { initInsertContextMenuCallback } from '../../behaviours/containers/inser
 import { initContainContextMenuCallback } from '../../behaviours/containers/contain/containers-contain.js'
 import { initContainerLayoutMoveCallback, initLayoutContextMenuCallback, initContainerLayoutPropertyFormCallback, initContainerLayoutPropertySetCallback, initLayoutIndicator, initLayoutIndicatorPaletteRevealCallback } from '../../behaviours/containers/layout/containers-layout.js'
 import { initChildContextMenuCallback } from '../../behaviours/containers/child/containers-child.js'
-import { initContainerDropLocatorFunction, initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js' 
+import { initContainerDropLocatorCallback, initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js' 
 import { initAttributeContainmentCallback } from '../../behaviours/containers/rules/containers-rules.js'
 import { initMarginsBuildControls, marginsIcon,  initPaddingBuildControls, paddingIcon,   initMinSizeBuildControls, minSizeIcon, sizingEnumProperties, sizingEnumValues, containerSizingSelector, sizingIcon } from '../../behaviours/styleable/size/styleable-size.js'
 import { initStyleContextMenuCallback, initBasicBuildControls } from '../../behaviours/styleable/styleable.js'
@@ -26,7 +26,7 @@ function initContainers() {
 
 		dragger.moveWith(initContainerLayoutMoveCallback());
 		dragger.dropWith(initContainmentDropCallback(command, containment, isRectangular));
-		dragger.dropLocatorFn(initContainerDropLocatorFunction(containment));
+		dragger.dropLocator(initContainerDropLocatorCallback(containment));
 				
 		contextMenu.add(initLayoutContextMenuCallback(layout));
 		contextMenu.add(initChildContextMenuCallback(command));

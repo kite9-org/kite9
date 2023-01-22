@@ -4,6 +4,11 @@ import { Selector } from '../../bundles/types.js';
 import { Dragger, DragLocatorCallback, DropCallback } from '../../classes/dragger/dragger.js';
 import { Command } from '../../classes/command/command.js';
 import { ContextMenuCallback } from '../../classes/context-menu/context-menu.js';
+import { addNamedEventListener } from '../../bundles/monika.js';
+
+export const DRAGABLE_START_EVENT = 'dragable-start', 
+	DRAGABLE_MOVE_EVENT = 'dragable-move', 
+	DRAGABLE_END_EVENT = 'dragable-end';
 
 function defaultDragableSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=drag]"));
@@ -22,31 +27,18 @@ export function initDragable(dragger: Dragger, selector: Selector = undefined) {
 	window.addEventListener('DOMContentLoaded', function() {
 
 		document.querySelectorAll("svg").forEach(svg => {
-			svg.removeEventListener("mousemove", drag);
-			svg.addEventListener("mousemove", drag);
-
-			svg.removeEventListener("touchmove", drag);
-			svg.addEventListener("touchmove", drag, { passive: false });
+			addNamedEventListener(svg, "mousemove", DRAGABLE_MOVE_EVENT, drag);
+			addNamedEventListener(svg, "mousemove", DRAGABLE_MOVE_EVENT, drag,  { passive: false });
 		})
 
-		document.removeEventListener("mouseup", drop);
-		document.addEventListener("mouseup", drop);
-
-		document.removeEventListener("touchend", drop);
-		document.addEventListener("touchend", drop);
+		addNamedEventListener(document, "mouseup", DRAGABLE_END_EVENT, drop);
+		addNamedEventListener(document, "touchend", DRAGABLE_END_EVENT, drop);
 
 		selector().forEach(function(v) {
-			v.removeEventListener("mouseup", drop);
-			v.removeEventListener("touchend", drop);
-
-			v.removeEventListener("mousedown", grab);
-			v.removeEventListener("touchstart", grab);
-
-			v.addEventListener("mouseup", drop);
-			v.addEventListener("touchend", drop);
-
-			v.addEventListener("mousedown", grab);
-			v.addEventListener("touchstart", grab);
+			addNamedEventListener(v, "mouseup", DRAGABLE_END_EVENT, drop);
+			addNamedEventListener(v, "touchend", DRAGABLE_END_EVENT, drop);
+			addNamedEventListener(v, "mousedown", DRAGABLE_START_EVENT, grab);
+			addNamedEventListener(v, "touchstart", DRAGABLE_START_EVENT, grab);
 		})
 	})
 }

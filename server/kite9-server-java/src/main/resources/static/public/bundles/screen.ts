@@ -66,8 +66,8 @@ export function getElementHTMLBBox(e: Element): Area {
 	const transform = getMainSvg().style.transform;
 	const t = parseTransform(transform);
 	const out = getElementPageBBox(e);
-	out.x = out.x * t.scaleX;
-	out.y = out.y * t.scaleY;
+	out.x = out.x * t.scaleX - window.pageXOffset;
+	out.y = out.y * t.scaleY - window.pageYOffset;
 	out.width = out.width * t.scaleX;
 	out.height = out.height * t.scaleY;
 	return out;
@@ -129,6 +129,20 @@ export function currentTarget(event: Event): SVGGraphicsElement {
 	const v = document.elementFromPoint(coords.x - window.pageXOffset, coords.y - window.pageYOffset);
 	(event as any).touchTarget = v;
 	return v as SVGGraphicsElement;
+}
+
+/*
+ * More reliable method of getting all current targets, which works with touch events. 
+ */
+export function currentTargets(event: Event): SVGGraphicsElement[] {
+	if ((event as any).touchTargets) {
+		return (event as any).touchTargets;
+	}
+
+	const coords = getHtmlCoords(event);
+	const v = document.elementsFromPoint(coords.x - window.pageXOffset, coords.y - window.pageYOffset);
+	(event as any).touchTargets = v;
+	return v as SVGGraphicsElement[];
 }
 
 /** 

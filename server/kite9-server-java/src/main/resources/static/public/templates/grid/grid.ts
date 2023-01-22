@@ -3,7 +3,7 @@ import { once } from '../../bundles/ensure.js'
 
 
 //grid
-import { initCellDragLocator, initCellDropCallback, initCellMoveCallback, initCellDropLocatorFunction } from '../../behaviours/grid/drag/grid-drag.js'
+import { initCellDragLocator, initCellDropCallback, initCellMoveCallback, initCellDropLocatorCallback } from '../../behaviours/grid/drag/grid-drag.js'
 import { initGridTemporaryReplacePaletteCallback } from '../../behaviours/grid/replace/grid-replace.js'
 import { initSelectContextMenuCallback } from '../../behaviours/grid/select/grid-select.js'
 import { initCellAppendContextMenuCallback } from '../../behaviours/grid/append/append.js'
@@ -26,7 +26,7 @@ export function initGrid() {
 		dragger.moveWith(initCellMoveCallback());
 
 		dragger.dragLocator(initCellDragLocator());
-		dragger.dropLocatorFn(initCellDropLocatorFunction())
+		dragger.dropLocator(initCellDropLocatorCallback())
 		contextMenu.add(initCellAppendContextMenuCallback(command));
 
 		palette.addLoad(initGridTemporaryReplacePaletteCallback(command));

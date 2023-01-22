@@ -13,7 +13,7 @@ import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoCon
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '../../behaviours/links/link/links-link.js'
 import { initLinkDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
 import { initAlignContextMenuCallback } from '../../behaviours/links/align/links-align.js'
-import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorFunction } from '../../behaviours/links/drag/terminators-drag.js'
+import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorCallback } from '../../behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '../../behaviours/links/drag/links-drag.js'
 import { initNewLinkPaletteLoadCallback } from '../../behaviours/links/new/links-new.js'
 import { initLinksNavContextMenuCallback } from '../../behaviours/links/nav/links-nav.js'
@@ -46,7 +46,7 @@ function initLinks() {
 		linker.add(initLinkLinkerCallback(command, alignmentCollector));
 		linker.add(initAutoConnectLinkerCallback(command, alignmentIdentifier));
 
-		dragger.dropLocatorFn(initTerminatorDropLocatorFunction(containment));
+		dragger.dropLocator(initTerminatorDropLocatorCallback(containment));
 		dragger.dropLocator(initLinkDropLocator());
 		
 		const portDropCallback = initContainmentDropCallback(

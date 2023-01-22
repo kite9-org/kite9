@@ -1,8 +1,6 @@
 import { getMainSvg, currentTarget } from '../../bundles/screen.js'
 import { getKite9Target } from '../../bundles/api.js'
-import { Selector } from '../../bundles/types.js';
-import { addMonikaEventListener } from '../../bundles/monika.js';
-
+import { addNamedEventListener } from '../../bundles/monika.js';
 
 export function clearLastSelected(within: Element) : void {
 	within.querySelectorAll(".lastSelected").forEach(c => {
@@ -95,7 +93,7 @@ export function initSelectable(
 		event['handledSelect'] = true;
 	}
 	
-	addMonikaEventListener(within, "mousedown", "selectable", mouseup);
+	addNamedEventListener(within, "mousedown", "selectable", mouseup);
 
 }
 

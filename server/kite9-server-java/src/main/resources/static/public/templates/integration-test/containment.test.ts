@@ -1,9 +1,10 @@
 import { describe, it, expect } from '../../bundles/monika.js';
 import { containment } from '../editor/editor.js'
+import { box, container, diagram, link,terminator, text, port, label } from './fixture.js';
 
 type Rules<X> = {
 	box: X,
-	bigBox: X,
+	container: X,
 	diagram: X,
 	link: X,
 	terminator: X,
@@ -13,20 +14,11 @@ type Rules<X> = {
 }
 
 export const containmentTest = describe("Containment Tests", async () => {
-
-	const box = document.getElementById("b1");
-	const bigBox = document.getElementById("bigbox");
-	const diagram = document.getElementById("dia");
-	const link = document.getElementById("link1");
-	const terminator = document.getElementById("link2-from");
-	const text = document.getElementById("t1");
-	const port = document.getElementById("p1");
-	const label = document.getElementById("l1");
 	
-	function createRule(box: boolean, bigBox: boolean, diagram: boolean, link: boolean, terminator: boolean, text: boolean, port: boolean, label: boolean) : Rules<boolean> {
+	function createRule(box: boolean, container: boolean, diagram: boolean, link: boolean, terminator: boolean, text: boolean, port: boolean, label: boolean) : Rules<boolean> {
 		return {
 			box,
-			bigBox,
+			container,
 			diagram,
 			link,
 			terminator,
@@ -38,7 +30,7 @@ export const containmentTest = describe("Containment Tests", async () => {
 	
 	const containers : Rules<Element> =  {
 		box,
-		bigBox,
+		container,
 		diagram,
 		link,
 		terminator,
@@ -49,7 +41,7 @@ export const containmentTest = describe("Containment Tests", async () => {
 	
 	const containerRules : Rules<Rules<boolean>> = {
 		box: createRule(false, false, false, false, true, false, true, false),
-		bigBox: createRule(true, true, false, false, true, true, true, true),
+		container: createRule(true, true, false, false, true, true, true, true),
 		diagram: createRule(true, true, false, false, false, true, false, true),
 		link: createRule(false, false, false, false, false, false, false, false),
 		terminator: createRule(false, false, false, false, false, false, false, true),

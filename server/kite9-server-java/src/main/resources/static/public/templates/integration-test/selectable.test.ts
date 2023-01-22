@@ -1,18 +1,15 @@
-import { describe, it, expect, getMonikaEventListener } from '../../bundles/monika.js';
-import { getElementHTMLBBox, getMainSvg } from '../../bundles/screen.js';
+import { describe, it, expect, getNamedEventListener } from '../../bundles/monika.js';
+import { getMainSvg } from '../../bundles/screen.js';
 import { isLastSelected, isSelected } from '../../behaviours/selectable/selectable.js';
+import { mouseEvent } from './fixture.js';
 
 export const selectableTest = describe("Selectable Tests", async () => {
 
 	it("select an element", async () => {
 		const t1 = document.getElementById("t1");
-		const area = getElementHTMLBBox(t1);
 		const mainSvg = getMainSvg();
-		const l = getMonikaEventListener("selectable", mainSvg);
-		const me = new MouseEvent("click", {
-			clientX : area.x + area.width / 2,
-			clientY : area.y + area.height / 2
-		});
+		const l = getNamedEventListener("selectable", mainSvg);
+		const me = mouseEvent(t1, "click");
 		l(me);
 		
 		// make sure element is sslected

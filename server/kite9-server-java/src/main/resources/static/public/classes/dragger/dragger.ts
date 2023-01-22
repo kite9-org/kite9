@@ -1,8 +1,9 @@
-import { getSVGCoords, getMainSvg, currentTarget } from '../../bundles/screen.js'
-import { handleTransformAsStyle, getKite9Target, getParentElement, onlyUnique, getNextSiblingId, isLink, isConnected } from '../../bundles/api.js'
+import { getSVGCoords, getMainSvg } from '../../bundles/screen.js'
+import { handleTransformAsStyle, getParentElement, onlyUnique, getNextSiblingId } from '../../bundles/api.js'
 
-export type DropLocatorFunction = (dragTarget: Element, dropTarget: Element) => boolean
-export type DropLocatorCallback = (dragTargets : Element[], target: Element) => Element[]
+export type DropLocation = Element
+
+export type DropLocatorCallback = (dragTargets : Element[], e: Event) => DropLocation | null
 export type DragLocatorCallback = (e: Event) => Element[]
 export type MoveCallback = (dragTargets : Element[], e?: Event, dropTargets?: Element[]) => void
 export type DropCallback = (state: StateItem[], e: Event, dropTargets: Element[]) => void
@@ -208,11 +209,13 @@ export class Dragger {
 			
 			const dragTargets = this.state.map(s => s.dragTarget)
 			
-			let newDropTargets = [];
-			const target = currentTarget(evt);
+			const newDropTargets = [];
             
 			this.dropLocators.forEach(dl => {
-				newDropTargets = newDropTargets.concat(dl(dragTargets, target));
+				const newEl = dl(dragTargets, evt);
+				if (newEl) {
+					newDropTargets.push(newEl);
+				}
 			})
 			
 			this.updateDropTargets(newDropTargets);
@@ -306,58 +309,6 @@ export class Dragger {
 		this.draggingWithButtonDown = true;
 		this.svg.style.cursor = undefined;
 	}	
-	
-	/**
-	 * This function provides some common behaviour for drop
-	 * locators, so that you just supply canDropHere(dragTarget, dropTarget).
-	 * It worries about handling the fact that you can multi-drag.
-	 */
-	dropLocatorFn(canDropHere : DropLocatorFunction) {
-		
-		let lastDropTarget = null;
-		let lastDragIds = null;
-		
-		function dragIds(dragTargets : Element[]) : string {
-			return dragTargets
-				.map(dt => dt.getAttribute("id"))
-				.reduce((a,b) => a+","+b, "");
-		}
-
-		const fn = function(dragTargets : Element[], target: Element) : Element[] {
-			let dropTarget = getKite9Target(target);
-
-			if (isLink(dropTarget)) {
-
-				// if the drag targets are the same as before, we may be
-				// hovering over a link, so keep dropTarget the same.
-				if (lastDragIds == dragIds(dragTargets)) {
-					return [ lastDropTarget ]
-				} 
-				
-			} else {
-				while (dropTarget) {
-					const ok = dragTargets
-						.map(dt => canDropHere(dt, dropTarget))
-						.reduce((a,b) => a&&b, true);
-				
-					if (ok) {
-						lastDragIds = dragIds(dragTargets);
-						lastDropTarget = dropTarget;
-						return [ dropTarget ];
-					} else if (isConnected(dropTarget)) {
-						dropTarget = getParentElement(dropTarget);
-					} else {
-						dropTarget = null;
-					}
-				}
-			}
-			
-			
-			return [ ];
-		}	
-		
-		this.dropLocator(fn);
-	}
 	
 }
 

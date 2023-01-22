@@ -2,12 +2,10 @@
  * Monika is a small in-situ integration testing library for javascript
  * event listeners. 
  */
-
-type HandlerCoords = {
-	name: string,
-	type: string,
-	target: EventTarget
-}
+ 
+type EventHandler = (event: Event) => void
+ 
+type NamedEventHandlers = { [key: string] : EventHandler }
 
 type Result = {
 	symbol: string,
@@ -15,18 +13,19 @@ type Result = {
 	error?: string;
 }
 
+/*
+ * stores all the declared handlers for objects in scope, releasing references
+ * to objects that are deleted from the DOM
+ */
+const _declaredHandlers = new WeakMap<EventTarget, NamedEventHandlers>();
+
 /**
  * Adds an event handler to the target with information so that it can be retrieved again.
  */
-export function addMonikaEventListener(et: EventTarget, type: string, name: string, eh: (event: Event) => void, options?: AddEventListenerOptions) {
-	eh['monika'] = {
-		name: name,
-		type: type,
-		target: et
-	} as HandlerCoords;
-	
+export function addNamedEventListener(et: EventTarget, type: string, name: string, eh: EventHandler, options?: AddEventListenerOptions) {
+
 	// keep track of the listeners on the object 
-	const listeners = et['monika-listeners'] ?? {};
+	const listeners : NamedEventHandlers = _declaredHandlers.get(et) ?? {};
 	
 	// remove an old listener if one is set
 	const oldListener = listeners[name];
@@ -34,25 +33,25 @@ export function addMonikaEventListener(et: EventTarget, type: string, name: stri
 		et.removeEventListener(type, oldListener);
 	}
 	listeners[name] = eh;
-	et['monika-listeners'] = listeners;
+	_declaredHandlers.set(et, listeners);
 	
 	et.addEventListener(type, eh, options)
 }
 
 
-export function getMonikaEventListener(name: string, e: string | Element) : EventListener { 
-	const elem = e instanceof Element ? e : document.getElementById(e);
+export function getNamedEventListener(name: string, e: string | Element | Document) : EventListener { 
+	const elem = (e instanceof Element) || (e instanceof Document) ? e : document.getElementById(e);
 	if (!elem) {
 		throw new MonikaError(`${e} not in dom`);
 	}
-	const listeners = elem['monika-listeners'] ?? {};
+	const listeners : NamedEventHandlers = _declaredHandlers.get(elem) ?? {};
 	return listeners[name];
 }
 
 let results : Result[] = [];
 
 export function describe(s: string, f: () => Promise<void>) : () => Promise<void> {
-	return () => {
+	return async () => {
 		results = []
 		return it(s, f).then(() => {
 			console.table(results);	
@@ -60,13 +59,13 @@ export function describe(s: string, f: () => Promise<void>) : () => Promise<void
 	}
 }
 
-export function it(s: string, f: () => Promise<void>) : Promise<void> {
+export async function it(s: string, f: () => Promise<void>) : Promise<void> {
 	console.log("Testing: "+s);
 	return f().then(() => {
 		results.push({symbol: '✅', message: s, error: ''})
 	}).catch((e) => {
 		results.push({symbol: '❌', message: s, error: e.message});
-		console.log(e.trace);
+		console.log(e);
 	});
 }
 

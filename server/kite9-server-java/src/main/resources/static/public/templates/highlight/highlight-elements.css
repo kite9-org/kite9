@@ -123,6 +123,26 @@
 }
 
 
+/* selected effect: stroke, fill, outline and pulse */
+
+.dropping > g > [k9-highlight~=outline],
+.dropping > g > [k9-highlight~=stroke],
+.dropping > g > [k9-highlight~=bar],
+.dropping > [k9-highlight~=outline],
+.dropping > [k9-highlight~=stroke],
+.dropping > [k9-highlight~=bar] {
+	stroke: #dcdddd!important;
+	stroke-opacity: .8 !important;
+}
+.dropping > g > [k9-highlight~=pulse],
+.dropping > g > [k9-highlight~=fill],
+.dropping > g > [k9-highlight~=grab],
+.dropping > [k9-highlight~=pulse],
+.dropping > [k9-highlight~=fill],
+.dropping > [k9-highlight~=grab] {
+	fill: #dcdddd !important;
+	fill-opacity: .8 !important;
+}
 
 
 /** 

@@ -1,4 +1,5 @@
-import { isLink, isConnected, isTerminator, getKite9Target, parseInfo, createUniqueId, onlyUnique, getContainingDiagram } from '../../../bundles/api.js'
+import { isLink, isConnected, getKite9Target, parseInfo, createUniqueId, onlyUnique, getContainingDiagram, getAffordances } from '../../../bundles/api.js'
+import { currentTargets } from '../../../bundles/screen.js';
 import { Command } from '../../../classes/command/command.js';
 import { DropCallback, DropLocatorCallback } from '../../../classes/dragger/dragger.js';
 
@@ -8,27 +9,29 @@ import { DropCallback, DropLocatorCallback } from '../../../classes/dragger/drag
  */
 export function initLinkDropLocator() : DropLocatorCallback {
 	
-	return function(dragTargets, target) {
+	return function(dragTargets, event) {
 		if (dragTargets.length != 1) {
-			return [];
+			return null;
 		}
 		
 		if (!isConnected(dragTargets[0])) {
-			return [];
+			return null;
 		}
 		
-		const dropTarget = getKite9Target(target);
+		const dropLinkTargets = currentTargets(event)
+			.map(t => getKite9Target(t))
+			.filter(t => isLink(t));
 		
-		if (isLink(dropTarget)) {
-			const out = dropTarget.getAttribute("k9-ui");
+		if (dropLinkTargets.length > 0) {
+			const out = getAffordances(dropLinkTargets[0]);
 			if (!out.includes("drop")) {
-				return [];
-			} else if (!isTerminator(dragTargets[0])) {
-				return [ dropTarget ];
+				return null;
+			} else {
+				return dropLinkTargets[0];
 			}
 		}
 
-		return [ ];
+		return null;
 	}	
 }
 

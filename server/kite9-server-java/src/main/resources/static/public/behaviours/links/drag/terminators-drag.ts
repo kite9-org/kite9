@@ -2,12 +2,12 @@
  * This handles moving a block from one place to another on the diagram, via drag and drop.
  * You can't drop into an element unless it has 
  */
-import { parseInfo, isTerminator, isPort, isLink, isConnected, getParentElement, getAffordances, connectedElementOtherEnd, onlyUnique, connectedElement } from "../../../bundles/api.js";
-import { getSVGCoords, getMainSvg } from '../../../bundles/screen.js'
+import { parseInfo, isTerminator, isPort, isLink, isConnected, getParentElement, getAffordances, connectedElementOtherEnd, onlyUnique, connectedElement, getKite9Target } from "../../../bundles/api.js";
+import { getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
 import { ElementFilter } from "../../../bundles/types.js";
 import { Command } from "../../../classes/command/command.js";
 import { Containment } from "../../../classes/containment/containment.js";
-import { DropCallback, DropLocatorFunction, MoveCallback } from "../../../classes/dragger/dragger.js";
+import { DropCallback, DropLocatorCallback, MoveCallback } from "../../../classes/dragger/dragger.js";
 
 /**
  * Keeps track of any links we've animated moving.
@@ -55,64 +55,26 @@ export function initTerminatorDropCallback(
 	}
 }
 
-export function initTerminatorDropLocatorFunction(containment: Containment) : DropLocatorFunction {
+export function initTerminatorDropLocatorCallback(containment: Containment) : DropLocatorCallback {
 	
-	return function (dragTarget, dropTarget) {
-		
-		if (dropTarget == null) {
-			return false;
-		}
-		
-		if (dragTarget==dropTarget) {
-			return false;
-		}
-				
-		if (isTerminator(dragTarget)) {
-			if (isTerminator(dropTarget)) {
-				// you can't drop on a terminator, but you can drop on whatever it terminates on
-				dropTarget = connectedElement(dropTarget, getMainSvg());
-			}
-		
-			if (isLink(dropTarget)) {
-				return false;
-			}
+	return function (dragTargets, e) {		
+		if (isTerminator(dragTargets[0])) {
+			const otherEnd = connectedElementOtherEnd(dragTargets[0], getMainSvg());
 
+			const containerDropTargets = currentTargets(e)
+				.map(t => getKite9Target(t))
+				.filter(t => isConnected(t) || isPort(t))
+				.filter(t => containment.canContainAll(dragTargets, t))
+				.filter(t => t != otherEnd)
+				.filter(t => !(isPort(otherEnd) && getParentElement(otherEnd) == t));
 			
-			if (!getAffordances(dropTarget).includes("connect")) {
-				return false;
-			}
-			
-			const otherEnd = connectedElementOtherEnd(dragTarget, getMainSvg());
-			
-			if (otherEnd == dropTarget) {
-				// linking to itself
-				return false;
-			}
-			
-			if (isPort(dropTarget)) {
-				if (getParentElement(dropTarget) == dragTarget) {
-					return false;
-				}
-			}
-			
-			if (isPort(otherEnd)) {
-				if (getParentElement(otherEnd) == dropTarget) {
-					return false;
-				}
-			}
-			
-			if (isConnected(dropTarget)) {
-				if (!containment.canContainAll(dragTarget, dropTarget)) {
-					return false;
-				}
+			if (containerDropTargets.length > 0) {
+				return containerDropTargets[0];
 			}
 		}
 
-		return true;
-		
-		
+		return null;
 	}
-	
 }
 
 
