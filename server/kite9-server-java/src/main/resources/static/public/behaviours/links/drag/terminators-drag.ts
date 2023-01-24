@@ -26,6 +26,8 @@ export function initTerminatorDropCallback(
 			
 			dropTargets.forEach(dropTarget => {
 				if (filter(dt, dropTarget)) {
+					console.log("Invoking terminator drop callback")
+				
 					command.push(  {
 						type: 'ReplaceAttr',
 						fragmentId: dt.getAttribute('id'),

@@ -27,6 +27,7 @@ import { initPortsAddContextMenuCallback } from '../../behaviours/ports/add/port
 import { singleSelect } from '../../behaviours/selectable/selectable.js';
 import { getDocumentParam } from '../../bundles/api.js'
 import { initBiFilter } from '../../behaviours/containers/rules/containers-rules.js'
+import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
 
 const linker = new Linker(updateLink);
 
@@ -47,7 +48,8 @@ function initLinks() {
 
 		dragger.dropLocator(initLinkDropLocator());
 			
-		dragger.dropWith(initPortDropCallback(command, initBiFilter(['port'],['connected'])));
+		dragger.dropWith(initContainmentDropCallback(command, initBiFilter(['port'],['connected'])));	
+		dragger.dropWith(initPortDropCallback(command, initBiFilter(['port'],['*'])));
 
 		dragger.moveWith(initTerminatorMoveCallback());
 		dragger.moveWith(initPortMoveCallback(containment));

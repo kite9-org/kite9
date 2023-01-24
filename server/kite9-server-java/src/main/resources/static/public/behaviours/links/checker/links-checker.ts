@@ -44,6 +44,8 @@ export function initLinksCheckerDropCallback(
 			if ((movingIds.includes(from) && droppingIds.includes(to)) ||
 				(movingIds.includes(to) && droppingIds.includes(from))) {
 			
+				console.log("Invoking link checker drop callback")
+
 				const id = link.getAttribute("id");
 				const parent = getParentElement(link);
 				const parentId = parent == undefined ? undefined : parent.getAttribute("id");

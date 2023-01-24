@@ -22,6 +22,9 @@ export function initPortDropCallback(command: Command, filter: ElementBiFilter) 
 					const style = parseStyle(s.dragTarget.getAttribute("style"));
 	
 					if (canReposition) {
+						console.log("Invoking port drop callback")
+
+					
 						command.push({
 							fragmentId: s.dragTarget.getAttribute("id"),
 							type: 'ReplaceStyle',

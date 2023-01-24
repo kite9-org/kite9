@@ -73,6 +73,9 @@ export function initLinkDropCallback(command: Command) : DropCallback {
 		const newId1 = createUniqueId();
 		const newId2 = createUniqueId();
 		
+		console.log("Invoking link drop callback")
+
+		
 		command.push({
 			"type": 'InsertUrlWithChanges',
 			"uriStr": "#"+dropId,

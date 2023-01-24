@@ -48,6 +48,7 @@ export function initContainmentDropCallback(
 			const beforeId = getBeforeId(dropTarget, evt, dragTargets);
 			dragState.forEach(s => {
 				if (filter(s.dragTarget, dropTarget)) {
+					console.log("Invoking containment drop callback")
 					if (s.dragParentId) {
 						// we are moving this from somewhere else in the diagram
 						command.push({

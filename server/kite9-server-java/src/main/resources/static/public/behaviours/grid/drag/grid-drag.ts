@@ -328,6 +328,8 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 				const dt = ds.dragTarget;
 				const id = dt.getAttribute("id");
 				
+				console.log("Invoking cell drop callback")
+				
 				// move into container
 				command.push({
 					type: 'Move',
