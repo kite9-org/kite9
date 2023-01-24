@@ -13,12 +13,11 @@ import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoCon
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '../../behaviours/links/link/links-link.js'
 import { initLinkDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
 import { initAlignContextMenuCallback } from '../../behaviours/links/align/links-align.js'
-import { initTerminatorDropCallback, initTerminatorMoveCallback, initTerminatorDropLocatorCallback } from '../../behaviours/links/drag/terminators-drag.js'
+import { initTerminatorDropCallback, initTerminatorMoveCallback } from '../../behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '../../behaviours/links/drag/links-drag.js'
 import { initNewLinkPaletteLoadCallback } from '../../behaviours/links/new/links-new.js'
 import { initLinksNavContextMenuCallback } from '../../behaviours/links/nav/links-nav.js'
 import { initLinksCheckerDropCallback } from '../../behaviours/links/checker/links-checker.js'
-import { initTerminatorContainmentCallback /*, initLabelContainmentCallback*/ } from '../../behaviours/links/rules/links-rules.js'
 import { initSetDefaultContextMenuCallback } from '../../behaviours/palettes/template/palettes-template.js';
 import { initPaletteFinder } from '../../behaviours/palettes/menu/palettes-menu.js';
 import { initStyleContextMenuCallback } from '../../behaviours/styleable/styleable.js';
@@ -46,7 +45,6 @@ function initLinks() {
 		linker.add(initLinkLinkerCallback(command, alignmentCollector));
 		linker.add(initAutoConnectLinkerCallback(command, alignmentIdentifier));
 
-		dragger.dropLocator(initTerminatorDropLocatorCallback(containment));
 		dragger.dropLocator(initLinkDropLocator());
 			
 		dragger.dropWith(initPortDropCallback(command, initBiFilter(['port'],['connected'])));
@@ -70,8 +68,6 @@ function initLinks() {
 		contextMenu.add(initLinkDirectionContextMenuCallback(command));
 		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
-
-		containment.add(initTerminatorContainmentCallback());
 
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'link-template-uri', "Link", paletteFinder, p => Array.from(p.querySelectorAll("[k9-elem=link]"))));
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'port-template-uri', "Port", paletteFinder, initPortsSelector()));

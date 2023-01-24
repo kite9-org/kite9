@@ -10,7 +10,7 @@
       <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete layout fill stroke size align connect</xsl:with-param>
       <xsl:with-param name="k9-palette">connected table</xsl:with-param>
-      <xsl:with-param name="k9-contains">cell</xsl:with-param>
+      <xsl:with-param name="k9-contains">cell terminator</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 

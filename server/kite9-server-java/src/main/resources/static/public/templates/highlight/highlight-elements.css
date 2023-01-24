@@ -131,7 +131,7 @@
 .dropping > [k9-highlight~=outline],
 .dropping > [k9-highlight~=stroke],
 .dropping > [k9-highlight~=bar] {
-	stroke: #dcdddd!important;
+	stroke: #dcdddd !important;
 	stroke-opacity: .8 !important;
 }
 .dropping > g > [k9-highlight~=pulse],

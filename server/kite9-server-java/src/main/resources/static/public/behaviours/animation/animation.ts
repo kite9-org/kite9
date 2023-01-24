@@ -138,7 +138,7 @@ function removeNonElementContent(el: Element) {
 
 function reconcileElement(inFrom: Element, inTo: Element, toDelete: Element, tl: Timeline) {
 	const isMainSvg = (inFrom.tagName == 'svg');
-	console.log("Reconciling " + inFrom.tagName + ' with ' + inTo.tagName + " " + inFrom.getAttribute("id") + " " + inTo.getAttribute("id"))
+	//console.log("Reconciling " + inFrom.tagName + ' with ' + inTo.tagName + " " + inFrom.getAttribute("id") + " " + inTo.getAttribute("id"))
 
 	if (!isMainSvg) {
 		handleTransformAsStyle(inFrom);

@@ -39,29 +39,6 @@ export function initTerminatorDropCallback(
 	}
 }
 
-export function initTerminatorDropLocatorCallback(containment: Containment) : DropLocatorCallback {
-	
-	return function (dragTargets, e) {		
-		if (isTerminator(dragTargets[0])) {
-			const otherEnd = connectedElementOtherEnd(dragTargets[0], getMainSvg());
-
-			const containerDropTargets = currentTargets(e)
-				.map(t => getKite9Target(t))
-				.filter(t => isConnected(t) || isPort(t))
-				.filter(t => containment.canContainAll(dragTargets, t))
-				.filter(t => t != otherEnd)
-				.filter(t => !(isPort(otherEnd) && getParentElement(otherEnd) == t));
-			
-			if (containerDropTargets.length > 0) {
-				return containerDropTargets[0];
-			}
-		}
-
-		return null;
-	}
-}
-
-
 /**
  * This shows the user where links will go.
  */
