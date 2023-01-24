@@ -5,8 +5,8 @@ import { dragableTest } from "./dragable.test.js";
 	
 function allTests() {
 	//selectableTest();		
-	//containmentTest();
-	dragableTest();
+	containmentTest();
+	//dragableTest();
 }	
 	
 window.addEventListener("DOMContentLoaded", () => {

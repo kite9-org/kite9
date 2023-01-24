@@ -1,11 +1,13 @@
 import { once } from '../../bundles/ensure.js'
 
-import { command, placement, contextMenu, metadata, palette, paletteContextMenu } from '../../templates/editor/editor.js'
+import { command, placement, contextMenu, metadata, palette, paletteContextMenu, dragger } from '../../templates/editor/editor.js'
 import { initAddLabelContextMenuCallback } from '../../behaviours/labels/add/labels-add.js' 
 import { initPlaceLabelContextMenuCallback, initLabelPlacementPropertyFormCallback, initLabelPlacementPropertySetCallback } from '../../behaviours/labels/place/labels-place.js' 
 import { initSetDefaultContextMenuCallback } from '../../behaviours/palettes/template/palettes-template.js';
 import { initPaletteFinder } from '../../behaviours/palettes/menu/palettes-menu.js';
 import { getDocumentParam } from '../../bundles/api.js';
+import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js';
+import { initBiFilter } from '../../behaviours/containers/rules/containers-rules.js';
 
 
 function initLabels() {
@@ -18,6 +20,8 @@ function initLabels() {
 		contextMenu.add(initAddLabelContextMenuCallback(command, getDocumentParam('label-template-uri')));
 		contextMenu.add(initPlaceLabelContextMenuCallback(placement, command));
 	
+		dragger.dropWith(initContainmentDropCallback(command, 
+			initBiFilter(['label'],['connected', 'diagram'])));
 	
 		paletteContextMenu.add(initSetDefaultContextMenuCallback(palette, 'label-template-uri', "Label", initPaletteFinder(), p => Array.from(p.querySelectorAll("[k9-elem=label]"))));
 	

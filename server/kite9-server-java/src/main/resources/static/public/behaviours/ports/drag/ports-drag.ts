@@ -5,36 +5,34 @@ import { drawBar, clearBar } from  '../../../bundles/ordering.js'
 import { DropCallback, MoveCallback } from '../../../classes/dragger/dragger.js'
 import { Containment } from '../../../classes/containment/containment.js'
 import { Command } from '../../../classes/command/command.js'
-import { Direction } from '../../../bundles/types.js'
+import { Direction, ElementBiFilter } from '../../../bundles/types.js'
 
 /**
  * Decorates the drop callback to ensure the _side_ of the container is 
  * set when dropping.
  */
-export function initPortDropCallback(command: Command) : DropCallback {
+export function initPortDropCallback(command: Command, filter: ElementBiFilter) : DropCallback {
 	
 	return function(dragState, evt, dropTargets) {
-		if (dropTargets.length > 0) {
-		
-			const dropTarget = dropTargets[0];
+		dropTargets.forEach(dropTarget => {
 			const side = closestSide(dropTarget, getSVGCoords(evt));
-			
-			Array.from(dragState).forEach(s => {
-
-				const canReposition = getAffordances(s.dragTarget).includes("port");
-				const style = parseStyle(s.dragTarget.getAttribute("style"));
-
-				if (canReposition) {
-					command.push({
-						fragmentId: s.dragTarget.getAttribute("id"),
-						type: 'ReplaceStyle',
-						name: '--kite9-direction',
-						to: side,
-						from: style['--kite9-direction']
-					});
+			dragState.forEach(s => {
+				if (filter(s.dragTarget, dropTarget)) {
+					const canReposition = getAffordances(s.dragTarget).includes("port");
+					const style = parseStyle(s.dragTarget.getAttribute("style"));
+	
+					if (canReposition) {
+						command.push({
+							fragmentId: s.dragTarget.getAttribute("id"),
+							type: 'ReplaceStyle',
+							name: '--kite9-direction',
+							to: side,
+							from: style['--kite9-direction']
+						});
+					}
 				}
 			});
-		} 
+		});
 	}
 }
 

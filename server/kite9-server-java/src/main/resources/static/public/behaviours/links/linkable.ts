@@ -56,21 +56,10 @@ export function initLinkable(linker: Linker, selector: Selector = undefined) {
 
 	window.addEventListener('DOMContentLoaded', function() {
 		selector().forEach(function(v) {
-			//v.removeEventListener("mousemove", move);
-			//v.removeEventListener("touchmove", move);
-			//v.removeEventListener("mouseup", end);
-			//v.removeEventListener("touchend", end);
-
-			//v.addEventListener("mousemove", move);
-			//v.addEventListener("touchmove", move, { passive: false });
-			//v.addEventListener("mouseup", end);
-		//	v.addEventListener("touchend", end);
-			
 			addNamedEventListener(v, "mousemove", LINKER_MOVE, move);
 			addNamedEventListener(v, "touchmove", LINKER_MOVE, move, { passive: false });
 			addNamedEventListener(v, "mouseup", LINKER_END, end);
 			addNamedEventListener(v, "touchend", LINKER_END, end);
-			
 		})
 	})
 }

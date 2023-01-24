@@ -13,7 +13,7 @@
       <xsl:with-param name="k9-elem">label</xsl:with-param>
       <xsl:with-param name="k9-palette">label</xsl:with-param>
       <xsl:with-param name="k9-contains">none</xsl:with-param>
-      <xsl:with-param name="k9-ui">delete edit xml place fill stroke size font</xsl:with-param>
+      <xsl:with-param name="k9-ui">delete edit xml drag place fill stroke size font</xsl:with-param>
     </xsl:call-template>
     
   </xsl:template> 

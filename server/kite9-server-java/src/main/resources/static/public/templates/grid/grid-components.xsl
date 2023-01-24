@@ -8,8 +8,9 @@
   <xsl:template name="grid-table-basic">
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
-      <xsl:with-param name="k9-ui">drag delete layout fill stroke size align</xsl:with-param>
+      <xsl:with-param name="k9-ui">drag delete layout fill stroke size align connect</xsl:with-param>
       <xsl:with-param name="k9-palette">connected table</xsl:with-param>
+      <xsl:with-param name="k9-contains">cell</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 
@@ -19,6 +20,7 @@
       <xsl:with-param name="k9-ui">drag delete cascade orphan layout grid fill stroke size</xsl:with-param>
       <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
       <xsl:with-param name="k9-palette">cell</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected label</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   

@@ -265,7 +265,7 @@ type Push = {
 }
 
 
-export function initCellDropCallback(command: Command) : DropCallback {
+export function initCellDropCallback(command: Command, ) : DropCallback {
 	
 	function getPush(area: GridArea, to, xOrdinals: Ordinals, yOrdinals: Ordinals) : Push {
 		if ((moveCache.side == 'up') || (moveCache.side=='down')) {

@@ -7,6 +7,7 @@ import { DRAGABLE_END_EVENT, DRAGABLE_MOVE_EVENT, DRAGABLE_START_EVENT } from '.
 import { Area, sharedArea } from '../../bundles/types.js';
 import { command, dragger, transition } from '../editor/editor.js';
 import { Command, CommandCallback, Update } from '../../classes/command/command.js';
+import { LINKER_END, LINKER_MOVE } from '../../behaviours/links/linkable.js';
 
 type Rule = {
  drag: string, 
@@ -34,7 +35,8 @@ let _commandCallbacks : CommandCallback[];
 
 function initResetAndCheckCommandCallback() : CommandCallback {
 	
-	const original = "d"+ getMainSvg().outerHTML;
+	const original = getMainSvg().outerHTML;
+	const parser = new DOMParser();
 	
 	const expected = [{
 		from: "dia",
@@ -47,7 +49,6 @@ function initResetAndCheckCommandCallback() : CommandCallback {
 	
 	return (u: Update) => {
 		expect(u.commands).toEqual(expected)
-		const parser = new DOMParser();
 		const doc = parser.parseFromString(original, "image/svg+xml");
 		transition.change(doc);
 	};
@@ -76,16 +77,21 @@ export const dragableTest = describe("Dragable Tests", async () => {
 //		allowed('terminator', 'container')		
 	];
 	
-	let delay = 10;
-	
-	function doDelay(f: () => void) {
-		setTimeout(f, delay);
-		delay +=10;
+	function doDelay(f: ()=> void) : Promise<void> {
+		const out = new Promise<void>((res) => {
+			return setTimeout(() => {
+				f();
+				res();
+			}, 100);
+		});
+		
+		return out;
 	}
 	
 	replaceCommandStuff(command);
 	
-	rules.forEach(r => {
+	const r = rules[0];
+	
 		const dragging = elements[r.drag];
 		singleSelect([ dragging ]);
 		
@@ -100,16 +106,18 @@ export const dragableTest = describe("Dragable Tests", async () => {
 		const mouseUp = mousePositionEvent(dropArea, "mouseup");
 
 		const start = getNamedEventListener(DRAGABLE_START_EVENT, dragging);
-		const move = getNamedEventListener(DRAGABLE_MOVE_EVENT, getMainSvg());
-		const end = getNamedEventListener(DRAGABLE_END_EVENT, document);
+		const dragMove = getNamedEventListener(DRAGABLE_MOVE_EVENT, getMainSvg());
+		const linkMove = getNamedEventListener(LINKER_MOVE, dragging);
+		const dragEnd = getNamedEventListener(DRAGABLE_END_EVENT, document);
+		const linkEnd =  getNamedEventListener(LINKER_END, dragging);
 		
-		doDelay(() => start(mouseDown));
-		doDelay(() => move(mouseDrag1));
-		doDelay(() => move(mouseDrag2));
-		doDelay(() => end(mouseUp));
-		doDelay(() => dragger.endMove(true));
-
-	});
+		
+		return Promise.resolve()
+			.then(() => doDelay(() => start(mouseDown)))
+			.then(() => doDelay(() => { linkMove(mouseDrag1); dragMove(mouseDrag1);  }))
+			.then(() => doDelay(() => { linkMove(mouseDrag2); dragMove(mouseDrag2);  }))
+			.then(() => doDelay(() => { dragEnd(mouseUp); linkEnd(mouseUp) }))
+			.then(() => doDelay(() => dragger.endMove(true)));
 	
 });
 

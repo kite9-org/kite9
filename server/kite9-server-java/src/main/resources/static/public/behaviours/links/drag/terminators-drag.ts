@@ -4,7 +4,7 @@
  */
 import { parseInfo, isTerminator, isPort, isLink, isConnected, getParentElement, getAffordances, connectedElementOtherEnd, onlyUnique, connectedElement, getKite9Target } from "../../../bundles/api.js";
 import { getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
-import { ElementFilter } from "../../../bundles/types.js";
+import { ElementBiFilter, ElementFilter } from "../../../bundles/types.js";
 import { Command } from "../../../classes/command/command.js";
 import { Containment } from "../../../classes/containment/containment.js";
 import { DropCallback, DropLocatorCallback, MoveCallback } from "../../../classes/dragger/dragger.js";
@@ -18,40 +18,24 @@ const SVG_PATH_REGEX = /[MLQTCSAZ][^MLQTCSAZ]*/gi;
 
 export function initTerminatorDropCallback(
 	command : Command,
-	containment: Containment, 
-	filter: ElementFilter = isTerminator) : DropCallback {
+	filter: ElementBiFilter) : DropCallback {
 	
 	return function(dragState, _evt, dropTargets) {
-		const relevantState = dragState
-			.filter(si => filter(si.dragTarget));
+		dragState.forEach(ds => {
+			const dt = ds.dragTarget;
 			
-		const dragTargets = relevantState
-			.map(s => s.dragTarget)
-
-		const validDropTargets = dropTargets
-			.map(t => {
-				if (isTerminator(t)) {
-					return connectedElement(t, getMainSvg());
-				} else {
-					return t;
-				}
-			})
-			.filter(t => containment.canContainAll(dragTargets, t))
-			.filter(onlyUnique);
-			
-		if (validDropTargets.length == 1) {
-			Array.from(dragTargets).forEach(dt => {
-				if (isTerminator(dt)) {
+			dropTargets.forEach(dropTarget => {
+				if (filter(dt, dropTarget)) {
 					command.push(  {
 						type: 'ReplaceAttr',
 						fragmentId: dt.getAttribute('id'),
 						name: 'reference',
-						to: dropTargets[0].getAttribute('id'),
+						to: dropTarget.getAttribute('id'),
 						from: dt.getAttribute('reference')
 					});
-				}	
-			});
-		} 
+				}
+			})
+		})
 	}
 }
 

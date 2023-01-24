@@ -13,6 +13,8 @@ import { initCellCreator } from '../../behaviours/grid/create/create.js'
 
 
 import { command, metadata, dragger, contextMenu, layout, palette, containment } from '../../templates/editor/editor.js'
+import { initBiFilter } from '../../behaviours/containers/rules/containers-rules.js'
+import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
 
 export function initGrid() {
 
@@ -22,7 +24,13 @@ export function initGrid() {
 		layout.formCallback(initGridLayoutPropertyFormCallback());
 		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
 
-		//dragger.dropWith(initContainmentDropCallback(..., initCellDropCallback(command)));
+		dragger.dropWith(initContainmentDropCallback(command, 
+			initBiFilter(['cell'],['table'])));
+			
+		dragger.dropWith(initContainmentDropCallback(command, 
+			initBiFilter(['connected', 'label'],['cell'])));
+			
+		dragger.dropWith(initCellDropCallback(command));
 		dragger.moveWith(initCellMoveCallback());
 
 		dragger.dragLocator(initCellDragLocator());

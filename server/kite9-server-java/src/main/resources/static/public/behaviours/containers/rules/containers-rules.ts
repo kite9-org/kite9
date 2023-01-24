@@ -1,5 +1,36 @@
 import { isGrid } from '../../../bundles/api.js'
+import { ElementBiFilter } from '../../../bundles/types.js';
 import { ContainmentCallback } from '../../../classes/containment/containment.js';
+
+function getTypes(element: Element | null, attr: string)  : string[] {
+
+	if (element == undefined) {
+		return [];
+	}
+	
+	const attrValue = element.getAttribute(attr);
+	if (attrValue) {
+		return attrValue.split(" ") || [];
+	}
+
+	if (attr == 'k9-containers') {
+		return [ "*" ];	// wildcard
+	} else {
+		return [ ];	// nothing
+	}
+}
+
+function intersectionRule(set1: string[], set2: string[]) {
+	if (set1.includes("*") && (set2.includes("*"))) {
+		return [ ...set1, ...set2 ];
+	} else if (set1.includes("*")) {
+		return set2;
+	} else if (set2.includes("*")) {
+		return set1;
+	} else {
+		return set1.filter(e => set2.includes(e));
+	}
+}
 
 /**
  * Three attributes:
@@ -10,31 +41,6 @@ import { ContainmentCallback } from '../../../classes/containment/containment.js
  * 
  */
 export function initAttributeContainmentCallback() : ContainmentCallback {
-	
-	function intersectionRule(set1: string[], set2: string[]) {
-		if (set1.includes("*") && (set2.includes("*"))) {
-			return [ ...set1, ...set2 ];
-		} else if (set1.includes("*")) {
-			return set2;
-		} else if (set2.includes("*")) {
-			return set1;
-		} else {
-			return set1.filter(e => set2.includes(e));
-		}
-	}
-	
-	function getTypes(element: Element, attr: string)  : string[] {
-		const attrValue = element.getAttribute(attr);
-		if (attrValue) {
-			return attrValue.split(" ") || [];
-		}
-
-		if (attr == 'k9-containers') {
-			return [ "*" ];	// wildcard
-		} else {
-			return [ ];	// nothing
-		}
-	}
 	
 	return function(elements: Element[], parent: Element) {
 		if (isGrid(parent)) {
@@ -59,5 +65,19 @@ export function initAttributeContainmentCallback() : ContainmentCallback {
 
 }
 
+/**
+ * Creates a filter whereby two elements must have a certain combination of k9-palette types.
+ */
+export function initBiFilter(e1Match: string[], e2Match: string[]) : ElementBiFilter {
 
+	return function(e1, e2) {
+		const e1Types = e1 ? getTypes(e1, 'k9-palette') : [];
+		const e2Types = e2 ? getTypes(e2, 'k9-palette') : [];
+		
+		const e1Ok = intersectionRule(e1Match, e1Types).length > 0;
+		const e2Ok = intersectionRule(e2Match, e2Types).length > 0;
+		
+		return e1Ok && e2Ok;	
+	}
+}
 

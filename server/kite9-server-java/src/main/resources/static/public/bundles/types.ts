@@ -9,6 +9,11 @@ export type Selector = () => Element[]
 export type ElementFilter = (e?: Element) => boolean
 
 /**
+ * For filtering a pair of elements.  e.g. for a drag target and a drop target.
+ */
+export type ElementBiFilter = (e1?: Element, e2?: Element) => boolean
+
+/**
  * For definining a selection from a palette (e.g. all links)
  */
 export type PaletteSelector = (e: Element) => Element[]
