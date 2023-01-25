@@ -104,7 +104,8 @@ export function initLinkDirectionContextMenuCallback(
 		text: string,
 		icon: string, 
 		selected: LinkDirection = undefined,
-		cb: () => void) : HTMLImageElement {
+		cb: () => void,
+		set = "Actions") : HTMLImageElement {
 		let title: string, src: string;
 		
 		if (text != undefined) {
@@ -115,7 +116,7 @@ export function initLinkDirectionContextMenuCallback(
 			src =  "/public/behaviours/links/direction/undirected.svg";				
 		}
 
-		const a = cm.addControl(event, src, title, cb) as HTMLDivElement; 
+		const a = cm.addControl(event, src, title, cb, set) as HTMLDivElement; 
 		const img = a.children[0] as HTMLImageElement;
 		
 		if (selected == text) {
@@ -157,15 +158,17 @@ export function initLinkDirectionContextMenuCallback(
 		const d2 = reverse ? reverseDirection(direction) : direction;
 		const img = drawDirectionImage(event, contextMenu, d2, d2, undefined, () => {
 			contextMenu.clear();
+
+			drawDirectionImage(event, contextMenu, null, null, d2, () => setDirections(selector(), null, contextMenu), "No Direction");
 			
-			[null, "up", "down", "left", "right"].forEach((s : LinkDirection) => {
-				drawDirectionImage(event, contextMenu, s, s, d2, () => setDirections(selector(), s, contextMenu));
+			["up", "down", "left", "right"].forEach((s : LinkDirection) => {
+				drawDirectionImage(event, contextMenu, s, s, d2, () => setDirections(selector(), s, contextMenu), "Fixed Direction");
 			});
 			
 			if (d2) {
-				drawDirectionImage(event, contextMenu, "Turn Clockwise", 'turn-cw', d2, () => setDirections(selector(), 'cw', contextMenu));
-				drawDirectionImage(event, contextMenu, "Turn Anti-Clockwise", 'turn-acw', d2, () => setDirections(selector(), 'acw', contextMenu));
-				drawDirectionImage(event, contextMenu, "Turn 180", 'turn-180', d2, () => setDirections(selector(), '180', contextMenu));
+				drawDirectionImage(event, contextMenu, "Turn Clockwise", 'turn-cw', d2, () => setDirections(selector(), 'cw', contextMenu), "Rotation");
+				drawDirectionImage(event, contextMenu, "Turn Anti-Clockwise", 'turn-acw', d2, () => setDirections(selector(), 'acw', contextMenu), "Rotation");
+				drawDirectionImage(event, contextMenu, "Turn 180", 'turn-180', d2, () => setDirections(selector(), '180', contextMenu), "Rotation");
 			}
 		});
 		
