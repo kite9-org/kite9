@@ -5,11 +5,13 @@ import { Selector } from '../../../bundles/types.js'
 
 export const portsPositionIcon = '/public/behaviours/ports/port.svg'
 
-const props = [ '--kite9-port-position' ]
+const PORT_POSITION = '--kite9-port-position';
+
+const props = [ PORT_POSITION ]
 
 const positionRegex = /^([0-9\-.]+)(px|%)$/
 
-function parsePosition(str) {
+function parsePosition(str: string) {
 	if (str) {
 		const matches = str.match(positionRegex);
 		if (matches.length > 0) {
@@ -33,14 +35,14 @@ export function initPortsSelector(doc = getMainSvg()) : Selector {
 }
 
 export function initPortsPositionBuildControls() : BuildControlsCallback {
-	return function(selectedElement, style) {
-		const position = style[props[1]];
+	return function(_selectedElement, style) {
+		const position = style[PORT_POSITION];
 		const { amount, unit } = parsePosition(position);
 		
 		return [ fieldset('Port Position', [
 			numeric('amount', amount, {name: undefined, id: 'amount'}),
 			select('unit', unit, {name: undefined, id: 'unit'}, [ '%', 'px' ]),
-			hidden(props[1], style[props[1]])
+			hidden(PORT_POSITION, style[PORT_POSITION])
 		]) ];
 	}
 }
@@ -49,10 +51,10 @@ export function initPortsPositionBuildControls() : BuildControlsCallback {
 export const initPortsPositionChangeEvent: InitChangeEvent = () => {
 	return () => {
 		// update hidden field
-		const form = formObject('enum');
+		const form = formObject();
 		const amount = (form.querySelector('#amount') as HTMLFormElement).value;
 		const unit = (form.querySelector('#unit') as HTMLFormElement).value;
-		const pos = (form.querySelector('#'+props[1])  as HTMLFormElement);
+		const pos = (form.querySelector('#'+PORT_POSITION)  as HTMLFormElement);
 		if (amount) {
 			pos.value = amount+unit;
 		} else {
