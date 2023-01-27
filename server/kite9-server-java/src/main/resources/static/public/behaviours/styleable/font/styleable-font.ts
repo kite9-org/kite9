@@ -40,7 +40,7 @@ export function initFontBuildControls() : BuildControlsCallback {
 		const fontFamilySelect = select('font-family', fontFamily, {}, [ '', ...Object.keys(availableFamilies) ]);
 		const fontWeightSelect = select('font-weight', fontWeight, {}, allWeights)
 		const fontStyleSelect = select('font-style', fontStyle, {}, allStyles)
-		const fontSizeField = numeric('font-size', parseFloat(fontSize));
+		const fontSizeField = numeric('font-size', fontSize);
 		
 		function updateWeightAndStyle(selected: string) {
 			const goodWeights = selected ? [ '', ...availableFamilies[selected].weights.split(" ") ] : allWeights;

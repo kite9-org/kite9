@@ -18,7 +18,7 @@ export function initPortDropCallback(command: Command, filter: ElementBiFilter) 
 			const side = closestSide(dropTarget, getSVGCoords(evt));
 			dragState.forEach(s => {
 				if (filter(s.dragTarget, dropTarget)) {
-					const canReposition = getAffordances(s.dragTarget).includes("port");
+					const canReposition = getAffordances(s.dragTarget).includes("direction");
 					const style = parseStyle(s.dragTarget.getAttribute("style"));
 	
 					if (canReposition) {

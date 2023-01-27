@@ -1,6 +1,6 @@
 import { hasLastSelected, onlyLastSelected } from '../../bundles/api.js'
 import { parseStyle, formatStyle, Styles } from '../../bundles/css.js'
-import { form, ok, cancel, inlineButtons, formValues, fieldset, select, numeric } from '../../bundles/form.js'
+import { ok, cancel, inlineButtons, formValues, fieldset, select, numeric } from '../../bundles/form.js'
 import { getMainSvg, getElementHTMLBBox } from '../../bundles/screen.js';
 import { Selector } from '../../bundles/types.js';
 import { Command } from '../../classes/command/command.js';
@@ -32,7 +32,7 @@ export function addNumericControl(
 		placeholderText = "default (" + inheritedLength.toFixed(1) + ")"
 	}
 
-	const box = numeric(cssAttribute, length, { "min": "0", "placeholder": placeholderText });
+	const box = numeric(cssAttribute, ""+length, { "min": "0", "placeholder": placeholderText });
 	const input: HTMLInputElement = box.children[1] as HTMLInputElement;
 
 	const sizer = overlay.createSizingArrow(sx, sy, length, horiz, inverse, (v) => {

@@ -5,6 +5,7 @@ import { Direction, ElementFilter, Point, Selector } from '../../bundles/types.j
 import { Command } from '../../classes/command/command.js';
 import { StateItem } from '../../classes/dragger/dragger.js';
 import { addNamedEventListener } from '../../bundles/monika.js';
+import { parseStyle } from '../../bundles/css.js';
 
 export type LinkDirection = Direction | undefined
 
@@ -114,4 +115,21 @@ export function initAlignmentCollector(ai: AlignmentIdentifier)  : AlignmentColl
 			});
 		
 	}
+}
+
+
+export function getDirection(e: Element): LinkDirection {
+	if (e == null) {
+		return undefined;
+	} else {
+		const info = parseInfo(e);
+		const l = info['direction'];
+		return l;
+	}
+}
+
+export function getStyleDirection(e1: Element) : LinkDirection {
+	const style = parseStyle(e1.getAttribute("style"));
+	const d = style['--kite9-direction'] as LinkDirection;
+	return d;
 }

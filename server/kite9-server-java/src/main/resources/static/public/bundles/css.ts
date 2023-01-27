@@ -1,5 +1,8 @@
 /** From: https://github.com/joshwnj/style-attr */
 
+/**
+ * Replace with StylePropertyMap when houdini matures
+ */
 export type Styles = { [key: string] : string }
 
 export function parseStyle(raw : string) : Styles {

@@ -165,12 +165,12 @@ export function initGridLayoutPropertyFormCallback() : FormCallback {
 		
 		fieldset.appendChild(
 			change(
-				numeric('Rows', rows, { 'min' : ''+minGridSize[1]}), 
+				numeric('Rows', ""+rows, { 'min' : ''+minGridSize[1]}), 
 				() => rows = number((contextEvent.target as HTMLFormElement).value)));
 				
 		fieldset.appendChild(
 			change(
-				numeric('Cols', cols, { 'min' : ''+minGridSize[0]}), 
+				numeric('Cols',""+cols, { 'min' : ''+minGridSize[0]}), 
 				() => cols = number((contextEvent.target as HTMLFormElement).value)));
 		
 		contextMenu.addControl(contextEvent, "/public/behaviours/containers/layout/grid.svg","Grid", 

@@ -136,8 +136,8 @@ export function hidden(placeholder:string, value: string) : HTMLElement {
 	return create('input', {'type': 'hidden', 'value': value, 'id': id, 'name': id })
 }
 
-export function numeric(placeholder:string, value: number, atts: object = {}) : HTMLElement {
-	return input(placeholder, 'number', ""+value, atts);
+export function numeric(placeholder:string, value: string, atts: object = {}) : HTMLElement {
+	return input(placeholder, 'number', value, atts);
 }
 
 export function email(placeholder:string, value: string, atts: object = {}) : HTMLElement {

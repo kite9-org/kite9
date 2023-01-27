@@ -15,7 +15,7 @@ export function initFillBuildControls() : BuildControlsCallback {
 		
 		if (needsFill) {
 			const fill = colour("fill", style['fill']);
-			const fillOpacity = numeric('fill-opacity', parseFloat(style['fill-opacity']), {min: 0, max: 1, step: 0.1});
+			const fillOpacity = numeric('fill-opacity', style['fill-opacity'], {min: 0, max: 1, step: 0.1});
 			const fillControls = [
 				fill,
 				fillOpacity
@@ -27,8 +27,8 @@ export function initFillBuildControls() : BuildControlsCallback {
 		
 		if (needsStroke) {
 			const stroke = colour("stroke", style['stroke']);
-			const strokeOpacity = numeric('stroke-opacity', parseFloat(style['stroke-opacity']),  {min: 0, max: 1, step: 0.1});
-			const strokeWidth = numeric('stroke-width', parseFloat(style['stroke-width']), {min: 0});
+			const strokeOpacity = numeric('stroke-opacity', style['stroke-opacity'],  {min: 0, max: 1, step: 0.1});
+			const strokeWidth = numeric('stroke-width', style['stroke-width'], {min: 0});
 			
 			const strokeControls = [
 				stroke,

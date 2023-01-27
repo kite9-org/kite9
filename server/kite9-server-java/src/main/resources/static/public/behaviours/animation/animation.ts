@@ -1,4 +1,5 @@
 import { parseTransform, number, handleTransformAsStyle } from '../../bundles/api.js'
+import { formatStyle, parseStyle } from '../../bundles/css.js';
 import { getMainSvg } from '../../bundles/screen.js'
 import { Timeline } from '../../classes/transition/timeline.js';
 import { TransitionAnimationCallback } from '../../classes/transition/transition.js';
@@ -16,16 +17,19 @@ function reconcileTransform(fromElement: SVGGraphicsElement, tl: Timeline, fromV
 }
 
 function reconcileStyles(fromElement: SVGGraphicsElement, toElement: SVGGraphicsElement, tl: Timeline) {
-	const toStyles = Array.from(toElement.style);
-	const fromStyles = Array.from(fromElement.style);
+	const toStyleMap = parseStyle(toElement.getAttribute("style"));
+	const fromStyleMap = parseStyle(fromElement.getAttribute("style"));
+	const toStyles = Object.keys(toStyleMap);
+	const fromStyles = Object.keys(fromStyleMap);
+
 	const toRemove = fromStyles.filter(a => -1 == toStyles.indexOf(a));
 
-	toRemove.forEach(a => fromElement.style[a] = null);
+	toRemove.forEach(a => fromStyleMap[a] = null);
 
 	toStyles.forEach(a => {
 
-		const fromValue = fromElement.style[a];
-		const toValue = toElement.style[a];
+		const fromValue = fromStyleMap[a];
+		const toValue = toStyleMap[a];
 
 		if (fromValue !== toValue) {
 			if (numeric.indexOf(a) != -1) {
@@ -34,10 +38,13 @@ function reconcileStyles(fromElement: SVGGraphicsElement, toElement: SVGGraphics
 				reconcileTransform(fromElement, tl, fromValue, toValue);
 			} else {
 				// just change text
-				fromElement.style[a] = toValue;
+				fromStyleMap[a] = toValue;
 			}
 		}
 	})
+	
+	const updated = formatStyle(fromStyleMap);
+	fromElement.setAttribute("style", updated);
 }
 
 function reconcileClasses(fromElement: Element, toElement: Element) {
