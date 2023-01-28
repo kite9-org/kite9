@@ -1,4 +1,4 @@
-import { parseInfo } from '../../bundles/api.js'
+import { getContainerChildren, parseInfo } from '../../bundles/api.js'
 
 export interface Ordinals extends Array<number> {
 	max: number, 
@@ -42,8 +42,7 @@ export function getOrdinals(container: Element) : {xOrdinals: Ordinals, yOrdinal
 	yOrdinals.max = Number.MIN_SAFE_INTEGER;
 	yOrdinals.min = Number.MAX_SAFE_INTEGER;
 	
-	Array.from(container.children)
-		.filter(e => e instanceof Element)
+	getContainerChildren(container)
 		.forEach(e => {
 		const details = parseInfo(e);
 		if ((details != null) && (details['position']) && details['grid-x']) {
