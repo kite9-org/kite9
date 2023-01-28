@@ -4,10 +4,11 @@ import { getOrdinals } from '../../grid/common-grid.js'
 import { Command } from '../../../classes/command/command.js';
 import { FormCallback, SetCallback } from '../../../classes/context-menu/property.js';
 import { PaletteSelector } from '../../../bundles/types.js';
+import { extractFormValues } from '../../styleable/styleable.js';
 
 function getMinGridSize(e: Element) : [number, number] {
 	const info = parseInfo(e);
-	if (info['layout'] == 'GRID') {
+	if (info['layout'] == 'grid') {
 		return info['grid-size'];
 	} else {
 		return [1, 1];
@@ -35,7 +36,10 @@ export function initGridLayoutPropertySetCallback(
 	}
 	
 	return function(_propertyOwner, _contextEvent, formEvent, _contextMenu, selectedElements) {
-		const layout = (formEvent.currentTarget as Element).getAttribute("title");
+		const layout = (formEvent.currentTarget as Element).getAttribute("aria-label")?.toLowerCase();
+		const params = extractFormValues();
+		const cols = number(params.cols);
+		const rows = number(params.rows);
 
 		Array.from(selectedElements).forEach(e => {
 			const existing = getLayout(e);
@@ -147,31 +151,21 @@ export function initGridLayoutPropertySetCallback(
 	
 }
 
-let rows = 2;
-let cols = 2;
 
 export function initGridLayoutPropertyFormCallback() : FormCallback {
 
 	return function(propertyOwner, contextEvent, contextMenu, selectedElements) {
 		const ls = onlyLastSelected(selectedElements);
-		const minGridSize = getMinGridSize(ls);
+		const [minRows, minCols] = getMinGridSize(ls);
 		
 		const fieldset = contextMenu.fieldset(contextEvent, "Grid");
 	
-		rows = Math.max(2, minGridSize[1]);
-		cols = Math.max(cols, minGridSize[0]);
+		const rows = Math.max(2, minRows);
+		const cols = Math.max(2, minCols);
 		
-		
-		
-		fieldset.appendChild(
-			change(
-				numeric('Rows', ""+rows, { 'min' : ''+minGridSize[1]}), 
-				() => rows = number((contextEvent.target as HTMLFormElement).value)));
+		fieldset.appendChild(numeric('Rows', ""+rows, { 'min' : ''+minRows}));
 				
-		fieldset.appendChild(
-			change(
-				numeric('Cols',""+cols, { 'min' : ''+minGridSize[0]}), 
-				() => cols = number((contextEvent.target as HTMLFormElement).value)));
+		fieldset.appendChild(numeric('Cols',""+cols, { 'min' : ''+minCols}));
 		
 		contextMenu.addControl(contextEvent, "/public/behaviours/containers/layout/grid.svg","Grid", 
 			(formEvent) => propertyOwner.setProperty(contextEvent, formEvent, contextMenu, selectedElements),
