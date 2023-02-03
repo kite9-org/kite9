@@ -3,6 +3,8 @@ package com.kite9.server.controllers;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
@@ -38,6 +40,8 @@ import com.kite9.server.web.URIRewriter;
  */
 @Controller
 public class PathContentController extends AbstractContentController {
+
+	private final Logger LOG = LoggerFactory.getLogger(PathContentController.class);
 
 	/**
 	 * If we add extra SourceAPIFactory implementations, we'll probably need to change this.

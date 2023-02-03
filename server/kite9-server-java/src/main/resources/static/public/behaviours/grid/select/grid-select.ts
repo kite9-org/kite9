@@ -1,6 +1,6 @@
 import { hasLastSelected, parseInfo } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js';
-import { Selector } from '../../../bundles/types.js';
+import { intersects, Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 
@@ -13,12 +13,6 @@ export function initSelectContextMenuCallback(selector: Selector = undefined) : 
 	}
 	
 	function performSelect(_cm: ContextMenu, _event: Event, horiz: boolean, elements: Element[]) {
-		
-		function intersects(r1 : number, r2: number) {
-			const startIn = (r1[0] >= r2[0]) && (r1[0] < r2[1]);
-			const endIn = (r1[1] > r2[0]) && (r1[1] <= r2[1]);
-			return startIn || endIn;
-		}
 		
 		elements.forEach(e => {
 			const info = parseInfo(e);

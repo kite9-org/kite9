@@ -31,6 +31,8 @@ export type Area = Point & {
 	height: number
 }
 
+export type Range = [number, number]
+
 /**
  * Given an id, returns the element
  */
@@ -87,4 +89,11 @@ export function sharedArea(a1: Area, a2: Area) : Area {
 	} as Area
 	
 }
+
+export function intersects(r1: Range, r2: Range) {
+	const startIn = (r1[0] >= r2[0]) && (r1[0] < r2[1]);
+	const endIn = (r1[1] > r2[0]) && (r1[1] <= r2[1]);
+	return startIn || endIn;
+}
+		
 

@@ -1,4 +1,4 @@
-import { Direction, ElementFilter } from "./types";
+import { Direction, ElementFilter, Range } from "./types";
 
 /**
  * Returns the collection of elements so long as one of them has the lastSelected class.
@@ -74,8 +74,8 @@ type Info = {
 	'direction'?: Direction,
 	'temporary'?: boolean,
 	'contradicting'?: 'yes',
-	'grid-x'?: number, 
-	'grid-y'?: number
+	'grid-x'?: Range, 
+	'grid-y'?: Range
 }
 
 export function parseInfo(t : Element) : Info  {

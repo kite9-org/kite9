@@ -1,7 +1,8 @@
-import { parseInfo, isCell, isGrid, getKite9Target, isConnected } from '../../../bundles/api.js'
+import { parseInfo, isCell, isGrid, getKite9Target, getParentElement, getContainerChildren } from '../../../bundles/api.js'
+import { parseStyle } from '../../../bundles/css.js';
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
-import { Direction, Selector, Point, Area } from '../../../bundles/types.js';
+import { Direction, Selector, Point, Area, Range, intersects } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { DragLocatorCallback, DropCallback, DropLocatorCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
 import { getOrdinal, getOrdinals, Ordinals  } from '../common-grid.js' 
@@ -22,9 +23,9 @@ export function initCellDropLocatorCallback() : DropLocatorCallback {
 	return function(dragTargets, e) {
 		const containerDropTargets = currentTargets(e)
 				.map(t => getKite9Target(t))
-				.filter(t => isConnected(t));
+				.filter(t => isCell(t));
 				
-		if (isCell(dragTargets[0]) && isCell(containerDropTargets[0])) {
+		if (isCell(dragTargets[0]) && (containerDropTargets.length>0)) {
 			return containerDropTargets[0];
 		} else {
 			return null;
@@ -34,14 +35,14 @@ export function initCellDropLocatorCallback() : DropLocatorCallback {
 }
 
 type Occupation = {
-	x: number[],
-	y: number[]
+	x: Range,
+	y: Range
 }[]
 
 type GridArea = {
-	x: [number, number],
-	y: [number, number],
-	items: { [ index: string] : { dx: [number, number], dy: [number, number] }}
+	x: Range,
+	y: Range,
+	items: { [ index: string] : { dx: Range, dy: Range }}
 }
 
 type MoveCache = {
@@ -50,6 +51,11 @@ type MoveCache = {
 	container?: Element
 	occupation?: Occupation,
 	side?: Direction
+}
+
+type MoveItem = {
+	dx: Range, 
+	dy: Range
 }
 
 let moveCache : MoveCache = {
@@ -94,7 +100,7 @@ function calculateOccupation(container: Element) : Occupation {
 	
 	const occupation = [];
 	
-	Array.from(container.children).forEach(e => {
+	getContainerChildren(container).forEach(e => {
 		const details = parseInfo(e);
 		if ((details != null) && details['grid-x']) {
 			const gridX = details['grid-x'];
@@ -163,14 +169,8 @@ export function initCellMoveCallback() : MoveCallback {
 	}
 
 	function overlaps(dragTargets: Element[], dropTargets: Element[]) : boolean {
-		
-		function intersects(r1, r2) {
-			const startIn = (r1[0] >= r2[0]) && (r1[0] < r2[1]);
-			const endIn = (r1[1] > r2[0]) && (r1[1] <= r2[1]);
-			return startIn || endIn;
-		}
-		
-		const container = dropTargets[0].parentElement;
+			
+		const container = getParentElement(dropTargets[0]);
 		const area = calculateArea(dragTargets);
 		const occupation = calculateOccupation(container);
 		
@@ -182,7 +182,7 @@ export function initCellMoveCallback() : MoveCallback {
 			const dt = dragTargets[i];
 			const id = dt.getAttribute("id");
 			const item = area.items[id];
-			const movedItem = { 
+			const movedItem : MoveItem = { 
 					dx: [item.dx[0] + dropX[0], item.dx[1] + dropX[0]],
 					dy: [item.dy[0] + dropY[0], item.dy[1] + dropY[0]]
 			}
@@ -232,17 +232,25 @@ export function initCellMoveCallback() : MoveCallback {
 			if (cellDropTargets.length == 1) {
 				if (overlaps(cellDragTargets, cellDropTargets)) {
 					// draw a bar on the closest side 
-					const box = getElementPageBBox(cellDropTargets[0]);
-					moveCache.side = closestSide(pos, box);
+					const container = getParentElement(cellDropTargets[0]);
+					const box1 = getElementPageBBox(cellDropTargets[0]);
+					const box2 = getElementPageBBox(container);
+					const box : Area = {
+						x: box1.x - box2.x,
+						y: box1.y - box2.y,
+						width: box1.width,
+						height: box1.height
+					}
+					moveCache.side = closestSide(pos, box1);
 					switch (moveCache.side) {
 					case 'up':
-						return drawBar(box.x, box.y, box.x + box.width, box.y);
+						return drawBar(box.x, box.y, box.x + box.width, box.y, container);
 					case 'down':
-						return drawBar(box.x, box.y+box.height, box.x + box.width, box.y+box.height);
+						return drawBar(box.x, box.y+box.height, box.x + box.width, box.y+box.height, container);
 					case 'left':
-						return drawBar(box.x, box.y, box.x, box.y+box.height);
+						return drawBar(box.x, box.y, box.x, box.y+box.height, container);
 					case 'right':
-						return drawBar(box.x + box.width, box.y, box.x + box.width, box.y+box.height);
+						return drawBar(box.x + box.width, box.y, box.x + box.width, box.y+box.height, container);
 					}			
 				} else {
 					moveCache.side = null;
@@ -285,6 +293,26 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 		}
 	}
 	
+	function pushCells(cells: Element[], from: number, horiz: boolean, push: number) {
+		cells.forEach(cell => {
+			const info = parseInfo(cell);
+			const infoField = horiz ? 'grid-x' : 'grid-y';
+			const styleField = horiz ? '--kite9-occupies-x': 'kite9-occupies-y';
+			const [f, t] = info[infoField];
+			if (f >= from) {
+				const style = parseStyle(cell.getAttribute("style"));
+				command.push({
+					type: 'ReplaceStyle',
+					fragmentId:  cell.getAttribute("id"),
+					name: styleField,
+					from: style[styleField],
+					to: `${f+push} ${t+push}`
+				});
+			}
+		})
+		
+	}
+	
 	return function(dragState, _evt, dropTargets) {
 		const dragTargets = dragState.map(s => s.dragTarget);
 		const dragTargetIds = dragTargets.map(s => s.getAttribute("id"));
@@ -313,15 +341,10 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 				const { from, horiz, push } = getPush(moveCache.area, to, xOrdinals, yOrdinals);
 				// console.log("Push: "+from+" "+horiz+" "+push);
 				
-				// TODO: fix this up
-//				command.push({
-//					type: 'ADLMoveCells',
-//					fragmentId: containerId,
-//					from: from,
-//					horiz: horiz,
-//					push: push,
-//					excludedIds: dragTargetIds
-//				})
+				const allCells = getContainerChildren(container, cellDragTargets)
+					.filter(c => isCell(c));
+				
+				pushCells(allCells, from, horiz, push);
 			}
 			
 			dragState.forEach(ds => {

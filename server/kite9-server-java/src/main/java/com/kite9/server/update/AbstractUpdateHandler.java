@@ -36,7 +36,7 @@ import com.kite9.server.update.Update.Type;
  */
 public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, ApplicationContextAware {
 	
-	protected final Logger LOG = LoggerFactory.getLogger(this.getClass());
+	private final Logger LOG = LoggerFactory.getLogger(AbstractUpdateHandler.class);
 	protected final CommandContext ctx = new BatikCommandContext();
 	protected ApplicationContext appCtx;
 		
