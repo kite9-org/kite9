@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.command.Command;
 import com.kite9.pipeline.command.CommandContext;
@@ -39,6 +41,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 	private final Logger LOG = LoggerFactory.getLogger(AbstractUpdateHandler.class);
 	protected final CommandContext ctx = new BatikCommandContext();
 	protected ApplicationContext appCtx;
+	private ObjectMapper logMapper = new ObjectMapper();
 		
 	public AbstractUpdateHandler() {
 		super();
@@ -60,7 +63,9 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 				Collections.reverse(commands);
 				for (Command command : commands) {
 					Command.Mismatch status = command.undoCommand(dom, ctx);
-					LOG.debug("Completed {} with status {}", command, status);
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Completed {} with status {}", jsonify(command), status);
+					}
 					if (status != null) {
 						errors.add(status);
 					}
@@ -68,7 +73,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 			} else {
 				for (Command command : commands) {
 					Command.Mismatch status = command.applyCommand(dom, ctx);
-					LOG.debug("Completed {} with status {}", command, status);
+					LOG.debug("Completed {} with status {}", jsonify(command), status);
 					if (status != null) {
 						errors.add(status);
 					}
@@ -99,6 +104,10 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 	}
 
 	
+	protected String jsonify(Command command) throws JsonProcessingException {
+		return logMapper.writeValueAsString(command);
+	}
+
 	protected void broadcastChange(ADLDom dom) {
 		Collection<ChangeBroadcaster> values = appCtx.getBeansOfType(ChangeBroadcaster.class).values();
 		values.stream()

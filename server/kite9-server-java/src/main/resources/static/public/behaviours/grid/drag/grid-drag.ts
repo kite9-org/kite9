@@ -297,7 +297,7 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 		cells.forEach(cell => {
 			const info = parseInfo(cell);
 			const infoField = horiz ? 'grid-x' : 'grid-y';
-			const styleField = horiz ? '--kite9-occupies-x': 'kite9-occupies-y';
+			const styleField = horiz ? '--kite9-occupies-x': '--kite9-occupies-y';
 			const [f, t] = info[infoField];
 			if (f >= from) {
 				const style = parseStyle(cell.getAttribute("style"));
