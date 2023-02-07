@@ -113,6 +113,11 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	public void test_46_16_GridProblem() throws Exception {
 		generate("broken_grid.xml");
 	}
+
+	@Test
+	public void test_46_16_GridProblem2() throws Exception {
+		generate("broken_grid2.xml");
+	}
 	
 	protected DiagramKite9XMLElement createDiagram() {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label",

@@ -1,4 +1,4 @@
-import { parseInfo, isCell, isGrid, getKite9Target, getParentElement, getContainerChildren } from '../../../bundles/api.js'
+import { parseInfo, isCell, isGrid, getKite9Target, getParentElement, getContainerChildren, isTemporary } from '../../../bundles/api.js'
 import { parseStyle } from '../../../bundles/css.js';
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
@@ -296,17 +296,24 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 	function pushCells(cells: Element[], from: number, horiz: boolean, push: number) {
 		cells.forEach(cell => {
 			const info = parseInfo(cell);
-			const infoField = horiz ? 'grid-x' : 'grid-y';
+			const position = info['position'];
 			const styleField = horiz ? '--kite9-occupies-x': '--kite9-occupies-y';
-			const [f, t] = info[infoField];
+			const [f, t] = horiz ? [ position[0], position[1]] : [position[2], position[3]];
 			if (f >= from) {
-				const style = parseStyle(cell.getAttribute("style"));
 				command.push({
 					type: 'ReplaceStyle',
 					fragmentId:  cell.getAttribute("id"),
 					name: styleField,
-					from: style[styleField],
+					from: `${f} ${t}`,
 					to: `${f+push} ${t+push}`
+				});
+			} else if (t >= from) {
+				command.push({
+					type: 'ReplaceStyle',
+					fragmentId:  cell.getAttribute("id"),
+					name: styleField,
+					from: `${f} ${t}`,
+					to: `${f} ${t+push}`
 				});
 			}
 		})
@@ -341,10 +348,11 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 				const { from, horiz, push } = getPush(moveCache.area, to, xOrdinals, yOrdinals);
 				// console.log("Push: "+from+" "+horiz+" "+push);
 				
-				const allCells = getContainerChildren(container, cellDragTargets)
-					.filter(c => isCell(c));
+				const movableCells = getContainerChildren(container, cellDragTargets)
+					.filter(c => isCell(c))
+					.filter(c => !isTemporary(c))
 				
-				pushCells(allCells, from, horiz, push);
+				pushCells(movableCells, from, horiz, push);
 			}
 			
 			dragState.forEach(ds => {

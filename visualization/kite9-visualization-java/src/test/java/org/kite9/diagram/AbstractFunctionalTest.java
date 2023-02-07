@@ -45,17 +45,17 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	@Before
 	public void setLogging() {
-		if ("off".equals(System.getProperty("kite9.logging"))) {
-			Kite9LogImpl.setLogging(Destination.OFF);
-		} else {
-			Kite9LogImpl.setLogging(Destination.STREAM);
-			// if we are running more than one test, then there's no point in logging.
-			if (firstRun) {
-				firstRun = false;
-			} else {
-				Kite9LogImpl.setLogging(Destination.OFF);
-			}
-		}
+		Kite9LogImpl.setLogging(Destination.STREAM);
+//		if ("off".equals(System.getProperty("kite9.logging"))) {
+//			Kite9LogImpl.setLogging(Destination.OFF);
+//		} else {
+//			// if we are running more than one test, then there's no point in logging.
+//			if (firstRun) {
+//				firstRun = false;
+//			} else {
+//				Kite9LogImpl.setLogging(Destination.OFF);
+//			}
+//		}
 	}
 
 	@Before

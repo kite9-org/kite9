@@ -443,6 +443,19 @@ export function isGrid(e? : Element) : boolean {
 	return false;
 }
 
+export function isTemporary(e? : Element) : boolean {
+	if (e == null)
+		return false;
+	if (e.hasAttribute("k9-info")) {
+		const out = e.getAttribute("k9-info");
+		if (out.includes("temporary: true;")) {
+			return true;
+		}
+	}
+	
+	return false;
+}
+
 
 export function connectedElement(terminator : Element, within : SVGSVGElement) : Element {
 	const info = parseInfo(terminator)

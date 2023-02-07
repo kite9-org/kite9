@@ -6,7 +6,9 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
+import org.kite9.diagram.model.style.GridContainerPosition;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.testing.TestingHelp;
@@ -47,6 +49,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -404,6 +407,56 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
+	private static void checkContentsGrid(Container con) {
+		List<ConnectedRectangular> connecteds = con.getContents().stream()
+				.filter(cc -> cc instanceof ConnectedRectangular)
+				.map(cc -> (ConnectedRectangular) cc)
+				.collect(Collectors.toList());
+
+		connecteds.forEach(c -> {
+			// first, check horizontal
+			GridContainerPosition gcpC = getGridContainerPosition(c);
+			RectangleRenderingInformation rriC = c.getRenderingInformation();
+			connecteds.forEach(d -> {
+				if (d != c) {
+					GridContainerPosition gcpD = getGridContainerPosition(d);
+					RectangleRenderingInformation rriD = d.getRenderingInformation();
+					boolean dBeforeCX = gcpD.getX().getTo() < gcpC.getX().getFrom();
+					boolean dAfterCX = gcpD.getX().getFrom() > gcpC.getX().getTo();
+
+					if (dBeforeCX) {
+						checkBefore(rriD.getPosition().x(), rriD.getSize().width(), rriC.getPosition().x(), rriC.getSize().width(), d, c, Layout.RIGHT);
+					}
+
+					if (dAfterCX) {
+						checkBefore(rriC.getPosition().x(), rriC.getSize().width(), rriD.getPosition().x(), rriD.getSize().width(), c, d, Layout.RIGHT);
+					}
+
+					boolean dBeforeCY = gcpD.getY().getTo() < gcpC.getY().getFrom();
+					boolean dAfterCY = gcpD.getY().getFrom() > gcpC.getY().getTo();
+
+					if (dBeforeCY) {
+						checkBefore(rriD.getPosition().y(), rriD.getSize().height(), rriC.getPosition().y(), rriC.getSize().height(), d, c, Layout.DOWN);
+					}
+
+					if (dAfterCY) {
+						checkBefore(rriC.getPosition().y(), rriC.getSize().height(), rriD.getPosition().y(), rriD.getSize().height(), c, d, Layout.DOWN);
+					}
+
+				}
+			});
+		});
+	}
+
+	private static GridContainerPosition getGridContainerPosition(ConnectedRectangular c) {
+		ContainerPosition cp = c.getContainerPosition();
+		if (!(cp instanceof GridContainerPosition)) {
+			throw new ExpectedLayoutException("Was expecting grid for "+ c.getID());
+		}
+
+		return (GridContainerPosition) cp;
+	}
+
 	public static void testLayout(Container d) {
 		Layout l = d.getLayout();
 
@@ -420,8 +473,10 @@ public class TestingEngine extends TestingHelp {
 					break;
 				case HORIZONTAL:
 				case VERTICAL:
-					
 					checkContentsOverlap(d, l);
+					break;
+				case GRID:
+					checkContentsGrid(d);
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
