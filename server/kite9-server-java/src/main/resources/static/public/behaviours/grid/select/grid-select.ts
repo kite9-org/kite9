@@ -41,8 +41,8 @@ export function initSelectContextMenuCallback(selector: Selector = undefined) : 
 		const e = hasLastSelected(selector());
 		
 		if (e.length > 0) {
-			cm.addControl(event, "/public/behaviours/grid/select/vertical.svg",  "Select Column", () => performSelect(cm, event, false, selector()));
-			cm.addControl(event, "/public/behaviours/grid/select/horizontal.svg",  "Select Row", () => performSelect(cm, event, true, selector()));
+			cm.addControl(event, "/public/behaviours/grid/select/vertical.svg",  "Select Column", () => performSelect(cm, event, false, selector()), 'Related');
+			cm.addControl(event, "/public/behaviours/grid/select/horizontal.svg",  "Select Row", () => performSelect(cm, event, true, selector()), 'Related');
 		}
 	}
 	

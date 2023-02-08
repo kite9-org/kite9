@@ -1,4 +1,5 @@
-import { getContainerChildren, parseInfo } from '../../bundles/api.js'
+import { getContainerChildren, isCell, isTemporary, parseInfo } from '../../bundles/api.js'
+import { Command } from '../../classes/command/command.js';
 
 export interface Ordinals extends Array<number> {
 	max: number, 
@@ -66,4 +67,38 @@ export function getOrdinals(container: Element) : {xOrdinals: Ordinals, yOrdinal
 		xOrdinals: xOrdinals,
 		yOrdinals: yOrdinals,
 	}
+}
+
+/**
+ * Used for moving cells in a grid down/left.
+ */
+export function pushCells(command: Command, container: Element, from: number, horiz: boolean, push: number, ignore: Element[]) {
+	const movableCells = getContainerChildren(container, ignore)
+		.filter(c => isCell(c))
+		.filter(c => !isTemporary(c))
+
+	movableCells.forEach(cell => {
+		const info = parseInfo(cell);
+		const position = info['position'];
+		const styleField = horiz ? '--kite9-occupies-x': '--kite9-occupies-y';
+		const [f, t] = horiz ? [ position[0], position[1]] : [position[2], position[3]];
+		if (f >= from) {
+			command.push({
+				type: 'ReplaceStyle',
+				fragmentId:  cell.getAttribute("id"),
+				name: styleField,
+				from: `${f} ${t}`,
+				to: `${f+push} ${t+push}`
+			});
+		} else if (t >= from) {
+			command.push({
+				type: 'ReplaceStyle',
+				fragmentId:  cell.getAttribute("id"),
+				name: styleField,
+				from: `${f} ${t}`,
+				to: `${f} ${t+push}`
+			});
+		}
+	})
+	
 }

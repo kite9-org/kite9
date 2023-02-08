@@ -6,10 +6,10 @@ import { once } from '../../bundles/ensure.js'
 import { initCellDragLocator, initCellDropCallback, initCellMoveCallback, initCellDropLocatorCallback } from '../../behaviours/grid/drag/grid-drag.js'
 import { initGridTemporaryReplacePaletteCallback } from '../../behaviours/grid/replace/grid-replace.js'
 import { initSelectContextMenuCallback } from '../../behaviours/grid/select/grid-select.js'
-import { initCellAppendContextMenuCallback } from '../../behaviours/grid/append/append.js'
+import { initCellAppendContextMenuCallback } from '../../behaviours/grid/append/grid-append.js'
 import { initGridContainmentCallback } from '../../behaviours/grid/rules/grid-rules.js'
 import { initGridLayoutPropertyFormCallback, initGridLayoutPropertySetCallback } from '../../behaviours/grid/layout/grid-layout.js'
-import { initCellCreator } from '../../behaviours/grid/create/create.js'
+import { initCellCreator } from '../../behaviours/grid/create/grid-create.js'
 
 
 import { command, metadata, dragger, contextMenu, layout, palette, containment } from '../../templates/editor/editor.js'

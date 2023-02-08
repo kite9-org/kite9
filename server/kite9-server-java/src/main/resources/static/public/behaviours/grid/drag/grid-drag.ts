@@ -1,11 +1,10 @@
-import { parseInfo, isCell, isGrid, getKite9Target, getParentElement, getContainerChildren, isTemporary } from '../../../bundles/api.js'
-import { parseStyle } from '../../../bundles/css.js';
+import { parseInfo, isCell, isGrid, getKite9Target, getParentElement, getContainerChildren } from '../../../bundles/api.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
 import { Direction, Selector, Point, Area, Range, intersects } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { DragLocatorCallback, DropCallback, DropLocatorCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
-import { getOrdinal, getOrdinals, Ordinals  } from '../common-grid.js' 
+import { getOrdinal, getOrdinals, Ordinals, pushCells  } from '../common-grid.js' 
 
 function isEmptyGrid(e) {
 	if (isGrid(e)) {
@@ -273,7 +272,7 @@ type Push = {
 }
 
 
-export function initCellDropCallback(command: Command, ) : DropCallback {
+export function initCellDropCallback(command: Command) : DropCallback {
 	
 	function getPush(area: GridArea, to, xOrdinals: Ordinals, yOrdinals: Ordinals) : Push {
 		if ((moveCache.side == 'up') || (moveCache.side=='down')) {
@@ -293,36 +292,8 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 		}
 	}
 	
-	function pushCells(cells: Element[], from: number, horiz: boolean, push: number) {
-		cells.forEach(cell => {
-			const info = parseInfo(cell);
-			const position = info['position'];
-			const styleField = horiz ? '--kite9-occupies-x': '--kite9-occupies-y';
-			const [f, t] = horiz ? [ position[0], position[1]] : [position[2], position[3]];
-			if (f >= from) {
-				command.push({
-					type: 'ReplaceStyle',
-					fragmentId:  cell.getAttribute("id"),
-					name: styleField,
-					from: `${f} ${t}`,
-					to: `${f+push} ${t+push}`
-				});
-			} else if (t >= from) {
-				command.push({
-					type: 'ReplaceStyle',
-					fragmentId:  cell.getAttribute("id"),
-					name: styleField,
-					from: `${f} ${t}`,
-					to: `${f} ${t+push}`
-				});
-			}
-		})
-		
-	}
-	
 	return function(dragState, _evt, dropTargets) {
 		const dragTargets = dragState.map(s => s.dragTarget);
-		const dragTargetIds = dragTargets.map(s => s.getAttribute("id"));
 		const cellDropTargets = dropTargets.filter(dt => isCell(dt));
 		const cellDragTargets = dragTargets.filter(dt => isCell(dt));
 		const gridDropTargets = dropTargets.filter(dt => isEmptyGrid(dt));
@@ -346,13 +317,7 @@ export function initCellDropCallback(command: Command, ) : DropCallback {
 			
 			if ((moveCache.side) && (container == moveCache.container)) {
 				const { from, horiz, push } = getPush(moveCache.area, to, xOrdinals, yOrdinals);
-				// console.log("Push: "+from+" "+horiz+" "+push);
-				
-				const movableCells = getContainerChildren(container, cellDragTargets)
-					.filter(c => isCell(c))
-					.filter(c => !isTemporary(c))
-				
-				pushCells(movableCells, from, horiz, push);
+				pushCells(command, container, from, horiz, push, cellDragTargets);
 			}
 			
 			dragState.forEach(ds => {
