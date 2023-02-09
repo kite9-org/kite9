@@ -95,9 +95,17 @@ export function initCellAppendContextMenuCallback(
 				command.push({
 					type: 'ReplaceStyle',
 					fragmentId:  newId,
-					name: '--kite9-occupies',
-					to: newPos[0] + ' ' + newPos[1] + ' ' + newPos[2] + ' ' + newPos[3],
-					from: item.style['--kite9-occupies']
+					name: '--kite9-occupies-x',
+					to: newPos[0] + ' ' + newPos[1],
+					from: itemPos[0]+' ' + itemPos[1]
+				})
+				
+				command.push({
+					type: 'ReplaceStyle',
+					fragmentId:  newId,
+					name: '--kite9-occupies-y',
+					to: newPos[2] + ' ' + newPos[3],
+					from: itemPos[2]+ ' '+itemPos[3]
 				})
 			});
 		})

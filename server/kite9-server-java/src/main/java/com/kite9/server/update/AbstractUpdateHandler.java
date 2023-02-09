@@ -64,7 +64,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 				for (Command command : commands) {
 					Command.Mismatch status = command.undoCommand(dom, ctx);
 					if (LOG.isDebugEnabled()) {
-						LOG.debug("Completed {} with status {}", jsonify(command), status);
+						LOG.debug("Completed {} with status {}", jsonify(command), explain(status));
 					}
 					if (status != null) {
 						errors.add(status);
@@ -73,7 +73,7 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 			} else {
 				for (Command command : commands) {
 					Command.Mismatch status = command.applyCommand(dom, ctx);
-					LOG.debug("Completed {} with status {}", jsonify(command), status);
+					LOG.debug("Completed {} with status {}", jsonify(command), explain(status));
 					if (status != null) {
 						errors.add(status);
 					}
@@ -103,6 +103,9 @@ public abstract class AbstractUpdateHandler implements Logable, UpdateHandler, A
 		}
 	}
 
+	protected String explain(Command.Mismatch status) {
+		return status == null ? "" : status.explain();
+	}
 	
 	protected String jsonify(Command command) throws JsonProcessingException {
 		return logMapper.writeValueAsString(command);
