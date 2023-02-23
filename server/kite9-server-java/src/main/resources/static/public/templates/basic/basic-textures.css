@@ -28,3 +28,11 @@
   font-family: "metropolis";
   font-size: 35pt;
 }
+
+[k9-elem=box].shaded {
+	fill: #AA5500; 
+}
+
+[k9-elem=textarea].warning {
+	fill: #FF8800; 
+}

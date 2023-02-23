@@ -6,14 +6,13 @@ import { PaletteSelector, Selector } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { Containment } from '../../../classes/containment/containment.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { DragLocatorCallback } from '../../../classes/dragger/dragger.js';
 
 function defaultInsertSelector() {
 	return Array.from(getMainSvg().querySelectorAll('[k9-contains].selected:not([k9-contains=""])'));
 }
 
 function defaultInsertableSelector(palettePanel: Element) {
-	return Array.from(palettePanel.querySelectorAll("[id][k9-palette]"));
+	return Array.from(palettePanel.querySelectorAll("[id][k9-elem]"));
 }
 
 /**

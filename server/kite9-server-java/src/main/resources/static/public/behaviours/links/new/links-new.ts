@@ -5,7 +5,7 @@ import { Dragger } from '../../../classes/dragger/dragger.js';
 import { getElementUri, PaletteLoadCallback } from '../../../classes/palette/palette.js';
 
 function defaultDragableSelector(palettePanel: Element): Element[] {
-	return Array.from(palettePanel.querySelectorAll("[allow-drag=true] [id][k9-palette]"));
+	return Array.from(palettePanel.querySelectorAll("[allow-drag=true] [id][k9-elem]"));
 }
 
 /** Internal state of palette drag */

@@ -6,18 +6,15 @@ import { Containment } from '../../../classes/containment/containment.js';
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { getElementUri, Palette } from '../../../classes/palette/palette.js';
 
-/**
- * k9-palette attribute says which type of element this is.  The element can be replaced with another element of the same type.
- */
 function initDefaultReplaceSelector() {
 	return function() {
-		return Array.from(getMainSvg().querySelectorAll("[id].selected"));
+		return Array.from(getMainSvg().querySelectorAll("[id][k9-elem].selected"));
 	}
 }
 
 function initDefaultReplaceChoiceSelector() {
 	return function(palettePanel: Element) {
-		return Array.from(palettePanel.querySelectorAll("[id][k9-palette]")); //  ~="+type+"]");	
+		return Array.from(palettePanel.querySelectorAll("[id][k9-elem]")); 	
 	}
 }
 
@@ -44,22 +41,28 @@ export function initReplaceContextMenuCallback(
 	
 	if (replaceChecker == undefined) {
 		replaceChecker = function(oldElement, newElement) {
-			if (isLink(oldElement) && isLink(newElement)) {
-				return true;
+			if (isLink(oldElement) != isLink(newElement)) {
+				return false;
 			}
 			
-			if (isTerminator(oldElement) && isTerminator(newElement)) {
-				return true;
+			if (isTerminator(oldElement) != isTerminator(newElement)) {
+				return false;
 			}
 			
-			if ((isLabel(oldElement) && isLabel(newElement)) ||
-				(isConnected(oldElement) && isConnected(newElement))) {
-				const oldParent = getParentElement(oldElement);
-				const children = getContainerChildren(oldElement);
-				const parentCanContainElement = containment.canContainAll([newElement], oldParent);
-				const elementCanContainChildren = containment.canContainAll(children, newElement);
-				return parentCanContainElement && elementCanContainChildren;
+			if (isLabel(oldElement) != isLabel(newElement)) {
+				return false;
 			}
+			
+			if (isConnected(oldElement) != isConnected(newElement)) {
+				return false;
+			}
+			
+			
+			const oldParent = getParentElement(oldElement);
+			const children = getContainerChildren(oldElement);
+			const parentCanContainElement = containment.canContainAll([newElement], oldParent);
+			const elementCanContainChildren = containment.canContainAll(children, newElement);
+			return parentCanContainElement && elementCanContainChildren;
 		}
 		
 	}

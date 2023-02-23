@@ -29,7 +29,7 @@
 			<xsl:with-param name="k9-format" select="$k9-format"  />
 			<xsl:with-param name="k9-highlight" select="$k9-highlight"  />
 			<xsl:with-param name="k9-texture" select="$k9-texture"  />
-			<xsl:with-param name="k9-palette">port</xsl:with-param>
+			<xsl:with-param name="k9-type">port</xsl:with-param>
 			<xsl:with-param name="k9-contains" select="$k9-contains" />
 			<xsl:with-param name="k9-ui" select="$k9-ui" />
 			<xsl:with-param name="id" select="$id"  />

@@ -26,7 +26,7 @@ import { initPortDropCallback, initPortMoveCallback } from '../../behaviours/por
 import { initPortsAddContextMenuCallback } from '../../behaviours/ports/add/ports-add.js';
 import { singleSelect } from '../../behaviours/selectable/selectable.js';
 import { getDocumentParam } from '../../bundles/api.js'
-import { initBiFilter } from '../../behaviours/containers/rules/containers-rules.js'
+import { initBiFilter } from '../../behaviours/typed/rules/typed-rules.js'
 import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
 
 const linker = new Linker(updateLink);
@@ -48,8 +48,8 @@ function initLinks() {
 
 		dragger.dropLocator(initLinkDropLocator());
 			
-		dragger.dropWith(initContainmentDropCallback(command, initBiFilter(['port'],['connected'])));	
-		dragger.dropWith(initPortDropCallback(command, initBiFilter(['port'],['*'])));
+		dragger.dropWith(initContainmentDropCallback(command, initBiFilter(containment, ['port'],['connected'])));	
+		dragger.dropWith(initPortDropCallback(command, initBiFilter(containment, ['port'],['*'])));
 
 		dragger.moveWith(initTerminatorMoveCallback());
 		dragger.moveWith(initPortMoveCallback(containment));
@@ -59,7 +59,7 @@ function initLinks() {
 			initAutoConnectTemplateSelector(getAlignTemplateUri, getLinkTemplateUri)));
 
 		dragger.dropWith(initLinkDropCallback(command));
-		dragger.dropWith(initTerminatorDropCallback(command, initBiFilter(['terminator'],['*'])));
+		dragger.dropWith(initTerminatorDropCallback(command, initBiFilter(containment, ['terminator'],['*'])));
 		dragger.dropWith(initLinkerDropCallback(command, linker));
 		dragger.dropWith(initLinksCheckerDropCallback(command));
 

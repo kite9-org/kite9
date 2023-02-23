@@ -8,7 +8,7 @@ import { getElementUri, Palette } from '../../../classes/palette/palette.js';
 
 
 const defaultContainSelector: Selector = function() {
-	return Array.from(getMainSvg().querySelectorAll("[k9-palette].selected"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-elem].selected"));
 }
 
 /**

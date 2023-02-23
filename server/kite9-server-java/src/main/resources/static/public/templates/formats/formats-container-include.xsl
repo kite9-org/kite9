@@ -15,7 +15,7 @@
     <xsl:param name="k9-format">container</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
     <xsl:param name="k9-contains"></xsl:param>
-    <xsl:param name="k9-palette"></xsl:param>
+    <xsl:param name="k9-type"></xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">background</xsl:param>
     <xsl:param name="k9-ui">drag delete align connect insert autoconnect fill stroke size align</xsl:param>
@@ -36,7 +36,7 @@
       <xsl:with-param name="k9-format" select="$k9-format"  />
       <xsl:with-param name="k9-highlight" select="$k9-highlight"  />
       <xsl:with-param name="k9-texture" select="$k9-texture"  />
-      <xsl:with-param name="k9-palette" select="$k9-palette" />
+      <xsl:with-param name="k9-type" select="$k9-type" />
       <xsl:with-param name="k9-ui" select="$k9-ui" />
       <xsl:with-param name="id" select="$id"  />
       <xsl:with-param name="style" select="$style" />

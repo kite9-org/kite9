@@ -22,13 +22,23 @@ export function getOrdinal(index: number, ordinals: Ordinals) : number {
 	}
 }
 
+export function nextNthOrdinal(o: number, ordinals: Ordinals, c: number) {
+	if (c == 0) {
+		return o;
+	} else if (c==1) {
+		return nextOrdinal(o, ordinals);
+	} else {
+		return nextNthOrdinal(nextOrdinal(o, ordinals), ordinals, c-1);
+	}
+}
+
 export function nextOrdinal(o: number, ordinals: Ordinals) {
 	const index = ordinals.indexOf(o);
 	if (index == -1) {
 		if (o < ordinals.min) {
 			return ordinals.min;
 		} else if (o > ordinals.max) {
-			return o + 1;
+			return o+1;
 		}
 	}
 	return getOrdinal(index+1, ordinals);

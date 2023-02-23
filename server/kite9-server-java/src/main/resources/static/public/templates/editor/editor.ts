@@ -43,6 +43,9 @@ import { initStyleContextMenuCallback } from '../../behaviours/styleable/styleab
 import { initFontBuildControls, fontSelector, fontIcon} from '../../behaviours/styleable/font/styleable-font.js'
 import { initTextBuildControls, textSelector, textIcon} from '../../behaviours/styleable/text/styleable-text.js'
 
+// containment rules (by type)
+import { initTypedRulesContainsCallback, initTypedRulesTypeCallback, initTypedRulesContainmentRuleCallback} from '../../behaviours/typed/rules/typed-rules.js'
+
 import { once } from '../../bundles/ensure.js'
 
 /**
@@ -99,6 +102,10 @@ function initEditor() {
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
 		
 		initSelectable(palette.get(), true);
+		
+		containment.addTypeCallback(initTypedRulesTypeCallback());
+		containment.addContainsCallback(initTypedRulesContainsCallback());
+		containment.addContainmentRuleCallback(initTypedRulesContainmentRuleCallback());
 
 	}
 	

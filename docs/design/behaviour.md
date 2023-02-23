@@ -115,21 +115,9 @@ Dictates the things you can choose from the context menu / gestures within the c
 
 _Implemented by **containment** class._
 
-_Used by **selectable/replace**, **containers/insert** and **containers/contain**._
+- **k9-type**:  Defines the type of thing this object is.  So far ADL defines: **link**, **end**, **cell**, **connected**, **grid**, **label** and **port**. Define others. 
+- **k9-contains**:  This is supported by containers-rules as a way of allowing you to specify special containment rules for a user-defined type / shape.
 
-Define a token to define the type of the object.  Then use **k9-palette** to mark up an element with this type.
-
-- **k9-contains**: Indicates the types of things that this object can contain.
-- **k9-palette**:  Defines the types of thing this object is.  So far ADL defines: **link**, **end**, **cell**, **connected**, **grid**, **label** and **port**. Define others. 
-- **k9-containers**: Defines the types of things this object can be contained in.
-
-When declaring palettes, you need to tell Kite9 which types each palette contains:
-
-```xsl
-  <xsl:template name="containers-diagram-palettes">
-     <adl:palette url="/public/templates/containers/palette.adl" />
-  </xsl:template>
-```
 Later, we should add:
 
  - **k9-link**:  Says what types of link can connect to this object.

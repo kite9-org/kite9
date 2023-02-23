@@ -14,7 +14,7 @@
     <xsl:param name="k9-elem" select="local-name()" />
     <xsl:param name="k9-format">text-fixed</xsl:param>
     <xsl:param name="k9-highlight">pulse</xsl:param>
-    <xsl:param name="k9-palette">connected</xsl:param>
+    <xsl:param name="k9-type">connected</xsl:param>
     <xsl:param name="k9-rounding">5pt</xsl:param>
     <xsl:param name="k9-texture">foreground</xsl:param>
     <xsl:param name="k9-ui">orphan edit fill font</xsl:param>
@@ -30,7 +30,7 @@
       <xsl:with-param name="k9-format" select="$k9-format"  />
       <xsl:with-param name="k9-highlight" select="$k9-highlight"  />
       <xsl:with-param name="k9-texture" select="$k9-texture"  />
-      <xsl:with-param name="k9-palette" select="$k9-palette" />
+      <xsl:with-param name="k9-type" select="$k9-type" />
       <xsl:with-param name="k9-ui" select="$k9-ui" />
       <xsl:with-param name="id" select="$id"  />
       <xsl:with-param name="style" select="$style" />

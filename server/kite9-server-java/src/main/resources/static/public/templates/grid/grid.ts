@@ -7,13 +7,13 @@ import { initCellDragLocator, initCellDropCallback, initCellMoveCallback, initCe
 import { initGridTemporaryReplacePaletteCallback } from '../../behaviours/grid/replace/grid-replace.js'
 import { initSelectContextMenuCallback } from '../../behaviours/grid/select/grid-select.js'
 import { initCellAppendContextMenuCallback } from '../../behaviours/grid/append/grid-append.js'
-import { initGridContainmentCallback } from '../../behaviours/grid/rules/grid-rules.js'
+import { initGridContainsCallback, initGridContainmentRuleCallback, initGridCellTemporaryTypeCallback } from '../../behaviours/grid/rules/grid-rules.js'
 import { initGridLayoutPropertyFormCallback, initGridLayoutPropertySetCallback } from '../../behaviours/grid/layout/grid-layout.js'
 import { initCellCreator } from '../../behaviours/grid/create/grid-create.js'
 
 
 import { command, metadata, dragger, contextMenu, layout, palette, containment } from '../../templates/editor/editor.js'
-import { initBiFilter } from '../../behaviours/containers/rules/containers-rules.js'
+import { initBiFilter } from '../../behaviours/typed/rules/typed-rules.js'
 import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
 
 export function initGrid() {
@@ -25,10 +25,10 @@ export function initGrid() {
 		layout.setCallback(initGridLayoutPropertySetCallback(command, initCellCreator(command)));
 
 		dragger.dropWith(initContainmentDropCallback(command, 
-			initBiFilter(['cell'],['table'])));
+			initBiFilter(containment, ['cell'],['table'])));
 			
 		dragger.dropWith(initContainmentDropCallback(command, 
-			initBiFilter(['connected', 'label'],['cell'])));
+			initBiFilter(containment, ['connected', 'label'],['cell'])));
 			
 		dragger.dropWith(initCellDropCallback(command));
 		dragger.moveWith(initCellMoveCallback());
@@ -40,7 +40,9 @@ export function initGrid() {
 		palette.addLoad(initGridTemporaryReplacePaletteCallback(command));
 		contextMenu.add(initSelectContextMenuCallback());
 
-		containment.add(initGridContainmentCallback());
+		containment.addContainmentRuleCallback(initGridContainmentRuleCallback());
+		containment.addContainsCallback(initGridContainsCallback());
+		containment.addTypeCallback(initGridCellTemporaryTypeCallback());
 	}
 }
 

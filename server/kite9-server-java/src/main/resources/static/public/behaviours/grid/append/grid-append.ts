@@ -1,4 +1,4 @@
-import { hasLastSelected, parseInfo, createUniqueId, getContainedChildIds, getParentElement } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo, createUniqueId, getContainedChildIds, getParentElement, isCell } from '../../../bundles/api.js'
 import { nextOrdinal, getOrdinals, pushCells  } from '../../../behaviours/grid/common-grid.js' 
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Command } from '../../../classes/command/command.js';
@@ -12,7 +12,8 @@ export function initCellAppendContextMenuCallback(
 	
 	if (selector == undefined) {
 		selector = function() {
-			return Array.from(getMainSvg().querySelectorAll("[id][k9-palette~='cell'].selected"))
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-elem].selected"))
+				.filter(e => isCell(e));
 		}
 	}
 	

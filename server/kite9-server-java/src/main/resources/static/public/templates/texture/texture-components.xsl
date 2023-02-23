@@ -29,7 +29,7 @@
 	    <xsl:param name="k9-containers"></xsl:param>
 	    <xsl:param name="id"></xsl:param>
 	    <xsl:param name="k9-format"></xsl:param>
-	    <xsl:param name="k9-palette"></xsl:param>
+	    <xsl:param name="k9-type"></xsl:param>
 	    <xsl:param name="k9-ui"></xsl:param>
 	    <xsl:param name="k9-child"></xsl:param>
 	
@@ -68,8 +68,8 @@
 	          <xsl:attribute name="k9-containers"><xsl:value-of select="$k9-containers" /></xsl:attribute>
 	        </xsl:if>
 	        
-	        <xsl:if test="$k9-palette">
-	          <xsl:attribute name="k9-palette"><xsl:value-of select="$k9-palette" /></xsl:attribute>
+	        <xsl:if test="$k9-type">
+	          <xsl:attribute name="k9-type"><xsl:value-of select="$k9-type" /></xsl:attribute>
 	        </xsl:if>
 	
 	        <xsl:if test="$k9-ui">

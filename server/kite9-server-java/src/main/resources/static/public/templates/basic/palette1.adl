@@ -8,8 +8,8 @@
       <textarea id="fs1">Box</textarea>
     </box>
 
-    <box id="b2" style="fill: #AA5500; " >
-      <textarea id="fs1" style="fill: #990055; ">Box 2</textarea>
+    <box id="b2" class="shaded">
+      <textarea class="warning" id="fs1">Box 2</textarea>
     </box>
     
     <box id="b3" k9-child="/public/templates/basic/palette1.adl#fs2" style="--kite9-layout: down">

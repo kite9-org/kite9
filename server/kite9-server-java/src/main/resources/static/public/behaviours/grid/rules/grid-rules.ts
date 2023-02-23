@@ -1,34 +1,40 @@
 import { isGrid } from '../../../bundles/api.js'
-import { ContainmentCallback } from '../../../classes/containment/containment.js';
+import { TypeCallback, ContainsCallback, ContainmentRuleCallback } from '../../../classes/containment/containment.js';
 
-export function initGridContainmentCallback() : ContainmentCallback {
+const CELL_LABEL = 'cell';
+
+export function initGridCellTemporaryTypeCallback() : TypeCallback {
 	
-	function paletteIsCell(e: Element) : boolean {
-		if (e == undefined) {
-			return false;
-		}
-		
-		const attrValue = e.getAttribute("k9-palette");
-		if (attrValue) {
-			return attrValue.split(" ").includes("cell");
-		}
-		
+	return function(e: Element) {
 		if (e.classList.contains('grid-temporary')) {
+			return CELL_LABEL;
+		} else {
+			return null;
+		}
+	}
+}
+
+export function initGridContainsCallback() : ContainsCallback {
+
+	return function(e: Element) {
+		
+		if (isGrid(e)) {
+			return [CELL_LABEL];
+		} else {
+			return [];
+		}
+	}
+}
+
+
+
+export function initGridContainmentRuleCallback() : ContainmentRuleCallback {
+	
+	return function(elementTypes, parentContainsTypes) {
+		if (parentContainsTypes.has(CELL_LABEL)) {
+			return elementTypes.has(CELL_LABEL);
+		} else {
 			return true;
 		}
-		
-		return false;
-	}
-	
-	/**
-	 * Overrides the elements if we're in grid mode.
-	 */
-	return function(elements, parent) {
-		if (isGrid(parent)) {
-			const cells = elements.filter(e => paletteIsCell(e));
-			return cells;
-		}
-
-		return [];
 	}
 }
