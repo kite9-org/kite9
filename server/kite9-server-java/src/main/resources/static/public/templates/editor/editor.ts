@@ -98,7 +98,7 @@ function initEditor() {
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, fontIcon, 'Font', initFontBuildControls(), fontSelector));
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, textIcon, 'Text Layout', initTextBuildControls(), textSelector));
 		
-		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'style'], keptTags: ['from', 'to' ]}, containment));
+		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'style']}, containment));
 		//contextMenu.add(initXCPContextMenuCallback(command, metadata, containment));
 		
 		initSelectable(palette.get(), true);

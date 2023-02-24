@@ -18,15 +18,6 @@ open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
     @JvmField
     var keptAttributes : List<String> = Arrays.asList("id") // just keep ID by default.
 
-    @JvmField
-    var keptTags = emptyList<String>()
-
-    private fun checkKeptTags(e: Element, n: Element, d: Document) {
-        if (keptTags.contains(e.tagName)) {
-            d.renameNode(n, e.namespaceURI, e.localName)
-        }
-    }
-
     private fun keepImportantAttributes(e: Element, n: Element) {
         for (a in keptAttributes) {
             if (e.hasAttribute(a)) {
@@ -68,7 +59,6 @@ open class ReplaceTag : AbstractReplaceCommand<Element?, Element>() {
         keepImportantAttributes(site, toContent)
         site.parentNode.insertBefore(toContent, site)
         copyAttributes(site, toContent, true)
-        checkKeptTags(site, toContent, doc)
         moveContents(site, toContent)
         site.parentNode.removeChild(site)
         ctx.log("Processed replace tag of $fragmentId")

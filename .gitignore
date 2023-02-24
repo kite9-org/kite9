@@ -42,5 +42,6 @@ application.yml
 application-local.yml
 
 # Typescript / Node
+server/kite9-server-java/node_modules
 server/kite9-server-java/src/main/resources/static/node_modules/
 server/kite9-server-java/src/main/resources/static/package-lock.json

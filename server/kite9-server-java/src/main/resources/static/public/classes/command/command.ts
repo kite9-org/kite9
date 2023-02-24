@@ -24,10 +24,9 @@ export type SingleCommand = {
 	name?: string,
 	horiz?: string,
 	keptAttributes?: string[],
-	keptTags?: string[],
 	cascade?: true,
 	
-}
+} 
 
 export type Update = {
 	uri?: URL,

@@ -2,7 +2,8 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowJs": true,
-		"outDir": "../../../../target/classes/static/public",
+		"outDir": "target/classes/static/public",
+		"rootDir": "",
 		"target": "es2021",
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
@@ -12,6 +13,6 @@
 		"moduleResolution": "node"
 	},
 	"include": [
-		"**/*"
+		"src/main/resources/static/public/**/*"
 	]
 }
