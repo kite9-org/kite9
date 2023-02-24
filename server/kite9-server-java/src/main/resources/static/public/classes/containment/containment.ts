@@ -89,3 +89,20 @@ export class Containment {
 	}
 
 }
+
+/**
+ * Useful for constructing ContainmentRuleCallbacks
+ */
+export function intersects(set1: Set<string>, set2: Set<string>): boolean {
+	if (set1.has("*")) {
+		return set2.size > 0;
+	} else if (set2.has("*")) {
+		return set1.size > 0;
+	} else {
+		for (const elem of set2) {
+			if (set1.has(elem)) {
+				return true;
+			}
+		}
+	}
+}

@@ -9,8 +9,8 @@
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-rounding">0pt</xsl:with-param>
       <xsl:with-param name="k9-ui">drag delete layout fill stroke size align connect</xsl:with-param>
-      <xsl:with-param name="k9-type">connected table</xsl:with-param>
-      <xsl:with-param name="k9-contains">cell terminator</xsl:with-param>
+      <xsl:with-param name="k9-type">connected</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected port label terminator</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
 

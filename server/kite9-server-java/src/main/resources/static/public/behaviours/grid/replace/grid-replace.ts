@@ -1,8 +1,9 @@
 import { getMainSvg } from '../../../bundles/screen.js'
-import { createUniqueId, parseInfo, getKite9Target, isCell } from '../../../bundles/api.js'
+import { createUniqueId, parseInfo, getKite9Target } from '../../../bundles/api.js'
 import { getElementUri, PaletteLoadCallback } from '../../../classes/palette/palette.js';
 import { Command } from '../../../classes/command/command.js';
 import { PaletteSelector, Selector } from '../../../bundles/types.js';
+import { isCell } from '../../../behaviours/grid/common-grid.js';
 
 /**
  * Allows you to select temporary grid elements.

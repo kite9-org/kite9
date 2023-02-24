@@ -1,6 +1,6 @@
 import { describe, it, expect } from '../../bundles/monika.js';
 import { containment } from '../editor/editor.js'
-import { box, container, diagram, link,terminator, text, port, label } from './fixture.js';
+import { box, container, diagram, link,terminator, text, port, label, grid, cell, temporary } from './fixture.js';
 
 type Rules<X> = {
 	box: X,
@@ -10,24 +10,14 @@ type Rules<X> = {
 	terminator: X,
 	text: X,
 	port: X,
-	label: X
+	label: X,
+	grid: X, 
+	cell: X,
+	temporary: X
 }
 
 export const containmentTest = describe("Containment Tests", async () => {
-	
-	function createRule(box: boolean, container: boolean, diagram: boolean, link: boolean, terminator: boolean, text: boolean, port: boolean, label: boolean) : Rules<boolean> {
-		return {
-			box,
-			container,
-			diagram,
-			link,
-			terminator,
-			text,
-			port, 
-			label
-		}
-	}
-	
+		
 	const containers : Rules<Element> =  {
 		box,
 		container,
@@ -36,18 +26,42 @@ export const containmentTest = describe("Containment Tests", async () => {
 		terminator,
 		text,
 		port,
-		label
+		label,
+		grid,
+		cell,
+		temporary
 	}
 	
+	function createRule(box: boolean, container: boolean, diagram: boolean, link: boolean, terminator: boolean, text: boolean, port: boolean, label: boolean, grid: boolean, cell: boolean, temporary: boolean) : Rules<boolean> {
+		return {
+			box,
+			container,
+			diagram,
+			link,
+			terminator,
+			text,
+			port, 
+			label,
+			grid,
+			cell,
+			temporary
+		}
+	}
+	
+	const ALL_FALSE = createRule(false, false, false, false, false, false, false, false, false, false, false);
+	
 	const containerRules : Rules<Rules<boolean>> = {
-		box: createRule(false, false, false, false, true, false, true, false),
-		container: createRule(true, true, false, false, true, true, true, true),
-		diagram: createRule(true, true, false, false, false, true, false, true),
-		link: createRule(false, false, false, false, false, false, false, false),
-		terminator: createRule(false, false, false, false, false, false, false, true),
-		text: createRule(false, false, false, false, false, false, false, false),
-		port: createRule(false, false, false, false, true, false, false, false),
-		label: createRule(false, false, false, false, false, false, false, false)
+		box: createRule(false, false, false, false, true, false, true, false, false, false, false),
+		container: createRule(true, true, false, false, true, true, true, true, true, false, false),
+		diagram: createRule(true, true, false, false, false, true, false, true, true, false, false),
+		link: ALL_FALSE,
+		terminator: createRule(false, false, false, false, false, false, false, true, false, false, false),
+		text: createRule(false, false, false, false, false, false, false, false, false, false, false),
+		port: createRule(false, false, false, false, true, false, false, false, false, false, false),
+		label: createRule(false, false, false, false, false, false, false, false, false, false, false),
+		grid: createRule(false, false, false, false, true, false, true, true, false, true, false),
+		cell: createRule(true, true, false, false, false, true, false, true, true, false, false),
+		temporary: ALL_FALSE,
 	}
 	
 	function singleTest(parent: string, child: string) : void {

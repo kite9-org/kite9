@@ -7,7 +7,7 @@ import { initCellDragLocator, initCellDropCallback, initCellMoveCallback, initCe
 import { initGridTemporaryReplacePaletteCallback } from '../../behaviours/grid/replace/grid-replace.js'
 import { initSelectContextMenuCallback } from '../../behaviours/grid/select/grid-select.js'
 import { initCellAppendContextMenuCallback } from '../../behaviours/grid/append/grid-append.js'
-import { initGridContainsCallback, initGridContainmentRuleCallback, initGridCellTemporaryTypeCallback } from '../../behaviours/grid/rules/grid-rules.js'
+import { initGridContainsCallback, initGridContainmentRuleCallback } from '../../behaviours/grid/rules/grid-rules.js'
 import { initGridLayoutPropertyFormCallback, initGridLayoutPropertySetCallback } from '../../behaviours/grid/layout/grid-layout.js'
 import { initCellCreator } from '../../behaviours/grid/create/grid-create.js'
 
@@ -42,7 +42,6 @@ export function initGrid() {
 
 		containment.addContainmentRuleCallback(initGridContainmentRuleCallback());
 		containment.addContainsCallback(initGridContainsCallback());
-		containment.addTypeCallback(initGridCellTemporaryTypeCallback());
 	}
 }
 

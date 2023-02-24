@@ -1,13 +1,15 @@
-import { parseInfo, isCell, isGrid, getKite9Target, getParentElement, getContainerChildren } from '../../../bundles/api.js'
+import { parseInfo, getKite9Target, getParentElement, getContainerChildren } from '../../../bundles/api.js'
 import { drawBar, clearBar } from '../../../bundles/ordering.js'
 import { getElementPageBBox, getSVGCoords, getMainSvg, currentTargets } from '../../../bundles/screen.js'
 import { Direction, Selector, Point, Area, Range, intersects } from '../../../bundles/types.js';
 import { Command } from '../../../classes/command/command.js';
 import { DragLocatorCallback, DropCallback, DropLocatorCallback, MoveCallback } from '../../../classes/dragger/dragger.js';
 import { getOrdinal, getOrdinals, Ordinals, pushCells  } from '../common-grid.js' 
+import { isCell, isGridLayout } from '../../../behaviours/grid/common-grid.js';
+
 
 function isEmptyGrid(e) {
-	if (isGrid(e)) {
+	if (isGridLayout(e)) {
 		return calculateOccupation(e).length==0;
 	} 
 	

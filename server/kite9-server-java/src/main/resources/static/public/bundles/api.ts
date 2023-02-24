@@ -418,32 +418,6 @@ export function isLabel(v? : Element) : boolean {
 	return (att == undefined ? "" : att).includes("rectangular: label");
 }
 
-export function isCell(e? : Element) : boolean {
-	if (e == null)
-		return false;
-	if (e.hasAttribute("k9-info")) {
-		const out = e.getAttribute("k9-info");
-		if (out.includes("grid-x")) {
-			return true;
-		} 
-	}
-	
-	return false;
-}
-
-export function isGrid(e? : Element) : boolean {
-	if (e == null)
-		return false;
-	if (e.hasAttribute("k9-info")) {
-		const out = e.getAttribute("k9-info");
-		if (out.includes("layout: GRID;")) {
-			return true;
-		}
-	}
-	
-	return false;
-}
-
 export function isTemporary(e? : Element) : boolean {
 	if (e == null)
 		return false;

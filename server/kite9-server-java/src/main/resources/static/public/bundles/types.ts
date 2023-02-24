@@ -95,5 +95,3 @@ export function intersects(r1: Range, r2: Range) {
 	const endIn = (r1[1] > r2[0]) && (r1[1] <= r2[1]);
 	return startIn || endIn;
 }
-		
-

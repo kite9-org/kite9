@@ -1,26 +1,16 @@
-import { isGrid } from '../../../bundles/api.js'
-import { TypeCallback, ContainsCallback, ContainmentRuleCallback } from '../../../classes/containment/containment.js';
+import { isGridLayout } from '../common-grid.js'
+import { ContainsCallback, ContainmentRuleCallback, intersects } from '../../../classes/containment/containment.js';
 
 const CELL_LABEL = 'cell';
-
-export function initGridCellTemporaryTypeCallback() : TypeCallback {
-	
-	return function(e: Element) {
-		if (e.classList.contains('grid-temporary')) {
-			return CELL_LABEL;
-		} else {
-			return null;
-		}
-	}
-}
+const ALLOWED_GRID_CONTENTS = new Set(['terminator', 'port', 'label']);
 
 export function initGridContainsCallback() : ContainsCallback {
 
 	return function(e: Element) {
 		
-		if (isGrid(e)) {
+		if (isGridLayout(e)) {
 			return [CELL_LABEL];
-		} else {
+		} else {		
 			return [];
 		}
 	}
@@ -31,10 +21,15 @@ export function initGridContainsCallback() : ContainsCallback {
 export function initGridContainmentRuleCallback() : ContainmentRuleCallback {
 	
 	return function(elementTypes, parentContainsTypes) {
-		if (parentContainsTypes.has(CELL_LABEL)) {
-			return elementTypes.has(CELL_LABEL);
-		} else {
+		if (intersects(elementTypes, ALLOWED_GRID_CONTENTS)) {
+			// these get a pass
 			return true;
 		}
+		
+		if (parentContainsTypes.has(CELL_LABEL)) {
+			return elementTypes.has(CELL_LABEL);
+		}
+		
+		return true;
 	}
 }

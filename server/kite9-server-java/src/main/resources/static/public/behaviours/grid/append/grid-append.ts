@@ -1,9 +1,10 @@
-import { hasLastSelected, parseInfo, createUniqueId, getContainedChildIds, getParentElement, isCell } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo, createUniqueId, getContainedChildIds, getParentElement } from '../../../bundles/api.js'
 import { nextOrdinal, getOrdinals, pushCells  } from '../../../behaviours/grid/common-grid.js' 
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Command } from '../../../classes/command/command.js';
 import { Direction, directions, Selector } from '../../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
+import { isCell } from '../../../behaviours/grid/common-grid.js';
 
 
 export function initCellAppendContextMenuCallback(

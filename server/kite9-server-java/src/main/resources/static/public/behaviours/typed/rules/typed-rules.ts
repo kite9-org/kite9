@@ -1,5 +1,5 @@
 import { ElementBiFilter } from '../../../bundles/types.js';
-import { Containment, ContainmentRuleCallback, ContainsCallback, TypeCallback } from '../../../classes/containment/containment.js';
+import { Containment, ContainmentRuleCallback, ContainsCallback, TypeCallback, intersects } from '../../../classes/containment/containment.js';
 
 export function initTypedRulesContainsCallback() : ContainsCallback {
 	return (element) => {
@@ -27,19 +27,6 @@ export function initTypedRulesTypeCallback() : TypeCallback {
 	}
 }
 
-function intersects(set1: Set<string>, set2: Set<string>): boolean {
-	if (set1.has("*")) {
-		return set2.size > 0;
-	} else if (set2.has("*")) {
-		return set1.size > 0;
-	} else {
-		for (const elem of set2) {
-			if (set1.has(elem)) {
-				return true;
-			}
-		}
-	}
-}
 
 /**
  * Allows inclusion where any of the elementTypes is contained in the containsTypes (also allows wildcard * on either side)

@@ -11,8 +11,9 @@ export const terminator = document.getElementById("link2-from");
 export const text = document.getElementById("t1");
 export const port = document.getElementById("p1");
 export const label = document.getElementById("l1");
-
-
+export const grid = document.getElementById("biggrid"); 
+export const cell = document.getElementById("2-0"); 
+export const temporary = document.getElementById("biggrid-g-1-1");
 
 export function mouseEvent(element: Element, name: string, init: MouseEventInit = {}, xo = 10, yo = 10) {
 	const area = element.getBoundingClientRect();
