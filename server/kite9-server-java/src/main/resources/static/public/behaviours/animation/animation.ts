@@ -52,7 +52,7 @@ function reconcileClasses(fromElement: Element, toElement: Element) {
   const fromClasses = Array.from(fromElement.classList);
   
   let toRemove = fromClasses.filter(a => -1 == toClasses.indexOf(a));
-  const toAdd = toClasses.filter(a => -1 == toClasses.indexOf(a));
+  const toAdd = toClasses.filter(a => -1 == fromClasses.indexOf(a));
   toRemove = toRemove.filter(a => -1 == editorClasses.indexOf(a));
   
   toRemove.forEach(a => fromElement.classList.remove(a));

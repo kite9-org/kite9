@@ -27,6 +27,8 @@ export function initGridContainmentRuleCallback() : ContainmentRuleCallback {
 		}
 		
 		if (parentContainsTypes.has(CELL_LABEL)) {
+			// in this case, we are in 'grid mode', so the element should 
+			// be a cell.
 			return elementTypes.has(CELL_LABEL);
 		}
 		

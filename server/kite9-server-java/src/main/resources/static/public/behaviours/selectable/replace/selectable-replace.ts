@@ -41,28 +41,7 @@ export function initReplaceContextMenuCallback(
 	
 	if (replaceChecker == undefined) {
 		replaceChecker = function(oldElement, newElement) {
-			if (isLink(oldElement) != isLink(newElement)) {
-				return false;
-			}
-			
-			if (isTerminator(oldElement) != isTerminator(newElement)) {
-				return false;
-			}
-			
-			if (isLabel(oldElement) != isLabel(newElement)) {
-				return false;
-			}
-			
-			if (isConnected(oldElement) != isConnected(newElement)) {
-				return false;
-			}
-			
-			
-			const oldParent = getParentElement(oldElement);
-			const children = getContainerChildren(oldElement);
-			const parentCanContainElement = containment.canContainAll([newElement], oldParent);
-			const elementCanContainChildren = containment.canContainAll(children, newElement);
-			return parentCanContainElement && elementCanContainChildren;
+			return containment.canReplace(oldElement, newElement);
 		}
 		
 	}
