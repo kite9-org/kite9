@@ -197,7 +197,7 @@ public class CommandsTest {
 		setAttr.to = "value";
 		setAttr.fragmentId="two";
 
-		testDoAndUndo(setAttr, "replaceAttr");
+		testDoAndUndo(setAttr, "replaceAttr2");
 
 	}
 	
