@@ -1,4 +1,4 @@
-import { parseInfo, getContainerChildren } from "./api.js";
+import { parseInfo, getContainerChildren, isConnected } from "./api.js";
 import { getSVGCoords, getElementPageBBox, getMainSvg } from './screen.js'
 
 /**
@@ -12,15 +12,14 @@ function doSort(contents: Element[], horiz : boolean, c: number) : Element | nul
 			const val = c < 0 ? (0 - c - pos) : (pos - c);
 			const out = {
 				p: val,
-				connected: e.getAttribute("k9-info").includes("rectangular: connected;"),
 				index: i,
 				e: e
 			};
 			return out;
 		});
 	
-	sorted = sorted.filter(pos => (pos.p >= 0) || (!pos.connected));
-	sorted = sorted.sort((a, b) => (!a.connected || !b.connected) ? a.index - b.index : a.p - b.p);
+	sorted = sorted.filter(pos => (pos.p >= 0));
+	sorted = sorted.sort((a, b) => a.p - b.p);
 
 	if (sorted.length == 0) {
 		return null;
@@ -36,43 +35,53 @@ export function getBefore(container : Element, evt : Event, ignore : Element[] =
 	const pos = getSVGCoords(evt);
 	
 	const allChildren = getContainerChildren(container, ignore);
+	const connectedChildren = allChildren.filter(c => isConnected(c));
+	const otherChildren = allChildren.filter(c => !isConnected(c));
+	var out = null;
 
 	switch (layout) {
 		case 'null':
 		case 'right':
 		case 'horizontal':
-			return doSort(allChildren, true, pos.x);
+			out = doSort(connectedChildren, true, pos.x);
+			break;
 		case 'left':
-			return doSort(allChildren, true, -pos.x);
+			out = doSort(connectedChildren, true, -pos.x);
+			break;
 		case 'up':
-			return doSort(allChildren, false, -pos.y);
+			out = doSort(connectedChildren, false, -pos.y);
+			break;
 		case 'down':
 		case 'vertical':
-			return doSort(allChildren, false, pos.y);
+			out = doSort(connectedChildren, false, pos.y);
+			break;
 		case 'grid': {
 			// just compare with elements on the current line.
-			const intersectingChildren = allChildren
+			const intersectingChildren = connectedChildren
 				.filter(e => {
 					const box = getElementPageBBox(e);
 					return (box.y <= pos.y) && (box.y + box.height >= pos.y);
 				});
 			
-			const out = doSort(intersectingChildren, true, pos.x);
+			out = doSort(intersectingChildren, true, pos.x);
 			
 			if (out == null) {
 				const lastOnLine = intersectingChildren[intersectingChildren.length-1];
-				const idx = allChildren.indexOf(lastOnLine);
+				const idx = connectedChildren.indexOf(lastOnLine);
 				
-				if (idx < allChildren.length-1) {
-					return allChildren[idx+1];
+				if (idx < connectedChildren.length-1) {
+					out = connectedChildren[idx+1];
 				}
-			} else {
-				return out;
 			}
-			break;
 		}
-		default:
-			return null;
+	}
+	
+	if (out) {
+		return out;
+	} else if (otherChildren.length>0) {
+		return otherChildren[0];
+	} else {
+		return null;
 	}
 }
 

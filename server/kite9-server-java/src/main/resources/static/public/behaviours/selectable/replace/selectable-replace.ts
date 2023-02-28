@@ -62,19 +62,6 @@ export function initReplaceContextMenuCallback(
 					...rules
 				});
 				
-				// delete any incompatible contents
-				getContainerChildren(e)
-					.filter(c => !containment.canContainAll(c, e))
-					.forEach(c => {
-						const deleteId = c.getAttribute("id");
-						command.push({
-							"type": "Delete",
-							"fragmentId": eId,
-							"beforeId": getNextSiblingId(c),
-							"base64Element": command.getAdl(deleteId)
-						})
-					});
-				
 				return true;
 			} else {
 				return false;
