@@ -8,11 +8,11 @@ import { Containment } from '../../../classes/containment/containment.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 
 function defaultInsertSelector() {
-	return Array.from(getMainSvg().querySelectorAll('[k9-contains].selected:not([k9-contains=""])'));
+	return Array.from(getMainSvg().querySelectorAll('[k9-contains].selected:not([k9-contains=""])')) as SVGGraphicsElement[];
 }
 
 function defaultInsertableSelector(palettePanel: Element) {
-	return Array.from(palettePanel.querySelectorAll("[id][k9-elem]"));
+	return Array.from(palettePanel.querySelectorAll("[id][k9-elem]")) as SVGGraphicsElement[];
 }
 
 /**
@@ -43,8 +43,8 @@ export function initInsertContextMenuCallback(
 		const lastSelectedElement = onlyLastSelected(insertSelector());
 
 		// this is the palette element we are going to insert into them
-		const droppingElement = palette.get().querySelector("[id].lastSelected") as SVGGraphicsElement;
 		const palettePanel = palette.getOpenPanel();
+		const droppingElement = onlyLastSelected(insertableSelector(palettePanel));
 
 		function createInsertStep(e, drop, newId, beforeId) {
 			return {

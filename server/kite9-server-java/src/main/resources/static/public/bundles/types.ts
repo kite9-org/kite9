@@ -1,7 +1,7 @@
 /**
  * For definining a selection on the diagram (e.g. all links)
  */
-export type Selector = () => Element[]
+export type Selector = () => SVGGraphicsElement[]
 
 /**
  * For filtering elements in a selection
@@ -16,7 +16,7 @@ export type ElementBiFilter = (e1?: Element, e2?: Element) => boolean
 /**
  * For definining a selection from a palette (e.g. all links)
  */
-export type PaletteSelector = (e: Element) => Element[]
+export type PaletteSelector = (e: Element) => SVGGraphicsElement[]
 
 /**
  * Various usages of a point

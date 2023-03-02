@@ -4,7 +4,6 @@ import { once } from '../../bundles/ensure.js'
 
 //grid
 import { initCellDragLocator, initCellDropCallback, initCellMoveCallback, initCellDropLocatorCallback } from '../../behaviours/grid/drag/grid-drag.js'
-import { initGridTemporaryReplacePaletteCallback } from '../../behaviours/grid/replace/grid-replace.js'
 import { initSelectContextMenuCallback } from '../../behaviours/grid/select/grid-select.js'
 import { initCellAppendContextMenuCallback } from '../../behaviours/grid/append/grid-append.js'
 import { initGridContainsCallback, initGridContainmentRuleCallback } from '../../behaviours/grid/rules/grid-rules.js'
@@ -12,9 +11,11 @@ import { initGridLayoutPropertyFormCallback, initGridLayoutPropertySetCallback }
 import { initCellCreator } from '../../behaviours/grid/create/grid-create.js'
 
 
-import { command, metadata, dragger, contextMenu, layout, palette, containment } from '../../templates/editor/editor.js'
+import { command, metadata, dragger, contextMenu, layout, palette, containment, paletteContextMenu } from '../../templates/editor/editor.js'
 import { initBiFilter } from '../../behaviours/typed/rules/typed-rules.js'
 import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
+import { initReplaceContextMenuCallback } from '../../behaviours/selectable/replace/selectable-replace.js'
+import { gridTemporaryReplaceStep, initReplaceTemporaryCellChoiceSelector, replaceTemporaryCellSelector } from '../../behaviours/grid/replace/grid-replace.js'
 
 export function initGrid() {
 
@@ -37,7 +38,10 @@ export function initGrid() {
 		dragger.dropLocator(initCellDropLocatorCallback())
 		contextMenu.add(initCellAppendContextMenuCallback(command));
 
-		palette.addLoad(initGridTemporaryReplacePaletteCallback(command));
+		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'style']}, containment,
+			initReplaceTemporaryCellChoiceSelector(),
+			replaceTemporaryCellSelector, 
+			gridTemporaryReplaceStep));
 		contextMenu.add(initSelectContextMenuCallback());
 
 		containment.addContainmentRuleCallback(initGridContainmentRuleCallback());

@@ -1,11 +1,11 @@
-import { getKite9Target, createUniqueId, changeId } from '../../../bundles/api.js'
+import { getKite9Target, createUniqueId, changeId, getParentElement } from '../../../bundles/api.js'
 import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '../../../bundles/screen.js'
 import { PaletteSelector, Point } from '../../../bundles/types.js';
 import { Dragger } from '../../../classes/dragger/dragger.js';
 import { getElementUri, PaletteLoadCallback } from '../../../classes/palette/palette.js';
 
-function defaultDragableSelector(palettePanel: Element): Element[] {
-	return Array.from(palettePanel.querySelectorAll("[allow-drag=true] [id][k9-elem]"));
+function defaultDragableSelector(palettePanel: Element): SVGGraphicsElement[] {
+	return Array.from(palettePanel.querySelectorAll("[allow-drag=true] [id][k9-elem]")) as SVGGraphicsElement[];
 }
 
 /** Internal state of palette drag */
@@ -32,7 +32,7 @@ export function initNewLinkPaletteLoadCallback(dragger: Dragger, dragableSelecto
 			const choices = dragableSelector(palettePanel);
 			let target = getKite9Target(currentTarget(event));
 			while ((!choices.includes(target)) && (target != null)) {
-				target = target.parentElement;
+				target = getParentElement(target);
 			}
 
 			return target;

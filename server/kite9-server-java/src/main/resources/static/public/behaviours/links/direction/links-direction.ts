@@ -6,12 +6,12 @@ import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/
 import { getDirection, getStyleDirection, LinkDirection, reverseDirection } from '../linkable.js';
 
 function linkDirectionSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction].selected"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction].selected")) as SVGGraphicsElement[];
 }
 
 function terminatorSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-info*=terminator]"))
-		.filter(e => isTerminator(e));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-info*=terminator]")) 
+		.filter(e => isTerminator(e)) as SVGGraphicsElement[];
 }
 
 

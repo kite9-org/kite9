@@ -34,7 +34,7 @@ export function initPortsAddContextMenuCallback(
 					} else if (isConnected(e)) {
 						return containment.canContainAll(palettePort, e);
 					}
-				});
+				}) as SVGGraphicsElement[]
 		}
 	}
 

@@ -9,7 +9,7 @@ import { Styles } from '../../../bundles/css.js';
 
 export function containerSizingSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=size].selected"))
-			.filter(e => isRectangular(e));
+			.filter(e => isRectangular(e)) as SVGGraphicsElement[];
 }
 
 export const marginsIcon = "/public/behaviours/styleable/size/margins.svg";

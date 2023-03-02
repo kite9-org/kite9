@@ -2,9 +2,10 @@ import { getMainSvg } from '../../../bundles/screen.js'
 import { hasLastSelected, parseInfo,  createUniqueId } from '../../../bundles/api.js'
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { Command } from '../../../classes/command/command.js';
+import { Selector } from '../../../bundles/types.js';
 
-export function labelableSelector() : Element[] {
-	const labelables = Array.from(getMainSvg().querySelectorAll("[k9-ui~=label].selected"));
+export function labelableSelector() : SVGGraphicsElement[] {
+	const labelables = Array.from(getMainSvg().querySelectorAll("[k9-ui~=label].selected")) as SVGGraphicsElement[];
 	return labelables;
 }
 
@@ -38,7 +39,7 @@ export function createInsertLabelStep(e: Element, templateUri: string, command: 
 export function initAddLabelContextMenuCallback(
 	command: Command, 
 	templateUri: string, 
-	selector = labelableSelector, 
+	selector : Selector = labelableSelector, 
 	action = createInsertLabelStep) : ContextMenuCallback {
 	
 	if (selector == undefined) {

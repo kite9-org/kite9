@@ -7,7 +7,7 @@ import { Selector } from '../../../bundles/types.js';
 
 
 export function voteableSelector() {
-	const votables = Array.from(getMainSvg().querySelectorAll("[k9-ui~=vote].selected"));
+	const votables = Array.from(getMainSvg().querySelectorAll("[k9-ui~=vote].selected")) as SVGGraphicsElement[];
 	return votables;
 }
 

@@ -1,5 +1,6 @@
-import { isGridLayout } from '../common-grid.js'
-import { ContainsCallback, ContainmentRuleCallback, intersects } from '../../../classes/containment/containment.js';
+import { isCell, isGridLayout } from '../common-grid.js'
+import { ContainsCallback, ContainmentRuleCallback, TypeCallback, intersects } from '../../../classes/containment/containment.js';
+import { isTemporary } from '../../../bundles/api.js';
 
 const CELL_LABEL = 'cell';
 const ALLOWED_GRID_CONTENTS = new Set(['terminator', 'port', 'label']);
@@ -15,8 +16,6 @@ export function initGridContainsCallback() : ContainsCallback {
 		}
 	}
 }
-
-
 
 export function initGridContainmentRuleCallback() : ContainmentRuleCallback {
 	

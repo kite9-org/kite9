@@ -17,7 +17,7 @@ export const alignIcon = '/public/behaviours/styleable/align/align.svg';
 
 export const alignSelector : Selector = () => {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=align].selected"))
-		.filter(e => isConnected(e));
+		.filter(e => isConnected(e)) as SVGGraphicsElement[];
 }
 
 export function initAlignBuildControls() : BuildControlsCallback {

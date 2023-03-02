@@ -14,7 +14,7 @@ export function initDeleteContextMenuCallback(
 
 	if (selector == undefined) {
 		selector = function() {
-			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='delete'].selected"))
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='delete'].selected")) as SVGGraphicsElement[]
 		}
 	}
 

@@ -75,7 +75,7 @@ export function initCellDragLocator(selector: Selector = undefined) : DragLocato
 	if (selector == undefined) {
 		selector = function() {
 			moveCache = {};
-			const allCells = Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='cell'].selected, [id][k9-ui~='cell'].mouseover"))
+			const allCells = Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='cell'].selected, [id][k9-ui~='cell'].mouseover")) as SVGGraphicsElement[]
 			if (allCells.length > 0) {
 				const mover = allCells.filter(dt => dt.classList.contains("lastSelected"))[0];
 				const container = mover.parentElement;

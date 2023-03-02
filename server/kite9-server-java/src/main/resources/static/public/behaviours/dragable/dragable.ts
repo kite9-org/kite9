@@ -11,7 +11,7 @@ export const DRAGABLE_START_EVENT = 'dragable-start',
 	DRAGABLE_END_EVENT = 'dragable-end';
 
 function defaultDragableSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=drag]"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=drag]")) as SVGGraphicsElement[];
 }
 
 export function initDragable(dragger: Dragger, selector: Selector = undefined) {

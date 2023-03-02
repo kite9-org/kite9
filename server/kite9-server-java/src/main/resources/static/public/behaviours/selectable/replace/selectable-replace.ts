@@ -1,4 +1,4 @@
-import { hasLastSelected, getContainerChildren, getNextSiblingId, getParentElement, parseInfo, isLink, isTerminator, isLabel, isConnected, onlyLastSelected } from '../../../bundles/api.js'
+import { hasLastSelected, parseInfo, onlyLastSelected } from '../../../bundles/api.js'
 import { getMainSvg } from '../../../bundles/screen.js'
 import { PaletteSelector, Selector } from '../../../bundles/types.js';
 import { Command, SingleCommand } from '../../../classes/command/command.js';
@@ -8,13 +8,13 @@ import { getElementUri, Palette } from '../../../classes/palette/palette.js';
 
 function initDefaultReplaceSelector() {
 	return function() {
-		return Array.from(getMainSvg().querySelectorAll("[id][k9-elem].selected"));
+		return Array.from(getMainSvg().querySelectorAll("[id][k9-elem].selected")) as SVGGraphicsElement[];
 	}
 }
 
 function initDefaultReplaceChoiceSelector() {
 	return function(palettePanel: Element) {
-		return Array.from(palettePanel.querySelectorAll("[id][k9-elem]")); 	
+		return Array.from(palettePanel.querySelectorAll("[id][k9-elem]")) as SVGGraphicsElement[]; 	
 	}
 }
 
@@ -79,8 +79,8 @@ export function initReplaceContextMenuCallback(
 		const lastSelectedElement = onlyLastSelected(replaceSelector());
 		
 		// this is the palette element we are going to replace it with
-		const droppingElement = palette.get().querySelector("[id].lastSelected");
 		const palettePanel = palette.getOpenPanel();
+		const droppingElement = onlyLastSelected(replaceChoiceSelector(palettePanel));
 
 		if (lastSelectedElement) {			
 			if (replaceChecker(lastSelectedElement, droppingElement)) {

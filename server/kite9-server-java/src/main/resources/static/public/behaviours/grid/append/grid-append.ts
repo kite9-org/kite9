@@ -14,7 +14,7 @@ export function initCellAppendContextMenuCallback(
 	if (selector == undefined) {
 		selector = function() {
 			return Array.from(getMainSvg().querySelectorAll("[id][k9-elem].selected"))
-				.filter(e => isCell(e));
+				.filter(e => isCell(e)) as SVGGraphicsElement[];
 		}
 	}
 	

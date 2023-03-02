@@ -6,7 +6,7 @@ import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js';
 export const textIcon = '/public/behaviours/styleable/text/text.svg';
 
 export function textSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=font][k9-ui~=edit].selected"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=font][k9-ui~=edit].selected")) as SVGGraphicsElement[];
 }
 
 const decorationOptions = [ '', 'underline', 'line-through'];

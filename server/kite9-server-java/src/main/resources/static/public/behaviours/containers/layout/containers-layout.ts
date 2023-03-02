@@ -41,7 +41,7 @@ const LAYOUTS = ["none", "right", "down", "horizontal", "vertical", "left", "up"
 
 export function initContainerLayoutPropertyFormCallback() : FormCallback {
 
-	return function(propertyOwner: Property, contextEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
+	return function(propertyOwner: Property, contextEvent: Event, contextMenu: ContextMenu, selectedElements: SVGGraphicsElement[]) {
 		const ls = onlyLastSelected(selectedElements);
 		const layout = getLayout(ls);
 

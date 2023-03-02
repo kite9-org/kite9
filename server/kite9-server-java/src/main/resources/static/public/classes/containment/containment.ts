@@ -37,7 +37,8 @@ export class Containment {
 	
 	getTypes(element: Element) : Set<string> {
 		return new Set(this.typeCallbacks
-			.map(cb => cb(element)));
+			.map(cb => cb(element))
+			.filter(r => r != undefined));
 	}
 	
 	getContainsTypes(element: Element) : Set<string> {

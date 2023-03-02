@@ -4,14 +4,14 @@ export type FormCallback = (
 	p: Property,
 	e: Event,
 	c: ContextMenu,
-	s: Element[]) => void
+	s: SVGGraphicsElement[]) => void
 	
 export type SetCallback = (
 	p: Property,
 	contextEvent: Event,
 	formEvent: Event,
 	c: ContextMenu,
-	s: Element[]) => void
+	s: SVGGraphicsElement[]) => void
 
 /**
  * Handles property functions where there might need to be pluggable behaviour.
@@ -39,7 +39,7 @@ export class Property {
 	/**
 	 * Adds controls to the contextMenu for editing the property.
 	 */
-	populateForm(contextEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
+	populateForm(contextEvent: Event, contextMenu: ContextMenu, selectedElements: SVGGraphicsElement[]) {
 		this.formCallbacks.forEach(fc => fc(this, contextEvent, contextMenu, selectedElements));
 	}
 	
@@ -47,7 +47,7 @@ export class Property {
 	 * Use this as the callback for "ok" buttons on the property to ensure all callbacks 
 	 * are done.
 	 */
-	setProperty(contextEvent: Event, formEvent: Event, contextMenu: ContextMenu, selectedElements: Element[]) {
+	setProperty(contextEvent: Event, formEvent: Event, contextMenu: ContextMenu, selectedElements: SVGGraphicsElement[]) {
 		this.setCallbacks.forEach(fc => fc(this, contextEvent, formEvent, contextMenu, selectedElements));
 		contextMenu.destroy();
 	}

@@ -45,7 +45,7 @@ export function initFillBuildControls() : BuildControlsCallback {
 }
 
 export function fillSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected,[id][k9-ui~=stroke].selected"));
+	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=fill].selected,[id][k9-ui~=stroke].selected")) as SVGGraphicsElement[];
 }
 
 export function initFillChangeEvent(selectedElement: Element, svgStyle: Styles) : EventListener {

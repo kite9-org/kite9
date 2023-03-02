@@ -112,6 +112,8 @@
 	stroke: rgb(255, 204, 0) !important;
 	stroke-opacity: .8 !important;
 }
+
+[k9-elem=_temporary].selected,
 .selected > g > [k9-highlight~=pulse],
 .selected > g > [k9-highlight~=fill],
 .selected > g > [k9-highlight~=grab],

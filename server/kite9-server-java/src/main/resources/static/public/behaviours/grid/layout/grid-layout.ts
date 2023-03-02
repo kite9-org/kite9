@@ -1,4 +1,4 @@
-import { numeric, change } from '../../../bundles/form.js'
+import { numeric } from '../../../bundles/form.js'
 import { parseInfo, number, createUniqueId, getContainedChildIds, isConnected, getParentElement, onlyLastSelected, getAffordances } from '../../../bundles/api.js'
 import { getOrdinals } from '../../grid/common-grid.js'
 import { Command } from '../../../classes/command/command.js';
@@ -31,7 +31,7 @@ export function initGridLayoutPropertySetCallback(
 		cellSelector = function (e) {
 			return Array.from(e.querySelectorAll("[id]"))
 				.filter(ee => isConnected(ee))
-				.filter(ee => getParentElement(ee) == e);
+				.filter(ee => getParentElement(ee) == e) as SVGGraphicsElement[];
 		}
 	}
 	

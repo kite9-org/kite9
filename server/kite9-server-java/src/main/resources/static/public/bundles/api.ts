@@ -3,7 +3,7 @@ import { Direction, ElementFilter, Range } from "./types";
 /**
  * Returns the collection of elements so long as one of them has the lastSelected class.
  */
-export function hasLastSelected(e: Element[]) : Element[] {
+export function hasLastSelected(e: SVGGraphicsElement[]) : SVGGraphicsElement[] {
 	for (let i = 0; i < e.length; i++) {
 		const item = e[i];
 		if (item.classList.contains("lastSelected")) {
@@ -17,7 +17,7 @@ export function hasLastSelected(e: Element[]) : Element[] {
 /**
  * Returns the element from the collection with the lastSelected class, or null.
  */
-export function onlyLastSelected(e: Element[]) : Element | null {
+export function onlyLastSelected(e: SVGGraphicsElement[]) : SVGGraphicsElement | null {
 	for (let i = 0; i < e.length; i++) {
 		const item = e[i];
 		if (item.classList.contains("lastSelected")) {
@@ -108,20 +108,20 @@ export function parseInfo(t : Element) : Info  {
 	}
 }
 
-export function getParentElement(elem: Element): Element | null {
+export function getParentElement(elem: Element): SVGGraphicsElement | null {
 	let p = elem.parentElement;
 	while ((p != null) && (!p.hasAttribute("k9-elem"))) {
 		p = p.parentElement;
 	}
 
-	if (p instanceof Element) {
-		return p as Element;
+	if (p instanceof SVGGraphicsElement) {
+		return p as SVGGraphicsElement;
 	} else {
 		return null;
 	}
 }
 
-export function getParentElements(elements : Element[]) : Element[] {
+export function getParentElements(elements : Element[]) : SVGGraphicsElement[] {
 	return [...new Set(Array.from(elements).flatMap(e => getParentElement(e)))];
 }
 
@@ -354,8 +354,8 @@ export function createUniqueId() : string {
 }
 
 
-export function getKite9Target(v: Node | null) : Element | null {
-	if (v instanceof Element) {
+export function getKite9Target(v: Node | null) : SVGGraphicsElement | null {
+	if (v instanceof SVGGraphicsElement) {
 		if (v.hasAttribute("k9-elem") && v.hasAttribute("id")) {
 			return v;
 		} else {
