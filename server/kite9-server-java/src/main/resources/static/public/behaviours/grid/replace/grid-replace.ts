@@ -3,7 +3,7 @@ import { createUniqueId, parseInfo, getKite9Target, isTemporary } from '../../..
 import { getElementUri } from '../../../classes/palette/palette.js';
 import { PaletteSelector, Selector } from '../../../bundles/types.js';
 import { isCell } from '../../../behaviours/grid/common-grid.js';
-import { CreateReplaceStep } from '../../selectable/replace/selectable-replace.js';
+import { CreateReplaceStep, ReplaceChecker } from '../../selectable/replace/selectable-replace.js';
 
 /**
  * Allows you to select temporary grid elements.
@@ -53,5 +53,9 @@ export const gridTemporaryReplaceStep : CreateReplaceStep = function(command, e,
 	return true;
 }
 
-
+export function initGridTemporaryReplaceChecker() : ReplaceChecker {
+	return function (_e1: Element, _e2: Element) {
+		return true;
+	}
+}
 	

@@ -15,7 +15,7 @@ import { command, metadata, dragger, contextMenu, layout, palette, containment, 
 import { initBiFilter } from '../../behaviours/typed/rules/typed-rules.js'
 import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
 import { initReplaceContextMenuCallback } from '../../behaviours/selectable/replace/selectable-replace.js'
-import { gridTemporaryReplaceStep, initReplaceTemporaryCellChoiceSelector, replaceTemporaryCellSelector } from '../../behaviours/grid/replace/grid-replace.js'
+import { gridTemporaryReplaceStep, initGridTemporaryReplaceChecker, initReplaceTemporaryCellChoiceSelector, replaceTemporaryCellSelector } from '../../behaviours/grid/replace/grid-replace.js'
 
 export function initGrid() {
 
@@ -41,7 +41,8 @@ export function initGrid() {
 		paletteContextMenu.add(initReplaceContextMenuCallback(palette, command, {keptAttributes: ['id', 'reference', 'end', 'style']}, containment,
 			initReplaceTemporaryCellChoiceSelector(),
 			replaceTemporaryCellSelector, 
-			gridTemporaryReplaceStep));
+			gridTemporaryReplaceStep,
+			initGridTemporaryReplaceChecker()));
 		contextMenu.add(initSelectContextMenuCallback());
 
 		containment.addContainmentRuleCallback(initGridContainmentRuleCallback());

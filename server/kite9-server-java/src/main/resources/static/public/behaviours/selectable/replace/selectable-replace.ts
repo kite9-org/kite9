@@ -20,6 +20,8 @@ function initDefaultReplaceChoiceSelector() {
 
 export type CreateReplaceStep = (command: Command, e: Element, drop: Element, palettePanel: HTMLDivElement) => boolean;
 
+export type ReplaceChecker = (e1: Element, e2: Element) => boolean;
+
 export function initReplaceContextMenuCallback(
 	palette: Palette, 
 	command: Command, 
@@ -28,7 +30,7 @@ export function initReplaceContextMenuCallback(
 	replaceChoiceSelector : PaletteSelector = undefined, 
 	replaceSelector: Selector = undefined, 
 	createReplaceStep: CreateReplaceStep = undefined , 
-	replaceChecker : (e1: Element, e2: Element) => boolean = undefined)
+	replaceChecker : ReplaceChecker = undefined)
 		: ContextMenuCallback {
 	
 	if (replaceChoiceSelector == undefined) {
