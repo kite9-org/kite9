@@ -6,6 +6,9 @@ import { Finder, Selector } from '../../../bundles/types.js';
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
 import { initPaletteFinder } from '../../palettes/menu/palettes-menu.js';
 import { AlignmentCollector } from '../linkable.js';
+import { addNamedEventListener } from '../../../bundles/monika.js';
+
+export const LINK_CANCELLED = 'link-cancel';
 
 export function getLinkTemplateUri() {
 	return getDocumentParam('link-template-uri');
@@ -25,6 +28,12 @@ export function initLinkContextMenuCallback(
 	if (linkFinder == undefined) {
 		linkFinder = initPaletteFinder();
 	}
+	
+	const cancel = (e:KeyboardEvent) => { 
+		if (e.key === 'Escape') linker.cancel(); 
+	};
+	
+	addNamedEventListener(document, "keypress", LINK_CANCELLED, cancel)
 
 	/**
 	 * Provides a link option for the context menu

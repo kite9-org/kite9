@@ -115,4 +115,9 @@ export class Linker {
 	clear() {
 		this.drawing = [];
 	}
+	
+	cancel() {
+		this.removeDrawingLinks();
+		this.clear();
+	}
 }
