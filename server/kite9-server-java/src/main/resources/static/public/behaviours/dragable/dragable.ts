@@ -8,7 +8,8 @@ import { addNamedEventListener } from '../../bundles/monika.js';
 
 export const DRAGABLE_START_EVENT = 'dragable-start', 
 	DRAGABLE_MOVE_EVENT = 'dragable-move', 
-	DRAGABLE_END_EVENT = 'dragable-end';
+	DRAGABLE_END_EVENT = 'dragable-end',
+	DRAGABLE_CANCELLED = 'dragable-cancel';
 
 function defaultDragableSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=drag]")) as SVGGraphicsElement[];
@@ -23,6 +24,9 @@ export function initDragable(dragger: Dragger, selector: Selector = undefined) {
 	const drag = (e: MouseEvent) => dragger.drag(e);
 	const drop = (e: MouseEvent) => dragger.drop(e);
 	const grab = () => dragger.grab();
+	const cancel = (e:KeyboardEvent) => { 
+		if (e.key === 'Escape') dragger.cancel(); 
+	};
 
 	window.addEventListener('DOMContentLoaded', function() {
 
@@ -30,7 +34,8 @@ export function initDragable(dragger: Dragger, selector: Selector = undefined) {
 			addNamedEventListener(svg, "mousemove", DRAGABLE_MOVE_EVENT, drag);
 			addNamedEventListener(svg, "touchmove", DRAGABLE_MOVE_EVENT, drag,  { passive: false });
 		})
-
+		
+		addNamedEventListener(document, "keypress", DRAGABLE_CANCELLED, cancel)
 		addNamedEventListener(document, "mouseup", DRAGABLE_END_EVENT, drop);
 		addNamedEventListener(document, "touchend", DRAGABLE_END_EVENT, drop);
 

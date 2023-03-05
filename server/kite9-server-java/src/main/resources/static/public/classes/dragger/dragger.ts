@@ -310,6 +310,16 @@ export class Dragger {
 		this.svg.style.cursor = undefined;
 	}	
 	
+	cancel() {
+		if (this.state) {
+			this.endMove(true);
+			this.mouseDown = false;
+			this.draggingWithButtonDown = true;
+			this.svg.style.cursor = undefined;
+			this.dropTargets = [];
+		}
+	}
+	
 }
 
 
