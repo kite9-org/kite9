@@ -5,11 +5,12 @@ import { once } from '../../bundles/ensure.js'
 import { Linker } from '../../classes/linker/linker.js'
 
 
-import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette, overlay, stylemenu } from '../../templates/editor/editor.js'
+import { command, metadata, dragger, contextMenu, paletteContextMenu, containment, palette, overlay, stylemenu, instrumentation } from '../../templates/editor/editor.js'
 
 // Links
 import { initLinkable, updateLink, initLinkerDropCallback, initAlignmentCollector, AlignmentIdentifier } from '../../behaviours/links/linkable.js'
-import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback, initAutoConnectTemplateSelector } from '../../behaviours/links/autoconnect/links-autoconnect.js'
+import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback } from '../../behaviours/links/autoconnect/links-autoconnect.js'
+import { initAutoConnectTemplateSelector, initAutoConnectInstrumentationCallback } from '../../behaviours/links/autoconnect/links-autoconnect-mode.js'
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '../../behaviours/links/link/links-link.js'
 import { initLinkDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
 import { initAlignContextMenuCallback } from '../../behaviours/links/align/links-align.js'
@@ -76,6 +77,8 @@ function initLinks() {
 
 		initLinkable(linker);
 		initTerminatorDirectionIndicator();
+
+		instrumentation.add(initAutoConnectInstrumentationCallback());
 
 
 		const portPosition = initStyleContextMenuCallback(command, overlay,
