@@ -3,6 +3,7 @@ import { getMainSvg, getSVGCoords, getElementPageBBox, currentTarget } from '../
 import { PaletteSelector, Point } from '../../../bundles/types.js';
 import { Dragger } from '../../../classes/dragger/dragger.js';
 import { getElementUri, PaletteLoadCallback } from '../../../classes/palette/palette.js';
+import { setAutoconnectNew } from '../linkable.js';
 
 function defaultDragableSelector(palettePanel: Element): SVGGraphicsElement[] {
 	return Array.from(palettePanel.querySelectorAll("[allow-drag=true] [id][k9-elem]")) as SVGGraphicsElement[];
@@ -44,7 +45,7 @@ export function initNewLinkPaletteLoadCallback(dragger: Dragger, dragableSelecto
 			mouseDown = true;
 		}
 
-		function endDrag(event: Event) {
+		function endDrag() {
 			mouseDown = false;
 		}
 
@@ -74,7 +75,7 @@ export function initNewLinkPaletteLoadCallback(dragger: Dragger, dragableSelecto
 				const droppingElement = paletteElement.cloneNode(true) as Element;
 				changeId(droppingElement, droppingElement.getAttribute("id"), newId);
 
-				droppingElement.setAttribute("autoconnect", "new");
+				setAutoconnectNew(droppingElement);
 
 				// place it in the same position on the main svg 
 				getMainSvg().appendChild(droppingElement);

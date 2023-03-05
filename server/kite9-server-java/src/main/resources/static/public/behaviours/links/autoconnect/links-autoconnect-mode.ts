@@ -2,6 +2,7 @@ import { getAffordances } from '../../../bundles/api.js'
 import { InstrumentationCallback } from '../../../classes/instrumentation/instrumentation.js';
 import { icon } from '../../../bundles/form.js';
 import { addNamedEventListener } from '../../../bundles/monika.js';
+import { isAutoconnectNew } from '../linkable.js';
 
 export const AUTOCONNECT_ALT_ON = 'autoconnect-alt-on', 
 	AUTOCONNECT_ALT_OFF = 'autoconnect-alt-off';
@@ -42,8 +43,26 @@ export function initAutoConnectTemplateSelector(
 	linkTemplateUriCallback: UriCallback): TemplateSelector {
 
 	return function(element: Element): string {
-		const alignLink = (element != null) && (!getAffordances(element).includes("autoconnect"));
-		return alignLink ? alignTemplateUriCallback() : linkTemplateUriCallback();
+		const ac = getAffordances(element).includes("autoconnect");
+	
+		switch (mode) {
+			case AutoConnectMode.NEW:
+				if (isAutoconnectNew(element) && ac) {
+					return linkTemplateUriCallback();
+				} else {
+					return alignTemplateUriCallback();
+				}
+			case AutoConnectMode.OFF: 
+				return null;
+			case AutoConnectMode.ON:
+				if (ac) {
+					return linkTemplateUriCallback();
+				} else {
+					return alignTemplateUriCallback();
+				}
+		}
+	
+//		const alignLink = (element != null) && (!);
 	}
 }
 

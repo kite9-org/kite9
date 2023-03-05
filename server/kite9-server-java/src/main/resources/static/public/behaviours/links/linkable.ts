@@ -133,3 +133,15 @@ export function getStyleDirection(e1: Element) : LinkDirection {
 	const d = style['--kite9-direction'] as LinkDirection;
 	return d;
 }
+
+
+/** 
+ * Call this to tell autoconnect we're dealing with a new element
+ */
+export function setAutoconnectNew(e: Element) {
+	e.setAttribute("autoconnect", "new");
+}
+
+export function isAutoconnectNew(e: Element) {
+	return e.getAttribute("autoconnect") == 'new';
+}
