@@ -53,6 +53,7 @@ import { once } from '../../bundles/ensure.js'
  * plugin/behaviour system.
  */
 import { command, metadata, transition, instrumentation, dragger, contextMenu, palette, paletteContextMenu, overlay } from '../../templates/adl/adl.js'
+import { initAutoConnectInstrumentationCallback } from '../../behaviours/links/autoconnect/links-autoconnect.js'
 
 const 
 	containment = new Containment(),
@@ -84,6 +85,7 @@ function initEditor() {
 		palette.addReveal(initPaletteUpdateDefaults(palette, initPaletteFinder()));
 		
 		instrumentation.add(initUndoableInstrumentationCallback(command));
+		instrumentation.add(initAutoConnectInstrumentationCallback());
 		
 		contextMenu.add(initDragContextMenuCallback(dragger));
 		contextMenu.add(initPaletteContextMenuCallback(palette));

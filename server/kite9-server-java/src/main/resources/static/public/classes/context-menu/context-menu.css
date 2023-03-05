@@ -59,10 +59,10 @@
 }
 
 .contextMenu .icon img {
-	width: 3rem;
-	height: 3rem;
+	width: 2rem;
+	height: 2rem;
 	cursor: pointer;
-	border-radius: 1.5rem;
+	border-radius: 1rem;
 	background-color: #EEEEEE;
 	margin: 0 .2rem 0 .2rem;
 }

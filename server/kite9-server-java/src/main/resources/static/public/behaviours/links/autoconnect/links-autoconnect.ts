@@ -5,12 +5,42 @@ import { Command } from '../../../classes/command/command.js';
 import { Area, Finder, Selector } from '../../../bundles/types.js';
 import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
+import { InstrumentationCallback } from '../../../classes/instrumentation/instrumentation.js';
+import { icon } from '../../../bundles/form.js';
+
+enum AutoConnectMode { OFF, NEW, ON }
+
+function modeText(a: AutoConnectMode) {
+	switch (a) {
+		case AutoConnectMode.OFF: return "Auto Connect Off";
+		case AutoConnectMode.NEW: return "New Elements Only";
+		case AutoConnectMode.ON: return "Connect On Drag";
+	}
+}
+
+function nextMode(a: AutoConnectMode): AutoConnectMode {
+	switch (a) {
+		case AutoConnectMode.OFF: return AutoConnectMode.NEW;
+		case AutoConnectMode.NEW: return AutoConnectMode.ON;
+		case AutoConnectMode.ON: return AutoConnectMode.OFF;
+	}
+}
+
+function getStyle(a: AutoConnectMode): string {
+	switch (a) {
+		case AutoConnectMode.OFF: return "opacity: .5; ";
+		case AutoConnectMode.NEW: return "background-color: #b7c0fe66;";
+		case AutoConnectMode.ON: return "background-color: #fd987066;";
+	}
+}	
+
 
 let link = null;
 let link_to = undefined;
 let link_d: LinkDirection = undefined;
 let draggingElement = undefined;
 let templateUri = undefined;
+let mode : AutoConnectMode = AutoConnectMode.OFF;
 
 export type UriCallback = () => string
 export type TemplateSelector = (e: Element) => string
@@ -22,6 +52,26 @@ export function initAutoConnectTemplateSelector(
 	return function(element: Element): string {
 		const alignLink = (element != null) && (!getAffordances(element).includes("autoconnect"));
 		return alignLink ? alignTemplateUriCallback() : linkTemplateUriCallback();
+	}
+}
+
+export function initAutoConnectInstrumentationCallback() : InstrumentationCallback {
+
+	let acIcon = null; 
+
+	function toggleState() {
+		mode = nextMode(mode);
+		acIcon.setAttribute("aria-label", modeText(mode));
+		acIcon.children[0].setAttribute("style", getStyle(mode));
+	}
+	
+	
+	return function(nav) {
+		if (acIcon == null) {
+			acIcon = icon('_autoconnect-toggle', "Toggle AutoConnect", "/public/behaviours/links/autoconnect/autoconnect.svg", toggleState);
+			nav.appendChild(acIcon);
+			toggleState();
+		}
 	}
 }
 
