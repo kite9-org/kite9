@@ -1,11 +1,11 @@
 import { getMainSvg, getElementPageBBox, currentTarget } from '../../../bundles/screen.js'
-import { parseInfo, createUniqueId, getContainingDiagram, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId, getAffordances } from '../../../bundles/api.js'
+import { parseInfo, createUniqueId, getContainingDiagram, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId, getAffordances, getParentElement } from '../../../bundles/api.js'
 import { Linker, LinkerCallback } from '../../../classes/linker/linker.js';
 import { Command } from '../../../classes/command/command.js';
 import { Area, Finder, Selector } from '../../../bundles/types.js';
 import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
-import { TemplateSelector } from './links-autoconnect-mode.js';
+import { TemplateSelector, getAutoConnectMode, AutoConnectMode } from './links-autoconnect-mode.js';
 
 let link_to = undefined;
 let link_d: LinkDirection = undefined;
@@ -19,18 +19,22 @@ export function initAutoConnectLinkerCallback(command: Command, alignmentIdentif
 	function undoAlignment(e: Element) {
 		const alignOnly = alignmentIdentifier(e);
 		const id = e.getAttribute("id");
+		const parent = getParentElement(e);
 		if (alignOnly) {
 			command.push({
 				type: 'Delete',
-				fragmentId: id,
-				base64Element: command.getAdl(id)
+				fragmentId: parent.getAttribute("id"),
+				base64Element: command.getAdl(id),
+				beforeId: getNextSiblingId(e)
 			});
+			return false;
 		} else {
+			const direction = parseInfo(e)['direction']
 			command.push({
-				type: 'ReplaceAttr',
+				type: 'ReplaceStyle',
 				fragmentId: id,
-				name: 'direction',
-				from: e.getAttribute('direction')
+				name: '--kite9-direction',
+				from: direction
 			})
 
 			return true;
@@ -62,8 +66,10 @@ export function initAutoConnectLinkerCallback(command: Command, alignmentIdentif
 			const diagramId = getContainingDiagram(link_to).getAttribute("id");
 
 			existingLinks = existingLinks.filter(e => undoAlignment(e));
+			
+			const mode = getAutoConnectMode();			
 
-			if (existingLinks.length == 0) {
+			if ((existingLinks.length == 0) || (mode == AutoConnectMode.ON)) {
 				// create a new link
 				const linkId = createUniqueId();
 				command.push({

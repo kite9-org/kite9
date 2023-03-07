@@ -30,7 +30,7 @@ export function initLinkContextMenuCallback(
 	}
 	
 	const cancel = (e:KeyboardEvent) => { 
-		if (e.key === 'Escape') linker.cancel(); 
+		if (e.key === 'Escape') linker.removeDrawingLinks(); 
 	};
 	
 	addNamedEventListener(document, "keypress", LINK_CANCELLED, cancel)
@@ -108,7 +108,7 @@ export function initLinkLinkerCallback(command: Command, alignmentCollector: Ali
 			if (perform) {
 				command.perform();
 			}
-			linker.clear();
+			linker.removeDrawingLinks();
 		}
 	};
 

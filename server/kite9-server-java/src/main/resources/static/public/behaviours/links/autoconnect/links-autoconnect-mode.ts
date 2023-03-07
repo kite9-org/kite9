@@ -9,7 +9,7 @@ import { Dragger } from '../../../classes/dragger/dragger.js';
 export const AUTOCONNECT_ALT_ON = 'autoconnect-alt-on', 
 	AUTOCONNECT_ALT_OFF = 'autoconnect-alt-off';
 
-enum AutoConnectMode { OFF, NEW, ON }
+export enum AutoConnectMode { OFF, NEW, ON }
 
 function modeText(a: AutoConnectMode) {
 	switch (a) {
@@ -120,4 +120,8 @@ export function initAutoConnectInstrumentationCallback(linker: Linker, dragger: 
 			toggleState();
 		}
 	}
+}
+
+export function getAutoConnectMode() : AutoConnectMode {
+	return mode;
 }
