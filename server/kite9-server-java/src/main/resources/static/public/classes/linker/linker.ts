@@ -111,13 +111,4 @@ export class Linker {
 	get() {
 		return this.drawing;
 	}
-	
-	clear() {
-		this.drawing = [];
-	}
-	
-	cancel() {
-		this.removeDrawingLinks();
-		this.clear();
-	}
 }

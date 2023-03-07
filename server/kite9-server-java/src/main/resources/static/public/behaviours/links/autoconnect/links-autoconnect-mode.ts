@@ -3,6 +3,8 @@ import { InstrumentationCallback } from '../../../classes/instrumentation/instru
 import { icon } from '../../../bundles/form.js';
 import { addNamedEventListener } from '../../../bundles/monika.js';
 import { isAutoconnectNew } from '../linkable.js';
+import { Linker } from '../../../classes/linker/linker.js';
+import { Dragger } from '../../../classes/dragger/dragger.js';
 
 export const AUTOCONNECT_ALT_ON = 'autoconnect-alt-on', 
 	AUTOCONNECT_ALT_OFF = 'autoconnect-alt-off';
@@ -66,7 +68,7 @@ export function initAutoConnectTemplateSelector(
 	}
 }
 
-export function initAutoConnectInstrumentationCallback() : InstrumentationCallback {
+export function initAutoConnectInstrumentationCallback(linker: Linker, dragger: Dragger) : InstrumentationCallback {
 
 	let acIcon = null; 
 	let altMode : AutoConnectMode = null;
@@ -74,6 +76,7 @@ export function initAutoConnectInstrumentationCallback() : InstrumentationCallba
 	function updateMode() {
 		acIcon.setAttribute("aria-label", modeText(mode));
 		acIcon.children[0].setAttribute("style", getStyle(mode));
+		dragger.last_drag_replay();
 	}
 	
 	function toggleState() {
@@ -88,6 +91,7 @@ export function initAutoConnectInstrumentationCallback() : InstrumentationCallba
 				case AutoConnectMode.ON:
 				case AutoConnectMode.NEW:
 					mode = AutoConnectMode.OFF;
+					linker.removeDrawingLinks();
 					break;
 				default:
 					mode = AutoConnectMode.ON;

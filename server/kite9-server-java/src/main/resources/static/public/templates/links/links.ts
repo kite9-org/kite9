@@ -78,7 +78,7 @@ function initLinks() {
 		initLinkable(linker);
 		initTerminatorDirectionIndicator();
 
-		instrumentation.add(initAutoConnectInstrumentationCallback());
+		instrumentation.add(initAutoConnectInstrumentationCallback(linker, dragger));
 
 
 		const portPosition = initStyleContextMenuCallback(command, overlay,

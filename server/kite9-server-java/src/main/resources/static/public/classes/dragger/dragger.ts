@@ -180,8 +180,15 @@ export class Dragger {
 		this.mouseDown = true;
 		this.draggingWithButtonDown = true;
 	}
+	
+	_lastEvt: MouseEvent;
+	
+	last_drag_replay() {
+		this.drag(this._lastEvt);
+	}
 
 	drag(evt : MouseEvent) {
+		this._lastEvt = evt;
 		if (this.draggingWithButtonDown) {
 			if (!this.mouseDown) {
 				return;

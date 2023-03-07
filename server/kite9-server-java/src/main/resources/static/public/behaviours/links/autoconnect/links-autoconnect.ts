@@ -7,7 +7,6 @@ import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkabl
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
 import { TemplateSelector } from './links-autoconnect-mode.js';
 
-let link = null;
 let link_to = undefined;
 let link_d: LinkDirection = undefined;
 let draggingElement = undefined;
@@ -109,8 +108,7 @@ export function initAutoConnectLinkerCallback(command: Command, alignmentIdentif
 				})
 			}
 
-			linker.clear();
-			link = null;
+			linker.removeDrawingLinks();
 			link_to = null;
 		}
 	}
@@ -128,7 +126,7 @@ export function initAutoConnectMoveCallback(
 
 	function clearLink() {
 		linker.removeDrawingLinks();
-		link = null;
+		link_to = null;
 	}
 
 	function updateLink(topos: Area, frompos: Area, link_d: LinkDirection, e: Element) {
@@ -162,15 +160,14 @@ export function initAutoConnectMoveCallback(
 
 
 
-		if (link == null) {
+		if (linker.get().length == 0) {
 			const representation = linkFinder(templateUri);
 			if (representation) {
 				linker.start([e], representation);
-				link = linker.get()[0];
 			}
 		}
 
-		if (link != null) {
+		if (linker.get().length > 0) {
 			linker.moveCoords(fx, fy, tx, ty);
 		}
 	}
@@ -276,7 +273,6 @@ export function initAutoConnectMoveCallback(
 
 		if (cancelEarly) {
 			clearLink();
-			link_to = undefined;
 			return;
 		}
 
@@ -359,13 +355,11 @@ export function initAutoConnectMoveCallback(
 
 		if (best === undefined) {
 			clearLink();
-			link_to = undefined;
 		} else if (autoConnectWith(draggingElement, currentTarget(event), best) == null) {
 			clearLink();
-			link_to = undefined;
-		} else if (best === link_to) {
-			link_d = best_d;
-			updateLink(pos, getElementPageBBox(best), link_d, draggingElement);
+//		} else if ((best === link_to) && link) {
+//			link_d = best_d;
+//			updateLink(pos, getElementPageBBox(best), link_d, draggingElement);
 		} else {
 			clearLink();
 			link_to = best;
