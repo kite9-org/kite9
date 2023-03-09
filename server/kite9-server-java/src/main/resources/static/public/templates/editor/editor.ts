@@ -53,6 +53,7 @@ import { once } from '../../bundles/ensure.js'
  * plugin/behaviour system.
  */
 import { command, metadata, transition, instrumentation, dragger, contextMenu, palette, paletteContextMenu, overlay } from '../../templates/adl/adl.js'
+import { initOptionalDirectionContextMenuCallback } from '../../behaviours/direction/direction.js'
 
 const 
 	containment = new Containment(),
@@ -92,6 +93,7 @@ function initEditor() {
 		contextMenu.add(initEditContextMenuCallback(command));
 		contextMenu.add(initXMLContextMenuCallback(command));
 		contextMenu.add(initEditableImageContextMenuCallback(command, metadata));
+		contextMenu.add(initOptionalDirectionContextMenuCallback(command));
 		
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, fillIcon, 'Fill & Style', initFillBuildControls(), fillSelector, () => "", initFillChangeEvent));
 		stylemenu.push(initStyleContextMenuCallback(command, overlay, alignIcon, 'Align', initAlignBuildControls(), alignSelector));

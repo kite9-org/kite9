@@ -2,13 +2,13 @@ import { getMainSvg, getElementPageBBox, currentTarget } from '../../../bundles/
 import { parseInfo, createUniqueId, getContainingDiagram, getExistingConnections, getKite9Target, getCommonContainer, isLink, getNextSiblingId, getAffordances, getParentElement } from '../../../bundles/api.js'
 import { Linker, LinkerCallback } from '../../../classes/linker/linker.js';
 import { Command } from '../../../classes/command/command.js';
-import { Area, Finder, Selector } from '../../../bundles/types.js';
-import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
+import { Area, Finder, Selector, OptionalDirection, reverseDirection } from '../../../bundles/types.js';
+import { AlignmentIdentifier } from '../linkable.js';
 import { MoveCallback } from '../../../classes/dragger/dragger.js';
 import { TemplateSelector, getAutoConnectMode, AutoConnectMode } from './links-autoconnect-mode.js';
 
 let link_to = undefined;
-let link_d: LinkDirection = undefined;
+let link_d: OptionalDirection = undefined;
 let draggingElement = undefined;
 let templateUri = undefined;
 
@@ -41,7 +41,7 @@ export function initAutoConnectLinkerCallback(command: Command, alignmentIdentif
 		}
 	}
 
-	function ensureNoDirectedLeavers(id: string, d1: LinkDirection) {
+	function ensureNoDirectedLeavers(id: string, d1: OptionalDirection) {
 		getExistingConnections(id).forEach(e => {
 			const parsed = parseInfo(e);
 			const d = parsed['direction'];
@@ -135,7 +135,7 @@ export function initAutoConnectMoveCallback(
 		link_to = null;
 	}
 
-	function updateLink(topos: Area, frompos: Area, link_d: LinkDirection, e: Element) {
+	function updateLink(topos: Area, frompos: Area, link_d: OptionalDirection, e: Element) {
 		let fx : number, fy : number, tx : number, ty : number;
 		const mx = topos.x + topos.width / 2;
 		const my = topos.y + topos.height / 2;
@@ -289,7 +289,7 @@ export function initAutoConnectMoveCallback(
 
 		let best : Element = undefined;
 		let best_dist : number = undefined;
-		let best_d : LinkDirection =  undefined;
+		let best_d : OptionalDirection =  undefined;
 
 		getElementsInAxis(y, false).forEach(function(k) {
 			if (!alreadyDragging(k)) {
@@ -297,7 +297,7 @@ export function initAutoConnectMoveCallback(
 
 				if (outside(pos, v) && (y <= v.y + v.height) && (y >= v.y)) {
 					// intersection on y position
-					let d : LinkDirection, dist: number;
+					let d : OptionalDirection, dist: number;
 					if (v.x + v.width < x) {
 						dist = pos.x - v.x - v.width;
 						d = 'right';
@@ -328,7 +328,7 @@ export function initAutoConnectMoveCallback(
 
 				if (outside(pos, v) && (x <= v.x + v.width) && (x >= v.x)) {
 					// intersection on x position
-					let d : LinkDirection, dist: number;
+					let d : OptionalDirection, dist: number;
 					if (v.y + v.height < y) {
 						dist = pos.y - v.y - v.height;
 						d = 'down';

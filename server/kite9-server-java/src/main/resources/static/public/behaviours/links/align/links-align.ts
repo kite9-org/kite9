@@ -1,9 +1,9 @@
 import { getContainingDiagram, createUniqueId, getExistingConnections, parseInfo, hasLastSelected, getDocumentParam, getParentElement } from '../../../bundles/api.js'
 import { getMainSvg, getElementPageBBox } from '../../../bundles/screen.js'
-import { Selector } from '../../../bundles/types.js';
+import { Selector, OptionalDirection, reverseDirection } from '../../../bundles/types.js';
 import { Command, SingleCommand } from '../../../classes/command/command.js';
 import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { AlignmentIdentifier, LinkDirection, reverseDirection } from '../linkable.js';
+import { AlignmentIdentifier } from '../linkable.js';
 
 export function initAlignContextMenuCallback(
 	command: Command, 
@@ -14,7 +14,7 @@ export function initAlignContextMenuCallback(
 	/**
 	 * Aligns the two elements
 	 */
-	function createAlignStep(from: Element, to: Element, direction: LinkDirection, steps: SingleCommand[] ,linkId: string) {
+	function createAlignStep(from: Element, to: Element, direction: OptionalDirection, steps: SingleCommand[] ,linkId: string) {
 		
 		const conns = getExistingConnections(from.getAttribute("id"), to.getAttribute("id"));
 		let toUseId : string = null;

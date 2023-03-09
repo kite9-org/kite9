@@ -44,8 +44,9 @@ export type Finder = (u: string) => Element
  */
 export type Direction  = "up" | "down" | "left" | "right"
 export const directions : Direction[] =  ["up" , "down", "left" , "right" ] 
+export type OptionalDirection = Direction | undefined
 
-export function rotateClockwise(d: Direction | undefined) : Direction {
+export function rotateClockwise(d: OptionalDirection) : OptionalDirection {
 	switch(d) {
 		case 'up':
 			return 'right';
@@ -60,7 +61,7 @@ export function rotateClockwise(d: Direction | undefined) : Direction {
 	}
 }
 
-export function rotateAntiClockwise(d: Direction | undefined) : Direction {
+export function rotateAntiClockwise(d: OptionalDirection) : OptionalDirection {
 	switch(d) {
 		case 'up':
 			return 'left';
@@ -70,6 +71,23 @@ export function rotateAntiClockwise(d: Direction | undefined) : Direction {
 			return 'down';
 		case 'right':
 			return 'up';
+		case undefined:
+			return undefined;
+	}
+}
+
+
+
+export function reverseDirection(d: OptionalDirection): OptionalDirection {
+	switch (d) {
+		case "left":
+			return "right";
+		case "up":
+			return "down";
+		case "down":
+			return "up";
+		case "right":
+			return "left";
 		case undefined:
 			return undefined;
 	}

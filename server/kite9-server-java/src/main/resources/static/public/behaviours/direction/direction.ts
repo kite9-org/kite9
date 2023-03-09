@@ -1,27 +1,28 @@
-import { getMainSvg, svg } from '../../../bundles/screen.js'
-import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected, isLink, getParentElement } from '../../../bundles/api.js'
-import { Command } from '../../../classes/command/command.js';
-import { rotateAntiClockwise, rotateClockwise, Selector } from '../../../bundles/types.js';
-import { ContextMenu, ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { getDirection, getStyleDirection, LinkDirection, reverseDirection } from '../linkable.js';
+import { getMainSvg } from '../../bundles/screen.js'
+import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected, isLink, getParentElement } from '../../bundles/api.js'
+import { Command } from '../../classes/command/command.js';
+import { rotateAntiClockwise, rotateClockwise, Selector } from '../../bundles/types.js';
+import { ContextMenu, ContextMenuCallback } from '../../classes/context-menu/context-menu.js';
+import { OptionalDirection, reverseDirection } from '../../bundles/types.js';
+import { parseStyle } from '../../bundles/css.js';
 
-function linkDirectionSelector() {
+function OptionalDirectionSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction].selected")) as SVGGraphicsElement[];
 }
 
-function terminatorSelector() {
-	return Array.from(getMainSvg().querySelectorAll("[id][k9-info*=terminator]")) 
-		.filter(e => isTerminator(e)) as SVGGraphicsElement[];
+function getStyleDirection(e1: Element) : OptionalDirection {
+	const style = parseStyle(e1.getAttribute("style"));
+	const d = style['--kite9-direction'] as OptionalDirection;
+	return d;
 }
 
-
-export function initLinkDirectionContextMenuCallback(
+export function initOptionalDirectionContextMenuCallback(
 	command: Command,
-	selector: Selector = linkDirectionSelector): ContextMenuCallback {
+	selector: Selector = OptionalDirectionSelector): ContextMenuCallback {
 
 	type Turn = "cw" | "acw" | "180";
 
-	function setDirections(es: Element[], direction: LinkDirection | Turn, contextMenu: ContextMenu) {
+	function setDirections(es: Element[], direction: OptionalDirection | Turn, contextMenu: ContextMenu) {
 
 		contextMenu.destroy();
 
@@ -29,7 +30,7 @@ export function initLinkDirectionContextMenuCallback(
 			const toChange = isTerminator(e1) ? getParentElement(e1) : e1
 			const id = toChange.getAttribute("id")
 			const oldDirection = getStyleDirection(toChange);
-			let relativeDirection: LinkDirection
+			let relativeDirection: OptionalDirection
 			let reverse = false;
 
 			if (e1 != toChange) {
@@ -84,7 +85,7 @@ export function initLinkDirectionContextMenuCallback(
 		cm: ContextMenu,
 		text: string,
 		icon: string,
-		selected: LinkDirection = undefined,
+		selected: OptionalDirection = undefined,
 		cb: () => void,
 		set = "Actions"): HTMLImageElement {
 		let title: string, src: string;
@@ -114,7 +115,7 @@ export function initLinkDirectionContextMenuCallback(
 
 		const e = onlyLastSelected(selector());
 
-		let link: Element, contradicting=false, direction: LinkDirection, reverse = false;
+		let link: Element, contradicting=false, direction: OptionalDirection, reverse = false;
 		if (e) {
 			if (isTerminator(e)) {
 				link = getParentElement(e);
@@ -141,7 +142,7 @@ export function initLinkDirectionContextMenuCallback(
 
 				drawDirectionImage(event, contextMenu, null, null, d2, () => setDirections(selector(), null, contextMenu), "No Direction");
 
-				["up", "down", "left", "right"].forEach((s: LinkDirection) => {
+				["up", "down", "left", "right"].forEach((s: OptionalDirection) => {
 					drawDirectionImage(event, contextMenu, s, s, d2, () => setDirections(selector(), s, contextMenu), "Fixed Direction");
 				});
 
@@ -157,43 +158,4 @@ export function initLinkDirectionContextMenuCallback(
 			}
 		}
 	};
-}
-
-export function initTerminatorDirectionIndicator(selector = terminatorSelector) {
-
-
-	const INDICATOR_SELECTOR = ":scope > g.k9-direction";
-
-	const drawingFunctions = {
-		"up": () => svg("polygon", { "points": "-10 12, 0 -8, 10 12" }),
-		"down": () => svg("polygon", { "points": "10 -12, 0 8, -10 -12" }),
-		"left": () => svg("polygon", { "points": "12 -10, -8 0, 12 10" }),
-		"right": () => svg("polygon", { "points": "-12 -10, 8 0, -12 10" })
-	}
-
-	const noneFunction = () => svg("ellipse", { "cx": "0", "cy": 0, "rx": 8, "ry": 8 });
-
-	function ensureDirectionIndicator(e: Element, direction: LinkDirection) {
-		let indicator = e.querySelector(INDICATOR_SELECTOR);
-		if ((indicator != null) && (indicator.getAttribute("direction") != direction)) {
-			e.removeChild(indicator);
-		} else if (indicator != null) {
-			return;
-		}
-
-		indicator = svg('g', {
-			'class': 'k9-direction',
-			'k9-highlight': 'fill',
-			'direction': direction,
-		}, [direction ? drawingFunctions[direction]() : noneFunction()]);
-
-		e.appendChild(indicator)
-	}
-
-	window.addEventListener('DOMContentLoaded', function() {
-		selector().forEach(function(v) {
-			const direction = getDirection(v);
-			ensureDirectionIndicator(v, direction)
-		})
-	})
 }

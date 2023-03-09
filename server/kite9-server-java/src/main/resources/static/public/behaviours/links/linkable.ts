@@ -1,31 +1,15 @@
 import { getMainSvg } from '../../bundles/screen.js'
 import { getExistingConnections, parseInfo } from '../../bundles/api.js'
 import { Linker } from '../../classes/linker/linker.js';
-import { Direction, ElementFilter, Point, Selector } from '../../bundles/types.js';
+import { ElementFilter, OptionalDirection, Point, reverseDirection, Selector } from '../../bundles/types.js';
 import { Command } from '../../classes/command/command.js';
 import { StateItem } from '../../classes/dragger/dragger.js';
 import { addNamedEventListener } from '../../bundles/monika.js';
-import { parseStyle } from '../../bundles/css.js';
 
-export type LinkDirection = Direction | undefined
+
 
 export const LINKER_MOVE = "linker-move";
 export const LINKER_END = "linker-end";
-
-export function reverseDirection(d: LinkDirection): LinkDirection {
-	switch (d) {
-		case "left":
-			return "right";
-		case "up":
-			return "down";
-		case "down":
-			return "up";
-		case "right":
-			return "left";
-		case undefined:
-			return undefined;
-	}
-}
 
 /**
  * Contains the functionality for linking drawing links between selected elements 
@@ -93,7 +77,7 @@ export type AlignmentIdentifier = ElementFilter
 
 export type AlignmentInfo = {
 	element: Element,
-	direction: LinkDirection
+	direction: OptionalDirection
 }
 
 export type AlignmentCollector = (id1: string, id2: string) => AlignmentInfo[]
@@ -116,24 +100,6 @@ export function initAlignmentCollector(ai: AlignmentIdentifier)  : AlignmentColl
 		
 	}
 }
-
-
-export function getDirection(e: Element): LinkDirection {
-	if (e == null) {
-		return undefined;
-	} else {
-		const info = parseInfo(e);
-		const l = info['direction'];
-		return l;
-	}
-}
-
-export function getStyleDirection(e1: Element) : LinkDirection {
-	const style = parseStyle(e1.getAttribute("style"));
-	const d = style['--kite9-direction'] as LinkDirection;
-	return d;
-}
-
 
 /** 
  * Call this to tell autoconnect we're dealing with a new element

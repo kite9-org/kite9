@@ -12,7 +12,6 @@ import { initLinkable, updateLink, initLinkerDropCallback, initAlignmentCollecto
 import { initAutoConnectMoveCallback, initAutoConnectLinkerCallback } from '../../behaviours/links/autoconnect/links-autoconnect.js'
 import { initAutoConnectTemplateSelector, initAutoConnectInstrumentationCallback } from '../../behaviours/links/autoconnect/links-autoconnect-mode.js'
 import { initLinkLinkerCallback, initLinkContextMenuCallback, getLinkTemplateUri } from '../../behaviours/links/link/links-link.js'
-import { initLinkDirectionContextMenuCallback, initTerminatorDirectionIndicator } from '../../behaviours/links/direction/links-direction.js'
 import { initAlignContextMenuCallback } from '../../behaviours/links/align/links-align.js'
 import { initTerminatorDropCallback, initTerminatorMoveCallback } from '../../behaviours/links/drag/terminators-drag.js'
 import { initLinkDropLocator, initLinkDropCallback } from '../../behaviours/links/drag/links-drag.js'
@@ -29,6 +28,7 @@ import { singleSelect } from '../../behaviours/selectable/selectable.js';
 import { getDocumentParam } from '../../bundles/api.js'
 import { initBiFilter } from '../../behaviours/typed/rules/typed-rules.js'
 import { initContainmentDropCallback } from '../../behaviours/containers/drag/containers-drag.js'
+import { initTerminatorDirectionIndicator } from '../../behaviours/links/terminator/links-terminator.js'
 
 const linker = new Linker(updateLink);
 
@@ -68,7 +68,6 @@ function initLinks() {
 
 		contextMenu.add(initLinkContextMenuCallback(linker));
 		contextMenu.add(initAlignContextMenuCallback(command, alignmentIdentifier));
-		contextMenu.add(initLinkDirectionContextMenuCallback(command));
 		contextMenu.add(initPortsAddContextMenuCallback(command, containment, paletteFinder));
 		contextMenu.add(initLinksNavContextMenuCallback(singleSelect));
 

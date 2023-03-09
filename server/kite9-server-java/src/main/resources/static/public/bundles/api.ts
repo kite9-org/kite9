@@ -519,4 +519,3 @@ export function getDocumentParam(p: string) {
 export function setDocumentParam(p: string, a: string) {
 	return document['params'][p] = a;
 }
-
