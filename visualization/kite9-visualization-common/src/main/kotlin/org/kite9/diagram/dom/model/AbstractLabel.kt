@@ -30,7 +30,7 @@ abstract class AbstractLabel(
     override fun initialize() {
         super.initialize()
         end = ctx.getCssStyleEnumProperty(CSSConstants.LINK_END, theElement, End::class)
-        labelPlacement = ctx.getCssStyleEnumProperty(CSSConstants.LABEL_PLACEMENT, theElement, Direction::class)
+        labelPlacement = ctx.getCssStyleEnumProperty(CSSConstants.DIRECTION, theElement, Direction::class)
     }
 
     override fun isConnectionLabel(): Boolean {

@@ -22,7 +22,6 @@ interface CSSConstants {
 
         // for containers, to decide how to layout their contents
         const val LAYOUT_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "layout"
-        const val LABEL_PLACEMENT = KITE9_CSS_PROPERTY_PREFIX + "label-placement"
 
         // grid property (part of layout)
         const val GRID_OCCUPIES_X_PROPERTY = KITE9_CSS_PROPERTY_PREFIX + "occupies-x"

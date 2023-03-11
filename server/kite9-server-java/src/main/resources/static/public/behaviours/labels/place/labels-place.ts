@@ -9,7 +9,7 @@ import { Direction, directions, Selector } from '../../../bundles/types.js';
 type LabelDirection = Direction | null;
 const placements = [...directions , null ];
 
-const STYLE_NAME = '--kite9-label-placement'
+const STYLE_NAME = '--kite9-direction'
 
 function getPlacement(command: Command, e: Element) : LabelDirection {
 	const adlElement = command.getADLDom(e.getAttribute("id"));

@@ -21,7 +21,7 @@
 [k9-elem=lane] > [k9-elem=label] {
   --kite9-usage: label;
   --kite9-type: text;
-  --kite9-label-placement: left;
+  --kite9-direction: left;
   --kite9-template: url(template.xml#vertical-textarea);
   --kite9-type: text;
   --kite9-vertical-align: center;

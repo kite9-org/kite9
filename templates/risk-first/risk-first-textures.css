@@ -31,7 +31,7 @@
   font-style: italic;
   font-size: 12pt;
   font-weight: 200;
-  --kite9-label-placement: right;
+  --kite9-direction: right;
 }
 
 /* Labels */

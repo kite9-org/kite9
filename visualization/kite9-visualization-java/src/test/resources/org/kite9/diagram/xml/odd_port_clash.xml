@@ -14,8 +14,8 @@
         <from id="link2-from" reference="b1"/>
         <to id="link2-to" reference="b2"/>
     </link>
-    <align drawDirection="UP" id="2-0">
+    <link drawDirection="UP" id="2-0">
         <from id="2-0-0" reference="b2"/>
         <to id="2-0-1" reference="b3"/>
-    </align>
+    </link>
 </diagram>

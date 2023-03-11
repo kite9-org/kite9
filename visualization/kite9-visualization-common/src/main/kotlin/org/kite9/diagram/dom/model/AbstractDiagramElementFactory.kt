@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.painter.LeafPainter
 import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementType
@@ -111,13 +112,18 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified : Boolean 
                 getDirectPainter(el),
                 ContentTransform.POSITION
             )
-            DiagramElementType.LINK_END -> TerminatorImpl(
-                el,
-                parent!!,
-                context!!,
-                getDirectPainter(el),
-                ContentTransform.POSITION
-            )
+            DiagramElementType.LINK_END -> {
+                if (!(parent is Connection)) {
+                    throw context!!.contextualException("Terminators must be inside link' @ " + getId(el), el)
+                }
+                return TerminatorImpl(
+                    el,
+                    parent!!,
+                    context!!,
+                    getDirectPainter(el),
+                    ContentTransform.POSITION
+                )
+            }
             DiagramElementType.NONE -> null
             DiagramElementType.PORT -> PortImpl(el, parent!!, context!!, getDirectPainter(el), ContentTransform.POSITION)
             DiagramElementType.UNSPECIFIED ->

@@ -13,9 +13,9 @@ export enum AutoConnectMode { OFF, NEW, ON }
 
 function modeText(a: AutoConnectMode) {
 	switch (a) {
-		case AutoConnectMode.OFF: return "Auto Connect Off ⇧";
-		case AutoConnectMode.NEW: return "New Elements Only ⇧";
-		case AutoConnectMode.ON: return "Connect On Drag ⇧";
+		case AutoConnectMode.OFF: return "Auto Connect: Off ⇧";
+		case AutoConnectMode.NEW: return "Auto Connect: New Only ⇧";
+		case AutoConnectMode.ON: return "Auto Connect: Always ⇧";
 	}
 }
 

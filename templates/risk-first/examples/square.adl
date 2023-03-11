@@ -3,23 +3,23 @@
   xmlns:xslt="http://www.kite9.org/schema/xslt" xmlns="http://www.kite9.org/schema/adl"
   xmlns:svg='http://www.w3.org/2000/svg' k9-contains="" id="diagram" k9-ui="xml">
 
-    <label id="title" style="--kite9-label-placement: top; " class="title">Risk-First Planner Grid</label>
+    <label id="title" style="--kite9-direction: up; " class="title">Risk-First Planner Grid</label>
 
     <planner style="--kite9-grid-size: 5 30; ">
       <planner-header style="--kite9-occupies: 0 0; ">
       </planner-header>
       <planner-header style="--kite9-occupies: 0 1; ">
-        <label id="l1" style="--kite9-label-placement: left ">High</label>
+        <label id="l1" style="--kite9-direction: left ">High</label>
       </planner-header>
       <planner-header style="--kite9-occupies: 0 2; ">
       </planner-header>
       <planner-header style="--kite9-occupies: 0 3; ">
-        <label id="l2" style="--kite9-label-placement: left; ">Medium</label>
+        <label id="l2" style="--kite9-direction: left; ">Medium</label>
       </planner-header>
       <planner-header style="--kite9-occupies: 0 4; ">
       </planner-header>
       <planner-header style="--kite9-occupies: 0 5; ">
-        <label id="l3" style="--kite9-label-placement: left; ">Low</label>
+        <label id="l3" style="--kite9-direction: left; ">Low</label>
       </planner-header>
       <planner-header style="--kite9-occupies: 2 0; ">
         <label id="l4">Today</label>
@@ -68,5 +68,5 @@
        
      
     </planner>
-      <label id="footer" style="--kite9-label-placement: bottom; ">Problems with feature X</label>
+      <label id="footer" style="--kite9-direction: bottom; ">Problems with feature X</label>
   </diagram>

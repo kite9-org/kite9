@@ -44,10 +44,10 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
      * As well as following the usual -1, 0, 1 compare operation, this also returns the common level of the two bounds
      * being compared.
      */
-    override operator fun compareTo(s: Bounds): Int {
-        return if (distanceMax < s.distanceMin) {
+    override operator fun compareTo(other: Bounds): Int {
+        return if (distanceMax < other.distanceMin) {
             -1
-        } else if (distanceMin > s.distanceMax) {
+        } else if (distanceMin > other.distanceMax) {
             1
         } else {
             0
@@ -64,9 +64,9 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         return BasicBounds(lower, upper)
     }
 
-    override fun keep(buffer: Double, width: Double, fraction: Double): Bounds {
+    override fun keep(buffer: Double, width: Double, atFraction: Double): Bounds {
         val span = (distanceMax - distanceMin - buffer * 2.0).coerceAtLeast(0.0)
-        val pos = fraction * span
+        val pos = atFraction * span
         var lower = distanceMin + pos - width / 2.0 + buffer
         var upper = distanceMin + pos + width / 2.0 + buffer
         lower = (distanceMin + buffer).coerceAtLeast(lower).coerceAtMost(upper)
@@ -75,16 +75,16 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
     }
 
     override fun size(): Double {
-       return distanceMax - distanceMin
+        return distanceMax - distanceMin
     }
 
-    override fun narrow(vertexTrim: Double): Bounds {
-        return BasicBounds(distanceMin + vertexTrim, distanceMax - vertexTrim)
+    override fun narrow(trim: Double): Bounds {
+        return BasicBounds(distanceMin + trim, distanceMax - trim)
     }
 
     companion object {
 
-		val EMPTY_BOUNDS = BasicBounds(-1.0, -1.0)
+        val EMPTY_BOUNDS = BasicBounds(-1.0, -1.0)
     }
 
     init {

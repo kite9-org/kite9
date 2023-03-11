@@ -1,12 +1,12 @@
 import { getMainSvg } from '../../bundles/screen.js'
 import { parseInfo, getContainingDiagram, getNextSiblingId, isTerminator, onlyLastSelected, isLink, getParentElement } from '../../bundles/api.js'
 import { Command } from '../../classes/command/command.js';
-import { rotateAntiClockwise, rotateClockwise, Selector } from '../../bundles/types.js';
+import { ElementFilter, rotateAntiClockwise, rotateClockwise, Selector } from '../../bundles/types.js';
 import { ContextMenu, ContextMenuCallback } from '../../classes/context-menu/context-menu.js';
 import { OptionalDirection, reverseDirection } from '../../bundles/types.js';
 import { parseStyle } from '../../bundles/css.js';
 
-function OptionalDirectionSelector() {
+function defaultSelector() {
 	return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~=direction].selected")) as SVGGraphicsElement[];
 }
 
@@ -18,7 +18,8 @@ function getStyleDirection(e1: Element) : OptionalDirection {
 
 export function initOptionalDirectionContextMenuCallback(
 	command: Command,
-	selector: Selector = OptionalDirectionSelector): ContextMenuCallback {
+	isOptional: ElementFilter = () => true,
+	selector: Selector = defaultSelector): ContextMenuCallback {
 
 	type Turn = "cw" | "acw" | "180";
 
@@ -91,11 +92,11 @@ export function initOptionalDirectionContextMenuCallback(
 		let title: string, src: string;
 
 		if (text != undefined) {
-			title = "Link Direction (" + text + ")";
-			src = "/public/behaviours/links/direction/" + icon + ".svg";
+			title = "Direction (" + text + ")";
+			src = "/public/behaviours/direction/" + icon + ".svg";
 		} else {
-			title = "Link Direction (undirected)";
-			src = "/public/behaviours/links/direction/undirected.svg";
+			title = "No Fixed Direction (undirected)";
+			src = "/public/behaviours/direction/undirected.svg";
 		}
 
 		const a = cm.addControl(event, src, title, cb, set) as HTMLDivElement;
@@ -140,7 +141,9 @@ export function initOptionalDirectionContextMenuCallback(
 			const img = drawDirectionImage(event, contextMenu, d2, d2, undefined, () => {
 				contextMenu.clear();
 
-				drawDirectionImage(event, contextMenu, null, null, d2, () => setDirections(selector(), null, contextMenu), "No Direction");
+				if (isOptional(e)) {
+					drawDirectionImage(event, contextMenu, null, null, d2, () => setDirections(selector(), null, contextMenu), "No Direction");
+				}
 
 				["up", "down", "left", "right"].forEach((s: OptionalDirection) => {
 					drawDirectionImage(event, contextMenu, s, s, d2, () => setDirections(selector(), s, contextMenu), "Fixed Direction");

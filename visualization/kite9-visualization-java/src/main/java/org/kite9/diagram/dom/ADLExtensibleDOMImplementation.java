@@ -89,10 +89,7 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_MINIMUM_LENGTH, 0f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_GUTTER, 0f));
 		registerCustomCSSValueManager(new LinkLengthManager(CSSConstants.LINK_CORNER_RADIUS, 0f));
-		
-		// LABELS
-		registerCustomCSSValueManager(new EnumManager(CSSConstants.LABEL_PLACEMENT, Direction.class, null, false));
-		
+
 		// LINK DYNAMICS
 		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_FROM_XPATH, "./*[@k9-elem='from']/@reference", true));
 		registerCustomCSSValueManager(new XPathManager(CSSConstants.LINK_TO_XPATH, "./*[@k9-elem='to']/@reference", true));

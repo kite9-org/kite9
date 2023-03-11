@@ -15,7 +15,7 @@
   </svg:defs>
 
 
-  <label id="title" style="--kite9-label-placement: top; --kite9-horizontal-align: center; " class="title">Risk-First Planner</label>
+  <label id="title" style="--kite9-direction: top; --kite9-horizontal-align: center; " class="title">Risk-First Planner</label>
 
   <planner style="--kite9-grid-size: 1 10; " id="parent">
     <planner-cell id="cell"/>
@@ -26,5 +26,5 @@
 
   </planner>
   
-  <label id="footer" style="--kite9-label-placement: bottom; ">Problems with feature X</label>
+  <label id="footer" style="--kite9-direction: bottom; ">Problems with feature X</label>
 </diagram>

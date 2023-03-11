@@ -414,35 +414,35 @@ public class TestingEngine extends TestingHelp {
 				.collect(Collectors.toList());
 
 		connecteds.forEach(c -> {
-			// first, check horizontal
 			GridContainerPosition gcpC = getGridContainerPosition(c);
 			RectangleRenderingInformation rriC = c.getRenderingInformation();
 			connecteds.forEach(d -> {
 				if (d != c) {
 					GridContainerPosition gcpD = getGridContainerPosition(d);
-					RectangleRenderingInformation rriD = d.getRenderingInformation();
-					boolean dBeforeCX = gcpD.getX().getTo() < gcpC.getX().getFrom();
-					boolean dAfterCX = gcpD.getX().getFrom() > gcpC.getX().getTo();
+					if (gcpC.isSet()&& gcpD.isSet()) {
+						RectangleRenderingInformation rriD = d.getRenderingInformation();
+						boolean dBeforeCX = gcpD.getX().getTo() < gcpC.getX().getFrom();
+						boolean dAfterCX = gcpD.getX().getFrom() > gcpC.getX().getTo();
 
-					if (dBeforeCX) {
-						checkBefore(rriD.getPosition().x(), rriD.getSize().width(), rriC.getPosition().x(), rriC.getSize().width(), d, c, Layout.RIGHT);
+						if (dBeforeCX) {
+							checkBefore(rriD.getPosition().x(), rriD.getSize().width(), rriC.getPosition().x(), rriC.getSize().width(), d, c, Layout.RIGHT);
+						}
+
+						if (dAfterCX) {
+							checkBefore(rriC.getPosition().x(), rriC.getSize().width(), rriD.getPosition().x(), rriD.getSize().width(), c, d, Layout.RIGHT);
+						}
+
+						boolean dBeforeCY = gcpD.getY().getTo() < gcpC.getY().getFrom();
+						boolean dAfterCY = gcpD.getY().getFrom() > gcpC.getY().getTo();
+
+						if (dBeforeCY) {
+							checkBefore(rriD.getPosition().y(), rriD.getSize().height(), rriC.getPosition().y(), rriC.getSize().height(), d, c, Layout.DOWN);
+						}
+
+						if (dAfterCY) {
+							checkBefore(rriC.getPosition().y(), rriC.getSize().height(), rriD.getPosition().y(), rriD.getSize().height(), c, d, Layout.DOWN);
+						}
 					}
-
-					if (dAfterCX) {
-						checkBefore(rriC.getPosition().x(), rriC.getSize().width(), rriD.getPosition().x(), rriD.getSize().width(), c, d, Layout.RIGHT);
-					}
-
-					boolean dBeforeCY = gcpD.getY().getTo() < gcpC.getY().getFrom();
-					boolean dAfterCY = gcpD.getY().getFrom() > gcpC.getY().getTo();
-
-					if (dBeforeCY) {
-						checkBefore(rriD.getPosition().y(), rriD.getSize().height(), rriC.getPosition().y(), rriC.getSize().height(), d, c, Layout.DOWN);
-					}
-
-					if (dAfterCY) {
-						checkBefore(rriC.getPosition().y(), rriC.getSize().height(), rriD.getPosition().y(), rriD.getSize().height(), c, d, Layout.DOWN);
-					}
-
 				}
 			});
 		});
@@ -571,6 +571,9 @@ public class TestingEngine extends TestingHelp {
 					return;
 				}
 				
+				if ((inner instanceof Label) && (outer instanceof Label)) {
+					return; // could be next to each other
+				}
 				
 				if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
 					// check y-separation

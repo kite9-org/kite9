@@ -4,7 +4,15 @@ import org.kite9.diagram.common.range.IntegerRange
 
 data class GridContainerPosition(val x: IntegerRange, val y: IntegerRange) : ContainerPosition {
 
+    fun isSet(): Boolean {
+        return !IntegerRange.notSet(x) && !IntegerRange.notSet(y)
+    }
+
     override fun toString(): String {
-        return "[" + x.from + "," + x.to + "," + y.from + "," + y.to + "]"
+        return if (!isSet()) {
+            "null"
+        } else {
+            "[" + x.from + "," + x.to + "," + y.from + "," + y.to + "]"
+        }
     }
 }

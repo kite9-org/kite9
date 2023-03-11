@@ -34,9 +34,9 @@ public class TestPositionRouter {
 
 	@Test
 	public void testOverWhenHorizNextTo() {
-		BoundsBasedPositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 3), new BasicBounds(0, 3));
-		BoundsBasedPositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(5, 6), new BasicBounds(1, 2));
-		BoundsBasedPositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(6, 7), new BasicBounds(4, 5));
+		BoundsBasedPositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 0.3), new BasicBounds(0, 0.3));
+		BoundsBasedPositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(0.5, 0.6), new BasicBounds(0.1, 0.2));
+		BoundsBasedPositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(0.6, 0.7), new BasicBounds(0.4, 0.5));
 		
 		List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(pri, past, to);
 		initAndPrint(l);
@@ -47,36 +47,36 @@ public class TestPositionRouter {
 		LinePositionRoutingInfo lpri = (LinePositionRoutingInfo) lri;
 		Assert.assertTrue(getHeight(lpri) == 0);
 		Assert.assertTrue(getWidth(lpri) == 0);
-		Assert.assertTrue(getMinX(lpri) == 6);
-		Assert.assertEquals(6d, lpri.getRunningCost(), 0.1);
+		Assert.assertTrue(getMinX(lpri) == 0.6);
+		Assert.assertEquals(0.6d, lpri.getRunningCost(), 0.01);
 	}
 	
-	private int getMinX(LinePositionRoutingInfo lpri) {
+	private double getMinX(LinePositionRoutingInfo lpri) {
 		Bounds b = lpri.getPositionForTesting().getX();
-		return (int) (b.getDistanceMin());
+		return (b.getDistanceMin());
 	}
 
-	private int getMinY(LinePositionRoutingInfo lpri) {
+	private double getMinY(LinePositionRoutingInfo lpri) {
 		Bounds b = lpri.getPositionForTesting().getY();
-		return (int) (b.getDistanceMin());
+		return (b.getDistanceMin());
 	}
 
 	
-	private int getWidth(LinePositionRoutingInfo lpri) {
+	private double getWidth(LinePositionRoutingInfo lpri) {
 		Bounds b = lpri.getPositionForTesting().getX();
-		return (int) ( b.getDistanceMax() - b.getDistanceMin());
+		return ( b.getDistanceMax() - b.getDistanceMin());
 	}
 
-	private int getHeight(LinePositionRoutingInfo lpri) {
+	private double getHeight(LinePositionRoutingInfo lpri) {
 		Bounds b = lpri.getPositionForTesting().getY();
-		return (int) ( b.getDistanceMax() - b.getDistanceMin());
+		return ( b.getDistanceMax() - b.getDistanceMin());
 	}
 
 	@Test
 	public void testDownWhenHorizNextTo() {
-		PositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 3), new BasicBounds(0, 3));
-		PositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(5, 6), new BasicBounds(1, 2));
-		PositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(7, 8), new BasicBounds(0, 4));
+		PositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 0.3), new BasicBounds(0, .3));
+		PositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(0.5, 0.6), new BasicBounds(.1, .2));
+		PositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(0.7, 0.8), new BasicBounds(0, .4));
 		
 		List<PositionRoutingInfo> l = HelpMethods.createList(pri, past, to);
 		initAndPrint(l);
@@ -87,40 +87,19 @@ public class TestPositionRouter {
 		lri = prh.move(lri, to, null);
 
 		LinePositionRoutingInfo lpri = (LinePositionRoutingInfo) lri;
-		Assert.assertEquals(1, getHeight(lpri));
-		Assert.assertEquals(0, getWidth(lpri));
-		Assert.assertEquals(7, getMinX(lpri));
-		Assert.assertEquals(2, getMinY(lpri));
-		Assert.assertEquals(4d, lpri.getRunningCost(), 0.1);
+		Assert.assertEquals(0.1, getHeight(lpri), 0.001);
+		Assert.assertEquals(0, getWidth(lpri), 0.001);
+		Assert.assertEquals(.7, getMinX(lpri), 0.001);
+		Assert.assertEquals(.2, getMinY(lpri), 0.001);
+		Assert.assertEquals(.4d, lpri.getRunningCost(), 0.01);
 
 	}
-	
-	@Test
-	@Ignore("Not meeting assumption - why wasn't this already ignored?")
-	public void testOverWhenAboveNextTo() {
-		PositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(3, 6), new BasicBounds(3, 6));
-		PositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(5, 6), new BasicBounds(1, 2));
-		PositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 0), new BasicBounds(0, 0));
-		
-		List<PositionRoutingInfo> l = HelpMethods.createList(pri, past, to);
-		initAndPrint(l);
-		
-		
-		LineRoutingInfo lri = prh.move(null, pri, null);
-		lri = prh.move(lri, past, Routing.OVER_FORWARDS);
-		lri = prh.move(lri, to, null);
-		LinePositionRoutingInfo lpri = (LinePositionRoutingInfo) lri;
-		Assert.assertEquals(0, getHeight(lpri));
-		Assert.assertEquals(0, getWidth(lpri));
-		Assert.assertEquals(0, getMinX(lpri));
-		Assert.assertEquals(0, getMinY(lpri));
-		Assert.assertEquals(6d, lpri.getRunningCost(), 0.1);
-	}
+
 	
 	@Test
 	public void testGettingHome() {
-		PositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 3), new BasicBounds(0, 3));
-		PositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(5, 6), new BasicBounds(1, 2));
+		PositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, .3), new BasicBounds(0, .3));
+		PositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(.5, .6), new BasicBounds(.1, .2));
 		
 		List<PositionRoutingInfo> l = HelpMethods.createList(pri, past);
 		initAndPrint(l);
@@ -129,72 +108,41 @@ public class TestPositionRouter {
 		LineRoutingInfo lri = prh.move(null, pri, null);
 		lri = prh.move(lri, past, null);
 		LinePositionRoutingInfo lpri = (LinePositionRoutingInfo) lri;
-		Assert.assertTrue(getHeight(lpri) == 1);
+		Assert.assertTrue(getHeight(lpri) == .1);
 		Assert.assertTrue(getWidth(lpri) == 0);
-		Assert.assertTrue(getMinX(lpri) == 5);
-		Assert.assertTrue(lpri.getRunningCost() == 2);
+		Assert.assertTrue(getMinX(lpri) == .5);
+		Assert.assertTrue(lpri.getRunningCost() == .2);
 	}
 	
 	@Test
 	public void testRoundAPost() {
-		PositionRoutingInfo start = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(0, 3));
-		PositionRoutingInfo post = new BoundsBasedPositionRoutingInfo(new BasicBounds(5, 6), new BasicBounds(1, 2));
+		PositionRoutingInfo start = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, .1), new BasicBounds(0, .3));
+		PositionRoutingInfo post = new BoundsBasedPositionRoutingInfo(new BasicBounds(.5, .6), new BasicBounds(.1, .2));
 		
 		List<PositionRoutingInfo> l = HelpMethods.createList(start, post);
 		initAndPrint(l);
 		
 		LineRoutingInfo lri1 = prh.move(null, start, null);
 		lri1 = prh.move(lri1, post, null);
-		Assert.assertTrue(lri1.getRunningCost() == 4);
+		Assert.assertTrue(lri1.getRunningCost() == .4);
 		
 		LineRoutingInfo lri2 = prh.move(null, start, null);
 		lri2 = prh.move(lri2, post, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, post, Routing.UNDER_BACKWARDS);
 		lri2 = prh.move(lri2, start, null);
-		Assert.assertEquals(11d, lri2.getRunningCost(), 0.1);
+		Assert.assertEquals(1.1d, lri2.getRunningCost(), 0.01);
 	}
 	
-	@Test
-	@Ignore("Really should fix this")
-	public void testSomethingBigNotReallyInTheWay() {
-		PositionRoutingInfo start = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(0, 1));
-		PositionRoutingInfo post = new BoundsBasedPositionRoutingInfo(new BasicBounds(2, 3), new BasicBounds(0, 5));
-		PositionRoutingInfo finish = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(3, 4));
-		
-		List<PositionRoutingInfo> l = HelpMethods.createList(start, post, finish);
-		initAndPrint(l);
 
-		
-		LineRoutingInfo lri2 = prh.move(null, start, null);
-		lri2 = prh.move(lri2, post, Routing.UNDER_FORWARDS);
-		lri2 = prh.move(lri2, finish, null);
-		Assert.assertEquals(2d, lri2.getRunningCost(), 0.1);
-	}
 	
-	@Test
-	@Ignore("Needs fixing")
-	public void testSomethingBigNotReallyInTheWay2() {
-		// except, it is in the way because now we go the other way round it.
-		PositionRoutingInfo start = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(0, 1));
-		PositionRoutingInfo post = new BoundsBasedPositionRoutingInfo(new BasicBounds(2, 3), new BasicBounds(0, 5));
-		PositionRoutingInfo finish = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(3, 4));
-		
-		List<PositionRoutingInfo> l = HelpMethods.createList(start, post, finish);
-		initAndPrint(l);
 
-		
-		LineRoutingInfo lri2 = prh.move(null, start, null);
-		lri2 = prh.move(lri2, post, Routing.OVER_FORWARDS);
-		lri2 = prh.move(lri2, finish, null);
-		Assert.assertEquals(10d, lri2.getRunningCost(), 0.1);
-	}
 	
 	@Test
 	public void testSomethingBigNotReallyInTheWay3() {
 		// taken from the 10_1 fail.
-		PositionRoutingInfo start = new BoundsBasedPositionRoutingInfo(new BasicBounds(2, 3), new BasicBounds(0, 1));
-		PositionRoutingInfo post = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(3, 4));
-		PositionRoutingInfo finish = new BoundsBasedPositionRoutingInfo(new BasicBounds(4, 5), new BasicBounds(0, 1));
+		PositionRoutingInfo start = new BoundsBasedPositionRoutingInfo(new BasicBounds(.2, .3), new BasicBounds(0, .1));
+		PositionRoutingInfo post = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, .1), new BasicBounds(.3, .4));
+		PositionRoutingInfo finish = new BoundsBasedPositionRoutingInfo(new BasicBounds(.4, .5), new BasicBounds(0, .1));
 		
 		List<PositionRoutingInfo> l = HelpMethods.createList(start, post, finish);
 		initAndPrint(l);
@@ -203,7 +151,7 @@ public class TestPositionRouter {
 		LineRoutingInfo lri2 = prh.move(null, start, null);
 		lri2 = prh.move(lri2, post, Routing.OVER_FORWARDS);
 		lri2 = prh.move(lri2, finish, null);
-		Assert.assertEquals(1d, lri2.getRunningCost(), 0.1);
+		Assert.assertEquals(.1d, lri2.getRunningCost(), 0.01);
 	}
 	
 	@Test
@@ -252,27 +200,7 @@ public class TestPositionRouter {
 		Assert.assertTrue(PositionRoutableHandler2D.Companion.eq(.1872, lri2.getRunningCost()));
 	}
 	
-	@Test
-	@Ignore("Not meeting assumption - why wasn't this already ignored?")
-	public void testBackwards() {
-		PositionRoutingInfo pri = new BoundsBasedPositionRoutingInfo(new BasicBounds(6, 9), new BasicBounds(0, 3));
-		PositionRoutingInfo past = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(1, 2));
-		PositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(0, 1), new BasicBounds(4, 5));
-		
-		List<PositionRoutingInfo> l = HelpMethods.createList(pri, past, to);
-		initAndPrint(l);
-		
-		LineRoutingInfo lri = prh.move(null, to, null);
-		lri = prh.move(lri, past, Routing.OVER_BACKWARDS);
-		lri = prh.move(lri, pri, null);
-		
-		LinePositionRoutingInfo lpri = (LinePositionRoutingInfo) lri;
-		Assert.assertEquals(0, getHeight(lpri));
-		Assert.assertEquals(0, getWidth(lpri));
-		Assert.assertEquals(6, getMinX(lpri));
-		Assert.assertEquals(3, getMinY(lpri));
-		Assert.assertEquals(6d, lpri.getRunningCost(), 0.1);
-	}
+
 	
 	@Test
 	public void boundsTesting() {
@@ -284,201 +212,7 @@ public class TestPositionRouter {
 		Assert.assertTrue(prh.overlaps(left, b));
 	}
 	
-	@Ignore("We don't have a fully rotational invariant approach because it never got used")
-	@Test
-	public void testVariousDifferentMovesAroundAnObstacleClockwise1() {
-		double[] totals = new double[] { 1.5d, .5d, .5d, 0d, 3.5d, 2.5d, 2.5d, 1.5d}; 
-		BoundsBasedPositionRoutingInfo[] fromPositions = createPositions1();
-		BoundsBasedPositionRoutingInfo obstacle = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(1, 2));
-		BoundsBasedPositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(2, 3), new BasicBounds(1.5, 2.5));
-		Routing r = Routing.OVER_FORWARDS;
-		for (int i = 0; i < fromPositions.length; i++) {
-			
-			List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(fromPositions[i], obstacle, to);
-			initAndPrint(l);
-			
-			LineRoutingInfo lri = prh.move(null, fromPositions[i], null);
-			lri = prh.move(lri, obstacle, r);
-			lri = prh.move(lri, to, null);	
-			System.out.println("Octant "+i+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
-			Assert.assertEquals("Distance Wrong", totals[i], lri.getRunningCost(), 0.1);
-		}
-	}
-	
 
-	@Test
-	@Ignore("We don't have a fully rotational invariant approach because it never got used")
-	public void testVariousDifferentMovesAroundAnObstacleAntiClockwise1() {
-		double[] totals = new double[] { 2d, 2d, 3d, 3d, 0d, 0d, 1d, 1d}; 
-		BoundsBasedPositionRoutingInfo[] fromPositions = createPositions1();
-		BoundsBasedPositionRoutingInfo obstacle = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(1, 2));
-		BoundsBasedPositionRoutingInfo to = new BoundsBasedPositionRoutingInfo(new BasicBounds(2, 3), new BasicBounds(1.5, 2.5));
-		Routing r = Routing.UNDER_FORWARDS;
-		for (int i = 0; i < fromPositions.length; i++) {
-			
-			List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(fromPositions[i], obstacle, to);
-			initAndPrint(l);
-
-			
-			LineRoutingInfo lri = prh.move(null, fromPositions[i], null);
-			lri = prh.move(lri, obstacle, r);
-			lri = prh.move(lri, to, null);	
-			System.out.println("Octant "+i+": Xc: "+lri.getHorizontalRunningCost()+"Yc: "+lri.getVerticalRunningCost());
-			Assert.assertEquals("Distance Wrong", totals[i], lri.getRunningCost(), 0.1);
-		}
-	}
-	
-	
-	@Ignore("We don't have a fully rotational invariant approach because it never got used")
-	@Test
-	public void testVariousDifferentMovesAroundAnObstacleClockwise2() {
-		BoundsBasedPositionRoutingInfo[] fromPositions = createPositions1();
-		BoundsBasedPositionRoutingInfo obstacle = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(1, 2));
-		
-		Routing r = Routing.OVER_FORWARDS;
-		double[][] totals = new double[][] { new double[] { 4d, 0d, 1d, 1d, 2d, 2d, 3d, 3d} ,
-											  new double[] {3d, 0d, 0d, 1d, 1d, 2d, 2d, 3d }}; 
-		
-		for (int c = 0; c <= 1; c++) {
-			for (int i = 0; i < fromPositions.length; i+=1) {
-				Double total = totals[c][i];
-				System.out.println("NEW ARRANGEMENT");
-				for (int t = 0; t < 8; t+=2) {
-					BoundsBasedPositionRoutingInfo start = fromPositions[t+c];
-					BoundsBasedPositionRoutingInfo to = fromPositions[(i + t+c) % 8];
-					
-					List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(start, obstacle, to);
-					initAndPrint(l);
-
-					System.out.println("Start: "+(t+c)+" to: "+(i + t+c) % 8);
-					System.out.println("Start: "+start+" obstacle: "+obstacle+" to: "+to);	
-					LineRoutingInfo lri = prh.move(null, start, null);
-					lri = prh.move(lri, obstacle, r);
-					lri = prh.move(lri, to, null);
-					double ttt = lri.getRunningCost();
-					if (total == null) {
-						total=ttt;
-					} else {
-						Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1d);
-					}
-
-					System.out.println("Octant start "+i+" end "+((i + t) % 8)+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
-				}
-			}	
-		}
-	}
-	
-	@Ignore("We don't have a fully rotational invariant approach because it never got used")
-	@Test
-	public void testVariousDifferentMovesAroundAnObstacleClockwise3() {
-		BoundsBasedPositionRoutingInfo[] fromPositions = createPositionsTH();
-		BoundsBasedPositionRoutingInfo[] toPositions = createPositionsBH();
-		
-		BoundsBasedPositionRoutingInfo obstacle = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(2, 4));
-		
-		Routing r = Routing.OVER_FORWARDS;
-		double[] totals = new double[] { 6d, 0d, 6d, 4d };
-		
-		for (int c = 0; c <= 3; c++) {
-			Double total = totals[c];
-			int ci = 1 + c*2;
-			int ii = ci;
-			BoundsBasedPositionRoutingInfo start = fromPositions[ci];
-			BoundsBasedPositionRoutingInfo to = toPositions[ii];
-			
-			List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(start, obstacle, to);
-			initAndPrint(l);
-			
-			System.out.println("Start: "+ci+" to: "+ii+" expecting: "+total);
-			System.out.println("Start: "+start+" obstacle: "+obstacle+" to: "+to);	
-			LineRoutingInfo lri = prh.move(null, start, null);
-			lri = prh.move(lri, obstacle, r);
-			lri = prh.move(lri, to, null);
-			double ttt = lri.getRunningCost();
-			if (total != null) {
-				Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1);
-			}
-
-			System.out.println("Octant start "+ci+" end "+ii+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
-		}	
-	}
-	
-	@Ignore("We don't have a fully rotational invariant approach because it never got used")
-	@Test
-	public void testVariousDifferentMovesAroundAnObstacleAntiClockwise2() {
-		BoundsBasedPositionRoutingInfo[] fromPositions = createPositions1();
-		BoundsBasedPositionRoutingInfo obstacle = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(1, 2));
-		
-		Routing r = Routing.UNDER_FORWARDS;
-		double[][] totals = new double[][] { 
-				new double[] { 0d, 3d, 3d, 2d, 2d, 1d, 1d, 0d} ,
-				  new double[] {0d, 3d, 2d, 2d, 1d, 1d, 0d, 0d }}; 
-		
-		for (int c = 0; c <= 1; c++) {
-			for (int i = 0; i < fromPositions.length; i+=1) {
-				Double total = totals[c][i];
-				System.out.println("NEW ARRANGEMENT");
-				for (int t = 0; t < 8; t+=2) {
-					BoundsBasedPositionRoutingInfo start = fromPositions[t+c];
-					BoundsBasedPositionRoutingInfo to = fromPositions[(i + t+c) % 8];
-					
-					List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(start, obstacle, to);
-					initAndPrint(l);
-					
-					System.out.println("Start: "+(t+c)+" to: "+(i + t+c) % 8+" expecting "+total);
-					System.out.println("Start: "+start+" obstacle: "+obstacle+" to: "+to);	
-					LineRoutingInfo lri = prh.move(null, start, null);
-					lri = prh.move(lri, obstacle, r);
-					lri = prh.move(lri, to, null);
-					double ttt = lri.getRunningCost();
-					if (total == null) {
-						total=ttt;
-					} else {
-						Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1);
-					}
-
-					System.out.println("Octant start "+i+" end "+((i + t) % 8)+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
-				}
-			}	
-		}
-	}
-	
-	@Ignore("We don't have a fully rotational invariant approach because it never got used")
-	@Test
-	public void testVariousDifferentMovesAroundAnObstacleAntiClockwise3() {
-		BoundsBasedPositionRoutingInfo[] fromPositions = createPositionsTH();
-		BoundsBasedPositionRoutingInfo[] toPositions = createPositionsBH();
-		
-		BoundsBasedPositionRoutingInfo obstacle = new BoundsBasedPositionRoutingInfo(new BasicBounds(1, 2), new BasicBounds(2, 4));
-		
-		Routing r = Routing.UNDER_FORWARDS;
-		double[] totals = new double[] { 0d, 4d, 0d, 0d };
-		
-		for (int c = 0; c <= 3; c++) {
-			Double total = totals[c];
-			int ci = 1 + c*2;
-			int ii = ci;
-			BoundsBasedPositionRoutingInfo start = fromPositions[ci];
-			BoundsBasedPositionRoutingInfo to = toPositions[ii];
-			
-			List<BoundsBasedPositionRoutingInfo> l = HelpMethods.createList(start, obstacle, to);
-			initAndPrint(l);
-			
-			System.out.println("Start: "+ci+" to: "+ii);
-			System.out.println("Start: "+start+" obstacle: "+obstacle+" to: "+to);	
-			LineRoutingInfo lri = prh.move(null, start, null);
-			lri = prh.move(lri, obstacle, r);
-			lri = prh.move(lri, to, null);
-			double ttt = lri.getRunningCost();
-			if (total == null) {
-				total=ttt;
-			} else {
-				Assert.assertEquals("Not rotationally invariant", (double) total, (double) ttt, 0.1);
-			}
-
-			System.out.println("Octant start "+ci+" end "+ii+": X: "+lri.getHorizontalRunningCost()+"Y: "+lri.getVerticalRunningCost());
-		}	
-	}
 
 	private void initAndPrint(List<? extends PositionRoutingInfo> l) {
 		Printer p = new Printer();

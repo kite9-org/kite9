@@ -28,7 +28,7 @@ public class TextLabel extends TextLine {
 
 	public static String formatPlacement(Direction d) {
 		if (d != null) {
-			return "--kite9-label-placement: " + d.toString().toLowerCase() + "; ";
+			return "--kite9-direction: " + d.toString().toLowerCase() + "; ";
 		} else {
 			return "";
 		}

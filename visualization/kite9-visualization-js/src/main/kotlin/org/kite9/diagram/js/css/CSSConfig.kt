@@ -87,11 +87,6 @@ fun init() {
     css.registerProperty( CSSProperty(CSSConstants.LINK_GUTTER,"<length>","0", false))
     css.registerProperty( CSSProperty(CSSConstants.LINK_CORNER_RADIUS,"<length>","0", false))
 
-
-    // LABELS
-    css.registerProperty( CSSProperty(CSSConstants.LABEL_PLACEMENT,syntax<Direction>()+" | none ","none", false))
-
-
     // LINK DYNAMICS
     css.registerProperty( CSSProperty(CSSConstants.LINK_FROM_XPATH,"*",
             "\"./*[@k9-elem='from']/@reference\"", true))

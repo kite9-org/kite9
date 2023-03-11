@@ -45,17 +45,17 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 
 	@Before
 	public void setLogging() {
-		Kite9LogImpl.setLogging(Destination.STREAM);
-//		if ("off".equals(System.getProperty("kite9.logging"))) {
-//			Kite9LogImpl.setLogging(Destination.OFF);
-//		} else {
-//			// if we are running more than one test, then there's no point in logging.
-//			if (firstRun) {
-//				firstRun = false;
-//			} else {
-//				Kite9LogImpl.setLogging(Destination.OFF);
-//			}
-//		}
+//		Kite9LogImpl.setLogging(Destination.STREAM);
+		if ("off".equals(System.getProperty("kite9.logging"))) {
+			Kite9LogImpl.setLogging(Destination.OFF);
+		} else {
+			// if we are running more than one test, then there's no point in logging.
+			if (firstRun) {
+				firstRun = false;
+			} else {
+				Kite9LogImpl.setLogging(Destination.OFF);
+			}
+		}
 	}
 
 	@Before
@@ -94,7 +94,7 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	}
 
 	protected TranscoderInput getTranscoderInput(String s) throws IOException {
-		File f = getOutputFile("-input.svg");
+		File f = getOutputFile("-input.adl");
 		StreamHelp.streamCopy(new StringReader(s), new FileWriter(f), true);
 		TranscoderInput out = new TranscoderInput(new StringReader(s));
 		out.setURI(getInputURI(f));
