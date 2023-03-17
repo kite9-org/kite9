@@ -1,0 +1,8 @@
+builtins_platform=JS
+unique_name=org.kite9\:kite9-visualization-js
+compiler_version=1.8.10
+depends=kotlin
+jsOutputName=kite9-parent-kite9-visualization-js
+abi_version=1.7.0
+metadata_version=1.4.1
+ir_version=1.0.0

@@ -1,0 +1,38 @@
+@import url(/public/templates/texture/texture-defaults.css);
+@import url(/public/templates/containers/containers-textures.css);
+@import url(/public/templates/links/links-textures.css);
+@import url(/public/templates/grid/grid-textures.css);
+@import url(/public/templates/labels/labels-textures.css);
+@import url(/public/templates/links/links-textures.css);
+@import url(/public/templates/editor/editor.css);
+@import url(/public/fonts/metropolis/metropolis.css);
+@import url(/public/fonts/chirp/chirp-ttf.css);
+@import url(/public/fonts/fontawesome/fontawesome.css);
+
+[k9-elem=box] > [k9-texture=background] {
+	fill: #CCCCAA;
+	fill-opacity: 1;
+	stroke: #AAAA88;
+	stroke-dasharray: none;
+}
+
+[k9-texture=foreground],
+[k9-texture=background] > g > text {
+	fill: rgb(36, 51, 20);
+	font-family: "metropolis";
+	font-size: 50pt;
+}
+
+[k9-elem=label] {
+  fill: black;
+  font-family: "metropolis";
+  font-size: 35pt;
+}
+
+[k9-elem=box].shaded {
+	fill: #AA5500; 
+}
+
+[k9-elem=textarea].warning {
+	fill: #FF8800; 
+}

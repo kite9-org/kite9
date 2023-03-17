@@ -1,0 +1,12 @@
+[k9-texture=background][k9-elem=container] {
+	stroke: black;
+	stroke-width: 1pt;
+}
+
+[k9-texture=background][k9-elem=container].solid > g.k9-shape > rect {
+	stroke-dasharray: none;
+}
+
+[k9-texture=background][k9-elem=container].dotted > g.k9-shape > rect {
+	stroke-dasharray: 4 4;	
+}

@@ -1,0 +1,49 @@
+
+/* cells */
+
+[k9-elem=cell] {
+	text-align: middle;
+}
+
+[k9-elem=_temporary],
+[k9-elem=cell] > [k9-texture=background] {
+	fill: #FFFFFF;
+	fill-opacity: 0.01;	
+}
+
+
+[k9-elem=cell].bordered {
+	stroke: black;
+	stroke-width: 2pt;
+}
+
+[k9-elem=cell].shaded {
+	fill: #DEDEDE;
+	fill-opacity: 1;
+}
+
+[k9-elem=table].invisible [k9-elem=cell],
+[k9-elem=table].invisible [k9-elem=_temporary],
+[k9-elem=cell].invisible,
+[k9-elem=table].invisible {
+  stroke: none;
+}
+
+
+[k9-elem=cell].left {
+	--kite9-horizontal-align: left;
+	text-align: start;
+}
+
+[k9-elem=cell].right {
+	--kite9-horizontal-align: right;
+	text-align: end;
+}
+
+[k9-elem=cell].bottom {
+	--kite9-vertical-align: bottom;
+}
+
+[k9-elem=cell].top {
+	--kite9-vertical-align: top;
+} 

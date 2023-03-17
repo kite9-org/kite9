@@ -1,0 +1,15 @@
+/* Groups: Invisible containers */
+
+[k9-elem=group] {
+	--kite9-sizing: minimize;
+	--kite9-traversal: always;
+	--kite9-min-size: 40pt 40pt;
+}
+
+/* Containers: Have a border */
+
+[k9-elem=container] {
+	--kite9-padding: 15pt;
+	--kite9-margin: 15pt;
+	--kite9-sizing: minimize;
+}

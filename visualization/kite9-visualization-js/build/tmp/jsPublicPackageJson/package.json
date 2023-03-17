@@ -1,0 +1,11 @@
+{
+  "name": "kite9-parent-kite9-visualization-js",
+  "version": "0.1.0-SNAPSHOT",
+  "main": "kite9-parent-kite9-visualization-js.js",
+  "types": "kite9-parent-kite9-visualization-js.d.ts",
+  "devDependencies": {},
+  "dependencies": {},
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "bundledDependencies": []
+}

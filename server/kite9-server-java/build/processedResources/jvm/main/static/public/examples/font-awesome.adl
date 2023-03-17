@@ -1,0 +1,9 @@
+<diagram 
+  xmlns="http://www.kite9.org/schema/adl" 
+  id="The Diagram"
+  xslt:template="/github/kite9-org/kite9/templates/font-awesome/font-awesome-template.xsl"
+  xmlns:xslt="http://www.kite9.org/schema/xslt">
+  <container>
+    <font-awesome id="bob">&#xf005;</font-awesome>
+  </container>
+</diagram>

@@ -22,7 +22,7 @@ public class ExitMatrixEvaluatorTest {
 				new float[] { 0, 0, 0 }}, false);
 		
 		// 2 for the corner crossing. 3 x .5 for the chance of cross with the middle
-		Assert.assertEquals(3.5f, (float) new ExitMatrixEvaluator().countOverlaps(a, a, Layout.LEFT, rh));
+		Assert.assertEquals(3.5f, (float) new ExitMatrixEvaluator().countOverlaps(a, a, Layout.LEFT, rh), 0.001);
 	}
 	
 	@Test
