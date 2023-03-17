@@ -1,0 +1,209 @@
+<?xml version="1.0" ?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="java_class:org.kite9.diagram.builders.Test14Hierarchy/test_14_1_TestHierarchy()">
+ <context id="Rob's Hierarchy0" bordered="true">
+  <context id="level 10" bordered="false">
+   <context id="level 10-glyphs" layout="HORIZONTAL" bordered="false">
+    <glyph id="Top" stereotype="" label="Top">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+  </context>
+  <context id="level 20" bordered="false">
+   <context id="level 20-glyphs" layout="HORIZONTAL" bordered="false">
+    <glyph id="Abstract1" stereotype="" label="Abstract1">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Middle2" stereotype="" label="Middle2">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Middle1" stereotype="" label="Middle1">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 20-arrows" layout="HORIZONTAL" bordered="false">
+    <arrow id="Abstract1/rel_implements" label="implements"></arrow>
+    <arrow id="Middle2/rel_implements" label="implements"></arrow>
+    <arrow id="Middle1/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 30" bordered="false">
+   <context id="level 30-glyphs" layout="HORIZONTAL" bordered="false">
+    <glyph id="Abstract2" stereotype="" label="Abstract2">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Conc2" stereotype="" label="Conc2">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Conc1" stereotype="" label="Conc1">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 30-arrows" layout="HORIZONTAL" bordered="false">
+    <arrow id="Abstract2/rel_implements" label="implements"></arrow>
+    <arrow id="Conc2/rel_extends" label="extends"></arrow>
+    <arrow id="Conc2/rel_implements" label="implements"></arrow>
+    <arrow id="Conc1/rel_extends" label="extends"></arrow>
+    <arrow id="Conc1/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 40" bordered="false">
+   <context id="level 40-glyphs" layout="HORIZONTAL" bordered="false">
+    <glyph id="Conc3" stereotype="" label="Conc3">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 40-arrows" layout="HORIZONTAL" bordered="false">
+    <arrow id="Conc3/rel_extends" label="extends"></arrow>
+    <arrow id="Conc3/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <arrow id="Rob's Hierarchy1/rel_class" label="has class"></arrow>
+  <label xsi:type="text-line">
+   <text>Rob's Hierarchy</text>
+   <symbols></symbols>
+  </label>
+ </context>
+ 
+  <link id="auto:0">
+   <from xsi:type="context" reference="Rob's Hierarchy0"></from>
+   <to xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></to>
+  </link>
+  <link id="auto:4">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Top"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:10" drawDirection="UP">
+   <from xsi:type="arrow" reference="Abstract1/rel_implements"></from>
+   <to xsi:type="glyph" reference="Top"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:12" drawDirection="UP">
+   <from xsi:type="arrow" reference="Middle2/rel_implements"></from>
+   <to xsi:type="glyph" reference="Top"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:24" drawDirection="UP">
+   <from xsi:type="arrow" reference="Middle1/rel_implements"></from>
+   <to xsi:type="glyph" reference="Top"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:1">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Abstract1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:9" drawDirection="UP">
+   <from xsi:type="glyph" reference="Abstract1"></from>
+   <to xsi:type="arrow" reference="Abstract1/rel_implements"></to>
+  </link>
+  <link id="auto:20" drawDirection="UP">
+   <from xsi:type="arrow" reference="Conc2/rel_extends"></from>
+   <to xsi:type="glyph" reference="Abstract1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:26" drawDirection="UP">
+   <from xsi:type="arrow" reference="Conc1/rel_extends"></from>
+   <to xsi:type="glyph" reference="Abstract1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:2">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Middle2"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:11" drawDirection="UP">
+   <from xsi:type="glyph" reference="Middle2"></from>
+   <to xsi:type="arrow" reference="Middle2/rel_implements"></to>
+  </link>
+  <link id="auto:28" drawDirection="UP">
+   <from xsi:type="arrow" reference="Conc1/rel_implements"></from>
+   <to xsi:type="glyph" reference="Middle2"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:7">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Middle1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:16" drawDirection="UP">
+   <from xsi:type="arrow" reference="Conc3/rel_implements"></from>
+   <to xsi:type="glyph" reference="Middle1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:18" drawDirection="UP">
+   <from xsi:type="arrow" reference="Abstract2/rel_implements"></from>
+   <to xsi:type="glyph" reference="Middle1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:22" drawDirection="UP">
+   <from xsi:type="arrow" reference="Conc2/rel_implements"></from>
+   <to xsi:type="glyph" reference="Middle1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:23" drawDirection="UP">
+   <from xsi:type="glyph" reference="Middle1"></from>
+   <to xsi:type="arrow" reference="Middle1/rel_implements"></to>
+  </link>
+  <link id="auto:5">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Abstract2"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:14" drawDirection="UP">
+   <from xsi:type="arrow" reference="Conc3/rel_extends"></from>
+   <to xsi:type="glyph" reference="Abstract2"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:17" drawDirection="UP">
+   <from xsi:type="glyph" reference="Abstract2"></from>
+   <to xsi:type="arrow" reference="Abstract2/rel_implements"></to>
+  </link>
+  <link id="auto:6">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Conc2"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:19" drawDirection="UP">
+   <from xsi:type="glyph" reference="Conc2"></from>
+   <to xsi:type="arrow" reference="Conc2/rel_extends"></to>
+  </link>
+  <link id="auto:21" drawDirection="UP">
+   <from xsi:type="glyph" reference="Conc2"></from>
+   <to xsi:type="arrow" reference="Conc2/rel_implements"></to>
+  </link>
+  <link id="auto:8">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Conc1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:25" drawDirection="UP">
+   <from xsi:type="glyph" reference="Conc1"></from>
+   <to xsi:type="arrow" reference="Conc1/rel_extends"></to>
+  </link>
+  <link id="auto:27" drawDirection="UP">
+   <from xsi:type="glyph" reference="Conc1"></from>
+   <to xsi:type="arrow" reference="Conc1/rel_implements"></to>
+  </link>
+  <link id="auto:3">
+   <from xsi:type="arrow" reference="Rob's Hierarchy1/rel_class"></from>
+   <to xsi:type="glyph" reference="Conc3"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:13" drawDirection="UP">
+   <from xsi:type="glyph" reference="Conc3"></from>
+   <to xsi:type="arrow" reference="Conc3/rel_extends"></to>
+  </link>
+  <link id="auto:15" drawDirection="UP">
+   <from xsi:type="glyph" reference="Conc3"></from>
+   <to xsi:type="arrow" reference="Conc3/rel_implements"></to>
+  </link>
+  
+</diagram>

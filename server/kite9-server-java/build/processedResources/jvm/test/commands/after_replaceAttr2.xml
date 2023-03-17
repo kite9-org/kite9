@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <diagram id="The Diagram">
+    <glyph id="one">
+      <label id="one-label">One</label>
+    </glyph>
+    <glyph style="value" id="two">
+      <label id="two-label">Two</label>
+    </glyph>
+    <link id="link" rank="4">
+      <from reference="one" id="link-from"/>
+      <to reference="two" class="arrow" id="link-to"/>
+    </link>
+  </diagram>

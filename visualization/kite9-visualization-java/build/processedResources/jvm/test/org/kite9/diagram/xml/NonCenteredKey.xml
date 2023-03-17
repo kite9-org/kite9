@@ -1,0 +1,132 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3768">
+ 
+ <hints py1="0.001997002" py2="0.998003" px2="0.998252" px1="0.001499"/>
+ <glyph id="id_1" shape="umlACTOR">
+  
+  <hints py1="0.001997102" py2="0.4990029" px2="0.4995009" px1="0.0014991" y1="12.0" y2="138.0" x2="205.0" x1="145.0"/>
+  <stereotype/>
+  <label>Guest</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_11" shape="umlUSECASE">
+  
+  <hints py1="0.2507486" py2="0.49875438" px2="0.7487544" px1="0.5012446" y1="102.0" y2="150.0" x2="465.0" x1="261.0"/>
+  <stereotype/>
+  <label>Cancel Reservation</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_3" shape="umlUSECASE">
+  
+  <hints py1="0.002245605" py2="0.25025138" px2="0.7487544" px1="0.5012446" y1="42.0" y2="90.0" x2="459.0" x1="267.0"/>
+  <stereotype/>
+  <label>Make Reservation</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_13" shape="umlUSECASE">
+  
+  <hints py1="0.5012456" py2="0.7492514" px2="0.7487544" px1="0.5012446" y1="162.0" y2="210.0" x2="417.0" x1="309.0"/>
+  <stereotype/>
+  <label>Check In</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_9" shape="umlUSECASE">
+  
+  <hints py1="0.7497486" py2="0.9977544" px2="0.7487544" px1="0.5012446" y1="222.0" y2="270.0" x2="423.0" x1="303.0"/>
+  <stereotype/>
+  <label>Check Out</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_5" shape="umlACTOR">
+  
+  <hints py1="0.5009971" py2="0.9980029" px2="0.9982519" px1="0.7497491" y1="132.0" y2="258.0" x2="574.0" x1="478.0"/>
+  <stereotype/>
+  <label>Receptionist</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <key id="id_15">
+  
+  <hints y1="282.0" y2="378.0" x2="576.0" x1="12.0"/>
+  <boldText>Actors and Use Cases</boldText>
+  <bodyText/>
+  <symbols>
+   <text-line id="auto:19327">
+    
+    <hints y1="310.25" y2="345.25" x2="539.75" x1="48.25"/>
+    <text>Actors in UML are represented by a stick-man symbol. 
+They are either human or machine agents outside of the system being designed.</text>
+    <symbols/>
+   </text-line>
+   <text-line id="auto:19328">
+    
+    <hints y1="345.25" y2="363.25" x2="539.75" x1="48.25"/>
+    <text>Use Cases are ways in which an Actor can use the system.  They are represented by ovals.  </text>
+    <symbols/>
+   </text-line>
+  </symbols>
+ </key>
+ 
+
+  <link id="id_2" shape="NORMAL"  drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_3"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_10" shape="NORMAL"  drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_11"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_4" shape="NORMAL" >
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_13"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_0" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_11"/>
+  </link>
+  <link id="id_6" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_11"/>
+   <to xsi:type="glyph" reference="id_13"/>
+  </link>
+  <link id="id_7" shape="NORMAL" >
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_3"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_12" shape="NORMAL"  drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_13"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_14" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_9"/>
+  </link>
+  <link id="id_8" shape="NORMAL"  drawDirection="LEFT">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_9"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  </diagram>

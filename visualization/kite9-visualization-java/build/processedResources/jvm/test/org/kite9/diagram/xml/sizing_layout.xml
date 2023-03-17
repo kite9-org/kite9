@@ -1,0 +1,73 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+<glyph id="id_1" stereotype="" label="New Part">
+
+ <text-lines>
+  <text-line id="auto:24595">
+
+   <text>New Text Line
+
+</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:24596">
+
+   <text>New Text Line</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:24597">
+
+   <text>New Text Line</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:24598">
+
+   <text>New Text Line</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph>
+<context id="auto:14926" layout="VERTICAL" bordered="true">
+
+ <glyph id="id_0" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <arrow id="id_4" label="New Connection Body">
+
+ </arrow>
+ <label xsi:type="text-line" id="id_3">
+
+  <text>My New Label</text>
+  <symbols/>
+ </label>
+</context>
+<context id="auto:10448" layout="RIGHT" bordered="false">
+
+</context>
+
+
+
+ <link id="id_2" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_1"/>
+ </link>
+ <link id="id_7" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_1"/>
+  <to xsi:type="arrow" reference="id_4"/>
+  <fromLabel xsi:type="text-line" id="id_10">
+
+   <text>My New Label</text>
+   <symbols/>
+  </fromLabel>
+  <toLabel xsi:type="text-line" id="id_11">
+
+   <text>My New Label</text>
+   <symbols/>
+  </toLabel>
+ </link>
+ </diagram>

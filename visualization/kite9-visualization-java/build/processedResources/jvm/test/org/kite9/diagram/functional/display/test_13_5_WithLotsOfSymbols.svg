@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="The Diagram" version="1.0" width="249" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: center; vert: center; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=249.0, h=286.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@20c1cb0c; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
+><defs
+  ><style type="text/css" xml:space="preserve"
+    >
+                    @import url("/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");
+                </style
+  ></defs
+  ><g filter="url(#dropshadow)"
+  >
+  <g k9-elem="glyph" id="0-a" transform="translate(15.0,128.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=128.0); rect-size: BasicDimension2D(w=26.0, h=30.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@21f8693e; " rank="0"
+    ><rect x="0" y="0" width="26" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="30" pp:width="$width"
+      />
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.3,21.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=134.0); rect-size: BasicDimension2D(w=6.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@6c524a7f; "
+      ><text x="0.0px" y="0.0px"
+        >a</text
+      ></g
+      >
+  </g
+      >
+  <g k9-elem="key" id="6" transform="translate(51.0,15.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 3.0 6.0 3.0 6.0; min-size: 0.0 0.0; sizing: [minimize, maximize]; horiz: center; vert: center; layout: null; rectangular: label; rect-pos: BasicDimension2D(w=51.0, h=15.0); rect-size: BasicDimension2D(w=183.0, h=271.0); position: none; placement: down;painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@61b3de5b; " rank="1"
+      ><g k9-info="margin: 0.0 0.0 0.0 0.0; padding: 12.0 12.0 12.0 12.0; min-size: 0.0 0.0; sizing: [maximize, maximize]; horiz: center; vert: center; layout: grid; grid-size: [1, 2]; cell-xs: [, 12, 159]; cell-ys: [, 12, 28, 253]; rectangular: connected; rect-pos: BasicDimension2D(w=57.0, h=18.0); rect-size: BasicDimension2D(w=171.0, h=265.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@12c1826; " k9-elem="body" transform="translate(6.0,3.0)"
+        ><rect x="0" y="0" width="171" style="fill: url(#glyph-background); " pp:height="$height" class="key-back" height="265" pp:width="$width"
+          />
+    <g k9-elem="boldText" id="7" class="bold-text" transform="translate(11.6,24.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 2.0 0.0 2.0 0.0; min-size: 0.0 0.0; sizing: [maximize, maximize]; horiz: center; vert: top; rectangular: connected; rect-pos: BasicDimension2D(w=69.0, h=30.0); rect-size: BasicDimension2D(w=147.0, h=16.0); position: [0,0,0,0]; grid-x: [0,1]; grid-y: [0,1]; painter: org.kite9.diagram.batik.painter.BatikTextPainter@35408036; "
+          ><text x="0.0px" y="0.0px"
+            >some bold text</text
+          ></g
+          >
+    <g k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [maximize, maximize]; horiz: center; vert: center; layout: vertical; rectangular: connected; rect-pos: BasicDimension2D(w=69.0, h=46.0); rect-size: BasicDimension2D(w=147.0, h=225.0); position: [0,0,2,2]; grid-x: [0,1]; grid-y: [1,2]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@6be8e6ee; " k9-elem="text-lines" transform="translate(12.0,28.0)"
+          ><g k9-elem="text-label" id="8" class="generic-text" transform="translate(2.5,13.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=49.0); rect-size: BasicDimension2D(w=82.0, h=12.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@198fe398; "
+            ><text x="0.0px" y="0.0px"
+              >Some information</text
+            ></g
+            ><g k9-elem="text-label" id="9" class="generic-text" transform="translate(2.0,28.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=64.0); rect-size: BasicDimension2D(w=41.0, h=12.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@511e0453; "
+            ><text x="0.0px" y="0.0px"
+              >Partridge</text
+            ></g
+            ><g k9-elem="text-label" id="10" class="generic-text" transform="translate(2.4,43.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=79.0); rect-size: BasicDimension2D(w=70.0, h=12.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@60ee6f76; "
+            ><text x="0.0px" y="0.0px"
+              >Gemstone Beta</text
+            ></g
+            ><g k9-elem="text-label" id="11" class="generic-text" transform="translate(2.4,58.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=94.0); rect-size: BasicDimension2D(w=141.0, h=36.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@4c1d2a13; "
+            ><text x="0.0px" y="0.0px"
+              >Multiline and very complicated
+</text
+              ><text x="0.0px" y="12.0px"
+              >description of the symbol
+</text
+              ><text x="0.0px" y="24.0px"
+              >itself</text
+            ></g
+            ><g k9-elem="text-label" id="12" class="generic-text" transform="translate(2.8,97.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=133.0); rect-size: BasicDimension2D(w=40.0, h=24.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@2a68932b; "
+            ><text x="0.0px" y="0.0px"
+              >Par
+</text
+              ><text x="0.0px" y="12.0px"
+              >two lines</text
+            ></g
+            ><g k9-elem="text-label" id="13" class="generic-text" transform="translate(2.5,124.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=160.0); rect-size: BasicDimension2D(w=82.0, h=12.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@b7526a9; "
+            ><text x="0.0px" y="0.0px"
+              >Some information</text
+            ></g
+            ><g k9-elem="text-label" id="14" class="generic-text" transform="translate(2.0,139.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=175.0); rect-size: BasicDimension2D(w=41.0, h=12.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@18f37d6e; "
+            ><text x="0.0px" y="0.0px"
+              >Partridge</text
+            ></g
+            ><g k9-elem="text-label" id="15" class="generic-text" transform="translate(2.4,154.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=190.0); rect-size: BasicDimension2D(w=70.0, h=12.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@3d1b91d1; "
+            ><text x="0.0px" y="0.0px"
+              >Gemstone Beta</text
+            ></g
+            ><g k9-elem="text-label" id="16" class="generic-text" transform="translate(2.4,169.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=205.0); rect-size: BasicDimension2D(w=141.0, h=36.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@5304ac92; "
+            ><text x="0.0px" y="0.0px"
+              >Multiline and very complicated
+</text
+              ><text x="0.0px" y="12.0px"
+              >description of the symbol
+</text
+              ><text x="0.0px" y="24.0px"
+              >itself</text
+            ></g
+            ><g k9-elem="text-label" id="17" class="generic-text" transform="translate(2.8,208.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: [minimize, minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=72.0, h=244.0); rect-size: BasicDimension2D(w=40.0, h=24.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@71669835; "
+            ><text x="0.0px" y="0.0px"
+              >Par
+</text
+              ><text x="0.0px" y="12.0px"
+              >two lines</text
+            ></g
+          ></g
+          >
+  </g
+        ></g
+        >
+</g
+        ><defs
+        ><linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
+          ><stop offset="0%" stop-color="#FFF"
+            /><stop offset="100%" stop-color="#DDD"
+          /></linearGradient
+          ><filter xlink:actuate="onLoad" xlink:type="simple" id="dropshadow" height="130%" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
+          ><feGaussianBlur stdDeviation="1" in="SourceAlpha"
+            /><feOffset dx="2" dy="2"
+            /><feColorMatrix type="matrix" values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0"
+            /><feMerge
+            ><feMergeNode
+              /><feMergeNode in="SourceGraphic"
+            /></feMerge
+          ></filter
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="1" refY="3" orient="auto" id="diamond-open-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="7" refY="3" orient="auto" id="diamond-open-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+          ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+          /></marker
+          ><marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
+          /></marker
+          ><marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
+          /></marker
+          ><marker refX="6" refY="4" orient="auto" id="arrow-open-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="open-arrow-marker" points="6,4 2,2 2,6"
+          /></marker
+          ><marker refX="2" refY="4" orient="auto" id="arrow-open-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="open-arrow-marker" points="2,4 6,2 6,6"
+          /></marker
+          ><marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="arrow-marker" points="2,4 6,2 6,6"
+          /></marker
+          ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+          ><polygon class="arrow-marker" points="6,4 2,2 2,6"
+          /></marker
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+          ><circle r="2" cx="3" class="circle-marker" cy="3"
+          /></marker
+          ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="gap-start-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="gap-end-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="none-start-marker" preserveAspectRatio="xMidYMid meet"
+          /><marker id="none-end-marker" preserveAspectRatio="xMidYMid meet"
+        /></defs
+      ></svg
+    >

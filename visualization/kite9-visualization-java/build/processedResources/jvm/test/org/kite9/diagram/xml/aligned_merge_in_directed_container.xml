@@ -1,0 +1,96 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+<context id="auto:36094" layout="HORIZONTAL" bordered="false">
+
+ <context id="auto:34041" layout="HORIZONTAL" bordered="true">
+
+  <arrow id="id_19" label="New Connection Body">
+
+  </arrow>
+  <context id="id_8" layout="RIGHT" bordered="false">
+
+   <glyph id="id_23" label="New Part">
+
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_24" label="New Part">
+
+    <text-lines/>
+    <symbols/>
+   </glyph>
+   <glyph id="id_21" stereotype="" label="New Part">
+
+    <text-lines>
+     <text-line id="auto:35630">
+
+      <text>New Text Line</text>
+      <symbols/>
+     </text-line>
+     <text-line id="auto:35631">
+
+      <text>New Text Line</text>
+      <symbols/>
+     </text-line>
+    </text-lines>
+    <symbols/>
+   </glyph>
+   <label xsi:type="text-line" id="id_9">
+    <renderingInformation xsi:type="rectangle" rendered="false">
+     <position x="0.0" y="0.0"/>
+     <size x="0.0" y="0.0"/>
+    </renderingInformation>
+    <text>Horizontal</text>
+    <symbols/>
+   </label>
+  </context>
+  <label xsi:type="text-line" id="id_31">
+
+   <text>My New Label</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="auto:34205" layout="VERTICAL" bordered="false">
+
+  <context id="id_27" layout="VERTICAL" bordered="true">
+
+   <label xsi:type="text-line" id="id_28">
+
+    <text>Vertical</text>
+    <symbols/>
+   </label>
+  </context>
+  <context id="id_25" layout="HORIZONTAL" bordered="true">
+
+   <label xsi:type="text-line" id="id_26">
+
+    <text>Horizontal</text>
+    <symbols/>
+   </label>
+  </context>
+ </context>
+</context>
+<key id="id_5">
+
+ <boldText>My New Key</boldText>
+</key>
+
+
+ <link id="id_0" drawDirection="RIGHT">
+
+  <from xsi:type="context" reference="id_27"/>
+  <to xsi:type="glyph" reference="id_21"/>
+  <fromLabel xsi:type="text-line" id="id_1">
+
+   <text>My New Label</text>
+   <symbols/>
+  </fromLabel>
+  <toLabel xsi:type="text-line" id="id_2">
+
+   <text>My New Label</text>
+   <symbols/>
+  </toLabel>
+  <toDecoration>CIRCLE</toDecoration>
+ </link>
+ 
+ </diagram>

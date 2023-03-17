@@ -1,0 +1,159 @@
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+ 
+ <glyph id="lmc" stereotype="" label="Linda McCartney">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <arrow id="id_36" label="id_36">
+  
+ </arrow>
+ <glyph id="ns" stereotype="" label="Nancy Shevell">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="hm" stereotype="" label="Heather Mills">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="ota" stereotype="" label="Olivia Trinidad Arias">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="bb" stereotype="" label="Barbara Bach">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <arrow id="id_28" label="id_28">
+  
+ </arrow>
+ <arrow id="m1" label="m1">
+  
+ </arrow>
+ <context id="id_5" layout="HORIZONTAL" bordered="true">
+  
+  <glyph id="ringo" stereotype="" label="Ringod">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="george" stereotype="" label="George">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="paul" stereotype="" label="Paul">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="john" stereotype="" label="John">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>The Beatles</text>
+   <symbols/>
+  </label>
+ </context>
+ <arrow id="m2" label="married">
+  
+ </arrow>
+ 
+ 
+
+  <link id="id_41" >
+   
+   <from xsi:type="arrow" reference="id_36"/>
+   <to xsi:type="glyph" reference="lmc"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_37">
+   
+   <from xsi:type="arrow" reference="id_36"/>
+   <to xsi:type="glyph" reference="paul"/>
+  </link>
+  <link id="id_38" >
+   
+   <from xsi:type="arrow" reference="id_36"/>
+   <to xsi:type="glyph" reference="hm"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_39" >
+   
+   <from xsi:type="arrow" reference="id_36"/>
+   <to xsi:type="glyph" reference="ns"/>
+   <fromLabel xsi:type="text-line">
+    
+    <text>this is a label
+dfdsf</text>
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_31" >
+   
+   <from xsi:type="arrow" reference="id_28"/>
+   <to xsi:type="glyph" reference="ota"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_23" >
+   
+   <from xsi:type="arrow" reference="m2"/>
+   <to xsi:type="glyph" reference="bb"/>
+   <fromLabel xsi:type="text-line">
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_32">
+   
+   <from xsi:type="arrow" reference="id_28"/>
+   <to xsi:type="glyph" reference="george"/>
+  </link>
+  <link id="id_16">
+   
+   <from xsi:type="arrow" reference="m1"/>
+   <to xsi:type="glyph" reference="john"/>
+  </link>
+  <link id="id_25">
+   
+   <from xsi:type="arrow" reference="m2"/>
+   <to xsi:type="glyph" reference="ringo"/>
+  </link>
+  </diagram>

@@ -1,0 +1,178 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="VERTICAL">
+ 
+ <context id="id_19" bordered="false">
+  
+  <glyph id="id_1" stereotype="interface" label="MGTPlanarization">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_15" stereotype="class" label="AbstractPlanarization">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line" id="id_20">
+   <renderingInformation xsi:type="rectangle" rendered="false">
+    <position x="0.0" y="0.0"/>
+    <size x="0.0" y="0.0"/>
+   </renderingInformation>
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_32" layout="HORIZONTAL" bordered="true">
+  
+  <glyph id="id_5" label="Vertex">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_3" label="Edge">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_4" label="Face">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_14" label="is a">
+   
+  </arrow>
+  <label xsi:type="text-line" id="id_33">
+   
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_34" bordered="false">
+  
+  <arrow id="id_30" label="is a">
+   
+  </arrow>
+  <arrow id="id_21" label="extends">
+   
+  </arrow>
+  <glyph id="id_2" label="MGTPlanarizationImpl">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_7" label="implements">
+   
+  </arrow>
+  <label xsi:type="text-line" id="id_35">
+   <renderingInformation xsi:type="rectangle" rendered="false">
+    <position x="0.0" y="0.0"/>
+    <size x="0.0" y="0.0"/>
+   </renderingInformation>
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ <glyph id="id_0" stereotype="interface" label="Planarization">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="id_39" layout="HORIZONTAL" bordered="false">
+  
+  <arrow id="id_8" label="implements">
+   
+  </arrow>
+  <arrow id="id_6" label="extends">
+   
+  </arrow>
+  <label xsi:type="text-line" id="id_40">
+   <renderingInformation xsi:type="rectangle" rendered="false">
+    <position x="0.0" y="0.0"/>
+    <size x="0.0" y="0.0"/>
+   </renderingInformation>
+   <text>Horizontal</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+
+  <link id="id_13" drawDirection="UP">
+   
+   <from xsi:type="arrow" reference="id_7"/>
+   <to xsi:type="glyph" reference="id_1"/>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_10">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="arrow" reference="id_6"/>
+  </link>
+  <link id="id_36">
+   
+   <from xsi:type="arrow" reference="id_30"/>
+   <to xsi:type="glyph" reference="id_15"/>
+  </link>
+  <link id="id_17">
+   
+   <from xsi:type="arrow" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_15"/>
+  </link>
+  <link id="id_24" drawDirection="UP">
+   
+   <from xsi:type="arrow" reference="id_21"/>
+   <to xsi:type="glyph" reference="id_15"/>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_28">
+   
+   <from xsi:type="arrow" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_5"/>
+   <toLabel xsi:type="text-line" id="id_29">
+    
+    <text>list of</text>
+    <symbols/>
+   </toLabel>
+  </link>
+  <link id="id_38">
+   
+   <from xsi:type="arrow" reference="id_30"/>
+   <to xsi:type="glyph" reference="id_4"/>
+   <toLabel xsi:type="text-line" id="id_41">
+    
+    <text>List of</text>
+    <symbols/>
+   </toLabel>
+  </link>
+  <link id="id_31">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="arrow" reference="id_14"/>
+  </link>
+  <link id="id_26">
+   
+   <from xsi:type="arrow" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  <link id="id_25" drawDirection="UP">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="arrow" reference="id_21"/>
+  </link>
+  <link id="id_12" drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_7"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  <link id="id_18" drawDirection="UP">
+   
+   <from xsi:type="arrow" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_0"/>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="id_9" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_0"/>
+   <to xsi:type="arrow" reference="id_6"/>
+   <fromDecoration>ARROW</fromDecoration>
+  </link>
+  </diagram>

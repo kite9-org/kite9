@@ -1,0 +1,108 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="pid_6" layout="RIGHT">
+ 
+ <context id="pid_7" layout="DOWN"  >
+  
+  <glyph id="palette:id_8" shape="fcDECISION">
+   
+   <stereotype/>
+   <label>decision</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_15" shape="fcSTORED DATA">
+   
+   <stereotype/>
+   <label>stored</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_1" shape="fcDELAY">
+   
+   <stereotype/>
+   <label>Delay</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_11" shape="fcMANUAL OPERATION">
+   
+   <stereotype/>
+   <label>Manual 
+Operation</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_10" shape="fcTERMINATOR">
+   
+   <stereotype/>
+   <label>terminator</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context>
+ <context id="pid_12" layout="DOWN"  >
+  
+  <glyph id="palette:id_9" shape="fcSTART1">
+   
+   <stereotype/>
+   <label>start</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_13" shape="fcPROCESS">
+   
+   <stereotype/>
+   <label>process</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_14" shape="fcDOCUMENT">
+   
+   <stereotype/>
+   <label>document</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_0" shape="fcMANUAL INPUT">
+   
+   <stereotype/>
+   <label>Manual
+Input</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="palette:id_16" shape="fcDATABASE">
+   
+   <stereotype/>
+   <label>database</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context>
+ 
+
+  <link id="pid_2" drawDirection="RIGHT" shape="INVISIBLE"  >
+   
+   <from xsi:type="glyph" reference="pid_8"/>
+   <to xsi:type="glyph" reference="pid_9"/>
+  </link>
+  <link id="pid_22" drawDirection="RIGHT" shape="INVISIBLE"  >
+   
+   <from xsi:type="glyph" reference="pid_15"/>
+   <to xsi:type="glyph" reference="pid_13"/>
+  </link>
+  <link id="pid_18" drawDirection="RIGHT" shape="INVISIBLE"  >
+   
+   <from xsi:type="glyph" reference="pid_1"/>
+   <to xsi:type="glyph" reference="pid_14"/>
+  </link>
+  <link id="pid_21" drawDirection="RIGHT" shape="INVISIBLE"  >
+   
+   <from xsi:type="glyph" reference="pid_11"/>
+   <to xsi:type="glyph" reference="pid_0"/>
+  </link>
+  <link id="pid_20" drawDirection="RIGHT" shape="INVISIBLE"  >
+   
+   <from xsi:type="glyph" reference="pid_10"/>
+   <to xsi:type="glyph" reference="pid_16"/>
+  </link>
+  </diagram>

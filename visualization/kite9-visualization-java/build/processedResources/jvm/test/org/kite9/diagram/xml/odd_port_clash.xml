@@ -1,0 +1,21 @@
+<diagram id="dia">
+    <glyph id="b1" label="y">
+        <socket id="p1" style="--kite9-port-side: top; "/>
+    </glyph>
+    <glyph id="b3" label="b3 line" />
+    <context id="bigbox" layout="HORIZONTAL">
+        <glyph id="b2" label="jj" />
+    </context>
+    <link id="link1" r="r">
+        <from id="link1-from" reference="p1" shape="arrow"/>
+        <to id="link1-to" reference="b3" shape="arrow"/>
+    </link>
+    <link drawDirection="RIGHT" id="link2">
+        <from id="link2-from" reference="b1"/>
+        <to id="link2-to" reference="b2"/>
+    </link>
+    <link drawDirection="UP" id="2-0">
+        <from id="2-0-0" reference="b2"/>
+        <to id="2-0-1" reference="b3"/>
+    </link>
+</diagram>

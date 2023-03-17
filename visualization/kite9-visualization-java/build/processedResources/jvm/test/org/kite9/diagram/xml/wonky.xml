@@ -1,0 +1,146 @@
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="DOWN">
+ 
+ <context id="id_19" layout="HORIZONTAL" bordered="true">
+  
+  <glyph id="id_1" stereotype="" label="Forum lead">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_2" label="New contacts">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="idd" stereotype="" label="Website hits">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_21" label="Play with Designer">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>Spending time on the website</text>
+   <symbols/>
+  </label>
+ </context>
+ <arrow id="id_3" label="Next step1">
+  
+ </arrow>
+ <glyph id="id_4" stereotype="" label="Sign-up to Kite9 account">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <arrow id="id_13" label="Next step2">
+  
+ </arrow>
+ <context id="id_20" layout="HORIZONTAL" bordered="true">
+  
+  <glyph id="id_10" label="Play with Designer">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_12" label="Trial website XML">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_11" label="Download API">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>Try one of the three service types</text>
+   <symbols/>
+  </label>
+ </context>
+ <arrow id="id_5" label="Next step3">
+  
+ </arrow>
+ <glyph id="id_15" label="Customer Interaction">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+ 
+
+  <link id="id_7">
+   
+   <from xsi:type="arrow" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_1"/>
+  </link>
+  <link id="id_29">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_15"/>
+  </link>
+  <link id="id_6">
+   
+   <from xsi:type="arrow" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  <link id="id_8">
+   
+   <from xsi:type="arrow" reference="id_3"/>
+   <to xsi:type="glyph" reference="idd"/>
+  </link>
+  <link id="id_22">
+   
+   <from xsi:type="arrow" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_21"/>
+  </link>
+  <link id="id_9">
+   
+   <from xsi:type="arrow" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_14">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="arrow" reference="id_13"/>
+  </link>
+  <link id="id_16">
+   
+   <from xsi:type="arrow" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_10"/>
+  </link>
+  <link id="id_17">
+   
+   <from xsi:type="arrow" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_11"/>
+  </link>
+  <link id="id_18">
+   
+   <from xsi:type="arrow" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_26">
+   
+   <from xsi:type="arrow" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_10"/>
+  </link>
+  <link id="id_25">
+   
+   <from xsi:type="arrow" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_24">
+   
+   <from xsi:type="arrow" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_11"/>
+  </link>
+  <link id="id_27">
+   
+   <from xsi:type="arrow" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_15"/>
+  </link>
+  </diagram>

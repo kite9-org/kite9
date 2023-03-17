@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	id="The Diagram" layout="RIGHT">
+
+	<context id="auto:1" bordered="true">
+
+	</context>
+	<context id="auto:2" bordered="true">
+
+	</context>
+	<context id="auto:3" bordered="true">
+
+	</context>
+	<context id="auto:4" bordered="true">
+
+	</context>
+
+
+	
+		<link id="id_5">
+			<from xsi:type="context" reference="auto:1" />
+			<to xsi:type="context" reference="auto:3" />
+		</link>
+	 
+</diagram>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <title>minimal</title>
+  <meta property="og:url" content="https://www.kite9.com" />
+  <meta property="og:site_name" content="Kite9" />
+  <meta property="og:title" content="Kite9 Diagrams" />
+  <meta property="og:description"
+    content="Kite9 draws diagrams, automatically.  UML, Risk-First, Templated, SVG, Flow-Charts, System Diagrams." />
+  <meta property="og:image" content="https://www.kite9.org/public/templates/admin/kite9-preview.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="718" />
+  <meta property="og:image:height" content="372" />
+  <meta property="twitter:site" content="@bobm_kite9" />
+  <meta property="twitter:creator" content="@bobm_kite9" />
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Kite9" />
+  <meta property="twitter:description"
+    content="Kite9 draws diagrams, automatically.  UML, Risk-First, Templated, SVG, Flow-Charts, System Diagrams." />
+  <meta property="twitter:image:src" content="https://www.kite9.org/public/templates/admin/kite9-preview.png" />
+  <meta property="twitter:image:width" content="718" />
+  <meta property="twitter:image:height" content="372" />
+  <meta charset="UTF-8" />
+  
+</head>
+
+<body>
+  <div class="main">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:pp="http://www.kite9.org/schema/post-processor" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:adl="http://www.kite9.org/schema/adl" xmlns:exslt="http://exslt.org/common" contentScriptType="text/ecmascript" zoomAndPan="magnify" contentStyleType="text/css" version="1.0" width="692" pp:width="$width" preserveAspectRatio="xMidYMid meet" height="745" pp:height="$height">
+  <metadata xmlns:md="http://www.kite9.org/schema/metadata">
+    <md:role>editor</md:role>
+    <md:self>http://localhost:39000/public/templates/risk-first/examples/minimal.adlformat=html</md:self>
+    <md:title>minimal</md:title>
+  </metadata>
+  <defs>
+    <style type="text/css" xml:space="preserve">
+		     		@import url('/public/templates/formats/formats.css');
+		     		@import url('/public/templates/diagram/diagram-elements.css');
+		     		@import url('/public/templates/containers/containers-elements.css');
+		     		@import url('/public/templates/labels/labels-elements.css');
+		     		@import url('/public/templates/grid/grid-elements.css');
+		     		@import url('/public/templates/links/links-elements.css');
+		     		@import url('/public/templates/textarea/textarea-elements.css');
+		     		@import url('/public/templates/risk-first/actions/action-elements.css');
+		     		@import url('/public/templates/risk-first/artifacts/artifact-elements.css');
+		     		@import url('/public/templates/risk-first/planner/planner-elements.css');
+		     		@import url('/public/templates/risk-first/risks/risk-elements.css');
+		     		@import url('/public/templates/risk-first/site/site-elements.css');
+		     		@import url('/public/templates/risk-first/risk-first-textures.css');</style>
+    <defs id="links-markers">
+      <marker id="-start-marker" preserveAspectRatio="xMidYMid meet"/>
+      <marker id="-end-marker" preserveAspectRatio="xMidYMid meet"/>
+      <marker refX="1" refY="3" orient="auto" id="strike-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="strike-marker" d="         M7,0 L5,6 h-1 L6,0z"/>
+      </marker>
+      <marker refX="7" refY="3" orient="auto" id="strike-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="strike-marker" d="         M3,0 L1,6 h-1 L2,0z"/>
+      </marker>
+      <marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3">
+        <circle r="2" cx="3" class="circle-marker" cy="3"/>
+      </marker>
+      <marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3">
+        <circle r="2" cx="3" class="circle-marker" cy="3"/>
+      </marker>
+      <marker refX="2" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/>
+      </marker>
+      <marker refX="6" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"/>
+      </marker>
+      <marker refX="5" refY="3" orient="auto" id="open-diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="open-diamond-marker" d="         M0,3 L3,1 L6,3 L5,3 L3,1.66 L1,3             L3,4.33 L5,3 L6,3 L3,5 L0,3"/>
+      </marker>
+      <marker refX="1" refY="3" orient="auto" id="open-diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8">
+        <path class="open-diamond-marker" d="         M6,3 L3,1 L0,3 L1,3 L3,1.66 L5,3             L3,4.33 L1,3 L0,3 L3,5 L6,3"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6 L4,4 L2,2"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6 L4,4 L6,2"/>
+      </marker>
+      <marker refX="1" refY="4" orient="auto" id="open-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="open-arrow-marker" d="         M6,4 L1,2 L1,3 L4,4 L1,5 L1,6 L6,4         M2,3 h-1 v2 h1z"/>
+      </marker>
+      <marker refX="6" refY="4" orient="auto" id="open-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="open-arrow-marker" d="         M1,4 L6,2 L6,3 L3,4 L6,5 L6,6 L1,4         M5,3 h1 v2 h-1z"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <polygon class="arrow-marker" points="2,4 6,2 6,6"/>
+      </marker>
+      <marker refX="4" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <polygon class="arrow-marker" points="6,4 2,2 2,6"/>
+      </marker>
+      <marker refX="5" refY="4" orient="auto" id="crow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="crow-marker" d="          M1,4 L4,1 l0.66 0.66 L2.3,4z          M1,4 L4,7 l0.66 -0.66 L2.3,4z"/>
+      </marker>
+      <marker refX="1" refY="4" orient="auto" id="crow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <path class="crow-marker" d="          M5,4 L2,1 l-0.66 0.66 L3.66,4z          M5,4 L2,7 l-0.66 -0.66 L3.66,4z"/>
+      </marker>
+      <marker refX="2" refY="2" orient="auto" id="square-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <rect x="0" width="4" y="0" height="4" class="square-marker"/>
+      </marker>
+      <marker refX="2" refY="2" orient="auto" id="square-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7">
+        <rect x="0" width="4" y="0" height="4" class="square-marker"/>
+      </marker>
+    </defs>
+    <defs id="container-indicators">
+      <marker refX="3" refY="3" fill="none" orient="auto" id="indicator-arrow" markerHeight="15" preserveAspectRatio="xMidYMid meet" stroke="none" markerWidth="15">
+        <path k9-highlight="stroke" d="M0,0 L3,3 L0,6"/>
+      </marker>
+    </defs>
+    <linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="risk-background" xlink:show="other">
+      <stop offset="0%" stop-color="#FFF"/>
+      <stop offset="100%" stop-color="#DDD"/>
+    </linearGradient>
+    <filter xlink:actuate="onLoad" xlink:type="simple" id="dropshadow" height="130%" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <feGaussianBlur stdDeviation="4" in="SourceAlpha"/>
+      <feOffset dx="6" dy="6"/>
+      <feColorMatrix type="matrix" values="             0 0 0 0 0                 0 0 0 0 0                 0 0 0 0 0                 0 0 0 .4 0"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <script xlink:actuate="onLoad" xlink:type="simple" id="adl:markup" xlink:show="other" type="text/xml;purpose=adl;base64" xmlns:xlink="http://www.w3.org/1999/xlink">PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48ZGlhZ3JhbSB4bWxucz0iaHR0cDovL3d3dy5raXRlOS5vcmcvc2NoZW1hL2FkbCIgeG1sbnM6eHNsdD0iaHR0cDovL3d3dy5raXRlOS5vcmcvc2NoZW1hL3hzbHQiIGlkPSJkaWEiIG5hbWU9IlBhdHRlcm4gTGFuZ3VhZ2UiIHhzbHQ6dGVtcGxhdGU9Ii9wdWJsaWMvdGVtcGxhdGVzL3Jpc2stZmlyc3Qvcmlzay1maXJzdC10ZW1wbGF0ZS54c2wiPgogICAgICAgICAKICAgIDxyaXNrIGNsYXNzPSJnZW5lcmljIiBocmVmPSIvcHVibGljL3RlbXBsYXRlcy9yaXNrLWZpcnN0L3JlZGVzaWduL2FydGlmYWN0cy9tZXRob2RvbG9neV92Mi5zdmciIGlkPSJpZF8wIj4KICAgICAgPGNvZGUgaWQ9ImMiPk1ldGhvZDwvY29kZT4KICAgICAgPHRpdGxlIGlkPSJkIj5Tb2Z0d2FyZSBNZXRob2RvbG9neTwvdGl0bGU+CiAgICA8L3Jpc2s+CiAgICAKPC9kaWFncmFtPgo=</script>
+  </defs>
+  <g xmlns:xslt="http://www.kite9.org/schema/xslt" k9-contains="connected" k9-palette="connected" k9-texture="none" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 266.66668701171875 266.66668701171875 266.66668701171875 266.66668701171875; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=692.0, h=745.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@145eceda; " id="dia" k9-format="container" k9-ui="layout label" name="Pattern Language" k9-elem="diagram" xslt:template="/public/templates/risk-first/risk-first-template.xsl">
+    <g>
+      <!--shape-->
+      <rect x="0" y="0" width="692" pp:y="$y" pp:height="$height" pp:x="$x" rx="0" ry="0" height="745" pp:width="$width"/>
+    </g>
+    <g>
+      <!--content-->
+      <g k9-contains="connected" href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(266.0,266.0)" k9-palette="connected risk" k9-texture="background" k9-info="margin: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; padding: 13.333333969116211 13.333333969116211 13.333333969116211 13.333333969116211; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: DOWN; rectangular: connected; rect-pos: BasicDimension2D(w=266.0, h=266.0); rect-size: BasicDimension2D(w=160.0, h=213.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@69542f39; " class="generic" id="id_0" k9-format="container" k9-ui="drag delete align connect autoconnect vote edit" k9-elem="risk">
+        <g k9-highlight="pulse">
+          <!--shape-->
+          <rect x="0" y="0" width="160" pp:y="$y" pp:height="$height" pp:x="$x" rx="5pt" ry="5pt" height="213" pp:width="$width"/>
+        </g>
+        <g>
+          <!--content-->
+          <g k9-contains="connected" transform="translate(27.3,42.3)" k9-palette="connected" k9-texture="foreground" k9-info="margin: 0.0 0.0 20.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: TOP; rectangular: connected; rect-pos: BasicDimension2D(w=296.0, h=279.0); rect-size: BasicDimension2D(w=101.0, h=35.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@4832fa70; " id="c" k9-format="text-fixed" k9-ui="orphan edit" k9-elem="code">
+            <text x="0.0px" y="0.0px">Method</text>
+          </g>
+          <g k9-contains="connected" href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" transform="translate(47.5,82.5)" k9-palette="connected" k9-texture="none" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; rectangular: connected; rect-pos: BasicDimension2D(w=313.0, h=348.0); rect-size: BasicDimension2D(w=67.0, h=67.0); position: none; painter: org.kite9.diagram.batik.painter.BatikLeafPainter@5726b292; " class="generic" id="id_0@image" k9-format="image" k9-ui="image" k9-elem="image">
+            <g k9-highlight="pulse">
+              <!--content-->
+              <image x="0" y="0" width="50pt" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/public/templates/risk-first/redesign/artifacts/methodology_v2.svg" xlink:type="simple" xlink:actuate="onLoad" height="50pt" preserveAspectRatio="xMidYMid meet" xlink:show="embed"/>
+              <rect x="0" y="0" width="50pt" xmlns:xlink="http://www.w3.org/1999/xlink" rx="5pt" ry="5pt" height="50pt"/>
+            </g>
+            <!--decoration-->
+          </g>
+          <g k9-contains="connected" transform="translate(29.5,178.0)" k9-palette="connected" k9-texture="foreground" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: BOTTOM; rectangular: connected; rect-pos: BasicDimension2D(w=297.0, h=428.0); rect-size: BasicDimension2D(w=99.0, h=38.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@898237c; " id="d" k9-format="text-fixed" k9-ui="orphan edit" k9-elem="title">
+            <text x="14.5px" y="0.0px">Software </text>
+            <text x="0.0px" y="19.2px">Methodology</text>
+          </g>
+        </g>
+        <!--decoration-->
+      </g>
+    </g>
+    <!--decoration-->
+  </g>
+  <defs>
+    <script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink">
+                 document.params = {
+                 "palettes" : [
+                	  
+                   ],
+                 };
+              </script>
+    <script xlink:actuate="onLoad" xlink:type="simple" xlink:show="other" type="module" xmlns:xlink="http://www.w3.org/1999/xlink">
+     import '/github/kite9-org/kite9/templates/risk-first/risk-first.js?v=v0.15'
+  </script>
+  </defs>
+</svg>
+
+  </div>
+</body>
+
+</html>

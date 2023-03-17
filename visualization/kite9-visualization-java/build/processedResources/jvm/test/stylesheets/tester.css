@@ -1,0 +1,553 @@
+@font-face {
+	font-family: "opensans-light-webfont";
+	src: url('./opensans-light-webfont.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "opensans-bold-webfont";
+	src: url('./opensans-bold-webfont.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: "opensans-regular-webfont";
+	src: url('./opensans-regular-webfont.ttf') format('truetype');
+}
+
+/** these two are used to test font-caching bug. */
+
+@font-face {
+	font-family: "chirp";
+	src: url('./chirp-medium-web.ttf') format('truetype');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: "opensans";
+	src: url('./chirp-bold-web.ttf') format('truetype');
+	font-weight: 700;
+}
+
+
+/* Definitions of Kite9 Elements */
+
+[k9-elem=context],
+[k9-elem=diagram],
+[k9-elem=glyph],
+[k9-elem=arrow],
+[k9-elem=link] {
+	--kite9-margin: 10px;
+	--kite9-link-inset: 10px;
+	--kite9-link-gutter: 10px;
+}
+
+svg {
+	--kite9-type: diagram;
+	--kite9-padding: 15px;
+	--kite9-traversal: none;
+}
+
+[k9-elem=key] {
+	--kite9-type: container;
+	--kite9-usage: label;
+	--kite9-padding: 3px 6px 3px 6px; 
+	--kite9-horizontal-sizing: maximize;
+	--kite9-vertical-sizing: minimize;
+    --kite9-direction: down;
+}
+
+[k9-elem=key] [k9-elem=body] {
+	--kite9-type: container;
+	--kite9-layout: grid;
+	--kite9-sizing: maximize;
+	--kite9-grid-size: 1 3;
+	--kite9-padding: 12px 12px 12px 12px;
+}
+
+[k9-elem=key] [k9-elem=text-lines] {
+	--kite9-type: container;
+	--kite9-sizing: maximize;
+	--kite9-layout: vertical;
+	--kite9-occupies: 0 2;
+}
+
+[k9-elem=key] [k9-elem=boldText] {
+	--kite9-occupies: 0 0;
+}
+
+[k9-elem=key] [k9-elem=bodyText]  {
+	--kite9-occupies: 0 1;
+}
+
+/* GLYPH GENERAL SHAPE */
+
+[k9-elem=glyph] {
+	--kite9-type: container;
+	--kite9-layout: down;	
+	--kite9-padding: 6px 10px 6px 10px;
+	--kite9-margin: 10px;
+}
+
+[k9-elem=glyph]  [k9-elem=symbols] {
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-layout: horizontal;
+	--kite9-margin: 5px 
+}
+
+[k9-elem=text-label] {
+    --kite9-usage: connected;
+	--kite9-type: text;
+	--kite9-sizing: minimize;
+	--kite9-vertical-align: top;
+	--kite9-margin: 3px;
+}
+
+[k9-elem=glyph]  [k9-elem=stereotype] {
+	--kite9-type: container;
+	--kite9-vertical-align: bottom;
+	--kite9-horizontal-align: center;
+	--kite9-margin: 5px; 
+	--kite9-sizing: maximize;
+	text-align: middle;
+}
+
+[k9-elem=glyph] [k9-elem=text-lines] {
+	--kite9-type: container;
+	--kite9-sizing: maximize;
+	--kite9-layout: vertical;
+}
+
+/* SYMBOLS */
+
+[k9-elem=symbol-text-line] {
+	--kite9-type: container;
+	--kite9-sizing: maximize;
+	--kite9-layout: grid;
+	--kite9-grid-size: 2 1;
+}
+
+[k9-elem=key] [k9-elem=text-lines] [k9-elem=text-label],
+[k9-elem=glyph] [k9-elem=text-lines] [k9-elem=text-label],
+[k9-elem=symbol-text-line] [k9-elem=k9-text] {
+	--kite9-horizontal-align: left;
+}
+
+[k9-elem=symbol-text-line] [k9-elem=symbols] {
+	--kite9-sizing: maximize;
+	--kite9-horizontal-align: right;
+	--kite9-occupies: 1 0;
+	margin: 0px;
+}
+
+[k9-elem=context] {
+	--kite9-type: container;
+	--kite9-sizing: maximize;
+	--kite9-traversal: always;
+	--kite9-padding: 12px;	
+	--kite9-link-inset: 12px;
+}
+
+[k9-elem=cell] > [k9-elem=label],
+[k9-elem=context] > [k9-elem=label] {
+	--kite9-usage: label;
+	--kite9-type: container; 
+	--kite9-sizing: minimize;
+	--kite9-padding: 4px;
+    --kite9-direction: down;
+}
+
+[k9-elem=grid] {
+	--kite9-padding: 0px;
+	--kite9-margin: 0px;
+	--kite9-type: container;
+	--kite9-sizing: maximize;
+	--kite9-traversal: always;
+	--kite9-layout: grid;
+}
+
+[k9-elem=cell] {
+	--kite9-padding: 0px;
+	--kite9-margin: 0px;
+	--kite9-type: container;
+	--kite9-sizing: maximize;
+	--kite9-traversal: always;
+	--kite9-min-size: 50px 50px;
+	fill: white;
+}
+
+[k9-elem=toLabel],
+[k9-elem=fromLabel] {
+	--kite9-usage: label;
+	--kite9-type: container; 
+	--kite9-padding: 0px;
+	--kite9-sizing: minimize;
+	--kite9-margin: 4px;
+}
+
+[k9-elem=_temporary] {
+	fill: none;
+}
+
+[k9-elem=toLabel],
+[k9-elem=to] {
+	--kite9-link-end: to;
+}
+
+[k9-elem=fromLabel],
+[k9-elem=from] {
+	--kite9-link-end: from;
+}
+
+[k9-elem=text-label] {
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: center;
+}
+
+[k9-elem=link] {
+	--kite9-type: link;
+}
+
+[drawDirection=LEFT] {
+	--kite9-direction: left;
+}
+
+[drawDirection=RIGHT] {
+	--kite9-direction: right;
+}
+
+[drawDirection=UP] {
+	--kite9-direction: up;
+}
+
+[drawDirection=DOWN] {
+	--kite9-direction: down;
+}
+
+[k9-elem=from],
+[k9-elem=to] {
+	--kite9-type: link-end;
+	--kite9-padding: 5px;
+}
+
+[k9-elem=from].circle,
+[k9-elem=to].circle {
+	--kite9-marker-start-reference: url(template.svg#circle-marker);
+	--kite9-marker-end-reference: url(template.svg#circle-marker);
+}
+
+[k9-elem=from].arrow,
+[k9-elem=to].arrow {
+	--kite9-marker-start-reference: url(template.svg#arrow-start-marker);
+	--kite9-marker-end-reference: url(template.svg#arrow-end-marker);
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
+}
+
+[k9-elem=from].arrow-open,
+[k9-elem=to].arrow-open {
+	--kite9-marker-start-reference: url(template.svg#open-arrow-start-marker);
+	--kite9-marker-end-reference: url(template.svg#open-arrow-end-marker);
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
+}
+
+[k9-elem=from].gap,
+[k9-elem=to].gap {
+	--kite9-marker-reserve: 2px;
+}
+
+[k9-elem=from].diamond,
+[k9-elem=to].diamond {
+	--kite9-marker-start-reference: url(template.svg#diamond-start-marker);
+	--kite9-marker-end-reference: url(template.svg#diamond-end-marker);
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
+}
+
+[k9-elem=from].diamond-open,
+[k9-elem=to].diamond-open {
+	--kite9-marker-start-reference: url(template.svg#open-diamond-start-marker);
+	--kite9-marker-end-reference: url(template.svg#open-diamond-end-marker);
+	--kite9-padding-top: 5px;
+	--kite9-padding-right: 12px;
+	--kite9-padding-bottom: 5px;
+	--kite9-padding-left: 1px;
+}
+
+[k9-elem=from].barbed-arrow,
+[k9-elem=to].barbed-arrow {
+	--kite9-marker-start-reference: url(template.svg#barbed-arrow-start-marker);
+	--kite9-marker-end-reference: url(template.svg#barbed-arrow-end-marker);
+ 	--kite9-padding-top: 5px;
+ 	--kite9-padding-right: 7px;
+ 	--kite9-padding-bottom: 5px;
+ 	--kite9-padding-left: 1px;
+}
+
+
+/* Symbols */
+
+[k9-elem=symbols] {
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-layout: horizontal;
+	--kite9-occupies: 1 0;
+}
+
+[k9-elem=symbol] {
+	--kite9-type: svg;
+    --kite9-margin-top: 0px;
+    --kite9-margin-right: 2px;
+    --kite9-margin-bottom: 0px;
+    --kite9-margin-left: 2px;
+    --kite9-sizing: minimize;
+	--kite9-link-inset: 0px;
+}
+
+[k9-elem=text-line],
+[k9-elem=k9-text],
+[k9-elem=boldText],
+[k9-elem=bodyText] {
+	--kite9-type: text;
+	--kite9-usage: connected;
+	--kite9-sizing: maximize;
+	--kite9-padding-top: 2px;
+	--kite9-padding-bottom: 2px;
+	--kite9-padding-left: 0px;
+	--kite9-padding-right: 0px;
+	--kite9-margin: 0;
+	--kite9-vertical-align: top;
+}
+
+[k9-elem=text-line],
+[k9-elem=k9-text],
+[k9-elem=bodyText] {
+	--kite9-horizontal-align: left;
+}
+
+[k9-elem=boldText] {
+	--kite9-horizontal-align: center;
+}
+
+
+
+/* Link Body */
+[k9-elem=link-body] {
+	--kite9-padding: 3px 5px 3px 5px; 
+	--kite9-margin: 10;
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-connections: separate;
+	--kite9-link-inset: 4px;
+}
+
+
+[k9-elem=link-body] > [k9-elem=label] {
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: center;
+}
+
+[k9-elem=link-body] > [k9-elem=label] > [k9-elem=contents] {
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: center;
+}
+
+/* ports */
+
+[k9-elem=socket] {
+    --kite9-type: port;
+}
+
+
+/* Classes And Styles */
+
+.copyright {
+	font-weight: normal;
+	font-size: 12px;
+	stroke: black;
+}
+
+.symbol {
+	font-size: 10px;
+	font-family: "opensans-bold-webfont";
+	fill: white;
+	stroke: none;
+}
+
+.symbol-text {
+	fill: white; 
+	font-family: opensans-regular-webfont; 
+	font-size: 8px; 
+	text-anchor: middle;
+}
+
+.context-back {
+	fill: none;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.cell-edge {
+	stroke: #BBBBBB;
+	stroke-width: .5px;
+}
+
+.grid-back {
+	stroke: none;
+	fill: white;
+}
+
+.grid-frame {
+	stroke: black;
+	stroke-width: 1px;	
+	fill: none;
+}
+
+.container-label-front {
+	stroke-width: 0;
+	font-size: 11px;
+	font-family: "opensans-light-webfont";
+	fill: white;
+}
+
+.container-label-back {
+	fill: #777;	
+}
+
+.connection-label-front {
+	stroke-width: 0;
+	font-size: 11px;
+	font-family: "opensans-light-webfont";
+	fill: white;
+	--kite9-margin: 0px;
+	--kite9-padding: 6px;
+}
+
+.connection-label-back {
+	fill: #777;	
+}
+
+.glyph-back {
+	stroke-width: 1px;
+	stroke: black;
+	fill: white;
+}
+
+.link-body-back {
+    fill: black;
+    stroke-width: 0;
+}
+
+.glyph-label-text {
+	font-size: 15px;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	stroke: none;
+	text-align: middle;
+}
+
+.link-body-label-text {
+	fill: white;
+	stroke: none;
+	font-size: 12px;
+	font-family: "opensans-regular-webfont";
+}
+
+.glyph-stereotype-text {
+	font-family: "opensans-bold-webfont";
+	font-size: 12px;
+	fill: black;
+	stroke: none;
+	text-align: middle;
+    --kite9-padding: 0px;
+}
+
+.generic-text {
+	stroke: none;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	text-align: start;	
+	font-size: 10px;
+}
+
+.bold-text {
+	stroke: none;
+	fill: black;
+	font-family: "opensans-bold-webfont";
+	text-align: start;	
+	font-size: 10px;
+}
+
+.body-text {
+	stroke: none;
+	fill: black;
+	font-family: "opensans-regular-webfont";
+	text-align: start;
+	font-size: 10px;
+}
+
+.red {
+	font-size: 25px;
+	fill: red;
+}
+
+.diagram {
+	fill: none;
+}
+
+.key-back {
+	fill: #ebebeb;
+}
+
+.link {
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+
+
+
+/** Marker Classes */
+
+.diamond-marker {
+	fill: black;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.arrow-marker {
+	fill: black;
+	stroke-width: 1px; 
+	stroke: black; 
+}
+
+.circle-marker {
+	fill: black;
+	stroke: none;
+}
+
+.open-diamond-marker {
+	fill: white;
+	stroke: black;
+	stroke-width: 1px;
+}
+
+.barbed-arrow-marker {
+	stroke-width: 1px; 
+	stroke: black; 
+	fill: none;
+}
+
+.open-arrow-marker {
+	stroke-width: 1px; 
+	stroke: black; 
+	fill: white;
+}

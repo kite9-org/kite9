@@ -1,0 +1,487 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="srvuniq_9o2tf3" layout="RIGHT" name="CS - Insight Release Process">
+
+<hints py1="0.0010" py2="0.999" px2="0.998501" px1="0.0018722526"/>
+<context layout="RIGHT" bordered="true"><glyph id="id_0">
+
+ <hints py1="0.0019981" py2="0.9980019" px2="0.12587515" px1="0.0018723524" y1="70.0" y2="154.0" x2="108.0" x1="12.0"/>
+ <stereotype/>
+ <label>14.2 Branch</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_58" shape="fcDOCUMENT">
+
+ <hints py1="0.002994104" py2="0.9970059" px2="0.25012666" px1="0.12612385" y1="58.0" y2="118.0" x2="240.0" x1="120.0"/>
+ <stereotype/>
+ <label>Project Plan</label>
+ <text-lines>
+  <text-line id="auto:28129">
+
+   <hints y1="84.5" y2="102.5" x2="231.0" x1="129.0"/>
+   <text>dictates timeboxes</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_16" shape="fcDOCUMENT">
+
+ <hints py1="0.003988116" py2="0.9960119" px2="0.37487614" px1="0.25087336" y1="58.0" y2="118.0" x2="372.0" x1="252.0"/>
+ <stereotype/>
+ <label>Quality Center</label>
+ <text-lines>
+  <text-line id="auto:3971">
+
+   <hints y1="84.5" y2="102.5" x2="362.5" x1="261.5"/>
+   <text>Bugs From Testing</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_14" shape="fcDOCUMENT">
+
+ <hints py1="0.00498014" py2="0.99501985" px2="0.49912766" px1="0.37512484" y1="46.0" y2="130.0" x2="492.0" x1="384.0"/>
+ <stereotype/>
+ <label>JIRAs</label>
+ <text-lines>
+  <text-line id="auto:65907">
+
+   <hints y1="76.0" y2="111.0" x2="482.5" x1="393.5"/>
+   <text>Specify business
+functionality</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph></context>
+
+
+
+<context id="auto:40619" layout="RIGHT" bordered="true">
+
+ <hints py1="0.0010" py2="0.999" px2="0.998501" px1="0.500499" y1="18.0" y2="478.0" x2="1768.0" x1="532.0"/>
+ <context id="auto:2046" layout="DOWN" bordered="true">
+
+  <hints py1="0.0010" py2="0.999" px2="0.62487525" px1="0.50087225" y1="30.0" y2="448.0" x2="774.0" x1="544.0"/>
+  <glyph id="id_2" shape="fcPROCESS" >
+
+   <hints py1="0.5009325" py2="0.562686" px2="0.6246274" px1="0.5011201" y1="106.0" y2="178.0" x2="744.0" x1="564.0"/>
+   <stereotype />
+   <label >SIT Drop</label>
+   <text-lines>
+    <text-line id="auto:1652">
+
+     <hints y1="134.5" y2="152.5" x2="734.0" x1="574.0"/>
+     <text>Run full suite of groups, loads</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:1653">
+
+     <hints y1="152.5" y2="170.5" x2="734.0" x1="574.0"/>
+     <text>Full &amp; Partial</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_9" shape="fcPROCESS">
+
+   <hints py1="0.56281" py2="0.6245635" px2="0.6246274" px1="0.5011201" y1="191.0" y2="239.0" x2="732.0" x1="576.0"/>
+   <stereotype/>
+   <label>Regular SIT Meetings</label>
+   <text-lines>
+    <text-line id="auto:2237">
+
+     <hints y1="216.5" y2="234.5" x2="724.0" x1="584.0"/>
+     <text>Liselle is Test Manager</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_38" shape="fcPROCESS">
+
+   <hints py1="0.6248736" py2="0.7486284" px2="0.6246274" px1="0.5011201" y1="252.0" y2="324.0" x2="744.0" x1="564.0"/>
+   <stereotype/>
+   <label>Performed By</label>
+   <text-lines>
+    <text-line id="auto:11698">
+
+     <hints y1="280.5" y2="298.5" x2="732.5" x1="575.5"/>
+     <text>BAs, PMs do testing</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:11699">
+
+     <hints y1="298.5" y2="316.5" x2="732.5" x1="575.5"/>
+     <text>Data could be as prod or dev</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <arrow id="id_27">
+
+   <hints py1="0.9662853" py2="0.9969771" px2="0.6246274" px1="0.5011201" y1="344.0" y2="386.0" x2="702.0" x1="606.0"/>
+   <label>All JIRA's Ready?</label>
+  </arrow>
+  <label xsi:type="text-line" id="id_11">
+
+   <hints y1="391.0" y2="446.0" x2="710.5" x1="607.5"/>
+   <text>SIT Testing.
+
+Time Box: 5 weeks</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_22" layout="DOWN" bordered="true">
+
+  <hints py1="0.0010" py2="0.999" px2="0.74912673" px1="0.62512374" y1="30.0" y2="448.0" x2="1092.0" x1="786.0"/>
+  <glyph id="id_24" shape="fcPROCESS">
+
+   <hints py1="0.8734848" py2="0.8888613" px2="0.7488789" px1="0.62537163" y1="52.0" y2="136.0" x2="1026.0" x1="834.0"/>
+   <stereotype/>
+   <label>UAT Drop</label>
+   <text-lines>
+    <text-line id="auto:7118">
+
+     <hints y1="78.0" y2="96.0" x2="1018.5" x1="841.5"/>
+     <text>Same code, same environment</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:7119">
+
+     <hints y1="96.0" y2="131.0" x2="1018.5" x1="841.5"/>
+     <text>-or- start with new business date
+new setup</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_41" shape="fcPROCESS">
+
+   <hints py1="0.8888923" py2="0.90426886" px2="0.7488789" px1="0.62537163" y1="148.0" y2="220.0" x2="1062.0" x1="798.0"/>
+   <stereotype/>
+   <label>Testing</label>
+   <text-lines>
+    <text-line id="auto:42540">
+
+     <hints y1="177.0" y2="212.0" x2="1053.5" x1="806.5"/>
+     <text>Performed by Business Change Management 
+&amp; Change Management Singapore</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_30" shape="fcPROCESS">
+
+   <hints py1="0.9043462" py2="0.9351611" px2="0.7488789" px1="0.62537163" y1="233.0" y2="305.0" x2="1020.0" x1="840.0"/>
+   <stereotype/>
+   <label>Sign Off</label>
+   <text-lines>
+    <text-line id="auto:8693">
+
+     <hints y1="261.5" y2="279.5" x2="1009.0" x1="851.0"/>
+     <text>Liselle (Test Manager) polices</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:8694">
+
+     <hints y1="279.5" y2="297.5" x2="1009.0" x1="851.0"/>
+     <text>SMT can push out a release</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <arrow id="id_37">
+
+   <hints py1="0.9662853" py2="0.9969771" px2="0.7488789" px1="0.62537163" y1="345.0" y2="387.0" x2="978.0" x1="882.0"/>
+   <label>SMT Approved?</label>
+  </arrow>
+  <label xsi:type="text-line" id="id_23">
+
+   <hints y1="391.0" y2="446.0" x2="990.5" x1="887.5"/>
+   <text>UAT Testing
+
+Time Box: 6 weeks</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_43" layout="DOWN" bordered="true">
+
+  <hints py1="0.0010" py2="0.999" px2="0.8738763" px1="0.7498733" y1="30.0" y2="448.0" x2="1310.0" x1="1104.0"/>
+  <glyph id="id_45" shape="fcPROCESS">
+
+   <hints py1="0.002868608" py2="0.12662339" px2="0.8735049" px1="0.7502446" y1="42.0" y2="114.0" x2="1280.0" x1="1124.0"/>
+   <stereotype/>
+   <label>Merge</label>
+   <text-lines>
+    <text-line id="auto:14448">
+
+     <hints y1="71.0" y2="106.0" x2="1273.5" x1="1130.5"/>
+     <text>Release candidate branch 
+merged to trunk</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_47" shape="fcPROCESS">
+
+   <hints py1="0.1268716" py2="0.2506264" px2="0.8735049" px1="0.7502446" y1="126.0" y2="162.0" x2="1268.0" x1="1136.0"/>
+   <stereotype/>
+   <label>Regression Drop</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_48" shape="fcPROCESS">
+
+   <hints py1="0.2513716" py2="0.3751264" px2="0.8736284" px1="0.7501211" y1="174.0" y2="222.0" x2="1274.0" x1="1130.0"/>
+   <stereotype/>
+   <label>Impact Analysis</label>
+   <text-lines>
+    <text-line id="auto:17029">
+
+     <hints y1="199.5" y2="217.5" x2="1264.5" x1="1139.5"/>
+     <text>Performed by business</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_50" shape="fcPROCESS">
+
+   <hints py1="0.37537462" py2="0.49912938" px2="0.8736284" px1="0.7501211" y1="234.0" y2="306.0" x2="1274.0" x1="1130.0"/>
+   <stereotype/>
+   <label>Sign Off</label>
+   <text-lines>
+    <text-line id="auto:18121">
+
+     <hints y1="263.0" y2="298.0" x2="1264.0" x1="1140.0"/>
+     <text>Impact analysis signed 
+off by Finance</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <arrow id="id_54">
+
+   <hints py1="0.9662853" py2="0.9969771" px2="0.8736284" px1="0.7501211" y1="346.0" y2="388.0" x2="1256.0" x1="1148.0"/>
+   <label>Finance Sign Off?</label>
+  </arrow>
+  <label xsi:type="text-line" id="id_44">
+
+   <hints y1="391.0" y2="446.0" x2="1238.5" x1="1175.5"/>
+   <text>Regression
+
+? how long</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_60" layout="DOWN" bordered="true">
+
+  <hints py1="0.0010" py2="0.999" px2="0.93606424" px1="0.87418675" y1="30.0" y2="448.0" x2="1540.0" x1="1322.0"/>
+  <glyph id="id_62" shape="fcPROCESS">
+
+   <hints py1="0.74946636" py2="0.7802813" px2="0.9359405" px1="0.8743105" y1="182.0" y2="254.0" x2="1510.0" x1="1342.0"/>
+   <stereotype/>
+   <label>Dry Run Drop</label>
+   <text-lines>
+    <text-line id="auto:31718">
+
+     <hints y1="210.5" y2="228.5" x2="1499.0" x1="1353.0"/>
+     <text>Release into environment</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:31719">
+
+     <hints y1="228.5" y2="246.5" x2="1499.0" x1="1353.0"/>
+     <text>Run entire (2 COB) process</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <glyph id="id_65" shape="fcPROCESS">
+
+   <hints py1="0.78034323" py2="0.8111581" px2="0.9359405" px1="0.8743105" y1="266.0" y2="302.0" x2="1492.0" x1="1360.0"/>
+   <stereotype/>
+   <label>PTG Walkthrough</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_66" shape="fcPROCESS">
+
+   <hints py1="0.811313" py2="0.87306654" px2="0.9359405" px1="0.8743105" y1="314.0" y2="350.0" x2="1510.0" x1="1342.0"/>
+   <stereotype/>
+   <label>Support Walkthrough</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <arrow id="id_68">
+
+   <hints py1="0.966316" py2="0.9969464" px2="0.9359405" px1="0.8743105" y1="362.0" y2="404.0" x2="1456.0" x1="1396.0"/>
+   <label>Approval?</label>
+  </arrow>
+  <label xsi:type="text-line" id="id_61">
+
+   <hints y1="425.0" y2="446.0" x2="1454.5" x1="1407.5"/>
+   <text>Dry Run</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_70" layout="DOWN" bordered="true">
+
+  <hints py1="0.0010" py2="0.999" px2="0.99806577" px1="0.9361883" y1="30.0" y2="448.0" x2="1756.0" x1="1552.0"/>
+  <glyph id="id_76" shape="fcPROCESS">
+
+   <hints py1="0.9353623" py2="0.9507388" px2="0.99794203" px1="0.93631196" y1="211.0" y2="247.0" x2="1708.0" x1="1600.0"/>
+   <stereotype/>
+   <label>Release Drop</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_77" shape="fcPROCESS">
+
+   <hints py1="0.95076984" py2="0.96614635" px2="0.99794203" px1="0.93631196" y1="259.0" y2="367.0" x2="1744.0" x1="1564.0"/>
+   <stereotype/>
+   <label>Testing</label>
+   <text-lines>
+    <text-line id="auto:47414">
+
+     <hints y1="288.5" y2="323.5" x2="1734.5" x1="1573.5"/>
+     <text>Make sure all features of the 
+release have gone in</text>
+     <symbols/>
+    </text-line>
+    <text-line id="auto:47415">
+
+     <hints y1="323.5" y2="358.5" x2="1734.5" x1="1573.5"/>
+     <text>Performed by business within
+30 hours</text>
+     <symbols/>
+    </text-line>
+   </text-lines>
+   <symbols/>
+  </glyph>
+  <arrow id="id_81">
+
+   <hints py1="0.966316" py2="0.9969464" px2="0.9980038" px1="0.9362502" y1="380.0" y2="404.0" x2="1684.0" x1="1624.0"/>
+   <label>Finished</label>
+  </arrow>
+  <label xsi:type="text-line" id="id_71">
+
+   <hints y1="425.0" y2="446.0" x2="1669.0" x1="1639.0"/>
+   <text>Prod</text>
+   <symbols/>
+  </label>
+ </context>
+ <label xsi:type="text-line" id="id_74">
+
+  <hints y1="455.0" y2="476.0" x2="1219.0" x1="1081.0"/>
+  <text>Release Manager's Remit</text>
+  <symbols/>
+ </label>
+</context>
+
+
+ <link id="id_1" shape="NORMAL"  drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_0"/>
+  <to xsi:type="glyph" reference="id_2"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_85" shape="DOTTED" >
+
+  <from xsi:type="glyph" reference="id_58"/>
+  <to xsi:type="context" reference="auto:40619"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_83" shape="DOTTED" >
+
+  <from xsi:type="glyph" reference="id_16"/>
+  <to xsi:type="context" reference="auto:40619"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_84" shape="DOTTED" >
+
+  <from xsi:type="glyph" reference="id_14"/>
+  <to xsi:type="context" reference="auto:40619"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_26.1" shape="NORMAL"  drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_38"/>
+  <to xsi:type="arrow" reference="id_27"/>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_33" shape="NORMAL" >
+
+  <from xsi:type="arrow" reference="id_27"/>
+  <to xsi:type="glyph" reference="id_24"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_56" shape="INVISIBLE" drawDirection="RIGHT">
+
+  <from xsi:type="arrow" reference="id_27"/>
+  <to xsi:type="arrow" reference="id_37"/>
+ </link>
+ <link id="id_52" shape="NORMAL" >
+
+  <from xsi:type="glyph" reference="id_30"/>
+  <to xsi:type="arrow" reference="id_37"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_53" shape="NORMAL" >
+
+  <from xsi:type="arrow" reference="id_37"/>
+  <to xsi:type="glyph" reference="id_45"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_57" shape="INVISIBLE" drawDirection="RIGHT">
+
+  <from xsi:type="arrow" reference="id_37"/>
+  <to xsi:type="arrow" reference="id_54"/>
+ </link>
+ <link id="id_55" shape="NORMAL" >
+
+  <from xsi:type="glyph" reference="id_50"/>
+  <to xsi:type="arrow" reference="id_54"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_67" shape="NORMAL" >
+
+  <from xsi:type="arrow" reference="id_54"/>
+  <to xsi:type="glyph" reference="id_62"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_69" shape="INVISIBLE" drawDirection="RIGHT">
+
+  <from xsi:type="arrow" reference="id_54"/>
+  <to xsi:type="arrow" reference="id_68"/>
+ </link>
+ <link id="id_80" shape="NORMAL" >
+
+  <from xsi:type="arrow" reference="id_68"/>
+  <to xsi:type="glyph" reference="id_76"/>
+  <fromDecoration>NONE</fromDecoration>
+  <toDecoration>BARBED ARROW</toDecoration>
+ </link>
+ <link id="id_82" shape="INVISIBLE" drawDirection="RIGHT">
+
+  <from xsi:type="arrow" reference="id_68"/>
+  <to xsi:type="arrow" reference="id_81"/>
+ </link>
+ 
+ </diagram>

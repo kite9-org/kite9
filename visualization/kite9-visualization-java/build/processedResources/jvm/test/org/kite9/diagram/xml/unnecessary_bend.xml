@@ -1,0 +1,58 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="DOWN">
+ 
+ <glyph id="id_13" label="New Part">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <context id="auto:58259" layout="HORIZONTAL" bordered="true">
+  
+  <glyph id="id_16" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_12" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_5" label="New Part">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context>
+ <glyph id="id_8" label="New Part">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+
+  <link id="id_53">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_54">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_5"/>
+  </link>
+  <link id="id_17">
+   
+   <from xsi:type="glyph" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_8"/>
+  </link>
+  <link id="id_15">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_12"/>
+  </link>
+  <link id="id_14">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_5"/>
+  </link>
+  </diagram>

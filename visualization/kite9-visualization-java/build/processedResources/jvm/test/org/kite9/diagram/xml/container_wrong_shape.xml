@@ -1,0 +1,76 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+ 
+ <context id="auto:8384" layout="HORIZONTAL" bordered="true">
+  
+  <glyph id="id_13">
+   
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_31">
+   
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_20">
+   
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph>
+ </context>
+ <glyph id="id_2">
+  
+  <stereotype>Part Type</stereotype>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_22">
+  
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_8">
+  
+  <stereotype/>
+  <label>New Part</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+
+  <link id="id_30" shape="NORMAL"  drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_31"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_21" shape="NORMAL" >
+   
+   <from xsi:type="glyph" reference="id_20"/>
+   <to xsi:type="glyph" reference="id_22"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  <link id="id_26" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="id_22"/>
+  </link>
+  <link id="id_34" shape="NORMAL"  drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_22"/>
+   <to xsi:type="glyph" reference="id_8"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>BARBED ARROW</toDecoration>
+  </link>
+  </diagram>

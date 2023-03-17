@@ -1,0 +1,253 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+
+<glyph id="id_2">
+ <label>id_2</label>
+</glyph>
+<glyph id="id_18" shape="fcDECISION">
+ <label>id_18</label>
+ </glyph>
+<glyph id="id_28" shape="fcSTART1">
+ <label>id_28</label>
+</glyph>
+<context id="auto:35061" bordered="true" layout="DOWN">
+ <glyph id="id_26" shape="fcTERMINATOR">
+  <label>id_26</label>
+ </glyph>
+ <glyph id="id_32" shape="fcDOCUMENT">
+  <label>id_32</label>
+ </glyph>
+ <glyph id="id_34" shape="fcMANUAL INPUT">
+  <label>id_34</label>
+ </glyph>
+</context>
+<glyph id="id_36" shape="fcDATABASE">
+ <label>id_36</label>
+</glyph>
+<glyph id="id_30" shape="fcPROCESS">
+ <label>id_30</label>
+</glyph>
+<glyph id="id_24" shape="fcMANUAL OPERATION">
+ <label>id_24</label>
+</glyph>
+<glyph id="id_40" shape="fcPREPARATION">
+ <label>id_40</label>
+</glyph>
+<glyph id="id_20" shape="fcSTORED DATA">
+ <label>id_20</label>
+</glyph>
+<glyph id="id_22" shape="fcDELAY">
+ <label>id_22</label>
+</glyph>
+<glyph id="id_48" shape="fcPREDEFINED">
+ <label>id_48</label>
+</glyph>
+<glyph id="id_44" shape="fcCONNECTOR">
+ <label>id_44</label>
+</glyph>
+<glyph id="id_42" shape="fcINTERNAL">
+ <label>id_42</label>
+</glyph>
+<glyph id="id_46" shape="fcDIRECT">
+ <label>id_46</label>
+</glyph>
+<glyph id="id_61" shape="umlCLASS">
+ <label>id_61</label>
+</glyph>
+<glyph id="id_38" shape="fcDISPLAY">
+ <label>id_38</label>
+</glyph>
+<context id="auto:30559" layout="RIGHT" bordered="true">
+ <glyph id="id_56" shape="fcREFERENCE">
+  <label>id_56</label>
+ </glyph>
+ <glyph id="id_58" shape="fcLOOP LIMIT">
+  <label>id_58</label>
+  </glyph>
+ <glyph id="id_5" shape="umlINTERFACE1">
+  <label>id_5</label>
+ </glyph>
+</context>
+<glyph id="id_52" shape="fcSEQUENTIAL">
+ <label>id_52</label>
+</glyph>
+<glyph id="id_50" shape="fcSTART2">
+ <label>id_50</label>
+</glyph>
+<glyph id="id_69" shape="umlCLASS">
+ <label>id_69</label>
+</glyph>
+<glyph id="id_54" shape="fcSTORED DATA">
+ <label>id_54</label>
+</glyph>
+<glyph id="id_3" shape="umlNOTE">
+ <label>id_3</label>
+</glyph>
+<context id="id_11" shape="umlCONTAINER" bordered="true">
+ <label xsi:type="text-line" id="id_12">
+  <text>id_11</text>
+  <symbols/>
+ </label>
+</context>
+
+ <link id="id_17" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_2"/>
+  <to xsi:type="glyph" reference="id_18"/>
+ </link>
+ <link id="id_19" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_18"/>
+  <to xsi:type="glyph" reference="id_20"/>
+ </link>
+ <link id="id_41">
+
+  <from xsi:type="glyph" reference="id_28"/>
+  <to xsi:type="glyph" reference="id_42"/>
+ </link>
+ <link id="id_27" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_28"/>
+ </link>
+ <link id="id_14" shape="DOTTED" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_28"/>
+  <to xsi:type="glyph" reference="id_56"/>
+ </link>
+ <link id="id_16" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_28"/>
+  <to xsi:type="glyph" reference="id_40"/>
+ </link>
+ <link id="id_29" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_30"/>
+ </link>
+ <link id="id_25" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_24"/>
+  <to xsi:type="glyph" reference="id_26"/>
+ </link>
+ <link id="id_31" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_32"/>
+ </link>
+ <link id="id_33" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_32"/>
+  <to xsi:type="glyph" reference="id_34"/>
+ </link>
+ <link id="id_0" shape="DOTTED" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_61"/>
+  <to xsi:type="glyph" reference="id_34"/>
+ </link>
+ <link id="id_37" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_34"/>
+  <to xsi:type="glyph" reference="id_38"/>
+ </link>
+ <link id="id_39" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_36"/>
+  <to xsi:type="glyph" reference="id_40"/>
+ </link>
+ <link id="id_35" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_30"/>
+  <to xsi:type="glyph" reference="id_36"/>
+ </link>
+ <link id="id_23" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_22"/>
+  <to xsi:type="glyph" reference="id_24"/>
+ </link>
+ <link id="id_15">
+
+  <from xsi:type="glyph" reference="id_40"/>
+  <to xsi:type="glyph" reference="id_42"/>
+ </link>
+ <link id="id_21" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_20"/>
+  <to xsi:type="glyph" reference="id_22"/>
+ </link>
+ <link id="id_60" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_20"/>
+  <to xsi:type="glyph" reference="id_61"/>
+ </link>
+ <link id="id_47" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_46"/>
+  <to xsi:type="glyph" reference="id_48"/>
+ </link>
+ <link id="id_43" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_42"/>
+  <to xsi:type="glyph" reference="id_44"/>
+ </link>
+ <link id="id_45" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_44"/>
+  <to xsi:type="glyph" reference="id_46"/>
+ </link>
+ <link id="id_72"  drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_61"/>
+  <to xsi:type="glyph" reference="id_69"/>
+ </link>
+ <link id="id_49" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_38"/>
+  <to xsi:type="glyph" reference="id_50"/>
+ </link>
+ <link id="id_55" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_52"/>
+  <to xsi:type="glyph" reference="id_56"/>
+ </link>
+ <link id="id_57" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_56"/>
+  <to xsi:type="glyph" reference="id_58"/>
+ </link>
+ <link id="id_68" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_58"/>
+  <to xsi:type="glyph" reference="id_69"/>
+ </link>
+ <link id="id_59"  drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_58"/>
+  <to xsi:type="glyph" reference="id_54"/>
+ </link>
+ <link id="id_4" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_58"/>
+  <to xsi:type="glyph" reference="id_5"/>
+ </link>
+ <link id="id_51" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_50"/>
+  <to xsi:type="glyph" reference="id_52"/>
+ </link>
+ <link id="id_53" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_52"/>
+  <to xsi:type="glyph" reference="id_54"/>
+ </link>
+ <link id="id_10" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_69"/>
+  <to xsi:type="context" reference="id_11"/>
+ </link>
+ <link id="id_1" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_54"/>
+  <to xsi:type="glyph" reference="id_3"/>
+ </link>
+ 
+ </diagram>

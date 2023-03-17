@@ -1,0 +1,388 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<key id="id_75">
+
+ <boldText>Welcome To Kite9</boldText>
+ <bodyText>This part at the bottom is the key.  You can add notes here 
+to explain what's going on in the diagram</bodyText>
+ <symbols>
+  <text-line id="auto:11001">
+
+   <text>You can clear the styles back to default too.  Select the shape, click palette and then click "Clear Styles"</text>
+   <symbols>
+    <symbol theChar="a" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+  <text-line id="auto:11002">
+
+   <text>To add extra text lines, select the whole shape and click the pencil icon to edit the whole thing in one go.  </text>
+   <symbols>
+    <symbol theChar="b" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+  <text-line id="auto:11003">
+
+   <text>You can select multiple items and change the style of them all at the same time.  </text>
+   <symbols>
+    <symbol theChar="c" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+  <text-line id="auto:11004">
+
+   <text>Containers will grow to hold all the items you drop in</text>
+   <symbols>
+    <symbol theChar="d" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+  <text-line id="auto:11005">
+
+   <text>Try also adding labels and connection end styles to the connection when you add it.</text>
+   <symbols>
+    <symbol theChar="e" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+  <text-line id="auto:11006">
+
+   <text>What happens if you connect them twice?</text>
+   <symbols>
+    <symbol theChar="f" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+ </symbols>
+</key>
+
+<context id="id_11" bordered="true">
+
+ <glyph id="id_50" shape="" >
+
+  <stereotype >Step 5</stereotype>
+  <label >Add Something to my Container</label>
+  <text-lines>
+   <text-line id="auto:5467">
+
+    <text>(click the add... button and drag something from the chooser)</text>
+    <symbols/>
+   </text-line>
+  </text-lines>
+  <symbols/>
+ </glyph>
+ <label xsi:type="text-line" id="id_12">
+
+  <text>Drop into this container</text>
+  <symbols>
+   <symbol theChar="d" shape="CIRCLE"/>
+  </symbols>
+ </label>
+</context><glyph id="id_10" shape="fcDECISION" >
+
+ <stereotype/>
+ <label >Delete Me</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_3">
+
+   <stereotype/>
+   <label>New Part</label>
+   <text-lines/>
+   <symbols/>
+  </glyph><glyph id="id_32" shape="fcREFERENCE" >
+
+ <stereotype/>
+ <label >Move Me</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_48">
+
+ <stereotype>step 7</stereotype>
+ <label>Group Me</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_26">
+
+ <stereotype>Step 6</stereotype>
+ <label>Change My Contents</label>
+ <text-lines>
+  <text-line id="auto:5896">
+
+   <text>Delete This Line</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:5897">
+
+   <text>Modify This Line</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:5898">
+
+   <text>Add a new line</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:5899">
+
+   <text>Try Undo and Redo to see your changes</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols>
+  <symbol theChar="b" shape="CIRCLE"/>
+ </symbols>
+</glyph><glyph id="id_57">
+
+ <stereotype>step 9</stereotype>
+ <label>The File... Menu</label>
+ <text-lines>
+  <text-line id="auto:8792">
+
+   <text>- save</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:8793">
+
+   <text>- publish as an image</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:8794">
+
+   <text>- share it</text>
+   <symbols/>
+  </text-line>
+  <text-line id="auto:8795">
+
+   <text> - create something: hit New Diagram</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_6" shape="fcSTART1" >
+
+ <stereotype >Start</stereotype>
+ <label >Welcome to the Kite9 Tutorial</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_29" shape="" >
+
+ <stereotype >Step 3</stereotype>
+ <label >Move the Orange Circle 
+to my right</label>
+ <text-lines>
+  <text-line id="auto:4282">
+
+   <text>(drag it to the right until a blue arrow appears)</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_35" shape="" >
+
+ <stereotype >Step 4</stereotype>
+ <label >Connect A to B</label>
+ <text-lines>
+  <text-line id="auto:30158">
+
+   <text>(select them both, then press connect)</text>
+   <symbols>
+    <symbol theChar="e" shape="CIRCLE"/>
+    <symbol theChar="f" shape="CIRCLE"/>
+   </symbols>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_20" shape="" >
+
+ <stereotype >Step 2</stereotype>
+ <label >Edit the blue hexagon's label</label>
+ <text-lines>
+  <text-line id="auto:2755">
+
+   <text>(click it, then click the pencil icon)</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_8" shape="" >
+
+ <stereotype >Step 1</stereotype>
+ <label >Delete the Yellow Diamond</label>
+ <text-lines>
+  <text-line id="auto:2644">
+
+   <text>(click it and hit the delete button)</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_54">
+
+ <stereotype>Step 7</stereotype>
+ <label>Group Me</label>
+ <text-lines>
+  <text-line id="auto:7160">
+
+   <text>(select the shapes and hit 
+the rectangle to group them)</text>
+   <symbols/>
+  </text-line>
+ </text-lines>
+ <symbols/>
+</glyph><glyph id="id_52">
+
+ <stereotype>step 7</stereotype>
+ <label>Group Me</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_25" shape="fcPREPARATION" >
+
+ <stereotype />
+ <label >Change Me</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_37" >
+
+ <stereotype />
+ <label >A</label>
+ <text-lines/>
+ <symbols/>
+</glyph><glyph id="id_39" >
+
+ <stereotype />
+ <label >B</label>
+ <text-lines/>
+ <symbols/>
+</glyph>
+ <link id="id_3b">
+  <renderingInformation xsi:type="route" rendered="false">
+   <fromDecoration>
+    <name>NONE</name>
+   </fromDecoration>
+   <toDecoration>
+    <name>NONE</name>
+   </toDecoration>
+   <contradicting>false</contradicting>
+  </renderingInformation>
+  <from xsi:type="glyph" reference="id_50"/>
+  <to xsi:type="context" reference="id_11"/>
+ </link>
+ <link id="id_23" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_50"/>
+  <to xsi:type="glyph" reference="id_26"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_0" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_50"/>
+  <to xsi:type="glyph" reference="id_35"/>
+ </link>
+ <link id="id_9" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_8"/>
+  <to xsi:type="glyph" reference="id_10"/>
+  <toLabel xsi:type="text-line" id="id_68">
+
+   <text>deleting the shape
+also deletes the
+connection</text>
+   <symbols/>
+  </toLabel>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_31" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_29"/>
+  <to xsi:type="glyph" reference="id_32"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_7" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_6"/>
+  <to xsi:type="glyph" reference="id_8"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_51" shape="DOTTED"  drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_52"/>
+ </link>
+ <link id="id_63" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_52"/>
+  <to xsi:type="glyph" reference="id_57"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_34" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_29"/>
+  <to xsi:type="glyph" reference="id_35"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_28" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_20"/>
+  <to xsi:type="glyph" reference="id_29"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_36" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_35"/>
+  <to xsi:type="glyph" reference="id_37"/>
+ </link>
+ <link id="id_38" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_35"/>
+  <to xsi:type="glyph" reference="id_39"/>
+ </link>
+ <link id="id_19" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_8"/>
+  <to xsi:type="glyph" reference="id_20"/>
+  <toDecoration>ARROW</toDecoration>
+ </link>
+ <link id="id_24" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_20"/>
+  <to xsi:type="glyph" reference="id_25"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_47" shape="DOTTED"  drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_48"/>
+ </link>
+ <link id="id_53" shape="DOTTED"  drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_54"/>
+ </link>
+ <link id="id_56" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_48"/>
+  <to xsi:type="glyph" reference="id_57"/>
+  <toDecoration>ARROW OPEN</toDecoration>
+ </link>
+ <link id="id_64" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_57"/>
+  <to xsi:type="glyph" reference="id_54"/>
+  <fromDecoration>ARROW OPEN</fromDecoration>
+ </link>
+<link id="id_2" drawDirection="LEFT">
+<from xsi:type="glyph" reference="id_32"/>
+<to xsi:type="glyph" reference="id_3"/>
+</link>
+ </diagram>

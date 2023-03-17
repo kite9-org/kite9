@@ -1,0 +1,512 @@
+<?xml version="1.0" ?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="project_java_class:org.kite9.diagram.Diagrams/ADLClassHierarchy()">
+  <context id="level 10" bordered="true">
+   <context id="level 10-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="VertexOnEdge" stereotype="" label="VertexOnEdge">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="BiDirectional" stereotype="" label="BiDirectional">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="KeyHelper" stereotype="" label="KeyHelper">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="DiagramElement" stereotype="" label="DiagramElement">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Symbol.SymbolShape" stereotype="" label="SymbolShape">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="KeyHelper.UsedKey" stereotype="" label="UsedKey">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="LinkLineStyle" stereotype="" label="LinkLineStyle">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="SymbolTarget" stereotype="" label="SymbolTarget">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="LinkEndStyle" stereotype="" label="LinkEndStyle">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+  </context>
+  <context id="level 20" bordered="true">
+   <context id="level 20-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="PositionableDiagramElement" stereotype="" label="PositionableDiagramElement">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="AbstractLabel" stereotype="" label="AbstractLabel">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 20-arrows" layout="HORIZONTAL" bordered="true">
+    <arrow id="PositionableDiagramElement/rel_implements" label="implements"></arrow>
+    <arrow id="AbstractLabel/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 30" bordered="true">
+   <context id="level 30-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="CompositionalDiagramElement" stereotype="" label="CompositionalDiagramElement">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="IdentifiableDiagramElement" stereotype="" label="IdentifiableDiagramElement">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Connection" stereotype="" label="Connection">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 30-arrows" layout="HORIZONTAL" bordered="true">
+    <arrow id="CompositionalDiagramElement/rel_implements" label="implements"></arrow>
+    <arrow id="IdentifiableDiagramElement/rel_implements" label="implements"></arrow>
+    <arrow id="Connection/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 40" bordered="true">
+   <context id="level 40-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="Symbol" stereotype="" label="Symbol">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="AbstractIdentifiableDiagramElement" stereotype="" label="AbstractIdentifiableDiagramElement">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Leaf" stereotype="" label="Leaf">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Label" stereotype="" label="Label">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Contained" stereotype="" label="Contained">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Connected" stereotype="" label="Connected">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 40-arrows" layout="HORIZONTAL" bordered="true">
+    <arrow id="Symbol/rel_implements" label="implements"></arrow>
+    <arrow id="Leaf/rel_implements" label="implements"></arrow>
+    <arrow id="AbstractIdentifiableDiagramElement/rel_implements" label="implements"></arrow>
+    <arrow id="Label/rel_implements" label="implements"></arrow>
+    <arrow id="Contained/rel_implements" label="implements"></arrow>
+    <arrow id="Connected/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 50" bordered="true">
+   <context id="level 50-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="AbstractBiDirectional" stereotype="" label="AbstractBiDirectional">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Key" stereotype="" label="Key">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="AbstractConnectedContained" stereotype="" label="AbstractConnectedContained">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Container" stereotype="" label="Container">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="TextLine" stereotype="" label="TextLine">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 50-arrows" layout="HORIZONTAL" bordered="true">
+    <arrow id="AbstractBiDirectional/rel_extends" label="extends"></arrow>
+    <arrow id="AbstractBiDirectional/rel_implements" label="implements"></arrow>
+    <arrow id="Key/rel_extends" label="extends"></arrow>
+    <arrow id="Key/rel_implements" label="implements"></arrow>
+    <arrow id="AbstractConnectedContained/rel_extends" label="extends"></arrow>
+    <arrow id="AbstractConnectedContained/rel_implements" label="implements"></arrow>
+    <arrow id="Container/rel_implements" label="implements"></arrow>
+    <arrow id="TextLine/rel_extends" label="extends"></arrow>
+    <arrow id="TextLine/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 60" bordered="true">
+   <context id="level 60-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="AbstractConnection" stereotype="" label="AbstractConnection">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Arrow" stereotype="" label="Arrow">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Glyph" stereotype="" label="Glyph">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="AbstractConnectedContainer" stereotype="" label="AbstractConnectedContainer">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 60-arrows" layout="HORIZONTAL" bordered="true">
+    <arrow id="AbstractConnection/rel_extends" label="extends"></arrow>
+    <arrow id="AbstractConnection/rel_implements" label="implements"></arrow>
+    <arrow id="Arrow/rel_extends" label="extends"></arrow>
+    <arrow id="Arrow/rel_implements" label="implements"></arrow>
+    <arrow id="Glyph/rel_extends" label="extends"></arrow>
+    <arrow id="Glyph/rel_implements" label="implements"></arrow>
+    <arrow id="AbstractConnectedContainer/rel_extends" label="extends"></arrow>
+    <arrow id="AbstractConnectedContainer/rel_implements" label="implements"></arrow>
+   </context>
+  </context>
+  <context id="level 70" bordered="true">
+   <context id="level 70-glyphs" layout="HORIZONTAL" bordered="true">
+    <glyph id="Link" stereotype="" label="Link">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Context" stereotype="" label="Context">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+    <glyph id="Diagram" stereotype="" label="Diagram">
+     <text-lines></text-lines>
+     <symbols></symbols>
+    </glyph>
+   </context>
+   <context id="level 70-arrows" layout="HORIZONTAL" bordered="true">
+    <arrow id="Link/rel_extends" label="extends"></arrow>
+    <arrow id="Context/rel_extends" label="extends"></arrow>
+    <arrow id="Diagram/rel_extends" label="extends"></arrow>
+   </context>
+  </context>
+  
+   <link id="auto:147" drawDirection="UP">
+    <from xsi:type="arrow" reference="Arrow/rel_implements"></from>
+    <to xsi:type="glyph" reference="VertexOnEdge"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:153" drawDirection="UP">
+    <from xsi:type="arrow" reference="Connection/rel_implements"></from>
+    <to xsi:type="glyph" reference="BiDirectional"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:162" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractBiDirectional/rel_implements"></from>
+    <to xsi:type="glyph" reference="BiDirectional"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:150" drawDirection="UP">
+    <from xsi:type="arrow" reference="PositionableDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="DiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:180" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractLabel/rel_implements"></from>
+    <to xsi:type="glyph" reference="DiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:158" drawDirection="UP">
+    <from xsi:type="arrow" reference="Glyph/rel_implements"></from>
+    <to xsi:type="glyph" reference="SymbolTarget"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:193" drawDirection="UP">
+    <from xsi:type="arrow" reference="TextLine/rel_implements"></from>
+    <to xsi:type="glyph" reference="SymbolTarget"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:129" drawDirection="UP">
+    <from xsi:type="arrow" reference="CompositionalDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="PositionableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:141" drawDirection="UP">
+    <from xsi:type="arrow" reference="IdentifiableDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="PositionableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:149" drawDirection="UP">
+    <from xsi:type="glyph" reference="PositionableDiagramElement"></from>
+    <to xsi:type="arrow" reference="PositionableDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:152" drawDirection="UP">
+    <from xsi:type="arrow" reference="Connection/rel_implements"></from>
+    <to xsi:type="glyph" reference="PositionableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:174" drawDirection="UP">
+    <from xsi:type="arrow" reference="Key/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractLabel"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:179" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractLabel"></from>
+    <to xsi:type="arrow" reference="AbstractLabel/rel_implements"></to>
+   </link>
+   <link id="auto:190" drawDirection="UP">
+    <from xsi:type="arrow" reference="TextLine/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractLabel"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:127" drawDirection="UP">
+    <from xsi:type="arrow" reference="Symbol/rel_implements"></from>
+    <to xsi:type="glyph" reference="CompositionalDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:128" drawDirection="UP">
+    <from xsi:type="glyph" reference="CompositionalDiagramElement"></from>
+    <to xsi:type="arrow" reference="CompositionalDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:139" drawDirection="UP">
+    <from xsi:type="arrow" reference="Label/rel_implements"></from>
+    <to xsi:type="glyph" reference="CompositionalDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:131" drawDirection="UP">
+    <from xsi:type="arrow" reference="Leaf/rel_implements"></from>
+    <to xsi:type="glyph" reference="IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:133" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractIdentifiableDiagramElement/rel_implements"></from>
+    <to xsi:type="glyph" reference="IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:140" drawDirection="UP">
+    <from xsi:type="glyph" reference="IdentifiableDiagramElement"></from>
+    <to xsi:type="arrow" reference="IdentifiableDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:143" drawDirection="UP">
+    <from xsi:type="arrow" reference="Contained/rel_implements"></from>
+    <to xsi:type="glyph" reference="IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:164" drawDirection="UP">
+    <from xsi:type="arrow" reference="Connected/rel_implements"></from>
+    <to xsi:type="glyph" reference="IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:187" drawDirection="UP">
+    <from xsi:type="arrow" reference="Container/rel_implements"></from>
+    <to xsi:type="glyph" reference="IdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:137" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnection/rel_implements"></from>
+    <to xsi:type="glyph" reference="Connection"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:151" drawDirection="UP">
+    <from xsi:type="glyph" reference="Connection"></from>
+    <to xsi:type="arrow" reference="Connection/rel_implements"></to>
+   </link>
+   <link id="auto:126" drawDirection="UP">
+    <from xsi:type="glyph" reference="Symbol"></from>
+    <to xsi:type="arrow" reference="Symbol/rel_implements"></to>
+   </link>
+   <link id="auto:132" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractIdentifiableDiagramElement"></from>
+    <to xsi:type="arrow" reference="AbstractIdentifiableDiagramElement/rel_implements"></to>
+   </link>
+   <link id="auto:160" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractBiDirectional/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractIdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:182" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnectedContained/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractIdentifiableDiagramElement"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:130" drawDirection="UP">
+    <from xsi:type="glyph" reference="Leaf"></from>
+    <to xsi:type="arrow" reference="Leaf/rel_implements"></to>
+   </link>
+   <link id="auto:148" drawDirection="UP">
+    <from xsi:type="arrow" reference="Arrow/rel_implements"></from>
+    <to xsi:type="glyph" reference="Leaf"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:157" drawDirection="UP">
+    <from xsi:type="arrow" reference="Glyph/rel_implements"></from>
+    <to xsi:type="glyph" reference="Leaf"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:138" drawDirection="UP">
+    <from xsi:type="glyph" reference="Label"></from>
+    <to xsi:type="arrow" reference="Label/rel_implements"></to>
+   </link>
+   <link id="auto:176" drawDirection="UP">
+    <from xsi:type="arrow" reference="Key/rel_implements"></from>
+    <to xsi:type="glyph" reference="Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:192" drawDirection="UP">
+    <from xsi:type="arrow" reference="TextLine/rel_implements"></from>
+    <to xsi:type="glyph" reference="Label"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:142" drawDirection="UP">
+    <from xsi:type="glyph" reference="Contained"></from>
+    <to xsi:type="arrow" reference="Contained/rel_implements"></to>
+   </link>
+   <link id="auto:185" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnectedContained/rel_implements"></from>
+    <to xsi:type="glyph" reference="Contained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:163" drawDirection="UP">
+    <from xsi:type="glyph" reference="Connected"></from>
+    <to xsi:type="arrow" reference="Connected/rel_implements"></to>
+   </link>
+   <link id="auto:184" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnectedContained/rel_implements"></from>
+    <to xsi:type="glyph" reference="Connected"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:188" drawDirection="UP">
+    <from xsi:type="arrow" reference="Container/rel_implements"></from>
+    <to xsi:type="glyph" reference="Connected"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:135" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnection/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractBiDirectional"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:159" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractBiDirectional"></from>
+    <to xsi:type="arrow" reference="AbstractBiDirectional/rel_extends"></to>
+   </link>
+   <link id="auto:161" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractBiDirectional"></from>
+    <to xsi:type="arrow" reference="AbstractBiDirectional/rel_implements"></to>
+   </link>
+   <link id="auto:173" drawDirection="UP">
+    <from xsi:type="glyph" reference="Key"></from>
+    <to xsi:type="arrow" reference="Key/rel_extends"></to>
+   </link>
+   <link id="auto:175" drawDirection="UP">
+    <from xsi:type="glyph" reference="Key"></from>
+    <to xsi:type="arrow" reference="Key/rel_implements"></to>
+   </link>
+   <link id="auto:145" drawDirection="UP">
+    <from xsi:type="arrow" reference="Arrow/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractConnectedContained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:155" drawDirection="UP">
+    <from xsi:type="arrow" reference="Glyph/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractConnectedContained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:168" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnectedContainer/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractConnectedContained"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:181" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractConnectedContained"></from>
+    <to xsi:type="arrow" reference="AbstractConnectedContained/rel_extends"></to>
+   </link>
+   <link id="auto:183" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractConnectedContained"></from>
+    <to xsi:type="arrow" reference="AbstractConnectedContained/rel_implements"></to>
+   </link>
+   <link id="auto:170" drawDirection="UP">
+    <from xsi:type="arrow" reference="AbstractConnectedContainer/rel_implements"></from>
+    <to xsi:type="glyph" reference="Container"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:186" drawDirection="UP">
+    <from xsi:type="glyph" reference="Container"></from>
+    <to xsi:type="arrow" reference="Container/rel_implements"></to>
+   </link>
+   <link id="auto:189" drawDirection="UP">
+    <from xsi:type="glyph" reference="TextLine"></from>
+    <to xsi:type="arrow" reference="TextLine/rel_extends"></to>
+   </link>
+   <link id="auto:191" drawDirection="UP">
+    <from xsi:type="glyph" reference="TextLine"></from>
+    <to xsi:type="arrow" reference="TextLine/rel_implements"></to>
+   </link>
+   <link id="auto:134" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractConnection"></from>
+    <to xsi:type="arrow" reference="AbstractConnection/rel_extends"></to>
+   </link>
+   <link id="auto:136" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractConnection"></from>
+    <to xsi:type="arrow" reference="AbstractConnection/rel_implements"></to>
+   </link>
+   <link id="auto:166" drawDirection="UP">
+    <from xsi:type="arrow" reference="Link/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractConnection"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:144" drawDirection="UP">
+    <from xsi:type="glyph" reference="Arrow"></from>
+    <to xsi:type="arrow" reference="Arrow/rel_extends"></to>
+   </link>
+   <link id="auto:146" drawDirection="UP">
+    <from xsi:type="glyph" reference="Arrow"></from>
+    <to xsi:type="arrow" reference="Arrow/rel_implements"></to>
+   </link>
+   <link id="auto:154" drawDirection="UP">
+    <from xsi:type="glyph" reference="Glyph"></from>
+    <to xsi:type="arrow" reference="Glyph/rel_extends"></to>
+   </link>
+   <link id="auto:156" drawDirection="UP">
+    <from xsi:type="glyph" reference="Glyph"></from>
+    <to xsi:type="arrow" reference="Glyph/rel_implements"></to>
+   </link>
+   <link id="auto:167" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractConnectedContainer"></from>
+    <to xsi:type="arrow" reference="AbstractConnectedContainer/rel_extends"></to>
+   </link>
+   <link id="auto:169" drawDirection="UP">
+    <from xsi:type="glyph" reference="AbstractConnectedContainer"></from>
+    <to xsi:type="arrow" reference="AbstractConnectedContainer/rel_implements"></to>
+   </link>
+   <link id="auto:172" drawDirection="UP">
+    <from xsi:type="arrow" reference="Context/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractConnectedContainer"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:178" drawDirection="UP">
+    <from xsi:type="arrow" reference="Diagram/rel_extends"></from>
+    <to xsi:type="glyph" reference="AbstractConnectedContainer"></to>
+    <toDecoration>ARROW</toDecoration>
+   </link>
+   <link id="auto:165" drawDirection="UP">
+    <from xsi:type="glyph" reference="Link"></from>
+    <to xsi:type="arrow" reference="Link/rel_extends"></to>
+   </link>
+   <link id="auto:171" drawDirection="UP">
+    <from xsi:type="glyph" reference="Context"></from>
+    <to xsi:type="arrow" reference="Context/rel_extends"></to>
+   </link>
+   <link id="auto:177" drawDirection="UP">
+    <from xsi:type="glyph" reference="Diagram"></from>
+    <to xsi:type="arrow" reference="Diagram/rel_extends"></to>
+   </link>
+   
+ </diagram>

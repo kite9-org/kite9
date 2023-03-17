@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram" layout="RIGHT">
+ 
+ <context id="id_1" layout="HORIZONTAL" bordered="false">
+  
+  <glyph id="id_5" label="Start">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>context 0</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_2" bordered="false">
+  
+  <glyph id="id_7" label="Next 3">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_8" label="Next 4">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_6" label="Next 2">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>context 1</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_3" layout="DOWN" bordered="false">
+  
+  <glyph id="id_12" label="a">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_14" label="b">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_15" stereotype="" label="c">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_17" label="d">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_13" label="e">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_16" label="f">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>context 2</text>
+   <symbols/>
+  </label>
+ </context>
+ <context id="id_4" layout="VERTICAL" bordered="false">
+  
+  <glyph id="id_29" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_30" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_31" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_28" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <glyph id="id_26" label="New Glyph">
+   
+   <text-lines/>
+   <symbols/>
+  </glyph>
+  <label xsi:type="text-line">
+   
+   <text>context 3</text>
+   <symbols/>
+  </label>
+ </context>
+ 
+ 
+  <link id="id_9">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_8"/>
+  </link>
+  <link id="id_10">
+   
+   <from xsi:type="glyph" reference="id_5"/>
+   <to xsi:type="glyph" reference="id_7"/>
+  </link>
+  <link id="id_11">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_5"/>
+  </link>
+  <link id="id_22">
+   
+   <from xsi:type="glyph" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_5"/>
+  </link>
+  <link id="id_27">
+   
+   <from xsi:type="glyph" reference="id_7"/>
+   <to xsi:type="glyph" reference="id_5"/>
+  </link>
+  <link id="id_21">
+   
+   <from xsi:type="glyph" reference="id_12"/>
+   <to xsi:type="glyph" reference="id_7"/>
+  </link>
+  <link id="id_24">
+   
+   <from xsi:type="glyph" reference="id_7"/>
+   <to xsi:type="glyph" reference="id_14"/>
+  </link>
+  <link id="id_18">
+   
+   <from xsi:type="glyph" reference="id_6"/>
+   <to xsi:type="glyph" reference="id_16"/>
+  </link>
+  <link id="id_20">
+   
+   <from xsi:type="glyph" reference="id_13"/>
+   <to xsi:type="glyph" reference="id_6"/>
+  </link>
+  <link id="id_23">
+   
+   <from xsi:type="glyph" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_17"/>
+  </link>
+  <link id="id_25">
+   
+   <from xsi:type="glyph" reference="id_14"/>
+   <to xsi:type="glyph" reference="id_13"/>
+  </link>
+  <link id="id_34" drawDirection="LEFT" >
+   
+   <from xsi:type="glyph" reference="id_30"/>
+   <to xsi:type="glyph" reference="id_15"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_35" drawDirection="RIGHT" >
+   
+   <from xsi:type="glyph" reference="id_29"/>
+   <to xsi:type="glyph" reference="id_15"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_33" drawDirection="LEFT" >
+   
+   <from xsi:type="glyph" reference="id_31"/>
+   <to xsi:type="glyph" reference="id_17"/>
+   <fromLabel xsi:type="text-line">
+    
+    <symbols/>
+   </fromLabel>
+   <toLabel xsi:type="text-line">
+    
+    <symbols/>
+   </toLabel>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_19">
+   
+   <from xsi:type="glyph" reference="id_17"/>
+   <to xsi:type="glyph" reference="id_30"/>
+  </link>
+  <link id="id_32">
+   
+   <from xsi:type="glyph" reference="id_28"/>
+   <to xsi:type="glyph" reference="id_13"/>
+  </link>
+  <link id="id_36">
+   
+   <from xsi:type="glyph" reference="id_26"/>
+   <to xsi:type="glyph" reference="id_16"/>
+  </link>
+ <link id="id_37"><from xsi:type="glyph" reference="id_8"/><to xsi:type="glyph" reference="id_15"/></link> </diagram>

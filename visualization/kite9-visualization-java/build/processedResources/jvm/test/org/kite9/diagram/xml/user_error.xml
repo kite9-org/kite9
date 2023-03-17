@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:4594">
+
+<context id="id_0" bordered="true">
+
+
+
+
+
+ <label xsi:type="text-line" id="id_1">
+
+  <text>Pascal Timur 3/10</text>
+  <symbols/>
+ </label>
+<context xmlns="" bordered="true"><glyph  id="id_7" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph><glyph  id="id_10" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph></context><glyph id="id_17" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph><context xmlns="" bordered="true"><glyph  id="id_6" label="New Part">
+
+  <text-lines/>
+  <symbols/>
+ </glyph><link  id="id_16" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_7"/>
+  <to xsi:type="glyph" reference="id_17"/>
+ </link></context></context>
+
+
+ <link id="id_12" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_7"/>
+  <to xsi:type="glyph" reference="id_6"/>
+  <fromLabel xsi:type="text-line" id="id_14">
+
+   <text>istri</text>
+   <symbols/>
+  </fromLabel>
+  <toLabel xsi:type="text-line" id="id_13">
+
+   <text>suami
+</text>
+   <symbols/>
+  </toLabel>
+ </link>
+ <link id="id_11" drawDirection="DOWN">
+
+  <from xsi:type="glyph" reference="id_7"/>
+  <to xsi:type="glyph" reference="id_10"/>
+ </link>
+
+<link xmlns="" id="id_24">
+	<from xsi:type="glyph" reference="id_10"/>
+	<to xsi:type="glyph" reference="id_6"/>
+	</link>
+<link xmlns="" id="id_26">
+<from xsi:type="glyph" reference="id_7"/>
+<to xsi:type="glyph" reference="id_10"/>
+</link>
+
+ 
+</diagram>

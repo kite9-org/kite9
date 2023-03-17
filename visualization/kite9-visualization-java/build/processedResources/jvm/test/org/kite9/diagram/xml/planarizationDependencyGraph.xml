@@ -1,0 +1,302 @@
+<?xml version="1.0" ?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="project_java_class:org.kite9.diagram.docs.PlanarizationDiagrams/planarizationDependencyGraph()">
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0" stereotype="instance" label="MGTPlanarizer">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mapping.ElementMapperImpl0" stereotype="instance" label="ElementMapperImpl">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue0/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.transform.TemporaryEdgeRemovalTransform0" stereotype="instance" label="TemporaryEdgeRemovalTransform">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemovalTransform0" stereotype="instance" label="ExcessVertexRemovalTransform">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="class org.kite9.diagram.visualization.planarization.transform.ContainerEdgeTransform0" stereotype="instance" label="ContainerEdgeTransform">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="class org.kite9.diagram.visualization.planarization.transform.ReduceLayoutEdgesTransform0" stereotype="instance" label="ReduceLayoutEdgesTransform">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="class org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemovalTransform1" stereotype="instance" label="ExcessVertexRemovalTransform">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.HierarchicalPlanarizationBuilder0" stereotype="instance" label="HierarchicalPlanarizationBuilder">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue2/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.SimplePlanarizationDirecter0" stereotype="instance" label="SimplePlanarizationDirecter">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue3/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.EdgeOrdererImpl0" stereotype="instance" label="EdgeOrdererImpl">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue4/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.FaceConstructorImpl0" stereotype="instance" label="FaceConstructorImpl">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue5/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler0" stereotype="instance" label="PositionRoutableHandler">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue6/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.vertex.GroupwiseVertexOrderer0" stereotype="instance" label="GroupwiseVertexOrderer">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue7/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter0" stereotype="instance" label="MGTEdgeRouter">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue8/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler$PositionRoutingInfo0" stereotype="instance" label="PositionRoutingInfo">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue9/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.vertex.DirectedGroupingStrategy0" stereotype="instance" label="DirectedGroupingStrategy">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue10/rel_references" label="references"></arrow>
+ <glyph id="class org.kite9.diagram.visualization.planarization.vertex.TopDownLayoutStrategy0" stereotype="instance" label="TopDownLayoutStrategy">
+  <text-lines></text-lines>
+  <symbols></symbols>
+ </glyph>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue11/rel_references" label="references"></arrow>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue12/rel_references" label="references"></arrow>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue13/rel_references" label="references"></arrow>
+ <arrow id="class org.kite9.diagram.builders.java.AccessibleObjectValue14/rel_references" label="references"></arrow>
+ 
+  <link id="auto:12" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue0/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getElementMapper</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:14" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getPlanarizationTransforms</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:20" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue2/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getPlanarizationBuilder</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:22" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue3/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getPlanarizationDirecter</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:24" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue4/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getEdgeOrderer</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:26" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.MGTPlanarizer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue5/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getFaceConstructor</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:13" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue0/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mapping.ElementMapperImpl0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:15" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.transform.TemporaryEdgeRemovalTransform0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:16" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemovalTransform0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:17" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.transform.ContainerEdgeTransform0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:18" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.transform.ReduceLayoutEdgesTransform0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:19" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue1/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.transform.ExcessVertexRemovalTransform1"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:21" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue2/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.HierarchicalPlanarizationBuilder0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:28" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.HierarchicalPlanarizationBuilder0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue6/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>route handler</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:30" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.HierarchicalPlanarizationBuilder0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue7/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>vertex orderer</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:32" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.HierarchicalPlanarizationBuilder0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue8/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>edge router</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:23" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue3/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.SimplePlanarizationDirecter0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:25" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue4/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.EdgeOrdererImpl0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:27" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue5/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.FaceConstructorImpl0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:29" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue6/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:34" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue9/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>getTopLevelRoutingInfo</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:41">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue12/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:43">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue13/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:45">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue14/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:31" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue7/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.GroupwiseVertexOrderer0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:36" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.GroupwiseVertexOrderer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue10/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>strategy</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:38" drawDirection="RIGHT">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.GroupwiseVertexOrderer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue11/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>layout</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:40">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.GroupwiseVertexOrderer0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue12/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>rh</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:33" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue8/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:42">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.MGTEdgeRouter0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue13/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>rh</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  <link id="auto:35" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue9/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.mgt.router.PositionRoutableHandler$PositionRoutingInfo0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:37" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue10/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.DirectedGroupingStrategy0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:39" drawDirection="RIGHT">
+   <from xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue11/rel_references"></from>
+   <to xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.TopDownLayoutStrategy0"></to>
+   <toDecoration>ARROW</toDecoration>
+  </link>
+  <link id="auto:44">
+   <from xsi:type="glyph" reference="class org.kite9.diagram.visualization.planarization.vertex.TopDownLayoutStrategy0"></from>
+   <to xsi:type="arrow" reference="class org.kite9.diagram.builders.java.AccessibleObjectValue14/rel_references"></to>
+   <fromLabel xsi:type="text-line">
+    <text>rh</text>
+    <symbols></symbols>
+   </fromLabel>
+  </link>
+  
+</diagram>

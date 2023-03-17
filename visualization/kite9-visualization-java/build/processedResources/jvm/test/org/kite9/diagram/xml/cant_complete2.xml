@@ -1,0 +1,75 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:3309">
+
+<glyph id="id_19" shape="umlCLASS">
+ <label>id_19</label>
+</glyph>
+
+<glyph id="id_26" shape="umlACTOR">
+ <label>id_26</label>
+</glyph>
+
+<context id="id_32" layout="DOWN" bordered="true">
+
+<glyph id="id_17" shape="umlCLASS">
+ <label>id_17</label>
+</glyph>
+
+<glyph id="id_14" shape="fcDECISION">
+ <label>id_14</label>
+</glyph>
+
+<glyph id="id_3">
+ <label>id_3</label>
+</glyph>
+
+</context>
+
+<glyph id="id_1">
+ <label>id_1</label>
+</glyph>
+
+<glyph id="id_15" shape="umlPACKAGE">
+ <label>id_15</label>
+</glyph>
+
+<glyph id="id_2">
+ <label>id_2</label>
+</glyph>
+
+<glyph id="id_10">
+ <label>id_10</label>
+</glyph>
+
+
+
+ <link id="id_18" drawDirection="LEFT">
+
+  <from xsi:type="glyph" reference="id_1"/>
+  <to xsi:type="glyph" reference="id_19"/>
+ </link>
+ <link id="id_29" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_19"/>
+  <to xsi:type="glyph" reference="id_26"/>
+ </link>
+ <link id="id_31" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_19"/>
+  <to xsi:type="context" reference="id_32"/>
+ </link>
+ <link id="id_4.1" drawDirection="RIGHT">
+
+  <from xsi:type="glyph" reference="id_26"/>
+  <to xsi:type="glyph" reference="id_3"/>
+ </link>
+ <link id="id_13" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_3"/>
+  <to xsi:type="glyph" reference="id_14"/>
+ </link>
+ <link id="id_8" drawDirection="UP">
+
+  <from xsi:type="glyph" reference="id_2"/>
+  <to xsi:type="glyph" reference="id_10"/>
+ </link>
+ </diagram>

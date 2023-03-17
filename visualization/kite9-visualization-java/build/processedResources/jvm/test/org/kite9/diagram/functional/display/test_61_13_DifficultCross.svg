@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="5" version="1.0" width="300" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=300.0, h=259.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@2ee205fd; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
+><defs
+  ><style type="text/css" xml:space="preserve"
+    >
+                    @import url("/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");
+                </style
+  ></defs
+  ><g filter="url(#dropshadow)"
+  >
+  <g transform="translate(15.0,15.0)" style="--kite9-layout: right;" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; min-size: 0.0 0.0; sizing: maximize maximize; horiz: center; vert: center; layout: right; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=270.0, h=81.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@784cb65e; " bordered="true" rank="0" class=".context-back" id="i1" k9-elem="context"
+    ><rect x="0" y="0" width="270" pp:height="$height" rx="12" class="context-back" ry="12" height="81" pp:width="$width"
+      />
+    <g k9-elem="glyph" id="1-up1" transform="translate(12.0,12.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: BasicDimension2D(w=27.0, h=27.0); rect-size: BasicDimension2D(w=57.0, h=47.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@1c6fd7f4; "
+      ><rect x="0" y="0" width="57" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="47" pp:width="$width"
+        />
+      <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(9.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=37.0, h=33.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@766f9053; "
+        ><text x="0.0px" y="0.0px"
+          >Stereo</text
+        ></g
+        >
+      <g k9-elem="text-label" class="glyph-label-text" transform="translate(16.8,38.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=45.0, h=50.0); rect-size: BasicDimension2D(w=22.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@159e231e; "
+        ><text x="0.0px" y="0.0px"
+          >up1</text
+        ></g
+        >
+      <g k9-elem="socket" id="up1socket-port" style="--kite9-direction: DOWN; --kite9-port-position: 50%;" transform="translate(29.0,47.0)" k9-info="direction: DOWN;pos: CostedDimension2D(w=56.0, h=74.0, cost=0); painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@440b538d; "
+        ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
+        /></g
+        >
+    </g
+        >
+    <g k9-elem="glyph" id="2-up2" transform="translate(89.0,22.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: BasicDimension2D(w=104.0, h=37.0); rect-size: BasicDimension2D(w=57.0, h=47.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@779c9089; "
+        ><rect x="0" y="0" width="57" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="47" pp:width="$width"
+          />
+      <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(9.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=114.0, h=43.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@6527ad60; "
+          ><text x="0.0px" y="0.0px"
+            >Stereo</text
+          ></g
+          >
+      <g k9-elem="text-label" class="glyph-label-text" transform="translate(15.8,38.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=121.0, h=60.0); rect-size: BasicDimension2D(w=24.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@66f42880; "
+          ><text x="0.0px" y="0.0px"
+            >up2</text
+          ></g
+          >
+      <g k9-elem="socket" id="up2socket-port" style="--kite9-direction: DOWN; --kite9-port-position: 50%;" transform="translate(29.0,47.0)" k9-info="direction: DOWN;pos: CostedDimension2D(w=133.0, h=84.0, cost=0); painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@4cceb165; "
+          ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
+          /></g
+          >
+    </g
+          >
+  </g
+          >
+  <g k9-elem="glyph" id="0-middle" transform="translate(107.0,106.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: BasicDimension2D(w=107.0, h=106.0); rect-size: BasicDimension2D(w=90.0, h=47.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@1cb9b851; " rank="1"
+          ><rect x="0" y="0" width="90" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="47" pp:width="$width"
+            />
+    <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(26.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=134.0, h=112.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@2b692dd4; "
+            ><text x="0.0px" y="0.0px"
+              >Stereo</text
+            ></g
+            >
+    <g k9-elem="text-label" class="glyph-label-text" transform="translate(20.7,38.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=129.0, h=129.0); rect-size: BasicDimension2D(w=46.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@35feb8ab; "
+            ><text x="0.0px" y="0.0px"
+              >middle</text
+            ></g
+            >
+    <g k9-elem="socket" id="top-right-port" style="--kite9-direction: UP; --kite9-port-position: 60%;" transform="translate(64.0,.0)" k9-info="direction: UP;pos: CostedDimension2D(w=171.0, h=106.0, cost=0); painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@694f2dce; "
+            ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
+            /></g
+            >
+    <g k9-elem="socket" id="top-left-port" style="--kite9-direction: UP; --kite9-port-position: 40%;" transform="translate(26.0,.0)" k9-info="direction: UP;pos: CostedDimension2D(w=133.0, h=106.0, cost=0); painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@3126b649; "
+            ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
+            /></g
+            >
+    <g k9-elem="socket" id="bottom-left-port" style="--kite9-direction: DOWN; --kite9-port-position: 10%;" transform="translate(17.0,47.0)" k9-info="direction: DOWN;pos: CostedDimension2D(w=124.0, h=153.0, cost=0); painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@53c32a34; "
+            ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
+            /></g
+            >
+    <g k9-elem="socket" id="bottom-right-port" style="--kite9-direction: DOWN; --kite9-port-position: 90%;" transform="translate(59.0,47.0)" k9-info="direction: DOWN;pos: CostedDimension2D(w=166.0, h=153.0, cost=0); painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@13b8fb07; "
+            ><ellipse rx="3" ry="3" cx="0" class="socket-circle" cy="0"
+            /></g
+            >
+  </g
+            >
+  <g transform="translate(15.0,163.0)" style="--kite9-layout: right;" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 12.0 12.0 12.0 12.0; min-size: 0.0 0.0; sizing: maximize maximize; horiz: center; vert: center; layout: right; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=163.0); rect-size: BasicDimension2D(w=270.0, h=81.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@30985e3; " bordered="true" rank="2" class=".context-back" id="i2" k9-elem="context"
+            ><rect x="0" y="0" width="270" pp:height="$height" rx="12" class="context-back" ry="12" height="81" pp:width="$width"
+              />
+    <g k9-elem="glyph" id="3-down1" transform="translate(119.0,12.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: BasicDimension2D(w=134.0, h=175.0); rect-size: BasicDimension2D(w=63.0, h=47.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@626a1b30; "
+              ><rect x="0" y="0" width="63" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="47" pp:width="$width"
+                />
+      <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(12.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=147.0, h=181.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@3800c94; "
+                ><text x="0.0px" y="0.0px"
+                  >Stereo</text
+                ></g
+                >
+      <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.2,38.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=144.0, h=198.0); rect-size: BasicDimension2D(w=43.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@6928631f; "
+                ><text x="0.0px" y="0.0px"
+                  >down1</text
+                ></g
+                >
+    </g
+                >
+    <g k9-elem="glyph" id="4-down2" transform="translate(192.0,12.0)" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 6.0 10.0 6.0 10.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: BasicDimension2D(w=207.0, h=175.0); rect-size: BasicDimension2D(w=66.0, h=47.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7ee0536e; "
+                ><rect x="0" y="0" width="66" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="47" pp:width="$width"
+                  />
+      <g k9-elem="text-label" class="glyph-stereotype-text" transform="translate(14.4,18.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=222.0, h=181.0); rect-size: BasicDimension2D(w=37.0, h=14.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@12bbf9cb; "
+                  ><text x="0.0px" y="0.0px"
+                    >Stereo</text
+                  ></g
+                  >
+      <g k9-elem="text-label" class="glyph-label-text" transform="translate(9.2,38.0)" k9-info="margin: 3.0 3.0 3.0 3.0; padding: 0.0 0.0 0.0 0.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; rectangular: connected; rect-pos: BasicDimension2D(w=217.0, h=198.0); rect-size: BasicDimension2D(w=46.0, h=18.0); position: none; painter: org.kite9.diagram.batik.painter.BatikTextPainter@71c4a5aa; "
+                  ><text x="0.0px" y="0.0px"
+                    >down2</text
+                  ></g
+                  >
+    </g
+                  >
+  </g
+                  >
+  <g k9-elem="link" id="top-right-port-up1socket-port" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['top-right-port','up1socket-port']; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@30b098c9; " rank="3"
+                  >
+    <g k9-elem="from" reference="top-right-port" transform="translate(171.0,106.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=171.0, h=106.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: top-right-port-up1socket-port; terminates-at: top-right-port; end: from; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@63fa86c9; "
+                    />
+    <g k9-elem="to" reference="up1socket-port" transform="translate(56.0,74.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=56.0, h=74.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: top-right-port-up1socket-port; terminates-at: up1socket-port; end: to; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@2ec25edc; "
+                    />
+  <g k9-info="margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: null; rect-size: null; position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7aff475b; " k9-elem="link-body"
+                    ><path marker-start="url(#-start-marker)" d="M171 106 L171 32 A5 5 0 0 0 166 27 L99 27 A5 5 0 0 0 94 32 L94 79 A5 5 0 0 1 89 84 L61 84 A5 5 0 0 1 56 79 L56 74 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
+                    /></g
+                  ></g
+                  >
+  <g k9-elem="link" id="top-left-port-up2socket-port" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['top-left-port','up2socket-port']; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@5b8bee22; " rank="4"
+                  >
+    <g k9-elem="from" reference="top-left-port" transform="translate(133.0,106.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=133.0, h=106.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: top-left-port-up2socket-port; terminates-at: top-left-port; end: from; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@79280cb7; "
+                    />
+    <g k9-elem="to" reference="up2socket-port" transform="translate(133.0,84.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=133.0, h=84.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: top-left-port-up2socket-port; terminates-at: up2socket-port; end: to; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@91d015e; "
+                    />
+  <g k9-info="margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: null; rect-size: null; position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@66db6b2b; " k9-elem="link-body"
+                    ><path marker-start="url(#-start-marker)" d="M133 106 L133 84 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
+                    /></g
+                  ></g
+                  >
+  <g k9-elem="link" id="bottom-right-port-3-down1" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['bottom-right-port','3-down1']; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@7848697d; " rank="5"
+                  >
+    <g k9-elem="from" reference="bottom-right-port" transform="translate(166.0,153.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=166.0, h=153.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: bottom-right-port-3-down1; terminates-at: bottom-right-port; end: from; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@2375f755; "
+                    />
+    <g k9-elem="to" reference="3-down1" transform="translate(166.0,175.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=166.0, h=175.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: bottom-right-port-3-down1; terminates-at: 3-down1; end: to; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@26f90f86; "
+                    />
+  <g k9-info="margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: null; rect-size: null; position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@537a692e; " k9-elem="link-body"
+                    ><path marker-start="url(#-start-marker)" d="M166 153 L166 175 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
+                    /></g
+                  ></g
+                  >
+  <g k9-elem="link" id="bottom-left-port-4-down2" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['bottom-left-port','4-down2']; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@3b72a757; " rank="6"
+                  >
+    <g k9-elem="from" reference="bottom-left-port" transform="translate(124.0,153.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=124.0, h=153.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: bottom-left-port-4-down2; terminates-at: bottom-left-port; end: from; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@37d8765c; "
+                    />
+    <g k9-elem="to" reference="4-down2" transform="translate(240.0,222.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 5.0 5.0 5.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; rectangular: terminator; rect-pos: BasicDimension2D(w=240.0, h=222.0); rect-size: BasicDimension2D(w=0.0, h=0.0); position: none; terminates: bottom-left-port-4-down2; terminates-at: 4-down2; end: to; direction: null; painter: org.kite9.diagram.dom.painter.DirectSVGGroupPainter@7163aa25; "
+                    />
+  <g k9-info="margin: 10.0 10.0 10.0 10.0; padding: 3.0 5.0 3.0 5.0; min-size: 0.0 0.0; sizing: minimize minimize; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: null; rect-size: null; position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@6ced2701; " k9-elem="link-body"
+                    ><path marker-start="url(#-start-marker)" d="M124 153 L124 227 A5 5 0 0 0 129 232 L235 232 A5 5 0 0 0 240 227 L240 222 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
+                    /></g
+                  ></g
+                  >
+</g
+                  ><defs
+                  ><linearGradient x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other"
+                    ><stop offset="0%" stop-color="#FFF"
+                      /><stop offset="100%" stop-color="#DDD"
+                    /></linearGradient
+                    ><filter xlink:actuate="onLoad" xlink:type="simple" id="dropshadow" height="130%" xlink:show="other" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    ><feGaussianBlur stdDeviation="1" in="SourceAlpha"
+                      /><feOffset dx="2" dy="2"
+                      /><feColorMatrix type="matrix" values="0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 0 .5                 0 0 0 1 0"
+                      /><feMerge
+                      ><feMergeNode
+                        /><feMergeNode in="SourceGraphic"
+                      /></feMerge
+                    ></filter
+                    ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+                    ><circle r="2" cx="3" class="circle-marker" cy="3"
+                    /></marker
+                    ><marker refX="1" refY="3" orient="auto" id="diamond-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                    ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+                    /></marker
+                    ><marker refX="7" refY="3" orient="auto" id="diamond-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                    ><polygon class="diamond-marker" points="1,3 4,1 7,3 4,5"
+                    /></marker
+                    ><marker refX="1" refY="3" orient="auto" id="diamond-open-start-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                    ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+                    /></marker
+                    ><marker refX="7" refY="3" orient="auto" id="diamond-open-end-marker" markerHeight="6" preserveAspectRatio="xMidYMid meet" markerWidth="8"
+                    ><polygon class="open-diamond-marker" points="1,3 4,1 7,3 4,5"
+                    /></marker
+                    ><marker refX="6" refY="4" orient="auto" id="barbed-arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                    ><path class="barbed-arrow-marker" d="M2,2 L6,4 L2,6"
+                    /></marker
+                    ><marker refX="2" refY="4" orient="auto" id="barbed-arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                    ><path class="barbed-arrow-marker" d="M6,2 L2,4 L6,6"
+                    /></marker
+                    ><marker refX="6" refY="4" orient="auto" id="arrow-open-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                    ><polygon class="open-arrow-marker" points="6,4 2,2 2,6"
+                    /></marker
+                    ><marker refX="2" refY="4" orient="auto" id="arrow-open-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                    ><polygon class="open-arrow-marker" points="2,4 6,2 6,6"
+                    /></marker
+                    ><marker refX="2" refY="4" orient="auto" id="arrow-start-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                    ><polygon class="arrow-marker" points="2,4 6,2 6,6"
+                    /></marker
+                    ><marker refX="6" refY="4" orient="auto" id="arrow-end-marker" markerHeight="7" preserveAspectRatio="xMidYMid meet" markerWidth="7"
+                    ><polygon class="arrow-marker" points="6,4 2,2 2,6"
+                    /></marker
+                    ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-start-marker" markerHeight="6" markerWidth="6" refX="3"
+                    ><circle r="2" cx="3" class="circle-marker" cy="3"
+                    /></marker
+                    ><marker refY="3" preserveAspectRatio="xMidYMid meet" id="circle-end-marker" markerHeight="6" markerWidth="6" refX="3"
+                    ><circle r="2" cx="3" class="circle-marker" cy="3"
+                    /></marker
+                    ><marker id="-start-marker" preserveAspectRatio="xMidYMid meet"
+                    /><marker id="-end-marker" preserveAspectRatio="xMidYMid meet"
+                    /><marker id="gap-start-marker" preserveAspectRatio="xMidYMid meet"
+                    /><marker id="gap-end-marker" preserveAspectRatio="xMidYMid meet"
+                    /><marker id="none-start-marker" preserveAspectRatio="xMidYMid meet"
+                    /><marker id="none-end-marker" preserveAspectRatio="xMidYMid meet"
+                  /></defs
+                ></svg
+              >

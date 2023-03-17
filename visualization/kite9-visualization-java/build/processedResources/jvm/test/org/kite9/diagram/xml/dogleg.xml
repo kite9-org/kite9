@@ -1,0 +1,60 @@
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+ 
+ <glyph id="idd" stereotype="" label="vhxcvhd kj vjkxch kjdshv dsfhkds fsggjhgjhgj">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_1" label="New Glyph">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_2" label="New Glyph">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_3" label="New Glyph">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+
+  <link id="id_4">
+   
+   <from xsi:type="glyph" reference="idd"/>
+   <to xsi:type="glyph" reference="id_1"/>
+  </link>
+  <link id="id_5">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="glyph" reference="idd"/>
+  </link>
+  <link id="id_6">
+   
+   <from xsi:type="glyph" reference="idd"/>
+   <to xsi:type="glyph" reference="id_3"/>
+  </link>
+  <link id="id_10">
+   
+   <from xsi:type="glyph" reference="idd"/>
+   <to xsi:type="glyph" reference="id_3"/>
+  </link>
+  <link id="id_14">
+   
+   <from xsi:type="glyph" reference="idd"/>
+   <to xsi:type="glyph" reference="id_1"/>
+  </link>
+  <link id="id_8">
+   
+   <from xsi:type="glyph" reference="id_3"/>
+   <to xsi:type="glyph" reference="id_1"/>
+  </link>
+  <link id="id_12">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_2"/>
+  </link>
+  </diagram>

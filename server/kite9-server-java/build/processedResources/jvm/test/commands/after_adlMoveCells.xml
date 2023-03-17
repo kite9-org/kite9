@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <diagram id="The Diagram">
+    
+    <table style="--kite9-grid-size: 2 2; " id="table1">
+      <cell style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 0 0;" id="t1"/>
+      <cell class="shaded" style="--kite9-occupies-x: 4 4; --kite9-occupies-y: 0 0;" id="t2"/>
+      <cell class="shaded bordered" style="--kite9-occupies-x: 4 4; --kite9-occupies-y: 1 1;" id="t3"/>
+      <cell class="bordered" style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 1 1;" id="t4"/>
+    </table>
+    
+    
+  </diagram>

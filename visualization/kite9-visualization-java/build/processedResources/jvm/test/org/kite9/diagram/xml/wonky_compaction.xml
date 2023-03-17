@@ -1,0 +1,43 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="auto:10909">
+ 
+ <glyph id="id_1" label="New Part">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <arrow id="id_17" label="A">
+  
+ </arrow>
+ <glyph id="id_2" label="New Part">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_4" label="New Part">
+  
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ 
+
+  <link id="id_3" drawDirection="RIGHT">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="glyph" reference="id_4"/>
+  </link>
+  <link id="id_20" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_1"/>
+   <to xsi:type="arrow" reference="id_17"/>
+  </link>
+  <link id="id_16" drawDirection="UP">
+   
+   <from xsi:type="glyph" reference="id_2"/>
+   <to xsi:type="arrow" reference="id_17"/>
+  </link>
+  <link id="id_18" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_4"/>
+   <to xsi:type="arrow" reference="id_17"/>
+  </link>
+  </diagram>

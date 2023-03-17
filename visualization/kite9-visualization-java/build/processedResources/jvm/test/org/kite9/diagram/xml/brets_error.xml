@@ -1,0 +1,22 @@
+<diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="The Diagram">
+
+	<context id="con1" layout="DOWN" bordered="true">
+		<context id="con2" bordered="true">
+			<context id="con_i2" layout="HORIZONTAL" bordered="true">
+			</context>
+			<context id="con_i3" layout="DOWN" bordered="true">
+			</context>
+		</context>
+		<arrow id="a" label="Connection Via Typed/Interfaced Adapters"></arrow>
+		<context id="con3" layout="HORIZONTAL" bordered="true"></context>
+		<glyph id="g1" label="New Glyph"></glyph>
+	</context>
+
+
+	
+		<link id="id_1" drawDirection="UP" >
+			<from xsi:type="context" reference="con_i3" />
+			<to xsi:type="context" reference="con3" />
+		</link>
+	 
+</diagram>

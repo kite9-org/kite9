@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
+          'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg:svg contentScriptType="text/ecmascript" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" zoomAndPan="magnify" contentStyleType="text/css" xmlns:pp="http://www.kite9.org/schema/post-processor" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" version="1.0"
+><svg:g xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:svg="http://www.w3.org/2000/svg" style="--kite9-type: diagram; --kite9-padding: 50px;" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 50.0 50.0 50.0 50.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=100.0, h=100.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@51c4ad0f; " id="one" xmlns="http://www.kite9.org/schema/adl" xml:id="one"
+  ><svg:g style="fill: white; stroke: grey; stroke-width: 3px; " xmlns:svg="http://www.w3.org/2000/svg"
+  /></svg:g
+></svg:svg
+>

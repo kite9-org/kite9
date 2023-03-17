@@ -1,0 +1,68 @@
+<?xml version="1.0"?><diagram  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="9" name="Some bobbins Name">
+ 
+ <hints py1="0.001248001" py2="0.9995" px2="0.99" px1="0.01"/>
+ <context id="id_16" layout="RIGHT" bordered="true">
+  
+  <hints py1="0.5005" py2="0.9995" px2="0.99" px1="0.01" y1="294.0" y2="336.0" x2="198.0" x1="12.0"/>
+  <label xsi:type="text-line" id="id_17">
+   
+   <hints y1="296.0" y2="334.0" x2="141.5" x1="68.5"/>
+   <text>Left-To-Right
+Container</text>
+   <symbols/>
+  </label>
+ </context>
+ <arrow id="id_8">
+  
+  <hints py1="0.0012480011" py2="0.249751" px2="0.98804194" px1="0.01195804" y1="12.0" y2="36.0" x2="186.0" x1="54.0"/>
+  <label>New Connection Body</label>
+ </arrow>
+ <glyph id="id_20" shape="umlACTOR">
+  
+  <hints py1="0.25037324" py2="0.37437624" px2="0.98706585" px1="0.012934124" y1="86.0" y2="170.0" x2="150.0" x1="90.0"/>
+  <stereotype/>
+  <label>Actor</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+ <glyph id="id_11" shape="umlCOMPONENT" >
+  
+  <hints py1="0.37462476" py2="0.49862775" px2="0.98706585" px1="0.012934124" y1="182.0" y2="254.0" x2="168.0" x1="72.0"/>
+  <stereotype />
+  <label >New Part
+
+c
+</label>
+  <text-lines/>
+  <symbols/>
+ </glyph>
+
+ 
+
+  <link id="id_24" shape="NORMAL" >
+   
+   <from xsi:type="context" reference="id_16"/>
+   <to xsi:type="glyph" reference="id_11"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>NONE</toDecoration>
+  </link>
+  <link id="id_21" shape="NORMAL"  drawDirection="DOWN">
+   
+   <from xsi:type="arrow" reference="id_8"/>
+   <to xsi:type="glyph" reference="id_20"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>DIAMOND OPEN</toDecoration>
+  </link>
+  <link id="id_25" shape="NORMAL" >
+   
+   <from xsi:type="glyph" reference="id_11"/>
+   <to xsi:type="arrow" reference="id_8"/>
+   <fromDecoration>NONE</fromDecoration>
+   <toDecoration>DIAMOND OPEN</toDecoration>
+  </link>
+  <link id="id_23" shape="INVISIBLE" drawDirection="DOWN">
+   
+   <from xsi:type="glyph" reference="id_20"/>
+   <to xsi:type="glyph" reference="id_11"/>
+  </link>
+  </diagram>
