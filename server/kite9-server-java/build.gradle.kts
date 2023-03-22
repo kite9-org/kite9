@@ -8,7 +8,9 @@ plugins {
 }
 
 kotlin {
-    jvm()
+    jvm() {
+        withJava()
+    }
 }
 
 

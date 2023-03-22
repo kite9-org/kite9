@@ -12,6 +12,7 @@ target
 .idea/
 .idea/*
 *.iml
+build
 
 # Mac Nonsense
 *.DS_Store

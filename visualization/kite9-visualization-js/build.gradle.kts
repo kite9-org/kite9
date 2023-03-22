@@ -20,8 +20,3 @@ kotlin {
 
 description = "Kite9 Visualization Javascript"
 
-
-dependencies {
-    implementation(kotlin("stdlib-js"))
-    api(project(":kite9-visualization-common"))
-}
