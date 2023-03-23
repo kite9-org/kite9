@@ -12,6 +12,7 @@ kotlin {
         withJava()
         dependencies {
             api(project(":kite9-visualization-java"))
+            api(project(":kite9-visualization-common"))
             api(project(":kite9-pipeline-common"))
             api("org.kohsuke:github-api:1.306")
             api("org.springframework.boot:spring-boot-starter-actuator:2.7.0")
@@ -21,6 +22,9 @@ kotlin {
             api("org.springframework.boot:spring-boot-starter-webflux:2.7.0")
             api("org.springframework.boot:spring-boot-starter-websocket:2.7.0")
             api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3")
+            implementation("org.apache.xmlgraphics:batik-util:1.14")
+            implementation("org.apache.xmlgraphics:batik-bridge:1.14")
+            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
             api("net.sf.saxon:Saxon-HE:10.5")
             api("org.xmlunit:xmlunit-core:2.9.0")
             api("org.webjars:bootstrap:4.3.1")
@@ -33,19 +37,15 @@ kotlin {
             testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.0")
         }
     }
+
+
+    sourceSets {
+        val jvmMain by getting
+        val jvmTest by getting
+    }
+
 }
 
-dependencies {
-    implementation(project(":kite9-visualization-common"))
-    implementation("org.xmlunit:xmlunit-core:2.9.0")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:2.14.2")
-}
-}
-
-sourceSets {
-    val jvmMain by getting
-    val jvmTest by getting
-}
 
 
 java {
