@@ -1,6 +1,6 @@
 plugins {
     id("org.kite9.java-conventions")
-    kotlin("multiplatform") version "1.8.10"
+    kotlin("multiplatform")
 }
 
 kotlin {
