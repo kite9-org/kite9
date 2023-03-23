@@ -1,18 +1,19 @@
 plugins {
-    id("org.kite9.java-conventions")
     kotlin("multiplatform")
 }
 
-
 kotlin {
-    jvm()
+    jvm() {
+        withJava()
+    }
 
     sourceSets {
-        val visMain by creating
         val jvmMain by getting {
-            dependsOn(visMain)
         }
     }
 }
 
-description = "Kite9 Visualization Common"
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}

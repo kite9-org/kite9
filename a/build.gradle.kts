@@ -10,9 +10,7 @@ kotlin {
     }
 
     sourceSets {
-        val myMain by creating
         val jvmMain by getting {
-            dependsOn(myMain)
         }
     }
 
