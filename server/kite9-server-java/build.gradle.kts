@@ -5,6 +5,7 @@
 plugins {
     id("org.kite9.java-conventions")
     kotlin("multiplatform")
+    id("org.springframework.boot").version("2.7.0")
 }
 
 kotlin {
