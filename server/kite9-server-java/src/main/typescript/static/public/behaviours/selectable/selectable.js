@@ -1,0 +1,76 @@
+import { getMainSvg, currentTarget } from '../../bundles/screen.js';
+import { getKite9Target } from '../../bundles/api.js';
+import { addNamedEventListener } from '../../bundles/monika.js';
+export function clearLastSelected(within) {
+    within.querySelectorAll(".lastSelected").forEach(c => {
+        c.classList.remove("lastSelected");
+    });
+}
+export function lastSelected(element) {
+    element.classList.add("lastSelected");
+}
+export function select(element, within = getMainSvg()) {
+    const classes = element.classList;
+    classes.add("selected");
+    // unselect nested elements
+    element.querySelectorAll(".selected").forEach(c => {
+        c.classList.remove("selected");
+    });
+    // unselect parent elements
+    let v = element;
+    while (v) {
+        v = v.parentElement;
+        if (v != null) {
+            v.classList.remove("selected");
+        }
+    }
+    clearLastSelected(within);
+    lastSelected(element);
+}
+export function isSelected(element) {
+    return element.classList.contains("selected");
+}
+export function isLastSelected(element) {
+    return element.classList.contains("lastSelected");
+}
+export function singleSelect(elements, within = getMainSvg()) {
+    within.querySelectorAll(".selected").forEach(c => {
+        c.classList.remove("selected");
+    });
+    elements.forEach(e => e.classList.add("selected"));
+    clearLastSelected(within);
+    lastSelected(elements[0]);
+}
+export function unselect(element) {
+    element.classList.remove("selected");
+}
+// Adds .selected class when the user mouseups over an element.
+// Adds .lastSelected class to a single element, which is the last one clicked on
+export function initSelectable(within = undefined, isSingleSelect = false) {
+    if (within == undefined) {
+        within = getMainSvg();
+    }
+    function mouseup(event) {
+        if (event['handledSelect']) {
+            return;
+        }
+        const v = getKite9Target(currentTarget(event));
+        if (v == undefined) {
+            return;
+        }
+        if (!isSelected(v)) {
+            if (isSingleSelect) {
+                // unselect all other elements
+                singleSelect([v], within);
+            }
+            else {
+                select(v, within);
+            }
+        }
+        else {
+            unselect(v);
+        }
+        event['handledSelect'] = true;
+    }
+    addNamedEventListener(within, "mousedown", "selectable", mouseup);
+}

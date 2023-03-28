@@ -1,0 +1,16 @@
+<diagram 
+  xmlns="http://www.kite9.org/schema/adl" 
+  xmlns:svg="http://www.w3.org/2000/svg"
+  title="Ports"
+  allow-drag="true"
+  icon="/public/templates/links/port.svg"
+  style="--kite9-layout: down; ">
+
+	<container style="--kite9-layout: right; --kite9-margin-right: 30pt; --kite9-min-width: 200px; --kite9-min-height: 200px; ">
+		<port id="p-top" style="--kite9-direction: up;" />
+		<port id="p-right" style="--kite9-direction: right" />
+		<port id="p-bottom" style="--kite9-direction: down" />
+		<port id="p-left" style="--kite9-direction: left" />
+	</container>
+
+</diagram>

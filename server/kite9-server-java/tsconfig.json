@@ -2,8 +2,8 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowJs": true,
-		"outDir": "target/classes/static/public",
-		"rootDir": "src/main/resources/static/public",
+		"outDir": "build/processedResources/jvm/main",
+		"rootDir": "src/main/typescript",
 		"target": "es2021",
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,

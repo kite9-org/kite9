@@ -1,0 +1,19 @@
+
+/* tables */
+
+[k9-elem=table] {
+	--kite9-layout: grid;
+	--kite9-padding: 10pt;
+}
+
+/* cells */
+
+[k9-elem=cell] {
+	--kite9-usage: regular;
+	--kite9-vertical-align: center;
+	--kite9-horizontal-align: center;
+	--kite9-sizing: minimize;
+	text-align: middle;
+	--kite9-min-size: 30pt 30pt;
+	--kite9-traversal: always;
+}

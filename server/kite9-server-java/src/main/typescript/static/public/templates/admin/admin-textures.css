@@ -1,0 +1,146 @@
+@import url('/github/kite9-org/kite9/templates/basic/basic-textures.css');
+@import url('/github/kite9-org/kite9/templates/highlight/highlight.css');
+@import url('/public/fonts/Kanit/Kanit.css');
+
+* {
+	font-family: Kanit;
+}
+
+[k9-elem=diagram] {
+	font-weight: 600;
+	margin: 0pt;
+	font-size: 15pt;
+	--kite9-layout: down;
+	--kite9-padding-left: 0;
+	--kite9-padding-right: 0;
+	--kite9-padding-top: 0;
+	--kite9-padding-bottom: 0;
+	
+}
+
+/* Containers */
+
+
+[k9-elem=container].main {
+	--kite9-margin-top: 0pt;
+	--kite9-layout: horizontal;
+}
+
+[k9-elem=container].trail {
+	--kite9-padding: 0pt;
+	--kite9-margin: 0;
+}
+
+[k9-elem=container].trail > g > rect {
+	stroke: none;
+}
+ 
+[k9-elem=container].trail * {
+	--kite9-margin: 0;
+}
+
+[k9-elem=container].grid {
+	--kite9-layout: grid;
+	--kite9-grid-columns: 4;
+}
+
+[k9-elem=container] > [k9-elem=back] {
+	stroke-width: 1pt;
+	stroke: #454545;
+}
+
+.invis [k9-elem=back] {
+	stroke: none;
+}
+
+/* Container Labels */
+
+[k9-elem=label] > [k9-elem=back] {
+	fill: none;
+	stroke: none;
+}
+
+[k9-elem=label] {
+	--kite9-sizing: minimize;
+}
+
+[k9-elem=label] > [k9-elem=front] {
+	fill: #232323;
+	font-style: normal;
+	font-size: 15pt;
+	font-weight: 200;
+	--kite9-margin: 20pt;
+}
+
+[k9-elem=entity] > [k9-elem=back],
+[k9-elem=pill] > [k9-elem=back] {
+	fill: white;
+}
+
+/* Attributes */
+
+[k9-elem=icon] {
+	--kite9-type: container;
+	--kite9-horizontal-align: center;
+	--kite9-vertical-align: top;
+}
+
+[k9-elem=pill] > [k9-elem=icon],
+[k9-elem=container].trail > [k9-elem=icon] {
+	--kite9-vertical-align: middle;
+	--kite9-horizontal-align: left;
+	--kite9-margin: 0pt;
+}
+
+[k9-elem=pill] > [k9-elem=title] {
+	--kite9-vertical-align: middle;
+	--kite9-margin-left: 5pt;
+}
+
+[k9-elem=caption] {
+	--kite9-type: text;
+	fill: #686868;
+	stroke: #AAAA88;
+	stroke-width: 0;
+	font-size: 18pt;
+	--kite9-margin: 15pt;
+	--kite9-text-bounds-size: 200pt 240pt;
+}
+
+[k9-elem=entity] [k9-elem=caption].title {
+	--kite9-vertical-align: bottom;
+}
+
+[k9-texture=foreground] > g > text {
+	font-size: 22pt;
+	font-weight: 500;
+	--kite9-vertical-align: top;
+}
+
+[k9-elem=caption].description > g > text {
+	fill:  #767676;
+	font-size: 15pt;
+	font-weight: 200;
+	
+}
+
+
+/* General */
+
+.round {
+	stroke: black;
+	stroke-width: 15pt;
+	fill: white;
+}
+
+.panel {
+	--kite9-layout: down;
+}
+
+.grid-temporary {
+	fill: none;
+	fill-opacity: 0;
+	stroke: none;
+}
+
+

@@ -1,0 +1,86 @@
+
+/** text-fixed format */
+
+[k9-format=text-fixed] {
+  --kite9-type: text;
+  --kite9-vertical-align: center;
+  --kite9-connection-align: 50%;
+  --kite9-horizontal-align: center;
+  --kite9-sizing: minimize;
+}
+
+/** image, image-fixed format */
+
+[k9-format=image],
+[k9-format=image-fixed] {
+  --kite9-type: svg;
+  --kite9-horizontal-align: center;
+  --kite9-vertical-align: center;
+}
+
+/* shape */
+
+[k9-format=shape] {
+  --kite9-type: container;
+  --kite9-horizontal-align: center;
+  --kite9-vertical-align: center;
+}
+
+/* container format */
+
+[k9-format=container] {
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+}
+
+/* text-captioned, text-portrait, text-shape-inline format */
+
+[k9-format=text-image-portrait],
+[k9-format=text-image-captioned],
+[k9-format=text-shape-captioned],
+[k9-format=text-shape-portrait],
+[k9-format=text-shape-inline] {
+	--kite9-type: container;
+	--kite9-sizing: minimize;
+}
+
+[k9-format=text-image-portrait],
+[k9-format=text-shape-portrait] {
+  --kite9-layout: down;
+}
+
+/* depiction:  a shape inside an object */
+
+[k9-format=text-shape-captioned] > g > [k9-elem=depiction],
+[k9-format=text-image-portrait] > g > [k9-elem=depiction],
+[k9-format=text-shape-portrait] > g > [k9-elem=depiction] {
+  --kite9-type: svg;
+  --kite9-connection-align: 50%;
+  --kite9-horizontal-align: center;
+  --kite9-connections: separate;
+}
+
+/* caption:  text inside the object */
+
+[k9-format=text-shape-inline] > g >[k9-elem=caption],
+[k9-format=text-image-portrait] > g >[k9-elem=caption],
+[k9-format=text-shape-portrait] > g > [k9-elem=caption],
+[k9-format=text-shape-captioned] > g > [k9-elem=caption]  {
+  --kite9-type: text;
+  --kite9-horizontal-align: center;
+  --kite9-vertical-align: center;
+  --kite9-sizing: minimize;
+}
+
+/* align: aligns the contents of the object */
+
+[k9-format=text-shape-captioned] > g > [k9-elem=shape-align] {
+  --kite9-type: link;
+}
+
+[k9-format=text-shape-captioned] > g > [k9-elem=shape-align] > g > [k9-elem=from],
+[k9-format=text-shape-captioned] > g > [k9-elem=shape-align] > g > [k9-elem=to] {
+  --kite9-type: link-end;
+}
+
+

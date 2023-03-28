@@ -1,0 +1,27 @@
+._overlay rect._background {
+	fill: white;
+	fill-opacity: .5;
+	stroke: none;
+}
+
+._overlay path._sizing,
+._overlay path._sizing-marker {
+	stroke: #fd9870;
+	stroke-opacity: 1;
+	stroke-width: 1px;
+	stroke-dasharray: 2 2;
+	fill: none;	
+}
+
+._overlay rect._sizing {
+	stroke: #fd9870;
+	stroke-opacity: 1;
+	stroke-width: 2px;
+	stroke-dasharray: 2 2;
+	fill: none;
+}
+
+._overlay ellipse {
+	fill: #fd9870;
+	fill-opacity: 1;
+}

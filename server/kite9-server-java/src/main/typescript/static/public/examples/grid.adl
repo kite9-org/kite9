@@ -1,0 +1,26 @@
+<diagram xmlns="http://www.kite9.org/schema/adl" xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia" xslt:template="/public/templates/basic/basic-template.xsl">
+   <container id="bigbox" style="fill: #aaaaaa; fill-opacity: 0.8; --kite9-margin-left: 50px; --kite9-layout: grid; ">
+      <cell id="2-0" style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 0 0; ">
+         <box id="b2">
+            <textarea id="t2">,</textarea>
+         </box>
+      </cell>
+      <cell id="2-1" style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 1 1; ">
+         <box id="b1">
+            <textarea id="t1" style="fill: red">y</textarea>
+            <port id="p1" style="--kite9-direction: up; "/>
+         </box>
+      </cell>
+      <cell id="2-2" style="--kite9-occupies-x: 0 0; --kite9-occupies-y: 2 2; "/>
+      <cell id="2-3" style="--kite9-occupies-x: 1 1; --kite9-occupies-y: 0 0; "/>
+      <cell id="2-4" style="--kite9-occupies-x: 1 1; --kite9-occupies-y: 1 1; ">
+         <box id="b3">
+            <textarea id="t3">b3 line</textarea>
+         </box>
+      </cell>
+      <cell id="2-5" style="--kite9-occupies-x: 1 1; --kite9-occupies-y: 2 2; "/>
+      <cell id="2-6" style="--kite9-occupies-x: 2 2; --kite9-occupies-y: 0 0; "/>
+      <cell id="2-7" style="--kite9-occupies-x: 2 2; --kite9-occupies-y: 1 1; "/>
+      <cell id="2-8" style="--kite9-occupies-x: 2 2; --kite9-occupies-y: 2 2; "/>
+   </container>
+</diagram>

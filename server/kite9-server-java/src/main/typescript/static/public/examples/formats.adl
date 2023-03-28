@@ -1,0 +1,58 @@
+<diagram xmlns="http://www.kite9.org/schema/adl"
+         xmlns:svg="http://www.w3.org/2000/svg"
+         id="dia" style="--kite9-layout: down; ">
+         
+   <svg:defs>
+     <svg:style type="text/css">
+       @import url('/github/kite9-org/kite9/templates/formats/formats-textures.css?v=v0.15');
+     </svg:style>
+   </svg:defs>
+         
+   <item id="c" k9-format="container">
+     <item id="t1" k9-format="text-shape-inline">Text Shape Inline</item>
+     
+     <item id="t2" k9-format="text-fixed">Text Fixed</item>
+      
+     
+     <item id="t3" k9-format="text-shape-portrait" k9-shape="ellipse">Text Portrait</item>
+     
+     <item id="t4" k9-format="text-shape-captioned" k9-shape="ellipse">Text Captioned</item> 
+    </item>
+    
+   <item id="cp" k9-format="container" style="fill: #B3B3B3; ">
+     <item id="t1p" k9-format="text-shape-inline" style="fill: #6A2A6A; ">Text Shape Inline</item>
+      
+     <item id="t2p" k9-format="text-fixed" style="fill: #602060; ">Text Fixed</item>
+      
+     <item id="t3p" k9-format="text-shape-portrait" k9-shape="ellipse" style="fill: #602060; fill-opacity: 1; ">Text Portrait</item>
+     
+     <item id="t4p" k9-format="text-shape-captioned" k9-shape="ellipse" style="fill: #602060; fill-opacity: 1; ">Text Captioned</item>
+ 
+    </item>
+    
+    <item id="d" k9-format="container">
+    
+      <item id="td" k9-format="image" href="/github/kite9-org/kite9/templates/admin/leaf.svg" />
+      
+      <item id="ti" k9-format="image-fixed" href="/github/kite9-org/kite9/templates/admin/leaf.svg"></item> 
+      
+      <item id="te" k9-format="text-image-portrait" href="/github/kite9-org/kite9/templates/admin/leaf.svg">Text Image Portrait</item> 
+   
+      <item id="s1" k9-format="shape"></item> 
+               
+   </item>
+
+    <item id="e" k9-format="container">
+    
+      <item id="tdp" k9-format="image" href="/github/kite9-org/kite9/templates/admin/leaf.svg" width="100pt" height="100pt"/>
+      
+      <item id="tip" k9-format="image-fixed" href="/github/kite9-org/kite9/templates/admin/leaf.svg"></item> 
+      
+      <item id="tep" k9-format="text-image-portrait" href="/github/kite9-org/kite9/templates/admin/leaf.svg">Text Image Portrait</item> 
+   
+      <item id="s1p" k9-format="shape" k9-shape="ellipse" style="fill: #602060;"></item> 
+               
+   </item>
+
+
+</diagram>
