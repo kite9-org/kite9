@@ -1,6 +1,7 @@
 import com.github.gradle.node.npm.task.NpxTask
 
 plugins {
+    id("org.kite9.java-conventions")
     kotlin("multiplatform")
     id("org.springframework.boot").version("2.7.0")
     id("com.github.node-gradle.node").version("3.5.1")
@@ -21,9 +22,9 @@ kotlin {
             api("org.springframework.boot:spring-boot-starter-webflux:2.7.0")
             api("org.springframework.boot:spring-boot-starter-websocket:2.7.0")
             api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3")
-            api("org.apache.xmlgraphics:batik-util:1.14")
-            api("org.apache.xmlgraphics:batik-bridge:1.14")
-            api("org.apache.xmlgraphics:batik-transcoder:1.14")
+            implementation("org.apache.xmlgraphics:batik-util:1.14")
+            implementation("org.apache.xmlgraphics:batik-bridge:1.14")
+            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
             api("net.sf.saxon:Saxon-HE:10.5")
             api("org.xmlunit:xmlunit-core:2.9.0")
             api("org.webjars:bootstrap:4.3.1")
