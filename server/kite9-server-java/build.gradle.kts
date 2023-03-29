@@ -57,6 +57,9 @@ val compileTypescript = tasks.register<NpxTask>("compileTypescript") {
     command.set("tsc")
 }
 
+val compile = tasks.getByName("jvmMainClasses") {
+    dependsOn(compileTypescript)
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11

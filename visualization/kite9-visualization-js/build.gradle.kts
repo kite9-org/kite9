@@ -12,7 +12,10 @@ kotlin {
 
         val jsMain by getting {
             kotlin.srcDir("src/main/kotlin")
-            kotlin.srcDir("../kite9-visualization-common/src/jvmMain/kotlin")
+            dependencies {
+                api(project(":kite9-visualization-common"))
+            }
+            //kotlin.srcDir("../kite9-visualization-common/src/jvmMain/kotlin")
         }
     }
 }
