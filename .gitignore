@@ -13,7 +13,6 @@ target
 .idea/*
 *.iml
 build
-buildSrc
 .gradle
 
 # Mac Nonsense
