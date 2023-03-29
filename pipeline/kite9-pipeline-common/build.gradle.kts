@@ -1,12 +1,11 @@
 plugins {
-    id("org.kite9.java-conventions")
     kotlin("multiplatform")
 }
-
 
 kotlin {
     jvm() {
         withJava()
+        val implementation by configurations
         dependencies {
             implementation(project(":kite9-visualization-common"))
             implementation("org.xmlunit:xmlunit-core:2.9.0")

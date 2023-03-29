@@ -22,6 +22,3 @@ project(":kite9-visualization-java").projectDir = file("visualization/kite9-visu
 project(":kite9-pipeline-common").projectDir = file("pipeline/kite9-pipeline-common")
 project(":kite9-server-java").projectDir = file("server/kite9-server-java")
 project(":kite9-visualization-js").projectDir = file("visualization/kite9-visualization-js")
-//include("a")
-//include("b")
-//include("c")

@@ -5,7 +5,11 @@ plugins {
     kotlin("multiplatform") apply false
 }
 
-allprojects {
+subprojects {
+
+	group = "org.kite9"
+    version = "3.0.0"
+    
     repositories {
         mavenCentral()
     }
