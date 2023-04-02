@@ -5,7 +5,7 @@ import { addNamedEventListener } from '../../bundles/monika.js';
 
 /**
  * Allows the context menu to appear when the user clicks an element with an id
- */    
+ */
 export function initActionable(contextMenu : ContextMenu, selector : Selector = undefined) {
 
 	/**
