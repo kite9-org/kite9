@@ -8,8 +8,7 @@ kotlin {
     }
 
     sourceSets {
-        val jvmMain by getting {
-        }
+        val jvmMain by getting
     }
 }
 
