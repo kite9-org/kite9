@@ -3,6 +3,7 @@ plugins {
     // in each subproject's classloader
     kotlin("jvm") apply false
     kotlin("multiplatform") apply false
+    id("eclipse")
 }
 
 subprojects {
@@ -13,4 +14,6 @@ subprojects {
     repositories {
         mavenCentral()
     }
+
+
 }

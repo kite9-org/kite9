@@ -1,10 +1,10 @@
 plugins {
     kotlin("multiplatform")
+    id("eclipse")
 }
 
 kotlin {
     jvm() {
-        withJava()
     }
 
     sourceSets {

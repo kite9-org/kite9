@@ -5,8 +5,8 @@ import org.springframework.security.core.Authentication;
 import com.kite9.pipeline.adl.holder.meta.Role;
 
 /**
- * This is an API that controls peristence to some kind of backing storage.
- * 
+ * This is an API that controls persistence to some kind of backing storage.
+ * <p>
  * Generally this is diagrams, but we also use it for file upload (creatable)
  * 
  * @author robmoffat
@@ -14,7 +14,7 @@ import com.kite9.pipeline.adl.holder.meta.Role;
  */
 public interface ModifiableAPI extends SourceAPI {
 
-	public enum ModificationType { 
+	enum ModificationType {
 		/** Doesn't exist yet, but the user has the rights to create it */
 		CREATABLE,		
 	
@@ -23,21 +23,21 @@ public interface ModifiableAPI extends SourceAPI {
 		
 		/** User lacks permission to change */
 		VIEWONLY
-	};
+	}
+
+
+	void commitRevisionAsBytes(String message, Authentication by, byte[] bytes);
 	
-	
-	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes);
-	
-	public ModificationType getModificationType(Authentication a);
+	ModificationType getModificationType(Authentication a);
 
 	/**
 	 * Returns role for user, or NONE if the user isn't authenticated
 	 */
-	public Role getAuthenticatedRole(Authentication a);
+	Role getAuthenticatedRole(Authentication a);
 
 	/**
 	 * Returns a userid for the underlying api.
 	 */
-	public String getUserId(Authentication a);
+	String getUserId(Authentication a);
 	
 }

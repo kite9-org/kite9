@@ -1,6 +1,7 @@
 plugins {
     id("org.kite9.java-conventions")
     kotlin("multiplatform")
+    id("eclipse")
 }
 
 kotlin {
