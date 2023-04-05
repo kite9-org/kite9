@@ -10,7 +10,7 @@ kotlin {
         dependencies {
             api(project(":kite9-visualization-common"))
             implementation("org.apache.xmlgraphics:batik-svggen:1.14")
-            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
+            implementation("org.apache.xmlgraphics:batik-transcoder:1.14") 
             implementation("org.apache.xmlgraphics:batik-bridge:1.14")
             implementation("org.apache.xmlgraphics:batik-ext:1.14")
             implementation("org.apache.xmlgraphics:xmlgraphics-commons:2.7")
@@ -19,10 +19,13 @@ kotlin {
             testImplementation("junit:junit:4.13.2")
             testImplementation("org.xmlunit:xmlunit-core:2.9.0")
         }
+        
     }
 
     sourceSets {
-        val jvmMain by getting
+        val jvmMain by getting {
+        
+        }
         val jvmTest by getting
     }
 }

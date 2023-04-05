@@ -25,7 +25,9 @@ kotlin {
             api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3")
             implementation("org.apache.xmlgraphics:batik-util:1.14")
             implementation("org.apache.xmlgraphics:batik-bridge:1.14")
-            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
+            implementation("org.apache.xmlgraphics:batik-transcoder:1.14") {
+            	exclude(group = "xml-apis")
+            }
             api("net.sf.saxon:Saxon-HE:10.5")
             api("org.xmlunit:xmlunit-core:2.9.0")
             api("org.webjars:bootstrap:4.3.1")
