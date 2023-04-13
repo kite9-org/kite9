@@ -50,7 +50,8 @@ kotlin {
 
 eclipse {
   classpath {
-    containers("bob")
+      minusConfigurations.remove(configurations.getByName(":kite9-visualization-java"))
+      containers("bob")
   }
 }
 
