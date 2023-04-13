@@ -5,7 +5,6 @@ plugins {
     kotlin("multiplatform")
     id("org.springframework.boot").version("2.7.0")
     id("com.github.node-gradle.node").version("3.5.1")
-    id("eclipse")
 }
 
 kotlin {
@@ -46,13 +45,6 @@ kotlin {
         val jvmMain by getting
         val jvmTest by getting
     }
-}
-
-eclipse {
-  classpath {
-      minusConfigurations.remove(configurations.getByName(":kite9-visualization-java"))
-      containers("bob")
-  }
 }
 
 node {
