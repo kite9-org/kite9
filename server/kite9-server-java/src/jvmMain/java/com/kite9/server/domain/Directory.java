@@ -1,8 +1,6 @@
 package com.kite9.server.domain;
 
-import java.util.List;
-
-public abstract class Directory extends RestEntity {
+public abstract class Directory extends Content implements HasContents {
 
 	@Override
 	public String getIcon() {
@@ -18,9 +16,5 @@ public abstract class Directory extends RestEntity {
 	public String getCommands() {
 		return "focus NewDocument";
 	}
-
-	public abstract List<Document> getDocuments();
-	
-	public abstract List<Directory> getSubDirectories();
 
 }

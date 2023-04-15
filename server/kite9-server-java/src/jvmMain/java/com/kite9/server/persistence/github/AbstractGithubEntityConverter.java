@@ -13,6 +13,8 @@ import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHPerson;
 import org.kohsuke.github.GHPersonSet;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHTree;
+import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.domain.Content;
 import com.kite9.server.domain.Directory;
 import com.kite9.server.domain.Document;
 import com.kite9.server.domain.Organisation;
@@ -161,8 +164,7 @@ public abstract class AbstractGithubEntityConverter {
 		return out;
 	}
 
-	public Directory templateDirectory(Link l, String name, List<RestEntity> parents, List<Document> contents,
-									   List<Directory> subdirectories) {
+	public Directory templateDirectory(Link l, String name, List<RestEntity> parents, List<Content> contents) {
 		Directory out = new Directory() {
 
 			@Override
@@ -176,13 +178,8 @@ public abstract class AbstractGithubEntityConverter {
 			}
 
 			@Override
-			public List<Document> getDocuments() {
+			public List<Content> getContents() {
 				return contents;
-			}
-
-			@Override
-			public List<Directory> getSubDirectories() {
-				return subdirectories;
 			}
 
 			@Override
@@ -196,8 +193,7 @@ public abstract class AbstractGithubEntityConverter {
 		return out;
 	}
 
-	public Repository templateRepo(Link self, GHRepository r, List<Document> documents, List<Directory> subdirs,
-			List<RestEntity> parents) {
+	public Repository templateRepo(Link self, GHRepository r, List<Content> contents, List<RestEntity> parents) {
 		Repository p = new Repository() {
 
 			@Override
@@ -216,13 +212,8 @@ public abstract class AbstractGithubEntityConverter {
 			}
 
 			@Override
-			public List<Document> getDocuments() {
-				return documents;
-			}
-
-			@Override
-			public List<Directory> getSubDirectories() {
-				return subdirs;
+			public List<Content> getContents() {
+				return contents;
 			}
 
 		};
@@ -237,7 +228,7 @@ public abstract class AbstractGithubEntityConverter {
 
 		@SuppressWarnings("deprecation")
 		List<Repository> repoList = repos.asList().stream().map(r -> {
-			return templateRepo(lb.slash(r.getName()).withSelfRel(), r, null, null, null);
+			return templateRepo(lb.slash(r.getName()).withSelfRel(), r, null, null);
 		}).collect(Collectors.toList());
 		return repoList;
 	}
@@ -254,12 +245,12 @@ public abstract class AbstractGithubEntityConverter {
 		return orgList;
 	}
 
-	public Document templateDocument(Link l, GHContent c, List<RestEntity> parents) {
+	public Document templateDocument(Link l, String name, List<RestEntity> parents) {
 		Document out = new Document() {
 
 			@Override
 			public String getTitle() {
-				return c.getName();
+				return name;
 			}
 
 			@Override
@@ -274,14 +265,10 @@ public abstract class AbstractGithubEntityConverter {
 			
 			@Override
 			public String getIcon() {
-				return getIconUrl(l, c);
-			}
-
-			private String getIconUrl(Link l, GHContent c) {
-				if (fs.getFormatFor(c.getName()) instanceof DiagramFileFormat) {
+				if (fs.getFormatFor(name) instanceof DiagramFileFormat) {
 					return l.getHref();	
-				} else if (hasIcon(c.getName())) {
-					return "/github/kite9-org/kite9/templates/admin/icons/"+getExtension(c.getName())+".svg?v=v0.15";
+				} else if (hasIcon(name)) {
+					return "/github/kite9-org/kite9/templates/admin/icons/"+getExtension(name)+".svg?v=v0.15";
 				} else {
 					return "/github/kite9-org/kite9/templates/admin/icons/unknown.svg?v=v0.15";
 				}
@@ -297,26 +284,29 @@ public abstract class AbstractGithubEntityConverter {
 		return out;
 	}
 
-	public List<Document> templateChildDiagrams(LinkBuilder lb, List<GHContent> contents)
+	public List<Content> templateContents(LinkBuilder lb, GHTree contents)
 			throws IOException {
-		return contents.stream().filter(c -> c.isFile())
-				.filter(c -> fs.getFormatFor(c.getName()) != null).map(c -> {
-					Document out = templateDocument(buildDiagramLink(lb, c), c, null);
-					return out;
-				}).collect(Collectors.toList());
-	}
-
-	protected Link buildDiagramLink(LinkBuilder lb, GHContent c) {
-		return lb.slash(c.getName()).withSelfRel();
-	}
-
-	public List<Directory> templateChildDirectories(LinkBuilder lb, List<GHContent> contents) throws IOException {
-		return contents.stream().filter(c -> c.isDirectory())
-				.map(c -> templateDirectory(buildDiagramLink(lb, c), c.getName(), null, null, null))
+		return contents.getTree().stream()
+				.map(c -> {
+					if (isTree(c)) {
+						return templateDirectory(buildDiagramLink(lb, c), c.getPath(), null, null);	
+					} else if (fs.getFormatFor(c.getPath()) != null) {
+						Document out = templateDocument(buildDiagramLink(lb, c), c.getPath(), null);
+						return out;
+					} else {
+						return null;
+					}
+				})
+				.filter(c -> c != null)
 				.collect(Collectors.toList());
-		// .map(c -> EntityConverter.templateDirectory(, safeGetName(c), null, null,
-		// null))
-		// .collect(Collectors.toList());
+	}
+	
+	private boolean isTree(GHTreeEntry c) {
+		return "tree".equals(c.getType());
+	}
+
+	protected Link buildDiagramLink(LinkBuilder lb, GHTreeEntry c) {
+		return lb.slash(c.getPath()).withSelfRel();
 	}
 
 	public String sanitize(GHContent c) {
@@ -370,33 +360,31 @@ public abstract class AbstractGithubEntityConverter {
 		return templateOrganisation(lb.slash("github").slash(userOrg).withSelfRel(), org, repoList, Collections.singletonList(gh)); 
 	}
 		
-	public Directory getDirectoryPage(
+	public RestEntity getDirectoryPage(
 			String userorg,
 			String reponame, 
 			String path, 
-			List<GHContent> contents, Authentication authentication) throws Exception {
+			GHTree contents, Authentication authentication) throws Exception {
 		
 		try {
 			LinkBuilder lb = linkToRemappedURI().slash("github");
 			LinkBuilder lbUserOrg = lb.slash(userorg);
 			LinkBuilder lbRepo = lbUserOrg.slash(reponame);
 			LinkBuilder lbRelative = lbRepo.slash(path);
-			LinkBuilder contentRelative = linkToRemappedURI().slash(GithubContentController.GITHUB).slash(userorg).slash(reponame).slash(path);
+			//LinkBuilder contentRelative = linkToRemappedURI().slash(GithubContentController.GITHUB).slash(userorg).slash(reponame).slash(path);
 			GitHub github = getGithubApi(authentication);
 			GHRepository repo = github.getRepository(userorg+"/"+reponame);
-			Repository repoParent = templateRepo(lbRepo.withSelfRel(), repo, null, null, null);
+			Repository repoParent = templateRepo(lbRepo.withSelfRel(), repo, null, null);
 			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), repo.getOwner(), null, null);
-			List<Directory> childDirectories = templateChildDirectories(lbRelative, contents);
-			List<Document> childDiagrams = templateChildDiagrams(contentRelative, contents);
+			List<Content> childContent = templateContents(lbRelative, contents);
 			
 			if (!StringUtils.hasText(path)) {
 				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
-				return templateRepo(lbRelative.withSelfRel(), repo, childDiagrams, childDirectories, parents);
+				return templateRepo(lbRelative.withSelfRel(), repo, childContent, parents);
 			} else {
 				String currentDir = path.substring(path.lastIndexOf("/")+1);
 				List<RestEntity> parents = buildParents(authentication, owner, repoParent, path, lbRepo);
-				return templateDirectory(lbRelative.withSelfRel(), 
-						currentDir, parents, childDiagrams, childDirectories);
+				return templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
 			}
 		} catch (Throwable e) {
 			throw new Kite9XMLProcessingException("Couldn't format directory page "+path, e);
@@ -416,7 +404,7 @@ public abstract class AbstractGithubEntityConverter {
 			for (int i = 0; i < pathParts.length-1; i++) {
 				String curPart = pathParts[i];
 				lb = lb.slash(curPart);
-				out.add(templateDirectory(lb.withSelfRel(), curPart, null, null, null));
+				out.add(templateDirectory(lb.withSelfRel(), curPart, null, null));
 			}
 		}
 		return out;

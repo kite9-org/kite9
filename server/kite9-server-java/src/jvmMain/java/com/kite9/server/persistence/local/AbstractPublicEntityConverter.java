@@ -13,6 +13,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.security.core.Authentication;
 
+import com.kite9.server.domain.Content;
 import com.kite9.server.domain.Directory;
 import com.kite9.server.domain.Document;
 import com.kite9.server.domain.RestEntity;
@@ -52,13 +53,21 @@ public abstract class AbstractPublicEntityConverter {
 				return "directory";
 			}
 			
-			@Override
-			public List<Directory> getSubDirectories() {
+			public List<Content> getContents() {
 				return Arrays.asList(resources).stream()
-						.filter(d -> isDirectory(d))
-						.map(d -> createDirectory(d, lb))
-						.collect(Collectors.toList());
-				}
+					.map(d -> {
+						if (isDirectory(d)) {
+							return createDirectory(d, lb);
+						} else if (isDocument(d)) {
+							return createDocument(d, lb);
+						} else {
+							return null;
+						}
+					})
+					.filter(d -> d != null)
+					.collect(Collectors.toList());
+						
+			}
 
 			protected Directory createDirectory(Resource d, LinkBuilder lb) {
 				Directory out = new Directory() {
@@ -79,26 +88,13 @@ public abstract class AbstractPublicEntityConverter {
 					}
 					
 					@Override
-					public List<Directory> getSubDirectories() {
-						return Collections.emptyList();
-					}
-					
-					@Override
-					public List<Document> getDocuments() {
+					public List<Content> getContents() {
 						return Collections.emptyList();
 					}
 				};
 				
 				out.add(lb.slash(d.getFilename()).withSelfRel());
 				return out;
-			}
-			
-			@Override
-			public List<Document> getDocuments() {
-				return Arrays.asList(resources).stream()
-					.filter(d -> isDocument(d))
-					.map(d -> createDocument(d, lb))
-					.collect(Collectors.toList());
 			}
 
 			protected Document createDocument(Resource d, LinkBuilder lb) {
@@ -171,12 +167,7 @@ public abstract class AbstractPublicEntityConverter {
 		Directory out = new Directory() {
 
 			@Override
-			public List<Document> getDocuments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<Directory> getSubDirectories() {
+			public List<Content> getContents() {
 				return Collections.emptyList();
 			}
 

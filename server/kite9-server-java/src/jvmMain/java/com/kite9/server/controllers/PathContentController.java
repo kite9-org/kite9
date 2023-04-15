@@ -58,7 +58,7 @@ public class PathContentController extends AbstractContentController {
 	@Value("${kite9.caching:true}")
 	boolean caching;
 	
-	@Value("${kite9.home.path:/github/kite9-org/kite9/templates/admin/index.adl}")
+	@Value("${kite9.home.path:/public/admin/index.adl}")
 	String homePagePath;
 	
 

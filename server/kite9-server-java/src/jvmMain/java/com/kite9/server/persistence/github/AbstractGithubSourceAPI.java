@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +81,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		K9URI out = u.withoutQueryParameters();
 		return out;
 	}
+	
 	public static String getRef(K9URI u) {
 		List<String> param = u.param("v");
 		if ((param == null) || (param.isEmpty())) {
@@ -127,11 +129,11 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	}
 
 	public abstract GitHub getGitHubAPI(String token);
-
-	public String getRef() {
-		return ref;
-	}
 	
+	protected GHRepository getRepo(String token) throws IOException {
+		return getGitHubAPI(token).getRepository(owner+"/"+reponame);
+	}
+
 
 	protected void initContents(Authentication auth) throws Exception {
 		String token = getAccessToken(auth, clientRepository);
@@ -145,7 +147,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		if ((contents == null) && (token != null)) {
 			GitHub api = getGitHubAPI(token);
 			try {
-				contents = api.getRepository(owner+"/"+reponame).getDirectoryContent(filepath, ref);
+				String branchName = ref == null ? getRepo(token).getDefaultBranch() : ref;
+				contents = api.getRepository(owner+"/"+reponame).getTreeRecursive(branchName,1);
 			} catch (IOException e) {
 				LOG.debug("Not a directory");
 			}

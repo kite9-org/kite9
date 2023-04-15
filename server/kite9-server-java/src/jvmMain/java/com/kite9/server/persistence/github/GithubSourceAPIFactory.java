@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9ProcessingException;
-import org.kohsuke.github.GHContent;
+import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.InitializingBean;
@@ -84,13 +84,12 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 				return getEmail(a);
 			}
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
 				if (contents == ORG_PAGE) {
 					return ec.getOrgPage(owner, a);
-				} else if (contents instanceof List) {		
-					return ec.getDirectoryPage(owner, reponame, filepath, (List<GHContent>) contents, a);
+				} else if (contents instanceof GHTree) {		
+					return ec.getDirectoryPage(owner, reponame, filepath, (GHTree) contents, a);
 				} else {
 					throw new Kite9ProcessingException("can't currently produce an entity representation here");
 				}

@@ -1,6 +1,6 @@
 package com.kite9.server.domain;
 
-public abstract class Repository extends Directory {
+public abstract class Repository extends RestEntity implements HasContents {
 	
 	@Override
 	public String getIcon() {

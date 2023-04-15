@@ -32,11 +32,11 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 		super(u, clientRepository);
 	}
 
-	protected void commitRevision(String message, String branch, Consumer<GHTreeBuilder> fn, Authentication by) {
+	protected void commitRevision(String message, String ref, Consumer<GHTreeBuilder> fn, Authentication by) {
 		try {
 			String token = getAccessToken(by, clientRepository);
-			GHRepository repo = getGitHubAPI(token).getRepository(owner+"/"+reponame);
-			String branchName = branch == null ? repo.getDefaultBranch() : branch;
+			GHRepository repo = getRepo(token);
+			String branchName = ref == null ? repo.getDefaultBranch() : ref;
 			String treeSha = repo.getTree(branchName).getSha();
 			String branchSha = repo.getBranch(branchName).getSHA1();
 

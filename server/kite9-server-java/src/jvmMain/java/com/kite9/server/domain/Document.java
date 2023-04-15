@@ -1,6 +1,6 @@
 package com.kite9.server.domain;
 
-public abstract class Document extends RestEntity {
+public abstract class Document extends Content {
 
 	@Override
 	public String getCommands() {

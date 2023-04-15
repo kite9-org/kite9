@@ -3,7 +3,7 @@
 	  xmlns="http://www.kite9.org/schema/adl"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	  xmlns:svg="http://www.w3.org/2000/svg"
-	  xslt:template="/github/kite9-org/kite9/templates/admin/admin-template.xsl"
+	  xslt:template="/public/templates/admin/admin-template.xsl"
     xmlns:xslt="http://www.kite9.org/schema/xslt" 
 	  style="--kite9-layout: down; ">
 

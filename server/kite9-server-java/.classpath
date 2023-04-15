@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry output="build/classes/java/main" kind="src" path="src/jvmMain/java">
+	<classpathentry kind="src" output="build/classes/java/main" path="src/jvmMain/java">
 		<attributes>
 			<attribute name="gradle_scope" value="main"/>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry output="build/processedResources/jvm/main" kind="src" path="src/jvmMain/resources">
+	<classpathentry kind="src" output="build/processedResources/jvm/main" path="src/jvmMain/resources">
 		<attributes>
 			<attribute name="gradle_scope" value="main"/>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry output="build/classes/java/test" kind="src" path="src/jvmTest/java">
+	<classpathentry kind="src" output="build/classes/java/test" path="src/jvmTest/java">
 		<attributes>
 			<attribute name="test" value="true"/>
 			<attribute name="gradle_scope" value="test"/>
 			<attribute name="gradle_used_by_scope" value="test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry output="build/processedResources/jvm/test" kind="src" path="src/jvmTest/resources">
+	<classpathentry kind="src" output="build/processedResources/jvm/test" path="src/jvmTest/resources">
 		<attributes>
 			<attribute name="test" value="true"/>
 			<attribute name="gradle_scope" value="test"/>
@@ -27,23 +27,18 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="bob"/>
-	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-js/build/libs/kite9-visualization-js-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-common/build/libs/kite9-visualization-common-jvm-3.0.0.jar"/>
 	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/build/libs/kite9-visualization-java-jvm-0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/pipeline/kite9-pipeline-common/build/libs/kite9-pipeline-common-jvm-0.1-SNAPSHOT.jar"/>
-
-
-
-
-
 	<classpathentry kind="lib" path="/Users/rob/.gradle/caches/modules-2/files-2.1/org.kohsuke/github-api/1.306/cb791fc578c559fc6da70fb5e5f819d4f6d21099/github-api-1.306.jar" sourcepath="/Users/rob/.gradle/caches/modules-2/files-2.1/org.kohsuke/github-api/1.306/5562f6848cc4943be1aa90a05c0aa54dfcd2f851/github-api-1.306-sources.jar">
 		<attributes>
-			<attribute name="module" value="true"/>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11/">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
@@ -827,4 +822,5 @@
 			<attribute name="gradle_used_by_scope" value="test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
