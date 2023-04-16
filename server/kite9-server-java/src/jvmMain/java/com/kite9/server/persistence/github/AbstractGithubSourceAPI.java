@@ -143,7 +143,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		testMissing(token);
 	}
 
-	private void testDirectory(String token) throws Exception {
+	private void testDirectory(String token) throws Exception {		
 		if ((contents == null) && (token != null)) {
 			GitHub api = getGitHubAPI(token);
 			try {

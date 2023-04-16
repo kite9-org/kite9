@@ -20,6 +20,12 @@
   --kite9-min-size: 50pt 50pt;
 }
 
+/* svg */
+
+[k9-format=svg] {
+  --kite9-margin: 10pt;
+}
+
 /* container format */
 
 [k9-format=container] {

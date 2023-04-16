@@ -4,7 +4,7 @@
          
    <svg:defs>
      <svg:style type="text/css">
-       @import url('/github/kite9-org/kite9/templates/formats/formats-textures.css?v=v0.15');
+       @import url('/public/templates/formats/formats-textures.css?v=v0.15');
      </svg:style>
    </svg:defs>
          
@@ -32,23 +32,35 @@
     
     <item id="d" k9-format="container">
     
-      <item id="td" k9-format="image" href="/github/kite9-org/kite9/templates/admin/leaf.svg" />
+      <item id="td" k9-format="image" href="/public/templates/admin/leaf.svg" />
       
-      <item id="ti" k9-format="image-fixed" href="/github/kite9-org/kite9/templates/admin/leaf.svg"></item> 
+      <item id="ti" k9-format="image-fixed" href="/public/templates/admin/leaf.svg"></item> 
       
-      <item id="te" k9-format="text-image-portrait" href="/github/kite9-org/kite9/templates/admin/leaf.svg">Text Image Portrait</item> 
+      <item id="te" k9-format="text-image-portrait" href="/public/templates/admin/leaf.svg">Text Image Portrait</item> 
    
       <item id="s1" k9-format="shape"></item> 
+      
+      <item id="v1" k9-format="svg" k9-ui="">
+        <svg:g transform="scale(7)">
+	      	<svg:path fill="green" stroke="#000" d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+        </svg:g>
+      </item>
+      
+      <item id="v1" k9-format="svg-fixed" k9-ui="">
+        <svg:g transform="scale(7)">
+	      	<svg:path fill="green" stroke="#000" d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+        </svg:g>
+      </item>
                
    </item>
 
     <item id="e" k9-format="container">
     
-      <item id="tdp" k9-format="image" href="/github/kite9-org/kite9/templates/admin/leaf.svg" width="100pt" height="100pt"/>
+      <item id="tdp" k9-format="image" href="/public/templates/admin/leaf.svg" width="100pt" height="100pt"/>
       
-      <item id="tip" k9-format="image-fixed" href="/github/kite9-org/kite9/templates/admin/leaf.svg"></item> 
+      <item id="tip" k9-format="image-fixed" href="/public/templates/admin/leaf.svg"></item> 
       
-      <item id="tep" k9-format="text-image-portrait" href="/github/kite9-org/kite9/templates/admin/leaf.svg">Text Image Portrait</item> 
+      <item id="tep" k9-format="text-image-portrait" href="/public/templates/admin/leaf.svg">Text Image Portrait</item> 
    
       <item id="s1p" k9-format="shape" k9-shape="ellipse" style="fill: #602060;"></item> 
                

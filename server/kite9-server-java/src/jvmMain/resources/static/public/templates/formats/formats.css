@@ -26,6 +26,16 @@
   --kite9-vertical-align: center;
 }
 
+/* svg */
+
+[k9-format=svg],
+[k9-format=svg-fixed] {
+  --kite9-type: svg;
+  --kite9-horizontal-align: center;
+  --kite9-vertical-align: center;
+}
+
+
 /* container format */
 
 [k9-format=container] {

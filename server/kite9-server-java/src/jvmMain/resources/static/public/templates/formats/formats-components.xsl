@@ -5,6 +5,8 @@
   <xsl:import href="formats-text-shape-inline-include.xsl"/>
   <xsl:import href="formats-text-fixed-include.xsl"/>
   <xsl:import href="formats-shape-include.xsl"/>
+  <xsl:import href="formats-svg-include.xsl"/>
+  <xsl:import href="formats-svg-fixed-include.xsl"/>
   <xsl:import href="formats-text-shape-portrait-include.xsl"/>
   <xsl:import href="formats-text-shape-captioned-include.xsl"/>
   <xsl:import href="formats-image-include.xsl"/>
