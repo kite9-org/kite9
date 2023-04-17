@@ -3,7 +3,7 @@
   xmlns:adl="http://www.kite9.org/schema/adl"
   xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
-  <xsl:template name="formats-container" match="*[@k9-format='svg-fixed']">
+  <xsl:template name="formats-svg-fixed" match="*[@k9-format='svg-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
     <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />

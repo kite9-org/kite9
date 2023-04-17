@@ -4,7 +4,7 @@
          
    <svg:defs>
      <svg:style type="text/css">
-       @import url('/public/templates/formats/formats-textures.css?v=v0.15');
+       @import url('/public/templates/formats/formats-textures.css');
      </svg:style>
    </svg:defs>
          

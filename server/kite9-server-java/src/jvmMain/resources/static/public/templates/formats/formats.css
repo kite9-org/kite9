@@ -31,6 +31,7 @@
 [k9-format=svg],
 [k9-format=svg-fixed] {
   --kite9-type: svg;
+  --kite9-usage: regular;
   --kite9-horizontal-align: center;
   --kite9-vertical-align: center;
 }

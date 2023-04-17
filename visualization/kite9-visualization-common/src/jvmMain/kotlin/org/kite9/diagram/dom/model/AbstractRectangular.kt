@@ -94,9 +94,9 @@ abstract class AbstractRectangular(
                 return "0";
             }
         } else if ("y1" == name || "height" == name) {
-            return "" + getRenderingInformation().size!!.h
+            return "" + (getRenderingInformation().size?.h ?: "0")
         } else if ("x1" == name || "width" == name) {
-            return "" + getRenderingInformation().size!!.w
+            return "" + (getRenderingInformation().size?.w ?: "0")
         } else if (getLayout() === Layout.GRID && this is Container) {
             val cellX = name.startsWith("cell-x-")
             val cellY = name.startsWith("cell-y-")
