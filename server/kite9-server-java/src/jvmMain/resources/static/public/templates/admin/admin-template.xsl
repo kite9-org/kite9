@@ -31,7 +31,7 @@
    </xsl:template>
    
    
-   <xsl:template match="adl:diagram">
+   <xsl:template match="adl:rest-listing">
    	<xsl:call-template name="formats-container">
    		<xsl:with-param name="k9-elem">admin</xsl:with-param>
    		<xsl:with-param name="k9-texture">none</xsl:with-param>

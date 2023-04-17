@@ -1,11 +1,14 @@
-<?xml version="1.0"?>
-	<diagram 
-	  xmlns="http://www.kite9.org/schema/adl"
-	  xmlns:svg="http://www.w3.org/2000/svg"
-	  style="--kite9-layout: down; ">
+
+<diagram xmlns="http://www.kite9.org/schema/adl"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+	xmlns:svg="http://www.w3.org/2000/svg"
+	xslt:template="/public/templates/admin/admin-template.xsl"
+	xmlns:xslt="http://www.kite9.org/schema/xslt"
+	style="--kite9-layout: down; ">
 
 
-	<container class="title" id="/github" k9-ui="open" k9-texture="none">
+	<container class="title" id="/github" k9-ui="open"
+		k9-texture="none">
 		<item k9-format="svg-fixed">
 			<svg:g transform="scale(7)">
 				<svg:g transform="matrix(1.3333333,0,0,-1.3333333,0,40)"
@@ -21,26 +24,33 @@
 							d="m 0,0 c 0,-0.368 -0.141,-0.711 -0.389,-0.963 -0.25,-0.251 -0.603,-0.414 -1.056,-0.416 -0.489,0.002 -0.836,0.188 -1.076,0.457 -0.241,0.27 -0.368,0.633 -0.368,0.971 0.002,0.422 0.168,0.762 0.432,1.008 0.264,0.244 0.627,0.388 1.012,0.388 0.341,0 0.711,-0.124 0.982,-0.363 C -0.189,0.842 -0.002,0.498 0,0 M 3.396,1.47 C 3.232,2.023 2.957,2.554 2.52,3 1.568,4.115 0.078,4.678 -1.512,4.678 c -1.345,0 -2.595,-0.485 -3.508,-1.342 -0.912,-0.857 -1.484,-2.09 -1.482,-3.551 -0.002,-1.42 0.555,-2.531 1.346,-3.272 0.793,-0.742 1.81,-1.123 2.752,-1.125 0.047,0.001 0.086,0.002 0.129,0.003 l -2.393,-3.29 c -0.055,-0.073 -0.061,-0.17 -0.021,-0.252 0.043,-0.082 0.126,-0.135 0.216,-0.135 h 3.625 c 0.08,0 0.157,0.041 0.202,0.107 l 3.044,4.484 v 0.002 c 0.643,0.963 1.198,2.101 1.215,3.475 v 0.003 c 0,0.553 -0.052,1.131 -0.217,1.685" />
 					</svg:g>
 				</svg:g>
-				
+
 			</svg:g>
 		</item>
 	</container>
 
 	<group style="--kite9-layout: right; ">
 
-	 	<container id="https://github.com/kite9-org/docs/wiki" k9-texture="none" k9-ui="open">
-			<item k9-format="text-image-portrait" href="/public/templates/admin/books.svg" style="--kite9-min-width: 100pt; --kite9-min-height: 100pt;">Documentation</item>
+		<container id="https://github.com/kite9-org/docs/wiki"
+			k9-texture="none" k9-ui="open">
+			<item k9-format="text-image-portrait"
+				href="/public/templates/admin/books.svg"
+				style="--kite9-min-width: 100pt; --kite9-min-height: 100pt;">Documentation</item>
 		</container>
 
-		<container id="/github" class="panel invis" k9-texture="none" k9-ui="open">
-			<item k9-format="text-image-portrait" href="/public/templates/admin/icons/github.png">GitHub Login</item> 
+		<container id="/github" class="panel invis"
+			k9-texture="none" k9-ui="open">
+			<item k9-format="text-image-portrait"
+				href="/public/templates/admin/icons/github.png">GitHub Login</item>
 		</container>
 
-		<container id="/github/kite9-org/examples" k9-texture="none" k9-ui="open">
-			<item k9-format="text-image-portrait" href="/public/templates/admin/leaf.svg">Examples</item>
-	 	</container>
-	 	
-	 	
+		<container id="/github/kite9-org/examples" k9-texture="none"
+			k9-ui="open">
+			<item k9-format="text-image-portrait"
+				href="/public/templates/admin/leaf.svg">Examples</item>
+		</container>
+
+
 
 	</group>
 
