@@ -1,0 +1,4 @@
+sources:
+- path: / 
+  showDirectories: true
+  pattern: "**/*.(adl|svg)"

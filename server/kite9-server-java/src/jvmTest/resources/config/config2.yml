@@ -1,0 +1,13 @@
+uploads: .kite9/loader
+sources:
+- path: p1
+  showDirectories: true
+  pattern: "**/*.(adl|svg)"
+- path: p2
+  showDirectories: false
+  pattern: "*"
+  
+templates:
+- a
+- b
+- c

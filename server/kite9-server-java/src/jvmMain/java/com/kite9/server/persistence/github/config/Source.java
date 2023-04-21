@@ -1,5 +1,6 @@
 package com.kite9.server.persistence.github.config;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.kohsuke.github.GHTreeEntry;
@@ -9,7 +10,6 @@ import org.springframework.util.PathMatcher;
 public class Source implements Predicate<GHTreeEntry> {
 
 	private String path = "/";
-	private String template;
 	private String pattern= "*.adl";
 	private boolean showDirectories = false;
 	
@@ -17,10 +17,9 @@ public class Source implements Predicate<GHTreeEntry> {
 		super();
 	}
 
-	public Source(String path, String template, String pattern) {
+	public Source(String path, String pattern) {
 		super();
 		this.path = path;
-		this.template = template;
 		this.pattern = pattern;
 	}
 	
@@ -49,14 +48,6 @@ public class Source implements Predicate<GHTreeEntry> {
 		this.path = path;
 	}
 
-	public String getTemplate() {
-		return template;
-	}
-
-	public void setTemplate(String template) {
-		this.template = template;
-	}
-
 	public String getPattern() {
 		return pattern;
 	}
@@ -71,6 +62,29 @@ public class Source implements Predicate<GHTreeEntry> {
 
 	public void setShowDirectories(boolean showDirectories) {
 		this.showDirectories = showDirectories;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(path, pattern, showDirectories);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Source other = (Source) obj;
+		return Objects.equals(path, other.path) && Objects.equals(pattern, other.pattern)
+				&& showDirectories == other.showDirectories;
+	}
+
+	@Override
+	public String toString() {
+		return "Source [path=" + path + ", pattern=" + pattern + ", showDirectories=" + showDirectories + "]";
 	}
 	
 }

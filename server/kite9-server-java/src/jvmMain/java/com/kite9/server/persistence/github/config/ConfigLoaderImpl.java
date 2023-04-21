@@ -24,7 +24,7 @@ public class ConfigLoaderImpl implements ConfigLoader {
 		GHTreeEntry configEntry = tree.getEntry(KITE_CONFIG_FILE);
 		
 		if (configEntry == null) {
-			return DEFAULT;
+			return new Config();
 		} else {
 			return loadConfig(token, repo.getOwnerName(), repo.getName(), KITE_CONFIG_FILE, ref);
 		}		
