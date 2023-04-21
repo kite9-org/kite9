@@ -11,6 +11,7 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.persistence.github.config.ConfigLoader;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.topic.WebSocketConfig;
 
@@ -20,9 +21,9 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 	private final DiagramFileFormat dff;
 	protected K9MediaType mediaType;
 
-	public AbstractGithubModifiableDiagramAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository,
-			DiagramFileFormat dff, K9MediaType mt) {
-		super(u, clientRepository);
+	public AbstractGithubModifiableDiagramAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, ConfigLoader configLoader,
+			DiagramFileFormat dff, K9MediaType mt) throws Exception {
+		super(u, clientRepository, configLoader);
 		this.dff = dff;
 		this.mediaType = mt;
 	}
@@ -34,14 +35,14 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 
 	@Override
 	public ADLBase getCurrentRevisionContent(Authentication authentication, HttpHeaders headers) throws Exception {
-		ADLBase base = dff.handleRead(getCurrentRevisionContentStream(authentication), getKite9ResourceURI(), headers);
+		ADLBase base = dff.handleRead(getCurrentRevisionContentStream(authentication), getUnderlyingResourceURI(), headers);
 		return base;
 	}
 
 	@Override
 	public void commitRevision(String message, Authentication by, ADLDom dom) {
-		ADLOutput out = dom.process(getKite9ResourceURI(), dff);
-		commitRevision(message, ref, tb -> tb.add(filepath, out.getAsBytes(), false), by);
+		ADLOutput out = dom.process(getUnderlyingResourceURI(), dff);
+		commitRevision(message, tb -> tb.add(this.githubPath.getFilepath(), out.getAsBytes(), false), by);
 	}
 
 	@Override

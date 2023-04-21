@@ -1,7 +1,6 @@
 package com.kite9.server.persistence.github;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +8,7 @@ import java.util.Set;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9ProcessingException;
-import org.kohsuke.github.GHTree;
+import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.InitializingBean;
@@ -27,9 +26,13 @@ import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.domain.RestEntity;
-import com.kite9.server.persistence.PathUtils;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.persistence.cache.CacheManagedAPIFactory;
+import com.kite9.server.persistence.github.config.ConfigLoader;
+import com.kite9.server.persistence.github.conversion.AbstractGithubEntityConverter;
+import com.kite9.server.persistence.github.conversion.DirectoryDetails;
+import com.kite9.server.persistence.github.conversion.GithubEntityConverter;
+import com.kite9.server.persistence.github.urls.Kite9GithubPath;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.topic.ChangeBroadcaster;
 import com.kite9.server.update.Update;
@@ -38,9 +41,11 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 
 	protected OAuth2AuthorizedClientRepository clientRepository;
 	
+	protected ConfigLoader configLoader;
+	
 	private FormatSupplier formatSupplier;
 	
-	private AbstractGithubEntityConverter ec;
+	private GithubEntityConverter ec;
 	
 	private String githubApiKey;
 	
@@ -48,17 +53,18 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			ApplicationContext ctx,
 			ADLFactory factory,
 			OAuth2AuthorizedClientRepository clientRepository, 
+			ConfigLoader configLoader,
 			FormatSupplier formatSupplier, String githubApiKey) {
 		super(ctx, factory);
 		this.clientRepository = clientRepository;
+		this.configLoader = configLoader;
 		this.formatSupplier = formatSupplier;
 		this.githubApiKey = githubApiKey;
 	}
 	
 	public SourceAPI createBackingAPI(K9URI u, Authentication authentication) throws Exception {
 		String path = u.getPath();
-		if (GithubContentController.GITHUB.equals(PathUtils.getPathSegment(PathUtils.TYPE, path))) {
-			// path starts with github, so we're good to go
+		if (Kite9GithubPath.isGithubPath(path)) {
 			Format f = formatSupplier.getFormatFor(path);
 			if (f instanceof DiagramFileFormat) {
 				return createDiagramApi(u, f);
@@ -70,9 +76,9 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		}	
 	}
 
-	protected SourceAPI createNonDiagramApi(K9URI u, Format f) throws URISyntaxException {
+	protected SourceAPI createNonDiagramApi(K9URI u, Format f) throws Exception {
 		
-		return new AbstractGithubModifiableAPI(u, clientRepository) {		
+		return new AbstractGithubModifiableAPI(u, clientRepository, configLoader) {		
 			
 			@Override
 			public GitHub getGitHubAPI(String token) {
@@ -84,12 +90,15 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 				return getEmail(a);
 			}
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
-				if (contents == ORG_PAGE) {
-					return ec.getOrgPage(owner, a);
-				} else if (contents instanceof GHTree) {		
-					return ec.getDirectoryPage(owner, reponame, filepath, (GHTree) contents, a);
+				if (contents == StaticPages.HOME_PAGE) {
+					return ec.getHomePage(a);
+				} else if (contents == StaticPages.ORG_PAGE) {
+					return ec.getOrgPage(this.githubPath.getOwner(), a);
+				} else if (contents instanceof DirectoryDetails) {		
+					return ec.getDirectoryPage((DirectoryDetails) contents, a);
 				} else {
 					throw new Kite9ProcessingException("can't currently produce an entity representation here");
 				}
@@ -102,9 +111,9 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 		};
 	}
 
-	protected SourceAPI createDiagramApi(K9URI u, Format f2) throws URISyntaxException {
+	protected SourceAPI createDiagramApi(K9URI u, Format f2) throws Exception {
 		K9MediaType mainMediaType = f2.getMediaTypes().get(0);
-		return new AbstractGithubModifiableDiagramAPI(u, clientRepository, (DiagramFileFormat) f2, mainMediaType) {
+		return new AbstractGithubModifiableDiagramAPI(u, clientRepository, configLoader, (DiagramFileFormat) f2, mainMediaType) {
 			
 			@Override
 			public GitHub getGitHubAPI(String token) {
@@ -167,8 +176,6 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			protected GitHub getGithubApi(Authentication authentication) throws Exception {
 				return GithubSourceAPIFactory.this.createGitHub(authentication);
 			}
-			
-			
 		};
 	}
 

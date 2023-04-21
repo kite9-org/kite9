@@ -67,7 +67,7 @@ public class Kite9ErrorController implements ErrorController {
 			Type t = lre.getType();
 			K9URI redirect = lre.getRedirectUri(); 
 			HttpHeaders headers = new HttpHeaders();
-			headers.add("Location", t.path+"?state=bllabh");    
+			headers.add("Location", t.path+"?state="+redirect.toString());    
 			return new ResponseEntity<String>(headers,HttpStatus.FOUND);	
 			
 		}

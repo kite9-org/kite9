@@ -216,7 +216,7 @@ public class HateoasADLHttpMessageWriter extends AbstractADLDomMessageWriter<Rep
 		generator.setPrettyPrinter(pp);
 
 		// set top-level element name
-		generator.setNextName(new QName(Kite9Namespaces.ADL_NAMESPACE, "diagram", ""));
+		generator.setNextName(new QName(Kite9Namespaces.ADL_NAMESPACE, "rest-response", ""));
 		return generator;
 	}
 

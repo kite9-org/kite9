@@ -22,16 +22,6 @@ public class URIWrapper {
 
             @NotNull
             @Override
-            public K9URI withoutQueryParameters() {
-                try {
-                    return wrap(new java.net.URI(javaNetURI.getScheme(), javaNetURI.getAuthority(), javaNetURI.getPath(), null, null));
-                } catch (URISyntaxException e) {
-                    throw new IllegalArgumentException("Couldn't create uri: ", e);
-                }
-            }
-
-            @NotNull
-            @Override
             public K9URI changeScheme(@NotNull String scheme, @NotNull String path) {
                 try {
                     return wrap(new java.net.URI(scheme, javaNetURI.getUserInfo(), javaNetURI.getHost(), javaNetURI.getPort(),

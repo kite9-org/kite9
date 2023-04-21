@@ -1,4 +1,4 @@
-package com.kite9.server.persistence.github;
+package com.kite9.server.persistence.github.conversion;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -13,7 +13,6 @@ import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHPerson;
 import org.kohsuke.github.GHPersonSet;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
@@ -30,11 +29,14 @@ import com.kite9.server.domain.Content;
 import com.kite9.server.domain.Directory;
 import com.kite9.server.domain.Document;
 import com.kite9.server.domain.Organisation;
+import com.kite9.server.domain.Ref;
 import com.kite9.server.domain.Repository;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.domain.User;
+import com.kite9.server.persistence.github.AbstractGithubModifiableDiagramAPI;
+import com.kite9.server.persistence.github.GithubSourceAPIFactory;
 
-public abstract class AbstractGithubEntityConverter {
+public abstract class AbstractGithubEntityConverter implements GithubEntityConverter {
 	
 	FormatSupplier fs;
 	GithubSourceAPIFactory apiFactory;
@@ -222,7 +224,38 @@ public abstract class AbstractGithubEntityConverter {
 
 		return p;
 	}
+	
+	public Ref templateRef(Link self, String name, List<Content> contents, List<RestEntity> parents) {
+		Ref p = new Ref() {
 
+			@Override
+			public String getTitle() {
+				return name;
+			}
+
+			@Override
+			public String getDescription() {
+				return "";
+			}
+
+			@Override
+			public List<RestEntity> getParents() {
+				return parents;
+			}
+
+			@Override
+			public List<Content> getContents() {
+				return contents;
+			}
+
+		};
+
+		p.add(self);
+
+		return p;
+	}
+
+	
 	public List<Repository> templateChildRepos(LinkBuilder lb, GHPerson user) {
 		PagedIterable<GHRepository> repos = user.listRepositories();
 
@@ -284,9 +317,9 @@ public abstract class AbstractGithubEntityConverter {
 		return out;
 	}
 
-	public List<Content> templateContents(LinkBuilder lb, GHTree contents)
+	public List<Content> templateContents(LinkBuilder lb, List<GHTreeEntry> contents)
 			throws IOException {
-		return contents.getTree().stream()
+		return contents.stream()
 				.map(c -> {
 					if (isTree(c)) {
 						return templateDirectory(buildDiagramLink(lb, c), c.getPath(), null, null);	
@@ -331,6 +364,7 @@ public abstract class AbstractGithubEntityConverter {
 	}
 	
 	
+	@Override
 	public User getHomePage(Authentication authentication) throws Exception {
 		GitHub github = getGithubApi(authentication);
 		String name = AbstractGithubModifiableDiagramAPI.getUserLogin(authentication);
@@ -349,6 +383,7 @@ public abstract class AbstractGithubEntityConverter {
 		return templateHome(lb.slash("github").withSelfRel());
 	}
 
+	@Override
 	public Organisation getOrgPage(
 			@PathVariable(name = "userorg") String userOrg, 
 			Authentication authentication) throws Exception {
@@ -360,38 +395,43 @@ public abstract class AbstractGithubEntityConverter {
 		return templateOrganisation(lb.slash("github").slash(userOrg).withSelfRel(), org, repoList, Collections.singletonList(gh)); 
 	}
 		
+	@Override
 	public RestEntity getDirectoryPage(
-			String userorg,
-			String reponame, 
-			String path, 
-			GHTree contents, Authentication authentication) throws Exception {
+			DirectoryDetails dd, Authentication authentication) throws Exception {
 		
 		try {
 			LinkBuilder lb = linkToRemappedURI().slash("github");
-			LinkBuilder lbUserOrg = lb.slash(userorg);
-			LinkBuilder lbRepo = lbUserOrg.slash(reponame);
-			LinkBuilder lbRelative = lbRepo.slash(path);
-			//LinkBuilder contentRelative = linkToRemappedURI().slash(GithubContentController.GITHUB).slash(userorg).slash(reponame).slash(path);
-			GitHub github = getGithubApi(authentication);
-			GHRepository repo = github.getRepository(userorg+"/"+reponame);
-			Repository repoParent = templateRepo(lbRepo.withSelfRel(), repo, null, null);
-			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), repo.getOwner(), null, null);
-			List<Content> childContent = templateContents(lbRelative, contents);
+			LinkBuilder lbUserOrg = lb.slash(dd.getPath().getOwner());
+			LinkBuilder lbRepo = lbUserOrg.slash(dd.getPath().getReponame());
+			LinkBuilder lbRef = lbRepo.slash(dd.getPath().getRef());
+			LinkBuilder lbRelative = lbRef.slash(dd.getPath().getFilepath());
+			Repository repo = templateRepo(lbRepo.withSelfRel(), dd.getRepo(), null, null);
+			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), dd.getRepo().getOwner(), null, null);
+			Ref ref = templateRef(lbRef.withSelfRel(), dd.getPath().getRef(), null, null);
 			
-			if (!StringUtils.hasText(path)) {
-				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
-				return templateRepo(lbRelative.withSelfRel(), repo, childContent, parents);
-			} else {
+			List<Content> childContent = templateContents(lbRelative, dd.getEntries());
+			
+			if (StringUtils.hasText(dd.getPath().getFilepath())) {
+				// directory in repo
+				String path = dd.getPath().getFilepath();
 				String currentDir = path.substring(path.lastIndexOf("/")+1);
-				List<RestEntity> parents = buildParents(authentication, owner, repoParent, path, lbRepo);
+				List<RestEntity> parents = buildParents(authentication, owner, repo, ref, dd.getPath().getFilepath(), lbRef);
 				return templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
-			}
+			} else if (StringUtils.hasText(dd.getPath().getRef())) {
+				// top of branch
+				List<RestEntity> parents = buildParents(authentication, owner, repo, ref, null, lbRef);
+				return templateRef(lbRelative.withSelfRel(), dd.getPath().getRef(), childContent, parents);
+			} else {
+				// repo (no ref?)
+				List<RestEntity> parents = buildParents(authentication, owner, null, null, null, lbRepo);
+				return templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
+			} 
 		} catch (Throwable e) {
-			throw new Kite9XMLProcessingException("Couldn't format directory page "+path, e);
+			throw new Kite9XMLProcessingException("Couldn't format directory page "+dd.getPath(), e);
 		}
 	}
 
-	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo, String path, LinkBuilder lb) {
+	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo, Ref ref, String path, LinkBuilder lb) {
 		List<RestEntity> out = new ArrayList<RestEntity>();
 		RestEntity github = createTopLevelParent();
 		out.add(github);

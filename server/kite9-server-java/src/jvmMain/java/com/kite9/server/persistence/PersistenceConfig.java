@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.persistence.github.GithubSourceAPIFactory;
+import com.kite9.server.persistence.github.config.ConfigLoaderImpl;
 import com.kite9.server.persistence.local.StaticSourceAPIFactory;
 import com.kite9.server.sources.PlugableContentAPIFactory;
 import com.kite9.server.sources.SourceAPIFactory;
@@ -56,7 +57,7 @@ public class PersistenceConfig {
 	
 	@Bean
 	GithubSourceAPIFactory githubContentAPIFactory() {
-		return new GithubSourceAPIFactory(ctx, factory, clientRepository, fs, githubApiKey);
+		return new GithubSourceAPIFactory(ctx, factory, clientRepository, new ConfigLoaderImpl(), fs, githubApiKey);
 	}
 
 	@Bean

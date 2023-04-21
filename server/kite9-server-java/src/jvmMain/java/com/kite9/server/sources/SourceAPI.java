@@ -37,8 +37,7 @@ public interface SourceAPI {
 	public K9MediaType getMediaType();
 	
 	/**
-	 * Returns the https://kite9.org URI of the resource being 
-	 * accessed.  All query parameters are removed.
+	 * Returns the https://kite9.org URI of the resource being accessed (as a key).
 	 */
-	public K9URI getKite9ResourceURI();
+	public K9URI getUnderlyingResourceURI();
 }

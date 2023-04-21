@@ -1,18 +1,18 @@
 package com.kite9.server.persistence.github;
 
-import static com.kite9.server.persistence.PathUtils.FILEPATH;
-import static com.kite9.server.persistence.PathUtils.OWNER;
-import static com.kite9.server.persistence.PathUtils.REPONAME;
-import static com.kite9.server.persistence.PathUtils.getPathSegment;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GHTree;
+import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,20 +24,21 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
-import org.springframework.web.reactive.function.client.WebClient.ResponseSpec;
+import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.client.WebClientResponseException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.persistence.github.config.Config;
+import com.kite9.server.persistence.github.config.ConfigLoader;
+import com.kite9.server.persistence.github.conversion.DirectoryDetails;
+import com.kite9.server.persistence.github.urls.Kite9GithubPath;
+import com.kite9.server.persistence.github.urls.RawGithub;
 import com.kite9.server.security.LoginRequiredException;
 import com.kite9.server.security.LoginRequiredException.Type;
 import com.kite9.server.sources.SourceAPI;
+import com.kite9.server.uri.URIWrapper;
 import com.kite9.server.web.URIRewriter;
-
-import reactor.core.publisher.Mono;
 
 /**
  * Represents files or directories loaded from Github.
@@ -46,43 +47,39 @@ import reactor.core.publisher.Mono;
  *
  */
 public abstract class AbstractGithubSourceAPI implements SourceAPI {
-
-	private static final String RAW_GITHUB = "https://raw.githubusercontent.com/";
-	private static final String HEAD_REF = "main";
-	protected static final Object NO_FILE = new Object();
-	protected static final Object ORG_PAGE = new Object();
+	
+	enum StaticPages {
+		NO_FILE, ORG_PAGE, HOME_PAGE
+	}
 	
 	protected static Logger LOG = LoggerFactory.getLogger(SourceAPI.class);
 	
 	private final K9URI resourceUri;
-	protected String path;
-	protected String owner;
-	protected String reponame;
-	protected String filepath;
-	protected String ref;
+	protected Kite9GithubPath githubPath;
 	protected OAuth2AuthorizedClientRepository clientRepository;
+	protected ConfigLoader configLoader;
 	protected Set<String> validTokens;
 	protected Object contents;
-	
-	public AbstractGithubSourceAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository) {
-		this.path = u.getPath();
-		this.ref = getRef(u);
-		this.owner = getPathSegment(OWNER, path);
-		this.reponame = getPathSegment(REPONAME, path);
-		this.filepath = getPathSegment(FILEPATH, path);
+	protected Config config;
+
+	public AbstractGithubSourceAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, ConfigLoader configLoader) throws Exception {
+		this.githubPath = Kite9GithubPath.create(u.getPath(), getProvidedVersionParameter(u));
 		this.clientRepository = clientRepository;
-		this.resourceUri = unmodifiedURI(u);
+		this.resourceUri = createResourceUri(this.githubPath);
+		this.configLoader = configLoader;
 	}
 
 	/**
-	 * This simplifies the URI to remove any query parameters
+	 * This simplifies the URI to remove query parameters except version, which is part of the key
+	 * @throws URISyntaxException 
 	 */
-	private static K9URI unmodifiedURI(K9URI u) {
-		K9URI out = u.withoutQueryParameters();
-		return out;
+	private static K9URI createResourceUri(Kite9GithubPath path) throws URISyntaxException {
+		String url = RawGithub.assembleGithubURL(path);
+		URI uri = new URI(url);
+		return URIWrapper.wrap(uri);
 	}
 	
-	public static String getRef(K9URI u) {
+	public static String getProvidedVersionParameter(K9URI u) {
 		List<String> param = u.param("v");
 		if ((param == null) || (param.isEmpty())) {
 			return null;
@@ -131,12 +128,13 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	public abstract GitHub getGitHubAPI(String token);
 	
 	protected GHRepository getRepo(String token) throws IOException {
-		return getGitHubAPI(token).getRepository(owner+"/"+reponame);
+		return getGitHubAPI(token).getRepository(githubPath.getOwner()+"/"+githubPath.getReponame());
 	}
 
 
 	protected void initContents(Authentication auth) throws Exception {
 		String token = getAccessToken(auth, clientRepository);
+		testHomePage();
 		testOrg();
 		testFile(token);
 		testDirectory(token);
@@ -146,21 +144,56 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	private void testDirectory(String token) throws Exception {		
 		if ((contents == null) && (token != null)) {
 			GitHub api = getGitHubAPI(token);
-			try {
-				String branchName = ref == null ? getRepo(token).getDefaultBranch() : ref;
-				contents = api.getRepository(owner+"/"+reponame).getTreeRecursive(branchName,1);
-			} catch (IOException e) {
-				LOG.debug("Not a directory");
+			String branchName;
+			GHRepository repo = api.getRepository(githubPath.getOwner()+"/"+githubPath.getReponame()); 
+			
+			if (githubPath.getRef() != null) {
+				branchName = githubPath.getRef();
+			} else {
+				branchName = repo.getDefaultBranch();
 			}
+			
+			GHTree tree = repo.getTreeRecursive(branchName,1);
+			if (!checkDirectoryExists(tree)) {
+				LOG.debug("Not a directory");
+				return;
+			}
+			Config config = configLoader.getConfig(tree, repo, token, branchName);
+			List<GHTreeEntry> treeEntries = getFilteredTreeList(tree, config);
+			contents = new DirectoryDetails(repo, treeEntries, this.githubPath);
+
 		}
+	}
+
+	private boolean checkDirectoryExists(GHTree tree) {
+		if (!StringUtils.hasText(this.githubPath.getFilepath())) {
+			return true;
+		}
+		
+		GHTreeEntry entry = tree.getEntry(this.githubPath.getFilepath());
+		return (entry != null) && ("tree".equals(entry.getType()));
+	}
+
+	private List<GHTreeEntry> getFilteredTreeList(GHTree tree, Config config) throws IOException {
+		return tree.getTree().stream()
+			.filter(config)
+			.collect(Collectors.toList());
 	}
 
 	private void testMissing(String token) {
 		if (contents == null) {
 			if (token == null) {
-				throw new LoginRequiredException(Type.GITHUB, getKite9ResourceURI());
+				throw new LoginRequiredException(Type.GITHUB, getUnderlyingResourceURI());
 			} else {
-				contents = NO_FILE;
+				contents = StaticPages.NO_FILE;
+			}
+		}
+	}
+	
+	private void testHomePage() {
+		if (contents == null) {
+			if (githubPath.getOwner() == null) {
+				contents = StaticPages.HOME_PAGE;
 			}
 		}
 	}
@@ -168,8 +201,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	private void testOrg() {
 		if (contents == null) {
 			// easy one first - no repo, so use org page.
-			if (reponame == null) {
-				contents = ORG_PAGE;
+			if (githubPath.getReponame() == null) {
+				contents = StaticPages.ORG_PAGE;
 			}
 		}
 	}
@@ -177,23 +210,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	private void testFile(String token) throws Exception {
 		if (contents == null) {
 			try {
-				// first, check to see if there is a raw entry
-				String ref = this.ref == null ? HEAD_REF : this.ref;
-				String url = RAW_GITHUB + owner + "/" + reponame + "/" + ref + "/" + filepath;
-				
-				WebClient webClient = WebClient.create(url);
-						
-				RequestHeadersSpec<?> spec = webClient.get()
-					.header("Accept-Encoding", "identity")
-					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE);
-				
-				if (token != null) {
-					spec = spec.header("Authorization", "token "+token);
-				}
-						
-				ResponseSpec retrieve = spec.retrieve();
-				Mono<ByteArrayResource> mono = retrieve.bodyToMono(ByteArrayResource.class);
-				ByteArrayResource db = mono.block();
+				String url = RawGithub.assembleGithubURL(githubPath.getOwner(), githubPath.getReponame(), githubPath.getRef(), githubPath.getFilepath());
+				ByteArrayResource db = RawGithub.loadBytesFromGithub(token, url);
 				
 				if (db != null) {
 					contents =  db.getByteArray();
@@ -209,11 +227,12 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 			}
 		}
 	}
+
 	
 	@Override
 	public SourceType getSourceType(Authentication auth) throws Exception {
 		initContents(auth);
-		if ((contents instanceof byte[]) || (contents == NO_FILE)) {
+		if ((contents instanceof byte[]) || (contents == StaticPages.NO_FILE)) {
 			return SourceType.FILE;
 		} else {
 			return SourceType.DIRECTORY;
@@ -226,12 +245,12 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		if (contents instanceof byte[]) {
 			return new ByteArrayInputStream((byte[]) contents);
 		} else {
-			throw new Kite9ProcessingException("not a file: "+getKite9ResourceURI());
+			throw new Kite9ProcessingException("not a file: "+getUnderlyingResourceURI());
 		}
 	}
 
 	@Override
-	public K9URI getKite9ResourceURI() {
+	public K9URI getUnderlyingResourceURI() {
 		return resourceUri;
 	}
 	

@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepo
 
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.uri.K9URI;
+import com.kite9.server.persistence.github.config.ConfigLoader;
 import com.kite9.server.sources.ModifiableAPI;
 
 /**
@@ -28,15 +29,15 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 		
 	protected boolean isNew;
 
-	public AbstractGithubModifiableAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository)  {
-		super(u, clientRepository);
+	public AbstractGithubModifiableAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, ConfigLoader configLoader) throws Exception  {
+		super(u, clientRepository, configLoader);
 	}
 
-	protected void commitRevision(String message, String ref, Consumer<GHTreeBuilder> fn, Authentication by) {
+	protected void commitRevision(String message, Consumer<GHTreeBuilder> fn, Authentication by) {
 		try {
 			String token = getAccessToken(by, clientRepository);
 			GHRepository repo = getRepo(token);
-			String branchName = ref == null ? repo.getDefaultBranch() : ref;
+			String branchName = this.githubPath.getRef();
 			String treeSha = repo.getTree(branchName).getSha();
 			String branchSha = repo.getBranch(branchName).getSHA1();
 
@@ -54,13 +55,13 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 			repo.getRef("heads/"+branchName).updateTo(c.getSHA1());	
 			isNew = false;
 		} catch (IOException e) {
-			throw new Kite9XMLProcessingException("Couldn't commit change to: "+path, e);
+			throw new Kite9XMLProcessingException("Couldn't commit change to: "+this.githubPath.getFilepath(), e);
 		}
 	}
 
 	@Override
 	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
-		commitRevision(message, ref, tb -> tb.add(filepath, bytes, false), by);
+		commitRevision(message, tb -> tb.add(this.githubPath.getFilepath(), bytes, false), by);
 	}
 	
 	@Override
@@ -74,7 +75,7 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 			try {
 				String token = getAccessToken(a, clientRepository);
 				GitHub api = getGitHubAPI(token);
-				GHRepository repo = api.getRepository(owner+ "/"+reponame);
+				GHRepository repo = getRepo(token);
 				GHPermissionType pt = repo.getPermission(api.getMyself());
 				return translateRole(pt);
 			} catch (Throwable e) {

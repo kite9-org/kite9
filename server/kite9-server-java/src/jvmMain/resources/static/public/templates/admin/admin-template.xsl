@@ -31,7 +31,7 @@
    </xsl:template>
    
    
-   <xsl:template match="adl:rest-listing">
+   <xsl:template match="adl:rest-response">
    	<xsl:call-template name="formats-container">
    		<xsl:with-param name="k9-elem">admin</xsl:with-param>
    		<xsl:with-param name="k9-texture">none</xsl:with-param>
@@ -97,23 +97,9 @@
 		   				<xsl:with-param name="id">documents</xsl:with-param>
 		   				<xsl:with-param name="k9-ui">NewDocument</xsl:with-param>
 		   				<xsl:with-param name="content">
-		   					<xsl:apply-templates select="adl:documents" mode="entity" />
+		   					<xsl:apply-templates select="adl:contents" mode="entity" />
 		   					<xsl:call-template name="labels-basic">
-		   						<xsl:with-param name="text"><text>Documents</text></xsl:with-param>
-		   					</xsl:call-template>
-		   				</xsl:with-param>
-					  </xsl:call-template>
-					  
-					  <xsl:call-template name="formats-container">
-					  	<xsl:with-param name="class">grid</xsl:with-param>
-		   		   		<xsl:with-param name="k9-texture">outline</xsl:with-param>
-		   				<xsl:with-param name="k9-elem">container</xsl:with-param>
-		   				<xsl:with-param name="id">sub-directories</xsl:with-param>
-		   				<xsl:with-param name="k9-ui"></xsl:with-param>
-		   				<xsl:with-param name="content">
-		   					<xsl:apply-templates select="adl:directory | adl:subDirectories" mode="entity" />
-		   					<xsl:call-template name="labels-basic">
-		   						<xsl:with-param name="text"><text>Sub-Directories</text></xsl:with-param>
+		   						<xsl:with-param name="text"><text>Contents</text></xsl:with-param>
 		   					</xsl:call-template>
 		   				</xsl:with-param>
 					  </xsl:call-template>

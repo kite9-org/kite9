@@ -18,6 +18,8 @@ import org.xmlunit.diff.ComparisonListener;
 import org.xmlunit.diff.ComparisonResult;
 import org.xmlunit.diff.ComparisonType;
 
+import kotlin.text.Charsets;
+
 public class XMLCompare {
 
 	public static void compareXML(String a, String b) {
@@ -88,7 +90,7 @@ public class XMLCompare {
 			dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 			dbf.setIgnoringElementContentWhitespace(true);
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			Document d = db.parse(new ReaderInputStream(new StringReader(a)));
+			Document d = db.parse(new ReaderInputStream(new StringReader(a), Charsets.UTF_8));
 			return Input.fromNode(d).build();
 		} catch (Exception e) {
 			throw new RuntimeException("Couldn't create DOM Source", e);

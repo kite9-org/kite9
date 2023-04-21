@@ -54,7 +54,7 @@ public class StaticSourceAPI implements ModifiableAPI {
 	}
 
 	@Override
-	public K9URI getKite9ResourceURI() {
+	public K9URI getUnderlyingResourceURI() {
 		return sourceUri;
 	}
 

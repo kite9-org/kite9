@@ -28,8 +28,11 @@ public class ADLConfig implements Logable {
 	@Value("${kite9.transformer.factory:}")
 	private String defaultXSLFactory;
 	
-	@Value("${kite9.transformer.defaultTemplate:/public/templates/basic/basic-template.xsl}")
+	@Value("${kite9.defaultTemplate:/public/templates/basic/basic-template.xsl}")
 	private String defaultTemplate;
+	
+	@Value("${kite9.defaultDiagram:/public/examples/basic.adl}")
+	private String defaultDiagram;
 
     @Bean
     public Cache cache() {
