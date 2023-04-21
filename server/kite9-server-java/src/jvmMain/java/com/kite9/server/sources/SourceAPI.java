@@ -38,6 +38,7 @@ public interface SourceAPI {
 	
 	/**
 	 * Returns the https://kite9.org URI of the resource being accessed (as a key).
+	 * @throws Exception 
 	 */
-	public K9URI getUnderlyingResourceURI();
+	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception;
 }

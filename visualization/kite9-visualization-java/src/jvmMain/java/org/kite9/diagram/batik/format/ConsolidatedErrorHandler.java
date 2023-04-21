@@ -91,22 +91,9 @@ public class ConsolidatedErrorHandler implements
 
     @Override
     public void fatalError(SAXParseException exception) throws SAXException {
-        if (isActuallyASaxProblem(exception)) {
-            log.error("SAX Fatal", exception);
-        }
+        log.send("SAX Fatal.  Can't parse "+ exception.getMessage());
 
         throw exception;
-    }
-
-    /**
-     * Don't report sax error when batik is trying to parse CSS
-     */
-    private boolean isActuallyASaxProblem(SAXParseException exception) {
-        if (exception.getSystemId() == null) {
-            return true;
-        }
-
-        return !exception.getSystemId().endsWith(".css");
     }
 
 	@Override

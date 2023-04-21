@@ -97,7 +97,7 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	}
 
 	@Override
-	public K9URI getUnderlyingResourceURI() {
+	public K9URI getUnderlyingResourceURI(Authentication a) {
 		return dom.getUri();
 	}
 

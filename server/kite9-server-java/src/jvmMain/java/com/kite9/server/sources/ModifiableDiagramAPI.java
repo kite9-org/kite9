@@ -8,7 +8,8 @@ public interface ModifiableDiagramAPI extends ModifiableAPI, DiagramAPI  {
 	
 	/**
 	 * Commits a revision when the content is an ADL Diagram,
+	 * @throws Exception 
 	 */
-	void commitRevision(String message, Authentication by, ADLDom data);
+	void commitRevision(String message, Authentication by, ADLDom data) throws Exception;
 
 }

@@ -77,7 +77,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 				return bs;
 			}
 			
-			return factory.adl(getUnderlyingResourceURI(), localCache, headers);
+			return factory.adl(getUnderlyingResourceURI(a), localCache, headers);
 		} else {
 			// try to access without authentication
 			return backingStore.getCurrentRevisionContent(a, headers);
@@ -110,8 +110,8 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 
 	@Override
-	public K9URI getUnderlyingResourceURI() {
-		return backingStore.getUnderlyingResourceURI();
+	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception {
+		return backingStore.getUnderlyingResourceURI(a);
 	}
 
 	@Override

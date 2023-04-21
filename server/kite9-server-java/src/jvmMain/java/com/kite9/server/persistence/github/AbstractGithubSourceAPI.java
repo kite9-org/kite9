@@ -4,9 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
@@ -54,31 +52,20 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	
 	protected static Logger LOG = LoggerFactory.getLogger(SourceAPI.class);
 	
-	private final K9URI resourceUri;
-	protected Kite9GithubPath githubPath;
-	protected OAuth2AuthorizedClientRepository clientRepository;
-	protected ConfigLoader configLoader;
-	protected Set<String> validTokens;
+	protected final K9URI u;
+	protected final Kite9GithubPath githubPath;
+	protected final OAuth2AuthorizedClientRepository clientRepository;
+	protected final ConfigLoader configLoader;
 	protected Object contents;
 	protected Config config;
 
 	public AbstractGithubSourceAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, ConfigLoader configLoader) throws Exception {
 		this.githubPath = Kite9GithubPath.create(u.getPath(), getProvidedVersionParameter(u));
 		this.clientRepository = clientRepository;
-		this.resourceUri = createResourceUri(this.githubPath);
 		this.configLoader = configLoader;
+		this.u = u;
 	}
-
-	/**
-	 * This simplifies the URI to remove query parameters except version, which is part of the key
-	 * @throws URISyntaxException 
-	 */
-	private static K9URI createResourceUri(Kite9GithubPath path) throws URISyntaxException {
-		String url = RawGithub.assembleGithubURL(path);
-		URI uri = new URI(url);
-		return URIWrapper.wrap(uri);
-	}
-	
+		
 	public static String getProvidedVersionParameter(K9URI u) {
 		List<String> param = u.param("v");
 		if ((param == null) || (param.isEmpty())) {
@@ -183,7 +170,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	private void testMissing(String token) {
 		if (contents == null) {
 			if (token == null) {
-				throw new LoginRequiredException(Type.GITHUB, getUnderlyingResourceURI());
+				throw new LoginRequiredException(Type.GITHUB, u);
 			} else {
 				contents = StaticPages.NO_FILE;
 			}
@@ -245,12 +232,26 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		if (contents instanceof byte[]) {
 			return new ByteArrayInputStream((byte[]) contents);
 		} else {
-			throw new Kite9ProcessingException("not a file: "+getUnderlyingResourceURI());
+			throw new Kite9ProcessingException("not a file: "+getUnderlyingResourceURI(authentication));
 		}
 	}
 
+	private K9URI resourceUri;
+	
 	@Override
-	public K9URI getUnderlyingResourceURI() {
+	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception {
+		if (resourceUri == null) {
+			String url = RawGithub.assembleGithubURL(githubPath, () -> {
+				try {
+					return getRepo(getAccessToken(a, clientRepository)).getDefaultBranch();
+				} catch (IOException e) {
+					LOG.error("Can't get default branch: "+githubPath);
+					return "main";
+				}
+			});
+			URI uri = new URI(url);
+			resourceUri = URIWrapper.wrap(uri);
+		}
 		return resourceUri;
 	}
 	

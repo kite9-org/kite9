@@ -38,7 +38,7 @@ public interface ChangeQueue {
 			this.by = by;
 		}
 		
-		public void perform() {
+		public void perform() throws Exception {
 			on.commitRevision(message, by, payload);
 		}
 	}

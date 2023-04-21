@@ -176,13 +176,23 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 		try {
 			accepted = getMediaTypes(req);
 			K9MediaType best = getBestDiagramMediaType(accepted);
-			format = (DiagramWriteFormat) fs.getFormatFor(best);
-		} catch (Exception e1) {
+			format = checkDiagramWriteFormat(fs.getFormatFor(best), accepted);
+		} catch (HttpMediaTypeNotAcceptableException e1) {
 			throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Couldn't return diagram matching "+accepted, e1);
 		}
+
+			
 		return format;
 	}
 	
+	private DiagramWriteFormat checkDiagramWriteFormat(Format format, List<K9MediaType> accepted) {
+		if (!(format instanceof DiagramWriteFormat)) {
+			throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Couldn't return diagram matching "+accepted);
+		} else {
+			return (DiagramWriteFormat) format;
+		}
+	}
+
 	protected DiagramWriteFormat getOutputFormat(RequestEntity<?> req) {
 		DiagramWriteFormat format;
 		List<K9MediaType> accepted = Collections.emptyList();
@@ -191,7 +201,7 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 					.map(s -> K9MediaType.Companion.parseMediaType(s))
 					.collect(Collectors.toList());
 			K9MediaType best = getBestDiagramMediaType(accepted);
-			format = (DiagramWriteFormat) fs.getFormatFor(best);
+			format = checkDiagramWriteFormat(fs.getFormatFor(best), accepted);
 		} catch (Exception e1) {
 			throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Couldn't return diagram matching "+accepted, e1);
 		}

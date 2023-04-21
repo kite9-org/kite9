@@ -35,13 +35,13 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 
 	@Override
 	public ADLBase getCurrentRevisionContent(Authentication authentication, HttpHeaders headers) throws Exception {
-		ADLBase base = dff.handleRead(getCurrentRevisionContentStream(authentication), getUnderlyingResourceURI(), headers);
+		ADLBase base = dff.handleRead(getCurrentRevisionContentStream(authentication), getUnderlyingResourceURI(authentication), headers);
 		return base;
 	}
 
 	@Override
-	public void commitRevision(String message, Authentication by, ADLDom dom) {
-		ADLOutput out = dom.process(getUnderlyingResourceURI(), dff);
+	public void commitRevision(String message, Authentication by, ADLDom dom) throws Exception {
+		ADLOutput out = dom.process(getUnderlyingResourceURI(by), dff);
 		commitRevision(message, tb -> tb.add(this.githubPath.getFilepath(), out.getAsBytes(), false), by);
 	}
 

@@ -23,6 +23,7 @@ public class LoginRequiredException extends RuntimeException {
 	private final K9URI redirectUri;
 	
 	public LoginRequiredException(Type t, K9URI u) {
+		super("Login required to access "+u);
 		this.t = t;
 		this.redirectUri = u;
 	}

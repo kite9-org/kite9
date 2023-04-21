@@ -91,7 +91,7 @@ public class BasicFormatSupplier implements FormatSupplier {
 			}
 		}
 
-		throw new IllegalArgumentException("Format not supported:" + mt);
+		return null;
 	}
 
 	public List<K9MediaType> getMediaTypes() {
