@@ -8,23 +8,24 @@ import org.springframework.security.core.Authentication;
 import com.kite9.pipeline.adl.holder.meta.Role;
 
 public abstract class AbstractCachingModifiableDiagramAPI implements CachingModifiableDiagramAPI {
-	
-	public static final long OCCUPANCY_TIME_MS = 1000*60*15;
 
 	private long lastAccessTime;
+	private final long occupancyTimeMs;
+	
 	protected Map<String, Role> goodEmails = new HashMap<>();
 
 	protected void updateAccessTime() {
 		lastAccessTime = System.currentTimeMillis();
 	}
 
-	public AbstractCachingModifiableDiagramAPI() {
+	public AbstractCachingModifiableDiagramAPI(long occupancyTimeMs) {
 		super();
+		this.occupancyTimeMs = occupancyTimeMs;
 	}
 
 	@Override
 	public boolean canEvict() {
-		return System.currentTimeMillis() > lastAccessTime + OCCUPANCY_TIME_MS;
+		return System.currentTimeMillis() > lastAccessTime + occupancyTimeMs;
 	}
 
 	public Role getAuthenticatedRole(Authentication a) {

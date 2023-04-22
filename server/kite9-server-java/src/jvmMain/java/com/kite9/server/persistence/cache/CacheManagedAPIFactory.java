@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
@@ -31,13 +32,16 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 	protected final ApplicationContext ctx;
 	
 	protected final ADLFactory factory;
+	
+	@Value("${cache.occupancy-time:30000}")
+	private long cacheOccupancyTimeMs = 1000*30;
 
 	public CacheManagedAPIFactory(ApplicationContext ctx, ADLFactory factory) {
 		super();
 		this.ctx = ctx;
 		this.factory = factory;
 	}
-
+	
 	public SourceAPI createAPI(K9URI u, Authentication a) throws Exception {
 		String path = u.getPath();
 		if (!path.startsWith("/github")) {
@@ -62,7 +66,7 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 			String path = u.getPath();
 			logger.info("Building Cache For: "+path);
 			ChangeQueue cq = createChangeQueue(path);
-			return new CommandQueueModifiableDiagramAPI(cq, (ModifiableDiagramAPI) backingApi, factory);
+			return new CommandQueueModifiableDiagramAPI(cq, (ModifiableDiagramAPI) backingApi, factory, cacheOccupancyTimeMs);
 		} else {
 			return backingApi;
 		} 

@@ -31,7 +31,8 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	private String localCache = null;
 	private final ADLFactory factory;
 	
-	public CommandQueueModifiableDiagramAPI(ChangeQueue cq, ModifiableDiagramAPI backingStore, ADLFactory factory) {
+	public CommandQueueModifiableDiagramAPI(ChangeQueue cq, ModifiableDiagramAPI backingStore, ADLFactory factory, long occupancyTimeMs) {
+		super(occupancyTimeMs);
 		this.cq = cq;
 		this.backingStore = backingStore;
 		this.factory = factory;

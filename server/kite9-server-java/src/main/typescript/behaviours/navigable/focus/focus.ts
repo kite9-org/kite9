@@ -25,15 +25,15 @@ export function initFocusContextMenuCallback(
 		const e = onlyLastSelected(selector());
 
 		if (e) {
-			contextMenu.addControl(event, "/public/behaviours/navigable/focus/focus.svg", "Focus On",
+			contextMenu.addControl(event, "/public/behaviours/navigable/focus/focus.svg", "Navigate To",
 				function() {
 					contextMenu.destroy();
 					let url = e.getAttribute("id");
-//					const projection = url.indexOf('{');
-//					if (projection != -1) {
-//						url = url.substring(0, projection);
-//					}
-//					command.get(url);
+					const projection = url.indexOf('{');
+					if (projection != -1) {
+						url = url.substring(0, projection);
+					}
+					command.get(url);
 				});
 		}
 	}
@@ -72,14 +72,14 @@ export function initFocusMetadataCallback(): MetadataCallback {
 	}
 }
 
-//export function initFocus(transition : Transition) {
-//
-//	function popState(event: Event) {
-//		state = event.state;
-//		document.title = event.state.title;
-//		command.get(event.state.page);
-//	}
-//
-//	window.removeEventListener('popstate', popState);
-//	window.addEventListener('popstate', popState);
-//}
+export function initFocus(transition : Transition) {
+
+	function popState(event: PopStateEvent) {
+		state = event.state;
+		document.title = event.state.title;
+		command.get(event.state.page);
+	}
+
+	window.removeEventListener('popstate', popState);
+	window.addEventListener('popstate', popState);
+}

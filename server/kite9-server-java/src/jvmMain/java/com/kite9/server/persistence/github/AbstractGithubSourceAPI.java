@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
@@ -197,7 +198,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	private void testFile(String token) throws Exception {
 		if (contents == null) {
 			try {
-				String url = RawGithub.assembleGithubURL(githubPath.getOwner(), githubPath.getReponame(), githubPath.getRef(), githubPath.getFilepath());
+				String url = RawGithub.assembleGithubURL(githubPath,  defaultBranchSupplier(token));
 				ByteArrayResource db = RawGithub.loadBytesFromGithub(token, url);
 				
 				if (db != null) {
@@ -232,6 +233,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		if (contents instanceof byte[]) {
 			return new ByteArrayInputStream((byte[]) contents);
 		} else {
+			contents = null;
 			throw new Kite9ProcessingException("not a file: "+getUnderlyingResourceURI(authentication));
 		}
 	}
@@ -241,19 +243,24 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	@Override
 	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception {
 		if (resourceUri == null) {
-			String url = RawGithub.assembleGithubURL(githubPath, () -> {
-				try {
-					return getRepo(getAccessToken(a, clientRepository)).getDefaultBranch();
-				} catch (IOException e) {
-					LOG.error("Can't get default branch: "+githubPath);
-					return "main";
-				}
-			});
+			String url = RawGithub.assembleGithubURL(githubPath, defaultBranchSupplier(a));
 			URI uri = new URI(url);
 			resourceUri = URIWrapper.wrap(uri);
 		}
 		return resourceUri;
 	}
 	
+	private Supplier<String> defaultBranchSupplier(Authentication a) {
+		return defaultBranchSupplier(getAccessToken(a, clientRepository));
+	}
 	
+	private Supplier<String> defaultBranchSupplier(String token) {
+		return () -> {
+			try {
+				return getRepo(token).getDefaultBranch();
+			} catch (IOException e) {
+				throw new LoginRequiredException(Type.GITHUB, this.u);
+			}
+		};
+	}
 }
