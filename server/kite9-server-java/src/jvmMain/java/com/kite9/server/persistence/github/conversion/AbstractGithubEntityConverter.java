@@ -24,12 +24,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
-import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.domain.Content;
 import com.kite9.server.domain.Directory;
 import com.kite9.server.domain.Document;
 import com.kite9.server.domain.Organisation;
-import com.kite9.server.domain.Ref;
 import com.kite9.server.domain.Repository;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.domain.User;
@@ -225,37 +223,6 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		return p;
 	}
 	
-	public Ref templateRef(Link self, String name, List<Content> contents, List<RestEntity> parents) {
-		Ref p = new Ref() {
-
-			@Override
-			public String getTitle() {
-				return name;
-			}
-
-			@Override
-			public String getDescription() {
-				return "";
-			}
-
-			@Override
-			public List<RestEntity> getParents() {
-				return parents;
-			}
-
-			@Override
-			public List<Content> getContents() {
-				return contents;
-			}
-
-		};
-
-		p.add(self);
-
-		return p;
-	}
-
-	
 	public List<Repository> templateChildRepos(LinkBuilder lb, GHPerson user) {
 		PagedIterable<GHRepository> repos = user.listRepositories();
 
@@ -315,14 +282,17 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		return out;
 	}
 
-	public List<Content> templateContents(LinkBuilder lb, List<GHTreeEntry> contents)
+	public List<Content> templateContents(LinkBuilder lb, DirectoryDetails dd)
 			throws IOException {
-		return contents.stream()
+		
+		String ref = dd.getPath().getRef() == null ? dd.getRepo().getDefaultBranch() : dd.getPath().getRef();
+		
+		return dd.getEntries().stream()
 				.map(c -> {
 					if (isTree(c)) {
-						return templateDirectory(buildDiagramLink(lb, c), c.getPath(), null, null);	
+						return templateDirectory(buildDiagramLink(lb, c, ref), c.getPath(), null, null);	
 					} else if (fs.getFormatFor(c.getPath()) != null) {
-						Document out = templateDocument(buildDiagramLink(lb, c), c.getPath(), null);
+						Document out = templateDocument(buildDiagramLink(lb, c, ref), c.getPath(), null);
 						return out;
 					} else {
 						return null;
@@ -336,8 +306,10 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		return "tree".equals(c.getType());
 	}
 
-	protected Link buildDiagramLink(LinkBuilder lb, GHTreeEntry c) {
-		return lb.slash(c.getPath()).withSelfRel();
+	protected Link buildDiagramLink(LinkBuilder lb, GHTreeEntry c, String ref) {
+		Link basic = lb.slash(c.getPath()).withSelfRel();
+		Link withRef = Link.of(basic.getHref()+"?v="+ref, basic.getRel());
+		return withRef;
 	}
 
 	public String sanitize(GHContent c) {
@@ -401,27 +373,20 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 			LinkBuilder lb = linkToRemappedURI().slash("github");
 			LinkBuilder lbUserOrg = lb.slash(dd.getPath().getOwner());
 			LinkBuilder lbRepo = lbUserOrg.slash(dd.getPath().getReponame());
-			LinkBuilder lbRef = lbRepo.slash(dd.getPath().getRef());
-			LinkBuilder lbRelative = lbRef.slash(dd.getPath().getFilepath());
+			LinkBuilder lbRelative = lbRepo.slash(dd.getPath().getFilepath());
 			Repository repo = templateRepo(lbRepo.withSelfRel(), dd.getRepo(), null, null);
 			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), dd.getRepo().getOwner(), null, null);
-			Ref ref = templateRef(lbRef.withSelfRel(), dd.getPath().getRef(), null, null);
 			
-			List<Content> childContent = templateContents(lbRelative, dd.getEntries());
+			List<Content> childContent = templateContents(lbRelative, dd);
 			
 			if (StringUtils.hasText(dd.getPath().getFilepath())) {
 				// directory in repo
 				String path = dd.getPath().getFilepath();
 				String currentDir = path.substring(path.lastIndexOf("/")+1);
-				List<RestEntity> parents = buildParents(authentication, owner, repo, ref, dd.getPath().getFilepath(), lbRef);
+				List<RestEntity> parents = buildParents(authentication, owner, repo, dd.getPath().getFilepath(), lbRepo);
 				return templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
-			} else if (StringUtils.hasText(dd.getPath().getRef())) {
-				// top of branch
-				List<RestEntity> parents = buildParents(authentication, owner, repo, ref, null, lbRef);
-				return templateRef(lbRelative.withSelfRel(), dd.getPath().getRef(), childContent, parents);
 			} else {
-				// repo (no ref?)
-				List<RestEntity> parents = buildParents(authentication, owner, null, null, null, lbRepo);
+				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
 				return templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
 			} 
 		} catch (Throwable e) {
@@ -429,7 +394,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		}
 	}
 
-	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo, Ref ref, String path, LinkBuilder lb) {
+	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo,  String path, LinkBuilder lb) {
 		List<RestEntity> out = new ArrayList<RestEntity>();
 		RestEntity github = createTopLevelParent();
 		out.add(github);
