@@ -13,7 +13,7 @@ public class Config implements Predicate<GHTreeEntry> {
 	public static final String DEFAULT_TEMPLATE = "/public/examples/basic.adl?format=adl";
 	
 	private String uploads = KITE9_UPLOADS;
-	private List<Source> sources;
+	private List<Source> sources = Collections.singletonList(new Source());
 	private List<String> templates = Collections.singletonList(DEFAULT_TEMPLATE);
 	
 	public Config() {
