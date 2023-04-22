@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
@@ -23,10 +24,13 @@ import com.kite9.server.sources.SourceAPIFactory;
 /**
  * Handles the primary, plug-able {@link SourceAPIFactory}.
  * 
+ * Scheduler is enabled to handle cache eviction.
+ * 
  * @author robmoffat
  *
  */
 @Configuration
+@EnableScheduling 
 public class PersistenceConfig {
 	
 	@Autowired
