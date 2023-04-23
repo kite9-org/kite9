@@ -27,10 +27,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="bob"/>
-	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-js/build/libs/kite9-visualization-js-0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-common/build/libs/kite9-visualization-common-jvm-3.0.0.jar"/>
-	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-java/build/libs/kite9-visualization-java-jvm-0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/pipeline/kite9-pipeline-common/build/libs/kite9-pipeline-common-jvm-0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/kite9-parent/visualization/kite9-visualization-js/build/libs/kite9-visualization-js-0.1-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="/Users/rob/Documents/kite9/kite9/visualization/kite9-visualization-common/build/libs/kite9-visualization-common-jvm-0.1-SNAPSHOT.jar" sourcepath="/kite9-parent/visualization/kite9-visualization-common/src/jvmMain/kotlin"/>
+	<classpathentry kind="lib" path="/kite9-parent/visualization/kite9-visualization-java/build/libs/kite9-visualization-java-jvm-0.1-SNAPSHOT.jar" sourcepath="/kite9-parent/visualization/kite9-visualization-java/src/jvmMain/java"/>
+	<classpathentry kind="lib" path="/kite9-parent/pipeline/kite9-pipeline-common/build/libs/kite9-pipeline-common-jvm-0.1-SNAPSHOT.jar" sourcepath="/kite9-parent/pipeline/kite9-pipeline-common/src/jvmMain/kotlin"/>
 	<classpathentry kind="lib" path="/Users/rob/.gradle/caches/modules-2/files-2.1/org.kohsuke/github-api/1.306/cb791fc578c559fc6da70fb5e5f819d4f6d21099/github-api-1.306.jar" sourcepath="/Users/rob/.gradle/caches/modules-2/files-2.1/org.kohsuke/github-api/1.306/5562f6848cc4943be1aa90a05c0aa54dfcd2f851/github-api-1.306-sources.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
