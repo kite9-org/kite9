@@ -43,7 +43,7 @@
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="GRADLE_CACHE/org.springframework.boot/spring-boot-starter-actuator/2.7.0/aa5de1a6c03d6b8e4351f442cdc59b8a8a4be8e4/spring-boot-starter-actuator-2.7.0.jar" sourcepath="GRADLE_CACHE/org.springframework.boot/spring-boot-starter-actuator/2.7.0/16c901292d360c300c6f375a4593a4e2d629a880/spring-boot-starter-actuator-2.7.0-sources.jar">
+	<classpathentry kind="var" path="GRADLE_CACHE/org.springframework.boot/spring-boot-starter-actuator/2.7.0/aa5de1a6c03d6b8e4351f442cdc59b8a8a4be8e4/spring-boot-starter-actuator-2.7.0.jar" sourcepath="GRADLE_CACHE/org.springframework.boot/spring-boot-starter-actuator/2.7.0/16c901292d360c300c6f375a4593a4e2d629a880/spring-boot-starter-actuator-2.7.0-sources.jar">
 		<attributes>
 			<attribute name="gradle_used_by_scope" value="main,test"/>
 		</attributes>
