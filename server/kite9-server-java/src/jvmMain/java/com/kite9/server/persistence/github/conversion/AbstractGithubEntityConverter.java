@@ -377,7 +377,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 			Repository repo = templateRepo(lbRepo.withSelfRel(), dd.getRepo(), null, null);
 			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), dd.getRepo().getOwner(), null, null);
 			
-			List<Content> childContent = templateContents(lbRelative, dd);
+			List<Content> childContent = templateContents(lbRepo, dd);
 			
 			if (StringUtils.hasText(dd.getPath().getFilepath())) {
 				// directory in repo

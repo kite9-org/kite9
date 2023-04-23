@@ -34,7 +34,7 @@ import { initActionable } from '../../behaviours/actionable/actionable.js'
 import { initHoverable } from '../../behaviours/hoverable/hoverable.js'
 
 import { once } from '../../bundles/ensure.js'
-import { getDocumentParam } from "../../bundles/api.js"
+import { encodeADLElement, getDocumentParam } from "../../bundles/api.js"
 
 export const 
 	command = new Command(), 
@@ -61,7 +61,7 @@ function initCommon() {
 	transition.animation(zoomableTransitionCallback);
 	transition.animation(initTransitionAnimationCallback());
 
-	command.add(initMetadataBasedUpdater(command, metadata, transition));
+	command.add(initMetadataBasedUpdater(metadata, transition, docText => command.adlUpdated(encodeADLElement(docText))));
 
 	dragger.moveWith(() => contextMenu.destroy());
 

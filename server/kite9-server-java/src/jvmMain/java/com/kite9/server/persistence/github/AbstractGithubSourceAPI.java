@@ -3,7 +3,7 @@ package com.kite9.server.persistence.github;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -36,7 +36,6 @@ import com.kite9.server.persistence.github.urls.RawGithub;
 import com.kite9.server.security.LoginRequiredException;
 import com.kite9.server.security.LoginRequiredException.Type;
 import com.kite9.server.sources.SourceAPI;
-import com.kite9.server.uri.URIWrapper;
 import com.kite9.server.web.URIRewriter;
 
 /**
@@ -147,7 +146,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 				return;
 			}
 			Config config = configLoader.getConfig(tree, repo, token, branchName);
-			List<GHTreeEntry> treeEntries = getFilteredTreeList(tree, config);
+			List<GHTreeEntry> treeEntries = getFilteredTreeList(tree, config, githubPath.getFilepath());
 			contents = new DirectoryDetails(repo, treeEntries, this.githubPath);
 
 		}
@@ -162,9 +161,10 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		return (entry != null) && ("tree".equals(entry.getType()));
 	}
 
-	private List<GHTreeEntry> getFilteredTreeList(GHTree tree, Config config) throws IOException {
+	private List<GHTreeEntry> getFilteredTreeList(GHTree tree, Config config, String filePath) throws IOException {
 		return tree.getTree().stream()
 			.filter(config)
+			.filter(te -> te.getPath().startsWith(filePath) && (!filePath.equals(te.getPath())))
 			.collect(Collectors.toList());
 	}
 
@@ -243,9 +243,11 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	@Override
 	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception {
 		if (resourceUri == null) {
-			String url = RawGithub.assembleGithubURL(githubPath, defaultBranchSupplier(a));
-			URI uri = new URI(url);
-			resourceUri = URIWrapper.wrap(uri);
+			resourceUri = u.filterQueryParameters(k -> "v".equals(k));
+			if (resourceUri.param("v").isEmpty()) {
+	 			String branch = githubPath.getRef() == null ? defaultBranchSupplier(a).get() : githubPath.getRef();
+	 			resourceUri = resourceUri.withQueryParameter("v", Collections.singletonList(branch));
+			}
 		}
 		return resourceUri;
 	}

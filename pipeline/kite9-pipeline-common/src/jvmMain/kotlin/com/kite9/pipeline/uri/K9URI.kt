@@ -19,4 +19,8 @@ interface K9URI {
     fun changeScheme(scheme: String, path: String): K9URI
 
     fun param(p: String): List<String>
+
+    fun filterQueryParameters(filter: Predicate<String>) : K9URI
+
+    fun withQueryParameter(k: String, v:  List<String>) : K9URI
 }

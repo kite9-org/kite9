@@ -3,10 +3,12 @@ package com.kite9.server.uri;
 import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.jetbrains.annotations.NotNull;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.pipeline.uri.K9URI;
@@ -30,6 +32,28 @@ public class URIWrapper {
                     throw new IllegalArgumentException("Couldn't create uri: ", e);
                 }
             }
+            
+            @NotNull
+            @Override
+            public K9URI filterQueryParameters(Predicate<String> filter) {
+                UriComponents instance = UriComponentsBuilder.fromUri(javaNetURI).build();
+
+                MultiValueMap<String, String> queryParams = instance.getQueryParams();
+                queryParams.keySet().stream()
+                    .filter(filter.negate())
+                    .forEach(k -> queryParams.remove(k));
+
+                return wrap(instance.toUri());
+            }
+            
+            @Override
+            @NotNull
+            public K9URI withQueryParameter(String key, List<String> value) {
+                UriComponents instance = UriComponentsBuilder.fromUri(javaNetURI).build();
+                instance.getQueryParams().put(key, value);
+                return wrap(instance.toUri());
+            }
+
 
             @NotNull
             @Override

@@ -1,14 +1,13 @@
 import { ensureJs, once } from '../../bundles/ensure.js'
 import { encodeADLElement } from '../../bundles/api.js'
 import { Transition } from '../../classes/transition/transition.js';
-import { Command } from '../../classes/command/command.js';
 import { Metadata } from '../../classes/metadata/metadata.js';
-import { UpdateableResolver } from './updatable.js';
+import { ADLUpdateCallback, UpdateableResolver } from './updatable.js';
 
 
 export function createAdlToSVGResolver(
 	transition: Transition,
-	command: Command,
+	adlCallback: ADLUpdateCallback,
 	metadata: Metadata) : UpdateableResolver {
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
@@ -81,7 +80,7 @@ export function createAdlToSVGResolver(
 		// handle adl update
 		metadata.process(doc);
 		const docText = new XMLSerializer().serializeToString(doc.documentElement);
-		command.adlUpdated(encodeADLElement(docText));
+		adlCallback(encodeADLElement(docText));
 	}
 
 	return (text) => {

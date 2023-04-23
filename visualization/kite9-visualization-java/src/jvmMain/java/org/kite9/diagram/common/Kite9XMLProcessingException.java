@@ -61,7 +61,7 @@ public class Kite9XMLProcessingException extends Kite9ProcessingException {
 	}
 
 	public Kite9XMLProcessingException(String reason, Throwable arg1, Node n) {
-		this(reason, arg1, n, n.getOwnerDocument());
+		this(reason, arg1, n, n != null ? n.getOwnerDocument() : null);
 	}
 
 	public static String debugCss(Node n) {

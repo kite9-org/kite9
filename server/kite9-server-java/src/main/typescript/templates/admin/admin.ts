@@ -1,7 +1,6 @@
 /**
  * This composes the basic edit behaviour of the application
  */
-
 import { metadata, transition, contextMenu, command } from '../adl/adl.js'
 
 // navigation
