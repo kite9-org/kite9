@@ -18,6 +18,7 @@ import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
@@ -366,8 +367,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 	}
 		
 	@Override
-	public RestEntity getDirectoryPage(
-			DirectoryDetails dd, Authentication authentication) throws Exception {
+	public RestEntity getDirectoryPage(DirectoryDetails dd, Authentication authentication) throws Exception {
 		
 		try {
 			LinkBuilder lb = linkToRemappedURI().slash("github");
@@ -378,17 +378,20 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), dd.getRepo().getOwner(), null, null);
 			
 			List<Content> childContent = templateContents(lbRepo, dd);
+			RestEntity out;
 			
 			if (StringUtils.hasText(dd.getPath().getFilepath())) {
 				// directory in repo
 				String path = dd.getPath().getFilepath();
 				String currentDir = path.substring(path.lastIndexOf("/")+1);
 				List<RestEntity> parents = buildParents(authentication, owner, repo, dd.getPath().getFilepath(), lbRepo);
-				return templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
+				out = templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
 			} else {
 				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
-				return templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
+				out = templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
 			} 
+			out.add(Link.of(dd.getConfig().getTemplates(), LinkRelation.of("templates")));
+			return out;
 		} catch (Throwable e) {
 			throw new Kite9XMLProcessingException("Couldn't format directory page "+dd.getPath(), e);
 		}

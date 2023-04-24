@@ -147,7 +147,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 			}
 			Config config = configLoader.getConfig(tree, repo, token, branchName);
 			List<GHTreeEntry> treeEntries = getFilteredTreeList(tree, config, githubPath.getFilepath());
-			contents = new DirectoryDetails(repo, treeEntries, this.githubPath);
+			contents = new DirectoryDetails(repo, treeEntries, this.githubPath, config);
 
 		}
 	}

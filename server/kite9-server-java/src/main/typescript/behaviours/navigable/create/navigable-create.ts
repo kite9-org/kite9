@@ -7,53 +7,6 @@ import { onlyLastSelected } from "../../../bundles/api.js";
 
 const LOADING = '/public/behaviours/rest/loading.svg';
 
-const DEFAULT_TEMPLATES = {
-  "documents": [
-    {
-      "title": "Basic Example",
-      "icon": "/public/templates/basic/example.adl",
-      "_links": {
-        "self": {
-          "href": "/public/templates/basic/example.adl"
-        }
-      }
-    },
-    {
-      "title": "Risk-First Diagram",
-      "icon": "/public/templates/risk-first/example.adl",
-      "_links": {
-        "self": {
-          "href": "/public/templates/risk-first/example.adl"
-        }
-      }
-    }, {
-      "title": "Designer",
-      "icon": "/public/templates/designer/example.adl",
-      "_links": {
-        "self": {
-          "href": "/public/templates/designer/example.adl"
-        }
-      }
-    }, {
-      "title": "Flow Chart",
-      "icon": "/public/templates/flowchart/example.adl",
-      "_links": {
-        "self": {
-          "href": "/public/templates/flowchart/example.adl"
-        }
-      }
-    }, {
-      "title": "UML",
-      "icon": "/public/templates/uml/example.adl",
-      "_links": {
-        "self": {
-          "href": "/public/templates/uml/example.adl"
-        }
-      }
-    }
-  ]
-};
-
 export type TemplateSource = (uri: URL) => Promise<unknown>
 
 export function initTemplateSource() : TemplateSource {
