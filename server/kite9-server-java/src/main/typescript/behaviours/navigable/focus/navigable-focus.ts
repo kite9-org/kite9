@@ -61,7 +61,6 @@ export function initFocusContextMenuCallback(
 		const e = onlyLastSelected(selector());
 		
 		const rd = getAppropriateResolver(transition, metadata, () => {})
-	
 		const updater = initFocusUpdater(rd.contentType, rd.resolver);
 
 		if (e) {
@@ -79,6 +78,12 @@ export function initFocusContextMenuCallback(
 	}
 }
 
+/**
+ * Stuff below allows us to handle back and forward controls in the browser 
+ * and animate between page states.
+ * 
+ * initFocusMetadataCallback: keeps track of the current page details
+ */
 type FocusState = { title?: string, page?: string }
 
 let state: FocusState = {
@@ -112,15 +117,19 @@ export function initFocusMetadataCallback(): MetadataCallback {
 	}
 }
 
-//
-//export function initFocus(transition : Transition) {
-//
-//	function popState(event: PopStateEvent) {
-//		state = event.state;
-//		document.title = event.state.title;
-//		command.get(event.state.page);
-//	}
-//
-//	window.removeEventListener('popstate', popState);
-//	window.addEventListener('popstate', popState);
-//}
+
+export function initFocus(transition : Transition, metadata: Metadata) {
+
+	const rd = getAppropriateResolver(transition, metadata, () => {})
+	const updater = initFocusUpdater(rd.contentType, rd.resolver);
+
+
+	function popState(event: PopStateEvent) {
+		state = event.state;
+		document.title = event.state.title;
+		updater(event.state.page);
+	}
+
+	window.removeEventListener('popstate', popState);
+	window.addEventListener('popstate', popState);
+}

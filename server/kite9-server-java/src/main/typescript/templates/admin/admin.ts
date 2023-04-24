@@ -4,7 +4,7 @@
 import { metadata, transition, contextMenu } from '../adl/adl.js'
 
 // navigation
-import { initFocusContextMenuCallback, initFocusMetadataCallback } from '../../behaviours/navigable/focus/navigable-focus.js'
+import { initFocus, initFocusContextMenuCallback, initFocusMetadataCallback } from '../../behaviours/navigable/focus/navigable-focus.js'
 import { initOpenContextMenuCallback } from '../../behaviours/navigable/open/navigable-open.js'
 
 // rest stuff
@@ -22,7 +22,7 @@ once(function() {
 	contextMenu.add(initOpenContextMenuCallback());
 	contextMenu.add(initNewDocumentContextMenuCallback(metadata, initTemplateSource()));
 	
-	//initFocus(transition);
+	initFocus(transition, metadata);
 	
 	initSelectable(undefined, true);
 });
