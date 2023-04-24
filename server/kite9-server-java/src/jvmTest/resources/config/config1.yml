@@ -1,4 +1,3 @@
 sources:
-- path: / 
-  showDirectories: true
-  pattern: "**/*.(adl|svg)"
+- showDirectories: true
+  pattern: "**/*.adl"
