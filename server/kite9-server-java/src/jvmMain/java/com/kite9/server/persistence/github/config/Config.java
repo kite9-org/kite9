@@ -10,17 +10,17 @@ public class Config implements Predicate<GHTreeEntry> {
 
 	static final String KITE9_UPLOADS = ".kite9/uploads";
 	
-	public static final String DEFAULT_TEMPLATE = "/public/examples/basic.adl?format=adl";
+	public static final String DEFAULT_TEMPLATE_DIR = "/public/examples";
 	
 	private String uploads = KITE9_UPLOADS;
 	private List<Source> sources = Collections.singletonList(new Source());
-	private List<String> templates = Collections.singletonList(DEFAULT_TEMPLATE);
+	private String templates = DEFAULT_TEMPLATE_DIR;
 	
 	public Config() {
 		super();
 	}
 
-	public Config(String uploads, List<Source> sources, List<String> templates) {
+	public Config(String uploads, List<Source> sources, String templates) {
 		super();
 		this.uploads = uploads;
 		this.sources = sources;
@@ -50,11 +50,11 @@ public class Config implements Predicate<GHTreeEntry> {
 		this.sources = sources;
 	}
 	
-	public List<String> getTemplates() {
+	public String getTemplates() {
 		return templates;
 	}
 
-	public void setTemplates(List<String> templates) {
+	public void setTemplates(String templates) {
 		this.templates = templates;
 	}
 

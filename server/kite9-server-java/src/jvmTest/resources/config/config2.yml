@@ -5,7 +5,4 @@ sources:
 - showDirectories: false
   pattern: "p2/*"
   
-templates:
-- a
-- b
-- c
+templates: a

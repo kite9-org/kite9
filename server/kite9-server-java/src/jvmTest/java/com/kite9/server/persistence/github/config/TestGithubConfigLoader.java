@@ -23,7 +23,7 @@ public class TestGithubConfigLoader {
 		Assertions.assertEquals(1, c.getSources().size());
 		Assertions.assertEquals("**/*.adl", c.getSources().get(0).getPattern());
 		Assertions.assertTrue(c.getSources().get(0).isShowDirectories());
-		Assertions.assertEquals(Collections.singletonList(Config.DEFAULT_TEMPLATE), c.getTemplates());
+		Assertions.assertEquals(Config.DEFAULT_TEMPLATE_DIR, c.getTemplates());
 		Assertions.assertTrue(c.test(createTreeEntry("bob/abc.adl", false)));
 		Assertions.assertTrue(c.test(createTreeEntry("abc.adl", false)));
 		Assertions.assertFalse(c.test(createTreeEntry(".kite9/file.adl", false)));
@@ -57,7 +57,7 @@ public class TestGithubConfigLoader {
 		Assertions.assertEquals("p2/*", c.getSources().get(1).getPattern());
 		Assertions.assertTrue(c.getSources().get(0).isShowDirectories());
 		Assertions.assertFalse(c.getSources().get(1).isShowDirectories());
-		Assertions.assertEquals(Arrays.asList(new String[] {"a", "b", "c"}), c.getTemplates());
+		Assertions.assertEquals("a", c.getTemplates());
 		Assertions.assertFalse(c.test(createTreeEntry("bob/abc.adl", false)));
 		Assertions.assertTrue(c.test(createTreeEntry("p1/abc.adl", false)));
 		Assertions.assertTrue(c.test(createTreeEntry("p1/pop/abc.adl", false)));
@@ -75,7 +75,7 @@ public class TestGithubConfigLoader {
 		Assertions.assertSame(".kite9/uploads", c.getUploads());
 		Assertions.assertEquals(1, c.getSources().size());
 		Assertions.assertTrue(c.getSources().get(0).isShowDirectories());
-		Assertions.assertEquals(Collections.singletonList(Config.DEFAULT_TEMPLATE), c.getTemplates());
+		Assertions.assertEquals(Config.DEFAULT_TEMPLATE_DIR, c.getTemplates());
 		Assertions.assertTrue(c.test(createTreeEntry("bob/abc.adl", false)));
 		Assertions.assertTrue(c.test(createTreeEntry("abc.adl", false)));
 		Assertions.assertFalse(c.test(createTreeEntry(".kite9/file.adl", false)));
