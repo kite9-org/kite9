@@ -1,8 +1,8 @@
-import { ensureJs, once } from '../../bundles/ensure.js'
-import { encodeADLElement } from '../../bundles/api.js'
-import { Transition } from '../../classes/transition/transition.js';
-import { Metadata } from '../../classes/metadata/metadata.js';
-import { ADLUpdateCallback, UpdateableResolver } from './updatable.js';
+import { ensureJs, once } from '../../../bundles/ensure.js'
+import { encodeADLElement } from '../../../bundles/api.js'
+import { Transition } from '../../../classes/transition/transition.js';
+import { Metadata } from '../../../classes/metadata/metadata.js';
+import { ADLUpdateCallback, UpdateableResolver } from '../navigable.js';
 
 
 export function createAdlToSVGResolver(

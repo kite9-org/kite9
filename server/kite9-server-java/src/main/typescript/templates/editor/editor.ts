@@ -25,7 +25,7 @@ import { initToggleInstrumentationCallback } from '../../behaviours/indication/t
 import { initPaletteUpdateDefaults } from '../../behaviours/palettes/template/palettes-template.js';
 
 // navigation
-import { closeMetadataCallback, initCloseInstrumentationCallback } from "../../behaviours/navigable/close/close.js";
+import { closeMetadataCallback, initCloseInstrumentationCallback } from "../../behaviours/navigable/close/navigable-close.js";
 
 // undo, redo, revisions
 import { initUndoableInstrumentationCallback, initUndoableCommandCallback } from "../../behaviours/revisioned/undoable.js";
@@ -115,5 +115,5 @@ function initEditor() {
 	initSelectable();  // for main svg area
 
 }
-
+ 
 once(() => initEditor());

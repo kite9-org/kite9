@@ -1,6 +1,6 @@
-import { Metadata } from "../../classes/metadata/metadata";
-import { Transition } from "../../classes/transition/transition";
-import { UpdateableResolver } from "./updatable";
+import { Metadata } from "../../../classes/metadata/metadata.js";
+import { Transition } from "../../../classes/transition/transition.js";
+import { UpdateableResolver } from "../navigable.js";
 
 export function createSVGResolver(
 	transition: Transition,

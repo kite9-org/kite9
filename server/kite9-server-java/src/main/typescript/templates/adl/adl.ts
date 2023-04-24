@@ -13,7 +13,7 @@ import { Palette } from '../../classes/palette/palette.js'
 import { Overlay } from '../../classes/overlay/overlay.js'
 
 //updatable
-import { initMetadataBasedUpdater } from '../../behaviours/updatable/updatable.js'
+import { initMetadataBasedUpdater } from '../../behaviours/navigable/update/navigable-update.js'
 
 // animation
 import { initTransitionAnimationCallback } from '../../behaviours/animation/animation.js'

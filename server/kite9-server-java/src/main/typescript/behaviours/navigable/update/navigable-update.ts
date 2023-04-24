@@ -1,13 +1,7 @@
-import { createSVGResolver } from './svgResolver.js'
-import { createAdlToSVGResolver } from './adlResolver.js'
-import { canRenderClientSide } from '../../bundles/screen.js'
-import { CommandCallback } from '../../classes/command/command.js';
-import { Metadata } from '../../classes/metadata/metadata.js';
-import { Transition } from '../../classes/transition/transition.js';
-
-export type UpdateableResolver = (text: string) => void;
-
-export type ADLUpdateCallback = (adl: string) => void;
+import { CommandCallback } from '../../../classes/command/command.js';
+import { Metadata } from '../../../classes/metadata/metadata.js';
+import { Transition } from '../../../classes/transition/transition.js';
+import { ADLUpdateCallback, getAppropriateResolver, UpdateableResolver } from '../navigable.js';
 
 /**
  * Makes sure that the websocket uses ws/wss where needed
@@ -119,17 +113,8 @@ export function initMetadataBasedUpdater(
 
 	const processViaWebSocket = metadata.get("topic") != null;
 
-	// for now, all rendering done on the client
-	const renderServerSide = !canRenderClientSide();
-
-	const resolver = renderServerSide ?
-		createSVGResolver(transition, metadata) :
-		createAdlToSVGResolver(transition, adlCallback, metadata);
-
-	const contentType = renderServerSide ?
-		"image/svg+xml;purpose=editable" :
-		"text/xml;purpose=editable_adl";
-
+	const rd = getAppropriateResolver(transition, metadata, adlCallback);
+	
 	let delegate : CommandCallback; 
 
 	if (processViaWebSocket) {
@@ -137,15 +122,15 @@ export function initMetadataBasedUpdater(
 		delegate = initWebsocketUpdater(
 			metadata.get("topic") as string,
 			metadata.get("self") as string,
-			resolver,
-			contentType);
+			rd.resolver,
+			rd.contentType);
 
 	} else {
 		// not using web-sockets
 		delegate = initHttpUpdater(
 			metadata.get("self") as string,
-			contentType,
-			resolver);
+			rd.contentType,
+			rd.resolver);
 	}
 
 	return (update) => {

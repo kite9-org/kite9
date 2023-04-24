@@ -1,14 +1,50 @@
 import { getMainSvg } from '../../../bundles/screen.js'
 import { onlyLastSelected } from '../../../bundles/api.js'
 import { ContextMenuCallback } from '../../../classes/context-menu/context-menu.js';
-import { Command } from '../../../classes/command/command.js';
 import { Selector } from '../../../bundles/types.js';
-import { MetadataCallback } from '../../../classes/metadata/metadata.js';
+import { Metadata, MetadataCallback } from '../../../classes/metadata/metadata.js';
 import { Transition } from '../../../classes/transition/transition.js';
+import { getAppropriateResolver, UpdateableResolver } from '../navigable.js';
 
+function initFocusUpdater(contentType: string, contentTypeResolver: UpdateableResolver) {
+
+	return async (uri) => {
+		return fetch(uri, {
+			method: 'GET',
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": contentType
+			}
+		})
+		.then(response => {
+			if (!response.ok) {
+				return Promise.reject(response)
+			} else {
+				return response.text()
+			}
+		})
+		.then(text => contentTypeResolver(text))
+		.catch(error => {
+			if (typeof error.json === "function") {
+				error.json().then(jsonError => {
+					console.log("Json error from API");
+					console.log(jsonError);
+				}).catch(genericError => {
+					console.log("Generic error from API");
+					console.log(error.statusText);
+				});
+			} else {
+				console.log("Fetch error");
+				console.log(error);
+			}
+		});
+	}
+
+}
 
 export function initFocusContextMenuCallback(
-	command: Command,
+	transition: Transition,
+	metadata: Metadata,
 	selector: Selector = undefined): ContextMenuCallback {
 
 	if (selector == undefined) {
@@ -23,6 +59,10 @@ export function initFocusContextMenuCallback(
 	return function(event, contextMenu) {
 
 		const e = onlyLastSelected(selector());
+		
+		const rd = getAppropriateResolver(transition, metadata, () => {})
+	
+		const updater = initFocusUpdater(rd.contentType, rd.resolver);
 
 		if (e) {
 			contextMenu.addControl(event, "/public/behaviours/navigable/focus/focus.svg", "Navigate To",
@@ -33,7 +73,7 @@ export function initFocusContextMenuCallback(
 					if (projection != -1) {
 						url = url.substring(0, projection);
 					}
-					command.get(url);
+					updater(url);
 				});
 		}
 	}
@@ -72,14 +112,15 @@ export function initFocusMetadataCallback(): MetadataCallback {
 	}
 }
 
-export function initFocus(transition : Transition) {
-
-	function popState(event: PopStateEvent) {
-		state = event.state;
-		document.title = event.state.title;
-		command.get(event.state.page);
-	}
-
-	window.removeEventListener('popstate', popState);
-	window.addEventListener('popstate', popState);
-}
+//
+//export function initFocus(transition : Transition) {
+//
+//	function popState(event: PopStateEvent) {
+//		state = event.state;
+//		document.title = event.state.title;
+//		command.get(event.state.page);
+//	}
+//
+//	window.removeEventListener('popstate', popState);
+//	window.addEventListener('popstate', popState);
+//}
