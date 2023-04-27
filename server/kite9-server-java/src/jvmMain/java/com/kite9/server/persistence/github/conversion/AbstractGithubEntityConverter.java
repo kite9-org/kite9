@@ -23,6 +23,8 @@ import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.server.domain.Content;
@@ -390,11 +392,23 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
 				out = templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
 			} 
-			out.add(Link.of(dd.getConfig().getTemplates(), LinkRelation.of("templates")));
+			addTemplatesLink(dd, lbRepo, out);
 			return out;
 		} catch (Throwable e) {
 			throw new Kite9XMLProcessingException("Couldn't format directory page "+dd.getPath(), e);
 		}
+	}
+
+	private void addTemplatesLink(DirectoryDetails dd, LinkBuilder lbRepo, RestEntity out) {
+		String templates = dd.getConfig().getTemplates();
+		UriComponents cm = UriComponentsBuilder.fromUriString(templates).build();
+		if (cm.getp.startsWith("/") || templates.startsWith("http:") | templates.startsWith("https:")) {
+			
+		} else {
+			
+	}
+		templates = templates.startsWith("/") ? templates : lbRepo.s
+		out.add(lbRepo.slash(templates).withRel("templates"));
 	}
 
 	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo,  String path, LinkBuilder lb) {
