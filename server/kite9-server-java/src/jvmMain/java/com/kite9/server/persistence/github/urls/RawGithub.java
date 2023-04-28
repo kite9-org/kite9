@@ -1,7 +1,5 @@
 package com.kite9.server.persistence.github.urls;
 
-import java.util.function.Supplier;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.StringUtils;
@@ -25,8 +23,8 @@ public class RawGithub {
 
 	private static final String RAW_GITHUB = "https://raw.githubusercontent.com";
 
-	public static String assembleGithubURL(Kite9GithubPath k9p, Supplier<String> refSupplier) {
-		String ref = k9p.getRef() == null ? refSupplier.get() : k9p.getRef();
+	public static String assembleGithubURL(Kite9GithubPath k9p, String defaultBranch) {
+		String ref = k9p.getRef() == null ? defaultBranch : k9p.getRef();
 		return assembleGithubURL(k9p.getOwner(), k9p.getReponame(), ref, k9p.getFilepath());
 	}
 	

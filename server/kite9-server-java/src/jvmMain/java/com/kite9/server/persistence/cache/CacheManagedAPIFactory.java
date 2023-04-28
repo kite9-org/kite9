@@ -93,9 +93,13 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 	public void cleanUp() {
 		int startSize = cache.size();
 		if (startSize > 0) {
-			if (cache.entrySet().removeIf(e -> e.getValue().canEvict())) {
-				logger.debug("Evicting apis: "+startSize+ " -> " + cache.size());
-			}
+			cache.entrySet().removeIf(e -> {
+				boolean evict = e.getValue().canEvict();
+				if (evict) {
+					logger.debug("Evicting api: ()", e.getKey());
+				}
+				return evict;
+			});
 		}
 	}
 	
@@ -104,8 +108,11 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 	 */
 	@Scheduled(fixedRate = 1 * 60 * 1000)
 	public void update() {
-		cache.values().stream()
-			.filter(v -> !v.canEvict())
-			.forEach(v -> v.update());
+		cache.entrySet().stream()
+			.filter(e -> !e.getValue().canEvict())
+			.forEach(e -> {
+				logger.debug("Updating apis: {} ",e.getKey());
+				e.getValue().update();
+			});
 	}
 }		

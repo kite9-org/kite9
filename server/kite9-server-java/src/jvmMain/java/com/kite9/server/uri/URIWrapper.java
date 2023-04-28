@@ -49,9 +49,8 @@ public class URIWrapper {
             @Override
             @NotNull
             public K9URI withQueryParameter(String key, List<String> value) {
-                UriComponents instance = UriComponentsBuilder.fromUri(javaNetURI).build();
-                instance.getQueryParams().put(key, value);
-                return wrap(instance.toUri());
+                UriComponents uc = UriComponentsBuilder.fromUri(javaNetURI).queryParam(key,value).build();
+                return wrap(uc.toUri());
             }
 
 

@@ -1,6 +1,7 @@
 package com.kite9.server.persistence.github.conversion;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,13 +19,10 @@ import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.LinkRelation;
 import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.server.domain.Content;
@@ -400,15 +398,10 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 	}
 
 	private void addTemplatesLink(DirectoryDetails dd, LinkBuilder lbRepo, RestEntity out) {
-		String templates = dd.getConfig().getTemplates();
-		UriComponents cm = UriComponentsBuilder.fromUriString(templates).build();
-		if (cm.getp.startsWith("/") || templates.startsWith("http:") | templates.startsWith("https:")) {
-			
-		} else {
-			
-	}
-		templates = templates.startsWith("/") ? templates : lbRepo.s
-		out.add(lbRepo.slash(templates).withRel("templates"));
+		URI repoURI = lbRepo.toUri();
+		URI templateURI = repoURI.resolve(dd.getConfig().getTemplates());
+		Link templateLink = Link.of(templateURI.toString(), "templates");
+		out.add(templateLink);
 	}
 
 	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo,  String path, LinkBuilder lb) {

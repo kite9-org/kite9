@@ -17,7 +17,7 @@ public class TestGithubConfigLoader {
 	@Test
 	public void testConfig1LoadsCorrectly() throws IOException {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config1.yml");
-		ConfigLoaderImpl i = new ConfigLoaderImpl();
+		ConfigLoader i = new ConfigLoaderImpl();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
 		Assertions.assertEquals(".kite9/uploads", c.getUploads());
 		Assertions.assertEquals(1, c.getSources().size());
@@ -49,7 +49,7 @@ public class TestGithubConfigLoader {
 	@Test
 	public void testConfig2LoadsCorrectly() throws IOException {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config2.yml");
-		ConfigLoaderImpl i = new ConfigLoaderImpl();
+		ConfigLoader i = new ConfigLoaderImpl();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
 		Assertions.assertEquals(".kite9/loader", c.getUploads());
 		Assertions.assertEquals(2, c.getSources().size());
@@ -70,7 +70,7 @@ public class TestGithubConfigLoader {
 	@Test
 	public void testConfig3LoadsCorrectly() throws IOException {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config1.yml");
-		ConfigLoaderImpl i = new ConfigLoaderImpl();
+		ConfigLoader i = new ConfigLoaderImpl();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
 		Assertions.assertSame(".kite9/uploads", c.getUploads());
 		Assertions.assertEquals(1, c.getSources().size());

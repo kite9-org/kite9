@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
@@ -56,8 +55,11 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	protected final Kite9GithubPath githubPath;
 	protected final OAuth2AuthorizedClientRepository clientRepository;
 	protected final ConfigLoader configLoader;
+	
+	// caches, set once in this class only by initContents()
 	protected Object contents;
 	protected Config config;
+	protected String branchName;
 
 	public AbstractGithubSourceAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, ConfigLoader configLoader) throws Exception {
 		this.githubPath = Kite9GithubPath.create(u.getPath(), getProvidedVersionParameter(u));
@@ -123,32 +125,62 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		String token = getAccessToken(auth, clientRepository);
 		testHomePage();
 		testOrg();
+		RepoSupplier repo = lazyRepo(token);
+		ensureConfigAndDefaultBranch(token, repo);
 		testFile(token);
-		testDirectory(token);
+		testDirectory(token, repo);
 		testMissing(token);
 	}
+	
+	interface RepoSupplier {
+		
+		public GHRepository get() throws Exception;
+	}
+	
+	/**
+	 * Some operations don't require this, so only load it if they do
+	 */
+	private RepoSupplier lazyRepo(String token) {
+		return new RepoSupplier() {
 
-	private void testDirectory(String token) throws Exception {		
-		if ((contents == null) && (token != null)) {
-			GitHub api = getGitHubAPI(token);
-			String branchName;
-			GHRepository repo = api.getRepository(githubPath.getOwner()+"/"+githubPath.getReponame()); 
-			
-			if (githubPath.getRef() != null) {
-				branchName = githubPath.getRef();
-			} else {
-				branchName = repo.getDefaultBranch();
+			GHRepository out = null;
+
+			@Override
+			public GHRepository get() throws Exception {
+				if (out == null) {
+					GitHub api = getGitHubAPI(token);
+					out = api.getRepository(githubPath.getOwner()+"/"+githubPath.getReponame());
+				}
+				return out;
 			}
+		};
+	}
+
+	private void ensureConfigAndDefaultBranch(String token, RepoSupplier repo) throws Exception {
+		if ((contents == null) && (token != null)) {
+			if (branchName == null) {
+				if (githubPath.getRef() != null) {
+					branchName = githubPath.getRef();
+				} else {
+					branchName = repo.get().getDefaultBranch();
+				}
+			} 
 			
-			GHTree tree = repo.getTreeRecursive(branchName,1);
+			if (config == null) {
+				this.config = configLoader.loadConfig(token, githubPath.getOwner(), githubPath.getReponame(), branchName);
+			}
+		}
+	}
+
+	private void testDirectory(String token, RepoSupplier repo) throws Exception {		
+		if ((contents == null) && (token != null)) {
+			GHTree tree = repo.get().getTreeRecursive(branchName,1);
 			if (!checkDirectoryExists(tree)) {
 				LOG.debug("Not a directory");
 				return;
 			}
-			Config config = configLoader.getConfig(tree, repo, token, branchName);
 			List<GHTreeEntry> treeEntries = getFilteredTreeList(tree, config, githubPath.getFilepath());
-			contents = new DirectoryDetails(repo, treeEntries, this.githubPath, config);
-
+			contents = new DirectoryDetails(repo.get(), treeEntries, this.githubPath, config);
 		}
 	}
 
@@ -198,7 +230,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	private void testFile(String token) throws Exception {
 		if (contents == null) {
 			try {
-				String url = RawGithub.assembleGithubURL(githubPath,  defaultBranchSupplier(token));
+				String url = RawGithub.assembleGithubURL(githubPath, branchName);
 				ByteArrayResource db = RawGithub.loadBytesFromGithub(token, url);
 				
 				if (db != null) {
@@ -245,24 +277,17 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		if (resourceUri == null) {
 			resourceUri = u.filterQueryParameters(k -> "v".equals(k));
 			if (resourceUri.param("v").isEmpty()) {
-	 			String branch = githubPath.getRef() == null ? defaultBranchSupplier(a).get() : githubPath.getRef();
-	 			resourceUri = resourceUri.withQueryParameter("v", Collections.singletonList(branch));
+	 			resourceUri = resourceUri.withQueryParameter("v", Collections.singletonList(branchName));
 			}
 		}
 		return resourceUri;
 	}
-	
-	private Supplier<String> defaultBranchSupplier(Authentication a) {
-		return defaultBranchSupplier(getAccessToken(a, clientRepository));
+
+	@Override
+	public String toString() {
+		return this.getClass().getName()+" [u=" + u + "]";
 	}
+
 	
-	private Supplier<String> defaultBranchSupplier(String token) {
-		return () -> {
-			try {
-				return getRepo(token).getDefaultBranch();
-			} catch (IOException e) {
-				throw new LoginRequiredException(Type.GITHUB, this.u);
-			}
-		};
-	}
+
 }
