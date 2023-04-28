@@ -115,26 +115,19 @@
    </xsl:template>
    
    <xsl:template match="*" mode="entity">
-   	<xsl:call-template name="formats-text-image-portrait">
-   	 	<xsl:with-param name="k9-elem">entity</xsl:with-param>
+   	<xsl:call-template name="formats-container">
+   	 	<xsl:with-param name="k9-elem">list-item</xsl:with-param>
 		<xsl:with-param name="id" select="adl:links[adl:rel='self']/adl:href" />
 		<xsl:with-param name="k9-ui" select="adl:commands" />
-		<xsl:with-param name="depiction-id"></xsl:with-param>
+	    <xsl:with-param name="k9-texture">none</xsl:with-param>
 		<xsl:with-param name="href" select="adl:icon/text()" />
-		<xsl:with-param name="width">100pt</xsl:with-param>
-		<xsl:with-param name="height">100pt</xsl:with-param>
- 		<xsl:with-param name="caption">
- 		 
-	      <xsl:call-template name="texture-basic">
-	      	<xsl:with-param name="class">description</xsl:with-param>
-	        <xsl:with-param name="k9-elem">caption</xsl:with-param>
-	        <xsl:with-param name="k9-texture">foreground</xsl:with-param>
-	        <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
-	        <xsl:with-param name="k9-format">text-fixed</xsl:with-param>
-	        <xsl:with-param name="shape"></xsl:with-param>
-	        <xsl:with-param name="content"><text><xsl:value-of select="adl:description/text()" /></text></xsl:with-param>
-	      </xsl:call-template>
-	      
+		<xsl:with-param name="content">
+		  <xsl:call-template name="formats-image-fixed">
+		  	<xsl:with-param name="href" select="adl:icon" />
+		  	<xsl:with-param name="width">50pt</xsl:with-param>
+		  	<xsl:with-param name="height">50pt</xsl:with-param>
+		  </xsl:call-template>
+		  		  		
 	      <xsl:call-template name="texture-basic">
 	      	<xsl:with-param name="class">title</xsl:with-param>
 	        <xsl:with-param name="k9-elem">caption</xsl:with-param>

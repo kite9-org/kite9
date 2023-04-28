@@ -24,13 +24,29 @@
 
 [k9-elem=entity] {
 	--kite9-type: container;
-	--kite9-layout: down;
 	--kite9-min-size: 190pt 280pt;
 	--kite9-sizing: minimize;
 	--kite9-margin: 10pt;
 	--kite9-padding: 15pt;
 	--kite9-connection-align: 50%;
+	--kite9-layout: right;
 }
+
+[k9-elem=list-item] {
+	--kite9-horizontal-sizing: maximize;
+	--kite9-vertical-sizing: minimize;
+	--kite9-type: container;
+	--kite9-margin: 0pt;
+	--kite9-padding: 5pt;
+	--kite9-connection-align: 50%;
+	--kite9-layout: right;
+}
+
+[k9-elem=list-item] [k9-elem] {
+	--kite9-horizontal-align: left;
+}
+
+
 
 [k9-elem=pill] {
 	--kite9-type: container;

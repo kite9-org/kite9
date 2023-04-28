@@ -22,7 +22,7 @@ import com.kite9.server.web.WebConfig;
 @AutoConfigureAfter({WebConfig.class})
 public class ADLConfig implements Logable {
 	
-	@Value("${kite9.caching:true}")
+	@Value("${kite9.public-caching:true}")
 	private boolean caching;
 	
 	@Value("${kite9.transformer.factory:}")

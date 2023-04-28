@@ -44,6 +44,10 @@
 	--kite9-grid-columns: 4;
 }
 
+[k9-elem=container].list {
+	--kite9-layout: down;
+}
+
 [k9-elem=container] > [k9-elem=back] {
 	stroke-width: 1pt;
 	stroke: #454545;
