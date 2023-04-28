@@ -1,9 +1,5 @@
 package com.kite9.server.persistence.github;
 
-import java.net.URI;
-
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.LinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
@@ -15,9 +11,7 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
-import com.kite9.server.domain.RestEntity;
 import com.kite9.server.persistence.github.config.ConfigLoader;
-import com.kite9.server.persistence.github.conversion.DirectoryDetails;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 import com.kite9.server.topic.WebSocketConfig;
 
@@ -53,6 +47,7 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 
 	@Override
 	public void addMeta(MetaReadWrite adl) {
+		super.addMeta(adl);
 		K9URI u = adl.getUri();
 		String uPath = u.getPath();
 		String closePath = uPath.substring(0, uPath.lastIndexOf("/"));
@@ -62,12 +57,6 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 		String socketScheme = u.getScheme().equals("http") ? "ws" : "wss";
 		K9URI topic = u.changeScheme(socketScheme, WebSocketConfig.TOPIC_PREFIX + uPath);
 		adl.setTopicUri(topic);
-
-		if (config != null) {
-			K9URI uploads = u.resolve(config.getUploads());
-			adl.setUploadsPath(uploads.toString());
-
-		}
 
 		adl.setTitle(AbstractGithubModifiableAPI.createTitle(u));
 	}

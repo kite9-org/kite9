@@ -7,34 +7,25 @@ import { onlyLastSelected } from "../../../bundles/api.js";
 
 const LOADING = '/public/behaviours/rest/loading.svg';
 
-export type TemplateSource = (uri: URL) => Promise<unknown>
+export type TemplateSource = () => Promise<unknown>
 
-export function initTemplateSource() : TemplateSource {
-  
-  return (currentUri) => {
-    const parts = currentUri.pathname.split("/");
-    if (parts.length < 4) {
-      return new Promise(() => DEFAULT_TEMPLATES);
-    } else {
-      const templatePath = "/" + parts[1]+"/" +parts[2]+"/"+parts[3]+"/.kite9/templates";
-      currentUri.pathname = templatePath;
-      return fetch(currentUri.href, {
-         method: 'GET', 
-         credentials: 'include', 
-         headers: {
-           'Accept': 'application/json'
-        }
-      })
-      .then (response => {
-        if (!response.ok) {
-          return DEFAULT_TEMPLATES;
-        } else {
-          return response.json();
-        }
-      })
-    }
-  }
+export function initTemplateSource(metadata: Metadata): TemplateSource {
+
+	return async () => {
+		const uri = metadata.get("templates") as string;
+
+		const response = await fetch(uri, {
+			method: 'GET',
+			credentials: 'include',
+			headers: {
+				'Accept': 'application/json'
+			}
+		});
+		return await response.json();
+	}
 }
+
+
 
 export function initNewDocumentContextMenuCallback(
 	metadata: Metadata, 
@@ -52,12 +43,12 @@ export function initNewDocumentContextMenuCallback(
      return currentUri;
   }
 
-  function loadTemplates(into: HTMLElement, templateField: HTMLInputElement, uri: string) {
+  function loadTemplates(into: HTMLElement, templateField: HTMLInputElement) {
     let selected = null;
     const spinner = img('status', LOADING, { width: '80px' });
     into.appendChild(spinner);
     
-    templateSource(fullUri(uri))
+    templateSource()
       .then(json => {
         json['documents'].forEach(d => {
         
@@ -91,7 +82,7 @@ export function initNewDocumentContextMenuCallback(
   }
 
 	/**
-	 * Provides a delete option for the context menu
+	 * Provides a "New Document" option for the context menu
 	 */
   return function(event, cm) {
 
@@ -107,7 +98,7 @@ export function initNewDocumentContextMenuCallback(
     }
 
     if (e) {
-      cm.addControl(event, "/public/behaviours/rest/NewDocument/add.svg", "New Document",
+      cm.addControl(event, "/public/behaviours/navigable/create/add.svg", "New Document",
         function() {
           cm.clear();
           const templateUri = text('Template Uri', undefined, { 'required': true });
@@ -121,14 +112,14 @@ export function initNewDocumentContextMenuCallback(
               text('File Name', undefined, { 'required': true, 'pattern': '[A-Za-z0-9_-]+', title: 'Please use alphanumeric characters, _ or - and no spaces' }),
               templateUri,
               fieldset('Templates', [ templates, ], { style: 'padding: 2px; ' }),
-              p("Add new custom templates by placing diagrams in .kite9/templates in the repo",  {style: 'font-weight: lighter; '}),
+              p("Add new custom templates by placing diagrams in "+metadata.get("templates"),  {style: 'font-weight: lighter; '}),
               select('Format', 'png', {}, ['svg', 'png', 'adl']),
               hidden('type', 'NewDocument'),
               ok('ok', {}, () => createNewDocument())
             ]));
     
           // populate templates
-          loadTemplates(templates, templateUri.children[1] as HTMLInputElement, e.getAttribute("subject-uri"));
+          loadTemplates(templates, templateUri.children[1] as HTMLInputElement);
      
         });
     }

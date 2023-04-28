@@ -8,7 +8,6 @@ import java.util.Set;
 
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.logging.Kite9ProcessingException;
-import org.kohsuke.github.GHTreeEntry;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.GitHubBuilder;
 import org.springframework.beans.factory.InitializingBean;
@@ -90,7 +89,6 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 				return getEmail(a);
 			}
 
-			@SuppressWarnings("unchecked")
 			@Override
 			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
 				if (contents == StaticPages.HOME_PAGE) {

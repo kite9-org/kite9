@@ -390,18 +390,10 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
 				out = templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
 			} 
-			addTemplatesLink(dd, lbRepo, out);
 			return out;
 		} catch (Throwable e) {
 			throw new Kite9XMLProcessingException("Couldn't format directory page "+dd.getPath(), e);
 		}
-	}
-
-	private void addTemplatesLink(DirectoryDetails dd, LinkBuilder lbRepo, RestEntity out) {
-		URI repoURI = lbRepo.toUri();
-		URI templateURI = repoURI.resolve(dd.getConfig().getTemplates());
-		Link templateLink = Link.of(templateURI.toString(), "templates");
-		out.add(templateLink);
 	}
 
 	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo,  String path, LinkBuilder lb) {

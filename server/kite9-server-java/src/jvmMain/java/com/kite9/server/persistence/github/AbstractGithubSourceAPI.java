@@ -26,6 +26,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.client.WebClientResponseException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.persistence.github.config.Config;
 import com.kite9.server.persistence.github.config.ConfigLoader;
@@ -286,6 +287,17 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	@Override
 	public String toString() {
 		return this.getClass().getName()+" [u=" + u + "]";
+	}
+
+	@Override
+	public void addMeta(MetaReadWrite adl) {
+		if (config != null) {
+			K9URI uploads = u.resolve(config.getUploads());
+			adl.setUploadsPath(uploads.toString());
+			
+			K9URI templates = u.resolve(config.getTemplates());
+			adl.setTemplatePath(templates.toString());
+		}
 	}
 
 	

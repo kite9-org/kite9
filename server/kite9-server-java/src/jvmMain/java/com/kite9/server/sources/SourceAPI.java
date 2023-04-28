@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.springframework.security.core.Authentication;
 
 import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.domain.RestEntity;
 
@@ -41,4 +42,10 @@ public interface SourceAPI {
 	 * @throws Exception 
 	 */
 	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception;
+
+	/**
+	 * Callback function to set api-specific metadata on the response for this source.
+	 */
+	public void addMeta(MetaReadWrite adl);
+	
 }

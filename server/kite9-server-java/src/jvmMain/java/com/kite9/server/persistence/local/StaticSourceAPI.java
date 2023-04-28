@@ -6,6 +6,7 @@ import java.io.InputStream;
 import org.springframework.security.core.Authentication;
 
 import com.kite9.pipeline.adl.format.media.K9MediaType;
+import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.domain.RestEntity;
@@ -71,6 +72,10 @@ public class StaticSourceAPI implements ModifiableAPI {
 	@Override
 	public SourceType getSourceType(Authentication a) throws Exception {
 		return SourceType.FILE;
+	}
+
+	@Override
+	public void addMeta(MetaReadWrite adl) {
 	}
 
 	

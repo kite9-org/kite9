@@ -47,9 +47,7 @@ public abstract class AbstractContentController extends AbstractNegotiatingContr
 		super.handleDynamicMetadata(authentication, uri, adl, api, out);
 		MetaHelper.setUser(adl);
 		adl.setUri(uri);
-		if (api instanceof ModifiableDiagramAPI) {
-			((ModifiableDiagramAPI) api).addMeta(adl);
-		}
+		api.addMeta(adl);
 		if (api instanceof ModifiableAPI) {
 			adl.setRole(((ModifiableAPI) api).getAuthenticatedRole(authentication));
 		}

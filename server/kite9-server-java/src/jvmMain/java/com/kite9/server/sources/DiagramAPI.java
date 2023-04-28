@@ -3,7 +3,6 @@ package com.kite9.server.sources;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 
-import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 
 /**
@@ -18,10 +17,5 @@ public interface DiagramAPI extends SourceAPI {
 	 * Returns the contents of the file as a renderable pipeline.
 	 */
 	public ADLBase getCurrentRevisionContent(Authentication authentication, HttpHeaders requestHeaders) throws Exception;
-	
-	/**
-	 * Callback function to set api-specific metadata on the ADL diagram.
-	 */
-	public void addMeta(MetaReadWrite adl);
 	
 }

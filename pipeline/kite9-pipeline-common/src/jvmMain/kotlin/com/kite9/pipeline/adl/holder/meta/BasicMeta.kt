@@ -70,6 +70,10 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
         metadata["uploads"] = u
     }
 
+    override fun setTemplatePath(u: String) {
+        metadata["templates"] = u
+    }
+
     init {
         this.metadata = metadata
         if (uri != null) {

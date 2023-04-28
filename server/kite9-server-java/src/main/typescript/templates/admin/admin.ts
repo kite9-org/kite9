@@ -8,7 +8,7 @@ import { initFocus, initFocusContextMenuCallback, initFocusMetadataCallback } fr
 import { initOpenContextMenuCallback } from '../../behaviours/navigable/open/navigable-open.js'
 
 // rest stuff
-import { initNewDocumentContextMenuCallback, initTemplateSource } from '../../behaviours/rest/NewDocument/NewDocument.js'
+import { initNewDocumentContextMenuCallback, initTemplateSource } from '../../behaviours/navigable/create/navigable-create.js'
 
 //selectable
 import { initSelectable } from '../../behaviours/selectable/selectable.js'
@@ -20,7 +20,7 @@ once(function() {
 			
 	contextMenu.add(initFocusContextMenuCallback(transition, metadata));
 	contextMenu.add(initOpenContextMenuCallback());
-	contextMenu.add(initNewDocumentContextMenuCallback(metadata, initTemplateSource()));
+	contextMenu.add(initNewDocumentContextMenuCallback(metadata, initTemplateSource(metadata)));
 	
 	initFocus(transition, metadata);
 	

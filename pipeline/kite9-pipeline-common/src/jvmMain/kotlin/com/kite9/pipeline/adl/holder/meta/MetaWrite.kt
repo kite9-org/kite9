@@ -18,6 +18,8 @@ interface MetaWrite {
     fun setRole(r: Role)
     fun setUploadsPath(u: String)
 
+    fun setTemplatePath(u: String)
+
     companion object {
         const val CONTENT_CHANGED = "content-changed"
     }
