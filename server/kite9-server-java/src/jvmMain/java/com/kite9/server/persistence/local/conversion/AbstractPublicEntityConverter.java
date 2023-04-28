@@ -1,4 +1,4 @@
-package com.kite9.server.persistence.local;
+package com.kite9.server.persistence.local.conversion;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -110,20 +110,6 @@ public abstract class AbstractPublicEntityConverter {
 						return Collections.emptyList();
 					}
 					
-					private String getExtension(String name) {
-						return name.substring(name.lastIndexOf(".")+1);
-					}
-					
-					@Override
-					public String getIcon() {
-						if (hasIcon(d.getFilename())) {
-							return "/github/kite9-org/kite9/templates/admin/icons/"+getExtension(d.getFilename())+".svg?v=v0.15";
-						} else {
-							return "/github/kite9-org/kite9/templates/admin/icons/unknown.svg?v=v0.15";
-						}
-					}
-					
-					@Override
 					public String getDescription() {
 						return getExtension(d.getFilename())+" file";
 					}

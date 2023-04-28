@@ -10,6 +10,7 @@ import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.logging.Kite9ProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -33,7 +34,9 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.MediaTypeHelper;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.domain.RestEntity;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
+import com.kite9.server.persistence.local.conversion.AbstractPublicEntityConverter;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.sources.SourceAPIFactory;
 import com.kite9.server.update.Update;
@@ -102,6 +105,12 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 						} 
 					} 
 					
+					if (r instanceof ClassPathResource) {
+						
+						//Resource[] res = rl.getResources(((ClassPathResource)r).getURI()+"/*");
+						return createAPIFromResourceListing(sourceUri, update.getHeaders(), underlying);
+					}
+					
 					return null;	
 				}			
 			} else {
@@ -109,6 +118,18 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 				return createAPIFromRemoteUrl(sourceUri);
 			}
 		}	
+	}
+
+	private SourceAPI createAPIFromResourceListing(K9URI sourceUri, HttpHeaders headers,
+			K9MediaType underlying) {
+		return new AbstractStaticSourceAPI(underlying, sourceUri) {
+
+			@Override
+			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
+				return ec.handleEntityContent(a, sourceUri.getPath());
+			}
+			
+		};
 	}
 
 	protected SourceAPI createAPIFromBytes(K9URI uri, HttpHeaders headers, byte[] bytes, K9MediaType mt) throws Exception {
@@ -123,8 +144,13 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 			LOG.debug("Couldn't find kite9 diagram in: "+uri);
 		} 
 		
-		return new StaticSourceAPI(mt, bytes, uri);
-		
+		return new AbstractStaticSourceAPI(mt, bytes, uri) {
+
+			@Override
+			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
+				throw new UnsupportedOperationException("Can't show directory for file");
+			}
+		};
 	}
 	
 	public static MultiValueMap<String, String> createCachingHeaders() {

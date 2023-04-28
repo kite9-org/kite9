@@ -20,6 +20,8 @@ interface MetaWrite {
 
     fun setTemplatePath(u: String)
 
+    fun setSourcePatterns(s: List<String>)
+
     companion object {
         const val CONTENT_CHANGED = "content-changed"
     }

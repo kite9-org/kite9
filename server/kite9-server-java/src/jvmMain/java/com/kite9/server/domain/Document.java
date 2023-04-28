@@ -32,4 +32,17 @@ public abstract class Document extends Content {
 			return false;
 		}
 	}
+
+	protected String getExtension(String name) {
+		return name.substring(name.lastIndexOf(".")+1);
+	}
+	
+	@Override
+	public String getIcon() {
+		if (hasIcon(getTitle())) {
+			return "/public/templates/admin/icons/"+getExtension(getTitle())+".svg";
+		} else {
+			return "/public/templates/admin/icons/unknown.svg";
+		}
+	}
 }

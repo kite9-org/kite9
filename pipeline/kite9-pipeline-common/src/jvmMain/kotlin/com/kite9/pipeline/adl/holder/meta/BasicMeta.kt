@@ -15,12 +15,12 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
     override val metaData: Map<String, Any>
         get() = metadata
 
-    override fun setUser(um: UserMeta) {
-        metadata["user"] = um
+    override fun setUser(a: UserMeta) {
+        metadata["user"] = a
     }
 
-    override fun setAuthor(um: UserMeta) {
-        metadata["author"] = um
+    override fun setAuthor(a: UserMeta) {
+        metadata["author"] = a
     }
 
     override fun setTopicUri(topic: K9URI) {
@@ -41,9 +41,7 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
     override fun getUri() = metadata["self"] as K9URI?
 
     override fun setUri(u: K9URI) {
-        if (u != null) {
-            metadata["self"] = u
-        }
+        metadata["self"] = u
     }
 
     override fun setCollaborators(collaborators: List<UserMeta>) {
@@ -63,7 +61,7 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
     }
 
     override fun setRole(r: Role) {
-        metadata["role"] = r.toString().toLowerCase()
+        metadata["role"] = r.toString().lowercase()
     }
 
     override fun setUploadsPath(u: String) {
@@ -72,6 +70,10 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
 
     override fun setTemplatePath(u: String) {
         metadata["templates"] = u
+    }
+
+    override fun setSourcePatterns(s: List<String>) {
+        metadata["patterns"] = s
     }
 
     init {

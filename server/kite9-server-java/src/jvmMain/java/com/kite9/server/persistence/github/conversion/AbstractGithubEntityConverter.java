@@ -1,7 +1,6 @@
 package com.kite9.server.persistence.github.conversion;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -257,20 +256,6 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 			@Override
 			public String getDescription() {
 				return "";
-			}
-			
-
-			private String getExtension(String name) {
-				return name.substring(name.lastIndexOf(".")+1);
-			}
-			
-			@Override
-			public String getIcon() {
-				if (hasIcon(name)) {
-					return "/public/templates/admin/icons/"+getExtension(name)+".svg";
-				} else {
-					return "/public/templates/admin/icons/unknown.svg";
-				}
 			}
 
 			@Override

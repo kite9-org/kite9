@@ -297,6 +297,11 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 			
 			K9URI templates = u.resolve(config.getTemplates());
 			adl.setTemplatePath(templates.toString());
+			
+			adl.setSourcePatterns(
+				config.getSources().stream()
+					.map(s -> s.getPattern())
+					.collect(Collectors.toList()));
 		}
 	}
 

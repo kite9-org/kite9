@@ -9,7 +9,6 @@ import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.ModifiableAPI;
 
 /**
@@ -18,16 +17,25 @@ import com.kite9.server.sources.ModifiableAPI;
  * @author rob@kite9.com
  *
  */
-public class StaticSourceAPI implements ModifiableAPI {
+public abstract class AbstractStaticSourceAPI implements ModifiableAPI {
 	
 	private final K9MediaType underlying;
-	private byte[] bytes;
+	private Object content;
 	private K9URI sourceUri;
+	private SourceType type;
 
-	public StaticSourceAPI(K9MediaType underlying, byte[] bytes, K9URI sourceUri) {
+	public AbstractStaticSourceAPI(K9MediaType underlying, byte[] bytes, K9URI sourceUri) {
 		this.underlying = underlying;
-		this.bytes = bytes;
+		this.content = bytes;
 		this.sourceUri = sourceUri;
+		this.type = SourceType.FILE;
+	}
+	
+	public AbstractStaticSourceAPI(K9MediaType underlying, K9URI sourceUri) {
+		this.underlying = underlying;
+		this.content = null;
+		this.sourceUri = sourceUri;
+		this.type = SourceType.DIRECTORY;
 	}
 
 	public K9MediaType getMediaType() {
@@ -36,7 +44,11 @@ public class StaticSourceAPI implements ModifiableAPI {
 
 	@Override
 	public InputStream getCurrentRevisionContentStream(Authentication authentication) {
-		return new ByteArrayInputStream(bytes);
+		if (type == SourceType.FILE) {
+			return new ByteArrayInputStream((byte[]) content);
+		} else {
+			throw new UnsupportedOperationException("Can't turn a directory into a diagram");
+		}
 	}
 
 	@Override
@@ -65,19 +77,12 @@ public class StaticSourceAPI implements ModifiableAPI {
 	}
 
 	@Override
-	public RestEntity getEntityRepresentation(Authentication a) throws Exception {
-		throw new UnsupportedOperationException("Only works for directories");
-	}
-
-	@Override
 	public SourceType getSourceType(Authentication a) throws Exception {
-		return SourceType.FILE;
+		return type;
 	}
 
 	@Override
 	public void addMeta(MetaReadWrite adl) {
 	}
-
 	
-
 }
