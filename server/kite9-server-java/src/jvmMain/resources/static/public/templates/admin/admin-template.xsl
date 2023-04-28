@@ -33,11 +33,13 @@
    
    <xsl:template match="adl:rest-response">
    	<xsl:call-template name="formats-container">
+   		<xsl:with-param name="id">--admin</xsl:with-param>
    		<xsl:with-param name="k9-elem">admin</xsl:with-param>
    		<xsl:with-param name="k9-texture">none</xsl:with-param>
    		<xsl:with-param name="content">
 		   	<!--  trail -->
 		    <xsl:call-template name="formats-container">
+   				<xsl:with-param name="id">--trail</xsl:with-param>
 		    	<xsl:with-param name="class">trail</xsl:with-param>
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
 		   		<xsl:with-param name="k9-texture">none</xsl:with-param>
@@ -49,8 +51,9 @@
 		      	</xsl:with-param>
 		     </xsl:call-template>
 		        
-		     <!-- main -->  
+		     <!-- content -->  
 		     <xsl:call-template name="formats-container">
+   				<xsl:with-param name="id">--main</xsl:with-param>
 		     	<xsl:with-param name="class">main</xsl:with-param>
 		   		<xsl:with-param name="k9-elem">container</xsl:with-param>
 		   		<xsl:with-param name="k9-texture">outline</xsl:with-param>

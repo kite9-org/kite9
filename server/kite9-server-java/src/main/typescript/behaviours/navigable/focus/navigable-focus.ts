@@ -9,7 +9,7 @@ import { getAppropriateResolver, UpdateableResolver } from '../navigable.js';
 function initFocusUpdater(contentType: string, contentTypeResolver: UpdateableResolver) {
 
 	return async (uri) => {
-		return fetch(uri, {
+		return fetch(uri+"?format=esvg", {
 			method: 'GET',
 			headers: {
 				"Content-Type": "application/json",
