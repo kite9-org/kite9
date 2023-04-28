@@ -6,8 +6,6 @@ import { metadata, transition, contextMenu } from '../adl/adl.js'
 // navigation
 import { initFocus, initFocusContextMenuCallback, initFocusMetadataCallback } from '../../behaviours/navigable/focus/navigable-focus.js'
 import { initOpenContextMenuCallback } from '../../behaviours/navigable/open/navigable-open.js'
-
-// rest stuff
 import { initNewDocumentContextMenuCallback, initTemplateSource } from '../../behaviours/navigable/create/navigable-create.js'
 
 //selectable

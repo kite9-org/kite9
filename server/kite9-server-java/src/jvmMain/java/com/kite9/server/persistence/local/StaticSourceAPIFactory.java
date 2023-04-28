@@ -106,8 +106,6 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 					} 
 					
 					if (r instanceof ClassPathResource) {
-						
-						//Resource[] res = rl.getResources(((ClassPathResource)r).getURI()+"/*");
 						return createAPIFromResourceListing(sourceUri, update.getHeaders(), underlying);
 					}
 					
@@ -166,6 +164,7 @@ public class StaticSourceAPIFactory implements SourceAPIFactory {
 	protected SourceAPI createAPIFromRemoteUrl(K9URI u) {
 		try {
 			WebClient webClient = WebClient.create(u.toString());
+			@SuppressWarnings("deprecation")
 			ClientResponse cr = webClient.get()
 					.header("Accept-Encoding", "identity")
 					.header(HttpHeaders.ACCEPT, Kite9MediaTypes.ALL_VALUE)
