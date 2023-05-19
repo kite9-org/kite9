@@ -11,17 +11,11 @@ import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHPerson;
-import org.kohsuke.github.GHPersonSet;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTreeEntry;
-import org.kohsuke.github.GHUser;
-import org.kohsuke.github.GitHub;
-import org.kohsuke.github.PagedIterable;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.LinkBuilder;
-import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.kite9.pipeline.adl.format.FormatSupplier;
 import com.kite9.server.domain.Content;
@@ -31,7 +25,6 @@ import com.kite9.server.domain.Organisation;
 import com.kite9.server.domain.Repository;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.domain.User;
-import com.kite9.server.persistence.github.AbstractGithubModifiableDiagramAPI;
 import com.kite9.server.persistence.github.GithubSourceAPIFactory;
 
 public abstract class AbstractGithubEntityConverter implements GithubEntityConverter {
@@ -223,23 +216,16 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		return p;
 	}
 	
-	public List<Repository> templateChildRepos(LinkBuilder lb, GHPerson user) {
-		PagedIterable<GHRepository> repos = user.listRepositories();
-
-		@SuppressWarnings("deprecation")
-		List<Repository> repoList = repos.asList().stream().map(r -> {
+	public List<Repository> templateChildRepos(LinkBuilder lb, List<GHRepository> repos) {
+		List<Repository> repoList = repos.stream().map(r -> {
 			return templateRepo(lb.slash(r.getName()).withSelfRel(), r, null, null);
 		}).collect(Collectors.toList());
 		return repoList;
 	}
 
-	public List<Organisation> templateChildOrganisations(LinkBuilder lb, GHUser user) throws IOException {
-		GHPersonSet<GHOrganization> orgs = user.getOrganizations();
-
+	public List<Organisation> templateChildOrganisations(LinkBuilder lb, List<GHOrganization> orgs) throws IOException {
 		List<Organisation> orgList = orgs.stream().map(o -> {
-
 			Organisation out = templateOrganisation(lb.slash(o.getLogin()).withSelfRel(), o, null, null);
-
 			return out;
 		}).collect(Collectors.toList());
 		return orgList;
@@ -311,24 +297,14 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 			return "";
 		}
 	}
-
-	protected abstract GitHub getGithubApi(Authentication authentication) throws Exception;
-
-	public static GHPerson getUserOrOrg(String userorg, GitHub github) throws IOException {
-		GHPerson p = github.getUser(userorg);
-		return p;
-	}
-	
 	
 	@Override
-	public User getHomePage(Authentication authentication) throws Exception {
-		GitHub github = getGithubApi(authentication);
-		String name = AbstractGithubModifiableDiagramAPI.getUserLogin(authentication);
+	public User getHomePage(HomeDetails hd) throws Exception {
 		LinkBuilder lb = linkToRemappedURI();
-		GHUser user = github.getUser(name);
-		List<Repository> repoList = templateChildRepos(lb.slash("github").slash(name), user);
-		List<Organisation> orgList = templateChildOrganisations(lb.slash("github"), user);
-		User out = templateHome(lb.slash("github").withSelfRel(), user, repoList, orgList, null);
+		String name = hd.getUser().getLogin();
+		List<Repository> repoList = templateChildRepos(lb.slash("github").slash(name), hd.getRepoList());
+		List<Organisation> orgList = templateChildOrganisations(lb.slash("github"), hd.getOrganisations());
+		User out = templateHome(lb.slash("github").withSelfRel(), hd.getUser(), repoList, orgList, null);
 		return out;
 	}
 	
@@ -340,19 +316,16 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 	}
 
 	@Override
-	public Organisation getOrgPage(
-			@PathVariable(name = "userorg") String userOrg, 
-			Authentication authentication) throws Exception {
-		GitHub github = getGithubApi(authentication);
+	public Organisation getOrgPage(OrgDetails od) throws Exception {
 		LinkBuilder lb = linkToRemappedURI();
-		GHPerson org = getUserOrOrg(userOrg, github);
 		RestEntity gh = createTopLevelParent();
-		List<Repository> repoList = templateChildRepos(lb.slash("github").slash(userOrg), org);
-		return templateOrganisation(lb.slash("github").slash(userOrg).withSelfRel(), org, repoList, Collections.singletonList(gh)); 
+		String name = od.getUserOrOrg().getLogin();
+		List<Repository> repoList = templateChildRepos(lb.slash("github").slash(name), od.getRepoList());
+		return templateOrganisation(lb.slash("github").slash(name).withSelfRel(), od.getUserOrOrg(), repoList, Collections.singletonList(gh)); 
 	}
 		
 	@Override
-	public RestEntity getDirectoryPage(DirectoryDetails dd, Authentication authentication) throws Exception {
+	public RestEntity getDirectoryPage(DirectoryDetails dd) throws Exception {
 		
 		try {
 			LinkBuilder lb = linkToRemappedURI().slash("github");
@@ -369,10 +342,10 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 				// directory in repo
 				String path = dd.getPath().getFilepath();
 				String currentDir = path.substring(path.lastIndexOf("/")+1);
-				List<RestEntity> parents = buildParents(authentication, owner, repo, dd.getPath().getFilepath(), lbRepo);
+				List<RestEntity> parents = buildParents(owner, repo, dd.getPath().getFilepath(), lbRepo);
 				out = templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
 			} else {
-				List<RestEntity> parents = buildParents(authentication, owner, null, null, lbRepo);
+				List<RestEntity> parents = buildParents(owner, null, null, lbRepo);
 				out = templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
 			} 
 			return out;
@@ -381,7 +354,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		}
 	}
 
-	private List<RestEntity> buildParents(Authentication a, Organisation owner, Repository repo,  String path, LinkBuilder lb) {
+	private List<RestEntity> buildParents(Organisation owner, Repository repo,  String path, LinkBuilder lb) {
 		List<RestEntity> out = new ArrayList<RestEntity>();
 		RestEntity github = createTopLevelParent();
 		out.add(github);

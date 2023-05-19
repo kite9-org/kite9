@@ -20,13 +20,6 @@ public class Config implements Predicate<GHTreeEntry> {
 		super();
 	}
 
-	public Config(String uploads, List<Source> sources, String templates) {
-		super();
-		this.uploads = uploads;
-		this.sources = sources;
-		this.templates = templates;
-	}
-
 	@Override
 	public boolean test(GHTreeEntry te) {
 		return sources.stream()

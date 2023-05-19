@@ -2,9 +2,7 @@ package com.kite9.server.persistence.github.config;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.kohsuke.github.GHTreeEntry;
@@ -75,6 +73,7 @@ public class TestGithubConfigLoader {
 		Assertions.assertSame(".kite9/uploads", c.getUploads());
 		Assertions.assertEquals(1, c.getSources().size());
 		Assertions.assertTrue(c.getSources().get(0).isShowDirectories());
+		Assertions.assertEquals("**/*.adl", c.getSources().get(0).getPattern());
 		Assertions.assertEquals(Config.DEFAULT_TEMPLATE_DIR, c.getTemplates());
 		Assertions.assertTrue(c.test(createTreeEntry("bob/abc.adl", false)));
 		Assertions.assertTrue(c.test(createTreeEntry("abc.adl", false)));

@@ -8,9 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.kohsuke.github.GHOrganization;
+import org.kohsuke.github.GHPerson;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHTree;
 import org.kohsuke.github.GHTreeEntry;
+import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +34,8 @@ import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.persistence.github.config.Config;
 import com.kite9.server.persistence.github.config.ConfigLoader;
 import com.kite9.server.persistence.github.conversion.DirectoryDetails;
+import com.kite9.server.persistence.github.conversion.HomeDetails;
+import com.kite9.server.persistence.github.conversion.OrgDetails;
 import com.kite9.server.persistence.github.urls.Kite9GithubPath;
 import com.kite9.server.persistence.github.urls.RawGithub;
 import com.kite9.server.security.LoginRequiredException;
@@ -47,7 +52,7 @@ import com.kite9.server.web.URIRewriter;
 public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	
 	enum StaticPages {
-		NO_FILE, ORG_PAGE, HOME_PAGE
+		NO_FILE
 	}
 	
 	protected static Logger LOG = LoggerFactory.getLogger(SourceAPI.class);
@@ -105,16 +110,6 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		}
 	}
 
-	public static String getUserLogin(Authentication p) {
-		try {
-			OAuth2User user = (OAuth2User) p.getPrincipal();
-			String login = user.getAttribute("login");
-			return login;
-		} catch (Exception e) {
-			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Could not determine login");
-		}
-	}
-
 	public abstract GitHub getGitHubAPI(String token);
 	
 	protected GHRepository getRepo(String token) throws IOException {
@@ -124,8 +119,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 
 	protected void initContents(Authentication auth) throws Exception {
 		String token = getAccessToken(auth, clientRepository);
-		testHomePage();
-		testOrg();
+		testHomePage(token, auth);
+		testOrg(token);
 		RepoSupplier repo = lazyRepo(token);
 		ensureConfigAndDefaultBranch(token, repo);
 		testFile(token);
@@ -211,19 +206,40 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		}
 	}
 	
-	private void testHomePage() {
+	private void testHomePage(String token, Authentication authentication) {
 		if (contents == null) {
-			if (githubPath.getOwner() == null) {
-				contents = StaticPages.HOME_PAGE;
+			if ((githubPath.getOwner() == null) && (token != null)) {
+				try {
+					GitHub github = getGitHubAPI(token);
+					String name = getUserLogin(authentication);
+					GHUser user = github.getUser(name); 
+					List<GHRepository> repos = user.getRepositories().values().stream().collect(Collectors.toList());
+					List<GHOrganization> orgs = user.getOrganizations().stream()
+						.filter(o -> o instanceof GHOrganization)
+						.map(o -> (GHOrganization) o)
+						.collect(Collectors.toList());
+					contents = new HomeDetails(this.githubPath, repos, orgs, user);
+				} catch (IOException e) {
+					LOG.debug("No token home page returned {} for {}", e.getMessage(), githubPath.toString());
+				}
 			}
 		}
 	}
 
-	private void testOrg() {
+	private void testOrg(String token) {
 		if (contents == null) {
 			// easy one first - no repo, so use org page.
-			if (githubPath.getReponame() == null) {
-				contents = StaticPages.ORG_PAGE;
+			if ((githubPath.getReponame() == null)  && (token != null)) {
+				// only applies for logged-in users
+				try {
+					GitHub github = getGitHubAPI(token);
+					String org = githubPath.getOwner();
+					GHPerson userOrg = github.getUser(org);
+					List<GHRepository> repos = userOrg.getRepositories().values().stream().collect(Collectors.toList());
+					contents = new OrgDetails(githubPath, repos, userOrg);
+				} catch (IOException e) {
+					LOG.debug("No token org page returned {} for {}", e.getMessage(), githubPath.toString());
+				}
 			}
 		}
 	}
@@ -305,6 +321,13 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		}
 	}
 
-	
-
+	public static String getUserLogin(Authentication p) {
+		try {
+			OAuth2User user = (OAuth2User) p.getPrincipal();
+			String login = user.getAttribute("login");
+			return login;
+		} catch (Exception e) {
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Could not determine login");
+		}
+	}
 }

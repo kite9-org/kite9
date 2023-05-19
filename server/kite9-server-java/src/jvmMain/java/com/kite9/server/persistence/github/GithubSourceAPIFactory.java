@@ -31,6 +31,8 @@ import com.kite9.server.persistence.github.config.ConfigLoader;
 import com.kite9.server.persistence.github.conversion.AbstractGithubEntityConverter;
 import com.kite9.server.persistence.github.conversion.DirectoryDetails;
 import com.kite9.server.persistence.github.conversion.GithubEntityConverter;
+import com.kite9.server.persistence.github.conversion.HomeDetails;
+import com.kite9.server.persistence.github.conversion.OrgDetails;
 import com.kite9.server.persistence.github.urls.Kite9GithubPath;
 import com.kite9.server.sources.SourceAPI;
 import com.kite9.server.topic.ChangeBroadcaster;
@@ -91,12 +93,12 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 
 			@Override
 			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
-				if (contents == StaticPages.HOME_PAGE) {
-					return ec.getHomePage(a);
-				} else if (contents == StaticPages.ORG_PAGE) {
-					return ec.getOrgPage(this.githubPath.getOwner(), a);
+				if (contents instanceof HomeDetails) {
+					return ec.getHomePage((HomeDetails) contents);
+				} else if (contents instanceof OrgDetails) {
+					return ec.getOrgPage((OrgDetails) contents);
 				} else if (contents instanceof DirectoryDetails) {		
-					return ec.getDirectoryPage((DirectoryDetails) contents, a);
+					return ec.getDirectoryPage((DirectoryDetails) contents);
 				} else {
 					throw new Kite9ProcessingException("can't currently produce an entity representation here");
 				}
@@ -168,11 +170,6 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			@Override
 			public LinkBuilder linkToRemappedURI() {
 				return RelativeHostLinkBuilder.linkToCurrentMapping();
-			}
-
-			@Override
-			protected GitHub getGithubApi(Authentication authentication) throws Exception {
-				return GithubSourceAPIFactory.this.createGitHub(authentication);
 			}
 		};
 	}
