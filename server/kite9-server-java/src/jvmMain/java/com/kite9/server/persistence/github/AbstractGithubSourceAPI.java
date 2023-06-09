@@ -122,7 +122,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		testHomePage(token, auth);
 		testOrg(token);
 		RepoSupplier repo = lazyRepo(token);
-		ensureConfigAndDefaultBranch(token, repo);
+		ensureConfigAndDefaultBranch(auth, repo);
 		testFile(token);
 		testDirectory(token, repo);
 		testMissing(token);
@@ -152,8 +152,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		};
 	}
 
-	private void ensureConfigAndDefaultBranch(String token, RepoSupplier repo) throws Exception {
-		if ((contents == null) && (token != null)) {
+	private void ensureConfigAndDefaultBranch(Authentication a, RepoSupplier repo) throws Exception {
+		if ((contents == null) && (a != null)) {
 			if (branchName == null) {
 				if (githubPath.getRef() != null) {
 					branchName = githubPath.getRef();
@@ -162,8 +162,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 				}
 			} 
 			
-			if (config == null) {
-				this.config = configLoader.loadConfig(token, githubPath.getOwner(), githubPath.getReponame(), branchName);
+			if ((config == null) && (!githubPath.getFilepath().equals(ConfigLoader.KITE9_CONFIG_FILE))) {
+				this.config = configLoader.loadConfig(a, githubPath.getOwner(), githubPath.getReponame(), branchName);
 			}
 		}
 	}

@@ -15,7 +15,7 @@ public class TestGithubConfigLoader {
 	@Test
 	public void testConfig1LoadsCorrectly() throws IOException {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config1.yml");
-		ConfigLoader i = new ConfigLoaderImpl();
+		ConfigLoader i = createConfigLoader();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
 		Assertions.assertEquals(".kite9/uploads", c.getUploads());
 		Assertions.assertEquals(1, c.getSources().size());
@@ -27,6 +27,10 @@ public class TestGithubConfigLoader {
 		Assertions.assertFalse(c.test(createTreeEntry(".kite9/file.adl", false)));
 		Assertions.assertFalse(c.test(createTreeEntry(".kite9/uploads", true)));
 		Assertions.assertTrue(c.test(createTreeEntry("uploads", true)));
+	}
+
+	private ConfigLoaderImpl createConfigLoader() {
+		return new ConfigLoaderImpl(null);
 	}
 	
 	private GHTreeEntry createTreeEntry(String path, boolean tree) {
@@ -47,7 +51,7 @@ public class TestGithubConfigLoader {
 	@Test
 	public void testConfig2LoadsCorrectly() throws IOException {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config2.yml");
-		ConfigLoader i = new ConfigLoaderImpl();
+		ConfigLoader i = createConfigLoader();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
 		Assertions.assertEquals(".kite9/loader", c.getUploads());
 		Assertions.assertEquals(2, c.getSources().size());
@@ -68,7 +72,7 @@ public class TestGithubConfigLoader {
 	@Test
 	public void testConfig3LoadsCorrectly() throws IOException {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config1.yml");
-		ConfigLoader i = new ConfigLoaderImpl();
+		ConfigLoader i = createConfigLoader();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
 		Assertions.assertSame(".kite9/uploads", c.getUploads());
 		Assertions.assertEquals(1, c.getSources().size());

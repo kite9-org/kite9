@@ -28,6 +28,7 @@ import com.kite9.server.domain.RestEntity;
 import com.kite9.server.persistence.RelativeHostLinkBuilder;
 import com.kite9.server.persistence.cache.CacheManagedAPIFactory;
 import com.kite9.server.persistence.github.config.ConfigLoader;
+import com.kite9.server.persistence.github.config.ConfigLoaderImpl;
 import com.kite9.server.persistence.github.conversion.AbstractGithubEntityConverter;
 import com.kite9.server.persistence.github.conversion.DirectoryDetails;
 import com.kite9.server.persistence.github.conversion.GithubEntityConverter;
@@ -54,11 +55,10 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			ApplicationContext ctx,
 			ADLFactory factory,
 			OAuth2AuthorizedClientRepository clientRepository, 
-			ConfigLoader configLoader,
 			FormatSupplier formatSupplier, String githubApiKey) {
 		super(ctx, factory);
 		this.clientRepository = clientRepository;
-		this.configLoader = configLoader;
+		this.configLoader = new ConfigLoaderImpl(this);
 		this.formatSupplier = formatSupplier;
 		this.githubApiKey = githubApiKey;
 	}

@@ -148,7 +148,7 @@ class MergeOption(
     }
 
     override fun toString(): String {
-        return ("[MO: " + number + " " + mk.a.groupNumber + " (" + mk.a.size + ")  " + mk.b.groupNumber + "(" + mk.b.size + "): t= " + mergeType + " i=" + linksIncluded + " a="
+        return ("[MO: " + number + " " + mk.a.groupNumber + "(" + mk.a.size + ")  " + mk.b.groupNumber + "(" + mk.b.size + "): t= " + mergeType + " i=" + linksIncluded + " a="
                 + linksAligned + " t=" + totalLinks + "ags=" + alignmentGroupSize + " od=" + ordinalDistance + ", p=" + priority + " a=" + alignedGroup + " ad=" + alignedDirection + " lr=" + linkRank + "]")
     }
 
