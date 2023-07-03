@@ -6,6 +6,7 @@ import org.kite9.diagram.model.position.End
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.*
 
+@JsExport
 @JsName("initCSS")
 fun init() {
 

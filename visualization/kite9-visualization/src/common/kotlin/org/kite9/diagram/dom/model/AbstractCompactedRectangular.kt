@@ -34,12 +34,12 @@ abstract class AbstractCompactedRectangular(
 
     override fun getVerticalAlignment(): VerticalAlignment {
         ensureInitialized()
-        return verticalAlignment!!
+        return verticalAlignment
     }
 
     override fun getHorizontalAlignment(): HorizontalAlignment {
         ensureInitialized()
-        return horizontalAlignment!!
+        return horizontalAlignment
     }
 
     override fun initialize() {
@@ -87,10 +87,7 @@ abstract class AbstractCompactedRectangular(
     }
 
     open fun ensureMinimumSize(c: Dimension2D, within: Dimension2D): CostedDimension2D {
-        var min: Dimension2D = CostedDimension2D.ZERO
-        if (this is SizedRectangular) {
-            min = (this as SizedRectangular).getMinimumSize()
-        }
+        var min = (this as SizedRectangular).getMinimumSize()
         return CostedDimension2D(
             max(c.w, min.w),
             max(c.h, min.h), within
@@ -98,7 +95,7 @@ abstract class AbstractCompactedRectangular(
     }
 
     private val leafBounds: Dimension2D
-        private get() {
+        get() {
             val p = painter
             return if (p is LeafPainter && transformer is LeafTransformer) {
                 transformer.getBounds(p)
@@ -107,18 +104,18 @@ abstract class AbstractCompactedRectangular(
 
     override fun getXPathVariable(name: String): String? {
         if ("x0" == name || "x" == name) {
-            if (painter is LeafPainter) {
+            return if (painter is LeafPainter) {
                 var out = (painter as LeafPainter).bounds().x - getPadding(Direction.LEFT)
-                return "" + out
+                "" + out
             } else {
-                return "0";
+                "0";
             }
         } else if ("y0" == name || "y" == name) {
-            if (painter is LeafPainter) {
+            return if (painter is LeafPainter) {
                 var out = (painter as LeafPainter).bounds().y - getPadding(Direction.UP)
-                return "" + out;
+                "" + out;
             } else {
-                return "0";
+                "0";
             }
         } else {
             return super.getXPathVariable(name);

@@ -8,7 +8,6 @@ import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.Placement
 import org.w3c.dom.Element
 import kotlin.reflect.KClass
-
 interface ElementContext {
 
     companion object {

@@ -15,12 +15,15 @@ import org.w3c.dom.Element
  * Kite9 SVG properly in-browser
  */
 
+@JsExport
 @JsName(name = "kite9Context")
 val context = JSElementContext()
 
+@JsExport
 @JsName(name = "getCssStyleDoubleProperty")
 fun getCssStyleDoubleProperty(p: String, e: Element) = context.getCssStyleDoubleProperty(p, e)
 
+@JsExport
 @JsName("formatSVG")
 fun formatSVG(e: Element) {
     Kite9Log.Companion.factory = { l -> JSKite9Log(l) }

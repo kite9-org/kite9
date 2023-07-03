@@ -4,12 +4,11 @@ plugins {
 }
 
 kotlin {
-    jvm() {
+    jvm {
         withJava()
         dependencies {
-            api(project(":kite9-visualization-common"))
             implementation("org.apache.xmlgraphics:batik-svggen:1.14")
-            implementation("org.apache.xmlgraphics:batik-transcoder:1.14") 
+            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
             implementation("org.apache.xmlgraphics:batik-bridge:1.14")
             implementation("org.apache.xmlgraphics:batik-ext:1.14")
             implementation("org.apache.xmlgraphics:xmlgraphics-commons:2.7")
@@ -18,18 +17,30 @@ kotlin {
             testImplementation("junit:junit:4.13.2")
             testImplementation("org.xmlunit:xmlunit-core:2.9.0")
         }
-        
     }
+
+    js(IR) {
+        browser()
+        binaries.library()
+
+        sourceSets.getByName("jsMain") {
+            kotlin.srcDirs("src/common/kotlin", "src/jsMain/kotlin")
+        }
+    }
+
 
     sourceSets {
         val jvmMain by getting {
-        
+            kotlin.srcDirs("src/common/kotlin", "src/jvmMain/java")
         }
-        val jvmTest by getting
     }
+
 }
 
-description = "Kite9 Visualization Java Batik (Server-Side)"
+
+
+description = "Kite9 Visualization"
+
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
