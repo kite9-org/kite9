@@ -17,6 +17,10 @@ kotlin {
             testImplementation("junit:junit:4.13.2")
             testImplementation("org.xmlunit:xmlunit-core:2.9.0")
         }
+
+        sourceSets.getByName("jvmMain") {
+            kotlin.srcDirs("src/common/kotlin", "src/jvmMain/java")
+        }
     }
 
     js(IR) {
@@ -27,14 +31,6 @@ kotlin {
             kotlin.srcDirs("src/common/kotlin", "src/jsMain/kotlin")
         }
     }
-
-
-    sourceSets {
-        val jvmMain by getting {
-            kotlin.srcDirs("src/common/kotlin", "src/jvmMain/java")
-        }
-    }
-
 }
 
 
