@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm")
-    id("eclipse")
     id("org.kite9.java-conventions")
 }
 
