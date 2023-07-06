@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile;
+
 plugins {
     id("org.kite9.java-conventions")
     kotlin("multiplatform")
+    id("com.dorongold.task-tree") version "2.1.1"
 }
 
 kotlin {
@@ -38,13 +41,17 @@ kotlin {
             dependsOn(common)
         }
     }
-
 }
 
-tasks.withType<GenerateModuleMetadata> {
-    enabled = false
+gradle.taskGraph.whenReady {
+    // this is necessary because otherwise the metadata for the
+    // common sourceSet fails to compile
+    tasks {
+        getByName("compileCommonKotlinMetadata") {
+            enabled = false
+        }
+    }
 }
-
 
 
 description = "Kite9 Visualization"
