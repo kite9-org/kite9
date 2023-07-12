@@ -21,15 +21,10 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractFunctionalTest extends HelpMethods {
+public abstract class AbstractFunctionalTest extends AbstractTest {
 
 	public AbstractFunctionalTest() {
 		super();
-	}
-
-	@BeforeClass
-	public static void setLoggingFactory() {
-		Kite9Log.Companion.setFactory(l -> new Kite9LogImpl(l));
 	}
 
 	@BeforeClass
@@ -43,20 +38,6 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 		AbstractMutableXMLElement.TESTING_DOCUMENT = AbstractMutableXMLElement.newDocument();
 	}
 
-	@Before
-	public void setLogging() {
-//		Kite9LogImpl.setLogging(Destination.STREAM);
-		if ("off".equals(System.getProperty("kite9.logging"))) {
-			Kite9LogImpl.setLogging(Destination.OFF);
-		} else {
-			// if we are running more than one test, then there's no point in logging.
-			if (firstRun) {
-				firstRun = false;
-			} else {
-				Kite9LogImpl.setLogging(Destination.OFF);
-			}
-		}
-	}
 
 	@Before
 	public void initTestDocument() {
@@ -114,9 +95,6 @@ public abstract class AbstractFunctionalTest extends HelpMethods {
 	protected String getTestMethod() {
 		return StackHelp.getAnnotatedMethod(org.junit.Test.class).getName();
 	}
-	
-	static boolean firstRun = true;
-	
 
 	
 

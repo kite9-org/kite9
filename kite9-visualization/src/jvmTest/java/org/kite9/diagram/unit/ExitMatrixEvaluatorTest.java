@@ -2,6 +2,8 @@ package org.kite9.diagram.unit;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.kite9.diagram.AbstractFunctionalTest;
+import org.kite9.diagram.AbstractTest;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
 import org.kite9.diagram.model.position.Layout;
@@ -10,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrixEvalua
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D;
 
-public class ExitMatrixEvaluatorTest {
+public class ExitMatrixEvaluatorTest extends AbstractTest {
 
 	@Test
 	public void testSideInterfere() {
@@ -40,7 +42,7 @@ public class ExitMatrixEvaluatorTest {
 					new float[] { 0, 0, 1 },
 					new float[] { 0, 0, 0 }}, false);
 		
-		Assert.assertEquals(0f, (float) new ExitMatrixEvaluator().countOverlaps(left, right, Layout.LEFT, rh));
+		Assert.assertEquals(0f, (float) new ExitMatrixEvaluator().countOverlaps(left, right, Layout.LEFT, rh), 0.01f);
 	}
 	
 
@@ -60,7 +62,7 @@ public class ExitMatrixEvaluatorTest {
 					new float[] { 0, 5, 0 }}, false);
 		
 		// edge leaving left has to cross 5 others, with prob .5
-		Assert.assertEquals(2.5f, (float)  new ExitMatrixEvaluator().countOverlaps(left, right, Layout.LEFT, rh));
+		Assert.assertEquals(2.5f, (float)  new ExitMatrixEvaluator().countOverlaps(left, right, Layout.LEFT, rh), 0.01f);
 	}
 	
 	@Test
@@ -79,7 +81,7 @@ public class ExitMatrixEvaluatorTest {
 					new float[] { 0, 0, 0 }}, false);
 		
 		// edges facing each other count at .25 each
-		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().countOverlaps(left, right, Layout.LEFT, rh));
+		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().countOverlaps(left, right, Layout.LEFT, rh), 0.01f);
 	}
 	
 	@Test
@@ -101,9 +103,9 @@ public class ExitMatrixEvaluatorTest {
 		right.setSize(new BasicBounds(0, .25),  new BasicBounds(0, .5));
 		
 		// right matrix left side gets cost of .25, left matrix right side gets .25
-		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(left, right, Layout.LEFT, rh));
+		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(left, right, Layout.LEFT, rh),0.01f);
 		// right (now bottom) matrix up side gets cost of .5 each
-		Assert.assertEquals(1.5f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(left, right, Layout.UP, rh));
+		Assert.assertEquals(1.5f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(left, right, Layout.UP, rh),0.01f);
 	}
 	
 	@Test
@@ -123,7 +125,7 @@ public class ExitMatrixEvaluatorTest {
 		
 				
 		// bottom matrix up (3) must cross left of top (4), with factor 1/2 .
-		Assert.assertEquals(6f, (float) new ExitMatrixEvaluator().countOverlaps(top, bottom, Layout.UP, rh));
+		Assert.assertEquals(6f, (float) new ExitMatrixEvaluator().countOverlaps(top, bottom, Layout.UP, rh), 0.01f);
 	}
 	
 	/**
@@ -150,15 +152,15 @@ public class ExitMatrixEvaluatorTest {
 		narrow.setSize(new BasicBounds(.25, .5), new BasicBounds(.25, .5));
 		
 		// since wide is wider than narrow, we are only likely to cross about 1/2 of the wide stuff.
-		Assert.assertEquals(.25f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.UP, rh));
+		Assert.assertEquals(.25f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.UP, rh), 0.01f);
 		
 		// narrow must cross one of wide's links, factor = 1/2
-		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.DOWN, rh));
+		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.DOWN, rh),0.01f);
 
 		// wide link going past narrow
-		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(wide, narrow, Layout.UP, rh));
+		Assert.assertEquals(.5f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(wide, narrow, Layout.UP, rh),0.01f);
 		// single narrow link going further
-		Assert.assertEquals(1f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(wide, narrow, Layout.DOWN, rh));
+		Assert.assertEquals(1f, (float) new ExitMatrixEvaluator().calculateExtraExternalLinkDistance(wide, narrow, Layout.DOWN, rh),0.01f);
 
 	}
 	
@@ -184,10 +186,10 @@ public class ExitMatrixEvaluatorTest {
 		narrow.setSpans(new Bounds[] { new BasicBounds(.5, 1), new BasicBounds(.5, 1), new BasicBounds(.5, 1), new BasicBounds(.5, 1)});
 		
 		// wide on top, but only 1 link is obscured, having 1/2 chance of crossing b, and 1/2 multiplier
-		Assert.assertEquals(.25f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.UP, rh));
+		Assert.assertEquals(.25f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.UP, rh), 0.01f);
 		
 		// only half of top is obscured, by 1/3 of the other. 1/2 * 1 * 1/2 multiplier = .25
-		Assert.assertEquals(.25f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.DOWN, rh));
+		Assert.assertEquals(.25f, (float) new ExitMatrixEvaluator().countOverlaps(wide, narrow, Layout.DOWN, rh),0.01f);
 
 	}
 	
