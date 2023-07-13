@@ -30,7 +30,6 @@ dependencies {
     api("org.webjars:highlightjs:9.6.0")
     api("org.webjars.npm:hint.css:2.3.2")
     api("org.webjars.npm:kotlin:1.4.30")
-    //api(project(":kite9-visualization-js"))
     testImplementation("org.springframework.security:spring-security-test:5.7.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.0")
 }
