@@ -87,7 +87,7 @@ public abstract class AbstractFunctionalTest extends AbstractTest {
 	protected String getInputURI(File f) {
 		String name = f.getName();
 		String packageName = this.getClass().getPackage().getName();
-		String root = "src/test/resources";
+		String root = "src/jvmTest/resources";
 		return root+"/"+packageName.replace('.', '/') + "/" + name;
 	}
 
