@@ -1,9 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile;
+import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile;
 
 plugins {
     id("org.kite9.java-conventions")
     kotlin("multiplatform")
     id("com.dorongold.task-tree") version "2.1.1"
+    id("distribution")
 }
 
 kotlin {
@@ -53,6 +55,13 @@ gradle.taskGraph.whenReady {
     }
 }
 
+tasks.withType<Kotlin2JsCompile>().configureEach {
+    // there are loads of name shadowed warnings which we should eventually fix
+    kotlinOptions.suppressWarnings = true
+
+    // this means source maps work in safari but it blows out the time
+    kotlinOptions.sourceMapEmbedSources = "always"
+}
 
 description = "Kite9 Visualization"
 

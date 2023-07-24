@@ -1,4 +1,5 @@
 import com.github.gradle.node.npm.task.NpxTask
+import org.gradle.api.tasks.Copy
 
 plugins {
     id("org.kite9.java-conventions")
@@ -45,8 +46,16 @@ val compileTypescript = tasks.register<NpxTask>("compileTypescript") {
     command.set("tsc")
 }
 
+val copyVisualization = tasks.register<Copy>("copyVisualization") {
+    from("../kite9-visualization/build/productionLibrary/")
+    into("build/resources/main/static/public/external")
+    include("kite9-parent-kite9-visualization.js")
+    include("kite9-parent-kite9-visualization.js.map")
+}
+
 val compile = tasks.getByName("classes") {
     dependsOn(compileTypescript)
+    dependsOn(copyVisualization)
 }
 
 java {

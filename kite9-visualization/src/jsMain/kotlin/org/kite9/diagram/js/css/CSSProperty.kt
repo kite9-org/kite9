@@ -1,3 +1,6 @@
 package org.kite9.diagram.js.css
 
-data class CSSProperty(val name: String, val syntax: String, val initialValue: String?, val inherits: Boolean)
+data class CSSProperty(@JsName("name") val name: String,
+                       @JsName("syntax")val syntax: String,
+                       @JsName("initialValue") val initialValue: String?,
+                       @JsName("inherits") val inherits: Boolean)

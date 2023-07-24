@@ -18,14 +18,14 @@ public class AbstractTest extends HelpMethods {
 
     @Before
     public void setLogging() {
-//		Kite9LogImpl.setLogging(Kite9Log.Destination.STREAM);
         if ("off".equals(System.getProperty("kite9.logging"))) {
             Kite9LogImpl.setLogging(Kite9Log.Destination.OFF);
         } else {
-            // if we are running more than one test, then there's no point in logging.
             if (firstRun) {
+                Kite9LogImpl.setLogging(Kite9Log.Destination.STREAM);
                 firstRun = false;
             } else {
+                // if we are running more than one test, then there's no point in logging.
                 Kite9LogImpl.setLogging(Kite9Log.Destination.OFF);
             }
         }

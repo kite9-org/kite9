@@ -4,11 +4,19 @@ import { Transition } from '../../../classes/transition/transition.js';
 import { Metadata } from '../../../classes/metadata/metadata.js';
 import { ADLUpdateCallback, UpdateableResolver } from '../navigable.js';
 
+type Kite9Library = {
+    initCSS(): void,
+    formatSVG(e: Element) : void
+}
 
 export function createAdlToSVGResolver(
 	transition: Transition,
 	adlCallback: ADLUpdateCallback,
 	metadata: Metadata) : UpdateableResolver {
+
+	function getKite9Library() : Kite9Library {
+	    return window['kite9-parent-kite9-visualization'] as Kite9Library;
+	}
 
 	const XSL_TEMPLATE_NAMESPACE = "http://www.kite9.org/schema/xslt";
 	const ADL_NAMESPACE = "http://www.kite9.org/schema/adl";
@@ -25,10 +33,10 @@ export function createAdlToSVGResolver(
 	once(function() {
 		ensureJs('/webjars/kotlin/1.4.30/kotlin.js')
 			.then(() => {
-				return ensureJs('/webjars/kite9-visualization-js/0.1-SNAPSHOT/kite9-visualization-js.js');
+				return ensureJs('/public/external/kite9-parent-kite9-visualization.js');
 			})
 			.then(() => {
-				window['kite9-visualization-js'].initCSS();
+				getKite9Library().initCSS();
 			})
 	});
 
@@ -71,7 +79,7 @@ export function createAdlToSVGResolver(
 		const update = ensureUpdateArea();
 		const docElement = result.documentElement
 		update.appendChild(docElement)
-		window['kite9-visualization-js'].formatSVG(docElement);
+		getKite9Library().formatSVG(docElement);
 
 		// put it back in the result 
 		result.appendChild(docElement);
