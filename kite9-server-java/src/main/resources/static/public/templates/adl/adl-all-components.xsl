@@ -19,7 +19,7 @@
   <xsl:import href="../labels/labels-components.xsl" />
   <xsl:import href="../grid/grid-components.xsl" />
   <xsl:import href="../links/links-components.xsl" />
-  <xsl:import href="../textarea/textarea-components.xsl" /> 
+  <xsl:import href="../textarea/textarea-components.xsl" />
   <xsl:import href="../highlight/highlight-components.xsl" />
   <xsl:import href="../diagram/diagram-components.xsl" />
 

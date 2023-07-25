@@ -289,10 +289,10 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	public static void drawPositions(Collection<Vertex> out, Class<?> theTest, String subtest, String item) {
-//		File target = new File("target");
-//		if (!target.isDirectory()) {
-//			return;
-//		}
+		File target = new File("build");
+		if (!target.isDirectory()) {
+			return;
+		}
 
 		double size = out.size() * 40;
 		size = Math.min(size, 1000);
