@@ -5,13 +5,25 @@ import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
+import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
 import kotlin.reflect.KClass
 interface ElementContext {
 
     companion object {
         val UNITS: Set<String> = setOf("pt", "cm", "em", "in", "ex", "px")
+
+        inline fun <reified  X : Enum<X>> getCssStyleEnumProperty(prop: String, e: Element, ec: ElementContext): X? {
+            val s = ec.getCssStyleStringProperty(prop, e)
+            if (s==null) {
+                return null
+            } else {
+                return enumValues<X>()
+                    .firstOrNull { it.name.toLowerCase().replace("_", "-") == s.trim() }
+            }
+        }
     }
 
     /**
@@ -19,7 +31,6 @@ interface ElementContext {
      */
     fun getCssStyleDoubleProperty(prop: String, e: Element): Double
     fun getCssStyleStringProperty(prop: String, e: Element): String?
-    fun <X : Any> getCssStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X?
     fun getCssStyleRangeProperty(prop: String, e: Element): IntegerRange?
     fun getCssStylePlacementProperty(prop: String, e: Element): Placement
 
@@ -47,4 +58,6 @@ interface ElementContext {
     fun textWidth(s: String, inside: Element) : Double
 
     fun getCssUnitSizeInPixels(prop: String, e: Element) : Double
+
 }
+

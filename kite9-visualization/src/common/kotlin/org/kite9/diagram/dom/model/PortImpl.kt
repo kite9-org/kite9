@@ -22,7 +22,7 @@ class PortImpl(
 ) : AbstractModelDiagramElement (el, parent, ctx, rp, t), Port {
 
     private val portSide : Direction by lazy {
-        val out = ctx.getCssStyleEnumProperty(CSSConstants.DIRECTION, theElement, Direction::class) ?: Direction.DOWN
+        val out = ElementContext.getCssStyleEnumProperty<Direction>(CSSConstants.DIRECTION, theElement, ctx) ?: Direction.DOWN
         out
     }
 
@@ -56,7 +56,7 @@ class PortImpl(
     }
 
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
-        return ctx.getCssStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
+        return ElementContext.getCssStyleEnumProperty<ConnectionsSeparation>(CSSConstants.CONNECTIONS_PROPERTY, theElement, ctx)!!
     }
 
     override fun getConnectionAlignment(side: Direction): Placement {

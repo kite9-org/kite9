@@ -26,7 +26,7 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
         iterations = 0
         paths = 0
         cost = 0
-        var p: Path? = null
+        var p: Path?
         while (true) {
             p = getShortestPath(fg)
             if (p == null) break
@@ -46,7 +46,7 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
 	iterations: $iterations
 	paths:    $paths
 	cost:     $cost
-	nodes:    ${fg!!.allNodes.size}
+	nodes:    ${fg.allNodes.size}
 	arcs:     ${fg.allArcs.size}"""
         )
         displayFlowInformation(fg)

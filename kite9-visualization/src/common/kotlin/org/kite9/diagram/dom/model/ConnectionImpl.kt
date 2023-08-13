@@ -104,7 +104,7 @@ class ConnectionImpl(
     }
 
     private fun initDrawDirection() {
-        drawDirection = ctx.getCssStyleEnumProperty(CSSConstants.DIRECTION, theElement, Direction::class)
+        drawDirection = ElementContext.getCssStyleEnumProperty<Direction>(CSSConstants.DIRECTION, theElement, ctx)
     }
 
     private fun indexOf(e: Element, within: NodeList): Int {

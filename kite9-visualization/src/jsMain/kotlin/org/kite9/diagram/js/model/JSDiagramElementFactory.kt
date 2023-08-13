@@ -1,6 +1,7 @@
 package org.kite9.diagram.js.model
 
 import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular
+import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.model.AbstractDiagramElementFactory
 import org.kite9.diagram.dom.model.TemporaryConnectedRectangularImpl
@@ -19,8 +20,8 @@ class JSDiagramElementFactory(context: JSElementContext) : AbstractDiagramElemen
     }
 
     override fun createDiagramElement(x: Element, parent: DiagramElement?): DiagramElement? {
-        val type = context!!.getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, DiagramElementType::class)
-        val usage= context!!.getCssStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, RectangularElementUsage::class)
+        val type = ElementContext.getCssStyleEnumProperty<DiagramElementType>(CSSConstants.ELEMENT_TYPE_PROPERTY, x, context!!)
+        val usage= ElementContext.getCssStyleEnumProperty<RectangularElementUsage>(CSSConstants.ELEMENT_USAGE_PROPERTY, x, context!!)
 
         if (type == null || usage == null) {
             return null

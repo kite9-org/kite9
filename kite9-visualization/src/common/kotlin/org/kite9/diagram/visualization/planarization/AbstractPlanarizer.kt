@@ -27,8 +27,8 @@ abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, P
     val gridPositioner: GridPositioner
         get() = elementMapper.getGridPositioner()
 
-    override fun planarize(c: Diagram): Planarization {
-        val pln = buildPlanarization(c)
+    override fun planarize(d: Diagram): Planarization {
+        val pln = buildPlanarization(d)
         return try {
             for (pt in planarizationTransforms) {
                 log.send("PLan:" + pln.toString())
@@ -44,6 +44,7 @@ abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, P
                  """.trimIndent())
             pln
         } catch (e: Exception) {
+            log.error("Planarization incomplete", e)
             throw PlanarizationException("Planarization incomplete", pln, e)
         }
     }
@@ -83,8 +84,8 @@ abstract class AbstractPlanarizer(val elementMapper: ElementMapper) : Logable, P
         }
     }
 
-    protected val planarizationTransforms: List<PlanarizationTransform>
-        protected get() {
+    private val planarizationTransforms: List<PlanarizationTransform>
+        get() {
             val out: MutableList<PlanarizationTransform> = ArrayList()
             out.add(ExcessVertexRemovalTransform())
             out.add(ContainerConnectionTransform1(elementMapper))

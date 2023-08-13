@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.model
 
+import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
@@ -45,7 +46,7 @@ open class ConnectedContainerImpl(
     }
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
-        return ctx.getCssStyleEnumProperty(TRAVERSAL_PROPERTIES[d]!!, theElement, BorderTraversal::class)!!
+        return ElementContext.getCssStyleEnumProperty<BorderTraversal>(TRAVERSAL_PROPERTIES[d]!!, theElement, ctx)!!
     }
 
     override fun getGridColumns(): Int {

@@ -94,9 +94,9 @@ fun init() {
 
     // LINK DYNAMICS
     register( CSSProperty(CSSConstants.LINK_FROM_XPATH,"*",
-            "\"./*[@k9-elem='from']/@reference\"", true))
+            "\"descendant::*[@k9-elem='from']/@reference\'", true))
     register( CSSProperty(CSSConstants.LINK_TO_XPATH, "*",
-        "\"./*[@k9-elem='to']/@reference\"", true))
+        "\"descendant::*[@k9-elem='to']/@reference\"", true))
     register( CSSProperty(CSSConstants.LINK_END,syntax<End>()+" | none", "none", false))
 
     // TERMINATORS

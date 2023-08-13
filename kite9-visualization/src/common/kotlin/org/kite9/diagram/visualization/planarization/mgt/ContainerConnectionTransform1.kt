@@ -47,7 +47,7 @@ class ContainerConnectionTransform1(elementMapper: ElementMapper) : Planarizatio
                 if (from is Container || to is Container) {
                     val forwardList: List<PlanarizationEdge> = edgeMapping.edges
                     eraseEnds(edgeMapping, de, from, to, toRemove, forwardList, edgeMapping.startVertex)
-                    if (toRemove.size > 0) {
+                    if (toRemove.isNotEmpty()) {
                         edgeMapping.remove(toRemove)
                         for (edge in toRemove) {
                             t.removeEdge(edge, pln)
@@ -58,9 +58,10 @@ class ContainerConnectionTransform1(elementMapper: ElementMapper) : Planarizatio
                         toRemove.clear()
                     }
 
-
-                    (edgeMapping.edges[0] as BiDirectionalPlanarizationEdge).fromUnderlying = from
-                    (edgeMapping.edges[edgeMapping.edges.size -1] as BiDirectionalPlanarizationEdge).toUnderlying = to
+                    if (edgeMapping.edges.size > 0) {
+                        (edgeMapping.edges[0] as BiDirectionalPlanarizationEdge).fromUnderlying = from
+                        (edgeMapping.edges[edgeMapping.edges.size - 1] as BiDirectionalPlanarizationEdge).toUnderlying = to
+                    }
                 }
             }
         }

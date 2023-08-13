@@ -16,7 +16,7 @@ export const marginsIcon = "/public/behaviours/styleable/size/margins.svg";
 
 export function initMarginsBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style, overlay, cm, event) {
-		const margins = parseInfo(selectedElement)['margin'].split(" ").map(x => parseFloat(x));
+		const margins = parseInfo(selectedElement)['margin'];
 		const bbox = getElementPageBBox(selectedElement);
 		
 		const innerMove = overlay.createSizingRect(bbox.x, bbox.y, bbox.width, bbox.height, 
@@ -41,7 +41,7 @@ export const paddingIcon = "/public/behaviours/styleable/size/padding.svg";
 
 export function initPaddingBuildControls() : BuildControlsCallback {
 	return function(selectedElement: Element, style: Styles, overlay: Overlay, cm: ContextMenu, event: Event) {
-		const padding = parseInfo(selectedElement)['padding'].split(" ").map(x => parseFloat(x));
+		const padding = parseInfo(selectedElement)['padding'];
 		const bbox = getElementPageBBox(selectedElement);
 		const ibox = {
 			x : bbox.x + padding[3],
@@ -75,7 +75,7 @@ export const minSizeIcon = "/public/behaviours/styleable/size/size.svg";
 
 export function initMinSizeBuildControls() : BuildControlsCallback {
 	return function(selectedElement, style, overlay, cm, event) {
-		const minSize = parseInfo(selectedElement)['min-size'].split(" ").map(x => parseFloat(x));
+		const minSize = parseInfo(selectedElement)['min-size'];
 		const bbox = getElementPageBBox(selectedElement);
 		
 		const numericControls = [

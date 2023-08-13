@@ -64,7 +64,7 @@ abstract class AbstractConnectedRectangular(
     }
 
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
-        return ctx.getCssStyleEnumProperty(CSSConstants.CONNECTIONS_PROPERTY, theElement, ConnectionsSeparation::class)!!
+        return ElementContext.getCssStyleEnumProperty<ConnectionsSeparation>(CSSConstants.CONNECTIONS_PROPERTY, theElement, ctx)!!
     }
 
     override fun getLinkGutter(): Double {

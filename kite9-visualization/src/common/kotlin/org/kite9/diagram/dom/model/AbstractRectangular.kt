@@ -45,14 +45,14 @@ abstract class AbstractRectangular(
     }
 
     protected fun initLayout() {
-        layout = ctx.getCssStyleEnumProperty(CSSConstants.LAYOUT_PROPERTY, theElement, Layout::class)
+        layout = ElementContext.getCssStyleEnumProperty<Layout>(CSSConstants.LAYOUT_PROPERTY, theElement, ctx)
     }
 
     protected fun initSizing() {
         sizingHoriz =
-            ctx.getCssStyleEnumProperty(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY, theElement, DiagramElementSizing::class)!!
+            ElementContext.getCssStyleEnumProperty<DiagramElementSizing>(CSSConstants.ELEMENT_HORIZONTAL_SIZING_PROPERTY, theElement, ctx)!!
         sizingVert =
-            ctx.getCssStyleEnumProperty(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY, theElement, DiagramElementSizing::class)!!
+            ElementContext.getCssStyleEnumProperty<DiagramElementSizing>(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY, theElement, ctx)!!
     }
 
     protected fun initContainerPosition() {

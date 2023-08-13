@@ -3,6 +3,7 @@ package org.kite9.diagram.dom.processors
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.ns.Kite9Namespaces
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.TextAlign
 import org.w3c.dom.Document
@@ -177,7 +178,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         (n is Element) && (n.localName == "image") && (n.namespaceURI == Kite9Namespaces.SVG_NAMESPACE)
 
     private fun isWrapContents(n: Element) =
-        ctx.getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, n, DiagramElementType::class) == DiagramElementType.TEXT
+        ElementContext.getCssStyleEnumProperty<DiagramElementType>(CSSConstants.ELEMENT_TYPE_PROPERTY, n, ctx) == DiagramElementType.TEXT
 
 
     fun splitIntoSpans(s: String, inside: Element) : List<Span> {

@@ -14,6 +14,7 @@ import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.Placement.Companion.NONE
+import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
 import org.w3c.dom.svg.SVGGraphicsElement
 import org.w3c.dom.svg.SVGSVGElement
@@ -181,15 +182,18 @@ class JSElementContext : ElementContext {
         return out
     }
 
-    override fun <X : Any> getCssStyleEnumProperty(prop: String, e: Element, c: KClass<X>): X? {
-        val s = getCssStyleStringProperty(prop, e)
-        if (s==null) {
-            return null
-        } else {
-            return (c.asDynamic().jClass.values() as Array<X>)
-                .firstOrNull { (it.asDynamic().name as String).toLowerCase().replace("_", "-") == s.trim() }
-        }
-    }
+//    override fun <X : Enum<Any>> getCssStyleEnumProperty(prop: String, e: Element, c: KClass<VerticalAlignment>): X? {
+//        val s = getCssStyleStringProperty(prop, e)
+//        if (s==null) {
+//            return null
+//        } else {
+//            // find the matching enum
+//            Class.forNa
+//            c.enum
+//            return (c.asDynamic().jClass.values() as Array<X>)
+//                .firstOrNull { (it.asDynamic().name as String).toLowerCase().replace("_", "-") == s.trim() }
+//        }
+//    }
 
     override fun getCssStyleRangeProperty(prop: String, e: Element): IntegerRange? {
         TODO("Not yet implemented")

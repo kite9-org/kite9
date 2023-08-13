@@ -168,9 +168,11 @@ export function svg(tag: string, atts: object = {}, contents: Element[] = []) {
 
 /** 
  * Detect whether we can render on the client side
+ * TODO: separate out transform and remove google check
  */
 export function canRenderClientSide(): boolean {
-	return ((window.CSS as any).registerProperty != null);
+	return ((window.CSS as any).registerProperty != null) &&
+	  (clientInformation.vendor.indexOf("Google") > -1);
 }
 
 

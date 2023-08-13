@@ -52,7 +52,7 @@ abstract class AbstractPainter : Painter {
                 "min-size: [" + sr.getMinimumSize().width() + " "+sr.getMinimumSize().height()+ "]; "
             )
             debug.append(
-                "sizing: [" + lowercase((r as SizedRectangular).getSizing(false)) + ", " +
+                "sizing: [" + lowercase((r as SizedRectangular).getSizing(false)) + " " +
                         lowercase((r as SizedRectangular).getSizing(true)) + "]; "
             )
         }
@@ -65,7 +65,7 @@ abstract class AbstractPainter : Painter {
             debug.append("layout: " + lowercase((r as Container).getLayout()) + "; ")
             if (c.getLayout() === Layout.GRID) {
                 val rri = c.getRenderingInformation()
-                debug.append("grid-size: [" + rri.gridXSize() + ", " + rri.gridYSize() + "]; ")
+                debug.append("grid-size: [" + rri.gridXSize() + " " + rri.gridYSize() + "]; ")
                 debug.append("cell-xs: [" + commaIntList(rri.cellXPositions) + "]; ")
                 debug.append("cell-ys: [" + commaIntList(rri.cellYPositions) + "]; ")
             }
@@ -106,7 +106,7 @@ abstract class AbstractPainter : Painter {
         }
         if (r is Connection) {
             val link = r as Connection
-            debug.append("link: ['" + link.getFrom().getID() + "','" + link.getTo().getID() + "']; ")
+            debug.append("link: ['" + link.getFrom().getID() + "' '" + link.getTo().getID() + "']; ")
             debug.append("direction: " + lowercase((r as Connection).getDrawDirection()) + "; ")
             if ((r as Connection).getRenderingInformation().isContradicting) {
                 debug.append("contradicting: yes; ")

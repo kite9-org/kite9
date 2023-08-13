@@ -26,8 +26,7 @@ import org.apache.batik.bridge.svg12.SVG12BridgeExtension;
 import org.apache.batik.css.engine.CSSContext;
 import org.apache.batik.css.engine.CSSEngine;
 import org.apache.batik.css.engine.CSSStylableElement;
-import org.apache.batik.css.engine.value.InheritValue;
-import org.apache.batik.css.engine.value.Value;
+import org.apache.batik.css.engine.value.*;
 import org.apache.batik.dom.util.SAXIOException;
 import org.apache.batik.gvt.GraphicsNode;
 import org.apache.batik.util.ParsedURL;
@@ -211,15 +210,18 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 	@Override
 	public String getCssStyleStringProperty(String prop, Element e) {
 		Value v = getCSSValue(prop, e);
-		return ((v == null) || (v instanceof InheritValue)) ? null : v.getStringValue();
-	}
-
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public <X> X getCssStyleEnumProperty(String prop, Element e, KClass<X> c) {
-		Value v = getCSSValue(prop, e);
-		return  v == null ? null : (X) ((EnumValue)v).getTheValue();
+		if (v instanceof StringValue) {
+			return v.getStringValue();
+		} else if (v instanceof EnumValue) {
+			Enum<?> en = ((EnumValue)v).getTheValue();
+			if (en == null) {
+				return null;
+			} else {
+				return en.name().toLowerCase().replace("_", "-");
+			}
+		} else {
+			return null;
+		}
 	}
 
 	@Override

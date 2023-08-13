@@ -11,11 +11,15 @@ class JSKite9Log(val l : Logable) : Kite9Log {
     }
 
     override fun send(string: String?) {
-        console.log(string)
+        if (string != null) {
+            console.log(string)
+        }
     }
 
     override fun send(indent: Int, string: String?) {
-        console.log(" ".repeat(indent) + string)
+        if (string != null) {
+            console.log(" ".repeat(indent) + string)
+        }
     }
 
     override fun send(prefix: String?, items: Collection<*>) {
@@ -31,11 +35,15 @@ class JSKite9Log(val l : Logable) : Kite9Log {
     }
 
     override fun error(string: String?) {
-        console.error(string)
+        if (string != null) {
+            console.error(string)
+        }
     }
 
     override fun error(string: String?, e: Throwable) {
-        console.error(string)
+        if (string != null) {
+            console.error(string)
+        }
         console.error(e)
     }
 }

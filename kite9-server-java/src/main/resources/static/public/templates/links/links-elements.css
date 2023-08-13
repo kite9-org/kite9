@@ -4,8 +4,8 @@
 [k9-format=link-align],
 [k9-format=link-basic] {
   --kite9-type: link;
-  --kite9-link-from-xpath: ".//*[@k9-elem='from']/@reference";
-  --kite9-link-to-xpath: ".//*[@k9-elem='to']/@reference";
+  --kite9-link-from-xpath: "descendant::*[@k9-elem='from']/@reference";
+  --kite9-link-to-xpath: "descendant::*[@k9-elem='to']/@reference";
 }
 
 /** 

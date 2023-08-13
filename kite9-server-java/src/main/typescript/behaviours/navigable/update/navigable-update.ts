@@ -95,8 +95,11 @@ export function initHttpUpdater(uri: string, contentType: string, contentTypeRes
 						console.log(error.statusText);
 					});
 				} else {
-					console.log("Fetch error");
+					console.log("Update error");
 					console.log(error);
+					if (error.stack) {
+					    console.log(error.stack);
+					}
 				}
 			});
 	}

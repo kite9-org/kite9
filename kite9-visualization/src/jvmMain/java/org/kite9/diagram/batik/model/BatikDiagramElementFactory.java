@@ -14,6 +14,8 @@ import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.w3c.dom.Element;
 
+import java.util.Arrays;
+
 public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<Element> {
 
 	public BatikDiagramElementFactory(ElementContext ctx) {
@@ -21,12 +23,25 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<El
 		setContext(ctx);
 	}
 
+
+	private static <X> X getCssStyleEnumProperty(String prop, Element e, ElementContext ec, Class<X> enumIn) {
+		String s = ec.getCssStyleStringProperty(prop, e);
+		if (s==null) {
+			return null;
+		} else {
+			return Arrays.stream(enumIn.getEnumConstants())
+					.filter(f -> ((Enum) f).name().toLowerCase().replace("_", "-").equals(s.trim()))
+					.findFirst()
+					.orElse(null);
+		}
+	}
+
 	/**
 	 * Produces the diagram element for the underlying XML.
 	 */
 	public DiagramElement createDiagramElement(Element x, DiagramElement parent) {
-		DiagramElementType type = getContext().getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(DiagramElementType.class));
-		RectangularElementUsage usage = getContext().getCssStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, JvmClassMappingKt.getKotlinClass(RectangularElementUsage.class));
+		DiagramElementType type = getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, getContext(), DiagramElementType.class);
+		RectangularElementUsage usage = getCssStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, getContext(), RectangularElementUsage.class);
 
 		if ((type == null) || (usage == null)) {
 			return null;
