@@ -98,7 +98,7 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 				} else if (contents instanceof OrgDetails) {
 					return ec.getOrgPage((OrgDetails) contents);
 				} else if (contents instanceof DirectoryDetails) {		
-					return ec.getDirectoryPage((DirectoryDetails) contents);
+					return ec.getDirectoryPage((DirectoryDetails) contents, config);
 				} else {
 					throw new Kite9ProcessingException("can't currently produce an entity representation here");
 				}

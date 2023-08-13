@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.kite9.server.persistence.github.config.Config;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHOrganization;
@@ -69,6 +70,8 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 			public List<RestEntity> getParents() {
 				return null;
 			}
+
+
 		};
 
 		out.add(self);
@@ -186,7 +189,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 		return out;
 	}
 
-	public Repository templateRepo(Link self, GHRepository r, List<Content> contents, List<RestEntity> parents) {
+	public Repository templateRepo(Link self, GHRepository r, Config c, List<Content> contents, List<RestEntity> parents) {
 		Repository p = new Repository() {
 
 			@Override
@@ -209,6 +212,8 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 				return contents;
 			}
 
+			@Override
+			public Config getConfig() { return c; }
 		};
 
 		p.add(self);
@@ -218,7 +223,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 	
 	public List<Repository> templateChildRepos(LinkBuilder lb, List<GHRepository> repos) {
 		List<Repository> repoList = repos.stream().map(r -> {
-			return templateRepo(lb.slash(r.getName()).withSelfRel(), r, null, null);
+			return templateRepo(lb.slash(r.getName()).withSelfRel(), r, null, null, null);
 		}).collect(Collectors.toList());
 		return repoList;
 	}
@@ -325,14 +330,14 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 	}
 		
 	@Override
-	public RestEntity getDirectoryPage(DirectoryDetails dd) throws Exception {
+	public RestEntity getDirectoryPage(DirectoryDetails dd, Config c) throws Exception {
 		
 		try {
 			LinkBuilder lb = linkToRemappedURI().slash("github");
 			LinkBuilder lbUserOrg = lb.slash(dd.getPath().getOwner());
 			LinkBuilder lbRepo = lbUserOrg.slash(dd.getPath().getReponame());
 			LinkBuilder lbRelative = lbRepo.slash(dd.getPath().getFilepath());
-			Repository repo = templateRepo(lbRepo.withSelfRel(), dd.getRepo(), null, null);
+			Repository repo = templateRepo(lbRepo.withSelfRel(), dd.getRepo(), c, null, null);
 			Organisation owner = templateOrganisation(lbUserOrg.withSelfRel(), dd.getRepo().getOwner(), null, null);
 			
 			List<Content> childContent = templateContents(lbRepo, dd);
@@ -346,7 +351,7 @@ public abstract class AbstractGithubEntityConverter implements GithubEntityConve
 				out = templateDirectory(lbRelative.withSelfRel(), currentDir, parents, childContent);
 			} else {
 				List<RestEntity> parents = buildParents(owner, null, null, lbRepo);
-				out = templateRepo(lbRelative.withSelfRel(), dd.getRepo(), childContent, parents);
+				out = templateRepo(lbRelative.withSelfRel(), dd.getRepo(), c, childContent, parents);
 			} 
 			return out;
 		} catch (Throwable e) {

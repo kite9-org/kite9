@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.kite9.server.adl.holder.meta.Payload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -117,7 +118,8 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 	protected ResponseEntity<?> outputDirectory(SourceAPI s, K9URI rewrittenURI, HttpHeaders headers,
 												K9MediaType putMediaType, Authentication authentication) throws Exception {
 		RestEntity re = s.getEntityRepresentation(authentication);
-		return new ResponseEntity<RestEntity>(re, createResponseHeaders(rewrittenURI, headers, putMediaType, true), HttpStatus.OK);
+		HttpHeaders responseHeaders = createResponseHeaders(rewrittenURI, headers, putMediaType, true);
+		return new ResponseEntity<RestEntity>(re, responseHeaders, HttpStatus.OK);
 	}
 
 	protected ResponseEntity<ADLDom> convertDiagram(K9URI rewrittenURI, HttpHeaders headers, K9MediaType putMediaType,

@@ -14,7 +14,9 @@ public class Config implements Predicate<GHTreeEntry> {
 	
 	private String uploads = KITE9_UPLOADS;
 	private List<Source> sources = Collections.singletonList(new Source());
-	private String templates = DEFAULT_TEMPLATE_DIR;
+	private String templatePath = DEFAULT_TEMPLATE_DIR;
+
+	private List<String> templates = null;
 	
 	public Config() {
 		super();
@@ -43,14 +45,21 @@ public class Config implements Predicate<GHTreeEntry> {
 		this.sources = sources;
 	}
 	
-	public String getTemplates() {
-		return templates;
+	public String getTemplatePath() {
+		return templatePath;
 	}
 
-	public void setTemplates(String templates) {
+	public void setTemplatePath(String templatePath) {
 		this.templates = templates;
 	}
 
+	public List<String> getTemplates() {
+		return templates;
+	}
+
+	public void setTemplates(List<String> templates) {
+		this.templates = templates;
+	}
 	
 }
 

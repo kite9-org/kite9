@@ -20,6 +20,8 @@ interface MetaWrite {
 
     fun setTemplatePath(u: String)
 
+    fun setTemplates(s: List<String>)
+
     fun setSourcePatterns(s: List<String>)
 
     companion object {

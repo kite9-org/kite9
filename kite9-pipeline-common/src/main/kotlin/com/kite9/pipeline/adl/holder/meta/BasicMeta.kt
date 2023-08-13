@@ -69,7 +69,11 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
     }
 
     override fun setTemplatePath(u: String) {
-        metadata["templates"] = u
+        metadata["templatePath"] = u
+    }
+
+    override fun setTemplates(s: List<String>) {
+        metadata["templates"] = s;
     }
 
     override fun setSourcePatterns(s: List<String>) {

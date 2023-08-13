@@ -17,5 +17,5 @@ public abstract class Repository extends RestEntity implements HasContents {
 		return "focus NewDocument";
 	}
 
-	
+	public abstract Object getConfig();
 }
