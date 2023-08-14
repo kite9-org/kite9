@@ -149,6 +149,7 @@ public class HateoasADLHttpMessageWriter extends AbstractADLDomMessageWriter<Rep
 		ADLDom adlDom = adlFactory.dom(u, out, EMPTY_HEADERS);
 
 		MetaHelper.setUser(adlDom);
+		MetaHelper.setConfigMetadata(adlDom);
 		adlDom.setTitle(getTitle(t));
 		
 		writeADLDom(adlDom, outputMessage);

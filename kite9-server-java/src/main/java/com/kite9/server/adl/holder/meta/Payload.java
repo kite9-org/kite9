@@ -102,8 +102,8 @@ public class Payload {
         Element entry = svgDocument.createElementNS(Kite9Namespaces.META_NAMESPACE, "md:"+key);
         if (value instanceof List) {
             for (Object o : (List<Object>) value) {
-                // currently only users are nested
-                Element nested = createContent(svgDocument, "user", o);
+                String tag = o instanceof UserMeta ? "user" : "value";
+                Element nested = createContent(svgDocument, tag, o);
                 entry.appendChild(nested);
             }
         } else if (value instanceof UserMeta) {
