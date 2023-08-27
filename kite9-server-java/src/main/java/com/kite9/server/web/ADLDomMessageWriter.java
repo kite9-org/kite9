@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
+import com.kite9.server.adl.format.media.RESTWriteFormat;
 import org.kite9.diagram.dom.cache.Cache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,8 +28,6 @@ public class ADLDomMessageWriter extends AbstractADLDomMessageWriter<ADLDom> {
 			
 	public ADLDomMessageWriter(FormatSupplier formatSupplier, Cache c) {
 		super(formatSupplier, c);
-		this.formatSupplier = formatSupplier;
-		this.cache = c;
 	}
 
 	@Override

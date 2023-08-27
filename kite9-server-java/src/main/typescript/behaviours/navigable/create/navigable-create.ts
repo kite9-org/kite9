@@ -7,22 +7,65 @@ import { onlyLastSelected } from "../../../bundles/api.js";
 
 const LOADING = '/public/behaviours/rest/loading.svg';
 
-export type TemplateSource = () => Promise<unknown>
+export type Template = {
+    url: string,
+    icon: string,
+    title: string
+}
+
+export type TemplateSource = () => Promise<Template[]>
 
 export function initTemplateSource(metadata: Metadata): TemplateSource {
 
-	return async () => {
-		const uri = metadata.get("templates") as string;
+    const path = metadata.get("templatepath") as string;
+    const uris = metadata.get("templates") as string[];
 
-		const response = await fetch(uri, {
+	function createTemplateListPromise() : Promise<Template[]> {
+        return new Promise((resolve, _reject) => {
+        	const out : Template[] = uris.map(u => { return { 
+                url: u,
+                icon: "/public/behaviours/navigable/create/template.svg",
+                title: u.substring(u.lastIndexOf("/")+1)
+            }});
+        
+        
+            resolve(out);
+        });
+	}
+
+	function createTemplatePathPromise() : Promise<Template[]> {
+		const response = fetch(path, {
 			method: 'GET',
 			credentials: 'include',
 			headers: {
 				'Accept': 'application/json'
 			}
-		});
-		return await response.json();
-	}
+		})
+
+		return response.then(r => r.json())
+			.then(contents => contents['documents'].map(d => { return {
+		        url: d._links.self.href,
+		        title: d.title,
+		        icon: d.icon
+		    }}))
+    }
+
+    return () => {
+        const promises = [];
+
+        if (uris) {
+            promises.push(createTemplateListPromise());
+        }
+
+        if (path) {
+            promises.push(createTemplatePathPromise());
+        }
+
+        return Promise.all(promises).then(r => {
+            return r.flat();
+        });
+    }
+
 }
 
 
@@ -50,15 +93,15 @@ export function initNewDocumentContextMenuCallback(
 		into.appendChild(spinner);
 
 		templateSource()
-			.then(json => {
-				json['documents'].forEach(d => {
+			.then(templates => {
+				templates.forEach(d => {
 
 					if (templateField.value == '') {
-						templateField.value = d._links.self.href;
+						templateField.value = d.url;
 					}
 
 					const img = largeIcon('x', d.title, d.icon, () => {
-						templateField.value = d._links.self.href;
+						templateField.value = d.url;
 						if (selected) {
 							selected.classList.remove("selected");
 						}
@@ -98,8 +141,8 @@ export function initNewDocumentContextMenuCallback(
 			}
 		}
 
-		if (e && metadata.get("templates")) {
-			cm.addControl(event, "/public/behaviours/navigable/create/add.svg", "New Document",
+		if (e && (metadata.get("templates") || metadata.get("templatepath"))) {
+			cm.addControl(event, "/public/behaviours/navigable/create/add.svg", "New Diagram",
 				function() {
 					cm.clear();
 					const templateUri = text('Template Uri', undefined, { 'required': true });
@@ -108,13 +151,14 @@ export function initNewDocumentContextMenuCallback(
 					// add the form to the contextMenu
 					const formArea = cm.get(event);
 					formArea.style.width = '500px';
+					const defaultFormat = metadata.get("defaultformat") as string
+					const formatOptions = metadata.get("allowedformats") as string[]
 					formArea.appendChild(
 						fieldset('New Document', [
 							text('File Name', undefined, { 'required': true, 'pattern': '[A-Za-z0-9_-]+', title: 'Please use alphanumeric characters, _ or - and no spaces' }),
 							templateUri,
-							fieldset('Templates', [templates,], { style: 'padding: 2px; ' }),
-							p("Add new custom templates by placing diagrams in " + metadata.get("templates"), { style: 'font-weight: lighter; ' }),
-							select('Format', 'png', {}, ['svg', 'png', 'adl']),
+							fieldset('Templates', [templates], { style: 'padding: 2px; ' }),
+							select('Format', defaultFormat, {}, formatOptions),
 							hidden('type', 'NewDocument'),
 							ok('ok', {}, () => createNewDocument())
 						]));

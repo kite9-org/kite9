@@ -17,7 +17,7 @@ public class TestGithubConfigLoader {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config1.yml");
 		ConfigLoader i = createConfigLoader();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
-		Assertions.assertEquals(".kite9/uploads", c.getUploads());
+		Assertions.assertEquals(".kite9/uploads", c.getUploadsPath());
 		Assertions.assertEquals(1, c.getSources().size());
 		Assertions.assertEquals("**/*.adl", c.getSources().get(0).getPattern());
 		Assertions.assertTrue(c.getSources().get(0).isShowDirectories());
@@ -53,7 +53,7 @@ public class TestGithubConfigLoader {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config2.yml");
 		ConfigLoader i = createConfigLoader();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
-		Assertions.assertEquals(".kite9/loader", c.getUploads());
+		Assertions.assertEquals(".kite9/loader", c.getUploadsPath());
 		Assertions.assertEquals(2, c.getSources().size());
 		Assertions.assertEquals("p1/**/*.adl", c.getSources().get(0).getPattern());
 		Assertions.assertEquals("p2/*", c.getSources().get(1).getPattern());
@@ -74,7 +74,7 @@ public class TestGithubConfigLoader {
 		InputStream contents = this.getClass().getResourceAsStream("/config/config1.yml");
 		ConfigLoader i = createConfigLoader();
 		Config c = i.loadConfig(StreamUtils.copyToString(contents, Charsets.UTF_8));
-		Assertions.assertSame(".kite9/uploads", c.getUploads());
+		Assertions.assertSame(".kite9/uploads", c.getUploadsPath());
 		Assertions.assertEquals(1, c.getSources().size());
 		Assertions.assertTrue(c.getSources().get(0).isShowDirectories());
 		Assertions.assertEquals("**/*.adl", c.getSources().get(0).getPattern());

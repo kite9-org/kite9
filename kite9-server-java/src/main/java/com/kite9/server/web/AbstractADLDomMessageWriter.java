@@ -34,6 +34,7 @@ public abstract class AbstractADLDomMessageWriter<X> extends AbstractGenericHttp
 		this.formatSupplier = formatSupplier;
 		this.cache = c;
 		setSupportedMediaTypes(formatSupplier.getMediaTypes().stream()
+				.filter(mt -> formatSupplier.getFormatFor(mt) instanceof DiagramWriteFormat)
 				.map(mt -> MediaType.parseMediaType(mt.toString())).collect(Collectors.toList()));
 	}
 

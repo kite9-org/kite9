@@ -1,12 +1,15 @@
 package com.kite9.server.persistence.github.config;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import com.kite9.pipeline.adl.holder.meta.CreateConfig;
+import org.jetbrains.annotations.NotNull;
 import org.kohsuke.github.GHTreeEntry;
 
-public class Config implements Predicate<GHTreeEntry> {
+public class Config implements Predicate<GHTreeEntry>, CreateConfig {
 
 	static final String KITE9_UPLOADS = ".kite9/uploads";
 	
@@ -15,6 +18,10 @@ public class Config implements Predicate<GHTreeEntry> {
 	private String uploads = KITE9_UPLOADS;
 	private List<Source> sources = Collections.singletonList(new Source());
 	private String templatePath = DEFAULT_TEMPLATE_DIR;
+
+	private String defaultFormat = "adl";
+
+	private List<String> allowedFormats = Arrays.asList("adl", "png", "svg");
 
 	private List<String> templates = null;
 	
@@ -29,11 +36,11 @@ public class Config implements Predicate<GHTreeEntry> {
 			.count() > 0;
 	}
 
-	public String getUploads() {
+	public String getUploadsPath() {
 		return uploads;
 	}
 
-	public void setUploads(String uploads) {
+	public void setUploadsPath(String uploads) {
 		this.uploads = uploads;
 	}
 
@@ -60,6 +67,21 @@ public class Config implements Predicate<GHTreeEntry> {
 	public void setTemplates(List<String> templates) {
 		this.templates = templates;
 	}
-	
+
+	public String getDefaultFormat() {
+		return defaultFormat;
+	}
+
+	public void setDefaultFormat(@NotNull String defaultFormat) {
+		this.defaultFormat = defaultFormat;
+	}
+
+	public List<String> getAllowedFormats() {
+		return allowedFormats;
+	}
+
+	public void setAllowedFormats(@NotNull List<String> allowedFormats) {
+		this.allowedFormats = allowedFormats;
+	}
 }
 

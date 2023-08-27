@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile;
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile;
 
 plugins {
@@ -47,7 +46,7 @@ kotlin {
 
 gradle.taskGraph.whenReady {
     // this is necessary because otherwise the metadata for the
-    // common sourceSet fails to compile
+    // common sourceSet fails to compile (due to DOM classes).
     tasks {
         getByName("compileCommonKotlinMetadata") {
             enabled = false

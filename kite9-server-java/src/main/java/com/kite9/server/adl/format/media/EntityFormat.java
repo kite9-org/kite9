@@ -2,20 +2,19 @@ package com.kite9.server.adl.format.media;
 
 import java.util.List;
 
-import org.kite9.diagram.dom.XMLHelper;
+import org.jetbrains.annotations.NotNull;
 
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 
 /**
  * Used for Hateoas, JSON.
  */
-public class EntityFormat extends AbstractSVGFormat {
+public class EntityFormat implements RESTWriteFormat {
 	
 	private String extension;
 	private List<K9MediaType> mediaTypes;
 
-	public EntityFormat(String extension, List<K9MediaType> mediaTypes, XMLHelper helper) {
-		super(helper);
+	public EntityFormat(String extension, List<K9MediaType> mediaTypes) {
 		this.extension = extension;
 		this.mediaTypes = mediaTypes;
 	}
@@ -26,5 +25,11 @@ public class EntityFormat extends AbstractSVGFormat {
 
 	public String getExtension() {
 		return extension;
+	}
+
+	@NotNull
+	@Override
+	public String getFormatIdentifier() {
+		return getMediaTypes().get(0).toString();
 	}
 }

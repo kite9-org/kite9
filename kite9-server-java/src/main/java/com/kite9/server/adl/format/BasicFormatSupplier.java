@@ -42,8 +42,8 @@ public class BasicFormatSupplier implements FormatSupplier {
 
 			
 			// entities
-			new EntityFormat("hal", singletonList(Kite9MediaTypes.INSTANCE.getHAL_JSON()), xmlHelper),
-			new EntityFormat("json", singletonList(Kite9MediaTypes.INSTANCE.getAPPLICATION_JSON()), xmlHelper),
+			new EntityFormat("hal", singletonList(Kite9MediaTypes.INSTANCE.getHAL_JSON())),
+			new EntityFormat("json", singletonList(Kite9MediaTypes.INSTANCE.getAPPLICATION_JSON())),
 			
 			// static stuff
 			new HTMLFormat(xmlHelper),

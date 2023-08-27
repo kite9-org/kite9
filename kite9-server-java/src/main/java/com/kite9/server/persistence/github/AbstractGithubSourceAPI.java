@@ -311,24 +311,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	@Override
 	public void addMeta(MetaReadWrite adl) {
 		if (config != null) {
-			K9URI uploads = u.resolve(config.getUploads());
+			K9URI uploads = u.resolve(config.getUploadsPath());
 			adl.setUploadsPath(uploads.toString());
-
-			if (config.getTemplatePath() != null) {
-				adl.setTemplatePath(resolve(config.getTemplatePath()));
-			}
-
-			if (config.getTemplates() != null) {
-				List<String> templates = config.getTemplates().stream()
-						.map(t -> resolve(t))
-						.collect(Collectors.toList());
-				adl.setTemplates(templates);
-			}
-			
-			adl.setSourcePatterns(
-				config.getSources().stream()
-					.map(s -> s.getPattern())
-					.collect(Collectors.toList()));
 		}
 	}
 

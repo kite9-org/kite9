@@ -44,7 +44,7 @@ public interface SourceAPI {
 	public K9URI getUnderlyingResourceURI(Authentication a) throws Exception;
 
 	/**
-	 * Callback function to set api-specific metadata on the response for this source.
+	 * Callback function to set diagram editing specific metadata on the response for this source.
 	 */
 	public void addMeta(MetaReadWrite adl);
 	

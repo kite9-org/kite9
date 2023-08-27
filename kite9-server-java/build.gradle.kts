@@ -1,11 +1,16 @@
 import com.github.gradle.node.npm.task.NpxTask
 import org.gradle.api.tasks.Copy
+import org.gradle.plugins.ide.eclipse.model.Library
+import org.gradle.plugins.ide.eclipse.model.SourceFolder
+import org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory
+import org.gradle.plugins.ide.eclipse.model.Classpath
+import org.gradle.plugins.ide.eclipse.model.ProjectDependency
 
 plugins {
     id("org.kite9.java-conventions")
-    kotlin("jvm")
     id("org.springframework.boot").version("2.7.0")
     id("com.github.node-gradle.node").version("3.5.1")
+    id("eclipse")
 }
 
 dependencies {
@@ -65,3 +70,53 @@ java {
 
 
 description = "Kite9 Server (Spring-Boot)"
+
+
+eclipse {
+    this.pathVariables(mapOf(
+        "GRADLE_CACHE" to File("/Users/rob/.gradle/caches/modules-2/files-2.1")
+    ))
+
+    classpath {
+        defaultOutputDir = file("build/classes/java/main")
+
+       file {
+           whenMerged {
+               var cpEntries = (this as Classpath).entries
+               cpEntries.forEach { entry ->
+                   if (entry.kind == "src" && entry is SourceFolder) {
+                       if (entry.output != null) {
+                           if (entry.path == "src/main/java") {
+                               entry.output = "build/classes/java/main"
+                           } else if (entry.path == "src/main/resources") {
+                               entry.output = "build/resources/main"
+                           } else if (entry.path == "src/test/java") {
+                               entry.output = "build/classes/java/test"
+                           } else if (entry.path == "src/test/resources") {
+                               entry.output = "build/resouces/test"
+                           }
+                       }
+                   }
+               }
+
+               // remove references to other subprojects and replace with jars
+               cpEntries.removeAll { it ->
+                   if (it is ProjectDependency) {
+                       println("Checking ${it.path}")
+                       (it.path == "/kite9-visualization") || (it.path == "/kite9-pipeline-common")
+                   } else {
+                       false
+                   }
+               }
+
+               var vis = FileReferenceFactory().fromPath("../kite9-visualization/build/libs/kite9-visualization-jvm-0.1-SNAPSHOT.jar")
+               var pipe = FileReferenceFactory().fromPath("../kite9-pipeline-common/build/libs/kite9-pipeline-common-0.1-SNAPSHOT.jar")
+
+               cpEntries.add(Library(vis))
+               cpEntries.add(Library(pipe))
+
+           }
+       }
+    }
+}
+

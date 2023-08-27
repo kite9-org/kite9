@@ -1,5 +1,6 @@
 package com.kite9.server.adl.holder.meta;
 
+import com.kite9.pipeline.adl.holder.meta.CreateConfig;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
@@ -72,6 +73,8 @@ public class MetaHelper {
         }
     }
 
+
+
     /**
      * This extracts the config details from the repository REST xml and adds them to the
      * metadata for the diagram being produced.
@@ -79,6 +82,7 @@ public class MetaHelper {
     public static void setConfigMetadata(ADLDom adlDom) {
         NodeList configs = adlDom.getDocument().getElementsByTagNameNS(Kite9Namespaces.ADL_NAMESPACE, "config");
         List<String> templates = new ArrayList<>();
+        List<String> formats = new ArrayList<>();
         for (int i = 0; i< configs.getLength(); i++) {
             NodeList items = configs.item(i).getChildNodes();
             for (int j =0; j< items.getLength(); j++) {
@@ -86,16 +90,21 @@ public class MetaHelper {
                 if (c instanceof Element) {
                     String tagName = ((Element) c).getTagName();
                     String content = c.getTextContent();
-                    if (tagName.equals("uploads")) {
-                        adlDom.setUploadsPath(content);
-                    } else if (tagName.equals("templatePath")) {
-                        adlDom.setTemplatePath(content);
-                    } else if (tagName.equals("templates")) {
+                    if (tagName.equals("templates")) {
                         templates.add(content);
+                    } else if (tagName.equals("allowedFormats")) {
+                        formats.add(content);
+                    } else if (CreateConfig.Companion.getPROPERTIES().contains(tagName)){
+                        adlDom.set(tagName, content);
                     }
                 }
             }
         }
-        adlDom.setTemplates(templates);
+        if (templates.size() > 0) {
+            adlDom.set("templates", templates);
+        }
+        if (formats.size() > 0) {
+            adlDom.set("allowedFormats", formats);
+        }
     }
 }

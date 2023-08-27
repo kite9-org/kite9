@@ -3,7 +3,7 @@ package com.kite9.pipeline.adl.holder.meta
 import com.kite9.pipeline.uri.K9URI
 
 
-interface MetaWrite {
+interface MetaWrite : CreateConfig {
 
     fun setUser(a: UserMeta)
     fun setAuthor(a: UserMeta)
@@ -16,13 +16,7 @@ interface MetaWrite {
     fun setError(message: String)
     fun setCommitCount(c: Int)
     fun setRole(r: Role)
-    fun setUploadsPath(u: String)
-
-    fun setTemplatePath(u: String)
-
-    fun setTemplates(s: List<String>)
-
-    fun setSourcePatterns(s: List<String>)
+    fun set(property: String, value: Any)
 
     companion object {
         const val CONTENT_CHANGED = "content-changed"

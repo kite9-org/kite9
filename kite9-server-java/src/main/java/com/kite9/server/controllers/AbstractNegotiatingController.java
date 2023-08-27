@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.server.adl.holder.meta.Payload;
+import com.kite9.server.adl.format.media.RESTWriteFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -85,7 +85,7 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 		
 		if (s instanceof SourceAPI) {
 			if (s.getSourceType(authentication) == SourceType.DIRECTORY) {
-				return outputDirectory(s, rewrittenURI, headers, getBestDiagramMediaType(putMediaType), authentication);
+				return outputDirectory(s, rewrittenURI, headers, getBestDirectoryMediaType(putMediaType), authentication);
 			} 
 
 			if ((s instanceof ModifiableDiagramAPI) && (((ModifiableAPI) s).getModificationType(authentication) == ModifiableAPI.ModificationType.CREATABLE)) {
@@ -113,6 +113,13 @@ public abstract class AbstractNegotiatingController extends AbstractUpdateHandle
 			.filter(mt -> fs.getFormatFor(mt) instanceof DiagramWriteFormat)
 			.findFirst()
 			.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Can't convert to any of "+putMediaType));
+	}
+
+	protected K9MediaType getBestDirectoryMediaType(List<K9MediaType> putMediaType) {
+		return putMediaType.stream()
+				.filter(mt -> fs.getFormatFor(mt) instanceof RESTWriteFormat)
+				.findFirst()
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "Can't convert to any of "+putMediaType));
 	}
 
 	protected ResponseEntity<?> outputDirectory(SourceAPI s, K9URI rewrittenURI, HttpHeaders headers,

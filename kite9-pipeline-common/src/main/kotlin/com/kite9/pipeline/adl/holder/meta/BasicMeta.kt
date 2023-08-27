@@ -64,20 +64,14 @@ open class BasicMeta(metadata: MutableMap<String, Any>, uri: K9URI?) : MetaReadW
         metadata["role"] = r.toString().lowercase()
     }
 
-    override fun setUploadsPath(u: String) {
-        metadata["uploads"] = u
+    override fun set(property: String, value: Any) {
+       if (CreateConfig.PROPERTIES.contains(property)) {
+           this.metadata.put(property, value);
+       }
     }
 
-    override fun setTemplatePath(u: String) {
-        metadata["templatePath"] = u
-    }
-
-    override fun setTemplates(s: List<String>) {
-        metadata["templates"] = s;
-    }
-
-    override fun setSourcePatterns(s: List<String>) {
-        metadata["patterns"] = s
+    override fun setUploadsPath(path: String) {
+        metadata["uploadsPath"] = path
     }
 
     init {

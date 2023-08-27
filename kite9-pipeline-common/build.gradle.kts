@@ -16,4 +16,3 @@ java {
 
 
 description = "Kite9 Pipeline Common"
-

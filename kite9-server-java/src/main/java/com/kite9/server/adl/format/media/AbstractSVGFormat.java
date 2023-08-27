@@ -18,7 +18,7 @@ import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.holder.ADLOutputImpl;
 import com.kite9.server.adl.holder.meta.Payload;
 
-public abstract class AbstractSVGFormat implements DiagramWriteFormat {
+public abstract class AbstractSVGFormat implements DiagramWriteFormat, RESTWriteFormat {
 
     private final XMLHelper xmlHelper;
 
