@@ -26,7 +26,6 @@ import org.springframework.util.StreamUtils;
 
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.command.Command;
 import com.kite9.pipeline.command.xml.insert.Delete;
 import com.kite9.pipeline.command.xml.insert.InsertUrl;

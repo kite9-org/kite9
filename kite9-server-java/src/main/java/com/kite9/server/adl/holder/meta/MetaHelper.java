@@ -1,22 +1,21 @@
 package com.kite9.server.adl.holder.meta;
 
-import com.kite9.pipeline.adl.holder.meta.CreateConfig;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import org.kite9.diagram.dom.XMLHelper;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-
-import com.kite9.pipeline.adl.holder.meta.MetaWrite;
-import com.kite9.pipeline.adl.holder.meta.UserMeta;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.kite9.pipeline.adl.holder.meta.CreateConfig;
+import com.kite9.pipeline.adl.holder.meta.MetaWrite;
+import com.kite9.pipeline.adl.holder.meta.UserMeta;
+import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 
 public class MetaHelper {
 

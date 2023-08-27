@@ -25,8 +25,8 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.kite9.server.XMLCompare;
 import com.kite9.pipeline.adl.format.media.Kite9MediaTypes;
+import com.kite9.server.XMLCompare;
 
 
 /**

@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.server.adl.format.media.RESTWriteFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +30,7 @@ import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
+import com.kite9.server.adl.format.media.RESTWriteFormat;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.DiagramAPI;
 import com.kite9.server.sources.ModifiableAPI;

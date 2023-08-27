@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import com.kite9.server.LoggingCustomizer;
-import com.kite9.server.web.WebConfig;
 import org.apache.commons.logging.impl.SimpleLog;
 import org.junit.jupiter.api.BeforeEach;
 import org.kite9.diagram.testing.TestingHelp;
@@ -45,6 +43,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.kite9.pipeline.command.Command;
+import com.kite9.server.LoggingCustomizer;
+import com.kite9.server.web.WebConfig;
 
 /**
  * Configuration of basic test, and rest template for accessing endpoints.

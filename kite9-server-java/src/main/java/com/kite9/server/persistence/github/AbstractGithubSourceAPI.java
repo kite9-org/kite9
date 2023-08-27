@@ -305,9 +305,6 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		return this.getClass().getName()+" [u=" + u + "]";
 	}
 
-	private String resolve(String path) {
-		return u.resolve(path).toString();
-	}
 	@Override
 	public void addMeta(MetaReadWrite adl) {
 		if (config != null) {

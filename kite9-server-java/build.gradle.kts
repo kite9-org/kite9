@@ -5,6 +5,7 @@ import org.gradle.plugins.ide.eclipse.model.SourceFolder
 import org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory
 import org.gradle.plugins.ide.eclipse.model.Classpath
 import org.gradle.plugins.ide.eclipse.model.ProjectDependency
+import org.gradle.plugins.ide.eclipse.model.Variable
 
 plugins {
     id("org.kite9.java-conventions")
@@ -108,13 +109,21 @@ eclipse {
                        false
                    }
                }
-
                var vis = FileReferenceFactory().fromPath("../kite9-visualization/build/libs/kite9-visualization-jvm-0.1-SNAPSHOT.jar")
                var pipe = FileReferenceFactory().fromPath("../kite9-pipeline-common/build/libs/kite9-pipeline-common-0.1-SNAPSHOT.jar")
-
                cpEntries.add(Library(vis))
                cpEntries.add(Library(pipe))
 
+               // remove xml-apis (should already have happened from dependencies but hasn't)
+               cpEntries.removeAll { it ->
+                   if (it is Variable) {
+                       (it.path.indexOf("/xml-apis/xml-apis/") > -1)
+                   } else {
+                       false
+                   }
+
+
+               }
            }
        }
     }

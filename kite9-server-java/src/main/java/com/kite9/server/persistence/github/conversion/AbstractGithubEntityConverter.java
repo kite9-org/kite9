@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.kite9.server.persistence.github.config.Config;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHOrganization;
@@ -27,6 +26,7 @@ import com.kite9.server.domain.Repository;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.domain.User;
 import com.kite9.server.persistence.github.GithubSourceAPIFactory;
+import com.kite9.server.persistence.github.config.Config;
 
 public abstract class AbstractGithubEntityConverter implements GithubEntityConverter {
 	

@@ -2,12 +2,6 @@ package com.kite9.server.domain;
 
 import java.util.List;
 
-import com.kite9.pipeline.adl.holder.meta.MetaWrite;
-import com.kite9.pipeline.adl.holder.meta.Role;
-import com.kite9.pipeline.adl.holder.meta.UserMeta;
-import com.kite9.pipeline.uri.K9URI;
-import com.kite9.server.persistence.github.config.Config;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.hateoas.RepresentationModel;
 
 /**

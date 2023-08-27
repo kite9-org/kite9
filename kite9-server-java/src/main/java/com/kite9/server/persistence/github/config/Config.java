@@ -5,9 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
-import com.kite9.pipeline.adl.holder.meta.CreateConfig;
 import org.jetbrains.annotations.NotNull;
 import org.kohsuke.github.GHTreeEntry;
+
+import com.kite9.pipeline.adl.holder.meta.CreateConfig;
 
 public class Config implements Predicate<GHTreeEntry>, CreateConfig {
 
@@ -57,7 +58,7 @@ public class Config implements Predicate<GHTreeEntry>, CreateConfig {
 	}
 
 	public void setTemplatePath(String templatePath) {
-		this.templates = templates;
+		this.templatePath = templatePath;
 	}
 
 	public List<String> getTemplates() {
