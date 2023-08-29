@@ -4,6 +4,9 @@ import org.gradle.plugins.ide.eclipse.model.Library
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 import org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory
 import org.gradle.plugins.ide.eclipse.model.Classpath
+import org.gradle.plugins.ide.eclipse.model.EclipseClasspath
+import org.gradle.plugins.ide.eclipse.model.EclipseModel
+import org.gradle.plugins.ide.eclipse.model.EclipseProject
 import org.gradle.plugins.ide.eclipse.model.ProjectDependency
 import org.gradle.plugins.ide.eclipse.model.Variable
 
@@ -74,9 +77,18 @@ description = "Kite9 Server (Spring-Boot)"
 
 
 eclipse {
+
     this.pathVariables(mapOf(
         "GRADLE_CACHE" to File("/Users/rob/.gradle/caches/modules-2/files-2.1")
     ))
+
+    project {
+        buildCommand(
+
+            mapOf("LaunchConfigHandle" to "<project>/.externalToolBuilders/Typescript Builder.launch"),
+            "org.eclipse.ui.externaltools.ExternalToolBuilder"
+           )
+    }
 
     classpath {
         defaultOutputDir = file("build/classes/java/main")
@@ -94,7 +106,7 @@ eclipse {
                            } else if (entry.path == "src/test/java") {
                                entry.output = "build/classes/java/test"
                            } else if (entry.path == "src/test/resources") {
-                               entry.output = "build/resouces/test"
+                               entry.output = "build/resources/test"
                            }
                        }
                    }
