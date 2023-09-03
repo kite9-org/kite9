@@ -39,7 +39,7 @@ export class Metadata {
 		} else if (isMap) {
 			// map mode
 			const out = {};			
-			children.forEach(e => out[e.tagName.substring(3)] = this.convert(e));
+			children.forEach(e => out[e.tagName.substring(3).toLowerCase()] = this.convert(e));
 			return out;
 		} else {
 			// array mode

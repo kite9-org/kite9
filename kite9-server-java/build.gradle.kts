@@ -84,10 +84,9 @@ eclipse {
 
     project {
         buildCommand(
-
             mapOf("LaunchConfigHandle" to "<project>/.externalToolBuilders/Typescript Builder.launch"),
             "org.eclipse.ui.externaltools.ExternalToolBuilder"
-           )
+        )
     }
 
     classpath {

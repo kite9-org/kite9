@@ -29,9 +29,14 @@ export function icon(id: string, title: string, image: string, onClick: (e: Even
 	return a as HTMLElement;
 }
 
-export function largeIcon(id: string, title: string, image: string, onClick: (e: Event)=> void, atts: object = {}) : HTMLElement {
-   const a = create('a', {'class': 'hint--bottom hint--bounce large-icon', 'aria-label': title, 'id': id}, [
-     create('img', { 'src': image, ...atts})
+export function namedIcon(id: string, title: string, shortTitle: string, image: string, onClick: (e: Event)=> void, atts: object = {}) : HTMLElement {
+   const a = create('a', {
+		   	'class': 'hint--bottom hint--bounce named-icon', 
+	   		'aria-label': title, 
+	   		'id': id,
+   		}, [
+		     create('img', { 'src': image, ...atts}),
+		     p(shortTitle)
    ]);
    a.addEventListener("click", onClick);
    return a;

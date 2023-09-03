@@ -1,4 +1,4 @@
-import { form, ok, text, hidden, formValues, formObject, select, div, fieldset, img, largeIcon, p } from '../../../bundles/form.js'
+import { form, ok, text, hidden, formValues, formObject, select, div, fieldset, img, namedIcon, p, icon } from '../../../bundles/form.js'
 import { getMainSvg } from '../../../bundles/screen.js';
 import { Metadata } from "../../../classes/metadata/metadata.js";
 import { ContextMenuCallback } from "../../../classes/context-menu/context-menu.js";
@@ -8,32 +8,34 @@ import { onlyLastSelected } from "../../../bundles/api.js";
 const LOADING = '/public/behaviours/rest/loading.svg';
 
 export type Template = {
-    url: string,
-    icon: string,
-    title: string
+	url: string,
+	icon: string,
+	title: string
 }
 
 export type TemplateSource = () => Promise<Template[]>
 
 export function initTemplateSource(metadata: Metadata): TemplateSource {
 
-    const path = metadata.get("templatepath") as string;
-    const uris = metadata.get("templates") as string[];
+	const path = metadata.get("templatepath") as string;
+	const uris = metadata.get("templates") as string[];
 
-	function createTemplateListPromise() : Promise<Template[]> {
-        return new Promise((resolve, _reject) => {
-        	const out : Template[] = uris.map(u => { return { 
-                url: u,
-                icon: "/public/behaviours/navigable/create/template.svg",
-                title: u.substring(u.lastIndexOf("/")+1)
-            }});
-        
-        
-            resolve(out);
-        });
+	async function createTemplateListPromise(): Promise<Template[]> {
+		return new Promise((resolve, _reject) => {
+			const out: Template[] = uris.map(u => {
+				return {
+					url: u,
+					icon: "/public/behaviours/navigable/create/template.svg",
+					title: u.substring(u.lastIndexOf("/") + 1)
+				}
+			});
+
+
+			resolve(out);
+		});
 	}
 
-	function createTemplatePathPromise() : Promise<Template[]> {
+	async function createTemplatePathPromise(): Promise<Template[]> {
 		const response = fetch(path, {
 			method: 'GET',
 			credentials: 'include',
@@ -43,49 +45,51 @@ export function initTemplateSource(metadata: Metadata): TemplateSource {
 		})
 
 		return response.then(r => r.json())
-			.then(contents => contents['documents'].map(d => { return {
-		        url: d._links.self.href,
-		        title: d.title,
-		        icon: d.icon
-		    }}))
-    }
+			.then(c => c['contents'].map(d => {
+				return {
+					url: d._links.self.href,
+					title: d.title,
+					icon: d.icon
+				}
+			}))
+	}
 
-    return () => {
-        const promises = [];
+	return async () => {
+		const promises = [];
 
-        if (uris) {
-            promises.push(createTemplateListPromise());
-        }
+		if (uris) {
+			promises.push(createTemplateListPromise());
+		}
 
-        if (path) {
-            promises.push(createTemplatePathPromise());
-        }
+		if (path) {
+			promises.push(createTemplatePathPromise());
+		}
 
-        return Promise.all(promises).then(r => {
-            return r.flat();
-        });
-    }
+		return Promise.all(promises).then(r => {
+			return r.flat();
+		});
+	}
 
 }
 
 
 
 export function initNewDocumentContextMenuCallback(
-	metadata: Metadata, 
-	templateSource: TemplateSource, 
-	selector: Selector = undefined) 
+	metadata: Metadata,
+	templateSource: TemplateSource,
+	selector: Selector = undefined)
 	: ContextMenuCallback {
 
-  if (selector == undefined) {
-    selector = function() {
-      return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='NewDocument']"))
-    }
-  }
-  
-  function fullUri(target: string) {
-     const currentUri = new URL(target, metadata.get("self") as string);
-     return currentUri;
-  }
+	if (selector == undefined) {
+		selector = function() {
+			return Array.from(getMainSvg().querySelectorAll("[id][k9-ui~='NewDocument']"))
+		}
+	}
+
+	function fullUri(target: string) {
+		const currentUri = new URL(target, metadata.get("self") as string);
+		return currentUri;
+	}
 
 	function loadTemplates(into: HTMLElement, templateField: HTMLInputElement) {
 		let selected = null;
@@ -99,15 +103,24 @@ export function initNewDocumentContextMenuCallback(
 					if (templateField.value == '') {
 						templateField.value = d.url;
 					}
+					
+					const shortTitle = d.title.substring(d.title.lastIndexOf("/"));
 
-					const img = largeIcon('x', d.title, d.icon, () => {
+					const img = namedIcon('x', d.title, shortTitle, d.icon, () => {
 						templateField.value = d.url;
 						if (selected) {
 							selected.classList.remove("selected");
 						}
 						img.classList.add("selected");
 						selected = img;
-					});
+					}); 
+					
+					// select the first template
+					if (selected==null) {
+						selected = img;
+						img.classList.add("selected");
+						templateField.value = d.url;
+					}
 
 					into.appendChild(img);
 				});
@@ -121,7 +134,8 @@ export function initNewDocumentContextMenuCallback(
 	function createDiv(id: string) {
 		return div({
 			'id': id,
-			'style': 'overflow: scroll; display: block; height: 140px; '
+			'style': 'overflow: scroll;  height: 210px; ',
+			'class': 'icons wide'
 		}, []);
 	}
 
@@ -150,12 +164,11 @@ export function initNewDocumentContextMenuCallback(
 
 					// add the form to the contextMenu
 					const formArea = cm.get(event);
-					formArea.style.width = '500px';
 					const defaultFormat = metadata.get("defaultformat") as string
 					const formatOptions = metadata.get("allowedformats") as string[]
 					formArea.appendChild(
 						fieldset('New Document', [
-							text('File Name', undefined, { 'required': true, 'pattern': '[A-Za-z0-9_-]+', title: 'Please use alphanumeric characters, _ or - and no spaces' }),
+							text('File Name', 'diagram-name', { 'required': true, 'pattern': '[A-Za-z0-9_-]+', title: 'Please use alphanumeric characters, _ or - and no spaces' }),
 							templateUri,
 							fieldset('Templates', [templates], { style: 'padding: 2px; ' }),
 							select('Format', defaultFormat, {}, formatOptions),

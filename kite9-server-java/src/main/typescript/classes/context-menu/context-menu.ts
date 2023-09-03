@@ -127,6 +127,7 @@ export class ContextMenu {
 	 */
 	addControl(event : Event, imageUrl : string, title: string, clickListener: (e: Event) => void = () => { /* no op */ }, set = "Actions", imageAtts: object = {}) {
 		const fs = this.fieldset(event, set);
+		fs.classList.add("icons");
 		const out = icon('_cm-'+title, title, imageUrl, clickListener, imageAtts)
 		fs.appendChild(out);
 		return out;
