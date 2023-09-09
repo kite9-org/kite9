@@ -5,7 +5,7 @@
 
   <xsl:template name="arrow" match="adl:arrow | adl:block">
     <xsl:call-template name="formats-text-shape-inline">
-      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect edit</xsl:with-param>
     </xsl:call-template>
   </xsl:template>
   
@@ -45,7 +45,7 @@
     
   <xsl:template name="generic-artifact" match="adl:generic-artifact">
     <xsl:call-template name="formats-text-image-portrait">
-      <xsl:with-param name="k9-ui">drag delete align connect autoconnect edit</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect edit</xsl:with-param>
       <xsl:with-param name="texture-text">artifact</xsl:with-param>
       <xsl:with-param name="texture-back">none</xsl:with-param>
     </xsl:call-template>  

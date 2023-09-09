@@ -5,7 +5,7 @@
          k9-ui="label"
          title="Risks"
          allow-drag="true"
-         icon="/public/templates/risk-first/redesign/risks/hidden_risk_v2.svg"
+         icon="/public/templates/risk-first/redesign/risks/attendant_risk_v2.svg"
 		id="The Diagram" style="--kite9-layout: down; --kite9-padding: 0;">
 
 		<table class="invisible"

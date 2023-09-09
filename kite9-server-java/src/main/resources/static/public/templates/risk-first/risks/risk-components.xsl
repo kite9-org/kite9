@@ -28,8 +28,8 @@
  
   <xsl:template name="risks-generic" match="adl:risk">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-ui">drag delete align connect autoconnect vote edit</xsl:with-param>
-      <xsl:with-param name="k9-palette">connected risk</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect vote edit</xsl:with-param>
+      <xsl:with-param name="k9-type">connected</xsl:with-param>
       <xsl:with-param name="content">
         <xsl:call-template name="risks-content"/>
       </xsl:with-param>
@@ -41,8 +41,8 @@
     <xsl:param name="image"/>
     <xsl:param name="dtitle" />
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-ui">drag delete align connect autoconnect vote</xsl:with-param>
-      <xsl:with-param name="k9-palette">connected risk</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect vote</xsl:with-param>
+      <xsl:with-param name="k9-type">connected</xsl:with-param>
       <xsl:with-param name="content">
        <xsl:call-template name="formats-text-fixed">
           <xsl:with-param name="k9-elem">code</xsl:with-param>
