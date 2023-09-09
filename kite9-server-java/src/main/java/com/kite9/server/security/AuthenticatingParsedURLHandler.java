@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.batik.util.ParsedURLData;
 import org.apache.batik.util.ParsedURLDefaultProtocolHandler;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.web.URIRewriter;
@@ -141,6 +144,8 @@ public class AuthenticatingParsedURLHandler extends ParsedURLDefaultProtocolHand
     	String auth = null;
     	String cookie = null;
     	if (url.getHost().equals(currentURI.getHost())) {
+    		SecurityContext sc = SecurityContextHolder.getContext();
+    		Authentication a = sc.getAuthentication();
     		HttpServletRequest request = URIRewriter.getCurrentRequest();
     		auth = request != null ? request.getHeader(HttpHeaders.AUTHORIZATION) : null;
     		cookie = request != null ? request.getHeader(HttpHeaders.COOKIE) : null;
