@@ -36,14 +36,14 @@ public class URIWrapper {
             @NotNull
             @Override
             public K9URI filterQueryParameters(Predicate<String> filter) {
-                UriComponents instance = UriComponentsBuilder.fromUri(javaNetURI).build();
-
-                MultiValueMap<String, String> queryParams = instance.getQueryParams();
-                queryParams.keySet().stream()
-                    .filter(filter.negate())
-                    .forEach(k -> queryParams.remove(k));
-
-                return wrap(instance.toUri());
+            	UriComponentsBuilder ucb = UriComponentsBuilder.fromUri(javaNetURI);
+            	UriComponents instance1 = ucb.build();
+                instance1.getQueryParams()
+                		.keySet().stream()
+    	                .filter(filter.negate())
+    	                .forEach(k -> ucb.replaceQueryParam(k, new Object[] {}));
+                
+                return wrap(ucb.build().toUri());
             }
             
             @Override

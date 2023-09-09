@@ -95,6 +95,15 @@ export function initNewDocumentContextMenuCallback(
 		let selected = null;
 		const spinner = img('status', LOADING, { width: '80px' });
 		into.appendChild(spinner);
+		
+		function select(d: Template, e: HTMLElement) {
+			templateField.value = fullUri(d.url).toString();
+			if (selected) {
+				selected.classList.remove("selected");
+			}
+			e.classList.add("selected");
+			selected = e;
+		}
 
 		templateSource()
 			.then(templates => {
@@ -107,19 +116,12 @@ export function initNewDocumentContextMenuCallback(
 					const shortTitle = d.title.substring(d.title.lastIndexOf("/"));
 
 					const img = namedIcon('x', d.title, shortTitle, d.icon, () => {
-						templateField.value = d.url;
-						if (selected) {
-							selected.classList.remove("selected");
-						}
-						img.classList.add("selected");
-						selected = img;
+						select(d, img);
 					}); 
 					
 					// select the first template
 					if (selected==null) {
-						selected = img;
-						img.classList.add("selected");
-						templateField.value = d.url;
+						select(d, img)
 					}
 
 					into.appendChild(img);
@@ -148,8 +150,8 @@ export function initNewDocumentContextMenuCallback(
 
 		function createNewDocument() {
 			if (formObject().checkValidity()) {
-				const values = formValues('newDocumentForm');
-				const newUri = fullUri(e.getAttribute('subject-uri') + "/" + values['fileName'] + "." + values['format']);
+				const values = formValues();
+				const newUri = fullUri(e.getAttribute('id') + "/" + values['fileName'] + "." + values['format']);
 				cm.destroy();
 				window.location.href = newUri + "?templateUri=" + fullUri(values.templateUri);
 			}

@@ -77,12 +77,18 @@ public class XMLHelper {
 	}
 
 	public Transformer newTransformer(boolean omitDeclaration) throws Exception {
-		return newTransformer(null, omitDeclaration);
+		Transformer newTransformer(null, omitDeclaration);
 	}
 
-	public Transformer newTransformer(Source source, boolean omitDeclaration) throws Exception {
+	public Transformer newTransformer(String templateUri, String baseUri, boolean omitDeclaration) throws Exception {
 		TransformerFactory transfac = getTransformerFactory();
-		Transformer trans = (source != null) ? transfac.newTransformer(source) : transfac.newTransformer();
+		Transformer trans = null;
+		if (templateUri != null) {
+			Source source = transfac.getURIResolver().resolve(templateUri, baseUri);
+			trans = transfac.newTransformer(source);
+		} else {
+			trans = transfac.newTransformer(); // identity transform
+		}
 		trans.setOutputProperty(OutputKeys.INDENT, "yes");
 		trans.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 		trans.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");

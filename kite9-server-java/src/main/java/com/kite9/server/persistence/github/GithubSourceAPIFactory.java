@@ -93,6 +93,7 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 
 			@Override
 			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
+				Object contents = initContents(a);
 				if (contents instanceof HomeDetails) {
 					return ec.getHomePage((HomeDetails) contents);
 				} else if (contents instanceof OrgDetails) {

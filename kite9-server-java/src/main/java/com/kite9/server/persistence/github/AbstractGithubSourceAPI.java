@@ -1,6 +1,7 @@
 package com.kite9.server.persistence.github;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collections;
@@ -63,7 +64,8 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	protected final ConfigLoader configLoader;
 	
 	// caches, set once in this class only by initContents()
-	protected Object contents;
+	// and then cleared after we commitRevision
+	private Object contents;
 	protected Config config;
 	protected String branchName;
 
@@ -117,7 +119,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	}
 
 
-	protected void initContents(Authentication auth) throws Exception {
+	protected Object initContents(Authentication auth) throws Exception {
 		String token = getAccessToken(auth, clientRepository);
 		testHomePage(token, auth);
 		testOrg(token);
@@ -126,6 +128,11 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		testFile(token);
 		testDirectory(token, repo);
 		testMissing(token);
+		return contents;
+	}
+	
+	protected void clearContents() {
+		this.contents = null;
 	}
 	
 	interface RepoSupplier {
@@ -281,8 +288,9 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		initContents(authentication);
 		if (contents instanceof byte[]) {
 			return new ByteArrayInputStream((byte[]) contents);
+		} else if (contents == StaticPages.NO_FILE) {
+			throw new FileNotFoundException();
 		} else {
-			contents = null;
 			throw new Kite9ProcessingException("not a file: "+getUnderlyingResourceURI(authentication));
 		}
 	}

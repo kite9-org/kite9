@@ -253,13 +253,8 @@ class JSElementContext : ElementContext {
 
     override fun bounds(g: Element): Rectangle2D {
         val g = g as SVGGraphicsElement
-        //val mtrx = g.getCTM()!!;
         val bbox = g.getBBox()!!;
-//        return Rectangle2D(
-//            (mtrx.e + bbox.x),
-//            (mtrx.f + bbox.y),
-//            bbox.width,
-//            bbox.height)
+
         return Rectangle2D(
             bbox.x,
             bbox.y,

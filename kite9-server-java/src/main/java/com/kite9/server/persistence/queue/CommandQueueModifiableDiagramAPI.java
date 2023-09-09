@@ -106,7 +106,7 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 
 	@Override
-	public ModificationType getModificationType(Authentication a) {
+	public ModificationType getModificationType(Authentication a) throws Exception {
 		return backingStore.getModificationType(a);
 	}
 

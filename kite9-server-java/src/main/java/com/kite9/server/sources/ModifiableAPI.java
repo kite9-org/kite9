@@ -28,7 +28,7 @@ public interface ModifiableAPI extends SourceAPI {
 
 	void commitRevisionAsBytes(String message, Authentication by, byte[] bytes);
 	
-	ModificationType getModificationType(Authentication a);
+	ModificationType getModificationType(Authentication a) throws Exception;
 
 	/**
 	 * Returns role for user, or NONE if the user isn't authenticated

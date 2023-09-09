@@ -22,8 +22,6 @@ kotlin {
             testImplementation("junit:junit:4.13.2")
             testImplementation("org.xmlunit:xmlunit-core:2.9.0")
         }
-
-
     }
 
     js(IR) {
@@ -42,6 +40,7 @@ kotlin {
             dependsOn(common)
         }
     }
+
 }
 
 gradle.taskGraph.whenReady {
@@ -65,6 +64,11 @@ tasks.withType<Kotlin2JsCompile>().configureEach {
 description = "Kite9 Visualization"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+val jvmMainSourceJar by tasks.registering(Jar::class) {
+    from(kotlin.sourceSets["jvmMain"].kotlin)
+    archiveClassifier.set("jvm-sources")
 }

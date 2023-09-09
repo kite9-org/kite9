@@ -313,10 +313,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 		// load the transform document
 		Transformer trans = (Transformer) cache.get(template, TRANSFORMER);
 		if (trans == null) {
-			ParsedURL parsedTemplateUri = new ParsedURL(templateURI.toString());
-			Source source = new StreamSource(parsedTemplateUri.openStream());
-			source.setSystemId(templateURI.toString());
-			trans = xmlHelper.newTransformer(source, false);
+			trans = xmlHelper.newTransformer(template, uri.toString(), false);
 			trans.setParameter("base-uri", baseUri.toString());
 			trans.setParameter("template-uri", uri.toString());
 			trans.setParameter("template-path", templatePath.toString());

@@ -4,9 +4,7 @@ import org.gradle.plugins.ide.eclipse.model.Library
 import org.gradle.plugins.ide.eclipse.model.SourceFolder
 import org.gradle.plugins.ide.eclipse.model.internal.FileReferenceFactory
 import org.gradle.plugins.ide.eclipse.model.Classpath
-import org.gradle.plugins.ide.eclipse.model.EclipseClasspath
-import org.gradle.plugins.ide.eclipse.model.EclipseModel
-import org.gradle.plugins.ide.eclipse.model.EclipseProject
+
 import org.gradle.plugins.ide.eclipse.model.ProjectDependency
 import org.gradle.plugins.ide.eclipse.model.Variable
 
@@ -42,6 +40,9 @@ dependencies {
     api("org.webjars.npm:kotlin:1.4.30")
     testImplementation("org.springframework.security:spring-security-test:5.7.1")
     testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.0")
+    
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.59.Final:osx-x86_64")
+    
 }
 
 node {
@@ -68,8 +69,8 @@ val compile = tasks.getByName("classes") {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 
@@ -120,10 +121,16 @@ eclipse {
                        false
                    }
                }
-               var vis = FileReferenceFactory().fromPath("../kite9-visualization/build/libs/kite9-visualization-jvm-0.1-SNAPSHOT.jar")
-               var pipe = FileReferenceFactory().fromPath("../kite9-pipeline-common/build/libs/kite9-pipeline-common-0.1-SNAPSHOT.jar")
-               cpEntries.add(Library(vis))
-               cpEntries.add(Library(pipe))
+               var vis = FileReferenceFactory().fromPath("KITE9_HOME/kite9-visualization/build/libs/kite9-visualization-jvm-0.1-SNAPSHOT.jar")
+               var visSource = FileReferenceFactory().fromPath("KITE9_HOME/kite9-visualization/src/jvmMain/java")
+               var pipe = FileReferenceFactory().fromPath("KITE9_HOME/kite9-pipeline-common/build/libs/kite9-pipeline-common-0.1-SNAPSHOT.jar")
+               var pipeSource = FileReferenceFactory().fromPath("KITE9_HOME/kite9-pipeline-common/src/main/kotlin")
+               var visLib = Variable(vis)
+               var pipeLib = Variable(pipe)
+               visLib.sourcePath = visSource
+               pipeLib.sourcePath = pipeSource
+               cpEntries.add(visLib)
+               cpEntries.add(pipeLib)
 
                // remove xml-apis (should already have happened from dependencies but hasn't)
                cpEntries.removeAll { it ->
@@ -132,8 +139,6 @@ eclipse {
                    } else {
                        false
                    }
-
-
                }
            }
        }

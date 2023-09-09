@@ -27,8 +27,6 @@ import com.kite9.server.sources.ModifiableAPI;
  */
 public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAPI implements ModifiableAPI {
 		
-	protected boolean isNew;
-
 	public AbstractGithubModifiableAPI(K9URI u, OAuth2AuthorizedClientRepository clientRepository, ConfigLoader configLoader) throws Exception  {
 		super(u, clientRepository, configLoader);
 	}
@@ -53,7 +51,8 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 					.create();
 			
 			repo.getRef("heads/"+branchName).updateTo(c.getSHA1());	
-			isNew = false;
+			
+			clearContents();
 		} catch (IOException e) {
 			throw new Kite9XMLProcessingException("Couldn't commit change to: "+this.githubPath.getFilepath(), e);
 		}
@@ -64,9 +63,12 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 		commitRevision(message, tb -> tb.add(this.githubPath.getFilepath(), bytes, false), by);
 	}
 	
+	
+	
 	@Override
-	public ModificationType getModificationType(Authentication a) {
-		return getAuthenticatedRole(a) == Role.EDITOR ? (isNew ? ModificationType.CREATABLE : ModificationType.MODIFIABLE) : ModificationType.VIEWONLY;
+	public ModificationType getModificationType(Authentication a) throws Exception {
+		Object contents = initContents(a);
+		return getAuthenticatedRole(a) == Role.EDITOR ? (contents == StaticPages.NO_FILE ? ModificationType.CREATABLE : ModificationType.MODIFIABLE) : ModificationType.VIEWONLY;
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.kite9.server.adl;
 
+import javax.xml.transform.TransformerFactory;
+
 import org.kite9.diagram.batik.format.ConsolidatedErrorHandler;
 import org.kite9.diagram.dom.XMLHelper;
 import org.kite9.diagram.dom.cache.Cache;
@@ -16,7 +18,10 @@ import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.server.adl.cache.PublicCache;
 import com.kite9.server.adl.format.BasicFormatSupplier;
 import com.kite9.server.adl.holder.ADLFactoryImpl;
+import com.kite9.server.security.AuthenticatingXSLTURIResolver;
 import com.kite9.server.web.WebConfig;
+
+import net.sf.saxon.lib.StandardURIResolver;
 
 @Configuration
 @AutoConfigureAfter({WebConfig.class})
@@ -25,7 +30,7 @@ public class ADLConfig implements Logable {
 	@Value("${kite9.public-caching:true}")
 	private boolean caching;
 	
-	@Value("${kite9.transformer.factory:}")
+	@Value("${kite9.transformer.factory:net.sf.saxon.TransformerFactoryImpl}")
 	private String defaultXSLFactory;
 	
 	@Value("${kite9.defaultTemplate:/public/templates/basic/basic-template.xsl}")
@@ -52,7 +57,18 @@ public class ADLConfig implements Logable {
 
     @Bean
     public XMLHelper xmlHelper() {
-        return new XMLHelper(defaultXSLFactory, consolidatedErrorHandler());
+    	
+        return new XMLHelper(defaultXSLFactory, consolidatedErrorHandler()) {
+
+			@Override
+			public TransformerFactory getTransformerFactory() throws Exception {
+				TransformerFactory out = super.getTransformerFactory();
+				out.setURIResolver(new AuthenticatingXSLTURIResolver(new StandardURIResolver()));
+				return out;
+			}
+        	
+        	
+        };
     }
 
     @Bean
