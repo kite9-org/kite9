@@ -17,6 +17,7 @@
     <xsl:call-template name="formats-image">
       <xsl:with-param name="k9-elem">image</xsl:with-param>
       <xsl:with-param name="id"><xsl:value-of select="@id" />@image</xsl:with-param>
+      <xsl:with-param name="k9-texture">none</xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates select="adl:title" />
   </xsl:template>
