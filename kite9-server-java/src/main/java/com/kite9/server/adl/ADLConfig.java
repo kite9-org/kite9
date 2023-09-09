@@ -63,7 +63,7 @@ public class ADLConfig implements Logable {
 			@Override
 			public TransformerFactory getTransformerFactory() throws Exception {
 				TransformerFactory out = super.getTransformerFactory();
-				out.setURIResolver(new AuthenticatingXSLTURIResolver(new StandardURIResolver()));
+				out.setURIResolver(new AuthenticatingXSLTURIResolver());
 				return out;
 			}
         	

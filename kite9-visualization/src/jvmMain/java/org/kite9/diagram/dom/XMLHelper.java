@@ -21,7 +21,7 @@ public class XMLHelper {
 
 	private final String transformerFactoryClassName;
 	private transient TransformerFactory transFact;
-	private ConsolidatedErrorHandler eh;
+	private final ConsolidatedErrorHandler eh;
 	
 	public XMLHelper() {
 		this("", new ConsolidatedErrorHandler());
@@ -77,7 +77,7 @@ public class XMLHelper {
 	}
 
 	public Transformer newTransformer(boolean omitDeclaration) throws Exception {
-		Transformer newTransformer(null, omitDeclaration);
+		return newTransformer(null, null, omitDeclaration);
 	}
 
 	public Transformer newTransformer(String templateUri, String baseUri, boolean omitDeclaration) throws Exception {

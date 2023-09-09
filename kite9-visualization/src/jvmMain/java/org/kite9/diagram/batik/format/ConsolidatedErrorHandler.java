@@ -1,6 +1,7 @@
 package org.kite9.diagram.batik.format;
 
 import javax.xml.transform.ErrorListener;
+import javax.xml.transform.SourceLocator;
 import javax.xml.transform.TransformerException;
 
 import org.apache.batik.transcoder.ErrorHandler;
@@ -24,14 +25,26 @@ public class ConsolidatedErrorHandler implements
     	this.log = Kite9Log.Companion.instance(this);
     }
 
-    public ConsolidatedErrorHandler(Kite9Log log) {
-        this.log = log;
+    public static String convertLocator(SourceLocator sl) {
+        return " [publicId: "+ sl.getPublicId() +
+                ", systemId: "+sl.getSystemId()+
+                ", lineNumber: "+ sl.getLineNumber()+
+                ", columnNumber: "+sl.getColumnNumber()+"]";
     }
+
+    public static String convertLocator(SAXParseException sl) {
+        return " [publicId: "+ sl.getPublicId() +
+                ", systemId: "+sl.getSystemId()+
+                ", lineNumber: "+ sl.getLineNumber()+
+                ", columnNumber: "+sl.getColumnNumber()+"]";
+    }
+
+
 
     /* Error Listener */
     @Override
     public void warning(TransformerException exception) throws TransformerException {
-        log.send("Tranform Warning"+exception.getMessage());
+        log.send("Tranform Warning"+exception.getMessage()+convertLocator(exception.getLocator()));
     }
 
     @Override
@@ -41,7 +54,7 @@ public class ConsolidatedErrorHandler implements
 
     @Override
     public void warning(SAXParseException exception) throws SAXException {
-        log.error("SAX Warning", exception);
+        log.error("SAX Warning"+convertLocator(exception), exception);
     }
 
 
@@ -55,9 +68,9 @@ public class ConsolidatedErrorHandler implements
 
     private void wrapTransformerException(TransformerException exception) {
         if (exception.getLocator() instanceof Node) {
-            throw new Kite9XMLProcessingException("Transform Exception", exception, (Node) exception.getLocator());
+            throw new Kite9XMLProcessingException("Transform Exception"+convertLocator(exception.getLocator()), exception, (Node) exception.getLocator());
         } else {
-            throw new Kite9XMLProcessingException("Transform Exception", exception);
+            throw new Kite9XMLProcessingException("Transform Exception"+convertLocator(exception.getLocator()), exception);
         }
     }
 
@@ -69,7 +82,7 @@ public class ConsolidatedErrorHandler implements
 
     @Override
     public void error(SAXParseException exception) throws SAXException {
-        log.error("SAX Error", exception);
+        log.error("SAX Error"+convertLocator(exception), exception);
         throw exception;
     }
 
@@ -91,7 +104,7 @@ public class ConsolidatedErrorHandler implements
 
     @Override
     public void fatalError(SAXParseException exception) throws SAXException {
-        log.send("SAX Fatal.  Can't parse "+ exception.getMessage());
+        log.send("SAX Fatal.  Can't parse "+ exception.getMessage()+convertLocator(exception));
 
         throw exception;
     }
