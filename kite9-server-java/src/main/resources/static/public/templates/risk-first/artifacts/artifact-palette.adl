@@ -1,8 +1,9 @@
 <diagram xslt:template="/public/templates/risk-first/risk-first-template.xsl"
          xmlns="http://www.kite9.org/schema/adl"
          xmlns:xslt="http://www.kite9.org/schema/xslt" 
-         name="Pattern Language"
-		     id="The Diagram" 
+         title="Artifacts"
+         allow-drag="true"
+         icon="/public/templates/risk-first/redesign/artifacts/component_v2.svg"
          style="--kite9-layout: down; --kite9-padding: 0;">
 
 		<table class="invisible"

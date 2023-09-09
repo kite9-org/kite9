@@ -38,4 +38,22 @@
   	<xsl:call-template name="site-risk-first-diagram-defs" />
   </xsl:template>
   
+  
+  <xsl:template match="/" mode="diagram-palettes">
+    <adl:palette url="/public/templates/risk-first/risks/risk-palette.adl" />
+    <adl:palette url="/public/templates/risk-first/artifacts/artifact-palette.adl" />
+  	<xsl:call-template name="adl-diagram-palettes" />
+  </xsl:template>
+  
+  
+  <xsl:template match="/" mode="diagram-font-families">
+    <adl:font-family weights="100 200 300 400 500 600 700 800 900" styles="regular italic">Metropolis</adl:font-family>
+  </xsl:template>
+  
+  
+  <xsl:template match="/" mode="diagram-constants">
+  	<xsl:call-template name="adl-diagram-constants" />
+  </xsl:template>
+  
+  
 </xsl:stylesheet>
