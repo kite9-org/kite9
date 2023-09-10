@@ -110,43 +110,29 @@ class JSElementContext : ElementContext {
 
     override fun getCssStyleDoubleProperty(prop: String, e: Element): Double {
         var v  = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
-        if (v == null) {
-            return 0.0
-        }
 
-        if (v.value == "none") {
+        if ((v == null) || (v.value == "none")) {
             // try the generic property
-            val ( size, idx ) = getUndirectedVersion(prop)
+            val (size, idx) = getUndirectedVersion(prop)
             if (size != null) {
-                val sizeVal = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(size)
-                if (sizeVal != null) {
-                    if (sizeVal.asDynamic().length !== undefined) {
-                        // it's an array
-                        if (sizeVal.asDynamic().length > idx) {
-                            v = sizeVal.asDynamic()[idx]
-                        } else {
-                            v = sizeVal.asDynamic()[0]
-                        }
-                    } else if  (sizeVal.value !== "none") {
-                        // it's a single value
-                        v = sizeVal
-                    } else {
-                        return 0.0
+                val sizeVals = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).getAll(size)
+                if (sizeVals != null) {
+                    v= when (sizeVals.size) {
+                        0 -> return 0.0;
+                        1 -> sizeVals[0]
+                        2 -> sizeVals[idx % 2]
+                        else -> sizeVals[idx]
                     }
-                } else {
-                    return 0.0
                 }
-            } else {
-                return 0.0
             }
         }
 
-        if ((v != null) && (v.unit != null)) {
+        return if ((v != null) && (v.unit != null)) {
             // convert to pixels
             val vPx = v.to("px")
-            return vPx.value as Double
+            vPx.value as Double
         } else {
-            return 0.0
+            0.0
         }
     }
 

@@ -24,7 +24,7 @@
 
 [k9-elem=arrow],
 [k9-elem=block] {
-  --kite9-padding: 8pt 5pt 8pt 5pt;
+  --kite9-padding: 8pt;
   --kite9-sizing: minimize;
   --kite9-connections: separate;
   --kite9-connection-align: 50%;
