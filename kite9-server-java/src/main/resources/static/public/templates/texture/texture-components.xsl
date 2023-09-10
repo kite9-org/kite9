@@ -81,6 +81,8 @@
 	        </xsl:if>
 	      </xsl:if>
 	      
+	      <!-- adding this here allows attributes to override 
+	           settings passed in by template params -->
 	      <xsl:copy-of select="$attributes" />     
 	      	      
 	      <xsl:choose>

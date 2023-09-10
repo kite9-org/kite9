@@ -33,7 +33,7 @@
 }
 
 [k9-elem=list-item] {
-	--kite9-horizontal-sizing: maximize;
+	--kite9-horizontal-sizing: minimize;
 	--kite9-vertical-sizing: minimize;
 	--kite9-type: container;
 	--kite9-margin: 0pt;

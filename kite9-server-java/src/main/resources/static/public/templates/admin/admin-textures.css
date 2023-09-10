@@ -29,8 +29,12 @@
 [k9-elem=container].trail {
 	--kite9-padding: 0pt;
 	--kite9-margin: 0;
-}
+} 
 
+[k9-elem=container].trail [k9-elem=caption] {
+	--kite9-margin-left: 15pt;
+}
+ 
 [k9-elem=container].trail > g > rect {
 	stroke: none;
 }
