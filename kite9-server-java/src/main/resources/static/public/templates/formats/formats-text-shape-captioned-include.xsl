@@ -33,8 +33,15 @@
       </xsl:call-template>
     </xsl:param>
     
-    <xsl:param name="depiction-id"><xsl:value-of select="$id" />@dep</xsl:param>
-    <xsl:param name="caption-id"><xsl:value-of select="$id" />@cap</xsl:param>
+    <xsl:param name="depiction-id"><xsl:choose>
+    	<xsl:when test="$id"><xsl:value-of select="$id" />@dep</xsl:when>
+    	<xsl:otherwise></xsl:otherwise>
+    	</xsl:choose></xsl:param>
+    
+    <xsl:param name="caption-id"><xsl:choose>
+    	<xsl:when test="$id"><xsl:value-of select="$id" />@cap</xsl:when>
+    	<xsl:otherwise></xsl:otherwise>
+    	</xsl:choose></xsl:param>
     
     <xsl:param name="depiction">
       <xsl:call-template name="texture-basic">

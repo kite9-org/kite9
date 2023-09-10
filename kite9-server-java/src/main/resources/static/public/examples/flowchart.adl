@@ -1,20 +1,15 @@
-<diagram xslt:template="/github/kite9-org/kite9/templates/flowchart/flowchart-template.xsl"
-         xmlns="http://www.kite9.org/schema/adl"
-         xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia">
-
-  <start k9-format="text-inline" id="1">Start</start>
-     
-	<document id="2">Document</document>
-
-  <decision id="3">Decision</decision>
-  
-  <decision k9-format="text-shape-captioned" id="4">Decision</decision>
-	 
-	<terminal k9-format="captioned" id="3">Terminal</terminal>
-  
-  <link id="l1">
-    <from id="f1" reference="1" />
-    <to id="f2" reference="4@dep" shape="arrow" />
-  </link>
- 
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt"
+         id="dia"
+         xslt:template="/github/kite9-org/kite9/templates/flowchart/flowchart-template.xsl">
+   <start id="1" k9-format="text-inline">Start</start>
+   <document id="2">Document</document>
+   <decision id="3">Decision</decision>
+   <decision id="4" k9-format="text-shape-captioned">Decision</decision>
+   <terminal id="3-gt" k9-format="captioned">Terminal</terminal>
+   <link id="l1">
+      <from id="f1" reference="1"/>
+      <to id="f2" reference="4@dep" shape="arrow"/>
+   </link>
 </diagram>

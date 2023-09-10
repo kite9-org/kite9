@@ -56,10 +56,8 @@
 	      <xsl:if test="$style">
 	        <xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
 	      </xsl:if>
-
-	      <xsl:copy-of select="$attributes" />     
 	      
-	      <xsl:if test="$id">
+	      <xsl:if test="string-length($id) > 0">
 	        <xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
 	      
 	        <xsl:if test="$k9-contains">
@@ -82,6 +80,8 @@
 	          <xsl:attribute name="k9-child"><xsl:value-of select="$k9-child" /></xsl:attribute>
 	        </xsl:if>
 	      </xsl:if>
+	      
+	      <xsl:copy-of select="$attributes" />     
 	      	      
 	      <xsl:choose>
 	        <xsl:when test="$shape">

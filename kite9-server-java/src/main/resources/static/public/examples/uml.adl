@@ -1,41 +1,37 @@
-<diagram xslt:template="/github/kite9-org/kite9/templates/uml/uml-template.xsl" 
-  xmlns="http://www.kite9.org/schema/adl"
-  xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia" 
-  name="UML">
-
-  <interface id="i1">Listener</interface> 
-
-  <class id="c">
-    <stereotype id="c2">owner</stereotype>
-    <class-name id="c3">Some Class</class-name>
-    <property id="c5">A Property</property>
-    <method id="c7">call me</method>
-  </class> 
-
-  <uml-container id="c8">
-    <package id="p1">
-      <label>A Package</label>
-    </package>
-    <component id="co1">
-      <label>Connect Me</label>
-    </component>
-    <label id="l1">Some Container</label>
-  </uml-container> 
-
-  <actor id="a1">The Actor</actor>
-  <use-case id="uc1">Hungry</use-case>
-
-
-  <link id="l1">
-    <from reference="a1@dep" id="l1-from"/>
-    <to reference="uc1" id="l1-to"/>
-  </link>
-  <link id="l2">
-    <from reference="c5" id="l2-from"/>
-    <to reference="p1" id="l2-to"/>
-  </link>
-  <link id="l3" style="--kite9-direction: up; ">
-    <from reference="c" id="l3-from"/>
-    <to reference="i1@dep" id="l3-to"/>
-  </link> 
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram xmlns="http://www.kite9.org/schema/adl"
+         xmlns:xslt="http://www.kite9.org/schema/xslt"
+         id="dia"
+         name="UML"
+         xslt:template="/github/kite9-org/kite9/templates/uml/uml-template.xsl">
+   <interface id="i1">Listener</interface>
+   <class id="c">
+      <stereotype id="c2">owner</stereotype>
+      <class-name id="c3">Some Class</class-name>
+      <property id="c5">A Property</property>
+      <method id="c7">call me</method>
+   </class>
+   <uml-container id="c8">
+      <package id="p1">
+         <label>A Package</label>
+      </package>
+      <component id="co1">
+         <label>Connect Me</label>
+      </component>
+      <label id="l1">Some Container</label>
+   </uml-container>
+   <actor id="a1">The Actor</actor>
+   <use-case id="uc1">Hungry</use-case>
+   <link id="l1-bn">
+      <from id="l1-from" reference="a1@dep"/>
+      <to id="l1-to" reference="uc1"/>
+   </link>
+   <link id="l2">
+      <from id="l2-from" reference="c5"/>
+      <to id="l2-to" reference="p1"/>
+   </link>
+   <link id="l3" style="--kite9-direction: up; ">
+      <from id="l3-from" reference="c"/>
+      <to id="l3-to" reference="i1@dep"/>
+   </link>
 </diagram>
