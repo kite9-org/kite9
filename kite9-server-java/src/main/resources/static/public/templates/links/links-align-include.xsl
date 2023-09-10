@@ -6,13 +6,13 @@
   <xsl:template name='links-link-align' match="*[@k9-format='link-align']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
-    <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
+    <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style' and name() != 'id' ]" />
     <xsl:param name="id" select="@id" />
 
     <xsl:param name="k9-elem" select="local-name()" />
     <xsl:param name="k9-format">link-align</xsl:param>
     <xsl:param name="k9-highlight">bar stroke</xsl:param>
-    <xsl:param name="k9-ui">delete link cascade drop</xsl:param>
+    <xsl:param name="k9-ui">delete link cascade direction</xsl:param>
     
     <xsl:param name="shape">
    		<g k9-elem="link-grab">

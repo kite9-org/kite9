@@ -6,7 +6,7 @@
   <xsl:template name="formats-svg-fixed" match="*[@k9-format='svg-fixed']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
-    <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
+    <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style' and name() != 'id' ]" />
     <xsl:param name="id" select="@id" />
 
     <xsl:param name="k9-child"></xsl:param>

@@ -6,7 +6,7 @@
   <xsl:template name="formats-text-shape-captioned" match="*[@k9-format='text-shape-captioned']">
     <xsl:param name="class" select="@class"/>
     <xsl:param name="style" select="@style"/>
-    <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style']" />
+    <xsl:param name="attributes" select="@*[name() != 'class' and name() != 'style' and name() != 'id' ]" />
     <xsl:param name="id" select="@id" />
 
     <xsl:param name="k9-containers"></xsl:param>
@@ -34,17 +34,15 @@
     </xsl:param>
     
     <xsl:param name="depiction-id"><xsl:value-of select="$id" />@dep</xsl:param>
-    
+    <xsl:param name="caption-id"><xsl:value-of select="$id" />@cap</xsl:param>
     
     <xsl:param name="depiction">
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-elem">depiction</xsl:with-param>
         <xsl:with-param name="k9-texture">background</xsl:with-param>
-		    <xsl:with-param name="k9-ui">connect autoconnect align</xsl:with-param>
+		<xsl:with-param name="k9-ui">connect autoconnect align</xsl:with-param>
         <xsl:with-param name="id" select="$depiction-id" />
-        <xsl:with-param name="shape">
-          <xsl:copy-of select="$shape" />
-        </xsl:with-param>
+        <xsl:with-param name="shape"><xsl:copy-of select="$shape" /></xsl:with-param>
         <xsl:with-param name="content"></xsl:with-param>
       </xsl:call-template>
     </xsl:param>    
@@ -53,12 +51,12 @@
       <xsl:call-template name="texture-basic">
         <xsl:with-param name="k9-elem">caption</xsl:with-param>
         <xsl:with-param name="k9-texture">foreground</xsl:with-param>
+		<xsl:with-param name="k9-ui">edit font</xsl:with-param>
+        <xsl:with-param name="id" select="$caption-id" />
         <xsl:with-param name="k9-highlight">pulse</xsl:with-param>
         <xsl:with-param name="k9-format">text-fixed</xsl:with-param>
         <xsl:with-param name="shape"></xsl:with-param>
         <xsl:with-param name="content" select="$text" />
-		    <xsl:with-param name="k9-ui">edit font</xsl:with-param>
-        <xsl:with-param name="id"><xsl:value-of select="$id" />@cap</xsl:with-param>
       </xsl:call-template>
     </xsl:param>  
            
@@ -70,10 +68,10 @@
     <xsl:param name="align">
       <g k9-elem="shape-align">
         <g k9-elem="from">
-          <xsl:attribute name="reference"><xsl:value-of select="$id" />@dep</xsl:attribute>
+          <xsl:attribute name="reference"><xsl:value-of select="$depiction-id" /></xsl:attribute>
         </g> 
         <g k9-elem="to">
-          <xsl:attribute name="reference"><xsl:value-of select="$id" />@cap</xsl:attribute>   
+          <xsl:attribute name="reference"><xsl:value-of select="$caption-id" /></xsl:attribute>   
         </g>
       </g>  
     </xsl:param>

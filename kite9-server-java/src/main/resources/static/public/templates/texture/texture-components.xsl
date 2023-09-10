@@ -56,6 +56,8 @@
 	      <xsl:if test="$style">
 	        <xsl:attribute name="style"><xsl:value-of select="$style"/></xsl:attribute>
 	      </xsl:if>
+
+	      <xsl:copy-of select="$attributes" />     
 	      
 	      <xsl:if test="$id">
 	        <xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
@@ -80,9 +82,7 @@
 	          <xsl:attribute name="k9-child"><xsl:value-of select="$k9-child" /></xsl:attribute>
 	        </xsl:if>
 	      </xsl:if>
-	      
-	      <xsl:copy-of select="$attributes" />     
-	      
+	      	      
 	      <xsl:choose>
 	        <xsl:when test="$shape">
 	          <!-- in this case, we need to add the highlight to the shape, if there is one -->

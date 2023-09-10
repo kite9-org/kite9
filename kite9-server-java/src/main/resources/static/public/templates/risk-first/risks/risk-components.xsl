@@ -13,11 +13,13 @@
   
   <!-- standard stuff that goes inside a risk-box -->
   <xsl:template name="risks-content">
+    <xsl:param name="image-id"><xsl:value-of select="@id" />@image</xsl:param>
     <xsl:apply-templates select="adl:code" />
     <xsl:call-template name="formats-image">
       <xsl:with-param name="k9-elem">image</xsl:with-param>
-      <xsl:with-param name="id"><xsl:value-of select="@id" />@image</xsl:with-param>
+      <xsl:with-param name="id" select="$image-id" />
       <xsl:with-param name="k9-texture">none</xsl:with-param>
+      <xsl:with-param name="k9-ui">image</xsl:with-param>
     </xsl:call-template>
     <xsl:apply-templates select="adl:title" />
   </xsl:template>
@@ -28,7 +30,7 @@
  
   <xsl:template name="risks-generic" match="adl:risk">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect vote edit</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect vote xml</xsl:with-param>
       <xsl:with-param name="k9-type">connected</xsl:with-param>
       <xsl:with-param name="content">
         <xsl:call-template name="risks-content"/>
@@ -40,6 +42,10 @@
     <xsl:param name="code" />
     <xsl:param name="image"/>
     <xsl:param name="dtitle" />
+    <xsl:param name="id" select="@id" />
+    <xsl:param name="image-id"><xsl:value-of select="$id" />@image</xsl:param>
+    <xsl:param name="text-id"><xsl:value-of select="$id" />@text</xsl:param>
+    
     <xsl:call-template name="formats-container">
       <xsl:with-param name="k9-ui">size drag delete align connect autoconnect vote</xsl:with-param>
       <xsl:with-param name="k9-type">connected</xsl:with-param>
@@ -51,16 +57,16 @@
           <xsl:with-param name="class"></xsl:with-param>
           <xsl:with-param name="style"></xsl:with-param>
         </xsl:call-template>
-        <xsl:call-template name="formats-image">
+        <xsl:call-template name="formats-image-fixed">
           <xsl:with-param name="href" select="$image" />
           <xsl:with-param name="k9-elem">image</xsl:with-param>
-          <xsl:with-param name="id"><xsl:value-of select="@id" />@image</xsl:with-param>
+          <xsl:with-param name="id"></xsl:with-param>
           <xsl:with-param name="class"></xsl:with-param>
           <xsl:with-param name="style"></xsl:with-param>
         </xsl:call-template>
         <xsl:call-template name="formats-text-fixed">
           <xsl:with-param name="k9-elem">title</xsl:with-param>
-          <xsl:with-param name="id"><xsl:value-of select="@id" />@text</xsl:with-param>
+          <xsl:with-param name="id" select="$text-id" />
           <xsl:with-param name="class"></xsl:with-param>
           <xsl:with-param name="style"></xsl:with-param>
           <xsl:with-param name="content">

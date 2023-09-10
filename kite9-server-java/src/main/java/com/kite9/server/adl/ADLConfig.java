@@ -21,8 +21,6 @@ import com.kite9.server.adl.holder.ADLFactoryImpl;
 import com.kite9.server.security.AuthenticatingXSLTURIResolver;
 import com.kite9.server.web.WebConfig;
 
-import net.sf.saxon.lib.StandardURIResolver;
-
 @Configuration
 @AutoConfigureAfter({WebConfig.class})
 public class ADLConfig implements Logable {
