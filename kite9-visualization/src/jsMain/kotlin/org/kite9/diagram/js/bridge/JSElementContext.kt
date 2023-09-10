@@ -2,6 +2,7 @@ package org.kite9.diagram.js.bridge
 
 import CSSRegistry
 import kotlinx.browser.window
+import org.kite9.diagram.common.range.BasicIntegerRange
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.bridge.ElementContext.Companion.UNITS
@@ -14,14 +15,9 @@ import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.Placement.Companion.NONE
-import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
-import org.w3c.dom.svg.SVGGraphicsElement
-import org.w3c.dom.svg.SVGSVGElement
-import org.w3c.dom.svg.SVGTSpanElement
-import org.w3c.dom.svg.SVGTextElement
+import org.w3c.dom.svg.*
 import kotlin.random.Random
-import kotlin.reflect.KClass
 
 
 class JSElementContext : ElementContext {
@@ -196,7 +192,13 @@ class JSElementContext : ElementContext {
 //    }
 
     override fun getCssStyleRangeProperty(prop: String, e: Element): IntegerRange? {
-        TODO("Not yet implemented")
+        val props = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).getAll(prop)
+
+        return when (props.size ?: 0) {
+            0 -> null
+            1 -> BasicIntegerRange(props[0].value as Int, props[0].value as Int)
+            else -> BasicIntegerRange(props[0].value as Int, props[1].value as Int)
+        }
     }
 
     override fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement> {
@@ -262,19 +264,38 @@ class JSElementContext : ElementContext {
             bbox.height)
     }
 
-    override fun textWidth(s: String, inside: Element): Double {
-        val firstChar = inside.textContent?.indexOf(s) ?: -1
-        if (firstChar == -1) {
-            throw Kite9ProcessingException("Trying to find substring "+s+" inside "+inside.textContent)
+    override fun textWidth(sIn: String, inside: Element): Double {
+        // rendered content of the element
+        val originalContent = inside?.textContent  ?: ""
+        val normalizedContent = originalContent
+            .replace(Regex("\\s+"), " ")
+            .replace(Regex("\\n"), "")
+            .trim()
+
+        // rendered content of the string
+        val sRendered = sIn
+            .replace(Regex("\\s+"), " ")
+            .replace(Regex("\\n"), "")
+
+        if (sRendered.isEmpty()) {
+            return 0.0;
         }
 
-        val lastChar = firstChar + s.length - 1
 
-        return if (inside is SVGTextElement) {
-            var charTL = inside.getStartPositionOfChar(firstChar)
-            var charBR = inside.getEndPositionOfChar(lastChar)
-            charBR.x - charTL.x
-        } else if (inside is SVGTSpanElement) {
+        val firstChar = normalizedContent.indexOf(sRendered) ?: -1
+        if (firstChar == -1) {
+            throw Kite9ProcessingException("Trying to find substring $sRendered inside $normalizedContent")
+        }
+
+        console.log("Looking for $sRendered inside $normalizedContent firstChar $firstChar");
+
+        val lastChar = firstChar + sRendered.length - 1
+
+        return if (inside is SVGTextContentElement) {
+            if (lastChar >= inside.getNumberOfChars()) {
+                throw Kite9ProcessingException("Character Count Too Long")
+            }
+
             var charTL = inside.getStartPositionOfChar(firstChar)
             var charBR = inside.getEndPositionOfChar(lastChar)
             charBR.x - charTL.x
@@ -285,12 +306,12 @@ class JSElementContext : ElementContext {
 
     override fun getCssUnitSizeInPixels(prop: String, e: Element): Double {
         return when (prop) {
-            "cm" -> css.cm("1").to("px")
-            "mm" -> css.mm("1").to("px")
-            "pt" -> css.pt("1").to("px")
-            "pc" -> css.pc("1").to("px")
-            "em" -> css.em("1").to("px")
+            "cm" -> css.cm("1").to("px").asDynamic().value
+            "mm" -> css.mm("1").to("px").asDynamic().value
+            "pt" -> css.pt("1").to("px").asDynamic().value
+            "pc" -> css.pc("1").to("px").asDynamic().value
+            "em" -> css.em("1").to("px").asDynamic().value
             else -> 1.0;
-        }
+        } as Double
     }
 }

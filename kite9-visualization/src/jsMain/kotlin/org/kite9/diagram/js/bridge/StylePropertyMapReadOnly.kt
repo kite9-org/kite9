@@ -15,4 +15,6 @@ external class StylePropertyMapReadOnly {
 
     fun get(p: String) : PropValue?
 
+    fun getAll(p: String) : Array<PropValue>
+
 }
