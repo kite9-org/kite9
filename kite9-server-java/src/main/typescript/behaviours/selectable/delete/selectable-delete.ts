@@ -43,7 +43,7 @@ export function initDeleteContextMenuCallback(
 
 		const id = e.getAttribute("id");
 		const keptChildren = cascade ? [] : getContainedChildIds(e, e => !orphan(e));
-		const parentElementId = getParentElement(e).getAttribute("id");
+		const parentElementId = getParentElement(e)?.getAttribute("id");
 
 		if ((id != undefined) && (parentElementId != undefined)) {
 			steps.push({
