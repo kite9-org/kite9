@@ -109,6 +109,15 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:template match="adl:risk[@class='goal']">
+    <xsl:call-template name="risks-fixed">
+      <xsl:with-param name="code">Goal</xsl:with-param>
+  
+      <xsl:with-param name="image">/public/templates/risk-first/redesign/risks/goal_v2.svg</xsl:with-param>
+      <xsl:with-param name="dtitle"><xsl:value-of select="text()" /></xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
   <xsl:template match="adl:risk[@class='market']">
     <xsl:call-template name="risks-fixed">
       <xsl:with-param name="code">F-Ma</xsl:with-param>

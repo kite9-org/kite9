@@ -35,7 +35,6 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 		try {
 			String token = getAccessToken(by, clientRepository);
 			GHRepository repo = getRepo(token);
-			String branchName = this.githubPath.getRef();
 			String treeSha = repo.getTree(branchName).getSha();
 			String branchSha = repo.getBranch(branchName).getSHA1();
 
