@@ -58,7 +58,7 @@ val compileTypescript = tasks.register<NpxTask>("compileTypescript") {
 
 val copyVisualization = tasks.register<Copy>("copyVisualization") {
     from("../kite9-visualization/build/productionLibrary/")
-    into("build/resources/main/static/public/external")
+    into("src/generated/resources/static/public/external")
     include("kite9-parent-kite9-visualization.js")
     include("kite9-parent-kite9-visualization.js.map")
 }
@@ -111,6 +111,13 @@ eclipse {
                        }
                    }
                }
+
+               // for the visualization library
+               var gen = "src/generated/resources"
+               var genOutput = "build/resources/generated"
+               var genSrc = SourceFolder(gen, genOutput)
+               cpEntries.add(genSrc)
+
 
                // remove references to other subprojects and replace with jars
                cpEntries.removeAll { it ->

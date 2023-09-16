@@ -6,6 +6,7 @@
 target
 .settings/
 bin
+/kite9-server-java/src/generated/resources
 
 # IntelliJ
 .idea/# IntelliJ
