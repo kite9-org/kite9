@@ -3,7 +3,6 @@ package org.kite9.diagram.dom.processors
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.ns.Kite9Namespaces
-import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.TextAlign
 import org.w3c.dom.Document
@@ -34,7 +33,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             // parameters to use
             val width = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_WIDTH, n)
             val height = ctx.getCssStyleDoubleProperty(CSSConstants.TEXT_BOUNDS_HEIGHT, n)
-            val align = toAlignEnum(ctx.getCssStyleStringProperty("text-align", n))
+            val align = toAlignEnum(ctx.getCssStyleStringProperty(CSSConstants.TEXT_ALIGN, n))
 
             // build the layout
             val spans = splitIntoSpans(n)
@@ -52,12 +51,20 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         }
     }
 
+    /**
+     * See: https://developer.mozilla.org/en-US/docs/Web/CSS/text-align
+     * Doesn't really apply to SVG per-se, but we'll make it work.
+     */
     private fun toAlignEnum(s: String?): TextAlign {
         return when (s) {
             "start" -> TextAlign.START
-            "middle" -> TextAlign.MIDDLE
+            "left" -> TextAlign.START
+            "middle" -> TextAlign.MIDDLE  // "middle" is something batik introduced I think
+            "center" -> TextAlign.MIDDLE
             "end" -> TextAlign.END
+            "right" -> TextAlign.END
             "full" -> TextAlign.FULL
+            "justify" -> TextAlign.FULL
             else -> TextAlign.START
         }
     }
@@ -93,9 +100,11 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     fun replaceContents(od: Document, lines: List<List<Span>>, align: TextAlign, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
 
         for ((lineNumber, t) in lines.withIndex()) {
+            val sumOfWidths = t.sumOf { it.width }
+
             var sx =  when (align) {
-                TextAlign.END ->  maxLineWidth - t.sumOf { it.width }
-                TextAlign.MIDDLE -> (maxLineWidth - t.sumOf { it.width }) / 2.0
+                TextAlign.END ->  maxLineWidth - sumOfWidths
+                TextAlign.MIDDLE -> (maxLineWidth - sumOfWidths) / 2.0
                 else -> 0.0
             }
 
@@ -122,7 +131,11 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                 }
 
                 it.parent.appendChild(cspan)
-                sx += it.width
+
+                sx += when(align) {
+                    TextAlign.FULL -> it.width + sumOfWidths / t.size
+                    else -> it.width
+                }
             }
 
         }

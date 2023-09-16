@@ -11,7 +11,7 @@ export function textSelector() {
 
 const decorationOptions = [ '', 'underline', 'line-through'];
 
-const textAlignOptions = [ '', 'start', 'middle', 'end'];
+const textAlignOptions = [ '', 'left', 'center', 'right'];
 
 const props = [
 	'--kite9-text-bounds-width',

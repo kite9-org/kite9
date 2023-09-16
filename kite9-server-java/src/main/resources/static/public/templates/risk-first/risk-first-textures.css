@@ -23,7 +23,7 @@
   font-size: 12pt;
   font-weight: 200;
   fill: black;
-  text-align: middle;
+  text-align: center;
   --kite9-text-bounds-width: 100pt;
 }
 
@@ -46,7 +46,7 @@
 }
 
 [k9-elem=caption] text {
-	text-align: middle;
+	text-align: center;
 }
 
 /* Arrow, Links */
@@ -82,7 +82,7 @@
   font-size: 12pt;
   font-weight: 200;
   fill: black;
-  text-align: middle;
+  text-align: center;
 }
 
 
@@ -96,14 +96,14 @@
   font-size: 12pt;
   font-weight: 200;
   fill: black;
-  text-align: middle;
+  text-align: center;
 }
 
 [k9-elem=code] {
 	font-size: 22pt;
 	font-weight: 300;
 	fill: black;
-	text-align: middle;
+	text-align: center;
 }
 
 [k9-elem=risk][k9-texture=background],

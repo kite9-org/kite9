@@ -18,7 +18,7 @@
 			href="/public/templates/risk-first/logo/R1_logo_black.svg" />
 		<page-title
 			style="--kite9-text-bounds-width: 760px; font-family: Metropolis; font-size: 100px; 
-			fill: rgb(245, 62, 121); indent:0;  text-align: end; 
+			fill: rgb(245, 62, 121); indent:0;  text-align: right; 
 			--kite9-horizontal-align: right; 
 			--kite9-padding-left: 40px; ">
 			Some Title

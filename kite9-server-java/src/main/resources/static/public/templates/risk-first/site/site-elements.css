@@ -193,7 +193,7 @@
 	fill: #61a2a1; 
 	letter-spacing: 1.4;
 	font-weight: 600;
-	text-align: middle;
+	text-align: center;
 	--kite9-margin-top: 0;
 }
 
@@ -212,7 +212,7 @@
   font-size: 50pt; 
   font-weight: 500;
   fill: rgb(0,0,0); 
-  text-align: start;
+  text-align: left;
   --kite9-padding-bottom: 0;
   --kite9-margin-bottom: 0;
   --kite9-margin-right: 30pt;
@@ -226,7 +226,7 @@
    --kite9-padding: 0pt;
    fill: #61a2a1; 
    indent: 0; 
-   text-align: middle;
+   text-align: center;
    font-weight: 300; 
    font-style: italic; 
 }

@@ -12,7 +12,7 @@
 			href="/public/templates/risk-first/logo/R1_logo_black.svg" />
 		<page-title
 			style="--kite9-text-bounds-width: 760px; font-family: Metropolis; font-size: 100px; 
-			fill: rgb(245, 62, 121); indent:0;  text-align: end; 
+			fill: rgb(245, 62, 121); indent:0;  text-align: right; 
 			--kite9-horizontal-align: right; 
 			--kite9-padding-left: 40px; ">
 			Some Title
@@ -20,7 +20,7 @@
 	</group>
 
 	<page-summary
-		style="--kite9-text-bounds-width: 1095px; font-family: Metropolis; font-size: 50px; fill: black; indent: 0; text-align: end; font-weight: 300; --kite9-horizontal-align: right; ">
+		style="--kite9-text-bounds-width: 1095px; font-family: Metropolis; font-size: 50px; fill: black; indent: 0; text-align: right; font-weight: 300; --kite9-horizontal-align: right; ">
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed 
 		do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
 	</page-summary>

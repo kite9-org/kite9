@@ -111,6 +111,8 @@ public class ADLExtensibleDOMImplementation extends CachingSVGDOMImplementation 
 		// PORTS
 		registerCustomCSSValueManager(new PlacementManager(CSSConstants.PORT_POSITION));
 
+		// TEXT_ALIGN
+		registerCustomCSSValueManager(new TextAlignManager2());
 	}
 
 	public static final RGBColorValue NO_COLOR = new RGBColorValue(

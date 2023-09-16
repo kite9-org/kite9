@@ -2,7 +2,7 @@
 /* cells */
 
 [k9-elem=cell] {
-	text-align: middle;
+	text-align: center;
 }
 
 [k9-elem=_temporary],
@@ -32,12 +32,12 @@
 
 [k9-elem=cell].left {
 	--kite9-horizontal-align: left;
-	text-align: start;
+	text-align: left;
 }
 
 [k9-elem=cell].right {
 	--kite9-horizontal-align: right;
-	text-align: end;
+	text-align: right;
 }
 
 [k9-elem=cell].bottom {
