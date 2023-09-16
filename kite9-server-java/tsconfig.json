@@ -2,7 +2,7 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
 		"allowJs": true,
-		"outDir": "build/resources/main/static/public",
+		"outDir": "build/resources/typescript/static/public",
 		"rootDir": "src/main/typescript",
 		"target": "es2021",
 		"skipLibCheck": true,
@@ -13,7 +13,7 @@
 		"moduleResolution": "node"
 	},
 	"include": [
-		"**/*.ts"
+		"src/main/typescript/**/*.ts"
 	],
 	"exclude": ["node_modules", "bin"]
 

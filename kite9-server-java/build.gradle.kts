@@ -118,6 +118,11 @@ eclipse {
                var genSrc = SourceFolder(gen, genOutput)
                cpEntries.add(genSrc)
 
+               // typescript
+               var ts = "src/main/typescript"
+               var tsOutput = "build/resources/typescript"
+               var tsSrc = SourceFolder(ts, tsOutput)
+               cpEntries.add(tsSrc)
 
                // remove references to other subprojects and replace with jars
                cpEntries.removeAll { it ->

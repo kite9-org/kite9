@@ -17,7 +17,7 @@ const props = [
 	'--kite9-text-bounds-width',
 	'--kite9-text-bounds-height',
 	'text-decoration',
-	'text-align'
+	'text-align' 
 ]
 
 export function initTextBuildControls() : BuildControlsCallback {
