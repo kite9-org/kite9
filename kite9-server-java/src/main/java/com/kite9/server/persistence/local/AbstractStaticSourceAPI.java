@@ -72,7 +72,7 @@ public abstract class AbstractStaticSourceAPI implements ModifiableAPI {
 	}
 
 	@Override
-	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
+	public void commitRevisionAsBytesInner(String message, Authentication by, byte[] bytes) {
 		throw new UnsupportedOperationException("Can't change static files");
 	}
 

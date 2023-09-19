@@ -6,11 +6,11 @@ import java.io.InputStream;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.domain.RestEntity;
 import com.kite9.server.sources.ModifiableDiagramAPI;
@@ -74,11 +74,7 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	}
 
 	@Override
-	public void commitRevision(String message, Authentication by, ADLDom data) {
-	}
-
-	@Override
-	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
+	public void commitRevisionAsBytesInner(String message, Authentication by, byte[] bytes) {
 	}
 
 	@Override
@@ -99,6 +95,11 @@ public class TransientDiagramAPI implements ModifiableDiagramAPI {
 	@Override
 	public K9URI getUnderlyingResourceURI(Authentication a) {
 		return dom.getUri();
+	}
+
+	@Override
+	public DiagramWriteFormat getWriteFormat() {
+		return null;	// transient diagrams are not written
 	}
 
 }

@@ -7,7 +7,7 @@ import org.springframework.security.core.Authentication;
 
 import com.kite9.pipeline.adl.holder.meta.Role;
 
-public abstract class AbstractCachingModifiableDiagramAPI implements CachingModifiableDiagramAPI {
+public abstract class AbstractCachingModifiableAPI implements CachingModifiableAPI {
 
 	private long lastAccessTime;
 	private final long occupancyTimeMs;
@@ -18,7 +18,7 @@ public abstract class AbstractCachingModifiableDiagramAPI implements CachingModi
 		lastAccessTime = System.currentTimeMillis();
 	}
 
-	public AbstractCachingModifiableDiagramAPI(long occupancyTimeMs) {
+	public AbstractCachingModifiableAPI(long occupancyTimeMs) {
 		super();
 		this.occupancyTimeMs = occupancyTimeMs;
 	}

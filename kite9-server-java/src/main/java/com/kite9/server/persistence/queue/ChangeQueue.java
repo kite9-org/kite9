@@ -4,8 +4,7 @@ import java.util.function.Consumer;
 
 import org.springframework.security.core.Authentication;
 
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.server.sources.ModifiableDiagramAPI;
+import com.kite9.server.sources.ModifiableAPI;
 
 public interface ChangeQueue {
 	
@@ -25,12 +24,12 @@ public interface ChangeQueue {
 	public class Change {
 
 		String message;
-		ADLDom payload;
-		ModifiableDiagramAPI on;
+		byte[] payload;
+		ModifiableAPI on;
 		Authentication by;
 		Consumer<?> done;
 		
-		public Change(ModifiableDiagramAPI on, String message, ADLDom payload, Authentication by) {
+		public Change(ModifiableAPI on, String message, byte[] payload, Authentication by) {
 			super();
 			this.on = on;
 			this.message = message;
@@ -39,7 +38,7 @@ public interface ChangeQueue {
 		}
 		
 		public void perform() throws Exception {
-			on.commitRevision(message, by, payload);
+			on.commitRevisionAsBytes(message, by, payload);
 		}
 	}
 	

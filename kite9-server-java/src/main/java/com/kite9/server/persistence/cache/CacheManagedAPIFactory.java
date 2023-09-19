@@ -27,7 +27,7 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 
 	private static Logger logger = LoggerFactory.getLogger(CacheManagedAPIFactory.class);
 	
-	private final Map<String, CachingModifiableDiagramAPI> cache = new HashMap<>();
+	private final Map<String, CachingModifiableAPI> cache = new HashMap<>();
 	
 	protected final ApplicationContext ctx;
 	
@@ -51,8 +51,8 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 		
 		if (out == null) {
 			out = buildNewAPI(u, a);
-			if (out instanceof CachingModifiableDiagramAPI) {
-				cache.put(path, (CachingModifiableDiagramAPI) out);
+			if (out instanceof CachingModifiableAPI) {
+				cache.put(path, (CachingModifiableAPI) out);
 			}
 		} 
 		return out;
@@ -96,7 +96,7 @@ public abstract class CacheManagedAPIFactory implements SourceAPIFactory {
 			cache.entrySet().removeIf(e -> {
 				boolean evict = e.getValue().canEvict();
 				if (evict) {
-					logger.debug("Evicting api: ()", e.getKey());
+					logger.debug("Evicting api: {}", e.getKey());
 				}
 				return evict;
 			});

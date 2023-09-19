@@ -1,21 +1,26 @@
 package com.kite9.server.persistence.queue;
 
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.ADLFactory;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.meta.Role;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
 import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
+import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.domain.RestEntity;
-import com.kite9.server.persistence.cache.AbstractCachingModifiableDiagramAPI;
+import com.kite9.server.persistence.cache.AbstractCachingModifiableAPI;
+import com.kite9.server.sources.DiagramAPI;
+import com.kite9.server.sources.ModifiableAPI;
 import com.kite9.server.sources.ModifiableDiagramAPI;
 
 /**
@@ -24,7 +29,7 @@ import com.kite9.server.sources.ModifiableDiagramAPI;
  * 
  * @author robmoffat
  */
-public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableDiagramAPI {
+public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableAPI implements ModifiableDiagramAPI {
 
 	private final ChangeQueue cq;
 	private final ModifiableDiagramAPI backingStore;
@@ -39,19 +44,16 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	}
 	
 	@Override
-	public void commitRevision(String message, Authentication by, ADLDom dom) {
-		if (getAuthenticatedRole(by) == Role.EDITOR) {
-			cq.addItem(new ChangeQueue.Change(backingStore, message, dom, by));
-			localCache = dom.getAsString();
-		} else {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-		}
+	public void commitRevision(String message, Authentication by, ADLDom dom) throws Exception {
+		checkUserCanWrite(by);
+		localCache = dom.getAsString();
+		ADLOutput out = dom.process(getUnderlyingResourceURI(by), getWriteFormat());
+		commitRevisionAsBytes(message, by, out.getAsBytes());
 	}
 	
 	@Override
-	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
-		backingStore.commitRevisionAsBytes(message, by, bytes);
-		localCache = null;
+	public void commitRevisionAsBytesInner(String message, Authentication by, byte[] bytes) {
+		cq.addItem(new ChangeQueue.Change(backingStore, message, bytes, by));
 	}
 
 	@Override
@@ -130,6 +132,11 @@ public class CommandQueueModifiableDiagramAPI extends AbstractCachingModifiableD
 	@Override
 	public SourceType getSourceType(Authentication a) throws Exception {
 		return backingStore.getSourceType(a);
+	}
+
+	@Override
+	public DiagramWriteFormat getWriteFormat() {
+		return backingStore.getWriteFormat();
 	}
 
 	

@@ -137,7 +137,6 @@ public final class GithubSourceAPIFactory extends CacheManagedAPIFactory impleme
 			public RestEntity getEntityRepresentation(Authentication a) throws Exception {
 				throw new UnsupportedOperationException();
 			}
-			
 		};
 	}
 

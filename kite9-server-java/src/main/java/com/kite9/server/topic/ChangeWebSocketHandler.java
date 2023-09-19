@@ -123,7 +123,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		TopicDetails topic = topics.get(session);
-		LOG.info("Received message "+message+" on topic "+topic);
+		LOG.info("Received message: "+message.getPayload()+" on topic: "+topic);
 		Update u = objectMapper.readValue(message.getPayload(), Update.class);
 		Authentication principal = (Authentication) session.getPrincipal();
 

@@ -23,8 +23,4 @@ public interface Caching {
 	 * Returns the number of commits still to make in local store.
 	 */
 	public int getCommitCount();
-	
-	/**
-	 * An ID that can be used 
-	 */
 }

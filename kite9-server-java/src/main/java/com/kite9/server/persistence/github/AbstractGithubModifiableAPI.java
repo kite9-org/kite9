@@ -31,7 +31,7 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 		super(u, clientRepository, configLoader);
 	}
 
-	protected void commitRevision(String message, Consumer<GHTreeBuilder> fn, Authentication by) {
+	protected void commitRevisionGithub(String message, Consumer<GHTreeBuilder> fn, Authentication by) {
 		try {
 			String token = getAccessToken(by, clientRepository);
 			GHRepository repo = getRepo(token);
@@ -58,11 +58,9 @@ public abstract class AbstractGithubModifiableAPI extends AbstractGithubSourceAP
 	}
 
 	@Override
-	public void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
-		commitRevision(message, tb -> tb.add(this.githubPath.getFilepath(), bytes, false), by);
+	public void commitRevisionAsBytesInner(String message, Authentication by, byte[] bytes) {
+		commitRevisionGithub(message, tb -> tb.add(this.githubPath.getFilepath(), bytes, false), by);
 	}
-	
-	
 	
 	@Override
 	public ModificationType getModificationType(Authentication a) throws Exception {

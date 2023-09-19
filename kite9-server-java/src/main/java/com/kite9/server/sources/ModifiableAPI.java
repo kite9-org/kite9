@@ -1,12 +1,13 @@
 package com.kite9.server.sources;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.kite9.pipeline.adl.holder.meta.Role;
 
 /**
  * This is an API that controls persistence to some kind of backing storage.
- * <p>
  * Generally this is diagrams, but we also use it for file upload (creatable)
  * 
  * @author robmoffat
@@ -26,8 +27,13 @@ public interface ModifiableAPI extends SourceAPI {
 	}
 
 
-	void commitRevisionAsBytes(String message, Authentication by, byte[] bytes);
+	default void commitRevisionAsBytes(String message, Authentication by, byte[] bytes) {
+		checkUserCanWrite(by);
+		commitRevisionAsBytesInner(message, by, bytes);
+	}
 	
+	void commitRevisionAsBytesInner(String message, Authentication by, byte[] bytes);
+
 	ModificationType getModificationType(Authentication a) throws Exception;
 
 	/**
@@ -39,5 +45,16 @@ public interface ModifiableAPI extends SourceAPI {
 	 * Returns a userid for the underlying api.
 	 */
 	String getUserId(Authentication a);
+	
+	default void checkUserCanWrite(Authentication a) {
+		Role r = getAuthenticatedRole(a);
+		switch (r) {
+		case EDITOR:
+			return;
+		default:
+			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+
+		}
+	}
 	
 }

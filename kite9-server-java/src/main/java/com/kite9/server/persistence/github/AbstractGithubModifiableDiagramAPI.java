@@ -4,11 +4,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 
+import com.kite9.pipeline.adl.format.media.DiagramWriteFormat;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 import com.kite9.pipeline.adl.holder.meta.MetaReadWrite;
 import com.kite9.pipeline.adl.holder.pipeline.ADLBase;
-import com.kite9.pipeline.adl.holder.pipeline.ADLDom;
-import com.kite9.pipeline.adl.holder.pipeline.ADLOutput;
 import com.kite9.pipeline.uri.K9URI;
 import com.kite9.server.adl.format.media.DiagramFileFormat;
 import com.kite9.server.persistence.github.config.ConfigLoader;
@@ -40,12 +39,6 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 	}
 
 	@Override
-	public void commitRevision(String message, Authentication by, ADLDom dom) throws Exception {
-		ADLOutput out = dom.process(getUnderlyingResourceURI(by), dff);
-		commitRevision(message, tb -> tb.add(this.githubPath.getFilepath(), out.getAsBytes(), false), by);
-	}
-
-	@Override
 	public void addMeta(MetaReadWrite adl) {
 		super.addMeta(adl);
 		K9URI u = adl.getUri();
@@ -60,4 +53,11 @@ public abstract class AbstractGithubModifiableDiagramAPI extends AbstractGithubM
 
 		adl.setTitle(AbstractGithubModifiableAPI.createTitle(u));
 	}
+
+	@Override
+	public DiagramWriteFormat getWriteFormat() {
+		return dff;
+	}
+	
+	
 }

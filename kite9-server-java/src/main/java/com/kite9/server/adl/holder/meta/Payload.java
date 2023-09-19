@@ -3,6 +3,7 @@ package com.kite9.server.adl.holder.meta;
 
 import static org.apache.batik.util.SVGConstants.SVG_NAMESPACE_URI;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import kotlin.text.Charsets;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.dom.ns.Kite9Namespaces;
 import org.w3c.dom.Document;
@@ -139,7 +141,7 @@ public class Payload {
     }
 
     public static String createBase64ADLString(ADLDom adl) {
-        byte[] bytes = adl.getAsString().getBytes();
+        byte[] bytes = adl.getAsString().getBytes(Charsets.UTF_8);
         String base64Encoded = new String(Base64.getEncoder().encode(bytes));
         return base64Encoded;
     }

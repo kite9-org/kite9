@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.kite9.diagram.logging.Kite9ProcessingException;
+import org.kohsuke.github.GHContent;
 import org.kohsuke.github.GHOrganization;
 import org.kohsuke.github.GHPerson;
 import org.kohsuke.github.GHRepository;
@@ -26,6 +27,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.reactive.function.client.WebClientResponseException.NotFound;
 import org.springframework.web.server.ResponseStatusException;
@@ -132,6 +134,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 	}
 	
 	protected void clearContents() {
+		LOG.info("Clearing contents {}", githubPath);
 		this.contents = null;
 	}
 	
@@ -151,6 +154,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 			@Override
 			public GHRepository get() throws Exception {
 				if (out == null) {
+					LOG.info("Retrieving repository data from GitHub: + "+githubPath);
 					GitHub api = getGitHubAPI(token);
 					out = api.getRepository(githubPath.getOwner()+"/"+githubPath.getReponame());
 				}
@@ -182,6 +186,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 				LOG.debug("Not a directory");
 				return;
 			}
+			LOG.info("Retrieving directory data from GitHub: + "+githubPath);
 			List<GHTreeEntry> treeEntries = getFilteredTreeList(tree, config, githubPath.getFilepath());
 			contents = new DirectoryDetails(repo.get(), treeEntries, this.githubPath, config);
 		}
@@ -217,6 +222,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 		if (contents == null) {
 			if ((githubPath.getOwner() == null) && (token != null)) {
 				try {
+					LOG.info("Retrieving user page data from GitHub: + "+githubPath);
 					GitHub github = getGitHubAPI(token);
 					String name = getUserLogin(authentication);
 					GHUser user = github.getUser(name); 
@@ -239,6 +245,7 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 			if ((githubPath.getReponame() == null)  && (token != null)) {
 				// only applies for logged-in users
 				try {
+					LOG.info("Retrieving org page data from GitHub: + "+githubPath);
 					GitHub github = getGitHubAPI(token);
 					String org = githubPath.getOwner();
 					GHPerson userOrg = github.getUser(org);
@@ -250,28 +257,40 @@ public abstract class AbstractGithubSourceAPI implements SourceAPI {
 			}
 		}
 	}
-
-	private void testFile(String token) throws Exception {
-		if (contents == null) {
-			try {
-				String url = RawGithub.assembleGithubURL(githubPath, branchName);
-				ByteArrayResource db = RawGithub.loadBytesFromGithub(token, url);
-				
-				if (db != null) {
-					contents =  db.getByteArray();
-				}
-			} catch (NotFound e) {
-				if (token != null) {
-					return;
-				} else {
-					throw e;
-				}
-			} catch (Exception e) {
-				LOG.debug("Not file: "+e.getMessage());
+	
+	private void testFileFromAPI(String token) throws IOException {
+		GHRepository repo = getRepo(token);
+		GHContent c = repo.getFileContent(githubPath.getFilepath(), githubPath.getRef());
+		if (c.isFile()) {
+			contents = StreamUtils.copyToByteArray(c.read());
+		}
+	}
+	
+	private void testFileFromRaw() {
+		try {
+			String url = RawGithub.assembleGithubURL(githubPath, branchName);
+			ByteArrayResource db = RawGithub.loadBytesFromGithub(null, url);
+			
+			if (db != null) {
+				LOG.info("Retrieved file data from GitHub: + "+githubPath);
+				contents =  db.getByteArray();
 			}
+		} catch (NotFound e) {
+			throw e;
+		} catch (Exception e) {
+			LOG.debug("Not file: "+e.getMessage());
 		}
 	}
 
+	private void testFile(String token) throws Exception {
+		if (contents == null) {
+			if (token == null) {
+				testFileFromRaw();
+			} else {
+				testFileFromAPI(token);
+			}
+		}
+	}
 	
 	@Override
 	public SourceType getSourceType(Authentication auth) throws Exception {
