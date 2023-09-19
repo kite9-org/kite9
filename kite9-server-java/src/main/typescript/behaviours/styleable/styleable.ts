@@ -23,16 +23,19 @@ export function addNumericControl(
 
 	let val = style[cssAttribute];
 	let length = inheritedLength;
+	
+	let lengthStr : string
 	let placeholderText : string;
 	if ((val) && val.endsWith("px")) {
 		val = val.substring(0, val.length - 2);
-		length = parseFloat(val);
+		lengthStr = ""+parseFloat(val).toFixed(2);
 		placeholderText = "revert to default"
 	} else {
 		placeholderText = "default (" + inheritedLength.toFixed(1) + ")"
+		lengthStr = "";
 	}
 
-	const box = numeric(cssAttribute, ""+length, { "min": "0", "placeholder": placeholderText });
+	const box = numeric(cssAttribute, lengthStr, { "min": "0", "placeholder": placeholderText });
 	const input: HTMLInputElement = box.children[1] as HTMLInputElement;
 
 	const sizer = overlay.createSizingArrow(sx, sy, length, horiz, inverse, (v) => {
