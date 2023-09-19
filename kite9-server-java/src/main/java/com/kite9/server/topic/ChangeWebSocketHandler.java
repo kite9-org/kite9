@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -197,7 +198,7 @@ public class ChangeWebSocketHandler extends TextWebSocketHandler implements Chan
 	@Scheduled(fixedDelay = 60000) 
 	public void tidyUp() {
 		sessions.values().forEach(l -> l.removeIf(ws -> !ws.isOpen()));
-		for (Map.Entry<String, List<WebSocketSession>> e : sessions.entrySet()) {
+		for (Map.Entry<String, List<WebSocketSession>> e : new HashSet<>(sessions.entrySet())) {
 			if (e.getValue().isEmpty()) {
 				sessions.remove(e.getKey());
 			}
