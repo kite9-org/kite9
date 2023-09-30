@@ -49,6 +49,10 @@
 	text-align: center;
 }
 
+[k9-elem=label] {
+	--kite9-padding: 10pt;
+}
+
 /* Arrow, Links */
 
 [k9-elem=arrow]  {

@@ -10,7 +10,9 @@
   </xsl:template>
   
    <xsl:template match="adl:description | adl:long-description ">
-     <xsl:call-template name="formats-text-fixed" />
+     <xsl:call-template name="formats-text-fixed">
+     	<xsl:with-param name="k9-ui">orphan edit fill font drag</xsl:with-param>
+     </xsl:call-template>
   </xsl:template>
   
   <xsl:template name="artifact" match="adl:artifact |  

@@ -1,0 +1,11 @@
+spring:
+  resources:
+    cache: 
+      cachecontrol:
+        no-store: true
+        max-age: 0
+
+kite9:
+  diagram-log: OFF
+  public-caching: false
+  client-caching: false
