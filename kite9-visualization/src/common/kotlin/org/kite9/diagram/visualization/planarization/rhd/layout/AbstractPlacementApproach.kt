@@ -9,9 +9,6 @@ abstract class AbstractPlacementApproach(
     val log: Kite9Log,
     val aDirection: Layout?,
     var overall: CompoundGroup,
-    val rh: RoutableHandler2D,
-    val setHoriz: Boolean,
-    val setVert: Boolean,
     override val natural: Boolean
 ): PlacementApproach {
 

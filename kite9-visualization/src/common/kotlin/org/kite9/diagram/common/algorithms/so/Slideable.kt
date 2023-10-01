@@ -3,7 +3,8 @@ package org.kite9.diagram.common.algorithms.so
 import org.kite9.diagram.logging.LogicException
 import kotlin.math.max
 
-open class Slideable(val so: SlackOptimisation) : PositionChangeNotifiable {
+abstract class Slideable(val so: SlackOptimisation) : PositionChangeNotifiable {
+
     protected val minimum = SingleDirection(this, true)
     protected val maximum = SingleDirection(this, false)
     private var hasBackwardConstraints = false

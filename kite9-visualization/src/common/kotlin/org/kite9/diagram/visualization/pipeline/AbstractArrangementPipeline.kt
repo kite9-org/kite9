@@ -7,7 +7,7 @@ import org.kite9.diagram.common.elements.mapping.ElementMapperImpl
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Compactor
-import org.kite9.diagram.visualization.compaction.PluggableCompactor
+import org.kite9.diagram.visualization.compaction.AbstractPluggableCompactor
 import org.kite9.diagram.visualization.compaction.align.AlignmentCompactionStep
 import org.kite9.diagram.visualization.compaction.align.CenteringAligner
 import org.kite9.diagram.visualization.compaction.align.ConnectionAlignmentCompactionStep
@@ -19,6 +19,7 @@ import org.kite9.diagram.visualization.compaction.position.GridCellPositionCompa
 import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep
 import org.kite9.diagram.visualization.compaction.rect.first.InnerFaceWithEmbeddingRectangularizer
 import org.kite9.diagram.visualization.compaction.rect.second.popout.PopOutRectangularizer
+import org.kite9.diagram.visualization.compaction.segment.SegmentPluggableCompactor
 import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep
 import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep
 import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep
@@ -105,7 +106,7 @@ abstract class AbstractArrangementPipeline : ArrangementPipeline {
             GridCellPositionCompactionStep(),
             LoggingOptimisationStep(cd)
         )
-        compactor = PluggableCompactor(steps)
+        compactor = SegmentPluggableCompactor(steps)
         return compactor!!
     }
 

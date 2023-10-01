@@ -8,4 +8,5 @@ interface ArrangementPipeline {
      * all [RenderingInformation] elements so that they can be rendered.
      */
     fun arrange(d: Diagram): Diagram
+
 }

@@ -76,21 +76,9 @@ abstract class RHDPlanarizationBuilder(protected var em: ElementMapper, val ef: 
         FIRST, REDO, DONE
     }
 
-    fun countConnectedElements(de: DiagramElement): Int {
-        var out: Int = 0
-        if (de is ConnectedRectangular) {
-            out++
-            if (de is Container) {
-                for (c: DiagramElement in (de as Container).getContents()) {
-                    out += countConnectedElements(c)
-                }
-            }
-        }
-        return out
-    }
 
     override fun planarize(c: Diagram): Planarization {
-        val elements: Int = countConnectedElements(c)
+        val elements: Int = Util.countConnectedElements(c)
         var run: PlanarizationRun = PlanarizationRun.FIRST
         val out: MutableList<Vertex> = ArrayList(elements * 2)
         var connections: ConnectionManager? = null
