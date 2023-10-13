@@ -21,6 +21,7 @@ import org.kite9.diagram.testing.DiagramElementVisitor;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.testing.VisitorAction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.w3c.dom.Element;
 
@@ -120,7 +121,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			
 			transcodeSVG(xml);
 			Diagram d = Kite9SVGTranscoder.lastDiagram;
-			AbstractArrangementPipeline pipeline = Kite9SVGTranscoder.lastPipeline;
+			NGArrangementPipeline pipeline = Kite9SVGTranscoder.lastPipeline;
 			
 			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);

@@ -11,6 +11,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.compaction.rect.second.NonEmbeddedFaceRectangularizer
 import org.kite9.diagram.visualization.compaction.rect.second.prioritised.PrioritisedRectOption
 import org.kite9.diagram.visualization.compaction.rect.second.prioritised.RectOption
+import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 
 /**
@@ -40,7 +41,7 @@ class PopOutRectangularizer(cd: CompleteDisplayer) : NonEmbeddedFaceRectangulari
                 val oldSlideables = listOf(pro.vt1.slideable, pro.vt5.slideable)
                 val sso = pro.vt5.slideable.so
                 val bufferSlideable = BufferSlideable(sso, dimension, oldSlideables)
-                sso.updateMaps(bufferSlideable);
+                (sso as SegmentSlackOptimisation).updateMaps(bufferSlideable);
 
                 // make sure everything is the right distance from the buffer
 

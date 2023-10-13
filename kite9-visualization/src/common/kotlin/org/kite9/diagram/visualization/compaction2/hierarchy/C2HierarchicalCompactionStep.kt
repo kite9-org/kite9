@@ -8,8 +8,8 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Co
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 class C2HierarchicalCompactionStep(val mr: GroupResult, cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
-    override fun compact(c: C2Compaction) {
-        innerCompact(c, mr.groups().first())
+    override fun compact(c: C2Compaction, g: Group) {
+        innerCompact(c,mr.groups().first())
     }
 
     private fun innerCompact(c: C2Compaction, first: Group) {
@@ -17,7 +17,7 @@ class C2HierarchicalCompactionStep(val mr: GroupResult, cd: CompleteDisplayer) :
             innerCompact(c, first.a)
             innerCompact(c, first.b)
 
-            
+
         }
     }
 

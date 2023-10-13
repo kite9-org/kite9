@@ -11,18 +11,19 @@ import org.kite9.diagram.logging.LogicException
  * @author robmoffat
  */
 abstract class AbstractSlackOptimisation : Logable, SlackOptimisation {
-    override val log = Kite9Log.instance(this)
+
+    override val log by lazy { Kite9Log.instance(this) }
 
     override var pushCount = 0
 
-    protected val _allSlideables: MutableCollection<Slideable> = LinkedHashSet()
+    protected val slideables: MutableCollection<Slideable> = LinkedHashSet()
 
     override fun getSize(): Int {
-        return _allSlideables.size
+        return slideables.size
     }
 
     override fun getAllSlideables(): Collection<Slideable> {
-        return _allSlideables
+        return slideables
     }
 
     override fun ensureMinimumDistance(left: Slideable, right: Slideable, minLength: Int) {
@@ -41,7 +42,7 @@ abstract class AbstractSlackOptimisation : Logable, SlackOptimisation {
 
     private fun debugOutput(minimums: Boolean) {
         val alreadyDone: MutableSet<Slideable> = HashSet()
-        for (slideable in _allSlideables) {
+        for (slideable in slideables) {
             if (!alreadyDone.contains(slideable)) {
                 debugOutputSlideable(minimums, slideable, alreadyDone, 0)
             }

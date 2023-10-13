@@ -10,6 +10,6 @@ class DirectionLayoutStrategy(rh: RoutableHandler2D) : AbstractTopDownLayoutStra
         gg: CompoundGroup, ld: Layout?,
         setHoriz: Boolean, setVert: Boolean, natural: Boolean
     ): PlacementApproach {
-        return DirectionPlacementApproach(log, ld, gg, rh, setHoriz, setVert, natural)
+        return DirectionPlacementApproach(log, ld, gg, rh, natural)
     }
 }

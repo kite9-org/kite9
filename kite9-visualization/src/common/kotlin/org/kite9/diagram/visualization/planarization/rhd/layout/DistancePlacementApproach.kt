@@ -21,12 +21,10 @@ class DistancePlacementApproach(
     log: Kite9Log,
     aDirection: Layout?,
     overall: CompoundGroup,
-    rh: RoutableHandler2D,
-    setHoriz: Boolean,
-    setVert: Boolean,
+    val rh: RoutableHandler2D,
     natural: Boolean
 ) : AbstractPlacementApproach(
-    log, aDirection, overall, rh, setHoriz, setVert, natural
+    log, aDirection, overall, natural
 ) {
 
     override fun evaluate() {

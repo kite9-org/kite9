@@ -8,26 +8,13 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
-import org.kite9.diagram.visualization.compaction.align.AlignmentCompactionStep
-import org.kite9.diagram.visualization.compaction.align.CenteringAligner
-import org.kite9.diagram.visualization.compaction.align.ConnectionAlignmentCompactionStep
-import org.kite9.diagram.visualization.compaction.align.LeftRightAligner
-import org.kite9.diagram.visualization.compaction.hierarchy.HierarchicalCompactionStep
-import org.kite9.diagram.visualization.compaction.insertion.SubGraphInsertionCompactionStep
-import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
-import org.kite9.diagram.visualization.compaction.position.ConnectionRouteCompactionStep
-import org.kite9.diagram.visualization.compaction.position.GridCellPositionCompactionStep
-import org.kite9.diagram.visualization.compaction.position.RectangularPositionCompactionStep
-import org.kite9.diagram.visualization.compaction.rect.first.InnerFaceWithEmbeddingRectangularizer
-import org.kite9.diagram.visualization.compaction.rect.second.popout.PopOutRectangularizer
-import org.kite9.diagram.visualization.compaction.slideable.DiagramSizeCompactionStep
-import org.kite9.diagram.visualization.compaction.slideable.LoggingOptimisationStep
-import org.kite9.diagram.visualization.compaction.slideable.MaximizeCompactionStep
-import org.kite9.diagram.visualization.compaction.slideable.MinimizeCompactionStep
 import org.kite9.diagram.visualization.compaction2.C2CompactionStep
+import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
+import org.kite9.diagram.visualization.compaction2.builders.C2ConnectedBuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
 import org.kite9.diagram.visualization.compaction2.position.C2RectangularPositionCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
+import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -47,7 +34,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     var em: ElementMapper? = null
 
     override fun arrange(d: Diagram): Diagram {
-        val mr = buildGrouuping(d)
+        val mr = buildGrouping(d)
 
         if (!log.go()) {
             log.send("Created Groups:", mr.groups())
@@ -64,8 +51,8 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         layout(mr)
 
         val compactor = createCompactor(mr)
-        compactor.compactDiagram(d)
-
+        compactor.compactDiagram(d, mr)
+        return d
     }
 
     private fun layout(mr: GroupResult) {
@@ -83,13 +70,12 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             return em!!
         }
 
-    private fun buildGrouuping(d: Diagram) : GroupResult {
+    private fun buildGrouping(d: Diagram) : GroupResult {
         val elements: Int = Util.countConnectedElements(d)
-        val ch: ContradictionHandler = BasicContradictionHandler(em)
+        val ch: ContradictionHandler = BasicContradictionHandler(elementMapper)
         val strategy = GeneratorBasedGroupingStrategyImpl(d, elements, ch, elementMapper.getGridPositioner(), elementMapper, diagramElementFactory)
         strategy.buildInitialGroups()
-        val mr = strategy.group()
-        return mr;
+        return strategy.group()
    }
 
     private fun createCompactor(mr: GroupResult): C2PluggableCompactor {
@@ -114,6 +100,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
         // essential compaction steps
         val steps = arrayOf<C2CompactionStep>(
+            C2ConnectedBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(mr, cd),
             C2RectangularPositionCompactionStep(cd),
         )
@@ -121,9 +108,14 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         return C2PluggableCompactor(steps)
     }
 
-    override val prefix: String?
+    override val prefix: String
         get() = "NGA "
 
     override val isLoggingEnabled: Boolean
         get() = true
+
+    // NG Doesn't use planarization....
+    fun getPln(): Planarization? {
+        return null;
+    }
 }

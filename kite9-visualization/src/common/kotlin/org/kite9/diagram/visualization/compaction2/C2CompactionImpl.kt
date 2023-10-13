@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction2
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Rectangle
 import org.kite9.diagram.model.Diagram
@@ -20,33 +21,13 @@ class C2CompactionImpl(
     private val diagram: Diagram,
     private val horizontalSegmentSlackOptimisation: C2SlackOptimisation,
     private val verticalSegmentSlackOptimisation: C2SlackOptimisation
-
 ) : C2Compaction {
 
-    override fun getVerticalSegments(): List<C2Slideable> {
-        return verticalSegmentSlackOptimisation.getAllSlideables()
-            .filterIsInstance<C2Slideable>()
-    }
-
-    override fun getHorizontalSegments(): List<C2Slideable> {
-        return horizontalSegmentSlackOptimisation.getAllSlideables()
-            .filterIsInstance<C2Slideable>()
-    }
-
-
-    override fun getHorizontalSegmentSlackOptimisation(): C2SlackOptimisation {
-        return horizontalSegmentSlackOptimisation
-    }
-
-    override fun getVerticalSegmentSlackOptimisation(): C2SlackOptimisation {
-        return verticalSegmentSlackOptimisation
-    }
-
-    override fun getSlackOptimisation(horizontal: Boolean): C2SlackOptimisation {
-        return if (horizontal) {
-            getHorizontalSegmentSlackOptimisation()
+    override fun getSlackOptimisation(d: Dimension): C2SlackOptimisation {
+        return if (d ==Dimension.H) {
+            horizontalSegmentSlackOptimisation
         } else {
-            getVerticalSegmentSlackOptimisation()
+            verticalSegmentSlackOptimisation
         }
     }
 

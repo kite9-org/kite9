@@ -21,14 +21,29 @@ class C2Slideable(
     val dimension: Dimension,
     val purpose: Purpose,
     e: DiagramElement,
-    s: Side,
-    val number: Int
+    s: Side
 ) : Slideable(so) {
 
     val anchors: MutableList<Anchor> = mutableListOf(Anchor(e, s))
+    val number: Int = nextNumber()
 
     fun merge(s: C2Slideable) {
         anchors.addAll(s.anchors)
     }
 
+    override fun toString(): String {
+        return "C2S($number, $dimension, $purpose, anchors=$anchors)"
+    }
+
+
+    companion object {
+
+        var n: Int = 0
+
+        fun nextNumber() : Int {
+            n++
+            return n;
+        }
+
+    }
 }

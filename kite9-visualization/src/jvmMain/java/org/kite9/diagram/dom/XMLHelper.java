@@ -9,6 +9,7 @@ import org.w3c.dom.Node;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
 /**
@@ -84,8 +85,13 @@ public class XMLHelper {
 		TransformerFactory transfac = getTransformerFactory();
 		Transformer trans = null;
 		if (templateUri != null) {
-			Source source = transfac.getURIResolver().resolve(templateUri, baseUri);
-			trans = transfac.newTransformer(source);
+			if (transFact.getURIResolver() != null) {
+				Source source = transfac.getURIResolver().resolve(templateUri, baseUri);
+				trans = transfac.newTransformer(source);
+			} else {
+				Source source = new StreamSource(templateUri);
+				trans = transfac.newTransformer(source);
+			}
 		} else {
 			trans = transfac.newTransformer(); // identity transform
 		}

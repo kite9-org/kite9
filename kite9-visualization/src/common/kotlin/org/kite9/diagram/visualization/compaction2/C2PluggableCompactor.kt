@@ -2,6 +2,9 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
  * Superclass for all segment-based compaction methods.   The process works by converting each face into
@@ -12,17 +15,16 @@ import org.kite9.diagram.model.position.Direction
  */
 class C2PluggableCompactor(val steps: Array<C2CompactionStep>) {
 
-    private var sb = MergeableSlideableBuilder()
 
-    fun compactDiagram(d: Diagram): C2Compaction {
-        val horizontal = sb.buildSegmentList(d, HORIZONTAL)
-        val vertical = sb.buildSegmentList(d, VERTICAL)
+    fun compactDiagram(d: Diagram, gr: GroupResult): C2Compaction {
+        val horizontal = C2SlackOptimisation(d)
+        val vertical = C2SlackOptimisation(d)
         val compaction = instantiateCompaction(
             d,
             horizontal,
             vertical,
         )
-        compact(compaction)
+        compact(compaction, gr.groups().first())
         return compaction
     }
 
@@ -39,9 +41,14 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) {
         )
     }
 
-    private fun compact(c: C2Compaction) {
+    private fun compact(c: C2Compaction, g: Group) {
+        if (g is CompoundGroup) {
+            compact(c, g.a)
+            compact(c, g.b)
+        }
+
         for (step in steps) {
-            step.compact(c)
+            step.compact(c, g)
         }
     }
 

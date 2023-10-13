@@ -31,6 +31,7 @@ import org.kite9.diagram.testing.HopChecker;
 import org.kite9.diagram.testing.HopChecker.HopAction;
 import org.kite9.diagram.testing.VisitorAction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
 import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
@@ -71,7 +72,7 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkMidConnection = true;
 	}
 	
-	public void testDiagram(Diagram d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
+	public void testDiagram(Diagram d, Class<?> theTest, String subtest, Checks c, boolean addressed, NGArrangementPipeline pipeline) throws IOException {
 		try {
 			LogicException out = null;
 			Planarization pln = null;

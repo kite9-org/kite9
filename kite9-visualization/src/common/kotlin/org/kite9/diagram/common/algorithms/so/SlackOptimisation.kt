@@ -11,5 +11,5 @@ interface SlackOptimisation {
     fun getAllSlideables(): Collection<Slideable>
     fun ensureMinimumDistance(left: Slideable, right: Slideable, minLength: Int)
     fun ensureMaximumDistance(left: Slideable, right: Slideable, maxLength: Int)
-    fun updateMaps(s: Slideable)
+    // fun updateMaps(s: Slideable)
 }

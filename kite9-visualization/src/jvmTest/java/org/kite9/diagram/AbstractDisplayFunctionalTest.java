@@ -6,6 +6,7 @@ import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StackHelp;
 import org.kite9.diagram.common.StreamHelp;
 import org.kite9.diagram.dom.XMLHelper;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.Element;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.Checks;
@@ -34,7 +35,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		} finally {
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
 			if (lastDiagram != null) {
-				AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+				NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
 			}
 			if (checkXML()) {

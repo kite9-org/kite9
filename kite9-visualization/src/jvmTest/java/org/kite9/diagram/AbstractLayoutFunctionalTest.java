@@ -19,6 +19,7 @@ import org.kite9.diagram.testing.DiagramChecker;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.ArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.*;
 
 import javax.xml.XMLConstants;
@@ -44,7 +45,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 			copyTo(getOutputFile(".svg"), "svg-output");
 		} finally {
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
-			AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+			NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 			boolean addressed = isAddressed();
 			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		}
@@ -162,7 +163,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		} finally {
 			boolean addressed = isAddressed();
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
-			AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+			NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
 		}
 	}

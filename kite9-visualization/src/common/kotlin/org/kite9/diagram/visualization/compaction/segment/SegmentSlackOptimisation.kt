@@ -9,7 +9,6 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
 
 /**
  * Augments SlackOptimisation to keep track of segments underlying the slideables.
@@ -26,9 +25,9 @@ class SegmentSlackOptimisation(val theDiagram: Diagram) : AbstractSlackOptimisat
         return underlying is Rectangular
     }
 
-    override fun updateMaps(s: Slideable) {
+    fun updateMaps(s: Slideable) {
         log.send(if (log.go()) null else "Added slideable: $s")
-        _allSlideables.add(s)
+        slideables.add(s)
         if (s is SegmentSlideable) {
             for (v in s.verticesOnSlideable) {
                 vertexToSlidableMap[v] = s

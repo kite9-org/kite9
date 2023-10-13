@@ -17,6 +17,7 @@ import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 
 import java.io.InputStreamReader;
 import java.io.StringWriter;
@@ -36,7 +37,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
 			if (lastDiagram != null) {
-				AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+				NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
 			}
 			if (checkXML()) {

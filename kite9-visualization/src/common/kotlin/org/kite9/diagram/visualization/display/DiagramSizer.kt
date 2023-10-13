@@ -25,6 +25,7 @@ interface DiagramSizer {
         concave: Boolean
     ): Double
 
+
     /**
      * Determines whether you should draw a hop at the point connection a meets connection b
      */
