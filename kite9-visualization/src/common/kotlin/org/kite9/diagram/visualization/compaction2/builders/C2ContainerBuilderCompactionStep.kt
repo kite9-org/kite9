@@ -1,10 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
@@ -31,7 +28,12 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         checkCreate(c.getDiagram(), Dimension.V, c.getSlackOptimisation(Dimension.V), null)
     }
 
-    private fun checkCreate(de: DiagramElement, d: Dimension, cso: C2SlackOptimisation, cExisting: C2Slideable?): RectangularSlideableSet? {
+    private fun checkCreate(
+        de: DiagramElement,
+        d: Dimension,
+        cso: C2SlackOptimisation,
+        cExisting: C2Slideable?
+    ): RectangularSlideableSet? {
         log.send("Creating $de")
         if (de !is Rectangular) {
             return null
@@ -48,10 +50,10 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
             val c = cExisting ?: C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER)
 
             // TODO: Add logic for line centering here.
-//            cso.ensureMinimumDistance(l, c, (ms / 2.0).toInt())
-//            cso.ensureMinimumDistance(c, r, (ms / 2.0).toInt())
-
             cso.ensureMinimumDistance(l, r, ms.toInt())
+            cso.ensureMinimumDistance(l, c, (ms / 2.0).toInt())
+            cso.ensureMinimumDistance(c, r, (ms / 2.0).toInt())
+
             ss = RectangularSlideableSetImpl(de, l, r, c)
             cso.add(de, ss)
         }
@@ -72,20 +74,35 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         l: Layout?,
         container: RectangularSlideableSet
     ) {
+
+        val contents = de.getContents()
+            .filterIsInstance<ConnectedRectangular>()
+
+        val anchors = contents.map { Anchor(it, Side.NEITHER) }.toSet()
+
         val centerLine = when (l) {
-            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.H) C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER) else null;
-            Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER) else null;
+            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.V) C2Slideable(
+                cso,
+                d,
+                Purpose.ROUTE,
+                anchors
+            ) else null
+
+            Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.H) C2Slideable(
+                cso,
+                d,
+                Purpose.ROUTE,
+                anchors
+            ) else null
+
             else -> null
         }
 
-        val contents = de.getContents()
-            .filterIsInstance<Rectangular>()
+        val contentMap = contents
             .map { it to checkCreate(it, d, cso, centerLine) }
 
-        val orderedContents = contents.filter { (k, _) -> k is Connected }
-
         // ensure within container
-        orderedContents
+        contentMap
             .forEach { (k, v) ->
                 val distL = getMinimumDistanceBetween(de, Side.START, k, Side.START, d, null, true)
                 val distR = getMinimumDistanceBetween(de, Side.END, k, Side.END, d, null, true)
@@ -95,35 +112,37 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
 
         // ensure internal ordering
         when (l) {
-            Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.H) setupInternalOrdering(orderedContents, d, cso)
-            Layout.LEFT -> if (d == Dimension.H) setupInternalOrdering(orderedContents.reversed(), d, cso)
-            Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) setupInternalOrdering(orderedContents, d, cso)
-            Layout.UP -> if (d == Dimension.V) setupInternalOrdering(orderedContents.reversed(), d, cso)
-            else -> { /* do nothing */ }
+            Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.H) setupInternalOrdering(contentMap, d, cso)
+            Layout.LEFT -> if (d == Dimension.H) setupInternalOrdering(contentMap.reversed(), d, cso)
+            Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) setupInternalOrdering(contentMap, d, cso)
+            Layout.UP -> if (d == Dimension.V) setupInternalOrdering(contentMap.reversed(), d, cso)
+            else -> { /* do nothing */
             }
-        }
-
-        private fun setupInternalOrdering(
-            orderedContents: List<Pair<Rectangular, RectangularSlideableSet?>>,
-            d: Dimension,
-            cso: C2SlackOptimisation
-        ) {
-            for (i in 1 until orderedContents.size) {
-                val prev = orderedContents[i - 1]
-                val current = orderedContents[i]
-                val dist = getMinimumDistanceBetween(prev.first, Side.END, current.first, Side.START, d, null, true)
-                separateRectangular(prev.second!!, Side.END, current.second!!, Side.START, cso, dist)
-            }
-        }
-
-        private fun separateRectangular(
-            a: RectangularSlideableSet,
-            aSide: Side,
-            b: RectangularSlideableSet,
-            bSide: Side,
-            cso: C2SlackOptimisation,
-            dist: Double
-        ) {
-            cso.ensureMinimumDistance(a.getRectangularOnSide(aSide), b.getRectangularOnSide(bSide), dist.toInt())
         }
     }
+
+    private fun setupInternalOrdering(
+        orderedContents: List<Pair<Rectangular, RectangularSlideableSet?>>,
+        d: Dimension,
+        cso: C2SlackOptimisation
+    ) {
+        for (i in 1 until orderedContents.size) {
+            val prev = orderedContents[i - 1]
+            val current = orderedContents[i]
+            val dist = getMinimumDistanceBetween(prev.first, Side.END, current.first, Side.START, d, null, true)
+            separateRectangular(prev.second!!, Side.END, current.second!!, Side.START, cso, dist)
+        }
+    }
+
+    private fun separateRectangular(
+        a: RectangularSlideableSet,
+        aSide: Side,
+        b: RectangularSlideableSet,
+        bSide: Side,
+        cso: C2SlackOptimisation,
+        dist: Double
+    ) {
+        cso.ensureMinimumDistance(a.getRectangularOnSide(aSide), b.getRectangularOnSide(bSide), dist.toInt())
+    }
+
+}
