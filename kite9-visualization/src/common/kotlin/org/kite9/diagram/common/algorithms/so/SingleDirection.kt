@@ -119,6 +119,11 @@ class SingleDirection(
         return owner.toString()
     }
 
+    fun merge(sd: SingleDirection) {
+        sd.forward.forEach { (k, v) -> this.addForwardConstraint(k, v) }
+        sd.backward.forEach { (k, v) -> this.addBackwardConstraint(k, v) }
+    }
+
     val maxDepth: Int
         get() {
             var depth = 0

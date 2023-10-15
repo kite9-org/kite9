@@ -42,11 +42,6 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) {
     }
 
     private fun compact(c: C2Compaction, g: Group) {
-        if (g is CompoundGroup) {
-            compact(c, g.a)
-            compact(c, g.b)
-        }
-
         for (step in steps) {
             step.compact(c, g)
         }

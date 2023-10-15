@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.position
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.BasicDimension2D
@@ -11,9 +12,8 @@ import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.model.style.Placement
-import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
-import org.kite9.diagram.visualization.compaction2.C2Compaction
-import org.kite9.diagram.visualization.compaction2.RectangularSlideables
+import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import kotlin.math.max
@@ -26,13 +26,15 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
     }
 
     private fun visit(r: Rectangular, c: C2Compaction) {
-        val ssy = c.getSlackOptimisation(Dimension.H).getSlideablesFor(r) as RectangularSlideables?
-        val ssx = c.getSlackOptimisation(Dimension.V).getSlideablesFor(r) as RectangularSlideables?
+        val ssy = c.getSlackOptimisation(Dimension.H).getSlideablesFor(r) as RectangularSlideableSet?
+        val ssx = c.getSlackOptimisation(Dimension.V).getSlideablesFor(r) as RectangularSlideableSet?
         if ((ssy != null) && (ssx != null)) {
-            val xMin = ssy.l.minimumPosition.toDouble()
-            val xMax = ssy.r.minimumPosition.toDouble()
-            val yMin = ssx.l.minimumPosition.toDouble()
-            val yMax = ssy.r.minimumPosition.toDouble()
+
+
+            val xMin = getSlideable(r, Side.START, ssy)!!.minimumPosition.toDouble()
+            val xMax = getSlideable(r, Side.END, ssy)!!.maximumPosition!!.toDouble()
+            val yMin = getSlideable(r, Side.START, ssx)!!.minimumPosition.toDouble()
+            val yMax =  getSlideable(r, Side.END, ssx)!!.maximumPosition!!.toDouble()
             val rri = r.getRenderingInformation()
             val position = BasicDimension2D(xMin, yMin)
             rri.position = position
@@ -98,6 +100,15 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
 
         val bounded = max(start, min(unbounded, start+size))
         return bounded
+    }
+
+    private fun getSlideable(r: DiagramElement, s: Side, set: RectangularSlideableSet) : C2Slideable? {
+        return set.getRectangularSlideables()
+            .filter { x->
+                x.anchors
+                    .filter { it.e == r }
+                    .firstOrNull { it.s == s } != null
+            }.firstOrNull()
     }
 
     override val prefix: String

@@ -1,12 +1,15 @@
 package org.kite9.diagram.common.algorithms.so
 
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import kotlin.math.max
 
-abstract class Slideable(val so: SlackOptimisation) : PositionChangeNotifiable {
+abstract class Slideable(val so: SlackOptimisation,
+    ) : PositionChangeNotifiable {
 
     protected val minimum = SingleDirection(this, true)
     protected val maximum = SingleDirection(this, false)
+
     private var hasBackwardConstraints = false
     var minimumPosition: Int
         get() = minimum.position
@@ -107,4 +110,5 @@ abstract class Slideable(val so: SlackOptimisation) : PositionChangeNotifiable {
         }
         return out
     }
+
 }

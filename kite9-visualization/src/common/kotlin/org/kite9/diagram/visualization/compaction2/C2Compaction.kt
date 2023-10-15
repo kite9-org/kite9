@@ -7,8 +7,5 @@ import org.kite9.diagram.model.DiagramElement
 interface C2Compaction {
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
     fun getDiagram(): Diagram
-    fun getSegments(de: DiagramElement, d: Dimension) : SlideableSet? {
-        return getSlackOptimisation(d).getSlideablesFor(de)
-    }
 
 }

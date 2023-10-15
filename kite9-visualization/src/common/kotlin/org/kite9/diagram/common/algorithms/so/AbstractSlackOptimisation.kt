@@ -82,7 +82,7 @@ abstract class AbstractSlackOptimisation : Logable, SlackOptimisation {
         get() = "ASO "
 
     override val isLoggingEnabled: Boolean
-        get() = false
+        get() = true
 
     abstract fun initialiseSlackOptimisation()
 }
