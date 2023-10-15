@@ -16,6 +16,8 @@ import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompa
 import org.kite9.diagram.visualization.compaction2.logging.C2LoggingOptimisationStep
 import org.kite9.diagram.visualization.compaction2.position.C2RectangularPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactionStep
+import org.kite9.diagram.visualization.compaction2.sizing.C2MaximizeCompactionStep
+import org.kite9.diagram.visualization.compaction2.sizing.C2MinimizeCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.rhd.Util
@@ -107,8 +109,10 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2GroupBuilderCompactionStep(cd),
             C2ContainerBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd),
+            C2MinimizeCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),
             C2LoggingOptimisationStep(cd),
+            C2MaximizeCompactionStep(cd),
             C2RectangularPositionCompactionStep(cd),
         )
 

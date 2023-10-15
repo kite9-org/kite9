@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
@@ -32,18 +33,22 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
 
             when(layout) {
                 Layout.DOWN -> {
+                    separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
                     vm = va.merge(vb, slackOptimisationV)
                     hm = ha.mergeWithAxis(hb, slackOptimisationH)
                 }
                 Layout.UP -> {
+                    separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
                     vm = va.merge(vb, slackOptimisationV)
                     hm = hb.mergeWithAxis(ha, slackOptimisationH)
                 }
                 Layout.RIGHT -> {
+                    separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
                     vm = va.mergeWithAxis(vb, slackOptimisationV)
                     hm = hb.merge(ha, slackOptimisationH)
                 }
                 Layout.LEFT -> {
+                    separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
                     vm = vb.mergeWithAxis(va, slackOptimisationV)
                     hm = hb.merge(ha, slackOptimisationH)
                 }
@@ -60,7 +65,35 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
         }
     }
 
+    private fun separateRectangular(
+        a: RectangularSlideableSet,
+        aSide: Side,
+        b: RectangularSlideableSet,
+        bSide: Side,
+        cso: C2SlackOptimisation,
+        d: Dimension
+    ) {
+        val aSlideables =  a.getRectangularsOnSide(aSide)
+        val bSlideables = b.getRectangularsOnSide(bSide)
 
+        val aElements = aSlideables
+            .flatMap { r -> r.anchors }
+            .map { a -> a.e }
+
+        val bElements = bSlideables
+            .flatMap { r -> r.anchors }
+            .map { a -> a.e }
+
+        val distance = aElements.maxOf { ae ->
+            bElements.maxOf { be -> getMinimumDistanceBetween(ae, aSide, be, bSide, d, null, false) }
+        }
+
+        aSlideables.forEach { aS ->
+            bSlideables.forEach { bS ->
+                cso.ensureMinimumDistance(aS, bS, distance.toInt())
+            }
+        }
+    }
     override val prefix: String
         get() = "HIER"
 

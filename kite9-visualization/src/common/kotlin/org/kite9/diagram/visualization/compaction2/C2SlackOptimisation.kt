@@ -149,6 +149,10 @@ class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimi
 
     }
 
+    fun getAllElements() : Set<DiagramElement> {
+        return elementMap.keys
+    }
+
     fun getSlideablesFor(de: DiagramElement): SlideableSet? {
         return elementMap[de]
     }

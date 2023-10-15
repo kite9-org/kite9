@@ -39,4 +39,5 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         along: DiagramElement?,
         concave: Boolean
     ) : Double = cd.getMinimumDistanceBetween(a, toDirection(aSide, d), b, toDirection(bSide, d), toDirection(d), along, concave)
+
 }
