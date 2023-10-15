@@ -85,7 +85,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             .map { a -> a.e }
 
         val distance = aElements.maxOf { ae ->
-            bElements.maxOf { be -> getMinimumDistanceBetween(ae, aSide, be, bSide, d, null, false) }
+            bElements.maxOf { be -> getMinimumDistanceBetween(ae, aSide, be, bSide, d, null, true) }
         }
 
         aSlideables.forEach { aS ->
