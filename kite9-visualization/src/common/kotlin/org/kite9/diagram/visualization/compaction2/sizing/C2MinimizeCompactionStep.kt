@@ -39,9 +39,8 @@ class C2MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractC2SizingCompact
         opt: C2SlackOptimisation,
         set: RectangularSlideableSet,
     ) {
-        val left = set.getRectangularsOnSide(Side.START).first()
-        val right = set.getRectangularsOnSide(Side.END).first()
-
+        val left = set.getRectangularOnSide(Side.START)
+        val right = set.getRectangularOnSide(Side.END)
         val minDist = left.minimumDistanceTo(right)
         opt.ensureMaximumDistance(left,right, minDist)
     }

@@ -27,12 +27,12 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         get() = true
 
     override fun compact(c: C2Compaction, g: Group) {
-        checkCreate(c.getDiagram(), Dimension.H, c.getSlackOptimisation(Dimension.H))
-        checkCreate(c.getDiagram(), Dimension.V, c.getSlackOptimisation(Dimension.V))
-
+        checkCreate(c.getDiagram(), Dimension.H, c.getSlackOptimisation(Dimension.H), null)
+        checkCreate(c.getDiagram(), Dimension.V, c.getSlackOptimisation(Dimension.V), null)
     }
 
-    private fun checkCreate(de: DiagramElement, d: Dimension, cso: C2SlackOptimisation): RectangularSlideableSet? {
+    private fun checkCreate(de: DiagramElement, d: Dimension, cso: C2SlackOptimisation, cExisting: C2Slideable?): RectangularSlideableSet? {
+        log.send("Creating $de")
         if (de !is Rectangular) {
             return null
         }
@@ -45,16 +45,22 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
 
             val l = C2Slideable(cso, d, Purpose.EDGE, de, Side.START)
             val r = C2Slideable(cso, d, Purpose.EDGE, de, Side.END)
+            val c = cExisting ?: C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER)
+
+            // TODO: Add logic for line centering here.
+//            cso.ensureMinimumDistance(l, c, (ms / 2.0).toInt())
+//            cso.ensureMinimumDistance(c, r, (ms / 2.0).toInt())
+
             cso.ensureMinimumDistance(l, r, ms.toInt())
-            ss = RectangularSlideableSetImpl(listOf(l, r))
+            ss = RectangularSlideableSetImpl(de, l, r, c)
             cso.add(de, ss)
-            log.send("Created RectangularSlideableSetImpl: ", ss.getAll())
         }
 
         if (de is Container) {
             checkCreateItems(cso, de, d, de.getLayout(), ss)
         }
 
+        log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
         return ss
 
     }
@@ -66,9 +72,15 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         l: Layout?,
         container: RectangularSlideableSet
     ) {
+        val centerLine = when (l) {
+            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.H) C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER) else null;
+            Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER) else null;
+            else -> null
+        }
+
         val contents = de.getContents()
             .filterIsInstance<Rectangular>()
-            .map { it to checkCreate(it, d, cso) }
+            .map { it to checkCreate(it, d, cso, centerLine) }
 
         val orderedContents = contents.filter { (k, _) -> k is Connected }
 
@@ -112,10 +124,6 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
             cso: C2SlackOptimisation,
             dist: Double
         ) {
-            a.getRectangularsOnSide(aSide).forEach { containerSlideable ->
-                b.getRectangularsOnSide(bSide).forEach { elementSlideable ->
-                    cso.ensureMinimumDistance(containerSlideable, elementSlideable, dist.toInt())
-                }
-            }
+            cso.ensureMinimumDistance(a.getRectangularOnSide(aSide), b.getRectangularOnSide(bSide), dist.toInt())
         }
     }

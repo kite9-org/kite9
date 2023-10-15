@@ -501,6 +501,7 @@ public class TestingEngine extends TestingHelp {
 			inR = createRect(inside);
 			outR = createRect(outside);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ElementsMissingException(cc.getID(), 1);
 		}
 		

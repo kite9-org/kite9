@@ -10,6 +10,9 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.C2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
+import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionStep
+import org.kite9.diagram.visualization.compaction2.align.C2CenteringAligner
+import org.kite9.diagram.visualization.compaction2.align.C2LeftRightAligner
 import org.kite9.diagram.visualization.compaction2.builders.C2ContainerBuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.builders.C2GroupBuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
@@ -106,13 +109,14 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
         // essential compaction steps
         val steps = arrayOf<C2CompactionStep>(
-            C2GroupBuilderCompactionStep(cd),
             C2ContainerBuilderCompactionStep(cd),
+            C2GroupBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd),
             C2MinimizeCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),
             C2LoggingOptimisationStep(cd),
             C2MaximizeCompactionStep(cd),
+            C2AlignmentCompactionStep(cd, C2LeftRightAligner(), C2CenteringAligner()),
             C2RectangularPositionCompactionStep(cd),
         )
 

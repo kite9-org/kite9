@@ -39,25 +39,19 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             return null
         }
 
-        val ss = cso.getSlideablesFor(de);
+        val ss = cso.getSlideablesFor(de) as RectangularSlideableSet?
 
-        if (ss == null) {
+        if (ss != null) {
             // we need to create these then
-            val ms = getMinimumDistanceBetween(de, Side.START, de, Side.END, d, null, false)
-
+            val l = ss.l
+            val r = ss.r
+            val c = ss.c
             val bl = C2Slideable(cso, d, Purpose.ROUTE, de, Side.START)
-            val l = C2Slideable(cso, d, Purpose.EDGE, de, Side.START)
-            val c = C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER)
-            val r = C2Slideable(cso, d, Purpose.EDGE, de, Side.END)
             val br = C2Slideable(cso, d, Purpose.ROUTE, de, Side.END)
-            cso.ensureMinimumDistance(l, r, ms.toInt())
             cso.ensureMinimumDistance(bl, l ,0 )
-            cso.ensureMinimumDistance(l, c, (ms / 2.0).toInt())
-            cso.ensureMinimumDistance(c, r, (ms / 2.0).toInt())
             cso.ensureMinimumDistance(r, br, 0)
 
-            val out = RoutableSlideableSetImpl(listOf(r, l), listOf(bl, br, c), c, bl, br)
-            cso.add(de, out)
+            val out = RoutableSlideableSetImpl(listOf(ss), listOf(bl, br, c), c, bl, br)
             cso.add(g, out)
             log.send("Created RoutableSlideableSetImpl: ", out.getAll())
             return out;

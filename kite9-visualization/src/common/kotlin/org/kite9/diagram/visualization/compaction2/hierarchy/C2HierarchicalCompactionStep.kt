@@ -32,22 +32,22 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             var hm : RoutableSlideableSet? = null
 
             when(layout) {
-                Layout.DOWN -> {
+                Layout.RIGHT -> {
                     separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
                     vm = va.merge(vb, slackOptimisationV)
                     hm = ha.mergeWithAxis(hb, slackOptimisationH)
                 }
-                Layout.UP -> {
+                Layout.LEFT -> {
                     separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
                     vm = va.merge(vb, slackOptimisationV)
                     hm = hb.mergeWithAxis(ha, slackOptimisationH)
                 }
-                Layout.RIGHT -> {
+                Layout.DOWN -> {
                     separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
                     vm = va.mergeWithAxis(vb, slackOptimisationV)
                     hm = hb.merge(ha, slackOptimisationH)
                 }
-                Layout.LEFT -> {
+                Layout.UP -> {
                     separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
                     vm = vb.mergeWithAxis(va, slackOptimisationV)
                     hm = hb.merge(ha, slackOptimisationH)
@@ -66,9 +66,9 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
     }
 
     private fun separateRectangular(
-        a: RectangularSlideableSet,
+        a: RoutableSlideableSet,
         aSide: Side,
-        b: RectangularSlideableSet,
+        b: RoutableSlideableSet,
         bSide: Side,
         cso: C2SlackOptimisation,
         d: Dimension

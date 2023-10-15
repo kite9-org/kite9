@@ -34,10 +34,10 @@ class C2MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractC2SizingCompacti
 
     private fun maximizeDistance(ss: SlideableSet?) {
         if (ss is RectangularSlideableSet) {
-            val start = ss.getRectangularsOnSide(Side.START)
-            val end = ss.getRectangularsOnSide(Side.END)
-            end.forEach { it.minimumPosition = it.maximumPosition!! }
-            start.forEach { it.maximumPosition = it.minimumPosition }
+            val start = ss.getRectangularOnSide(Side.START)
+            val end = ss.getRectangularOnSide(Side.END)
+            end.minimumPosition = end.maximumPosition!!
+            start.maximumPosition = start.minimumPosition
         }
     }
 
