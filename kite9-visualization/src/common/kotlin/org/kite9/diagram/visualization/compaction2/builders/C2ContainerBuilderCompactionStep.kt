@@ -78,7 +78,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
                 val distL = getMinimumDistanceBetween(de, Side.START, k, Side.START, d, null, true)
                 val distR = getMinimumDistanceBetween(de, Side.END, k, Side.END, d, null, true)
                 separateRectangular(container, Side.START, v!!, Side.START, cso, distL)
-                separateRectangular(container, Side.END, v!!, Side.END, cso, distL)
+                separateRectangular(v!!, Side.END, container, Side.END, cso, distR)
             }
 
         // ensure internal ordering
