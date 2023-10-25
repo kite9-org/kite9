@@ -53,7 +53,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
                     hm = hb.merge(ha, slackOptimisationH)
                 }
                 else -> {
-                    throw LogicException("Can't deal with this yet")
+                    vm = va.merge(vb, slackOptimisationV)
+                    hm = hb.merge(ha, slackOptimisationH)
                 }
             }
 

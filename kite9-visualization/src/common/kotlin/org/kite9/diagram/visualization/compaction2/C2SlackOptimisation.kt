@@ -10,98 +10,113 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
-interface SlideableSet {
+interface SlideableSet<X : SlideableSet<X>> {
 
-    fun getAll() : Collection<C2Slideable>
+    fun getAll() : Set<C2Slideable>
 
-    fun replace(s: C2Slideable, with: C2Slideable) : SlideableSet
+    fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable) : X
+
+    fun replace(s: C2BufferSlideable, with: C2BufferSlideable) : X
+
+    fun replaceGeneric(s: C2Slideable, with: C2Slideable) : X {
+        return if ((s is C2RectangularSlideable) && (with is C2RectangularSlideable)) {
+            replace(s, with)
+        } else if ((s is C2BufferSlideable) && (with is C2BufferSlideable)) {
+            replace(s, with)
+        } else {
+            throw LogicException("Can only replace slideable with same type $s $with")
+        }
+    }
 }
-interface RectangularSlideableSet : SlideableSet {
+interface RectangularSlideableSet : SlideableSet<RectangularSlideableSet> {
 
     val d: Rectangular
-    val l: C2Slideable
-    val r: C2Slideable
-    val c: C2Slideable
+    val l: C2RectangularSlideable
+    val r: C2RectangularSlideable
+    val c: C2BufferSlideable
 
-    fun getRectangularSlideables(): Collection<C2Slideable>
+    fun getRectangularSlideables(): Collection<C2RectangularSlideable>
 
-    fun getRectangularOnSide(s: Side) : C2Slideable = getRectangularSlideables()
+    fun getRectangularOnSide(s: Side) : C2RectangularSlideable = getRectangularSlideables()
         .first { rs ->  rs.anchors.firstOrNull { (it.s == s) && (it.e == d) } != null }
-
-    override fun replace(s: C2Slideable, with: C2Slideable) : RectangularSlideableSet
 
 }
 
-interface RoutableSlideableSet : SlideableSet {
+interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
-    val c: C2Slideable?
-    val bl: C2Slideable
-    val br: C2Slideable
+    val c: C2BufferSlideable?
+    val bl: C2BufferSlideable
+    val br: C2BufferSlideable
 
-    fun merge(after: SlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
+    fun merge(after: SlideableSet<*>, c2: C2SlackOptimisation) : RoutableSlideableSet
 
-    fun mergeWithAxis(after: SlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
+    fun mergeWithAxis(after: SlideableSet<*>, c2: C2SlackOptimisation) : RoutableSlideableSet
 
-    fun getBufferSlideables() : Collection<C2Slideable>
+    fun getBufferSlideables() : Set<C2BufferSlideable>
 
-    fun getRectangularSlideableSets() : Collection<RectangularSlideableSet>
+    fun getRectangularSlideableSets() : Set<RectangularSlideableSet>
 
-    fun getRectangularsOnSide(s: Side) : Collection<C2Slideable> = getRectangularSlideableSets()
+    fun getRectangularsOnSide(s: Side) : Collection<C2RectangularSlideable> = getRectangularSlideableSets()
         .map { it.getRectangularOnSide(s) }
+
 }
 
 data class RectangularSlideableSetImpl(
     override val d: Rectangular,
-    override val l: C2Slideable,
-    override val r: C2Slideable,
-    override val c: C2Slideable) : RectangularSlideableSet {
+    override val l: C2RectangularSlideable,
+    override val r: C2RectangularSlideable,
+    override val c: C2BufferSlideable) : RectangularSlideableSet {
 
-//    override fun merge(ss: SlideableSet, c2: C2SlackOptimisation): SlideableSet {
-//        val newAll = setOf(all, ss.getAll()).flatten()
-//        return RectangularSlideableSetImpl(newAll)
-//    }
-
-    override fun replace(s: C2Slideable, with: C2Slideable): RectangularSlideableSet {
+    override fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable): RectangularSlideableSet {
         return RectangularSlideableSetImpl(
             d,
             if (l == s) with else l,
             if (r == s) with else r,
+            c
+        )
+    }
+
+    override fun replace(s: C2BufferSlideable, with: C2BufferSlideable): RectangularSlideableSet {
+        return RectangularSlideableSetImpl(
+            d,
+            l,
+            r,
             if (c == s) with else c
         )
     }
 
-    override fun getRectangularSlideables(): Collection<C2Slideable> {
+    override fun getRectangularSlideables(): Collection<C2RectangularSlideable> {
+        return setOf(l, r)
+    }
+
+    override fun getAll(): Set<C2Slideable> {
         return setOf(l, r, c)
     }
 
-    override fun getAll(): Collection<C2Slideable> {
-        return getRectangularSlideables()
-    }
-
     companion object {
-        fun <X> replaceIfPresent(s: Collection<X>, o: X, n: X): Collection<X> {
-            if (s.contains(o)) {
-                return s.minus(o).plus(n)
+        fun <X> replaceIfPresent(s: Set<X>, o: X, n: X): Set<X> {
+            return if (s.contains(o)) {
+                s.minus(o).plus(n)
             } else {
-                return s
+                s
             }
         }
     }
 }
 
 
-data class RoutableSlideableSetImpl(val rs: Collection<RectangularSlideableSet>,
-                                    val bs: Collection<C2Slideable>,
-                                    override val c: C2Slideable?,
-                                    override val bl: C2Slideable,
-                                    override val br: C2Slideable,
+data class RoutableSlideableSetImpl(val rs: Set<RectangularSlideableSet>,
+                                    val bs: Set<C2BufferSlideable>,
+                                    override val c: C2BufferSlideable?,
+                                    override val bl: C2BufferSlideable,
+                                    override val br: C2BufferSlideable,
 
     ) : RoutableSlideableSet {
 
-    override fun merge(after: SlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+    override fun merge(after: SlideableSet<*>, c2: C2SlackOptimisation): RoutableSlideableSet {
         return if (after is RoutableSlideableSet) {
-            val allRs = setOf(rs, after.getRectangularSlideableSets()).flatten()
-            val allBs = setOf(bs, after.getBufferSlideables()).flatten()
+            val allRs = setOf(rs, after.getRectangularSlideableSets()).flatten().toSet()
+            val allBs = setOf(bs, after.getBufferSlideables()).flatten().toSet()
             val newC = c2.mergeSlideables(br, after.bl)
             RoutableSlideableSetImpl(allRs, allBs, newC, bl, after.br)
         } else if (after is RectangularSlideableSet) {
@@ -112,12 +127,12 @@ data class RoutableSlideableSetImpl(val rs: Collection<RectangularSlideableSet>,
         }
     }
 
-    override fun mergeWithAxis(ss: SlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+    override fun mergeWithAxis(ss: SlideableSet<*>, c2: C2SlackOptimisation): RoutableSlideableSet {
         return if (ss is RoutableSlideableSet) {
-            val allRs = setOf(rs, ss.getRectangularSlideableSets()).flatten()
-            val allBs = setOf(bs, ss.getBufferSlideables()).flatten()
+            val allRs = setOf(rs, ss.getRectangularSlideableSets()).flatten().toSet()
+            val allBs = setOf(bs, ss.getBufferSlideables()).flatten().toSet()
             val newL = c2.mergeSlideables(ss.bl, bl)
-            val newR = c2.mergeSlideables(ss.br,br)
+            val newR = c2.mergeSlideables(ss.br, br)
             val newC = c2.mergeSlideables(ss.c, c)
             RoutableSlideableSetImpl(allRs, allBs, newC, newL, newR)
         } else if (ss is RectangularSlideableSet) {
@@ -129,21 +144,30 @@ data class RoutableSlideableSetImpl(val rs: Collection<RectangularSlideableSet>,
         }
     }
 
-    override fun getBufferSlideables(): Collection<C2Slideable> {
+    override fun getBufferSlideables(): Set<C2BufferSlideable> {
         return bs
     }
 
-    override fun getRectangularSlideableSets(): Collection<RectangularSlideableSet> {
+    override fun getRectangularSlideableSets(): Set<RectangularSlideableSet> {
         return rs
     }
 
-    override fun getAll(): Collection<C2Slideable> {
-        return rs.flatMap { it.getRectangularSlideables() }.plus(bs)
+    override fun getAll(): Set<C2Slideable> {
+        return rs.flatMap { it.getRectangularSlideables() }.plus(bs).toSet()
     }
 
-    override fun replace(s: C2Slideable, with: C2Slideable): RoutableSlideableSetImpl {
+    override fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable): RoutableSlideableSetImpl {
         return RoutableSlideableSetImpl(
-            rs.map { it.replace(s, with) },
+            rs.map { k -> k.replace(s, with) }.toSet(),
+            bs,
+            c,
+            bl,
+            br)
+    }
+
+    override fun replace(s: C2BufferSlideable, with: C2BufferSlideable): RoutableSlideableSetImpl {
+        return RoutableSlideableSetImpl(
+            rs,
             RectangularSlideableSetImpl.replaceIfPresent(bs, s, with),
             if (c == s) with else c,
             if (bl == s)with else bl,
@@ -159,8 +183,8 @@ data class RoutableSlideableSetImpl(val rs: Collection<RectangularSlideableSet>,
  */
 class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimisation(), Logable {
     private val elementMap: MutableMap<DiagramElement, RectangularSlideableSet> = HashMap()
-    private val groupMap: MutableMap<Group, RoutableSlideableSet> = HashMap()
-    private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet>> = HashMap()
+    private val groupMap: MutableMap<Group, SlideableSet<*>> = HashMap()
+    private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
 
     private fun isRectangular(underlying: DiagramElement): Boolean {
         return underlying is Rectangular
@@ -178,20 +202,20 @@ class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimi
         return elementMap.keys
     }
 
-    fun getSlideablesFor(de: DiagramElement): SlideableSet? {
+    fun getSlideablesFor(de: DiagramElement): RectangularSlideableSet? {
         return elementMap[de]
     }
 
-    fun getSlideablesFor(group: Group) : SlideableSet? {
+    fun getSlideablesFor(group: Group) : SlideableSet<*>? {
         return groupMap[group]
     }
 
-    fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable {
+    fun mergeSlideables(s1: C2BufferSlideable?, s2: C2BufferSlideable?) : C2BufferSlideable {
         if (s1 == null) {
-            return s2!!;
+            return s2!!
         } else if (s2 == null) {
-            return s1;
-        } else if (s1.purpose == s2.purpose) {
+            return s1
+        } else {
             val sNew = s1.merge(s2)
             // now we need to replace s1 and s2 in their containers
             val containsS1 = slideableMap.remove(s1)
@@ -207,18 +231,40 @@ class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimi
             log.send("Merging: \n\t$s1\n\t$s2\nAdded: $sNew")
 
             return sNew
+        }
+    }
+
+    fun mergeSlideables(s1: C2RectangularSlideable?, s2: C2RectangularSlideable?) : C2RectangularSlideable {
+        if (s1 == null) {
+            return s2!!
+        } else if (s2 == null) {
+            return s1
         } else {
-            throw LogicException("Can't merge slideables $s1 $s2")
+            val sNew = s1.merge(s2)
+            // now we need to replace s1 and s2 in their containers
+            val containsS1 = slideableMap.remove(s1)
+            val containsS2 = slideableMap.remove(s2)
+
+            updateMaps(containsS1, s1, sNew)
+            updateMaps(containsS2, s2, sNew)
+
+            slideables.add(sNew)
+            slideables.remove(s1)
+            slideables.remove(s2)
+
+            log.send("Merging: \n\t$s1\n\t$s2\nAdded: $sNew")
+
+            return sNew
         }
     }
 
     private fun updateMaps(
-        contains: MutableSet<SlideableSet>?,
+        contains: MutableSet<SlideableSet<*>>?,
         sOld: C2Slideable,
         sNew: C2Slideable
     ) {
         contains?.forEach {
-            val ssNew = it.replace(sOld, sNew)
+            val ssNew : SlideableSet<*> = it.replaceGeneric(sOld, sNew)
             updateSlideableMap(ssNew)
 
             val toReplaceDiagramElements = elementMap.filter { (_, v) -> v == it }.keys
@@ -235,7 +281,7 @@ class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimi
         updateSlideableMap(ss)
     }
 
-    private fun updateSlideableMap(ss: SlideableSet) {
+    private fun updateSlideableMap(ss: SlideableSet<*>) {
         ss.getAll().forEach {
             val set = slideableMap.getOrElse(it) { mutableSetOf() }
             set.add(ss)
@@ -244,8 +290,8 @@ class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimi
         }
     }
 
-    fun add(g: Group, ss: RoutableSlideableSet) {
-        groupMap[g] = ss;
+    fun add(g: Group, ss: SlideableSet<*>) {
+        groupMap[g] = ss
         updateSlideableMap(ss)
     }
 
@@ -260,7 +306,7 @@ class C2SlackOptimisation(private val theDiagram: Diagram) : AbstractSlackOptimi
 
         groupMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
 
-         slideables.flatMap { it.getForwardSlideables(true) }
+        slideables.flatMap { it.getForwardSlideables(true) }
             .forEach { checkValid(it as C2Slideable, "*") }
 
         slideables.flatMap { it.getForwardSlideables(false) }

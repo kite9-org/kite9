@@ -1,14 +1,15 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.*
+import org.kite9.diagram.model.ConnectedRectangular
+import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 /**
  * This turns the diagram's hierarchical structure of DiagramElement's into C2Slideables.
@@ -32,22 +33,22 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         de: DiagramElement,
         d: Dimension,
         cso: C2SlackOptimisation,
-        cExisting: C2Slideable?
+        cExisting: C2BufferSlideable?
     ): RectangularSlideableSet? {
         log.send("Creating $de")
         if (de !is Rectangular) {
             return null
         }
 
-        var ss = cso.getSlideablesFor(de) as RectangularSlideableSet?
+        var ss = cso.getSlideablesFor(de)
 
         if (ss == null) {
             // we need to create these then
             val ms = getMinimumDistanceBetween(de, Side.START, de, Side.END, d, null, false)
 
-            val l = C2Slideable(cso, d, Purpose.EDGE, de, Side.START)
-            val r = C2Slideable(cso, d, Purpose.EDGE, de, Side.END)
-            val c = cExisting ?: C2Slideable(cso, d, Purpose.ROUTE, de, Side.NEITHER)
+            val l = C2RectangularSlideable(cso, d, de, Side.START)
+            val r = C2RectangularSlideable(cso, d, de, Side.END)
+            val c = cExisting ?: C2BufferSlideable(cso, d)
 
             // TODO: Add logic for line centering here.
             cso.ensureMinimumDistance(l, r, ms.toInt())
@@ -78,37 +79,24 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         val contents = de.getContents()
             .filterIsInstance<ConnectedRectangular>()
 
-        val anchors = contents.map { Anchor(it, Side.NEITHER) }.toSet()
-
         val centerLine = when (l) {
-            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.V) C2Slideable(
+            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.V) C2BufferSlideable(
                 cso,
                 d,
-                Purpose.ROUTE,
-                anchors
             ) else null
 
-            Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.H) C2Slideable(
+            Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.H) C2BufferSlideable(
                 cso,
                 d,
-                Purpose.ROUTE,
-                anchors
             ) else null
 
             else -> null
         }
 
-        val contentMap = contents
-            .map { it to checkCreate(it, d, cso, centerLine) }
+        val contentMap = contents.map { it to checkCreate(it, d, cso, centerLine) }
 
         // ensure within container
-        contentMap
-            .forEach { (k, v) ->
-                val distL = getMinimumDistanceBetween(de, Side.START, k, Side.START, d, null, true)
-                val distR = getMinimumDistanceBetween(de, Side.END, k, Side.END, d, null, true)
-                separateRectangular(container, Side.START, v!!, Side.START, cso, distL)
-                separateRectangular(v!!, Side.END, container, Side.END, cso, distR)
-            }
+        contentMap.forEach { (_, v) -> embed(d, container, v, cso) }
 
         // ensure internal ordering
         when (l) {
@@ -120,6 +108,8 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
             }
         }
     }
+
+
 
     private fun setupInternalOrdering(
         orderedContents: List<Pair<Rectangular, RectangularSlideableSet?>>,
@@ -134,15 +124,6 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         }
     }
 
-    private fun separateRectangular(
-        a: RectangularSlideableSet,
-        aSide: Side,
-        b: RectangularSlideableSet,
-        bSide: Side,
-        cso: C2SlackOptimisation,
-        dist: Double
-    ) {
-        cso.ensureMinimumDistance(a.getRectangularOnSide(aSide), b.getRectangularOnSide(bSide), dist.toInt())
-    }
+
 
 }

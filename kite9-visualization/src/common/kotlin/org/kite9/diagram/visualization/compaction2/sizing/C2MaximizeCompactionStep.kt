@@ -1,15 +1,12 @@
 package org.kite9.diagram.visualization.compaction2.sizing
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
-import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.RectangularSlideableSet
-import org.kite9.diagram.visualization.compaction2.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 
 class C2MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractC2SizingCompactionStep(cd) {
@@ -32,8 +29,8 @@ class C2MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractC2SizingCompacti
         maximizeDistance(ss)
     }
 
-    private fun maximizeDistance(ss: SlideableSet?) {
-        if (ss is RectangularSlideableSet) {
+    private fun maximizeDistance(ss: RectangularSlideableSet?) {
+        if (ss != null) {
             val start = ss.getRectangularOnSide(Side.START)
             val end = ss.getRectangularOnSide(Side.END)
             end.minimumPosition = end.maximumPosition!!
@@ -41,7 +38,7 @@ class C2MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractC2SizingCompacti
         }
     }
 
-    override val prefix: String?
+    override val prefix: String
         get() = "MAXS"
 
 }

@@ -9,10 +9,7 @@ import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.VerticalAlignment
-import org.kite9.diagram.visualization.compaction2.C2Compaction
-import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
-import org.kite9.diagram.visualization.compaction2.C2Slideable
-import org.kite9.diagram.visualization.compaction2.RectangularSlideableSet
+import org.kite9.diagram.visualization.compaction2.*
 
 /**
  * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right wants to align left)
@@ -35,7 +32,7 @@ class C2LeftRightAligner : Aligner {
         }
     }
 
-    private fun getAlignStyle(sl: C2Slideable, d: Dimension) : AlignStyle? {
+    private fun getAlignStyle(sl: C2RectangularSlideable, d: Dimension) : AlignStyle? {
         return sl.anchors
             .asSequence()
             .map { it.e }
@@ -49,7 +46,7 @@ class C2LeftRightAligner : Aligner {
             .firstOrNull()
     }
 
-    private fun alignSegment(sl: C2Slideable, d: Dimension) {
+    private fun alignSegment(sl: C2RectangularSlideable, d: Dimension) {
         val style = getAlignStyle(sl, d)
         if (style == AlignStyle.MAX) {
             val max = sl.maximumPosition

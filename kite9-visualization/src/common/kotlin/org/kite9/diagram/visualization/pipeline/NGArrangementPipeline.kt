@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.pipeline
 
+import org.kite9.diagram.visualization.compaction2.hierarchy.C2ContainmentCompactionStep
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl
 import org.kite9.diagram.common.elements.mapping.ElementMapper
@@ -8,6 +9,7 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
+import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction2.C2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
 import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionStep
@@ -25,7 +27,10 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
 import org.kite9.diagram.visualization.planarization.rhd.layout.DirectionLayoutStrategy
 import org.kite9.diagram.visualization.planarization.rhd.layout.LayoutStrategy
@@ -33,6 +38,7 @@ import org.kite9.diagram.visualization.planarization.rhd.layout.MostNetworkedFir
 import org.kite9.diagram.visualization.planarization.rhd.links.BasicContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFactory<*>,
                             private val displayer: CompleteDisplayer) : ArrangementPipeline, Logable {
@@ -69,6 +75,26 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         val routableReader = PositionRoutableHandler2D()
         val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
         layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
+        outputGroupInfo(topGroup, 1, routableReader)
+    }
+
+    fun outputGroupInfo(g: Group, spc: Int, rr: RoutableHandler2D) {
+        val sb: StringBuilder = StringBuilder(spc)
+        for (i in 0 until spc) {
+            sb.append(" ")
+        }
+        val axis = g.axis as DirectedGroupAxis
+        val l: Layout? = g.layout
+        log.send(
+            (sb.toString() + g.groupNumber +
+                    " " + (if ((g is AbstractLeafGroup)) g.toString() else axis)
+                    + "   " + rr.getPlacedPosition(g) + "  " + l + " " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                    + (if ((g is AbstractCompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
+        )
+        if (g is AbstractCompoundGroup) {
+            outputGroupInfo(g.a, spc + 1, rr)
+            outputGroupInfo(g.b, spc + 1, rr)
+        }
     }
 
     private val elementMapper: ElementMapper
@@ -112,11 +138,12 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2ContainerBuilderCompactionStep(cd),
             C2GroupBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd),
+            C2ContainmentCompactionStep(cd, mr),
             C2MinimizeCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),
             C2LoggingOptimisationStep(cd),
             C2MaximizeCompactionStep(cd),
-            C2AlignmentCompactionStep(cd, C2LeftRightAligner(), C2CenteringAligner()),
+            C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
             C2RectangularPositionCompactionStep(cd),
         )
 

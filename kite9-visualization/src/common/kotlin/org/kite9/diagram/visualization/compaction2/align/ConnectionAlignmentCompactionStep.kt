@@ -29,15 +29,14 @@ class ConnectionAlignmentCompactionStep : CompactionStep {
 
     private fun alignSegment(sl: ElementSlideable) {
         if (sl.alignStyle === AlignStyle.MAX) {
-            val max = sl!!.maximumPosition
+            val max = sl.maximumPosition
             sl.minimumPosition = max!!
         } else if (sl.alignStyle === AlignStyle.MIN) {
-            val min = sl!!.minimumPosition
+            val min = sl.minimumPosition
             sl.maximumPosition = min
         } else {
             val balance = sl.adjoiningSegmentBalance
-            var pos = 0
-            pos = if (balance == 0) {
+            val pos = if (balance == 0) {
                 val slack = sl.maximumPosition!! - sl.minimumPosition
                 sl.minimumPosition + slack / 2
             } else if (balance < 0) {

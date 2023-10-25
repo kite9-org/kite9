@@ -40,4 +40,34 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         concave: Boolean
     ) : Double = cd.getMinimumDistanceBetween(a, toDirection(aSide, d), b, toDirection(bSide, d), toDirection(d), along, concave)
 
+    /**
+     * Makes sure that the contents are within the container, with correct spacing either side.
+     */
+    fun embed(
+        d: Dimension,
+        container: RectangularSlideableSet,
+        contents: RectangularSlideableSet?,
+        cso: C2SlackOptimisation
+    ) {
+        if (contents != null) {
+            val distL = getMinimumDistanceBetween(container.d, Side.START, contents.d, Side.START, d, null, true)
+            val distR = getMinimumDistanceBetween(container.d, Side.END, contents.d, Side.END, d, null, true)
+            separateRectangular(container, Side.START, contents, Side.START, cso, distL)
+            separateRectangular(contents, Side.END, container, Side.END, cso, distR)
+        }
+    }
+
+    /**
+     * Ensures that b is after a by a given distance
+     */
+    fun separateRectangular(
+        a: RectangularSlideableSet,
+        aSide: Side,
+        b: RectangularSlideableSet,
+        bSide: Side,
+        cso: C2SlackOptimisation,
+        dist: Double
+    ) {
+        cso.ensureMinimumDistance(a.getRectangularOnSide(aSide), b.getRectangularOnSide(bSide), dist.toInt())
+    }
 }

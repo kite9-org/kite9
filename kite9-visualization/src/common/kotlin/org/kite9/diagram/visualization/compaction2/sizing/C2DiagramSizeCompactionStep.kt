@@ -24,9 +24,7 @@ class C2DiagramSizeCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionS
 
     private fun setFor(o: C2SlackOptimisation, diagram: Diagram) {
         val set = o.getSlideablesFor(diagram);
-        val highSide = set?.getAll()
-            ?.filter { it.anchors.contains(Anchor(diagram, Side.END)) }
-            ?.firstOrNull()
+        val highSide = set?.getRectangularSlideables()?.firstOrNull { it.anchors.contains(Anchor(diagram, Side.END)) }
 
         if (highSide != null) {
             val min = highSide.minimumPosition

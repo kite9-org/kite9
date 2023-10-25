@@ -84,11 +84,11 @@ class C2MinimizeCompactionStep(cd: CompleteDisplayer?) : AbstractC2SizingCompact
         return max(leavingsOnSide(ss!!, c, Side.START), leavingsOnSide(ss!!, c, Side.END))
     }
 
-    private fun leavingsOnSide(ss: SlideableSet, c: C2Compaction, side: Side): Int {
+    private fun leavingsOnSide(ss: RectangularSlideableSet, c: C2Compaction, side: Side): Int {
         val connections = getLeavingConnections(ss, c)
         return connections.size
     }
-    fun getLeavingConnections(a2: SlideableSet, c: C2Compaction): Collection<Connection> {
+    fun getLeavingConnections(a2: RectangularSlideableSet, c: C2Compaction): Collection<Connection> {
         // TODO: Implement this
         return emptyList()
     }

@@ -1,10 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -34,30 +31,30 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
         }
     }
 
-    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: DiagramElement?, d: Dimension) : SlideableSet? {
+    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: DiagramElement?, d: Dimension) : SlideableSet<*>? {
         if (de == null) {
             return null
         }
 
-        val ss = cso.getSlideablesFor(de) as RectangularSlideableSet?
+        val ss = cso.getSlideablesFor(de)
 
         if (ss != null) {
             // we need to create these then
             val l = ss.l
             val r = ss.r
             val c = ss.c
-            val bl = C2Slideable(cso, d, Purpose.ROUTE, de, Side.START)
-            val br = C2Slideable(cso, d, Purpose.ROUTE, de, Side.END)
+            val bl = C2BufferSlideable(cso, d)
+            val br = C2BufferSlideable(cso, d)
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
 
-            val out = RoutableSlideableSetImpl(listOf(ss), listOf(bl, br, c), c, bl, br)
+            val out = RoutableSlideableSetImpl(setOf(ss), setOf(bl, br, c), c, bl, br)
             cso.add(g, out)
             log.send("Created RoutableSlideableSetImpl: ", out.getAll())
-            return out;
+            return out
 
         } else {
-            return ss;
+            return ss
         }
     }
 

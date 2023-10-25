@@ -18,6 +18,10 @@ abstract class GroupResult {
         return containerStates[c]
     }
 
+    fun containers() : Collection<Container> {
+        return containerStates.keys;
+    }
+
     inner class ContainerStateInfo(c: Container) {
 		val contents: MutableSet<Group>
 		val incompleteSubcontainers: MutableSet<Container>

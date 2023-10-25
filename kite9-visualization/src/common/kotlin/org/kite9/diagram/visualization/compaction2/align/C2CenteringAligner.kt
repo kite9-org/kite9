@@ -30,11 +30,11 @@ import kotlin.math.min
  */
 class C2CenteringAligner : Aligner, Logable {
 
-    protected var log = Kite9Log.instance(this)
+    private var log = Kite9Log.instance(this)
 
-    override fun alignFor(co: Container, des: Set<Rectangular>, c: C2Compaction, d: Dimension) {
+    override fun alignFor(co: Container, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
         val sso = c.getSlackOptimisation(d)
-        log.send("Center Align: $d", des)
+        log.send("Center Align: $d", de)
         val l = co.getLayout()
         val inLine = isHorizontal(l) == d.isHoriz()
         if (l === Layout.GRID) {
@@ -42,28 +42,28 @@ class C2CenteringAligner : Aligner, Logable {
             return
         }
 
-        val containerSlideables = sso.getSlideablesFor(co) as RectangularSlideableSet?
-        val leftSlack = minSlack(containerSlideables!!.l)
-        val rightSlack = minSlack(containerSlideables!!.r)
-        var slackToHave = min(leftSlack, rightSlack)
+        val containerSlideables = sso.getSlideablesFor(co)!!
+        val leftSlack = minSlack(containerSlideables.l)
+        val rightSlack = minSlack(containerSlideables.r)
+        val slackToHave = min(leftSlack, rightSlack)
 
         if (inLine) {
-            val matches = findRelevantSlideables(des, sso)
-            if (matches.size != des.size * 2) {
+            val matches = findRelevantSlideables(de, sso)
+            if (matches.size != de.size * 2) {
                 return
                 //throw new LogicException("Elements missing");
             }
             log.send("Slideables to Align: ", matches)
             var i = 0
-            while (i < ceil(des.size / 2.0)) {
+            while (i < ceil(de.size / 2.0)) {
                 val leftD = matches[i * 2]
                 val rightD = matches[matches.size - i * 2 - 1]
-                var slackUsed = centerSlideables(leftD, rightD, des.size - i * 2, slackToHave)
+                var slackUsed = centerSlideables(leftD, rightD, de.size - i * 2, slackToHave)
                 i++
             }
         } else {
             // do one-at-a-time
-            for (r in des) {
+            for (r in de) {
                 val ss = sso.getSlideablesFor(r) as RectangularSlideableSet
                 var slackUsed = centerSlideables(ss, ss, 1, slackToHave)
             }
