@@ -1,15 +1,14 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 /**
  * This turns the diagram's hierarchical structure of DiagramElement's into C2Slideables.
@@ -24,16 +23,23 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
     override val isLoggingEnabled: Boolean
         get() = true
 
+    var firstGroup = true;
+
     override fun compact(c: C2Compaction, g: Group) {
-        checkCreate(c.getDiagram(), Dimension.H, c.getSlackOptimisation(Dimension.H), null)
-        checkCreate(c.getDiagram(), Dimension.V, c.getSlackOptimisation(Dimension.V), null)
+        if (firstGroup) {
+            // we only need do this once for the whole group structure
+            checkCreate(c.getDiagram(), Dimension.H, c.getSlackOptimisation(Dimension.H), null, g)
+            checkCreate(c.getDiagram(), Dimension.V, c.getSlackOptimisation(Dimension.V), null, g)
+            firstGroup = false
+        }
     }
 
     private fun checkCreate(
         de: DiagramElement,
         d: Dimension,
         cso: C2SlackOptimisation,
-        cExisting: C2BufferSlideable?
+        cExisting: C2BufferSlideable?,
+        topGroup: Group
     ): RectangularSlideableSet? {
         log.send("Creating $de")
         if (de !is Rectangular) {
@@ -60,7 +66,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         }
 
         if (de is Container) {
-            checkCreateItems(cso, de, d, de.getLayout(), ss)
+            checkCreateItems(cso, de, d, de.getLayout(), ss, topGroup)
         }
 
         log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
@@ -73,7 +79,8 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         de: Container,
         d: Dimension,
         l: Layout?,
-        container: RectangularSlideableSet
+        container: RectangularSlideableSet,
+        topGroup: Group
     ) {
 
         val contents = de.getContents()
@@ -93,23 +100,44 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
             else -> null
         }
 
-        val contentMap = contents.map { it to checkCreate(it, d, cso, centerLine) }
+        val contentMap = contents.map { it to checkCreate(it, d, cso, centerLine, topGroup) }
 
         // ensure within container
         contentMap.forEach { (_, v) -> embed(d, container, v, cso) }
 
         // ensure internal ordering
-        when (l) {
-            Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.H) setupInternalOrdering(contentMap, d, cso)
-            Layout.LEFT -> if (d == Dimension.H) setupInternalOrdering(contentMap.reversed(), d, cso)
-            Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) setupInternalOrdering(contentMap, d, cso)
-            Layout.UP -> if (d == Dimension.V) setupInternalOrdering(contentMap.reversed(), d, cso)
-            else -> { /* do nothing */
+        if (!usingGroups(contents, topGroup)) {
+            when (l) {
+                Layout.RIGHT, Layout.HORIZONTAL, null -> if (d == Dimension.H) setupInternalOrdering(contentMap, d, cso)
+                Layout.LEFT -> if (d == Dimension.H) setupInternalOrdering(contentMap.reversed(), d, cso)
+                Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) setupInternalOrdering(contentMap, d, cso)
+                Layout.UP -> if (d == Dimension.V) setupInternalOrdering(contentMap.reversed(), d, cso)
+                Layout.GRID -> {
+                    // grid, don't handle this yet
+                }
             }
+        } else {
+            log.send("Using groups: $de")
         }
     }
 
+    /**
+     * Either content are laid out using the Group process, or they aren't connected so we need
+     * to just follow layout.
+     */
+    private fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group) : Boolean {
+        return contents.map { hasGroup(it, topGroup) }.reduceRight {  a, b -> a || b };
+    }
 
+    private fun hasGroup(item: Connected, group: Group) : Boolean {
+        if (group is CompoundGroup) {
+            return hasGroup(item, group.a) || hasGroup(item, group.b)
+        } else if (group is LeafGroup){
+            return (group.container == item) || (group.connected == item);
+        } else {
+            return false;
+        }
+    }
 
     private fun setupInternalOrdering(
         orderedContents: List<Pair<Rectangular, RectangularSlideableSet?>>,

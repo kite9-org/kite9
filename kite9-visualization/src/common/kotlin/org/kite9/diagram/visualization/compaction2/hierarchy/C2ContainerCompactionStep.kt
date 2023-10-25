@@ -7,7 +7,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
-class C2ContainmentCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2CompactionStep(cd) {
+class C2ContainerCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2CompactionStep(cd) {
 
     private val containerCompletion: MutableMap<Group, MutableList<Container>> = mutableMapOf()
 
@@ -55,17 +55,10 @@ class C2ContainmentCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abstr
 
 
     init {
-        r.containers().forEach { container ->
-            val state = r.getStateFor(container)
-            state?.contents?.forEach {
-                val cc = containerCompletion.getOrPut(it) { mutableListOf() }
-                cc.add(container)
-            }
-        }
+        // for each container, figure out all the elements it contains.
+        // for each group, figure out all the elements it contains.
+        // work out the lowest group that has all the elements of a container
 
-        // ensure outer containers are handled later
-        containerCompletion.values.forEach { c ->
-            c.sortBy { -it.getDepth() }
-        }
+
     }
 }
