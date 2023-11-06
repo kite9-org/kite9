@@ -191,4 +191,15 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		renderDiagram(d);
 	}
 
+	@Test
+	public void test_4_8_HierarchicalContainersWithLink() throws Exception {
+		Glyph one = new Glyph("Stereo", "one", null, null);
+		Glyph two = new Glyph("Stereo", "two", null, null);
+		Context con1 = new Context("b1", createList(one), true, null, null);
+		Context con2 = new Context("b2", createList(two), true, null, null);
+		Context con3 = new Context("b3", createList(con1, con2), true, null, null);
+		new Link(one, two);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con3), null);
+		renderDiagram(d);
+	}
 }

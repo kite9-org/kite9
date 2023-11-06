@@ -34,15 +34,16 @@ class C2CenteringAligner : Aligner, Logable {
 
     override fun alignFor(co: Container, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
         val sso = c.getSlackOptimisation(d)
-        log.send("Center Align: $d", de)
+        log.send("Center Align: $d $co", de)
         val l = co.getLayout()
         val inLine = isHorizontal(l) == d.isHoriz()
         if (l === Layout.GRID) {
             // you can't centre anything on a grid, since cells use all the space in the grid.
             return
         }
-
+        
         val containerSlideables = sso.getSlideablesFor(co)!!
+
         val leftSlack = minSlack(containerSlideables.l)
         val rightSlack = minSlack(containerSlideables.r)
         val slackToHave = min(leftSlack, rightSlack)
@@ -61,12 +62,9 @@ class C2CenteringAligner : Aligner, Logable {
                 var slackUsed = centerSlideables(leftD, rightD, de.size - i * 2, slackToHave)
                 i++
             }
+
         } else {
-            // do one-at-a-time
-            for (r in de) {
-                val ss = sso.getSlideablesFor(r) as RectangularSlideableSet
-                var slackUsed = centerSlideables(ss, ss, 1, slackToHave)
-            }
+            // throw LogicException("Was expecting rectangular")
         }
     }
 

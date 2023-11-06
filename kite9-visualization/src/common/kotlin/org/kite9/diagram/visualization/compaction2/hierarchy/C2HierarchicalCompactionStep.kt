@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
@@ -10,7 +9,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
-class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
+class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd, r) {
     override fun compact(c: C2Compaction, g: Group) {
         if (g is CompoundGroup) {
             compact(c, g.a)
@@ -23,10 +22,10 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
             val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
 
-            val ha = slackOptimisationH.getSlideablesFor(a) as RoutableSlideableSet
-            val va = slackOptimisationV.getSlideablesFor(a) as RoutableSlideableSet
-            val hb = slackOptimisationH.getSlideablesFor(b) as RoutableSlideableSet
-            val vb = slackOptimisationV.getSlideablesFor(b) as RoutableSlideableSet
+            val ha = slackOptimisationH.getSlideablesFor(a)!!
+            val va = slackOptimisationV.getSlideablesFor(a)!!
+            val hb = slackOptimisationH.getSlideablesFor(b)!!
+            val vb = slackOptimisationV.getSlideablesFor(b)!!
 
             var vm : RoutableSlideableSet? = null
             var hm : RoutableSlideableSet? = null
@@ -34,27 +33,27 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             when(layout) {
                 Layout.RIGHT -> {
                     separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
-                    vm = va.merge(vb, slackOptimisationV)
-                    hm = ha.mergeWithAxis(hb, slackOptimisationH)
+                    vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                    hm = ha.mergeWithGutter(hb, slackOptimisationH)
                 }
                 Layout.LEFT -> {
                     separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
-                    vm = va.merge(vb, slackOptimisationV)
-                    hm = hb.mergeWithAxis(ha, slackOptimisationH)
+                    vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                    hm = hb.mergeWithGutter(ha, slackOptimisationH)
                 }
                 Layout.DOWN -> {
                     separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
-                    vm = va.mergeWithAxis(vb, slackOptimisationV)
-                    hm = hb.merge(ha, slackOptimisationH)
+                    vm = va.mergeWithGutter(vb, slackOptimisationV)
+                    hm = hb.mergeWithOverlap(ha, slackOptimisationH)
                 }
                 Layout.UP -> {
                     separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
-                    vm = vb.mergeWithAxis(va, slackOptimisationV)
-                    hm = hb.merge(ha, slackOptimisationH)
+                    vm = vb.mergeWithGutter(va, slackOptimisationV)
+                    hm = hb.mergeWithOverlap(ha, slackOptimisationH)
                 }
                 else -> {
-                    vm = va.merge(vb, slackOptimisationV)
-                    hm = hb.merge(ha, slackOptimisationH)
+                    vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                    hm = hb.mergeWithOverlap(ha, slackOptimisationH)
                 }
             }
 
@@ -64,12 +63,14 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             slackOptimisationH.checkConsistency()
             slackOptimisationV.checkConsistency()
         }
+
+        super.compact(c, g)
     }
 
     private fun separateRectangular(
-        a: RoutableSlideableSet,
+        a: SlideableSet<*>,
         aSide: Side,
-        b: RoutableSlideableSet,
+        b: SlideableSet<*>,
         bSide: Side,
         cso: C2SlackOptimisation,
         d: Dimension

@@ -4,10 +4,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
-import org.kite9.diagram.visualization.compaction2.Anchor
-import org.kite9.diagram.visualization.compaction2.C2Compaction
-import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
@@ -23,7 +20,7 @@ class C2DiagramSizeCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionS
     }
 
     private fun setFor(o: C2SlackOptimisation, diagram: Diagram) {
-        val set = o.getSlideablesFor(diagram);
+        val set = o.getSlideablesFor(diagram)
         val highSide = set?.getRectangularSlideables()?.firstOrNull { it.anchors.contains(Anchor(diagram, Side.END)) }
 
         if (highSide != null) {

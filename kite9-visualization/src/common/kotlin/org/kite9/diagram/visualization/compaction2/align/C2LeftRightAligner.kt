@@ -25,7 +25,7 @@ class C2LeftRightAligner : Aligner {
     }
 
     private fun alignRectangular(de: Rectangular, sso: C2SlackOptimisation, d: Dimension) {
-        val oss = sso.getSlideablesFor(de) as RectangularSlideableSet?
+        val oss = sso.getSlideablesFor(de)
         if (oss != null) {
             alignSegment(oss.l, d)
             alignSegment(oss.r, d)
@@ -41,7 +41,6 @@ class C2LeftRightAligner : Aligner {
             .map { des -> when (des) {
                 DiagramElementSizing.MAXIMIZE -> AlignStyle.MAX
                 DiagramElementSizing.MINIMIZE -> AlignStyle.MIN
-                else -> AlignStyle.MIN
             } }
             .firstOrNull()
     }

@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -46,14 +47,25 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
     fun embed(
         d: Dimension,
         container: RectangularSlideableSet,
-        contents: RectangularSlideableSet?,
+        contents: SlideableSet<*>?,
         cso: C2SlackOptimisation
     ) {
         if (contents != null) {
-            val distL = getMinimumDistanceBetween(container.d, Side.START, contents.d, Side.START, d, null, true)
-            val distR = getMinimumDistanceBetween(container.d, Side.END, contents.d, Side.END, d, null, true)
-            separateRectangular(container, Side.START, contents, Side.START, cso, distL)
-            separateRectangular(contents, Side.END, container, Side.END, cso, distR)
+            if (contents is RectangularSlideableSet) {
+                val distL = getMinimumDistanceBetween(container.d, Side.START, contents.d, Side.START, d, null, true)
+                val distR = getMinimumDistanceBetween(container.d, Side.END, contents.d, Side.END, d, null, true)
+                separateRectangular(container, Side.START, contents, Side.START, cso, distL)
+                separateRectangular(contents, Side.END, container, Side.END, cso, distR)
+            } else if (contents is RoutableSlideableSet) {
+                val leftC = container.getRectangularOnSide(Side.START)
+                val rightC = container.getRectangularOnSide(Side.END)
+                val leftI = contents.bl
+                val rightI = contents.br
+                cso.ensureMinimumDistance(leftC, leftI, 0);
+                cso.ensureMinimumDistance(rightI, rightC, 0);
+            } else {
+                throw LogicException("Unknown type")
+            }
         }
     }
 
@@ -61,13 +73,19 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
      * Ensures that b is after a by a given distance
      */
     fun separateRectangular(
-        a: RectangularSlideableSet,
+        a: SlideableSet<*>,
         aSide: Side,
-        b: RectangularSlideableSet,
+        b: SlideableSet<*>,
         bSide: Side,
         cso: C2SlackOptimisation,
         dist: Double
     ) {
-        cso.ensureMinimumDistance(a.getRectangularOnSide(aSide), b.getRectangularOnSide(bSide), dist.toInt())
+        val set1 = a.getRectangularsOnSide(aSide)
+        val set2 = b.getRectangularsOnSide(bSide)
+        set1.forEach { l ->
+            set2.forEach { r ->  cso.ensureMinimumDistance(l, r, dist.toInt())}
+        }
+
+
     }
 }
