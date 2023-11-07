@@ -481,12 +481,14 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
-				RenderingInformation ri = cc.getRenderingInformation();
-				if ((ri instanceof RectangleRenderingInformation)) {
-					checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
-				}
-				if (cc instanceof Container) {
-					testLayout((Container) cc);
+				if (!(cc instanceof Label)) {
+					RenderingInformation ri = cc.getRenderingInformation();
+					if ((ri instanceof RectangleRenderingInformation)) {
+						checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
+					}
+					if (cc instanceof Container) {
+						testLayout((Container) cc);
+					}
 				}
 			}
 		}

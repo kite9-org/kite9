@@ -19,52 +19,78 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             val b = g.b
             val layout = g.layout
 
-            val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
-            val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
 
-            val ha = slackOptimisationH.getSlideablesFor(a)!!
-            val va = slackOptimisationV.getSlideablesFor(a)!!
-            val hb = slackOptimisationH.getSlideablesFor(b)!!
-            val vb = slackOptimisationV.getSlideablesFor(b)!!
+            if (horizontalAxis(g)) {
+                val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
+                val ha = slackOptimisationH.getSlideablesFor(a)!!
+                val hb = slackOptimisationH.getSlideablesFor(b)!!
+                var hm : RoutableSlideableSet? = null
 
-            var vm : RoutableSlideableSet? = null
-            var hm : RoutableSlideableSet? = null
 
-            when(layout) {
-                Layout.RIGHT -> {
-                    separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
-                    vm = va.mergeWithOverlap(vb, slackOptimisationV)
-                    hm = ha.mergeWithGutter(hb, slackOptimisationH)
+                when(layout) {
+                    Layout.RIGHT -> {
+                        separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
+                        hm = ha.mergeWithGutter(hb, slackOptimisationH)
+                    }
+                    Layout.LEFT -> {
+                        separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
+                        hm = hb.mergeWithGutter(ha, slackOptimisationH)
+                    }
+                    Layout.DOWN -> {
+                        hm = hb.mergeWithOverlap(ha, slackOptimisationH)
+                    }
+                    Layout.UP -> {
+                        hm = hb.mergeWithOverlap(ha, slackOptimisationH)
+                    }
+                    else -> {
+                        hm = hb.mergeWithOverlap(ha, slackOptimisationH)
+                    }
                 }
-                Layout.LEFT -> {
-                    separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
-                    vm = va.mergeWithOverlap(vb, slackOptimisationV)
-                    hm = hb.mergeWithGutter(ha, slackOptimisationH)
-                }
-                Layout.DOWN -> {
-                    separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
-                    vm = va.mergeWithGutter(vb, slackOptimisationV)
-                    hm = hb.mergeWithOverlap(ha, slackOptimisationH)
-                }
-                Layout.UP -> {
-                    separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
-                    vm = vb.mergeWithGutter(va, slackOptimisationV)
-                    hm = hb.mergeWithOverlap(ha, slackOptimisationH)
-                }
-                else -> {
-                    vm = va.mergeWithOverlap(vb, slackOptimisationV)
-                    hm = hb.mergeWithOverlap(ha, slackOptimisationH)
-                }
+
+                slackOptimisationH.add(g, hm!!)
+                slackOptimisationH.checkConsistency()
+                completeContainers(c, g, Dimension.H)
             }
 
-            slackOptimisationH.add(g, hm)
-            slackOptimisationV.add(g, vm)
+            if (verticalAxis(g)) {
+                val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
+                val va = slackOptimisationV.getSlideablesFor(a)!!
+                val vb = slackOptimisationV.getSlideablesFor(b)!!
+                var vm : RoutableSlideableSet? = null
 
-            slackOptimisationH.checkConsistency()
-            slackOptimisationV.checkConsistency()
+                when(layout) {
+                    Layout.RIGHT -> {
+                        vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                    }
+                    Layout.LEFT -> {
+                        vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                    }
+                    Layout.DOWN -> {
+                        separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
+                        vm = va.mergeWithGutter(vb, slackOptimisationV)
+                    }
+                    Layout.UP -> {
+                        separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
+                        vm = vb.mergeWithGutter(va, slackOptimisationV)
+                    }
+                    else -> {
+                        vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                    }
+                }
+
+                slackOptimisationV.add(g, vm!!)
+                slackOptimisationV.checkConsistency()
+                completeContainers(c, g, Dimension.V)
+            }
         }
+    }
 
-        super.compact(c, g)
+    private fun horizontalAxis(g: CompoundGroup): Boolean {
+        return g.axis.isHorizontal
+    }
+
+    private fun verticalAxis(g: CompoundGroup): Boolean {
+        return g.axis.isVertical
     }
 
     private fun separateRectangular(

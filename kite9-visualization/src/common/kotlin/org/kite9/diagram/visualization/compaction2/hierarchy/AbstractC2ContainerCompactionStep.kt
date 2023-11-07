@@ -18,23 +18,18 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     private val containerCompletion: MutableMap<Group, MutableList<Container>> = mutableMapOf()
 
-    override fun compact(c: C2Compaction, g: Group) {
+    fun completeContainers(c: C2Compaction, g: Group, d: Dimension) {
         val completedContainers = containerCompletion[g]
-        val sov = c.getSlackOptimisation(Dimension.V)
-        var ssv = sov.getSlideablesFor(g)!!
-
-        val soh = c.getSlackOptimisation(Dimension.H)
-        var ssh = soh.getSlideablesFor(g)!!
+        val so = c.getSlackOptimisation(d)
+        var ss = so.getSlideablesFor(g)!!
 
         completedContainers?.forEach { container ->
-            val csv = sov.getSlideablesFor(container)!!
-            val csh = soh.getSlideablesFor(container)!!
-            ssv = embed(sov, csv, ssv, Dimension.V)
-            ssh = embed(soh, csh, ssh, Dimension.H)
+            val cs = so.getSlideablesFor(container)!!
+
+            ss = embed(so, cs, ss, d)
 
             // replace the group slideable sets so we use these instead
-            sov.add(g, ssv)
-            soh.add(g, ssh)
+            so.add(g, ss)
         }
     }
 

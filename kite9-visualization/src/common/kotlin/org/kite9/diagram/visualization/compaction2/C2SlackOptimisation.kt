@@ -146,6 +146,9 @@ data class RectangularSlideableSetImpl(
         val bl = C2BufferSlideable(c2, c.dimension)
         val br = C2BufferSlideable(c2, c.dimension)
 
+        c2.ensureMinimumDistance(bl, l, 0)
+        c2.ensureMinimumDistance(r, br, 0)
+
         return RoutableSlideableSetImpl(
             setOf(this),
             setOf(bl, c, br),

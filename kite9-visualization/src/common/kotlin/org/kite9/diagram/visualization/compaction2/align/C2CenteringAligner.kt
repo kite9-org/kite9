@@ -42,7 +42,12 @@ class C2CenteringAligner : Aligner, Logable {
             return
         }
         
-        val containerSlideables = sso.getSlideablesFor(co)!!
+        val containerSlideables = sso.getSlideablesFor(co)
+
+        if (containerSlideables == null) {
+            log.send("Was expecting something for $co")
+            return;
+        }
 
         val leftSlack = minSlack(containerSlideables.l)
         val rightSlack = minSlack(containerSlideables.r)
