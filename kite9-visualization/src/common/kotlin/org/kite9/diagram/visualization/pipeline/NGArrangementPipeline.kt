@@ -136,9 +136,12 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         // essential compaction steps
         val steps = arrayOf<C2CompactionStep>(
             C2ContainerBuilderCompactionStep(cd),
+            C2LoggingOptimisationStep(cd),
             C2GroupBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd, mr),
+            C2LoggingOptimisationStep(cd),
             C2MinimizeCompactionStep(cd),
+            C2LoggingOptimisationStep(cd),
             C2DiagramSizeCompactionStep(cd),
             C2LoggingOptimisationStep(cd),
             C2MaximizeCompactionStep(cd),

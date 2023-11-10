@@ -29,12 +29,10 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
         val ssy = c.getSlackOptimisation(Dimension.H).getSlideablesFor(r)
         val ssx = c.getSlackOptimisation(Dimension.V).getSlideablesFor(r)
         if ((ssy != null) && (ssx != null)) {
-
-
             val xMin = getSlideable(r, Side.START, ssy)!!.minimumPosition.toDouble()
-            val xMax = getSlideable(r, Side.END, ssy)!!.maximumPosition!!.toDouble()
+            val xMax = getSlideable(r, Side.END, ssy)!!.minimumPosition.toDouble()
             val yMin = getSlideable(r, Side.START, ssx)!!.minimumPosition.toDouble()
-            val yMax =  getSlideable(r, Side.END, ssx)!!.maximumPosition!!.toDouble()
+            val yMax =  getSlideable(r, Side.END, ssx)!!.minimumPosition.toDouble()
             val rri = r.getRenderingInformation()
             val position = BasicDimension2D(xMin, yMin)
             rri.position = position

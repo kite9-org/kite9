@@ -31,12 +31,14 @@ class C2LoggingOptimisationStep(cd: CompleteDisplayer) : AbstractC2CompactionSte
         log.send(
             if (log.go()) null else """Minimisation Steps: 
   HorizontalSegments: ${horizontalSegments.getSize()} 
-  Vertical Segments: ${verticalSegments.getSize()} T: ${horizontalSegments.getSize() + verticalSegments.getSize()}"""
+  Vertical Segments: ${verticalSegments.getSize()} 
+  Total: ${horizontalSegments.getSize() + verticalSegments.getSize()}"""
         )
         log.send(
             if (log.go()) null else """Push Steps: 
   Horizontal Segments: ${horizontalSegments.pushCount} 
-  Vertical Segments: ${verticalSegments.pushCount}T: ${horizontalSegments.pushCount + verticalSegments.pushCount}"""
+  Vertical Segments: ${verticalSegments.pushCount} 
+  Total: ${horizontalSegments.pushCount + verticalSegments.pushCount}"""
         )
         log.send("Horizontal Segments:", horizontalSegments.getAllSlideables())
         log.send("Vertical Segments:", verticalSegments.getAllSlideables())

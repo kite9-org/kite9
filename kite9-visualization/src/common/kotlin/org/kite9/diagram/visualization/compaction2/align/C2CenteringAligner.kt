@@ -55,21 +55,20 @@ class C2CenteringAligner : Aligner, Logable {
 
         if (inLine) {
             val matches = findRelevantSlideables(de, sso)
-            if (matches.size != de.size * 2) {
-                return
-                //throw new LogicException("Elements missing");
-            }
             log.send("Slideables to Align: ", matches)
             var i = 0
-            while (i < ceil(de.size / 2.0)) {
-                val leftD = matches[i * 2]
-                val rightD = matches[matches.size - i * 2 - 1]
-                var slackUsed = centerSlideables(leftD, rightD, de.size - i * 2, slackToHave)
+            while (i < ceil(matches.size / 2.0)) {
+                val leftD = matches[i]
+                val rightD = matches[matches.size - i - 1]
+                var slackUsed = centerSlideables(leftD, rightD, matches.size - i, slackToHave)
                 i++
             }
 
         } else {
-            // throw LogicException("Was expecting rectangular")
+            // everything centered, in a line
+            val matches = findRelevantSlideables(de, sso)
+            log.send("Slideables to Align: ", matches)
+            matches.forEach { centerSlideables(it, it, 1, slackToHave) }
         }
     }
 
