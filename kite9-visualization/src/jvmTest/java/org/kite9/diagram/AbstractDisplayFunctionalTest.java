@@ -34,17 +34,17 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			super.transcodeSVG(s);
 		} finally {
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
+			try {
+				copyTo(getOutputFile(".svg"), "svg-output");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			if (lastDiagram != null) {
 				NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
 			}
 			if (checkXML()) {
 				checkIdenticalXML();
-			}
-			try {
-				copyTo(getOutputFile(".svg"), "svg-output");
-			} catch (Exception e) {
-				e.printStackTrace();
 			}
 		}
 	}

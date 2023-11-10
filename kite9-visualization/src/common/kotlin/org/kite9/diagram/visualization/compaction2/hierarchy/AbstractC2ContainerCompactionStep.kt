@@ -16,14 +16,15 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
  */
 abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2CompactionStep(cd) {
 
-    private val containerCompletion: MutableMap<Group, MutableList<Container>> = mutableMapOf()
+    private val containerCompletionV: MutableMap<Group, MutableList<Container>> = mutableMapOf()
+    private val containerCompletionH: MutableMap<Group, MutableList<Container>> = mutableMapOf()
 
     fun completeContainers(c: C2Compaction, g: Group, d: Dimension) {
-        val completedContainers = containerCompletion[g]
+        val completedContainers = popCompletedContainers(d, g)
         val so = c.getSlackOptimisation(d)
         var ss = so.getSlideablesFor(g)!!
 
-        completedContainers?.forEach { container ->
+        completedContainers.forEach { container ->
             val cs = so.getSlideablesFor(container)!!
 
             ss = embed(so, cs, ss, d)
@@ -33,23 +34,27 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
+    private fun popCompletedContainers(d: Dimension, g: Group) : List<Container> {
+        return when (d) {
+            Dimension.H -> containerCompletionH.remove(g) ?: emptyList()
+            Dimension.V -> containerCompletionV.remove(g) ?: emptyList()
+        }
+    }
+
     private fun embed(so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension): RoutableSlideableSet {
-        embed(d, outer, inner, so)
+        when (inner) {
+            is RectangularSlideableSet -> embed(d, outer, inner, so, inner.d)
+            is RoutableSlideableSet -> {
+                // first, ensure the buffer slideables are well-separated
+                so.ensureMinimumDistance(outer.l, inner.bl,0)
+                so.ensureMinimumDistance(inner.br, outer.r, 0)
+
+                // now make sure that the rectangulars composing the routable are well-separated
+                inner.getRectangularSlideableSets().forEach { embed(d, outer, it, so, it.d) }
+            }
+        }
+
         return outer.wrapInRoutable(so)
-
-//        when (inner) {
-//            is RectangularSlideableSet -> embed(d, outer, inner, so)
-//            is RoutableSlideableSet -> {
-//                // first, ensure the buffer slideables are well-separated
-//                so.ensureMinimumDistance(outer.l, inner.bl,0)
-//                so.ensureMinimumDistance(inner.br, outer.r, 0)
-//
-//                // now make sure that the rectangulars composing the routable are well-separated
-//                inner.getRectangularSlideableSets().forEach { embed(d, outer, it, so) }
-//            }
-//        }
-
-//        return outer
     }
 
     override val prefix: String
@@ -80,9 +85,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         // we need to reverse this map so that we get groups-to-containers
         relevantContainers.mapNotNull { (c, g) ->
-            val list = containerCompletion.getOrPut(g) { mutableListOf() }
+            val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
+            val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
             if (c != null) {
-                list.add(c)
+                listV.add(c)
+                listH.add(c)
             }
         }
 

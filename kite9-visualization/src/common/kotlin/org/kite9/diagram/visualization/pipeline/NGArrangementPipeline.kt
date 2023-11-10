@@ -27,9 +27,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
 import org.kite9.diagram.visualization.planarization.rhd.layout.DirectionLayoutStrategy
@@ -85,11 +83,13 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         }
         val axis = g.axis as DirectedGroupAxis
         val l: Layout? = g.layout
+        val h = if (g.axis.isHorizontal) "h" else " "
+        val v = if (g.axis.isVertical) "v" else " "
         log.send(
             (sb.toString() + g.groupNumber +
-                    " " + (if ((g is AbstractLeafGroup)) g.toString() else axis)
-                    + "   " + rr.getPlacedPosition(g) + "  " + l + " " + (if (g.axis.isLayoutRequired) "LR " else " ")
-                    + (if ((g is AbstractCompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
+                    " " + (if ((g is LeafGroup)) g.toString() else axis)
+                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                    + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
         )
         if (g is AbstractCompoundGroup) {
             outputGroupInfo(g.a, spc + 1, rr)

@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -48,24 +49,28 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         d: Dimension,
         container: RectangularSlideableSet,
         contents: SlideableSet<*>?,
-        cso: C2SlackOptimisation
+        cso: C2SlackOptimisation,
+        e: DiagramElement
     ) {
-        if (contents != null) {
-            if (contents is RectangularSlideableSet) {
+        log.send("Embedding $e inside $container.d")
+        when (contents) {
+            is RectangularSlideableSet -> {
                 val distL = getMinimumDistanceBetween(container.d, Side.START, contents.d, Side.START, d, null, true)
                 val distR = getMinimumDistanceBetween(container.d, Side.END, contents.d, Side.END, d, null, true)
                 separateRectangular(container, Side.START, contents, Side.START, cso, distL)
                 separateRectangular(contents, Side.END, container, Side.END, cso, distR)
-            } else if (contents is RoutableSlideableSet) {
+            }
+            is RoutableSlideableSet -> {
                 val leftC = container.getRectangularOnSide(Side.START)
                 val rightC = container.getRectangularOnSide(Side.END)
                 val leftI = contents.bl
                 val rightI = contents.br
                 cso.ensureMinimumDistance(leftC, leftI, 0);
                 cso.ensureMinimumDistance(rightI, rightC, 0);
-            } else {
-                throw LogicException("Unknown type")
             }
+            null -> {
+            }
+            else -> throw LogicException("Unknown type")
         }
     }
 

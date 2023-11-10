@@ -8,6 +8,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd, r) {
     override fun compact(c: C2Compaction, g: Group) {
@@ -49,7 +50,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
                 slackOptimisationH.add(g, hm!!)
                 slackOptimisationH.checkConsistency()
-                completeContainers(c, g, Dimension.H)
             }
 
             if (verticalAxis(g)) {
@@ -80,17 +80,25 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
                 slackOptimisationV.add(g, vm!!)
                 slackOptimisationV.checkConsistency()
-                completeContainers(c, g, Dimension.V)
             }
+        }
+
+
+        if (horizontalAxis(g) || (g is LeafGroup)) {
+            completeContainers(c, g, Dimension.H)
+        }
+
+        if (verticalAxis(g) || (g is LeafGroup)) {
+            completeContainers(c, g, Dimension.V)
         }
     }
 
-    private fun horizontalAxis(g: CompoundGroup): Boolean {
-        return g.axis.isHorizontal
+    private fun horizontalAxis(g: Group): Boolean {
+        return g.axis.isHorizontal && g.axis.isLayoutRequired
     }
 
-    private fun verticalAxis(g: CompoundGroup): Boolean {
-        return g.axis.isVertical
+    private fun verticalAxis(g: Group): Boolean {
+        return g.axis.isVertical && g.axis.isLayoutRequired
     }
 
     private fun separateRectangular(

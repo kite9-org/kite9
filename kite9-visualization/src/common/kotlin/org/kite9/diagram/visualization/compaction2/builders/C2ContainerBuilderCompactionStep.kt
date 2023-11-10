@@ -63,15 +63,15 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
 
             ss = RectangularSlideableSetImpl(de, l, r, c)
             cso.add(de, ss)
+
+            if (de is Container) {
+                checkCreateItems(cso, de, d, de.getLayout(), ss, topGroup)
+            }
+
+            log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
         }
 
-        if (de is Container) {
-            checkCreateItems(cso, de, d, de.getLayout(), ss, topGroup)
-        }
-
-        log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
         return ss
-
     }
 
     private fun checkCreateItems(
@@ -103,7 +103,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         val contentMap = contents.map { it to checkCreate(it, d, cso, centerLine, topGroup) }
 
         // ensure within container
-        contentMap.forEach { (_, v) -> embed(d, container, v, cso) }
+        contentMap.forEach { (e, v) -> embed(d, container, v, cso, e) }
 
         // ensure internal ordering
         if (!usingGroups(contents, topGroup)) {
@@ -126,7 +126,8 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
      * to just follow layout.
      */
     private fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group) : Boolean {
-        return contents.map { hasGroup(it, topGroup) }.reduceRight {  a, b -> a || b };
+        val gm = contents.map { hasGroup(it, topGroup) }
+        return gm.reduceRight {  a, b -> a && b };
     }
 
     private fun hasGroup(item: Connected, group: Group) : Boolean {
