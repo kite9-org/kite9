@@ -1,4 +1,4 @@
-package org.kite9.diagram.visualization.compaction2.position
+package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException

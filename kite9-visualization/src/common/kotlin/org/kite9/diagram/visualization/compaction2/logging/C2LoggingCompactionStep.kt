@@ -1,18 +1,13 @@
 package org.kite9.diagram.visualization.compaction2.logging
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
-import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.Compactor
-import org.kite9.diagram.visualization.compaction.Embedding
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
-class C2LoggingOptimisationStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
+class C2LoggingCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
 
     override val prefix: String
         get() = "LOPS"

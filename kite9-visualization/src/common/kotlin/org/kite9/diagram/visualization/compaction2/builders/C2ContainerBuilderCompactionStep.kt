@@ -54,14 +54,11 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
 
             val l = C2RectangularSlideable(cso, d, de, Side.START)
             val r = C2RectangularSlideable(cso, d, de, Side.END)
-            val c = cExisting ?: C2BufferSlideable(cso, d)
-
-            // TODO: Add logic for line centering here.
+            val c = cExisting ?: C2BufferSlideable(cso, d, setOf(de))
             cso.ensureMinimumDistance(l, r, ms.toInt())
-            cso.ensureMinimumDistance(l, c, (ms / 2.0).toInt())
-            cso.ensureMinimumDistance(c, r, (ms / 2.0).toInt())
 
             ss = RectangularSlideableSetImpl(de, l, r, c)
+            ensureCentreSlideablePosition(cso, ss)
             cso.add(de, ss)
 
             if (de is Container) {
@@ -90,11 +87,13 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
             Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.V) C2BufferSlideable(
                 cso,
                 d,
+                setOf(de)
             ) else null
 
             Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.H) C2BufferSlideable(
                 cso,
                 d,
+                setOf(de)
             ) else null
 
             else -> null

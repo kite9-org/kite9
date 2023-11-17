@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.pipeline
 
-import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2ContainerCompactionStep
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl
 import org.kite9.diagram.common.elements.mapping.ElementMapper
@@ -18,8 +17,10 @@ import org.kite9.diagram.visualization.compaction2.align.C2LeftRightAligner
 import org.kite9.diagram.visualization.compaction2.builders.C2ContainerBuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.builders.C2GroupBuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
-import org.kite9.diagram.visualization.compaction2.logging.C2LoggingOptimisationStep
-import org.kite9.diagram.visualization.compaction2.position.C2RectangularPositionCompactionStep
+import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
+import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositionCompactionStep
+import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionPositionCompactionStep
+import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2MaximizeCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2MinimizeCompactionStep
@@ -136,17 +137,19 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         // essential compaction steps
         val steps = arrayOf<C2CompactionStep>(
             C2ContainerBuilderCompactionStep(cd),
-            C2LoggingOptimisationStep(cd),
+            C2LoggingCompactionStep(cd),
             C2GroupBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd, mr),
-            C2LoggingOptimisationStep(cd),
+            C2LoggingCompactionStep(cd),
+            C2ConnectionRouterCompactionStep(cd, mr),
             C2MinimizeCompactionStep(cd),
-            C2LoggingOptimisationStep(cd),
+            C2LoggingCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),
-            C2LoggingOptimisationStep(cd),
+            C2LoggingCompactionStep(cd),
             C2MaximizeCompactionStep(cd),
             C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
             C2RectangularPositionCompactionStep(cd),
+            C2ConnectionPositionCompactionStep(cd)
         )
 
         return C2PluggableCompactor(steps)

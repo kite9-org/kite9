@@ -19,4 +19,16 @@ open class C2Slideable(so: SlackOptimisation, val dimension: Dimension) : Slidea
 
     }
 
+    fun routesTo(increasing: Boolean) : Map<C2Slideable, Int> {
+        return if (increasing) {
+            minimum.forward
+                .map { (k, v) -> k.owner as C2Slideable to v }
+                .toMap()
+        } else {
+            maximum.forward
+                .map { (k,v) -> k.owner as C2Slideable to v }
+                .toMap()
+        }
+    }
+
 }

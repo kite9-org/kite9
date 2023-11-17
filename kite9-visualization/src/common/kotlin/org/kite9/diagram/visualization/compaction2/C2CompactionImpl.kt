@@ -3,9 +3,11 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.vertex.Vertex
 import org.kite9.diagram.common.objects.Rectangle
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
 import org.kite9.diagram.visualization.compaction.slideable.ElementSlideable
+import org.kite9.diagram.visualization.compaction2.routing.C2Route
 import org.kite9.diagram.visualization.orthogonalization.Dart
 import org.kite9.diagram.visualization.orthogonalization.DartFace
 import org.kite9.diagram.visualization.orthogonalization.Orthogonalization
@@ -34,5 +36,12 @@ class C2CompactionImpl(
     override fun getDiagram(): Diagram {
         return diagram
     }
+
+    private val routes = mutableMapOf<Connection, C2Route>()
+
+    override fun getRoutes(): MutableMap<Connection, C2Route> {
+        return routes
+    }
+
 
 }

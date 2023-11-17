@@ -143,8 +143,8 @@ data class RectangularSlideableSetImpl(
     }
 
     override fun wrapInRoutable(c2: C2SlackOptimisation): RoutableSlideableSet {
-        val bl = C2BufferSlideable(c2, c.dimension)
-        val br = C2BufferSlideable(c2, c.dimension)
+        val bl = C2BufferSlideable(c2, c.dimension, emptySet())
+        val br = C2BufferSlideable(c2, c.dimension, emptySet())
 
         c2.ensureMinimumDistance(bl, l, 0)
         c2.ensureMinimumDistance(r, br, 0)

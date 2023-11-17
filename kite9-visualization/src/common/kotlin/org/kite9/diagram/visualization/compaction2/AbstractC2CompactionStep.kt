@@ -4,8 +4,9 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Diagram
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -90,7 +91,28 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         set1.forEach { l ->
             set2.forEach { r ->  cso.ensureMinimumDistance(l, r, dist.toInt())}
         }
+    }
 
+    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, r: Rectangular) {
+        val ss = cso.getSlideablesFor(r)
+        if (ss != null) {
+            ensureCentreSlideablePosition(cso, ss)
+        }
+    }
 
+    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet) {
+        val minDist = ss.l.minimumDistanceTo(ss.r)
+        cso.ensureMinimumDistance(ss.l, ss.c, (minDist / 2.0).toInt())
+        cso.ensureMinimumDistance(ss.c, ss.r, (minDist / 2.0).toInt())
+    }
+
+    fun visitRectangulars(r: Rectangular, f: (r: Rectangular) -> Unit) {
+        if (r is Container) {
+            r.getContents()
+                .filterIsInstance<Rectangular>()
+                .forEach { visitRectangulars(it, f) }
+        }
+
+        f(r);
     }
 }

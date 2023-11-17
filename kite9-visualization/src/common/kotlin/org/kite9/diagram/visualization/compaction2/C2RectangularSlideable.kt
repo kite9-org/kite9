@@ -3,11 +3,12 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import kotlin.math.max
 import kotlin.math.min
 
-data class Anchor(val e: DiagramElement, val s: Side)
+data class Anchor(val e: Rectangular, val s: Side)
 
 /**
  * This implementation of Slideable tracks underlying diagram
@@ -54,6 +55,6 @@ class C2RectangularSlideable(
 
     constructor(so: C2SlackOptimisation,
                 dimension: Dimension,
-                de: DiagramElement,
+                de: Rectangular,
                 side: Side) : this(so, dimension, setOf(Anchor(de, side)))
 }

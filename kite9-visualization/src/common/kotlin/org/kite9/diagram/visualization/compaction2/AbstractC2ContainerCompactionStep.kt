@@ -1,9 +1,8 @@
-package org.kite9.diagram.visualization.compaction2.hierarchy
+package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
