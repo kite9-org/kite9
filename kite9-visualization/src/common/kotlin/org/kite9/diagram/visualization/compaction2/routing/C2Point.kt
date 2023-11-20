@@ -18,4 +18,19 @@ class C2Point(a: C2Slideable, b: C2Slideable, val d: Direction) : Pair<C2Slideab
         }
     }
 
+    override fun equals(o: Any?) : Boolean {
+        return if (o is C2Point) {
+            super.equals(o) && this.d == o.d
+        } else {
+            false
+        }
+    }
+
+    override fun hashCode(): Int {
+        return super.hashCode() + d.hashCode()
+    }
+
+    override fun toString(): String {
+        return "[$a,$b $d]"
+    }
 }
