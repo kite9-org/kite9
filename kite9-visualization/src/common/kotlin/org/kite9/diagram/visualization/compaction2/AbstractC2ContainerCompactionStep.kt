@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
@@ -26,7 +27,9 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         completedContainers.forEach { container ->
             val cs = so.getSlideablesFor(container)!!
 
-            ss = embed(so, cs, ss, d)
+            if (!(container is Diagram)) {
+                ss = embed(so, cs, ss, d)
+            }
 
             // replace the group slideable sets so we use these instead
             so.add(g, ss)

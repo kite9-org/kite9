@@ -82,7 +82,7 @@ class C2SlideableSSP(
             BufferType.ORBITER -> along.orbits
         }
 
-        if (canAdvanceFrom(perp, d, common)) {
+        if (canAdvanceFrom(perp, d, common, along)) {
             val leavers = perp.routesTo(isIncreasing(d))
             leavers.forEach { (k, v) ->
                 if (canAdvanceTo(common, k)) {
@@ -98,18 +98,22 @@ class C2SlideableSSP(
         }
     }
 
-    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>): Boolean {
+    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable): Boolean {
         return when (perp) {
             is C2BufferSlideable -> true
             is C2RectangularSlideable -> {
-                val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
-                val matchingAnchors = perp.anchors
-                    .filter { common.contains(it.e) }
-                    .any { it.s == okAnchorDirection }
-                if (!matchingAnchors) {
-                    log.send("Can't move on from $perp going $d")
+                if (along.getBufferType() == BufferType.INTESECTER) {
+                    val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
+                    val matchingAnchors = perp.anchors
+                        .filter { common.contains(it.e) }
+                        .any { it.s == okAnchorDirection }
+                    if (!matchingAnchors) {
+                        log.send("Can't move on from $perp going $d")
+                    }
+                    return matchingAnchors
+                } else {
+                    return true
                 }
-                return matchingAnchors
             }
         }
     }
