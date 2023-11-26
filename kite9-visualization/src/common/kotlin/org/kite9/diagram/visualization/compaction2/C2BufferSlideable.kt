@@ -1,11 +1,8 @@
 package org.kite9.diagram.visualization.compaction2
 
-import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.visualization.compaction.Side
 import kotlin.math.max
 import kotlin.math.min
 
@@ -14,28 +11,46 @@ import kotlin.math.min
  * This implementation of Slideable is used as a buffer between diagram
  * elements in which connections can be routed.
  *
- * Tracks the connection details within it.
+ * Tracks the connection details within it. (TODO)
+ *
+ * Where <pre>intersects</pre> is set, this means the slideable cuts through the
+ * elements in <pre>orbits</pre>, forming the center line.  If this is not set, the
+ * slideable goes above or below the elements given in <pre>orbits</pre>.
  */
+
+enum class BufferType { ORBITER, INTESECTER }
 
 class C2BufferSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
-    val meets: Set<DiagramElement>,
+    val orbits: Set<DiagramElement>,
+    val intersects: List<DiagramElement>
 ) : C2Slideable(so, dimension) {
 
-    var expired = false;
+    fun getBufferType() : BufferType {
+        return if ((orbits.isNotEmpty()) && (intersects.isEmpty())) {
+            BufferType.ORBITER
+        } else if ((orbits.isEmpty()) && (intersects.isNotEmpty())) {
+            BufferType.INTESECTER
+        } else {
+            throw LogicException("type not clear")
+        }
+    }
 
     fun merge(s: C2BufferSlideable) : C2BufferSlideable {
-        if (s.dimension == dimension) {
-            val out = C2BufferSlideable(so as C2SlackOptimisation, dimension, s.meets.plus(meets).toSet())
-            out.minimum.merge(minimum)
-            out.minimum.merge(s.minimum)
-            out.maximum.merge(maximum)
-            out.maximum.merge(s.maximum)
+        if ((s.dimension == dimension) && (s.getBufferType() == getBufferType())) {
+            val out = C2BufferSlideable(so as C2SlackOptimisation, dimension,
+                s.orbits.plus(orbits).toSet(),
+                s.intersects.plus(intersects))
+
+            out.minimum.merge(minimum, setOf(s.minimum, minimum))
+            out.minimum.merge(s.minimum, setOf(s.minimum, minimum))
+            out.maximum.merge(maximum, setOf(s.maximum, maximum))
+            out.maximum.merge(s.maximum, setOf(s.maximum, maximum))
             out.minimumPosition = max(this.minimumPosition, s.minimumPosition)
             out.maximumPosition = optionalMin(s)
-            this.expired = true;
-            s.expired = true;
+            this.done = true
+            s.done = true
             return out
         } else {
             throw LogicException("Can't merge $this with $s")
@@ -53,6 +68,6 @@ class C2BufferSlideable(
     }
 
     override fun toString(): String {
-        return "C2SB($number, $dimension, min=$minimumPosition, max=$maximumPosition meets=$meets expired=$expired)"
+        return "C2SB($number, $dimension, i/s=$intersects min=$minimumPosition, max=$maximumPosition orbits=$orbits done=$done)"
     }
 }

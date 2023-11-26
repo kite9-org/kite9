@@ -102,7 +102,7 @@ public class Test2Links extends AbstractDisplayFunctionalTest {
 	 */
 	@Test
 	public void test_2_7_1Glyph1Arrow2() throws Exception {
-		Glyph one = new Glyph("one", "Stereo", "One", null, null);
+		LinkBody one = new LinkBody("one", "One");
 		LinkBody a = new LinkBody("meets", "meets");
 		TurnLink tl1 = new TurnLink(a, one);
 		TurnLink tl2 = new TurnLink(a, one);

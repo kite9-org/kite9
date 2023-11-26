@@ -6,7 +6,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 
-class C2Point(a: C2Slideable, b: C2Slideable, val d: Direction) : Pair<C2Slideable>(a, b) {
+class C2Point(along: C2Slideable, perp: C2Slideable, val d: Direction) : Pair<C2Slideable>(along, perp) {
 
     fun get(d: Dimension) : C2Slideable {
         return if (a.dimension == d) {
@@ -31,6 +31,14 @@ class C2Point(a: C2Slideable, b: C2Slideable, val d: Direction) : Pair<C2Slideab
     }
 
     override fun toString(): String {
-        return "[$a,$b $d]"
+        return "[${get(Dimension.H).number},${get(Dimension.V).number} $d]"
+    }
+
+    fun getAlong() : C2Slideable {
+        return a
+    }
+
+    fun getPerp() : C2Slideable {
+        return b
     }
 }

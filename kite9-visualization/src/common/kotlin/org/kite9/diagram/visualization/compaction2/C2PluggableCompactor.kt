@@ -5,7 +5,6 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
@@ -20,8 +19,8 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) : Logable {
     val log by lazy { Kite9Log.instance(this) }
 
     fun compactDiagram(d: Diagram, gr: GroupResult): C2Compaction {
-        val horizontal = C2SlackOptimisation(d)
-        val vertical = C2SlackOptimisation(d)
+        val horizontal = C2SlackOptimisation()
+        val vertical = C2SlackOptimisation()
         val compaction = instantiateCompaction(
             d,
             horizontal,
@@ -32,7 +31,7 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) : Logable {
     }
 
 
-    protected fun instantiateCompaction(
+    private fun instantiateCompaction(
         d: Diagram,
         horizontal: C2SlackOptimisation,
         vertical: C2SlackOptimisation,
@@ -50,7 +49,7 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) : Logable {
                 step.compact(c, g)
             } catch (e: Throwable) {
                 e.printStackTrace()
-                throw e;
+                throw e
             }
         }
     }
@@ -60,8 +59,9 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) : Logable {
         val HORIZONTAL = setOf(Direction.LEFT, Direction.RIGHT)
     }
 
-    override val prefix: String?
+    override val prefix: String
         get() = "C2PC"
+
     override val isLoggingEnabled: Boolean
         get() = true
 }

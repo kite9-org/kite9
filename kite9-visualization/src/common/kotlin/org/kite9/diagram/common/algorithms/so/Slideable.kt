@@ -80,6 +80,13 @@ abstract class Slideable(val so: SlackOptimisation,
         }
     }
 
+    fun replaceConstraint(was: Slideable, now: Slideable) {
+        minimum.replaceForwardConstraint(was.minimum, now.minimum)
+        minimum.replaceBackwardConstraint(was.minimum, now.minimum)
+        maximum.replaceForwardConstraint(was.maximum, now.maximum)
+        maximum.replaceBackwardConstraint(was.maximum, now.maximum)
+    }
+
     fun addMaximumForwardConstraint(to: Slideable, dist: Int) {
         try {
             maximum.addForwardConstraint(to.maximum, dist)

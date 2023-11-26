@@ -54,7 +54,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
 
             val l = C2RectangularSlideable(cso, d, de, Side.START)
             val r = C2RectangularSlideable(cso, d, de, Side.END)
-            val c = cExisting ?: C2BufferSlideable(cso, d, setOf(de))
+            val c = cExisting ?: C2BufferSlideable(cso, d, setOf(), listOf(de))
             cso.ensureMinimumDistance(l, r, ms.toInt())
 
             ss = RectangularSlideableSetImpl(de, l, r, c)
@@ -87,13 +87,15 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
             Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.V) C2BufferSlideable(
                 cso,
                 d,
-                setOf(de)
+                setOf(),
+                listOf(de)
             ) else null
 
             Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.H) C2BufferSlideable(
                 cso,
                 d,
-                setOf(de)
+                setOf(),
+                listOf(de)
             ) else null
 
             else -> null

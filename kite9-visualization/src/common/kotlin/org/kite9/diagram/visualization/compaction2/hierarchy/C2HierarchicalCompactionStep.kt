@@ -48,6 +48,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     }
                 }
 
+                slackOptimisationH.remove(a)
+                slackOptimisationH.remove(b)
                 slackOptimisationH.add(g, hm!!)
                 slackOptimisationH.checkConsistency()
             }
@@ -77,7 +79,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                         vm = va.mergeWithOverlap(vb, slackOptimisationV)
                     }
                 }
-
+                slackOptimisationV.remove(a)
+                slackOptimisationV.remove(b)
                 slackOptimisationV.add(g, vm!!)
                 slackOptimisationV.checkConsistency()
             }

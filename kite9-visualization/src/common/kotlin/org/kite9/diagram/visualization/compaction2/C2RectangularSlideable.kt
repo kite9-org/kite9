@@ -27,12 +27,14 @@ class C2RectangularSlideable(
         if (s.dimension == dimension) {
             val newAnchors = listOf(anchors, s.anchors).flatten().toSet()
             val out = C2RectangularSlideable(so as C2SlackOptimisation, dimension, newAnchors)
-            out.minimum.merge(minimum)
-            out.minimum.merge(s.minimum)
-            out.maximum.merge(maximum)
-            out.maximum.merge(s.maximum)
+            out.minimum.merge(minimum, setOf(s.minimum, minimum))
+            out.minimum.merge(s.minimum, setOf(s.minimum, minimum))
+            out.maximum.merge(maximum, setOf(s.maximum, maximum))
+            out.maximum.merge(s.maximum, setOf(s.maximum, maximum))
             out.minimumPosition = max(this.minimumPosition, s.minimumPosition)
             out.maximumPosition = optionalMin(s)
+            this.done = true
+            s.done = true;
             return out
         } else {
             throw LogicException("Can't merge $this with $s")
@@ -50,7 +52,7 @@ class C2RectangularSlideable(
     }
 
     override fun toString(): String {
-        return "C2SR($number, $dimension, anchors=$anchors, min=$minimumPosition, max=$maximumPosition)"
+        return "C2SR($number, $dimension, anchors=$anchors, min=$minimumPosition, max=$maximumPosition done=$done)"
     }
 
     constructor(so: C2SlackOptimisation,

@@ -115,13 +115,31 @@ class SingleDirection(
         }
     }
 
+    fun replaceForwardConstraint(was: SingleDirection, now: SingleDirection) {
+        val existing = forward.remove(was)
+        if (existing != null) {
+            forward[now] = existing
+        }
+    }
+
+    fun replaceBackwardConstraint(was: SingleDirection, now: SingleDirection) {
+        val existing = backward.remove(was)
+        if (existing != null) {
+            backward[now] = existing
+        }
+    }
+
     override fun toString(): String {
         return owner.toString()
     }
 
-    fun merge(sd: SingleDirection) {
-        sd.forward.forEach { (k, v) -> this.addForwardConstraint(k, v) }
-        sd.backward.forEach { (k, v) -> this.addBackwardConstraint(k, v) }
+    fun merge(sd: SingleDirection, exclude: Set<SingleDirection>) {
+        sd.forward
+            .filter { (k, v) -> !exclude.contains(k) }
+            .forEach { (k, v) -> this.addForwardConstraint(k, v) }
+        sd.backward
+            .filter { (k, v) -> !exclude.contains(k) }
+            .forEach { (k, v) -> this.addBackwardConstraint(k, v) }
     }
 
     val maxDepth: Int

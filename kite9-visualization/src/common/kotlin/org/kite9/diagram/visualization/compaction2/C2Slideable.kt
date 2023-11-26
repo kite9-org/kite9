@@ -4,9 +4,11 @@ import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 
-open class C2Slideable(so: SlackOptimisation, val dimension: Dimension) : Slideable(so) {
+sealed class C2Slideable(so: SlackOptimisation, val dimension: Dimension) : Slideable(so) {
 
     val number: Int = nextNumber()
+
+    var done = false
 
     companion object {
 

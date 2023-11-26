@@ -5,6 +5,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Port
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -13,6 +14,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Co
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.links.RankBasedConnectionQueue
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
+import kotlin.math.max
 
 
 class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd,r) {
@@ -29,11 +31,20 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
         val vss = v.getSlideablesFor(d)!!
 
         return setOf(
+            C2Point(vss.c, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
             C2Point(hss.c, vss.l, if (arriving) Direction.DOWN else Direction.UP),  // top
             C2Point(hss.c, vss.r, if (arriving) Direction.UP else Direction.DOWN),  // bottom
             C2Point(vss.c, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT),  // left
-            C2Point(vss.c, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT)   // right
         ).minus(usedStartEndPoints)
+    }
+
+    private fun createZone(c2: C2Compaction, r: Rectangular) : Zone {
+        val h = c2.getSlackOptimisation(Dimension.H)
+        val hs = h.getSlideablesFor(r)!!
+        val v = c2.getSlackOptimisation(Dimension.V)
+        val vs = v.getSlideablesFor(r)!!
+        return Zone(hs.l.minimumPosition, hs.r.maximumPosition!!,
+            vs.l.minimumPosition, vs.r.maximumPosition!!)
     }
 
     private fun insertLink(c2: C2Compaction, c: Connection) {
@@ -41,8 +52,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
             val startingPoints = createPoints(c2, c.getFrom(), false)
             val endingPoints = createPoints(c2, c.getTo(), true)
             val allowTurns = (c.getDrawDirection() == null) || (c.getRenderingInformation().isContradicting)
-
-            val doer = C2SlideableSSP(startingPoints, endingPoints, allowTurns, log)
+            val endZone = createZone(c2, c.getTo() as Rectangular)
+            val doer = C2SlideableSSP(startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, allowTurns, log)
             log.send("Routing: $c")
             val out = doer.createShortestPath()
 
@@ -51,11 +62,44 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
             updateUsedStartEndPoints(out.point, c.getTo())
             updateUsedStartEndPoints(getStart(out), c.getFrom())
 
+            if (out.prev != null) {
+                ensureSlackForConnection(out.point, out.prev, c)
+            }
 
             c2.getRoutes()[c] = out
 
         } catch (e: NoFurtherPathException) {
             log.error("Couldn't route: $c")
+        }
+    }
+
+    private fun ensureSlackForConnection(start: C2Point, rest: C2Route, c: Connection) {
+        val end = rest.point
+        val length = c.getMinimumLength()
+        val d = start.d
+        val margin = max(c.getMargin(Direction.rotateAntiClockwise(d)),
+            c.getMargin(Direction.rotateClockwise(d)))
+
+        val from = start.getPerp()
+        val to = end.get(from.dimension)
+//        if (C2SlideableSSP.isIncreasing(start.d)) {
+//            from.so.ensureMinimumDistance(from, to, length.toInt())
+//        } else {
+//            from.so.ensureMinimumDistance(to, from, length.toInt())
+//        }
+
+
+        val along = start.getAlong()
+        along.getForwardSlideables(true).forEach {
+            along.so.ensureMinimumDistance(along, it, margin.toInt())
+        }
+
+        along.getForwardSlideables(false).forEach {
+            along.so.ensureMinimumDistance(it, along, margin.toInt())
+        }
+
+        if (rest.prev != null) {
+            ensureSlackForConnection(end, rest.prev, c)
         }
     }
 
