@@ -9,6 +9,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 
 class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd, r) {
     override fun compact(c: C2Compaction, g: Group) {
@@ -25,32 +26,23 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
                 val ha = slackOptimisationH.getSlideablesFor(a)!!
                 val hb = slackOptimisationH.getSlideablesFor(b)!!
-                var hm : RoutableSlideableSet? = null
-
-
-                when(layout) {
+                val hm = when(layout) {
                     Layout.RIGHT -> {
                         separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
-                        hm = ha.mergeWithGutter(hb, slackOptimisationH)
+                        ha.mergeWithGutter(hb, slackOptimisationH)
                     }
                     Layout.LEFT -> {
                         separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
-                        hm = hb.mergeWithGutter(ha, slackOptimisationH)
-                    }
-                    Layout.DOWN -> {
-                        hm = hb.mergeWithOverlap(ha, slackOptimisationH)
-                    }
-                    Layout.UP -> {
-                        hm = hb.mergeWithOverlap(ha, slackOptimisationH)
+                        hb.mergeWithGutter(ha, slackOptimisationH)
                     }
                     else -> {
-                        hm = hb.mergeWithOverlap(ha, slackOptimisationH)
+                        hb.mergeWithOverlap(ha, slackOptimisationH)
                     }
                 }
 
                 slackOptimisationH.remove(a)
                 slackOptimisationH.remove(b)
-                slackOptimisationH.add(g, hm!!)
+                slackOptimisationH.add(g, hm)
                 slackOptimisationH.checkConsistency()
             }
 
@@ -58,34 +50,39 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
                 val va = slackOptimisationV.getSlideablesFor(a)!!
                 val vb = slackOptimisationV.getSlideablesFor(b)!!
-                var vm : RoutableSlideableSet? = null
-
-                when(layout) {
-                    Layout.RIGHT -> {
-                        vm = va.mergeWithOverlap(vb, slackOptimisationV)
-                    }
-                    Layout.LEFT -> {
-                        vm = va.mergeWithOverlap(vb, slackOptimisationV)
-                    }
+                val vm = when(layout) {
                     Layout.DOWN -> {
                         separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
-                        vm = va.mergeWithGutter(vb, slackOptimisationV)
+                        va.mergeWithGutter(vb, slackOptimisationV)
                     }
                     Layout.UP -> {
                         separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
-                        vm = vb.mergeWithGutter(va, slackOptimisationV)
+                        vb.mergeWithGutter(va, slackOptimisationV)
                     }
                     else -> {
-                        vm = va.mergeWithOverlap(vb, slackOptimisationV)
+                        va.mergeWithOverlap(vb, slackOptimisationV)
                     }
                 }
                 slackOptimisationV.remove(a)
                 slackOptimisationV.remove(b)
-                slackOptimisationV.add(g, vm!!)
+                slackOptimisationV.add(g, vm)
                 slackOptimisationV.checkConsistency()
             }
-        }
 
+            if (combiningAxis(g)) {
+                // in this case, we need to
+                val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
+                val va = slackOptimisationV.getSlideablesFor(a)
+                val vb = slackOptimisationV.getSlideablesFor(b)
+
+                val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
+                val ha = slackOptimisationH.getSlideablesFor(a)
+                val hb = slackOptimisationH.getSlideablesFor(b)
+                slackOptimisationV.add(g, va ?: vb!!)
+                slackOptimisationH.add(g, ha ?: hb!!)
+
+            }
+        }
 
         if (horizontalAxis(g) || (g is LeafGroup)) {
             completeContainers(c, g, Dimension.H)
@@ -94,6 +91,13 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         if (verticalAxis(g) || (g is LeafGroup)) {
             completeContainers(c, g, Dimension.V)
         }
+    }
+
+    private fun combiningAxis(g: CompoundGroup) : Boolean {
+        val hasChildHorizontal = horizontalAxis(g.a) || horizontalAxis(g.b)
+        val hasChildVertical = verticalAxis(g.a) || verticalAxis(g.b)
+
+        return !horizontalAxis(g) && !verticalAxis(g) && hasChildHorizontal && hasChildVertical
     }
 
     private fun horizontalAxis(g: Group): Boolean {

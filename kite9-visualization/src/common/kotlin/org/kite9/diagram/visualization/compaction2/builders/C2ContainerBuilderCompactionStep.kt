@@ -83,25 +83,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         val contents = de.getContents()
             .filterIsInstance<ConnectedRectangular>()
 
-        val centerLine = when (l) {
-            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> if (d == Dimension.V) C2BufferSlideable(
-                cso,
-                d,
-                setOf(),
-                listOf(de)
-            ) else null
-
-            Layout.UP, Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.H) C2BufferSlideable(
-                cso,
-                d,
-                setOf(),
-                listOf(de)
-            ) else null
-
-            else -> null
-        }
-
-        val contentMap = contents.map { it to checkCreate(it, d, cso, centerLine, topGroup) }
+        val contentMap = contents.map { it to checkCreate(it, d, cso, null, topGroup) }
 
         // ensure within container
         contentMap.forEach { (e, v) -> embed(d, container, v, cso, e) }

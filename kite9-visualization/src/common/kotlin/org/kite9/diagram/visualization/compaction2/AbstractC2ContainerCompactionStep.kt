@@ -21,16 +21,19 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     fun completeContainers(c: C2Compaction, g: Group, d: Dimension) {
         val completedContainers = popCompletedContainers(d, g)
-        val so = c.getSlackOptimisation(d)
-        var ss = so.getSlideablesFor(g)!!
 
-        completedContainers.forEach { container ->
-            val cs = so.getSlideablesFor(container)!!
+        if (completedContainers.isNotEmpty()) {
+            val so = c.getSlackOptimisation(d)
+            var ss = so.getSlideablesFor(g)!!
 
-            ss = embed(so, cs, ss, d)
+            completedContainers.forEach { container ->
+                val cs = so.getSlideablesFor(container)!!
 
-            // replace the group slideable sets so we use these instead
-            so.add(g, ss)
+                ss = embed(so, cs, ss, d)
+
+                // replace the group slideable sets so we use these instead
+                so.add(g, ss)
+            }
         }
     }
 
