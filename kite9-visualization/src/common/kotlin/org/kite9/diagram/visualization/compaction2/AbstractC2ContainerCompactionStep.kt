@@ -27,9 +27,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         completedContainers.forEach { container ->
             val cs = so.getSlideablesFor(container)!!
 
-            if (!(container is Diagram)) {
-                ss = embed(so, cs, ss, d)
-            }
+            ss = embed(so, cs, ss, d)
 
             // replace the group slideable sets so we use these instead
             so.add(g, ss)

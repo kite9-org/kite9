@@ -63,7 +63,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
             updateUsedStartEndPoints(getStart(out), c.getFrom())
 
             if (out.prev != null) {
-                ensureSlackForConnection(out.point, out.prev, c)
+                ensureSlackForConnection(out.point, out.prev, c, true)
             }
 
             c2.getRoutes()[c] = out
@@ -73,21 +73,31 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
         }
     }
 
-    private fun ensureSlackForConnection(start: C2Point, rest: C2Route, c: Connection) {
+    private fun ensureSlackForConnection(start: C2Point, rest: C2Route, c: Connection, connectionStart: Boolean) {
         val end = rest.point
-        val length = c.getMinimumLength()
         val d = start.d
-        val margin = max(c.getMargin(Direction.rotateAntiClockwise(d)),
-            c.getMargin(Direction.rotateClockwise(d)))
-
         val from = start.getPerp()
         val to = end.get(from.dimension)
-//        if (C2SlideableSSP.isIncreasing(start.d)) {
-//            from.so.ensureMinimumDistance(from, to, length.toInt())
-//        } else {
-//            from.so.ensureMinimumDistance(to, from, length.toInt())
-//        }
 
+
+        // handle connection minimum length
+        val connectionEnd = rest.prev == null
+        val length = when {
+            connectionStart && connectionEnd -> c.getFromDecoration().getReservedLength() + c.getToDecoration().getReservedLength()
+            connectionStart -> c.getFromDecoration().getReservedLength()
+            connectionEnd -> c.getToDecoration().getReservedLength()
+            else -> c.getMinimumLength()
+        } + c.getMinimumLength()
+
+        if (C2SlideableSSP.isIncreasing(start.d)) {
+            from.so.ensureMinimumDistance(to, from, length.toInt())
+        } else {
+            from.so.ensureMinimumDistance(from, to, length.toInt())
+        }
+
+        // handle connection margins
+        val margin = max(c.getMargin(Direction.rotateAntiClockwise(d)),
+            c.getMargin(Direction.rotateClockwise(d)))
 
         val along = start.getAlong()
         along.getForwardSlideables(true).forEach {
@@ -98,8 +108,9 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
             along.so.ensureMinimumDistance(it, along, margin.toInt())
         }
 
+        // continue
         if (rest.prev != null) {
-            ensureSlackForConnection(end, rest.prev, c)
+            ensureSlackForConnection(end, rest.prev, c, false)
         }
     }
 
