@@ -8,10 +8,7 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.BufferType
-import org.kite9.diagram.visualization.compaction2.C2BufferSlideable
-import org.kite9.diagram.visualization.compaction2.C2RectangularSlideable
-import org.kite9.diagram.visualization.compaction2.C2Slideable
+import org.kite9.diagram.visualization.compaction2.*
 import kotlin.math.abs
 
 data class Zone(val minX: Int, val maxX: Int, val minY: Int, val maxY: Int)
@@ -77,9 +74,9 @@ class C2SlideableSSP(
         s: State<C2Route>,
         c: C2Costing
     ) {
-        val common = when (along.getBufferType()) {
-            BufferType.INTESECTER -> setOf(startElem, endElem)
-            BufferType.ORBITER -> along.orbits
+        val common = when (along) {
+            is C2IntersectionSlideable -> setOf(startElem, endElem)
+            is C2OrbitSlideable -> along.orbits
         }
 
         if (canAdvanceFrom(perp, d, common, along)) {
@@ -102,7 +99,7 @@ class C2SlideableSSP(
         return when (perp) {
             is C2BufferSlideable -> true
             is C2RectangularSlideable -> {
-                if (along.getBufferType() == BufferType.INTESECTER) {
+                if (along is C2IntersectionSlideable) {
                     val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
                     val matchingAnchors = perp.anchors
                         .filter { common.contains(it.e) }
@@ -126,11 +123,8 @@ class C2SlideableSSP(
     private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable): Boolean {
         return when (k) {
             is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
-            is C2BufferSlideable -> if (k.getBufferType() == BufferType.ORBITER) {
-                k.orbits.any { common.contains(it) }
-            } else {
-                nextTo(k.intersects, common, endElem)
-            }
+            is C2OrbitSlideable ->  k.orbits.any { common.contains(it) }
+            is C2IntersectionSlideable -> nextTo(k.intersects, common, endElem)
         }
     }
 

@@ -1,9 +1,11 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction.rect.second.popout.BufferSlideable
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -15,7 +17,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
  *
  * @author robmoffat
  */
-class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
+class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) : AbstractC2CompactionStep(cd) {
 
     override val prefix: String
         get() = "CBCS"
@@ -38,7 +40,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         de: DiagramElement,
         d: Dimension,
         cso: C2SlackOptimisation,
-        cExisting: C2BufferSlideable?,
+        cExisting: C2IntersectionSlideable?,
         topGroup: Group
     ): RectangularSlideableSet? {
         log.send("Creating $de")
@@ -54,7 +56,7 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
 
             val l = C2RectangularSlideable(cso, d, de, Side.START)
             val r = C2RectangularSlideable(cso, d, de, Side.END)
-            val c = cExisting ?: C2BufferSlideable(cso, d, setOf(), listOf(de))
+            val c = cExisting ?: C2IntersectionSlideable(cso, d, listOf(de))
             cso.ensureMinimumDistance(l, r, ms.toInt())
 
             ss = RectangularSlideableSetImpl(de, l, r, c)
@@ -83,13 +85,21 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         val contents = de.getContents()
             .filterIsInstance<ConnectedRectangular>()
 
+        val relyOnGroupLayout = usingGroups(contents, topGroup)
+
+        var central = if (requiresSharedCentralSlideable(l, d) && !relyOnGroupLayout) {
+            C2IntersectionSlideable(cso, d, contents)
+        } else {
+            null
+        }
+
         val contentMap = contents.map { it to checkCreate(it, d, cso, null, topGroup) }
 
         // ensure within container
         contentMap.forEach { (e, v) -> embed(d, container, v, cso, e) }
 
         // ensure internal ordering
-        if (!usingGroups(contents, topGroup)) {
+        if (!relyOnGroupLayout) {
             when (l) {
                 Layout.RIGHT, Layout.HORIZONTAL, null -> if (d == Dimension.H) setupInternalOrdering(contentMap, d, cso)
                 Layout.LEFT -> if (d == Dimension.H) setupInternalOrdering(contentMap.reversed(), d, cso)
@@ -104,13 +114,21 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compac
         }
     }
 
+    private fun requiresSharedCentralSlideable(l: Layout?, d: Dimension): Boolean {
+        return when (l) {
+            null, Layout.GRID -> false
+            Layout.DOWN, Layout.UP, Layout.VERTICAL -> return d == Dimension.V
+            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> return d== Dimension.H
+        }
+    }
+
     /**
      * Either content are laid out using the Group process, or they aren't connected so we need
      * to just follow layout.
      */
     private fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group) : Boolean {
         val gm = contents.map { hasGroup(it, topGroup) }
-        return gm.reduceRight {  a, b -> a && b };
+        return gm.reduceRightOrNull {  a, b -> a && b } ?: false
     }
 
     private fun hasGroup(item: Connected, group: Group) : Boolean {

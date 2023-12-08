@@ -43,8 +43,8 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             val l = ss.l
             val r = ss.r
             val c = ss.c
-            val bl = C2BufferSlideable(cso, d, setOf(de), listOf())
-            val br = C2BufferSlideable(cso, d, setOf(de), listOf())
+            val bl = C2OrbitSlideable(cso, d, setOf(de))
+            val br = C2OrbitSlideable(cso, d, setOf(de))
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
 
