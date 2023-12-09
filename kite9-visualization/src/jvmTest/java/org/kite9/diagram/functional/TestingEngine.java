@@ -296,25 +296,31 @@ public class TestingEngine extends TestingHelp {
 
 		Color[] cols = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY };
 
-		drawGroup(gr.groups().iterator().next(), rr, cols, g, size, 30, 30);
+		drawGroup(gr.groups().iterator().next(), rr, cols, g, size, new HashSet<Group>());
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);
 
 	}
 
-	private static void drawGroup(Group group, RoutableReader rr, Color[] cols, Graphics2D g, int size, int xoffset, int yoffset) {
+	private static void drawGroup(Group group, RoutableReader rr, Color[] cols, Graphics2D g, int size, HashSet<Group> done) {
 		if (group instanceof LeafGroup) {
-			PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);
+			if (!done.contains(group)) {
+				PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);
 
-			if (pri != null) {
-				g.setColor(cols[Math.abs(group.hashCode()) % 4]);
-				g.setStroke(new BasicStroke(1));
-				g.drawRoundRect((int) (pri.getMinX() * size + 20), (int) (pri.getMinY() * size + 20), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
-				g.drawString(group.getID(), (int) (pri.centerX() * size + 20) + xoffset, (int) (pri.centerY() * size + 20) + yoffset);
+				if (pri != null) {
+					int xr = new Random().nextInt(10) - 5;
+					int yr = new Random().nextInt(10) - 5;
+
+					g.setColor(cols[Math.abs(group.hashCode()) % 4]);
+					g.setStroke(new BasicStroke(1));
+					g.drawRoundRect((int) (pri.getMinX() * size + xr), (int) (pri.getMinY() * size + yr), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
+					g.drawString(group.getID(), (int) (pri.centerX() * size + xr), (int) (pri.centerY() * size + yr));
+				}
+				done.add(group);
 			}
 		} else {
-			drawGroup(((CompoundGroup) group).getA(), rr, cols, g, size, xoffset, yoffset);
-			drawGroup(((CompoundGroup) group).getB(), rr, cols, g, size, xoffset, yoffset);
+			drawGroup(((CompoundGroup) group).getA(), rr, cols, g, size, done);
+			drawGroup(((CompoundGroup) group).getB(), rr, cols, g, size, done);
 		}
 	}
 
