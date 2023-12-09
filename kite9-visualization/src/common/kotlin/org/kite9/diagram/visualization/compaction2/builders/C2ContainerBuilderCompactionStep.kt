@@ -87,11 +87,11 @@ class C2ContainerBuilderCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
         val relyOnGroupLayout = usingGroups(contents, topGroup)
 
-        var central = if (requiresSharedCentralSlideable(l, d) && !relyOnGroupLayout) {
-            C2IntersectionSlideable(cso, d, contents)
-        } else {
-            null
-        }
+//        var central = if (requiresSharedCentralSlideable(l, d) && !relyOnGroupLayout) {
+//            C2IntersectionSlideable(cso, d, contents)
+//        } else {
+//            null
+//        }
 
         val contentMap = contents.map { it to checkCreate(it, d, cso, null, topGroup) }
 

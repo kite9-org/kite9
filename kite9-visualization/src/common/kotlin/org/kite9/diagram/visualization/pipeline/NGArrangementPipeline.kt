@@ -26,9 +26,11 @@ import org.kite9.diagram.visualization.compaction2.sizing.C2MaximizeCompactionSt
 import org.kite9.diagram.visualization.compaction2.sizing.C2MinimizeCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.Planarization
+import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.*
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
 import org.kite9.diagram.visualization.planarization.rhd.layout.DirectionLayoutStrategy
@@ -45,25 +47,18 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     private val log = Kite9Log.instance(this)
 
     var em: ElementMapper? = null
+    private var mr: GroupResult? = null
+    private var rr: RoutableReader? = null
 
     override fun arrange(d: Diagram): Diagram {
         val mr = buildGrouping(d)
-
-        if (!log.go()) {
-            log.send("Created Groups:", mr.groups())
-        }
+        this.mr = mr
 
         if (mr.groups().size > 1) {
             throw LogicException("Should end up with a single group")
         }
 
-        if (!log.go()) {
-            //outputGroupInfo(topGroup, 0)
-        }
-
         layout(mr)
-        log.send("Groups:", mr.groups())
-
         val compactor = createCompactor(mr)
         compactor.compactDiagram(d, mr)
         return d
@@ -75,9 +70,10 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
         layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
         outputGroupInfo(topGroup, 1, routableReader)
+        this.rr = routableReader
     }
 
-    fun outputGroupInfo(g: Group, spc: Int, rr: RoutableHandler2D) {
+    private fun outputGroupInfo(g: Group, spc: Int, rr: RoutableHandler2D) {
         val sb: StringBuilder = StringBuilder(spc)
         for (i in 0 until spc) {
             sb.append(" ")
@@ -86,12 +82,12 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         val l: Layout? = g.layout
         val h = if (g.axis.isHorizontal) "h" else " "
         val v = if (g.axis.isVertical) "v" else " "
-        log.send(
-            (sb.toString() + g.groupNumber +
-                    " " + (if ((g is LeafGroup)) g.toString() else axis)
-                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v " + (if (g.axis.isLayoutRequired) "LR " else " ")
-                    + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
-        )
+        val line = (sb.toString() + g.groupNumber +
+                " " + (if ((g is LeafGroup)) g.toString() else axis)
+                + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
+        log.send(line)
+        AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG += line + "\n"
         if (g is AbstractCompoundGroup) {
             outputGroupInfo(g.a, spc + 1, rr)
             outputGroupInfo(g.b, spc + 1, rr)
@@ -161,8 +157,11 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     override val isLoggingEnabled: Boolean
         get() = true
 
-    // NG Doesn't use planarization....
-    fun getPln(): Planarization? {
-        return null;
+    fun getGrouping(): GroupResult? {
+        return mr;
+    }
+
+    fun getRoutableReader(): RoutableReader? {
+        return rr;
     }
 }

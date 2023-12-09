@@ -37,8 +37,13 @@ import org.kite9.diagram.visualization.planarization.Planarization;
 import org.kite9.diagram.visualization.planarization.PlanarizationException;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.builder.HierarchicalPlanarizationBuilder;
+import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
 import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 
@@ -75,32 +80,19 @@ public class TestingEngine extends TestingHelp {
 	public void testDiagram(Diagram d, Class<?> theTest, String subtest, Checks c, boolean addressed, NGArrangementPipeline pipeline) throws IOException {
 		try {
 			LogicException out = null;
-			Planarization pln = null;
+			GroupResult gr = null;
 			try {
 				// write the outputs
 				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d).getBytes());
-				if (HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
-					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG().getBytes());
-				}
 				if (AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG() != null) {
 					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG().getBytes());
 				}
-				if (RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
-					TestingEngine.drawPositions(RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), theTest, subtest, subtest + "-positions.png");
-				}
-			} catch (PlanarizationException pe) {
-				pln = pe.getPlanarization();
-				out = pe;
 			} catch (LogicException le) {
 				out = le;
 			}
 
-			if (pipeline.getPln() != null) {
-				pln = pipeline.getPln();
-			}
-
-			if (pln != null) {
-				writeVertexOrder((MGTPlanarization) pln, theTest, subtest, subtest + "-vertex-order.txt");
+			if (pipeline.getGrouping() != null) {
+				TestingEngine.drawPositions(pipeline.getGrouping(), pipeline.getRoutableReader(), theTest, subtest, subtest + "-positions.png");
 			}
 
 			if (out != null) {
@@ -289,14 +281,14 @@ public class TestingEngine extends TestingHelp {
 		writeOutput(theTest, subtest, item, sb.toString().getBytes());
 	}
 
-	public static void drawPositions(Collection<Vertex> out, Class<?> theTest, String subtest, String item) {
+
+	public static void drawPositions(GroupResult gr, RoutableReader rr, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");
 		if (!target.isDirectory()) {
 			return;
 		}
 
-		double size = out.size() * 40;
-		size = Math.min(size, 1000);
+		int size = 1000;
 		BufferedImage bi = new BufferedImage((int) size + 60, (int) size + 60, BufferedImage.TYPE_3BYTE_BGR);
 		Graphics2D g = bi.createGraphics();
 		g.setColor(Color.WHITE);
@@ -304,33 +296,26 @@ public class TestingEngine extends TestingHelp {
 
 		Color[] cols = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY };
 
-		for (Vertex vertex : out) {
-			int xoffset = 0;
-			int yoffset = 0;
-			if (vertex instanceof MultiCornerVertex) {
-				if (((MultiCornerVertex) vertex).getXOrdinal().equals(LongFraction.Companion.getONE())) {
-					xoffset = -20;
-				} else {
-					yoffset = 5;
-				}
-				if (((MultiCornerVertex) vertex).getYOrdinal().equals(LongFraction.Companion.getONE())) {
-					yoffset = -20;
-				} else {
-					yoffset = 5;
-				}
-
-			}
-			PositionRoutingInfo pri = (PositionRoutingInfo) vertex.getRoutingInfo();
-			if (pri != null) {
-				g.setColor(cols[Math.abs(vertex.hashCode()) % 4]);
-				g.setStroke(new BasicStroke(1));
-				g.drawRoundRect((int) (pri.getMinX() * size + 20), (int) (pri.getMinY() * size + 20), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
-				g.drawString(vertex.getID(), (int) (pri.centerX() * size + 20) + xoffset, (int) (pri.centerY() * size + 20) + yoffset);
-			}
-		}
+		drawGroup(gr.groups().iterator().next(), rr, cols, g, size, 30, 30);
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);
 
+	}
+
+	private static void drawGroup(Group group, RoutableReader rr, Color[] cols, Graphics2D g, int size, int xoffset, int yoffset) {
+		if (group instanceof LeafGroup) {
+			PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);
+
+			if (pri != null) {
+				g.setColor(cols[Math.abs(group.hashCode()) % 4]);
+				g.setStroke(new BasicStroke(1));
+				g.drawRoundRect((int) (pri.getMinX() * size + 20), (int) (pri.getMinY() * size + 20), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
+				g.drawString(group.getID(), (int) (pri.centerX() * size + 20) + xoffset, (int) (pri.centerY() * size + 20) + yoffset);
+			}
+		} else {
+			drawGroup(((CompoundGroup) group).getA(), rr, cols, g, size, xoffset, yoffset);
+			drawGroup(((CompoundGroup) group).getB(), rr, cols, g, size, xoffset, yoffset);
+		}
 	}
 
 	public static void testConnectionPresence(Diagram d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {

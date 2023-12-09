@@ -123,7 +123,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			Diagram d = Kite9SVGTranscoder.lastDiagram;
 			NGArrangementPipeline pipeline = Kite9SVGTranscoder.lastPipeline;
 			
-			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
+			TestingEngine.drawPositions(pipeline.getGrouping(), pipeline.getRoutableReader(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);
 			TestingEngine.testLayout(d);
 			
