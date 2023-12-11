@@ -314,7 +314,13 @@ public class TestingEngine extends TestingHelp {
 					g.setColor(cols[Math.abs(group.hashCode()) % 4]);
 					g.setStroke(new BasicStroke(1));
 					g.drawRoundRect((int) (pri.getMinX() * size + xr), (int) (pri.getMinY() * size + yr), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
-					g.drawString(group.getID(), (int) (pri.centerX() * size + xr), (int) (pri.centerY() * size + yr));
+
+					String id = group.getID();
+					if (((LeafGroup) group).getConnected() != null) {
+						id += " "+((LeafGroup) group).getConnected().getID();
+					}
+
+					g.drawString(id, (int) (pri.centerX() * size + xr), (int) (pri.centerY() * size + yr));
 				}
 				done.add(group);
 			}

@@ -24,15 +24,16 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         if (completedContainers.isNotEmpty()) {
             val so = c.getSlackOptimisation(d)
-            var ss = so.getSlideablesFor(g)!!
+            var ss = so.getSlideablesFor(g)
+            if (ss != null) {
+                completedContainers.forEach { container ->
+                    val cs = so.getSlideablesFor(container)!!
 
-            completedContainers.forEach { container ->
-                val cs = so.getSlideablesFor(container)!!
+                    ss = embed(so, cs, ss!!, d)
 
-                ss = embed(so, cs, ss, d)
-
-                // replace the group slideable sets so we use these instead
-                so.add(g, ss)
+                    // replace the group slideable sets so we use these instead
+                    so.add(g, ss!!)
+                }
             }
         }
     }

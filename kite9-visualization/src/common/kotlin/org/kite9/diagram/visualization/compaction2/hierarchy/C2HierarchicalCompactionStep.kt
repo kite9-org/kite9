@@ -19,15 +19,16 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
             val a = g.a
             val b = g.b
-            val layout = g.layout
 
-
-            if (horizontalAxis(g)) {
-                val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
-                val ha = slackOptimisationH.getSlideablesFor(a)!!
-                val hb = slackOptimisationH.getSlideablesFor(b)!!
-                val hm = when(layout) {
-                    Layout.RIGHT -> {
+            // horizontal axia
+            val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
+            val ha = slackOptimisationH.getSlideablesFor(a)
+            val hb = slackOptimisationH.getSlideablesFor(b)
+            val hm = if ((ha == null) || (hb == null)) {
+                ha ?: hb
+            } else {
+                when(getRequiredLayout(g, Dimension.H)) {
+                    Layout.RIGHT, Layout.HORIZONTAL -> {
                         separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
                         ha.mergeWithGutter(hb, slackOptimisationH)
                     }
@@ -39,19 +40,25 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                         hb.mergeWithOverlap(ha, slackOptimisationH)
                     }
                 }
-
-                slackOptimisationH.remove(a)
-                slackOptimisationH.remove(b)
-                slackOptimisationH.add(g, hm)
-                slackOptimisationH.checkConsistency()
             }
 
-            if (verticalAxis(g)) {
-                val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
-                val va = slackOptimisationV.getSlideablesFor(a)!!
-                val vb = slackOptimisationV.getSlideablesFor(b)!!
-                val vm = when(layout) {
-                    Layout.DOWN -> {
+            slackOptimisationH.remove(a)
+            slackOptimisationH.remove(b)
+            if (hm != null) {
+                slackOptimisationH.add(g, hm)
+            }
+            slackOptimisationH.checkConsistency()
+
+
+            // vertical axis
+            val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
+            val va = slackOptimisationV.getSlideablesFor(a)
+            val vb = slackOptimisationV.getSlideablesFor(b)
+            val vm = if ((va == null) || (vb == null)) {
+                va ?: vb
+            } else {
+                when(getRequiredLayout(g, Dimension.V)) {
+                    Layout.DOWN, Layout.VERTICAL -> {
                         separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
                         va.mergeWithGutter(vb, slackOptimisationV)
                     }
@@ -63,25 +70,28 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                         va.mergeWithOverlap(vb, slackOptimisationV)
                     }
                 }
-                slackOptimisationV.remove(a)
-                slackOptimisationV.remove(b)
+            }
+            slackOptimisationV.remove(a)
+            slackOptimisationV.remove(b)
+            if (vm != null) {
                 slackOptimisationV.add(g, vm)
-                slackOptimisationV.checkConsistency()
             }
+            slackOptimisationV.checkConsistency()
 
-            if (combiningAxis(g)) {
-                // in this case, we need to
-                val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
-                val va = slackOptimisationV.getSlideablesFor(a)
-                val vb = slackOptimisationV.getSlideablesFor(b)
 
-                val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
-                val ha = slackOptimisationH.getSlideablesFor(a)
-                val hb = slackOptimisationH.getSlideablesFor(b)
-                slackOptimisationV.add(g, va ?: vb!!)
-                slackOptimisationH.add(g, ha ?: hb!!)
-
-            }
+//            if (combiningAxis(g)) {
+//                // in this case, we need to store whatever is available.
+//                val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
+//                val va = slackOptimisationV.getSlideablesFor(a)
+//                val vb = slackOptimisationV.getSlideablesFor(b)
+//
+//                val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
+//                val ha = slackOptimisationH.getSlideablesFor(a)
+//                val hb = slackOptimisationH.getSlideablesFor(b)
+//                slackOptimisationV.add(g, va ?: vb!!)
+//                slackOptimisationH.add(g, ha ?: hb!!)
+//
+//            }
         }
 
         if (horizontalAxis(g) || (g is LeafGroup)) {
@@ -93,6 +103,22 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         }
     }
 
+    private fun getRequiredLayout(g: CompoundGroup, d: Dimension) : Layout? {
+        return if (!g.axis.isLayoutRequired) {
+            return null
+        } else if (d==Dimension.H) {
+            when (g.layout) {
+                Layout.RIGHT, Layout.LEFT -> g.layout
+                else -> null
+            }
+        } else {
+            when (g.layout) {
+                Layout.UP, Layout.DOWN -> g.layout
+                else -> null
+            }
+        }
+    }
+
     private fun combiningAxis(g: CompoundGroup) : Boolean {
         val hasChildHorizontal = horizontalAxis(g.a) || horizontalAxis(g.b)
         val hasChildVertical = verticalAxis(g.a) || verticalAxis(g.b)
@@ -101,11 +127,11 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
     }
 
     private fun horizontalAxis(g: Group): Boolean {
-        return g.axis.isHorizontal && g.axis.isLayoutRequired
+        return g.axis.isHorizontal
     }
 
     private fun verticalAxis(g: Group): Boolean {
-        return g.axis.isVertical && g.axis.isLayoutRequired
+        return g.axis.isVertical
     }
 
     private fun separateRectangular(

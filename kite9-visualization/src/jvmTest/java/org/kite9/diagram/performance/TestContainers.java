@@ -52,7 +52,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		Context[] contexts = new Context[containers];
 
 		for (int i = 0; i < contexts.length; i++) {
-			contexts[i] = new Context("c" + i, new ArrayList<Element>(), true, new TextLine("Context " + i), l);
+			contexts[i] = new Context("c" + i, new ArrayList<Element>(), true, new TextLine("ctx"+i, "Context " + i), l);
 		}
 
 		for (int i = 0; i < items.length; i++) {

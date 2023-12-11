@@ -77,7 +77,7 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	public void test_46_11_KeyTooSmall() throws Exception {
 		renderDiagram(new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label",
 			HelpMethods.createList(
-				new TextLine("Some Text Here To Make It A Bit Wider")),				
+				new TextLine("Sm","Some Text Here To Make It A Bit Wider")),
 			HelpMethods.createList(
 				new Symbol("sdfsf", 's', SymbolShape.CIRCLE),
 				new Symbol("sdfsf", 'w', SymbolShape.DIAMOND)))),
@@ -117,7 +117,7 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	protected DiagramKite9XMLElement createDiagram() {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(new Glyph("stereo", "Some Label",
 			HelpMethods.createList(
-				new TextLine("Some Text Here To Make It A Bit Wider")),				
+				new TextLine("sm", "Some Text Here To Make It A Bit Wider")),
 			HelpMethods.createList(
 				new Symbol("sdfsf", 's', SymbolShape.CIRCLE),
 				new Symbol("sdfsf", 'w', SymbolShape.DIAMOND)))),
