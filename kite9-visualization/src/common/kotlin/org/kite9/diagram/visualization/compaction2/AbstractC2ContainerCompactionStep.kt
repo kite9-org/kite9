@@ -72,23 +72,27 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         // collect the set of elements represented by groups,
         // mapped to those groups.
         val groupedElements = relevantElements(r.groups().first())
+        val allContainers = relevantContainers(r.groups().first()).toSet()
 
         // handy map of group's parents
-        val parentage = mutableMapOf<Group, Group?>()
+        val parentage = mutableMapOf<Group, MutableList<Group>>()
         groupParentage(r.groups().first(), null, parentage)
 
         // collect all the containers of these elements
         // and map them to the lowest group that represents their contents
-        val relevantContainersV = groupedElements.keys
-            .groupBy { it?.getContainer() }
-            .mapValues { (_, elements) ->
-                getLowestGroup(elements.mapNotNull { groupedElements[it] }.toSet(), parentage, Dimension.V )
+        val relevantContainers = allContainers.associateWith {
+            val o = containsAnyLevel(groupedElements, it)
+            o
+        }
+
+        val relevantContainersV = relevantContainers
+            .mapValues { (c, elements) ->
+                getLowestGroup(elements, parentage, Dimension.V, c )
             }
 
-        val relevantContainersH = groupedElements.keys
-            .groupBy { it?.getContainer() }
-            .mapValues { (_, elements) ->
-                getLowestGroup(elements.mapNotNull { groupedElements[it] }.toSet(), parentage, Dimension.H )
+        val relevantContainersH = relevantContainers
+            .mapValues { (c, elements) ->
+                getLowestGroup(elements, parentage, Dimension.H, c )
             }
 
 
@@ -115,30 +119,71 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun getLowestGroup(groupsIn: Set<Group>, parentage: Map<Group, Group?>, axis: Dimension) : Group? {
-        var groups = groupsIn
+    private fun contains(e: DiagramElement?, c: Container) : Boolean {
+        return if (e==null) {
+            false;
+        } else if (e == c) {
+            return true;
+        } else {
+            return contains(e.getParent(), c)
+        }
+    }
+
+    private fun containsAnyLevel(groups: Map<DiagramElement?, List<Group>>, c: Container) : List<Group> {
+        return groups.flatMap { (de, groups) ->
+            if (contains(de, c)) {
+                groups
+            } else {
+                emptyList<Group>()
+            }
+        }
+    }
+
+    private fun getLowestGroup(groupsIn: List<Group>, parentage: Map<Group, List<Group>>, axis: Dimension, container: Container?) : Group? {
+        var groups = groupsIn.filter { matchesAxis(axis, it) }.toSet()
+
         while (groups.size > 1) {
             val lowestGroupHeight = groups.minOf { it.height }
             groups = groups
+                .flatMap { if (it.height == lowestGroupHeight) parentage[it].orEmpty() else listOf(it) }
                 .filter { matchesAxis(axis, it) }
-                .mapNotNull { if (it.height == lowestGroupHeight) parentage[it] else it }
                 .toSet()
         }
 
         return groups.firstOrNull()
     }
 
-    private fun relevantElements(topGroup: Group) : Map<DiagramElement?, Group> {
+    private fun relevantElements(topGroup: Group) : Map<DiagramElement?, List<Group>> {
         return when (topGroup) {
             is CompoundGroup -> relevantElements(topGroup.a).plus(relevantElements(topGroup.b))
-            is LeafGroup -> mapOf(topGroup.connected to topGroup,
-                topGroup.container to topGroup)
+            is LeafGroup -> if (topGroup.connected != null) {
+                mapOf(topGroup.connected to listOf(topGroup))
+            } else {
+                mapOf()
+            }
             else -> mapOf()
         }
     }
 
-    private fun groupParentage(g: Group, p: Group?, parentage: MutableMap<Group, Group?>) {
-        parentage[g] = p;
+    private fun relevantContainers(topGroup: Group) : List<Container> {
+        return when (topGroup) {
+            is CompoundGroup -> relevantContainers(topGroup.a).plus(relevantContainers(topGroup.b))
+            is LeafGroup -> if (topGroup.container != null) {
+                listOf(topGroup.container!!)
+            } else {
+                emptyList()
+            }
+            else -> emptyList()
+        }
+    }
+
+    private fun groupParentage(g: Group, p: Group?, parentage: MutableMap<Group, MutableList<Group>>) {
+        val parents = parentage.getOrPut(g) { mutableListOf() }
+
+        if (p != null) {
+            parents.add(p)
+        }
+
         if (g is CompoundGroup) {
             groupParentage(g.a, g, parentage)
             groupParentage(g.b, g, parentage)
