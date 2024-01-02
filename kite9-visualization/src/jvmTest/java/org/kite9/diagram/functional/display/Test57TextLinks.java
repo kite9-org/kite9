@@ -37,7 +37,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 	public void test_57_2_TextLineLink2() throws Exception {
 		TextLine tl = new TextLine("linker", "some row");
 		TextLine tl2 = new TextLine("linker2", "some other row");
-		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl, tl2), null);
+		Glyph one = new Glyph("bigboy", "Stereo", "One", HelpMethods.listOf(tl, tl2), null);
 		LinkBody a = new LinkBody("a");
 		LinkBody b = new LinkBody("b");
 		new Link(a, tl, null, null, null, null, Direction.RIGHT);

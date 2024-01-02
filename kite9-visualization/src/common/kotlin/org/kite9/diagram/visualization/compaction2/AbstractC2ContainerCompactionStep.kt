@@ -79,38 +79,53 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         // collect all the containers of these elements
         // and map them to the lowest group that represents their contents
-        val relevantContainers = groupedElements.keys
+        val relevantContainersV = groupedElements.keys
             .groupBy { it?.getContainer() }
             .mapValues { (_, elements) ->
-                getLowestGroup(elements
-                    .mapNotNull { groupedElements[it] }
-                    .toSet(), parentage )
+                getLowestGroup(elements.mapNotNull { groupedElements[it] }.toSet(), parentage, Dimension.V )
             }
 
+        val relevantContainersH = groupedElements.keys
+            .groupBy { it?.getContainer() }
+            .mapValues { (_, elements) ->
+                getLowestGroup(elements.mapNotNull { groupedElements[it] }.toSet(), parentage, Dimension.H )
+            }
+
+
         // we need to reverse this map so that we get groups-to-containers
-        relevantContainers.mapNotNull { (c, g) ->
-            val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
-            val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
-            if (c != null) {
-                listV.add(c)
-                listH.add(c)
+        relevantContainersV.mapNotNull { (c, g) ->
+            if (g != null) {
+                val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
+                if (c != null) {
+                    listV.add(c)
+                    listV.sortBy { -it.getDepth() }
+                }
             }
         }
 
-        // finally sort so that the outermost containers are done last.
-        relevantContainers.values.sortedBy { - it.height }
+        // we need to reverse this map so that we get groups-to-containers
+        relevantContainersH.mapNotNull { (c, g) ->
+            if (g != null) {
+                val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
+                if (c != null) {
+                    listH.add(c)
+                    listH.sortBy { -it.getDepth() }
+                }
+            }
+        }
     }
 
-    private fun getLowestGroup(groupsIn: Set<Group>, parentage: Map<Group, Group?>) : Group {
+    private fun getLowestGroup(groupsIn: Set<Group>, parentage: Map<Group, Group?>, axis: Dimension) : Group? {
         var groups = groupsIn
         while (groups.size > 1) {
             val lowestGroupHeight = groups.minOf { it.height }
             groups = groups
+                .filter { matchesAxis(axis, it) }
                 .mapNotNull { if (it.height == lowestGroupHeight) parentage[it] else it }
                 .toSet()
         }
 
-        return groups.first()
+        return groups.firstOrNull()
     }
 
     private fun relevantElements(topGroup: Group) : Map<DiagramElement?, Group> {
@@ -129,4 +144,26 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             groupParentage(g.b, g, parentage)
         }
     }
+
+    private fun matchesAxis(axis: Dimension, g: Group) : Boolean {
+        return when (axis) {
+            Dimension.V -> verticalAxis(g)
+            Dimension.H -> horizontalAxis(g)
+        }
+    }
+    fun combiningAxis(g: CompoundGroup) : Boolean {
+        val hasChildHorizontal = horizontalAxis(g.a) || horizontalAxis(g.b)
+        val hasChildVertical = verticalAxis(g.a) || verticalAxis(g.b)
+
+        return !horizontalAxis(g) && !verticalAxis(g) && hasChildHorizontal && hasChildVertical
+    }
+
+    fun horizontalAxis(g: Group): Boolean {
+        return g.axis.isHorizontal || g is LeafGroup
+    }
+
+    fun verticalAxis(g: Group): Boolean {
+        return g.axis.isVertical || g is LeafGroup
+    }
+
 }

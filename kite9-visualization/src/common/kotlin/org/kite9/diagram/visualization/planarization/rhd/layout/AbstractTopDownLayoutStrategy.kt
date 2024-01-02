@@ -81,9 +81,15 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                 best?.choose()
             }
         } else {
-            val pa = createPlacementApproach(gg, ld, canBeHoriz, canBeVert, true)
+            val ld2 = if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
+                null
+            } else {
+                ld
+            }
+
+            val pa = createPlacementApproach(gg, ld2, canBeHoriz, canBeVert, true)
             pa.choose()
-            log.send("Group layout = $ld")
+            log.send("Group layout = $ld2")
         }
     }
 

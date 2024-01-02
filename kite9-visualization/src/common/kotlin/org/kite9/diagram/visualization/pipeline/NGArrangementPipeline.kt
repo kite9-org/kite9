@@ -78,14 +78,19 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         for (i in 0 until spc) {
             sb.append(" ")
         }
-        val axis = g.axis as DirectedGroupAxis
-        val l: Layout? = g.layout
-        val h = if (g.axis.isHorizontal) "h" else " "
-        val v = if (g.axis.isVertical) "v" else " "
-        val line = (sb.toString() + g.groupNumber +
-                " " + (if ((g is LeafGroup)) g.toString() else axis)
-                + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v " + (if (g.axis.isLayoutRequired) "LR " else " ")
-                + (if ((g is CompoundGroup)) (g.a.groupNumber).toString() + " " + (g.b.groupNumber) else ""))
+        val line = if (g is CompoundGroup) {
+            val axis = g.axis as DirectedGroupAxis
+            val l: Layout? = g.layout
+            val h = if (g.axis.isHorizontal) "h" else " "
+            val v = if (g.axis.isVertical) "v" else " "
+            (sb.toString() + g.groupNumber +
+                    " " + axis
+                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                    + (g.a.groupNumber).toString() + " " + (g.b.groupNumber))
+        } else {
+            (sb.toString() + g.groupNumber +
+                    " " + g.toString())
+        }
         log.send(line)
         AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG += line + "\n"
         if (g is AbstractCompoundGroup) {
