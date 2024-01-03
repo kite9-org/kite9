@@ -103,9 +103,11 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
     }
 
     fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet) {
-        val minDist = ss.l.minimumDistanceTo(ss.r)
-        cso.ensureMinimumDistance(ss.l, ss.c, (minDist / 2.0).toInt())
-        cso.ensureMinimumDistance(ss.c, ss.r, (minDist / 2.0).toInt())
+        if (ss.c != null) {
+            val minDist = ss.l.minimumDistanceTo(ss.r)
+            cso.ensureMinimumDistance(ss.l, ss.c!!, (minDist / 2.0).toInt())
+            cso.ensureMinimumDistance(ss.c!!, ss.r, (minDist / 2.0).toInt())
+        }
     }
 
     fun visitRectangulars(r: Rectangular, f: (r: Rectangular) -> Unit) {

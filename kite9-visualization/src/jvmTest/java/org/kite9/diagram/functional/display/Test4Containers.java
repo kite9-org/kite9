@@ -80,7 +80,7 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		TextLabel tall = new TextLabel("7. Tall\n RIght", Direction.RIGHT);
 		TextLabel down = new TextLabel("8. Bottom (middle)", Direction.DOWN);
 		
-		top.setAttribute("style", "--kite9-horizontal-sizing: maximize; --kite9-direction: top;");
+		top.setAttribute("style", "--kite9-horizontal-sizing: maximize; --kite9-direction: up;");
 		right.setAttribute("style", "--kite9-horizontal-sizing: maximize; --kite9-direction: right;");
 		
 		tall.setAttribute("style", "--kite9-vertical-sizing: maximize; --kite9-direction: right;");
@@ -101,7 +101,7 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 						new TextLabel("12. Left \n2 \n(middle)", Direction.LEFT)), true, null, null);
 		
 		TextLabel topl = new TextLabel("13. Top (middle) \n1", Direction.LEFT);
-		topl.setAttribute("style", "--kite9-vertical-sizing: maximize; --kite9-horizontal-sizing: minimize; --kite9-direction: top;");
+		topl.setAttribute("style", "--kite9-vertical-sizing: maximize; --kite9-horizontal-sizing: minimize; --kite9-direction: up;");
 		
 		Context con4 = new Context("b4", 
 				createList(four, topl), true, null, null);

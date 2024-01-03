@@ -40,11 +40,11 @@ interface RectangularSlideableSet : SlideableSet<RectangularSlideableSet> {
     val d: Rectangular
     val l: C2RectangularSlideable
     val r: C2RectangularSlideable
-    val c: C2IntersectionSlideable
+    val c: C2IntersectionSlideable?
 
     fun getRectangularSlideables(): Collection<C2RectangularSlideable>
 
-    override fun getBufferSlideables() : Set<C2BufferSlideable> = setOf(c)
+    override fun getBufferSlideables() : Set<C2BufferSlideable> = setOfNotNull(c)
 
     fun getRectangularOnSide(s: Side) : C2RectangularSlideable {
         if (getRectangularsOnSide(s).size == 1) {
@@ -83,7 +83,7 @@ data class RectangularSlideableSetImpl(
     override val d: Rectangular,
     override val l: C2RectangularSlideable,
     override val r: C2RectangularSlideable,
-    override val c: C2IntersectionSlideable) : RectangularSlideableSet {
+    override val c: C2IntersectionSlideable?) : RectangularSlideableSet {
 
     override fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable): RectangularSlideableSet {
         return RectangularSlideableSetImpl(
@@ -130,7 +130,7 @@ data class RectangularSlideableSetImpl(
     }
 
     override fun getAll(): Set<C2Slideable> {
-        return setOf(l, r, c)
+        return setOfNotNull(l, r, c)
     }
 
     companion object {
@@ -152,15 +152,15 @@ data class RectangularSlideableSetImpl(
     }
 
     override fun wrapInRoutable(so: C2SlackOptimisation): RoutableSlideableSet {
-        val bl = C2OrbitSlideable(so, c.dimension, setOf(d))
-        val br = C2OrbitSlideable(so, c.dimension, setOf(d))
+        val bl = C2OrbitSlideable(so, l.dimension, setOf(d))
+        val br = C2OrbitSlideable(so, l.dimension, setOf(d))
 
         so.ensureMinimumDistance(bl, l, 0)
         so.ensureMinimumDistance(r, br, 0)
 
         return RoutableSlideableSetImpl(
             setOf(this),
-            setOf(bl, c, br),
+            setOfNotNull(bl, c, br),
             c,
             bl,
             br)
@@ -323,29 +323,34 @@ class C2SlackOptimisation : AbstractSlackOptimisation(), Logable {
         }
     }
 
-//    fun mergeSlideables(s1: C2RectangularSlideable?, s2: C2RectangularSlideable?) : C2RectangularSlideable {
-//        if (s1 == null) {
-//            return s2!!
-//        } else if (s2 == null) {
-//            return s1
-//        } else {
-//            val sNew = s1.merge(s2)
-//            // now we need to replace s1 and s2 in their containers
-//            val containsS1 = slideableMap.remove(s1)
-//            val containsS2 = slideableMap.remove(s2)
-//
-//            updateMaps(containsS1, s1, sNew)
-//            updateMaps(containsS2, s2, sNew)
-//
-//            slideables.add(sNew)
-//            slideables.remove(s1)
-//            slideables.remove(s2)
-//
-//            log.send("Merging: \n\t$s1\n\t$s2\nAdded: $sNew")
-//
-//            return sNew
-//        }
-//    }
+    fun mergeSlideables(s1: C2RectangularSlideable?, s2: C2RectangularSlideable?) : C2RectangularSlideable {
+        if (s1 == null) {
+            return s2!!
+        } else if (s2 == null) {
+            return s1
+        } else {
+            val sNew = s1.merge(s2)
+            // now we need to replace s1 and s2 in their containers
+            val containsS1 = slideableMap.remove(s1)
+            val containsS2 = slideableMap.remove(s2)
+            containsS1!!.addAll(containsS2!!)
+
+            updateMaps(containsS1, s1, s2, sNew)
+
+            slideables.add(sNew)
+            slideables.remove(s1)
+            slideables.remove(s2)
+
+            slideables.forEach {
+                it.replaceConstraint(s1, sNew)
+                it.replaceConstraint(s2, sNew)
+            }
+
+            log.send("Merging: \n\t$s1\n\t$s2\nAdded: $sNew")
+
+            return sNew
+        }
+    }
 
     private fun updateMaps(
         contains: Set<SlideableSet<*>>?,

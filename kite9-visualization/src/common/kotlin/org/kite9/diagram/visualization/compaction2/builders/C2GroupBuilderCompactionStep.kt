@@ -54,7 +54,7 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
 
-            val out = RoutableSlideableSetImpl(setOf(ss2), setOf(bl, br, c), c, bl, br)
+            val out = RoutableSlideableSetImpl(setOf(ss2), setOfNotNull(bl, br, c), c, bl, br)
             cso.add(g, out)
             log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())
             return out

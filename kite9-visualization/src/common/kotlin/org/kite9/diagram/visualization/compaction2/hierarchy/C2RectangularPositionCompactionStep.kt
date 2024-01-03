@@ -26,6 +26,7 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
     }
 
     private fun visit(r: Rectangular, c: C2Compaction) {
+        log.send("Positioning $r")
         val ssy = c.getSlackOptimisation(Dimension.H).getSlideablesFor(r)
         val ssx = c.getSlackOptimisation(Dimension.V).getSlideablesFor(r)
         if ((ssy != null) && (ssx != null)) {

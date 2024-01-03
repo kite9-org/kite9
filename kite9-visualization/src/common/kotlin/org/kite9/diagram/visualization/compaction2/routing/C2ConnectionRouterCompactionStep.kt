@@ -31,10 +31,10 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
         val vss = v.getSlideablesFor(d)!!
 
         return setOf(
-            C2Point(vss.c, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT),  // left
-            C2Point(vss.c, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
-            C2Point(hss.c, vss.l, if (arriving) Direction.DOWN else Direction.UP),  // top
-            C2Point(hss.c, vss.r, if (arriving) Direction.UP else Direction.DOWN),  // bottom
+            C2Point(vss.c!!, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT),  // left
+            C2Point(vss.c!!, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
+            C2Point(hss.c!!, vss.l, if (arriving) Direction.DOWN else Direction.UP),  // top
+            C2Point(hss.c!!, vss.r, if (arriving) Direction.UP else Direction.DOWN),  // bottom
         ).minus(usedStartEndPoints)
     }
 
