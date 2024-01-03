@@ -36,25 +36,31 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             return null
         }
 
-        val ss = cso.getSlideablesFor(de)
+        val ss1 = cso.getSlideablesFor(g)
 
-        if (ss != null) {
+        if (ss1 != null) {
+            return ss1
+        }
+
+        val ss2 = cso.getSlideablesFor(de)
+
+        if (ss2 != null) {
             // we need to create these then
-            val l = ss.l
-            val r = ss.r
-            val c = ss.c
+            val l = ss2.l
+            val r = ss2.r
+            val c = ss2.c
             val bl = C2OrbitSlideable(cso, d, setOf(de))
             val br = C2OrbitSlideable(cso, d, setOf(de))
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
 
-            val out = RoutableSlideableSetImpl(setOf(ss), setOf(bl, br, c), c, bl, br)
+            val out = RoutableSlideableSetImpl(setOf(ss2), setOf(bl, br, c), c, bl, br)
             cso.add(g, out)
-            log.send("Created RoutableSlideableSetImpl: ", out.getAll())
+            log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())
             return out
 
         } else {
-            return ss
+            return null
         }
     }
 

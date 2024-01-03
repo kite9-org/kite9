@@ -11,8 +11,6 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import kotlin.math.abs
 
-data class Zone(val minX: Int, val maxX: Int, val minY: Int, val maxY: Int)
-
 class C2SlideableSSP(
     val start: Set<C2Point>,
     val end: Set<C2Point>,
