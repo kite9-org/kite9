@@ -24,6 +24,17 @@ class C2SlideableSSP(
         return end.contains(r.point)
     }
 
+    private val allowedTraversal : Set<DiagramElement> = run {
+        val startElemHier = parents(startElem)
+        val endElemHeir = parents(endElem)
+        val intersection = startElemHier.intersect(endElemHeir)
+        val union = startElemHier.union(endElemHeir)
+        union
+            .minus(intersection)
+            .minus(startElem)
+            .minus(endElem)
+    }
+
     private fun remainingDistance1D(s: C2Slideable, from: Int, to: Int) : Int {
         return if (s.maximumPosition!! < from) {
             from - s.maximumPosition!!
@@ -64,6 +75,18 @@ class C2SlideableSSP(
         }
     }
 
+
+    private val commonMap = mutableMapOf<C2IntersectionSlideable, Set<DiagramElement>>()
+
+    private fun includeParentsOf(s: C2IntersectionSlideable) : Set<DiagramElement> {
+
+
+
+        return commonMap.getOrPut(s) {
+            s.intersects.flatMap { parents(it) }.toSet()
+        }
+    }
+
     private fun advance(
         d: Direction,
         perp: C2Slideable,
@@ -73,7 +96,7 @@ class C2SlideableSSP(
         c: C2Costing
     ) {
         val common = when (along) {
-            is C2IntersectionSlideable -> setOf(startElem, endElem)
+            is C2IntersectionSlideable -> includeParentsOf(along)
             is C2OrbitSlideable -> along.orbits
         }
 
@@ -101,7 +124,9 @@ class C2SlideableSSP(
                     val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
                     val matchingAnchors = perp.anchors
                         .filter { common.contains(it.e) }
-                        .any { it.s == okAnchorDirection }
+                        .any {
+                            (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
+                        }
                     if (!matchingAnchors) {
                         log.send("Can't move on from $perp going $d")
                     }
@@ -146,6 +171,14 @@ class C2SlideableSSP(
     }
 
     companion object {
+
+        fun parents(x: DiagramElement?) : Set<DiagramElement> {
+            return if (x == null) {
+                setOf()
+            } else {
+                return setOf(x).plus(parents(x.getParent()))
+            }
+        }
 
         fun isIncreasing(d: Direction): Boolean {
             return when (d) {
