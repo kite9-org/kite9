@@ -36,7 +36,15 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         val allLabels = c.getContents()
             .filterIsInstance<Label>()
 
-        val labelsBySide = allLabels.groupBy { it.getLabelPlacement() ?: Direction.DOWN }
+        val labelsBySide = allLabels
+            .groupBy { it.getLabelPlacement() ?: Direction.DOWN }
+            .map { (k, ll) ->
+                k to when (k) {
+                    Direction.LEFT, Direction.RIGHT -> ll.sortedBy { it.getHorizontalAlignment().ordinal }
+                    Direction.DOWN, Direction.UP -> ll.sortedBy { it.getVerticalAlignment().ordinal }
+                }
+            }
+            .toMap()
 
         val leftLabels = labelsBySide.get(Direction.LEFT).orEmpty()
         addLabelsToSide(Direction.LEFT, leftLabels, c, c2, allContent)
@@ -51,10 +59,13 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         addLabelsToSide(Direction.DOWN, downLabels, c, c2, allContent.plus(leftLabels).plus(rightLabels).plus(upLabels))
     }
 
-    private fun createSlideables(cso: C2SlackOptimisation, de: Label, d: Dimension) : RectangularSlideableSet {
-        log.send("Creating $de")
-
-        return checkCreate(de, d, cso, null, null)!!
+    private fun createSlideables(cso: C2SlackOptimisation, ll: List<Label>, d: Dimension, dd: Direction) : List<RectangularSlideableSet> {
+        val needsIntersection = d.isHoriz() == Direction.isHorizontal(dd)
+        val c = if (needsIntersection) C2IntersectionSlideable(cso, d, ll) else null
+        return ll.map {
+            log.send("Creating $it")
+            checkCreate(it, d, cso, c, null)!!
+        }
     }
 
     private fun addLabelsToSide(d: Direction, ll: List<Label>, c: Container, c2: C2Compaction, allContent: List<Rectangular>) {
@@ -65,16 +76,16 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         val csov = c2.getSlackOptimisation(Dimension.V)
 
         // label slideable sets
-        val hss = ll.associateWith { createSlideables(csoh, it, Dimension.H) }
-        val vss = ll.associateWith { createSlideables(csov, it, Dimension.V) }
+        val hss = createSlideables(csoh, ll, Dimension.H, d)
+        val vss = createSlideables(csov, ll, Dimension.V, d)
 
         // container slideable sets
         val cssh = csoh.getSlideablesFor(c)
         val cssv = csov.getSlideablesFor(c)
 
         // content slideable sets
-        val hssContent = allContent.associateWith { csoh.getSlideablesFor(it) }
-        val vssContent = allContent.associateWith { csov.getSlideablesFor(it) }
+        val hssContent = allContent.map { csoh.getSlideablesFor(it) }
+        val vssContent = allContent.map { csov.getSlideablesFor(it) }
 
         if ((cssh == null) || (cssv == null)) {
             // can't place labels if container is invisible
@@ -84,34 +95,27 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         when (d) {
             Direction.RIGHT -> {
                 log.send("Elements with direction RIGHT: ",ll)
-                val ordered = vss.values.toList()
-                separateItems(ordered, Dimension.V, csov, cssv)
-                mergeSlideables(cssh.r, hss.values.map { it.r }, csoh)
-                ensureSeparated(hssContent.values, hss.values, Dimension.H, csoh)
+                separateItems(vss, Dimension.V, csov, cssv)
+                ensureSeparateInternal(hss, cssh, Dimension.H, csoh)
+                ensureSeparated(hssContent, hss, Dimension.H, csoh)
             }
             Direction.LEFT -> {
                 log.send("Elements with direction RIGHT: ",ll)
-                val ordered = vss.values.toList()
-                separateItems(ordered, Dimension.V, csov, cssv)
-                mergeSlideables(cssh.l, hss.values.map { it.l }, csoh)
-                ensureSeparated(hss.values, hssContent.values, Dimension.H, csoh)
+                separateItems(vss, Dimension.V, csov, cssv)
+                ensureSeparateInternal(hss, cssh, Dimension.H, csoh)
+                ensureSeparated(hss, hssContent, Dimension.H, csoh)
             }
             Direction.DOWN -> {
                 log.send("Elements with direction DOWN: ",ll)
-                val ordered = hss.values.toList()
-                separateItems(ordered, Dimension.H, csoh, cssh)
-                mergeSlideables(cssv.r, vss.values.map { it.r }, csov)
-                ensureSeparated(vssContent.values, vss.values, Dimension.V, csov)
+                separateItems(hss, Dimension.H, csoh, cssh)
+                ensureSeparated(vssContent, vss, Dimension.V, csov)
+                ensureSeparateInternal(vss, cssv, Dimension.V, csov)
             }
             Direction.UP -> {
                 log.send("Elements with direction UP: ",ll)
-                val ordered = hss.values.toList()
-                separateItems(ordered, Dimension.H, csoh, cssh)
-                mergeSlideables(cssv.l, vss.values.map { it.l }, csov)
-                ensureSeparated(vss.values, vssContent.values, Dimension.V, csov)
-            }
-            else -> {
-
+                separateItems(hss, Dimension.H, csoh, cssh)
+                ensureSeparateInternal(vss, cssv, Dimension.V, csov)
+                ensureSeparated(vss, vssContent, Dimension.V, csov)
             }
         }
 
@@ -124,19 +128,31 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
 
             below.filterNotNull().forEach { b ->
                 val deB = b.d
-                val dist = getMinimumDistanceBetween(deA, Side.END, deB, Side.START, d, null, false)
+                val dist = getMinimumDistanceBetween(deA, Side.END, deB, Side.START, d, null, true)
                 cso.ensureMinimumDistance(a.r, b.l, dist.toInt())
             }
         }
     }
 
-    private fun mergeSlideables(r: C2RectangularSlideable, map: List<C2RectangularSlideable>, cso: C2SlackOptimisation) {
-        var out = r
+    private fun ensureSeparateInternal(inside: Collection<RectangularSlideableSet?>, o: RectangularSlideableSet, d: Dimension, cso: C2SlackOptimisation) {
+        val deOut = o.d
 
-        map.forEach {
-            out = cso.mergeSlideables(out, it)
+        inside.filterNotNull().forEach { i ->
+            val deIn = i.d
+            val distUp = getMinimumDistanceBetween(deOut, Side.START, deIn, Side.START, d, null, true)
+            val distDown = getMinimumDistanceBetween(deIn, Side.END, deOut, Side.END, d, null, true)
+            cso.ensureMinimumDistance(o.l, i.l, distUp.toInt())
+            cso.ensureMinimumDistance(i.r, o.r, distDown.toInt())
         }
     }
+
+//    private fun mergeSlideables(r: C2RectangularSlideable, map: List<C2RectangularSlideable>, cso: C2SlackOptimisation) {
+//        var out = r
+//
+//        map.forEach {
+//            out = cso.mergeSlideables(out, it)
+//        }
+//    }
 
     private fun separateItems(values: List<RectangularSlideableSet>, d: Dimension, cso: C2SlackOptimisation, containerSS: RectangularSlideableSet) {
         var prev : RectangularSlideableSet? = null

@@ -572,10 +572,6 @@ public class TestingEngine extends TestingHelp {
 					return;
 				}
 				
-				if ((inner instanceof Label) && (outer instanceof Label)) {
-					return; // could be next to each other
-				}
-				
 				if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
 					// check y-separation
 					

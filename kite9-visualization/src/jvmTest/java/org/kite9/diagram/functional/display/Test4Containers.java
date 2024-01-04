@@ -117,13 +117,13 @@ public class Test4Containers extends AbstractDisplayFunctionalTest {
 		
 		con5.setAttribute("style", "--kite9-sizing: minimize;");
 		
-		new Link(one, two);
-		new Link(three, four);
-		new Link(four, five);
+//		new Link(one, two);
+//		new Link(three, four);
+//		new Link(four, five);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(
-				con1, 
-				con2, 
-				con3, 
+				con1,
+				con2,
+				con3,
 				con4,
 				con5
 				), null);

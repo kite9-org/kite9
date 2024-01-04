@@ -158,4 +158,13 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
         }
 
     }
+
+
+//    private fun mergeSlideables(r: C2RectangularSlideable, map: List<C2RectangularSlideable>, cso: C2SlackOptimisation) {
+//        var out = r
+//
+//        map.forEach {
+//            out = cso.mergeSlideables(out, it)
+//        }
+//    }
 }

@@ -8,7 +8,7 @@ import org.kite9.diagram.model.position.End
  * Labels take up space on the diagram, so they have to be processed in the *orthogonalization* phase.
  * however they don't have connections so they are excluded from the Planarization phase.
  */
-interface Label : Rectangular {
+interface Label : AlignedRectangular {
 
     fun isConnectionLabel(): Boolean
 
