@@ -1,10 +1,6 @@
 package org.kite9.diagram.visualization.compaction2
 
-import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.DiagramElement
-import kotlin.math.max
 import kotlin.math.min
 
 
@@ -20,7 +16,9 @@ import kotlin.math.min
  */
 
 
-abstract sealed class C2BufferSlideable(so: SlackOptimisation, dimension: Dimension): C2Slideable(so, dimension) {
+sealed class C2BufferSlideable(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<Anchor>): C2RectangularSlideable(so, dimension, anchors) {
+
+    constructor(so: C2SlackOptimisation, dimension: Dimension) : this(so, dimension, emptySet())
 
     protected fun optionalMin(s: C2BufferSlideable) = if (this.maximumPosition != null) {
         if (s.maximumPosition != null) {
@@ -32,6 +30,6 @@ abstract sealed class C2BufferSlideable(so: SlackOptimisation, dimension: Dimens
         null
     }
 
-    abstract fun merge(with: C2BufferSlideable) : C2BufferSlideable
+    abstract override fun merge(with: C2RectangularSlideable) : C2BufferSlideable
 
 }

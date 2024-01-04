@@ -118,33 +118,19 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
     private fun createCompactor(mr: GroupResult): C2PluggableCompactor {
         val cd = displayer
-//        val steps = arrayOf(
-//            HierarchicalCompactionStep(cd),
-//            InnerFaceWithEmbeddingRectangularizer(cd),
-//            SubGraphInsertionCompactionStep(cd),
-//            PopOutRectangularizer(cd),
-//            SubGraphInsertionCompactionStep(cd),  //				new LoggingOptimisationStep(cd),
-//            MinimizeCompactionStep(cd),
-//            DiagramSizeCompactionStep(cd),
-//            LoggingOptimisationStep(cd),
-//            MaximizeCompactionStep(cd),  //				new LoggingOptimisationStep(cd),
-//            AlignmentCompactionStep(cd, LeftRightAligner(), CenteringAligner()),
-//            ConnectionAlignmentCompactionStep(),
-//            ConnectionRouteCompactionStep(),
-//            RectangularPositionCompactionStep(cd),
+//
 //            GridCellPositionCompactionStep(),
-//            LoggingOptimisationStep(cd)
-//        )
-
+//
         // essential compaction steps
+        val gp = elementMapper.getGridPositioner()
         val steps = arrayOf<C2CompactionStep>(
-            C2ContainerBuilderCompactionStep(cd, elementMapper.getGridPositioner()),
+            C2ContainerBuilderCompactionStep(cd, gp),
             C2LoggingCompactionStep(cd),
             C2GroupBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd, mr),
             C2LoggingCompactionStep(cd),
-            C2ConnectionRouterCompactionStep(cd, mr),
-            C2ContainerLabelCompactionStep(cd, elementMapper.getGridPositioner()),
+            C2ConnectionRouterCompactionStep(cd, gp),
+            C2ContainerLabelCompactionStep(cd, gp),
             C2MinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),

@@ -20,22 +20,31 @@ import kotlin.math.max
 class C2IntersectionSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
-    val intersects: List<DiagramElement>
-) : C2BufferSlideable(so, dimension) {
+    val intersects: List<DiagramElement>,
+    anchors: Set<Anchor>
+) : C2BufferSlideable(so, dimension, anchors) {
 
-    override fun merge(s: C2BufferSlideable) : C2IntersectionSlideable {
-        if ((s.dimension == dimension) && (s is C2IntersectionSlideable)) {
-            val out = C2IntersectionSlideable(so as C2SlackOptimisation, dimension,
-                s.intersects.plus(intersects))
+    constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: List<DiagramElement>) : this(so, dimension, intersects, emptySet())
 
-            out.minimum.merge(minimum, setOf(s.minimum, minimum))
-            out.minimum.merge(s.minimum, setOf(s.minimum, minimum))
-            out.maximum.merge(maximum, setOf(s.maximum, maximum))
-            out.maximum.merge(s.maximum, setOf(s.maximum, maximum))
-            out.minimumPosition = max(this.minimumPosition, s.minimumPosition)
-            out.maximumPosition = optionalMin(s)
-            this.done = true
-            s.done = true
+    override fun merge(s: C2RectangularSlideable) : C2IntersectionSlideable {
+        if (s.dimension == dimension) {
+            val out = when (s) {
+                is C2OrbitSlideable -> throw LogicException("Can't merge $this with $s")
+                is C2IntersectionSlideable -> C2IntersectionSlideable(
+                    so as C2SlackOptimisation, dimension,
+                    s.intersects.plus(intersects),
+                    s.anchors.plus(anchors).toSet()
+                )
+
+                is C2RectangularSlideable -> C2IntersectionSlideable(
+                    so as C2SlackOptimisation, dimension,
+                    intersects,
+                    s.anchors.plus(anchors).toSet()
+                )
+                else -> throw LogicException("Can't merge $this with $s")
+            }
+
+            handleMinimumMaximumAndDone(out, s)
             return out
         } else {
             throw LogicException("Can't merge $this with $s")
@@ -43,6 +52,6 @@ class C2IntersectionSlideable(
     }
 
     override fun toString(): String {
-        return "C2SI($number, $dimension, i/s=$intersects min=$minimumPosition, max=$maximumPosition done=$done)"
+        return "C2SI($number, $dimension, i/s=$intersects min=$minimumPosition, max=$maximumPosition done=$done${if (anchors.isNotEmpty()) " anchors=$anchors" else ""})"
     }
 }

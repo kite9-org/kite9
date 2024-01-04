@@ -2,12 +2,11 @@ package org.kite9.diagram.visualization.compaction2.routing
 
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Port
-import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.builders.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -17,7 +16,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutab
 import kotlin.math.max
 
 
-class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd,r) {
+class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
 
     override val prefix = "C2CR"
     override val isLoggingEnabled = true
@@ -47,7 +46,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
             vs.l.minimumPosition, vs.r.maximumPosition!!)
     }
 
-    private fun insertLink(c2: C2Compaction, c: Connection) {
+    private fun insertLink(c2: C2Compaction, c: Connection) : C2Route? {
         try {
             val startingPoints = createPoints(c2, c.getFrom(), false)
             val endingPoints = createPoints(c2, c.getTo(), true)
@@ -67,9 +66,11 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
             }
 
             c2.getRoutes()[c] = out
+            return out
 
         } catch (e: NoFurtherPathException) {
             log.error("Couldn't route: $c")
+            return null
         }
     }
 
@@ -139,6 +140,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
         queue.handleLinks(g)
     }
 
+    override fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?) = false
+
     override fun compact(c: C2Compaction, g: Group) {
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
@@ -153,18 +156,43 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, r: GroupResult) : 
 
         queue.forEach {
             if (it is Connection) {
-                insertLink(c, it)
+                val route = insertLink(c, it)
+                if (route != null) {
+                    val startPoint = getStart(route)
+                    val endPoint = route.point
+                    handleLabel(it.getFromLabel(), startPoint, c, endPoint.d)
+                    handleLabel(it.getToLabel(), route.point, c, Direction.reverse(startPoint.d)!!)
+                }
             }
         }
 
     }
 
+    private fun handleLabel(l: Label?, start: C2Point, c2: C2Compaction, d: Direction) {
+        if (l != null) {
+            val csoh = c2.getSlackOptimisation(Dimension.H)
+            val csov = c2.getSlackOptimisation(Dimension.V)
 
-//    private fun mergeSlideables(r: C2RectangularSlideable, map: List<C2RectangularSlideable>, cso: C2SlackOptimisation) {
-//        var out = r
-//
-//        map.forEach {
-//            out = cso.mergeSlideables(out, it)
-//        }
-//    }
+            val rssh = checkCreate(l, Dimension.H, csoh, null, null)!!
+            val rssv = checkCreate(l, Dimension.V, csov, null, null)!!
+
+            val horiz = Direction.isHorizontal(d)
+            val hc = (if (!horiz) start.getAlong() else start.getPerp()) as C2RectangularSlideable
+            val vc = (if (!horiz) start.getPerp() else start.getAlong()) as C2RectangularSlideable
+
+            // really simple merge for now
+            when (d) {
+                Direction.LEFT  -> {
+                }
+                Direction.DOWN, Direction.UP -> {
+                    csov.mergeSlideables(vc, rssv.r)
+                    csoh.mergeSlideables(hc, rssh.r)
+                }
+                Direction.RIGHT -> {
+
+                }
+            }
+        }
+    }
+
 }

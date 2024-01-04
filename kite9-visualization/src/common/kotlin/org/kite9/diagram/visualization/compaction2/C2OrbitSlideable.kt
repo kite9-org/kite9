@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
-import kotlin.math.max
 
 
 /**
@@ -21,21 +20,19 @@ class C2OrbitSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
     val orbits: Set<DiagramElement>,
-) : C2BufferSlideable(so, dimension) {
+    anchors: Set<Anchor>
+) : C2BufferSlideable(so, dimension, anchors) {
 
-    override fun merge(s: C2BufferSlideable) : C2OrbitSlideable {
-        if ((s.dimension == dimension) && (s is C2OrbitSlideable)) {
+    constructor(so: C2SlackOptimisation, dimension: Dimension, orbits: Set<DiagramElement>) : this(so, dimension, orbits, emptySet())
+
+    override fun merge(s: C2RectangularSlideable) : C2OrbitSlideable {
+        if ((s.dimension == dimension) && (s !is C2IntersectionSlideable)) {
+            val newOrbits = orbits.plus(if (s is C2OrbitSlideable) s.orbits else emptySet())
             val out = C2OrbitSlideable(so as C2SlackOptimisation, dimension,
-                s.orbits.plus(orbits).toSet())
+                newOrbits,
+                s.anchors.plus(anchors).toSet())
 
-            out.minimum.merge(minimum, setOf(s.minimum, minimum))
-            out.minimum.merge(s.minimum, setOf(s.minimum, minimum))
-            out.maximum.merge(maximum, setOf(s.maximum, maximum))
-            out.maximum.merge(s.maximum, setOf(s.maximum, maximum))
-            out.minimumPosition = max(this.minimumPosition, s.minimumPosition)
-            out.maximumPosition = optionalMin(s)
-            this.done = true
-            s.done = true
+            handleMinimumMaximumAndDone(out, s)
             return out
         } else {
             throw LogicException("Can't merge $this with $s")
@@ -43,6 +40,6 @@ class C2OrbitSlideable(
     }
 
     override fun toString(): String {
-        return "C2SO($number, $dimension, min=$minimumPosition, max=$maximumPosition orbits=$orbits done=$done)"
+        return "C2SO($number, $dimension, min=$minimumPosition, max=$maximumPosition orbits=$orbits done=$done${if (anchors.isNotEmpty()) " anchors=$anchors" else ""})"
     }
 }

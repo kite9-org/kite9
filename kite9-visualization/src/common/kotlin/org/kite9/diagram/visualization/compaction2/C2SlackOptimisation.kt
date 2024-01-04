@@ -12,15 +12,15 @@ interface SlideableSet<X : SlideableSet<X>> {
 
     fun getAll() : Set<C2Slideable>
 
-    fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable) : X
+    fun replaceRectangular(s: C2RectangularSlideable, with: C2RectangularSlideable) : X
 
-    fun replace(s: C2IntersectionSlideable, with: C2IntersectionSlideable) : X
+    fun replaceIntersection(s: C2IntersectionSlideable, with: C2IntersectionSlideable) : X
 
     fun replaceGeneric(s: C2Slideable, with: C2Slideable) : X {
-        return if ((s is C2RectangularSlideable) && (with is C2RectangularSlideable)) {
-            replace(s, with)
-        } else if ((s is C2IntersectionSlideable) && (with is C2IntersectionSlideable)) {
-            replace(s, with)
+        return if ((s is C2IntersectionSlideable) && (with is C2IntersectionSlideable)) {
+            replaceIntersection(s, with)
+        } else if ((s is C2RectangularSlideable) && (with is C2RectangularSlideable)) {
+            replaceRectangular(s, with)
         } else {
             throw LogicException("Can only replace slideable with same type $s $with")
         }
@@ -67,11 +67,11 @@ interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
     fun getRectangularSlideableSets() : Set<RectangularSlideableSet>
 
-    fun replace(s: C2OrbitSlideable, with: C2OrbitSlideable) : RoutableSlideableSet
+    fun replaceOrbit(s: C2OrbitSlideable, with: C2OrbitSlideable) : RoutableSlideableSet
 
     override fun replaceGeneric(s: C2Slideable, with: C2Slideable) : RoutableSlideableSet {
         return if ((s is C2OrbitSlideable) && (with is C2OrbitSlideable)) {
-            replace(s, with)
+            replaceOrbit(s, with)
         } else {
             super.replaceGeneric(s, with)
         }
@@ -85,7 +85,7 @@ data class RectangularSlideableSetImpl(
     override val r: C2RectangularSlideable,
     override val c: C2IntersectionSlideable?) : RectangularSlideableSet {
 
-    override fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable): RectangularSlideableSet {
+    override fun replaceRectangular(s: C2RectangularSlideable, with: C2RectangularSlideable): RectangularSlideableSet {
         return RectangularSlideableSetImpl(
             d,
             if (l == s) with else l,
@@ -94,7 +94,7 @@ data class RectangularSlideableSetImpl(
         )
     }
 
-    override fun replace(s: C2IntersectionSlideable, with: C2IntersectionSlideable): RectangularSlideableSet {
+    override fun replaceIntersection(s: C2IntersectionSlideable, with: C2IntersectionSlideable): RectangularSlideableSet {
         return RectangularSlideableSetImpl(
             d,
             l,
@@ -226,16 +226,16 @@ data class RoutableSlideableSetImpl(val rs: Set<RectangularSlideableSet>,
         return rs.flatMap { it.getRectangularSlideables() }.plus(bs).toSet()
     }
 
-    override fun replace(s: C2RectangularSlideable, with: C2RectangularSlideable): RoutableSlideableSetImpl {
+    override fun replaceRectangular(s: C2RectangularSlideable, with: C2RectangularSlideable): RoutableSlideableSetImpl {
         return RoutableSlideableSetImpl(
-            rs.map { k -> k.replace(s, with) }.toSet(),
+            rs.map { k -> k.replaceRectangular(s, with) }.toSet(),
             bs,
             c,
             bl,
             br)
     }
 
-    override fun replace(s: C2OrbitSlideable, with: C2OrbitSlideable): RoutableSlideableSetImpl {
+    override fun replaceOrbit(s: C2OrbitSlideable, with: C2OrbitSlideable): RoutableSlideableSetImpl {
         return RoutableSlideableSetImpl(
             rs,
             RectangularSlideableSetImpl.replaceIfPresent(bs, s, with),
@@ -244,7 +244,7 @@ data class RoutableSlideableSetImpl(val rs: Set<RectangularSlideableSet>,
             if (br == s) with else br)
     }
 
-    override fun replace(s: C2IntersectionSlideable, with: C2IntersectionSlideable): RoutableSlideableSetImpl {
+    override fun replaceIntersection(s: C2IntersectionSlideable, with: C2IntersectionSlideable): RoutableSlideableSetImpl {
         return RoutableSlideableSetImpl(
             rs,
             RectangularSlideableSetImpl.replaceIfPresent(bs, s, with),
@@ -287,21 +287,25 @@ class C2SlackOptimisation : AbstractSlackOptimisation(), Logable {
         return groupMap[group]
     }
 
-    fun mergeSlideables(s1: C2IntersectionSlideable?, s2: C2IntersectionSlideable?) : C2IntersectionSlideable? {
+    fun mergeSlideables(s1: C2IntersectionSlideable?, s2: C2RectangularSlideable?) : C2IntersectionSlideable? {
         return mergeSlideablesInner(s1, s2) as C2IntersectionSlideable?
     }
 
-    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2OrbitSlideable) : C2OrbitSlideable {
+    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2RectangularSlideable) : C2OrbitSlideable {
         return mergeSlideablesInner(s1, s2) as C2OrbitSlideable
     }
 
-    private fun mergeSlideablesInner(s1: C2BufferSlideable?, s2: C2BufferSlideable?) : C2BufferSlideable? {
+    fun mergeSlideables(s1: C2BufferSlideable, s2: C2RectangularSlideable) : C2BufferSlideable {
+        return mergeSlideablesInner(s1, s2) as C2BufferSlideable
+    }
+
+    private fun <X : C2RectangularSlideable> mergeSlideablesInner(s1: X?, s2: X?) : X? {
         if (s1 == null) {
             return s2
         } else if (s2 == null) {
             return s1
         } else {
-            val sNew = s1.merge(s2)
+            val sNew = s1.merge(s2) as X
             // now we need to replace s1 and s2 in their containers
             val containsS1 = slideableMap.remove(s1)
             val containsS2 = slideableMap.remove(s2)
