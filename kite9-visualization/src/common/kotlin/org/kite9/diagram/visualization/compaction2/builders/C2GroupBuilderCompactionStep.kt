@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -26,16 +27,15 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             compact(c, g.a)
             compact(c, g.b)
         } else if (g is LeafGroup) {
-            checkCreate(c.getSlackOptimisation(Dimension.H), g, g.connected, Dimension.H)
-            checkCreate(c.getSlackOptimisation(Dimension.V), g, g.connected, Dimension.V)
+            val e = g.connected
+            if (e is Rectangular) {
+                checkCreate(c.getSlackOptimisation(Dimension.H), g, e, Dimension.H)
+                checkCreate(c.getSlackOptimisation(Dimension.V), g, e, Dimension.V)
+            }
         }
     }
 
-    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: DiagramElement?, d: Dimension) : SlideableSet<*>? {
-        if (de == null) {
-            return null
-        }
-
+    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, d: Dimension) : SlideableSet<*>? {
         val ss1 = cso.getSlideablesFor(g)
 
         if (ss1 != null) {
@@ -53,8 +53,8 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             val br = C2OrbitSlideable(cso, d, setOf(de))
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
-
-            val out = RoutableSlideableSetImpl(setOf(ss2), setOfNotNull(bl, br, c), c, bl, br)
+            val out = RoutableSlideableSetImpl(setOfNotNull(bl, br, c), c, bl, br)
+            cso.contains(out, ss2)
             cso.add(g, out)
             log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())
             return out

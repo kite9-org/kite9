@@ -9,7 +9,6 @@ import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.UNBOUNDED
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.position.Direction.Companion.isHorizontal
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.style.Measurement
 import kotlin.math.abs
@@ -197,9 +196,9 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) : CompleteDisplayer, D
     private fun portPositionPixels(p: Port, d: Direction, on: Rectangular) : Double {
         val elementLength = getInternalDistance(on, d, reverse(d))
         val pxDist : Double = when {
-            p.getPortPosition().type == Measurement.PERCENTAGE ->  elementLength * p.getPortPosition().amount / 100
-            p.getPortPosition().amount < 0 -> elementLength + p.getPortPosition().amount
-            else  -> p.getPortPosition().amount.toDouble()
+            p.getContainerPosition().type == Measurement.PERCENTAGE ->  elementLength * p.getContainerPosition().amount / 100
+            p.getContainerPosition().amount < 0 -> elementLength + p.getContainerPosition().amount
+            else  -> p.getContainerPosition().amount.toDouble()
         }
 
         return when (d) {

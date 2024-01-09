@@ -5,9 +5,7 @@ import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.ConnectionsSeparation
 
-interface Connected : DiagramElement {
-
-    override fun getRenderingInformation(): RectangleRenderingInformation
+interface Connected : Positioned {
 
     /**
      * Returns an unmodifiable collection of links

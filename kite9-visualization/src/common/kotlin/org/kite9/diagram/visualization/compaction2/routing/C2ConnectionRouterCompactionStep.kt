@@ -65,7 +65,6 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 ensureSlackForConnection(out.point, out.prev, c, true)
             }
 
-            c2.getRoutes()[c] = out
             return out
 
         } catch (e: NoFurtherPathException) {
@@ -160,8 +159,11 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 if (route != null) {
                     val startPoint = getStart(route)
                     val endPoint = route.point
+                    writeRoute(it, route, 0)
+                    hso.checkConsistency()
                     handleLabel(it.getFromLabel(), startPoint, c, endPoint.d)
                     handleLabel(it.getToLabel(), route.point, c, Direction.reverse(startPoint.d)!!)
+                    hso.checkConsistency()
                 }
             }
         }
@@ -192,6 +194,15 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
                 }
             }
+        }
+    }
+
+    private fun writeRoute(c: Connection, r: C2Route?, i: Int) {
+        if (r != null) {
+            val p = r.point
+            (p.getAlong() as C2RectangularSlideable).addAnchor(ConnAnchor(c, i))
+            (p.getPerp() as C2RectangularSlideable).addAnchor(ConnAnchor(c, i))
+            writeRoute(c, r.prev, i+1)
         }
     }
 

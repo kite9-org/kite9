@@ -20,8 +20,8 @@ import kotlin.math.min
 
 class RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractCompactionStep(cd) {
 
-    override fun compact(c: Compaction, r: Embedding, rc: Compactor) {
-        if (r.isTopEmbedding) {
+    override fun compact(c: Compaction, e: Embedding, rc: Compactor) {
+        if (e.isTopEmbedding) {
             compactInternal(c)
         }
     }
@@ -61,7 +61,7 @@ class RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractCompact
                 r.getContents()
                     .filterIsInstance<Port>()
                     .forEach {
-                        val pp = it.getPortPosition()
+                        val pp = it.getContainerPosition()
                         val direction = it.getPortDirection()
                         when (direction) {
                             Direction.LEFT -> setPortPosition(it, position.x(), measure(position.y(), size.y(), pp))

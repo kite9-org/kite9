@@ -75,28 +75,28 @@ abstract class AbstractConnectedRectangular(
         return linkInset
     }
 
-    override fun getConnectionAlignment(d: Direction): Placement {
+    override fun getConnectionAlignment(side: Direction): Placement {
         ensureInitialized()
-        return alignments[d.ordinal]
+        return alignments[side.ordinal]
     }
 
     /**
      * Connected elements might also have ports, which inform the size of the element
      */
-    override fun ensureMinimumSize(c1: Dimension2D, within: Dimension2D): CostedDimension2D {
+    override fun ensureMinimumSize(c: Dimension2D, within: Dimension2D): CostedDimension2D {
         if (this is Container) {
             val portSizing = getContents()
                 .filterIsInstance<Port>()
-                .filter { it.getPortPosition().type == Measurement.PIXELS }
+                .filter { it.getContainerPosition().type == Measurement.PIXELS }
                 .groupBy { Direction.isHorizontal(it.getPortDirection()) }
                 .mapValues {
                     it.value
-                        .maxOf { abs(it.getPortPosition().amount) }
+                        .maxOf { abs(it.getContainerPosition().amount) }
                 }
-            val c2 = CostedDimension2D(max(c1.w, (portSizing[false]?:0.0).toDouble()), max(c1.h, (portSizing[true]?:0.0).toDouble()))
+            val c2 = CostedDimension2D(max(c.w, (portSizing[false]?:0.0).toDouble()), max(c.h, (portSizing[true]?:0.0).toDouble()))
             return super.ensureMinimumSize(c2, within)
         } else {
-            return super.ensureMinimumSize(c1, within)
+            return super.ensureMinimumSize(c, within)
         }
     }
 }

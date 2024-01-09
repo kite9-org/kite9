@@ -36,12 +36,4 @@ class C2CompactionImpl(
     override fun getDiagram(): Diagram {
         return diagram
     }
-
-    private val routes = mutableMapOf<Connection, C2Route>()
-
-    override fun getRoutes(): MutableMap<Connection, C2Route> {
-        return routes
-    }
-
-
 }

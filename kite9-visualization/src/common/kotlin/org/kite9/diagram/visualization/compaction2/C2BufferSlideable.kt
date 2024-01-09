@@ -16,9 +16,7 @@ import kotlin.math.min
  */
 
 
-sealed class C2BufferSlideable(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<Anchor>): C2RectangularSlideable(so, dimension, anchors) {
-
-    constructor(so: C2SlackOptimisation, dimension: Dimension) : this(so, dimension, emptySet())
+sealed class C2BufferSlideable(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<Anchor>): C2RectangularSlideable(so, dimension, anchors.toMutableSet()) {
 
     protected fun optionalMin(s: C2BufferSlideable) = if (this.maximumPosition != null) {
         if (s.maximumPosition != null) {

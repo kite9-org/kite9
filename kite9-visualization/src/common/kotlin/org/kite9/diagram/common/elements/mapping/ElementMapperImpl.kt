@@ -24,8 +24,8 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     private var hasConnections: MutableMap<DiagramElement?, Boolean> = HashMap()
     private var fractions: MutableMap<Pair<DiagramElement, Direction>, Map<DiagramElement, LongFraction>> = hashMapOf()
 
-    override fun hasOuterCornerVertices(d: DiagramElement): Boolean {
-        return cornerVertices.containsKey(d)
+    override fun hasOuterCornerVertices(c: DiagramElement): Boolean {
+        return cornerVertices.containsKey(c)
     }
 
     override fun getOuterCornerVertices(c: DiagramElement): CornerVertices {
@@ -56,7 +56,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
     private fun getBaseGridCornerVertices(c: Container?): BaseGridCornerVertices {
         var bgcv = baseGrids[c]
         if (bgcv == null) {
-            bgcv = BaseGridCornerVertices(c!!, c!!.getDepth() + 1)
+            bgcv = BaseGridCornerVertices(c!!, c.getDepth() + 1)
             baseGrids[c] = bgcv
         }
         return bgcv
@@ -86,9 +86,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
             } else {
                 throw LogicException("Unknown BiDirectional type: $element")
             }
-            if (element != null) {
-                edges[element] = e
-            }
+            edges[element] = e
             e
         } else {
             val oldFrom = e.getFrom()
@@ -104,23 +102,23 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
         }
     }
 
-    override fun getPlanarizationVertex(de: DiagramElement): Vertex {
-        var v = singleVertices[de]
+    override fun getPlanarizationVertex(c: DiagramElement): Vertex {
+        var v = singleVertices[c]
         if (v == null) {
-            if (de is ConnectedRectangular) {
-                v = ConnectedRectangularVertex(de.getID(), de)
-                singleVertices[de] = v
-            }else if (de is Port) {
-                val c1 = de.getContainer()!!
+            if (c is ConnectedRectangular) {
+                v = ConnectedRectangularVertex(c.getID(), c)
+                singleVertices[c] = v
+            }else if (c is Port) {
+                val c1 = c.getContainer()!!
                 val cv = getOuterCornerVertices(c1)
-                val (fracX, fracY) = buildFractionPair(c1, de)
+                val (fracX, fracY) = buildFractionPair(c1, c)
                 v = cv.createVertex(fracX, fracY,
-                    HPos.getFromDirection(de.getPortDirection()), VPos.getFromDirection(de.getPortDirection()),
-                    c1, de)
+                    HPos.getFromDirection(c.getPortDirection()), VPos.getFromDirection(c.getPortDirection()),
+                    c1, c)
 
-                singleVertices[de] = v
+                singleVertices[c] = v
             } else {
-                throw LogicException("Not sure how to create vertex for $de")
+                throw LogicException("Not sure how to create vertex for $c")
             }
         }
         return v
@@ -132,7 +130,7 @@ class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
                 c.getContents()
                     .filterIsInstance<Port>()
                     .filter { it.getPortDirection() == d }
-                    .map { it to it.getPortPosition() }
+                    .map { it to it.getContainerPosition() }
             } else {
                 emptyList()
             } + if (c is Connected) {

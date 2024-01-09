@@ -107,7 +107,7 @@ abstract class AligningRectangularizer(cd: CompleteDisplayer?) : PrioritizingRec
 
     private fun getCommonPortPlacement(a: ElementSlideable, b: ElementSlideable): Placement? {
         val port = a.ports.intersect(b.ports).firstOrNull()
-        return port?.getPortPosition()
+        return port?.getContainerPosition()
     }
 
     fun positionSlideable(

@@ -35,7 +35,7 @@ class PortImpl(
         return portSide
     }
 
-    override fun getPortPosition(): Placement {
+    override fun getContainerPosition(): Placement {
         ensureInitialized()
         return portPlacement
     }

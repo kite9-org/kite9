@@ -17,12 +17,12 @@ import kotlin.math.min
 open class C2RectangularSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
-    val anchors: Set<Anchor>
+    val anchors: MutableSet<Anchor>
 ) : C2Slideable(so, dimension) {
 
     open fun merge(s: C2RectangularSlideable) : C2RectangularSlideable {
         if (s.dimension == dimension) {
-            val out = C2RectangularSlideable(so as C2SlackOptimisation, dimension, anchors.plus(s.anchors))
+            val out = C2RectangularSlideable(so as C2SlackOptimisation, dimension, anchors.plus(s.anchors).toMutableSet())
             handleMinimumMaximumAndDone(out, s)
             return out
         } else {
@@ -54,6 +54,11 @@ open class C2RectangularSlideable(
         null
     }
 
+    fun addAnchor(a: Anchor) {
+        anchors.add(a)
+    }
+
+
     override fun toString(): String {
         return "C2SR($number, $dimension, anchors=$anchors, min=$minimumPosition, max=$maximumPosition done=$done)"
     }
@@ -61,5 +66,5 @@ open class C2RectangularSlideable(
     constructor(so: C2SlackOptimisation,
                 dimension: Dimension,
                 de: Rectangular,
-                side: Side) : this(so, dimension, setOf(RectAnchor(de, side)))
+                side: Side) : this(so, dimension, mutableSetOf(RectAnchor(de, side)))
 }

@@ -54,7 +54,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                 so.ensureMinimumDistance(inner.br, outer.r, 0)
 
                 // now make sure that the rectangulars composing the routable are well-separated
-                inner.getRectangularSlideableSets().forEach { embed(d, outer, it, so, it.d) }
+                so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }
             }
         }
 

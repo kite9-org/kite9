@@ -5,16 +5,8 @@ import org.kite9.diagram.model.style.ContainerPosition
 
 /**
  * Marker interface for diagram elements which consume a rectangular space, and therefore
- * return [RectangleRenderingInformation].
+ * return width and height in [RectangleRenderingInformation].
  *
  * @author robmoffat
  */
-interface Rectangular : DiagramElement {
-
-    override fun getRenderingInformation(): RectangleRenderingInformation
-
-    /**
-     * Any other details about how this rectangular is to be positioned in the container.
-     */
-    fun getContainerPosition(): ContainerPosition?
-}
+interface Rectangular : Positioned

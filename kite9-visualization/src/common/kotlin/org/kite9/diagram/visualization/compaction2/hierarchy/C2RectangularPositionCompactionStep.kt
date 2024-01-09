@@ -48,7 +48,7 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
                 r.getContents()
                     .filterIsInstance<Port>()
                     .forEach {
-                        val pp = it.getPortPosition()
+                        val pp = it.getContainerPosition()
                         val direction = it.getPortDirection()
                         when (direction) {
                             Direction.LEFT -> setPortPosition(it, position.x(), measure(position.y(), size.y(), pp))

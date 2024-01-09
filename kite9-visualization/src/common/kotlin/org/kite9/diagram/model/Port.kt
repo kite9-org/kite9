@@ -7,6 +7,6 @@ interface Port : Connected {
 
     fun getPortDirection(): Direction
 
-    fun getPortPosition(): Placement
+    override fun getContainerPosition(): Placement
 
 }

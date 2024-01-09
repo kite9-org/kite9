@@ -64,8 +64,8 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
                 separateRectangular(contents, Side.END, container, Side.END, cso, distR)
             }
             is RoutableSlideableSet -> {
-                val leftC = container.getRectangularOnSide(Side.START)
-                val rightC = container.getRectangularOnSide(Side.END)
+                val leftC = container.l
+                val rightC = container.r
                 val leftI = contents.bl
                 val rightI = contents.br
                 cso.ensureMinimumDistance(leftC, leftI, 0);
@@ -76,6 +76,8 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
             else -> throw LogicException("Unknown type")
         }
     }
+
+
 
     /**
      * Ensures that b is after a by a given distance
@@ -88,8 +90,8 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         cso: C2SlackOptimisation,
         dist: Double
     ) {
-        val set1 = a.getRectangularsOnSide(aSide)
-        val set2 = b.getRectangularsOnSide(bSide)
+        val set1 = cso.getRectangularsOnSide(aSide, a)
+        val set2 = cso.getRectangularsOnSide(bSide, b)
         set1.forEach { l ->
             set2.forEach { r ->  cso.ensureMinimumDistance(l, r, dist.toInt())}
         }

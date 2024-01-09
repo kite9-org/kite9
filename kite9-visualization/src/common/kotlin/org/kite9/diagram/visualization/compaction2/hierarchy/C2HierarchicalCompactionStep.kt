@@ -147,8 +147,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         cso: C2SlackOptimisation,
         d: Dimension
     ) {
-        val aSlideables =  a.getRectangularsOnSide(aSide)
-        val bSlideables = b.getRectangularsOnSide(bSide)
+        val aSlideables =  cso.getRectangularsOnSide(aSide,a)
+        val bSlideables = cso.getRectangularsOnSide(bSide, b)
 
         val aElements = aSlideables
             .flatMap { r -> r.anchors }

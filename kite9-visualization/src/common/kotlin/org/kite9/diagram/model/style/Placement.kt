@@ -1,6 +1,6 @@
 package org.kite9.diagram.model.style
 
-data class Placement(val type: Measurement, val amount: Double) : Comparable<Placement> {
+data class Placement(val type: Measurement, val amount: Double) : Comparable<Placement>, ContainerPosition {
 
     companion object {
 
