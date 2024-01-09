@@ -2,10 +2,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Port
-import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.Dimension2D
@@ -73,6 +70,13 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
             r.getContents()
                 .filterIsInstance<Rectangular>()
                 .forEach { visit(it, c) }
+
+            r.getContents()
+                .filterIsInstance<Connection>()
+                .forEach { conn ->
+                    conn.getFromLabel()?.let { visit(it, c) }
+                    conn.getToLabel()?.let { visit(it, c) }
+                }
         }
     }
 
