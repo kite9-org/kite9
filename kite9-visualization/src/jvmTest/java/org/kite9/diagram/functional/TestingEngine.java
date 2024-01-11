@@ -46,6 +46,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Gr
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
+import org.w3c.dom.css.Rect;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -534,18 +535,26 @@ public class TestingEngine extends TestingHelp {
 	}
 		
 	private void checkOverlap(Rectangular outer, Diagram d, BasicCompleteDisplayer disp) {
-		RectangleRenderingInformation ri = (RectangleRenderingInformation) outer.getRenderingInformation();
-		Rectangle2D outerRect;
-		try {
-			outerRect = createRect(ri);
-		} catch (NullPointerException e) {
-			throw new ElementsMissingException(outer.getID(), 1);
-		}
+
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement inner) {
 				if (inner instanceof Rectangular) {
+					Rectangular outer = inner.getContainer();
+
+					if (outer == null) {
+						return;
+					}
+
+					Rectangle2D outerRect;
+					try {
+						RectangleRenderingInformation ri = outer.getRenderingInformation();
+						outerRect = createRect(ri);
+					} catch (NullPointerException e) {
+						throw new ElementsMissingException(outer.getID(), 1);
+					}
+
 					if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
 						Rectangle2D innerRect = createRect(inner.getRenderingInformation());
 	
@@ -555,11 +564,31 @@ public class TestingEngine extends TestingHelp {
 	
 						if (isChildOf(inner, outer)) {
 							checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
-	 					} else if (inner instanceof Rectangular) {
+	 					} else if (isIgnorableLabel((Rectangular) inner, outer)) {
+							// don't do the check
+						} else if (inner instanceof Rectangular) {
 							checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
 						}
 					}
 				} 
+			}
+
+			private boolean isIgnorableLabel(Rectangular r, Rectangular o) {
+				if (r instanceof Label) {
+					DiagramElement p = r.getParent();
+					if (p instanceof Connection) {
+						Connection c= (Connection) p;
+						if ((c.getFromLabel() == r) && (c.getFrom().getParent() == o)) {
+							return true;
+						}
+
+						if ((c.getToLabel() == r) && (c.getTo().getParent() == o)) {
+							return true;
+						}
+					}
+				}
+
+				return false;
 			}
 
 		
