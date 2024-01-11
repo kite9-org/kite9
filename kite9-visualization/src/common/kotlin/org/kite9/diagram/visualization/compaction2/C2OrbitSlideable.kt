@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.DiagramElement
 
 
 /**
@@ -19,23 +18,23 @@ import org.kite9.diagram.model.DiagramElement
 class C2OrbitSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
-    val orbits: Set<DiagramElement>,
+    val orbits: Set<RectAnchor>,
     anchors: Set<Anchor>
 ) : C2BufferSlideable(so, dimension, anchors) {
 
-    constructor(so: C2SlackOptimisation, dimension: Dimension, orbits: Set<DiagramElement>) : this(so, dimension, orbits, emptySet())
+    constructor(so: C2SlackOptimisation, dimension: Dimension, orbits: Set<RectAnchor>) : this(so, dimension, orbits, emptySet())
 
-    override fun merge(s: C2RectangularSlideable) : C2OrbitSlideable {
-        if ((s.dimension == dimension) && (s !is C2IntersectionSlideable)) {
-            val newOrbits = orbits.plus(if (s is C2OrbitSlideable) s.orbits else emptySet())
+    override fun merge(with: C2RectangularSlideable) : C2OrbitSlideable {
+        if ((with.dimension == dimension) && (with !is C2IntersectionSlideable)) {
+            val newOrbits = orbits.plus(if (with is C2OrbitSlideable) with.orbits else emptySet())
             val out = C2OrbitSlideable(so as C2SlackOptimisation, dimension,
                 newOrbits,
-                s.anchors.plus(anchors).toSet())
+                with.anchors.plus(anchors).toSet())
 
-            handleMinimumMaximumAndDone(out, s)
+            handleMinimumMaximumAndDone(out, with)
             return out
         } else {
-            throw LogicException("Can't merge $this with $s")
+            throw LogicException("Can't merge $this with $with")
         }
     }
 

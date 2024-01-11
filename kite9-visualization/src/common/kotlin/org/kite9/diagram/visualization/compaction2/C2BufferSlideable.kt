@@ -28,6 +28,6 @@ sealed class C2BufferSlideable(so: C2SlackOptimisation, dimension: Dimension, an
         null
     }
 
-    abstract override fun merge(with: C2RectangularSlideable) : C2BufferSlideable
+    abstract override fun merge(s: C2RectangularSlideable) : C2BufferSlideable
 
 }

@@ -97,7 +97,7 @@ class C2SlideableSSP(
     ) {
         val common = when (along) {
             is C2IntersectionSlideable -> includeParentsOf(along)
-            is C2OrbitSlideable -> along.orbits
+            is C2OrbitSlideable -> along.orbits.map { it.e }.toSet()
         }
 
         if (canAdvanceFrom(perp, d, common, along)) {
@@ -146,7 +146,7 @@ class C2SlideableSSP(
     private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable): Boolean {
         return when (k) {
             is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
-            is C2OrbitSlideable ->  k.orbits.any { common.contains(it) }
+            is C2OrbitSlideable ->  k.orbits.any { common.contains(it.e) }
             is C2IntersectionSlideable -> nextTo(k.intersects, common, endElem)
         }
     }

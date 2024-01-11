@@ -26,8 +26,6 @@ interface SlideableSet<X : SlideableSet<X>> {
         }
     }
 
-    //fun getRectangularsOnSide(s: Side) : Set<C2RectangularSlideable>
-
     fun getBufferSlideables() : Set<C2BufferSlideable>
 
     fun mergeWithOverlap(over: SlideableSet<*>, c2: C2SlackOptimisation) : RoutableSlideableSet
@@ -145,17 +143,9 @@ data class RectangularSlideableSetImpl(
         }
     }
 
-//    override fun getRectangularsOnSide(s: Side): Set<C2RectangularSlideable> {
-//        return when (s) {
-//            Side.START -> setOf(l)
-//            Side.END -> setOf(r)
-//            else -> setOf()
-//        }
-//    }
-
     override fun wrapInRoutable(so: C2SlackOptimisation): RoutableSlideableSet {
-        val bl = C2OrbitSlideable(so, l.dimension, setOf(d))
-        val br = C2OrbitSlideable(so, l.dimension, setOf(d))
+        val bl = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.START)))
+        val br = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.END)))
 
         so.ensureMinimumDistance(bl, l, 0)
         so.ensureMinimumDistance(r, br, 0)
@@ -458,11 +448,20 @@ class C2SlackOptimisation : AbstractSlackOptimisation(), Logable {
             }
         }
 
+        // TBD - need to do this
+//        containment.entries.forEach { (e, v) ->
+//            e.getAll().forEach { checkValid(it, e) }
+//            v
+//                .flatMap { l -> l.getAll() }
+//                .forEach { checkValid(it, e) }
+//        }
+
         log.send("Consistent")
     }
 
     fun remove(g: Group) {
-        groupMap.remove(g)
+        val v = groupMap.remove(g)
+        containment.remove(v)
     }
 
     companion object {

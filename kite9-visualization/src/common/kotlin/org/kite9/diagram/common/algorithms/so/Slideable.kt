@@ -66,7 +66,7 @@ abstract class Slideable(val so: SlackOptimisation,
     fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
         try {
             minimum.addForwardConstraint(to.minimum, dist)
-        } catch (e: RuntimeException) {
+        } catch (e: Throwable) {
             throw SlideableException("addMinimumForwardConstraint: $this to $to dist: $dist", e)
         }
     }
@@ -75,7 +75,7 @@ abstract class Slideable(val so: SlackOptimisation,
         try {
             minimum.addBackwardConstraint(to.minimum, dist)
             hasBackwardConstraints = true
-        } catch (e: RuntimeException) {
+        } catch (e: Throwable) {
             throw SlideableException("addMinimumBackwardConstraint: $this to $to dist: $dist", e)
         }
     }

@@ -57,20 +57,20 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 	@Test
 	public void test_12_1_LabelledLeftRight() throws Exception {
 		
-//		Glyph a = new Glyph("g1", "", "aasdsad", null, null);
-		Glyph b = new Glyph("g2", "", "b", null, null);
+		Glyph a = new Glyph("a", "", "a", null, null);
+		Glyph b = new Glyph("b", "", "b", null, null);
 		
-		LinkBody i1 = new LinkBody("arrow1", "i1asdas ");
+		LinkBody i1 = new LinkBody("i1", "i1asdas ");
 		
-		TextLabel fromLabel = new TextLabel("from (down)", Direction.DOWN);
+		TextLabel fromLabel = new TextLabel("from (i1 end)", Direction.DOWN);
 		fromLabel.setID("fromLabel");
-//		TextLabel toLabel = new TextLabel("to dsdsfds f ds f (up)", LabelPlacement.TOP);
-//		toLabel.setID("toLabel");
+		TextLabel toLabel = new TextLabel("to dsdsfds f ds f (b-end)", Direction.UP);
+		toLabel.setID("toLabel");
 		
-//		new Link(i1, a, null, null, null, from, Direction.LEFT);
-		new Link(i1, b, null, fromLabel, LinkEndStyle.ARROW, null, Direction.RIGHT);
+		new Link(i1, a, null, null, null, null, Direction.LEFT);
+		new Link(i1, b, null, fromLabel, LinkEndStyle.ARROW, toLabel, Direction.RIGHT);
 						
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(b, i1), null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(a, b, i1), null);
 		renderDiagram(d);
 	}
 	

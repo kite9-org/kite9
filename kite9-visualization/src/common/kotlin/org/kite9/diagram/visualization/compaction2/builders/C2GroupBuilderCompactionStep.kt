@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.builders
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -49,8 +50,8 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             val l = ss2.l
             val r = ss2.r
             val c = ss2.c
-            val bl = C2OrbitSlideable(cso, d, setOf(de))
-            val br = C2OrbitSlideable(cso, d, setOf(de))
+            val bl = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.START)))
+            val br = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.END)))
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
             val out = RoutableSlideableSetImpl(setOfNotNull(bl, br, c), c, bl, br)
