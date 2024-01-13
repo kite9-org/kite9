@@ -4,13 +4,14 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.AbstractC2ContainerCompactionStep
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 
 class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd, r) {
     override fun compact(c: C2Compaction, g: Group) {
@@ -32,12 +33,12 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     val rl = getRequiredLayout(g, Dimension.H)
                     when (rl) {
                         Layout.RIGHT -> {
-                            separateRectangular(ha, Side.END, hb, Side.START, slackOptimisationH, Dimension.H)
+                            separateRectangular(ha, hb, slackOptimisationH, Dimension.H)
                             ha.mergeWithGutter(hb, slackOptimisationH)
                         }
 
                         Layout.LEFT -> {
-                            separateRectangular(hb, Side.END, ha, Side.START, slackOptimisationH, Dimension.H)
+                            separateRectangular(hb, ha, slackOptimisationH, Dimension.H)
                             hb.mergeWithGutter(ha, slackOptimisationH)
                         }
 
@@ -71,12 +72,12 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     val rl = getRequiredLayout(g, Dimension.V)
                     when (rl) {
                         Layout.DOWN -> {
-                            separateRectangular(va, Side.END, vb, Side.START, slackOptimisationV, Dimension.V)
+                            separateRectangular(va, vb, slackOptimisationV, Dimension.V)
                             va.mergeWithGutter(vb, slackOptimisationV)
                         }
 
                         Layout.UP -> {
-                            separateRectangular(vb, Side.END, va, Side.START, slackOptimisationV, Dimension.V)
+                            separateRectangular(vb, va, slackOptimisationV, Dimension.V)
                             vb.mergeWithGutter(va, slackOptimisationV)
                         }
 
@@ -141,26 +142,24 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
     private fun separateRectangular(
         a: SlideableSet<*>,
-        aSide: Side,
         b: SlideableSet<*>,
-        bSide: Side,
         cso: C2SlackOptimisation,
         d: Dimension
     ) {
-        val aSlideables =  cso.getRectangularsOnSide(aSide,a)
-        val bSlideables = cso.getRectangularsOnSide(bSide, b)
+        val aSlideables =  cso.getRectangularsOnSide(Side.END,a)
+        val bSlideables = cso.getRectangularsOnSide(Side.START, b)
 
         val aElements = aSlideables
             .flatMap { r -> r.anchors }
-            .map { a -> a.e }
+            .map { it.e }
 
         val bElements = bSlideables
             .flatMap { r -> r.anchors }
-            .map { a -> a.e }
+            .map { it.e }
 
-        val distance = aElements.maxOf { ae ->
-            bElements.maxOf { be -> getMinimumDistanceBetween(ae, aSide, be, bSide, d, null, true) }
-        }
+        val distance = aElements.maxOfOrNull { ae ->
+            bElements.maxOf { be -> getMinimumDistanceBetween(ae, Side.END, be, Side.START, d, null, true) }
+        } ?: 0.0
 
         aSlideables.forEach { aS ->
             bSlideables.forEach { bS ->

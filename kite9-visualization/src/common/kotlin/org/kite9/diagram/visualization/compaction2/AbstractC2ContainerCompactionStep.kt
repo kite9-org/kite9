@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
@@ -25,15 +24,14 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         if (completedContainers.isNotEmpty()) {
             val so = c.getSlackOptimisation(d)
             var ss = so.getSlideablesFor(g)
-            if (ss != null) {
-                completedContainers.forEach { container ->
-                    val cs = so.getSlideablesFor(container)!!
+            completedContainers.forEach { container ->
+                val cs = so.getSlideablesFor(container)!!
 
-                    ss = embed(so, cs, ss!!, d)
+                ss = embed(so, cs, ss, d)
 
-                    // replace the group slideable sets so we use these instead
-                    so.add(g, ss!!)
-                }
+                // replace the group slideable sets so we use these instead
+                so.add(g, ss!!)
+
             }
         }
     }
@@ -45,7 +43,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun embed(so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension): RoutableSlideableSet {
+    private fun embed(so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet?, d: Dimension): RoutableSlideableSet {
         when (inner) {
             is RectangularSlideableSet -> embed(d, outer, inner, so, inner.d)
             is RoutableSlideableSet -> {
@@ -72,7 +70,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         // collect the set of elements represented by groups,
         // mapped to those groups.
         val groupedElements = relevantElements(r.groups().first())
-        val allContainers = relevantContainers(r.groups().first()).toSet()
+        val groupedContainers = relevantContainers(r.groups().first())
 
         // handy map of group's parents
         val parentage = mutableMapOf<Group, MutableList<Group>>()
@@ -80,19 +78,20 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         // collect all the containers of these elements
         // and map them to the lowest group that represents their contents
-        val relevantContainers = allContainers.associateWith {
+        val relevantContainers = groupedContainers.keys.associateWith {
+            val n = containsAnyLevel(groupedContainers, it)
             val o = containsAnyLevel(groupedElements, it)
-            o
+            (o + n).distinct()
         }
 
         val relevantContainersV = relevantContainers
-            .mapValues { (c, elements) ->
-                getLowestGroup(elements, parentage, Dimension.V, c )
+            .mapValues { (_, elements) ->
+                getLowestGroup(elements, parentage, Dimension.V)
             }
 
         val relevantContainersH = relevantContainers
-            .mapValues { (c, elements) ->
-                getLowestGroup(elements, parentage, Dimension.H, c )
+            .mapValues { (_, elements) ->
+                getLowestGroup(elements, parentage, Dimension.H)
             }
 
 
@@ -100,10 +99,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         relevantContainersV.mapNotNull { (c, g) ->
             if (g != null) {
                 val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
-                if (c != null) {
-                    listV.add(c)
-                    listV.sortBy { -it.getDepth() }
-                }
+                listV.add(c)
+                listV.sortBy { -it.getDepth() }
             }
         }
 
@@ -111,35 +108,31 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         relevantContainersH.mapNotNull { (c, g) ->
             if (g != null) {
                 val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
-                if (c != null) {
-                    listH.add(c)
-                    listH.sortBy { -it.getDepth() }
-                }
+                listH.add(c)
+                listH.sortBy { -it.getDepth() }
             }
         }
     }
 
     private fun contains(e: DiagramElement?, c: Container) : Boolean {
-        return if (e==null) {
-            false;
-        } else if (e == c) {
-            return true;
-        } else {
-            return contains(e.getParent(), c)
+        return when (e) {
+            null -> false
+            c -> true
+            else -> contains(e.getParent(), c)
         }
     }
 
-    private fun containsAnyLevel(groups: Map<DiagramElement?, List<Group>>, c: Container) : List<Group> {
+    private fun <X : DiagramElement> containsAnyLevel(groups: Map<X, List<Group>>, c: Container) : List<Group> {
         return groups.flatMap { (de, groups) ->
             if (contains(de, c)) {
                 groups
             } else {
-                emptyList<Group>()
+                emptyList()
             }
         }
     }
 
-    private fun getLowestGroup(groupsIn: List<Group>, parentage: Map<Group, List<Group>>, axis: Dimension, container: Container?) : Group? {
+    private fun getLowestGroup(groupsIn: List<Group>, parentage: Map<Group, List<Group>>, axis: Dimension) : Group? {
         var groups = groupsIn.filter { matchesAxis(axis, it) }.toSet()
 
         while (groups.size > 1) {
@@ -153,27 +146,41 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         return groups.firstOrNull()
     }
 
-    private fun relevantElements(topGroup: Group) : Map<DiagramElement?, List<Group>> {
+    private fun <X, Y> mergeMaps(a: Map<X, List<Y>>, b: Map<X, List<Y>>) : Map<X, List<Y>> {
+        return (a.keys + b.keys).associateWith {
+            val aList = a[it] ?: emptyList()
+            val bList = b[it] ?: emptyList()
+            (aList + bList).toSet().toList()
+        }
+    }
+
+    private fun relevantElements(topGroup: Group) : Map<DiagramElement, List<Group>> {
         return when (topGroup) {
-            is CompoundGroup -> relevantElements(topGroup.a).plus(relevantElements(topGroup.b))
-            is LeafGroup -> if (topGroup.connected != null) {
-                mapOf(topGroup.connected to listOf(topGroup))
-            } else {
-                mapOf()
+            is CompoundGroup -> mergeMaps(relevantElements(topGroup.a),(relevantElements(topGroup.b)))
+            is LeafGroup -> {
+                val c = topGroup.connected
+                if (c != null) {
+                    mapOf(c to listOf(topGroup))
+                } else {
+                    mapOf()
+                }
             }
             else -> mapOf()
         }
     }
 
-    private fun relevantContainers(topGroup: Group) : List<Container> {
+    private fun relevantContainers(topGroup: Group) : Map<Container, List<Group>> {
         return when (topGroup) {
-            is CompoundGroup -> relevantContainers(topGroup.a).plus(relevantContainers(topGroup.b))
-            is LeafGroup -> if (topGroup.container != null) {
-                listOf(topGroup.container!!)
-            } else {
-                emptyList()
+            is CompoundGroup -> mergeMaps(relevantContainers(topGroup.a),(relevantContainers(topGroup.b)))
+            is LeafGroup -> {
+                val c = topGroup.container
+                if (c != null) {
+                    mapOf(c to listOf(topGroup))
+                } else {
+                    emptyMap()
+                }
             }
-            else -> emptyList()
+            else -> emptyMap()
         }
     }
 
