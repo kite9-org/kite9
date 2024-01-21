@@ -1,10 +1,12 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
+import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -32,8 +34,30 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             if (e is Rectangular) {
                 checkCreate(c.getSlackOptimisation(Dimension.H), g, e, Dimension.H)
                 checkCreate(c.getSlackOptimisation(Dimension.V), g, e, Dimension.V)
+            } else {
+                // leaf node must be for container arrival
+                val f = g.container!!
+                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
             }
         }
+    }
+
+    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: Group, c: Container, d: Dimension) : SlideableSet<*>? {
+        val ss1 = cso.getSlideablesFor(g)
+
+        if (ss1 != null) {
+            return ss1
+        }
+
+        val ic = C2IntersectionSlideable(cso, d, listOf(c))
+        val bl = C2OrbitSlideable(cso, d, setOf())
+        val br = C2OrbitSlideable(cso, d, setOf())
+        val out = RoutableSlideableSetImpl(ic, bl, br)
+
+        cso.add(g, out)
+        log.send("Created a RouteableSlideableSet for $c: ", out.getAll())
+        return out
     }
 
     private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, d: Dimension) : SlideableSet<*>? {

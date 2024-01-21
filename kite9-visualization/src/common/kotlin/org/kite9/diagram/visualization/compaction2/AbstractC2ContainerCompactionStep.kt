@@ -3,6 +3,8 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -56,7 +58,9 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             }
         }
 
-        return outer.wrapInRoutable(so)
+        val out = outer.wrapInRoutable(so)
+        so.contains(out, outer)
+        return out
     }
 
     override val prefix: String

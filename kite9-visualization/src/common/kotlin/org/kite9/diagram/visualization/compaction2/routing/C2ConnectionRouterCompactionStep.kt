@@ -29,12 +29,25 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val hss = h.getSlideablesFor(d)!!
         val vss = v.getSlideablesFor(d)!!
 
-        return setOf(
-            C2Point(vss.c!!, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT),  // left
-            C2Point(vss.c!!, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
-            C2Point(hss.c!!, vss.l, if (arriving) Direction.DOWN else Direction.UP),  // top
-            C2Point(hss.c!!, vss.r, if (arriving) Direction.UP else Direction.DOWN),  // bottom
-        ).minus(usedStartEndPoints)
+        val hInter = h.getAllSlideables()
+            .filterIsInstance<C2IntersectionSlideable>()
+            .filter { it.intersects.contains(d)}
+
+        val vInter = v.getAllSlideables()
+            .filterIsInstance<C2IntersectionSlideable>()
+            .filter { it.intersects.contains(d)}
+
+        val vertical = hInter.flatMap { listOf(
+            C2Point(it, vss.l, if (arriving) Direction.DOWN else Direction.UP),  // top
+            C2Point(it, vss.r, if (arriving) Direction.UP else Direction.DOWN),  // bottom
+        ) }.toSet()
+
+        val horizontal = vInter.flatMap { listOf(
+            C2Point(it, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT),  // left
+            C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
+        ) }.toSet()
+
+        return vertical + horizontal - usedStartEndPoints
     }
 
     private fun createZone(c2: C2Compaction, r: Rectangular) : Zone {
@@ -53,7 +66,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val allowTurns = (c.getDrawDirection() == null) || (c.getRenderingInformation().isContradicting)
             val endZone = createZone(c2, c.getTo() as Rectangular)
             val doer = C2SlideableSSP(startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, allowTurns, log)
-            log.send("Routing: $c")
+            log.send("Routing: $c via", doer.allowedTraversal)
             val out = doer.createShortestPath()
 
             log.send("Found shortest path: $out")
@@ -148,6 +161,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val vso = c.getSlackOptimisation(Dimension.V)
         val hso = c.getSlackOptimisation(Dimension.H)
 
+        val junctionMap = buildJunctionMap(c)
+
         visitRectangulars(c.getDiagram()) {
             ensureCentreSlideablePosition(hso, it)
             ensureCentreSlideablePosition(vso, it)
@@ -168,6 +183,15 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             }
         }
     }
+
+    private fun buildJunctionMap(c: C2Compaction): Map<C2BufferSlideable, List<C2Slideable>> {
+       return buildJunctionMap1D(c.getSlackOptimisation(Dimension.V)) + buildJunctionMap1D(c.getSlackOptimisation(Dimension.V))
+    }
+
+    private fun buildJunctionMap1D(so: C2SlackOptimisation): Map<C2BufferSlideable, List<C2Slideable>> {
+        return mapOf()
+    }
+
 
     private fun getUpdatedSlideable(old: C2RectangularSlideable, so: C2SlackOptimisation, conn: Connection) : C2Slideable? {
         val connAnchor = old.anchors.first { it.e == conn }

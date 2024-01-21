@@ -1,16 +1,15 @@
 package org.kite9.diagram.visualization.compaction2.sizing
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlideable
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
-import org.kite9.diagram.visualization.compaction.Compaction
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction.segment.SegmentSlackOptimisation
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import kotlin.math.max
 

@@ -24,15 +24,27 @@ class C2SlideableSSP(
         return end.contains(r.point)
     }
 
-    private val allowedTraversal : Set<DiagramElement> = run {
-        val startElemHier = parents(startElem)
-        val endElemHeir = parents(endElem)
-        val intersection = startElemHier.intersect(endElemHeir)
-        val union = startElemHier.union(endElemHeir)
-        union
-            .minus(intersection)
-            .minus(startElem)
-            .minus(endElem)
+    val allowedTraversal : Set<DiagramElement> = run {
+        var se = startElem
+        var ee = endElem
+        val out = mutableSetOf<DiagramElement>()
+        while (se != ee) {
+            out.add(se)
+            out.add(ee)
+
+            if (se.getDepth() > ee.getDepth()) {
+                se = se.getParent()!!
+            } else if (ee.getDepth() > se.getDepth()) {
+                ee = ee.getParent()!!
+            } else {
+                se = se.getParent()!!
+                ee = ee.getParent()!!
+            }
+        }
+
+        out.add(ee)
+
+        out
     }
 
     private fun remainingDistance1D(s: C2Slideable, from: Int, to: Int) : Int {
@@ -79,8 +91,6 @@ class C2SlideableSSP(
     private val commonMap = mutableMapOf<C2IntersectionSlideable, Set<DiagramElement>>()
 
     private fun includeParentsOf(s: C2IntersectionSlideable) : Set<DiagramElement> {
-
-
 
         return commonMap.getOrPut(s) {
             s.intersects.flatMap { parents(it) }.toSet()
@@ -145,9 +155,9 @@ class C2SlideableSSP(
      */
     private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable): Boolean {
         return when (k) {
-            is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
             is C2OrbitSlideable ->  k.orbits.any { common.contains(it.e) }
             is C2IntersectionSlideable -> nextTo(k.intersects, common, endElem)
+            is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
         }
     }
 

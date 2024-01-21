@@ -19,28 +19,9 @@ class C2PluggableCompactor(val steps: Array<C2CompactionStep>) : Logable {
     val log by lazy { Kite9Log.instance(this) }
 
     fun compactDiagram(d: Diagram, gr: GroupResult): C2Compaction {
-        val horizontal = C2SlackOptimisation()
-        val vertical = C2SlackOptimisation()
-        val compaction = instantiateCompaction(
-            d,
-            horizontal,
-            vertical,
-        )
+        val compaction = C2CompactionImpl(d)
         compact(compaction, gr.groups().first())
         return compaction
-    }
-
-
-    private fun instantiateCompaction(
-        d: Diagram,
-        horizontal: C2SlackOptimisation,
-        vertical: C2SlackOptimisation,
-    ): C2CompactionImpl {
-        return C2CompactionImpl(
-            d,
-            horizontal,
-            vertical
-        )
     }
 
     private fun compact(c: C2Compaction, g: Group) {

@@ -14,7 +14,7 @@ import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
-import org.kite9.diagram.visualization.compaction2.RectangularSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min

@@ -4,9 +4,8 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.style.DiagramElementSizing
-import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
-import org.kite9.diagram.visualization.compaction2.RectangularSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 
 class C2MaximizeCompactionStep(cd: CompleteDisplayer) : AbstractC2SizingCompactionStep(cd) {

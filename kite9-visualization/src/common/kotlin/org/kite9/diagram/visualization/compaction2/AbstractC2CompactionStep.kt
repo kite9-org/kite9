@@ -9,9 +9,10 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2CompactionStep, Logable {
 
