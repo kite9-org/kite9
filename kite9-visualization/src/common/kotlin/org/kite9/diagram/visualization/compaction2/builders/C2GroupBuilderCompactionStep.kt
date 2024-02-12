@@ -1,10 +1,15 @@
 package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.logging.Kite9ProcessingException
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Leaf
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -32,25 +37,34 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
         } else if (g is LeafGroup) {
             val e = g.connected
             if (e is Rectangular) {
-                checkCreate(c.getSlackOptimisation(Dimension.H), g, e, Dimension.H)
-                checkCreate(c.getSlackOptimisation(Dimension.V), g, e, Dimension.V)
+                val hso = c.getSlackOptimisation(Dimension.H)
+                val vso = c.getSlackOptimisation(Dimension.V)
+                val hr = hso.getSlideablesFor(e)!!
+                val vr = vso.getSlideablesFor(e)!!
+
+                val hss = checkCreate(hso, g, e, hr, Dimension.H)
+                val vss = checkCreate(vso, g, e, vr, Dimension.V)
+                c.createInitialJunctions(hss, vss, vr)
+                c.createInitialJunctions(vss, hss, hr)
             } else {
                 // leaf node must be for container arrival
                 val f = g.container!!
-                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
-                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
+                val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
+                c.createInitialJunctions(hss, vss, null)
+                c.createInitialJunctions(vss, hss, null)
             }
         }
     }
 
-    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: Group, c: Container, d: Dimension) : SlideableSet<*>? {
+    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: Group, c: Container, d: Dimension) : RoutableSlideableSet {
         val ss1 = cso.getSlideablesFor(g)
 
         if (ss1 != null) {
             return ss1
         }
 
-        val ic = C2IntersectionSlideable(cso, d, listOf(c))
+        val ic = C2IntersectionSlideable(cso, d, setOf(c))
         val bl = C2OrbitSlideable(cso, d, setOf())
         val br = C2OrbitSlideable(cso, d, setOf())
         val out = RoutableSlideableSetImpl(ic, bl, br)
@@ -60,7 +74,7 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
         return out
     }
 
-    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, d: Dimension) : SlideableSet<*>? {
+    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, ss2: RectangularSlideableSet, d: Dimension) : RoutableSlideableSet {
         val ss1 = cso.getSlideablesFor(g)
 
         if (ss1 != null) {
@@ -85,7 +99,7 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             return out
 
         } else {
-            return null
+            throw Kite9ProcessingException("Should have been content here")
         }
     }
 

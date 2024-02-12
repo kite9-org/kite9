@@ -37,7 +37,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, gp: GridPo
 
             val l = C2RectangularSlideable(cso, d, de, Side.START)
             val r = C2RectangularSlideable(cso, d, de, Side.END)
-            val c = cExisting ?: C2IntersectionSlideable(cso, d, listOf(de))
+            val c = cExisting ?: C2IntersectionSlideable(cso, d, setOf(de))
             cso.ensureMinimumDistance(l, r, ms.toInt())
 
             ss = RectangularSlideableSetImpl(de, l, r, c)

@@ -22,10 +22,6 @@ interface SlideableSet<X : SlideableSet<X>> {
 
     fun getBufferSlideables() : Set<C2BufferSlideable>
 
-    fun mergeWithOverlap(over: SlideableSet<*>, c2: C2SlackOptimisation) : RoutableSlideableSet
-
-    fun mergeWithGutter(after: SlideableSet<*>, c2: C2SlackOptimisation) : RoutableSlideableSet
-
     val done : Boolean
 
     val number : Int

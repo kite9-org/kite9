@@ -20,11 +20,11 @@ import kotlin.math.max
 class C2IntersectionSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
-    val intersects: List<DiagramElement>,
+    val intersects: Set<DiagramElement>,
     anchors: Set<Anchor>
 ) : C2BufferSlideable(so, dimension, anchors) {
 
-    constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: List<DiagramElement>) : this(so, dimension, intersects, emptySet())
+    constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: Set<DiagramElement>) : this(so, dimension, intersects, emptySet())
 
     override fun merge(s: C2RectangularSlideable) : C2IntersectionSlideable {
         if (s.dimension == dimension) {
@@ -36,12 +36,11 @@ class C2IntersectionSlideable(
                     s.anchors.plus(anchors).toSet()
                 )
 
-                is C2RectangularSlideable -> C2IntersectionSlideable(
+                else -> C2IntersectionSlideable(
                     so as C2SlackOptimisation, dimension,
                     intersects,
                     s.anchors.plus(anchors).toSet()
                 )
-                else -> throw LogicException("Can't merge $this with $s")
             }
 
             handleMinimumMaximumAndDone(out, s)

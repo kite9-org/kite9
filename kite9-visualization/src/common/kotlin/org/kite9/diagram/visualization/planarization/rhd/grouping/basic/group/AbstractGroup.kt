@@ -4,7 +4,7 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.visualization.planarization.rhd.GroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
-abstract class AbstractGroup protected constructor(
+abstract sealed class AbstractGroup protected constructor(
     override val groupNumber: Int,
     val hc: Int) :
     Group {

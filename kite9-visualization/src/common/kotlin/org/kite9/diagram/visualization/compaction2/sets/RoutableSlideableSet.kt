@@ -1,8 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.sets;
 
-import org.kite9.diagram.visualization.compaction2.C2IntersectionSlideable
-import org.kite9.diagram.visualization.compaction2.C2OrbitSlideable
-import org.kite9.diagram.visualization.compaction2.C2Slideable
+import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 
 /**
@@ -10,9 +8,12 @@ import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
  */
 interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
-    val c: C2IntersectionSlideable?
+    val c: C2BufferSlideable?
     val bl: C2OrbitSlideable
     val br: C2OrbitSlideable
+
+    override fun getAll() : Set<C2BufferSlideable>
+
 
     fun replaceOrbit(s: C2OrbitSlideable, with: C2OrbitSlideable) : RoutableSlideableSet
 
@@ -24,5 +25,9 @@ interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
             super.replaceGeneric(s, with)
         }
     }
+
+    fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
+
+    fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
 
 }

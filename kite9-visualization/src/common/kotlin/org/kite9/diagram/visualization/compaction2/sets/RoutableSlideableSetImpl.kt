@@ -4,7 +4,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.visualization.compaction2.*
 
 data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
-                                    override val c: C2IntersectionSlideable?,
+                                    override val c: C2BufferSlideable?,
                                     override val bl: C2OrbitSlideable,
                                     override val br: C2OrbitSlideable,
 ) : RoutableSlideableSet {
@@ -13,59 +13,34 @@ data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
 
     override var done = false
 
-    override fun mergeWithGutter(after: SlideableSet<*>, c2: C2SlackOptimisation): RoutableSlideableSet {
-        return when (after) {
-
-            is RoutableSlideableSet -> {
-                val newOrbit = c2.mergeSlideables(br, after.bl)
-                val allBs = setOf(bs, after.getBufferSlideables()).asSequence().flatten().minus(br).minus(after.bl).plus(newOrbit).toSet()
-                done = true
-                val new = RoutableSlideableSetImpl(allBs, null, bl, after.br)
-                c2.contains(new, c2.getContents(this).plus(c2.getContents(after)))
-                new
-            }
-
-            is RectangularSlideableSet -> {
-                done = true
-                val out = RoutableSlideableSetImpl(bs, c, bl, br)
-                c2.contains(out, c2.getContents(this).plus(after))
-                out
-            }
-            else -> throw LogicException("unsupported")
-        }
+    override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+        val newOrbit = c2.mergeSlideables(br, after.bl)
+        val allBs =
+            setOf(bs, after.getBufferSlideables()).asSequence().flatten().minus(br).minus(after.bl).plus(newOrbit)
+                .toSet()
+        done = true
+        val new = RoutableSlideableSetImpl(allBs, newOrbit, bl, after.br)
+        c2.contains(new, c2.getContents(this).plus(c2.getContents(after)))
+        c2.compaction.replaceJunction(br, after.bl, newOrbit)
+        return new
     }
 
-    override fun mergeWithOverlap(over: SlideableSet<*>, c2: C2SlackOptimisation): RoutableSlideableSet {
-        return when (over) {
-
-            is RoutableSlideableSet -> {
-                //val allRs = setOf(rs, over.getRectangularSlideableSets()).flatten().toSet()
-                val newL = c2.mergeSlideables(over.bl, bl)
-                val newR = c2.mergeSlideables(over.br, br)
-                val newC = c2.mergeSlideables(over.c, c)
-                done = true
-                val out = RoutableSlideableSetImpl(setOfNotNull(newL, newR, newC), newC, newL, newR)
-                c2.contains(out, c2.getContents(this).plus(c2.getContents(over)))
-                out
-            }
-
-            is RectangularSlideableSet -> {
-                val newC = c2.mergeSlideables(over.c, c)
-                done = true
-                val out = RoutableSlideableSetImpl(bs, newC, bl, br)
-                c2.contains(out, c2.getContents(this).plus(over))
-                out
-            }
-
-            else -> throw LogicException("unsupported")
-        }
+    override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+        val newL = c2.mergeSlideables(over.bl, bl)
+        val newR = c2.mergeSlideables(over.br, br)
+        done = true
+        val out = RoutableSlideableSetImpl(setOfNotNull(newL, newR, c, over.c), null, newL, newR)
+        c2.contains(out, c2.getContents(this).plus(c2.getContents(over)))
+        c2.compaction.replaceJunction(br, over.br, newR)
+        c2.compaction.replaceJunction(bl, over.bl, newL)
+        return out
     }
 
     override fun getBufferSlideables(): Set<C2BufferSlideable> {
         return bs
     }
 
-    override fun getAll(): Set<C2Slideable> {
+    override fun getAll(): Set<C2BufferSlideable> {
         return bs
     }
 

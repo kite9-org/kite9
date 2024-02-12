@@ -6,7 +6,7 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.GroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
-interface Group : Deterministic {
+sealed interface Group : Deterministic {
 
     /**
      * Unique number for this group

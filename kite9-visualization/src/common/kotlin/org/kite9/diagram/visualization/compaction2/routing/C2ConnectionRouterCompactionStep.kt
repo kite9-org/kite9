@@ -64,8 +64,11 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val startingPoints = createPoints(c2, c.getFrom(), false)
             val endingPoints = createPoints(c2, c.getTo(), true)
             val allowTurns = (c.getDrawDirection() == null) || (c.getRenderingInformation().isContradicting)
+            val constrainedHorizontally = !allowTurns && Direction.isVertical(c.getDrawDirection()!!)
+            val constrainedVertically = !allowTurns && Direction.isHorizontal(c.getDrawDirection()!!)
+
             val endZone = createZone(c2, c.getTo() as Rectangular)
-            val doer = C2SlideableSSP(startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, allowTurns, log)
+            val doer = C2SlideableSSP(startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, constrainedHorizontally, constrainedVertically, c2.junctions, log)
             log.send("Routing: $c via", doer.allowedTraversal)
             val out = doer.createShortestPath()
 
@@ -127,14 +130,6 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         }
     }
 
-    private fun getStart(out: C2Route) : C2Point {
-        return if (out.prev != null) {
-            getStart(out.prev)
-        } else {
-            out.point
-        }
-    }
-
     private fun updateUsedStartEndPoints(out: C2Point, from: Connected) {
         if (from is Port) {
             // ports are allowed to have multiple connections
@@ -158,10 +153,11 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
+        c.consistentJunctions()
+        c.resortJunctions()
+
         val vso = c.getSlackOptimisation(Dimension.V)
         val hso = c.getSlackOptimisation(Dimension.H)
-
-        val junctionMap = buildJunctionMap(c)
 
         visitRectangulars(c.getDiagram()) {
             ensureCentreSlideablePosition(hso, it)
@@ -176,22 +172,13 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                     val endPoint = route.point
                     writeRoute(it, route, 0)
                     hso.checkConsistency()
-                    handleLabel(it.getFromLabel(), startPoint, c, endPoint.d, it.getFrom())
-                    handleLabel(it.getToLabel(), getUpdatedPoint(endPoint, c, it), c, Direction.reverse(startPoint.d)!!, it.getTo())
+          //          handleLabel(it.getFromLabel(), startPoint, c, endPoint.d, it.getFrom())
+          //          handleLabel(it.getToLabel(), getUpdatedPoint(endPoint, c, it), c, Direction.reverse(startPoint.d)!!, it.getTo())
                     hso.checkConsistency()
                 }
             }
         }
     }
-
-    private fun buildJunctionMap(c: C2Compaction): Map<C2BufferSlideable, List<C2Slideable>> {
-       return buildJunctionMap1D(c.getSlackOptimisation(Dimension.V)) + buildJunctionMap1D(c.getSlackOptimisation(Dimension.V))
-    }
-
-    private fun buildJunctionMap1D(so: C2SlackOptimisation): Map<C2BufferSlideable, List<C2Slideable>> {
-        return mapOf()
-    }
-
 
     private fun getUpdatedSlideable(old: C2RectangularSlideable, so: C2SlackOptimisation, conn: Connection) : C2Slideable? {
         val connAnchor = old.anchors.first { it.e == conn }
@@ -329,4 +316,13 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         }
     }
 
+    companion object {
+        fun getStart(out: C2Route) : C2Point {
+            return if (out.prev != null) {
+                getStart(out.prev)
+            } else {
+                out.point
+            }
+        }
+    }
 }

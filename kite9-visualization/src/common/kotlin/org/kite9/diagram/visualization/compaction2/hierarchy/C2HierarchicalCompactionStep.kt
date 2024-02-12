@@ -12,14 +12,45 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd, r) {
+
+    var first = true;
     override fun compact(c: C2Compaction, g: Group) {
+        if (!first) {
+            return
+        }
+
+        first = true
+
+        // first, collect all groups and order
+        val allGroups = collectGroups(g).sortedBy { it.height }.distinctBy { it.groupNumber }
+        allGroups.forEach { processGroup(it, c) }
+
+        ensureCrossingPoints(c)
+    }
+
+    private fun ensureCrossingPoints(c: C2Compaction) {
+        val sov = c.getSlackOptimisation(Dimension.V)
+        val soh = c.getSlackOptimisation(Dimension.H)
+        allContainers.forEach {
+            val ssv = sov.getSlideablesFor(it)!!
+            val ssh = soh.getSlideablesFor(it)!!
+
+            val ssvc = sov.getContainer(ssv)
+            val sshc = soh.getContainer(ssh)
+
+            c.createRoutableJunctions(ssvc, sshc)
+            c.createRoutableJunctions(sshc, ssvc)
+        }
+    }
+
+    private fun processGroup(
+        g: Group,
+        c: C2Compaction
+    ) {
         if (g is CompoundGroup) {
-            compact(c, g.a)
-            compact(c, g.b)
-
-
             if (horizontalAxis(g)) {
                 mergeForAxis(c, g, Dimension.H, Layout.RIGHT, Layout.LEFT)
             }
@@ -39,7 +70,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val hb = slackOptimisationH.getSlideablesFor(g.b)
                 slackOptimisationV.add(g, va ?: vb!!)
                 slackOptimisationH.add(g, ha ?: hb!!)
-
             }
         }
 
@@ -52,13 +82,26 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         }
     }
 
+    private fun collectGroups(g: Group) : List<Group> {
+        return when (g) {
+            is CompoundGroup -> listOf(g) + collectGroups(g.a) + collectGroups(g.b)
+            is LeafGroup -> listOf(g)
+            else -> throw LogicException("wtf kotlin")
+        }
+    }
+
+
     private fun mergeForAxis(c: C2Compaction, g: CompoundGroup, d: Dimension, l1: Layout, l2: Layout) {
         val a = g.a
         val b = g.b
 
         val so = c.getSlackOptimisation(d)
+        val soo = c.getSlackOptimisation(d.other())
         val ha = so.getSlideablesFor(a)
         val hb = so.getSlideablesFor(b)
+        val ta = soo.getSlideablesFor(a)
+        val tb = soo.getSlideablesFor(b)
+
         val hm = if ((ha == null) || (hb == null)) {
             ha ?: hb
         } else {

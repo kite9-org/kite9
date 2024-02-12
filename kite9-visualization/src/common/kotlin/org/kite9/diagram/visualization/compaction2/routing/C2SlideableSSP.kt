@@ -17,7 +17,9 @@ class C2SlideableSSP(
     private val startElem: DiagramElement,
     private val endElem: DiagramElement,
     private val endZone: Zone,
-    private val allowTurns: Boolean,
+    private val horizontalConstraint: Boolean,
+    private val verticalConstraint: Boolean,
+    private val junctions: Map<C2BufferSlideable, List<C2Slideable>>,
     val log: Kite9Log
 ) : AbstractSSP<C2Route>() {
     override fun pathComplete(r: C2Route): Boolean {
@@ -74,17 +76,15 @@ class C2SlideableSSP(
             advance(d, perp, r, along, s, r.cost.addStep())
         }
 
-        if (allowTurns) {
-            if ((along is C2BufferSlideable)
-                && (perp is C2BufferSlideable)) {
-                // turns ok if both axes are buffer slideable
-                val dc = Direction.rotateClockwise(d)
-                advance(dc, along, r, perp, s, r.cost.addTurn())
+        if ((along is C2BufferSlideable) && (perp is C2BufferSlideable)) {
+            // turns ok if both axes are buffer slideable
+            val dc = Direction.rotateClockwise(d)
+            advance(dc, along, r, perp, s, r.cost.addTurn())
 
-                val dac = Direction.rotateAntiClockwise(d)
-                advance(dac, along, r, perp, s, r.cost.addTurn())
-            }
+            val dac = Direction.rotateAntiClockwise(d)
+            advance(dac, along, r, perp, s, r.cost.addTurn())
         }
+
     }
 
 
@@ -110,12 +110,15 @@ class C2SlideableSSP(
             is C2OrbitSlideable -> along.orbits.map { it.e }.toSet()
         }
 
+        val startPoint = C2ConnectionRouterCompactionStep.getStart(r)
+
         if (canAdvanceFrom(perp, d, common, along)) {
-            val leavers = perp.routesTo(isIncreasing(d))
-            leavers.forEach { (k, v) ->
-                if (canAdvanceTo(common, k)) {
+            val leavers = getForwardSlideables(along, perp, d)
+            leavers.forEach { k ->
+                if (canAdvanceTo(common, k, startPoint)) {
+                    val dist = abs(k.minimumPosition - perp.minimumPosition)
                     val p = C2Point(along, k, d)
-                    val travelledDistance = c.minimumTravelledDistance + v
+                    val travelledDistance = c.minimumTravelledDistance + dist
                     val possibleDistance = travelledDistance + remainingDistance(p)
                     val newCost = c.setDistances(travelledDistance, possibleDistance)
                     val r2 = C2Route(r, p, newCost)
@@ -124,6 +127,35 @@ class C2SlideableSSP(
                 }
             }
         }
+    }
+
+    private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : List<C2Slideable> {
+        val stops = junctions[along]!!
+        var at = stops.indexOf(startingAt)
+        if (at == -1) {
+            return emptyList()
+        }
+
+        val incr = when(going) {
+            Direction.DOWN, Direction.RIGHT -> 1
+            Direction.LEFT, Direction.UP -> -1
+        }
+
+        val out = mutableListOf<C2Slideable>()
+
+        while ((at > 0) && (at < stops.size-1)) {
+            at += incr
+            val stop = stops[at]
+            when (stop) {
+                is C2BufferSlideable -> out.add(stop)
+                else -> {
+                    out.add(stop)
+                    return out
+                }
+            }
+        }
+
+        return out
     }
 
     private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable): Boolean {
@@ -150,23 +182,33 @@ class C2SlideableSSP(
 
 
     /**
-     * THis looks at a slideable and says whether we can go to it, returning the cost of
+     * This looks at a slideable and says whether we can go to it, returning the cost of
      * doing so if so.
      */
-    private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable): Boolean {
-        return when (k) {
+    private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable, startPoint: C2Point): Boolean {
+        val intersectionOk = when (k) {
             is C2OrbitSlideable ->  k.orbits.any { common.contains(it.e) }
-            is C2IntersectionSlideable -> nextTo(k.intersects, common, endElem)
+            is C2IntersectionSlideable -> k.intersects.any { it == endElem || common.contains(it) }
             is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
+        }
+
+        if (!intersectionOk) {
+            return false;
+        }
+
+        return when (k.dimension) {
+            Dimension.H -> if (!horizontalConstraint) true else intersects(k, startPoint.get(k.dimension))
+            Dimension.V -> if (!verticalConstraint) true else intersects(k, startPoint.get(k.dimension))
         }
     }
 
-    private fun <K> nextTo(l: List<K>, a: Set<K>, b: K) : Boolean {
-        val i2 = l.indexOf(b)
-        val closest = a.map { l.indexOf(it) }
-            .filter { it != -1 }.minOfOrNull { abs(i2 - it) }
+    private fun intersects(k1: C2Slideable, k2: C2Slideable) : Boolean {
+        return intersects(k1.minimumPosition, k2.minimumPosition, k2.maximumPosition!!) ||
+                intersects(k1.maximumPosition!!, k2.minimumPosition, k2.maximumPosition!!)
+    }
 
-        return (closest != null) && (closest < 2)
+    private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {
+        return (i1 >= lower) && (i1<=upper)
     }
 
     override fun createInitialPaths(s: State<C2Route>) {

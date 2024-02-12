@@ -2,7 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
-interface CompoundGroup : Group {
+sealed interface CompoundGroup : Group {
 
     val a: Group
     val b: Group

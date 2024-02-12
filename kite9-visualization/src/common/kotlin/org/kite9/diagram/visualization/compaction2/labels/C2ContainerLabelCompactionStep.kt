@@ -60,7 +60,7 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         addLabelsToSide(Direction.DOWN, downLabels, c, c2, allContent.plus(leftLabels).plus(rightLabels).plus(upLabels))
     }
 
-    private fun createSlideables(cso: C2SlackOptimisation, ll: List<Label>, d: Dimension, dd: Direction) : List<RectangularSlideableSet> {
+    private fun createSlideables(cso: C2SlackOptimisation, ll: Set<Label>, d: Dimension, dd: Direction) : List<RectangularSlideableSet> {
         val needsIntersection = d.isHoriz() == Direction.isHorizontal(dd)
         val c = if (needsIntersection) C2IntersectionSlideable(cso, d, ll) else null
         return ll.map {
@@ -77,8 +77,8 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         val csov = c2.getSlackOptimisation(Dimension.V)
 
         // label slideable sets
-        val hss = createSlideables(csoh, ll, Dimension.H, d)
-        val vss = createSlideables(csov, ll, Dimension.V, d)
+        val hss = createSlideables(csoh, ll.toSet(), Dimension.H, d)
+        val vss = createSlideables(csov, ll.toSet(), Dimension.V, d)
 
         // container slideable sets
         val cssh = csoh.getSlideablesFor(c)

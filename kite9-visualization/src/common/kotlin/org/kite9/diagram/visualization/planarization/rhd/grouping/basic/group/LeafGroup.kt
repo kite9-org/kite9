@@ -6,7 +6,7 @@ import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 
-interface LeafGroup : Group {
+sealed interface LeafGroup : Group {
 
     val connected: Connected?
 

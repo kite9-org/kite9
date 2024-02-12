@@ -17,7 +17,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Gr
  * Augments SlackOptimisation to keep track of diagram elements underlying the slideables.
  * @author robmoffat
  */
-class C2SlackOptimisation(private val compaction: C2CompactionImpl) : AbstractSlackOptimisation(), Logable {
+class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptimisation(), Logable {
 
     private val positionedMap: MutableMap<Positioned, RectangularSlideableSet> = HashMap()
     private val groupMap: MutableMap<Group, RoutableSlideableSet> = HashMap()
@@ -48,11 +48,15 @@ class C2SlackOptimisation(private val compaction: C2CompactionImpl) : AbstractSl
         return groupMap[group]
     }
 
-    fun mergeSlideables(s1: C2IntersectionSlideable?, s2: C2RectangularSlideable?) : C2IntersectionSlideable? {
-        return mergeSlideablesInner(s1, s2) as C2IntersectionSlideable?
-    }
+//    fun mergeSlideables(s1: C2IntersectionSlideable?, s2: C2RectangularSlideable?) : C2IntersectionSlideable? {
+//        return mergeSlideablesInner(s1, s2) as C2IntersectionSlideable?
+//    }
+//
+//    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2RectangularSlideable) : C2OrbitSlideable {
+//        return mergeSlideablesInner(s1, s2) as C2OrbitSlideable
+//    }
 
-    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2RectangularSlideable) : C2OrbitSlideable {
+    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2OrbitSlideable) : C2OrbitSlideable {
         return mergeSlideablesInner(s1, s2) as C2OrbitSlideable
     }
 
@@ -62,7 +66,7 @@ class C2SlackOptimisation(private val compaction: C2CompactionImpl) : AbstractSl
         } else if (s2 == null) {
             return s1
         } else {
-            val sNew = s1.merge(s2) as X
+            @Suppress("UNCHECKED_CAST") val sNew = s1.merge(s2) as X
             // now we need to replace s1 and s2 in their containers
             val containsS1 = slideableMap.remove(s1)
             val containsS2 = slideableMap.remove(s2)
@@ -183,6 +187,12 @@ class C2SlackOptimisation(private val compaction: C2CompactionImpl) : AbstractSl
 
     fun getContents(outer: RoutableSlideableSet) : List<RectangularSlideableSet> {
         return containment.getOrElse(outer) { emptyList() }.toList()
+    }
+
+    fun getContainer(inner: RectangularSlideableSet) : RoutableSlideableSet {
+        return containment.filterValues { it.contains(inner) }
+            .keys
+            .first()
     }
 
     fun checkConsistency() {

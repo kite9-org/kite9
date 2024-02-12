@@ -33,32 +33,6 @@ data class RectangularSlideableSetImpl(
         )
     }
 
-    override fun mergeWithOverlap(over: SlideableSet<*>, c2: C2SlackOptimisation): RoutableSlideableSet {
-        return if (over is RoutableSlideableSet) {
-            val allBs = setOf(getBufferSlideables(), over.getBufferSlideables()).flatten().toSet()
-            val newC = c2.mergeSlideables(over.c, c)
-            done = true
-            val out = RoutableSlideableSetImpl(allBs, newC, over.bl, over.br)
-            c2.contains(out, c2.getContents(over).plus(this))
-            out
-        } else {
-            throw LogicException("unsupported")
-        }
-    }
-
-    override fun mergeWithGutter(after: SlideableSet<*>, c2: C2SlackOptimisation): RoutableSlideableSet {
-        return if (after is RoutableSlideableSet) {
-            val allBs = setOf(getBufferSlideables(), after.getBufferSlideables()).flatten().toSet()
-            val newC = c2.mergeSlideables(this.c, c)
-            done = true
-            val  out = RoutableSlideableSetImpl(allBs, newC, after.bl, after.br)
-            c2.contains(out, c2.getContents(after).plus(this))
-            out
-        } else {
-            throw LogicException("unsupported")
-        }
-    }
-
     override fun getRectangularSlideables(): Collection<C2RectangularSlideable> {
         return setOf(l, r)
     }
