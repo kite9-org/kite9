@@ -17,13 +17,17 @@ class C2SlideableSSP(
     private val startElem: DiagramElement,
     private val endElem: DiagramElement,
     private val endZone: Zone,
-    private val horizontalConstraint: Boolean,
-    private val verticalConstraint: Boolean,
+    private val direction: Direction?,
     private val junctions: Map<C2BufferSlideable, List<C2Slideable>>,
     val log: Kite9Log
 ) : AbstractSSP<C2Route>() {
+
     override fun pathComplete(r: C2Route): Boolean {
-        return end.contains(r.point)
+        return end.contains(r.point) && if (direction != null) {
+            r.point.d == direction
+        } else {
+            true
+        }
     }
 
     val allowedTraversal : Set<DiagramElement> = run {
@@ -129,32 +133,27 @@ class C2SlideableSSP(
         }
     }
 
-    private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : List<C2Slideable> {
+    private fun collectInDirection(from: C2Slideable, forward: Boolean, foundSoFar: MutableSet<C2Slideable>) {
+        if (foundSoFar.contains(from)) {
+            return
+        } else {
+            foundSoFar.add(from)
+            from.getForwardSlideables(forward).forEach { collectInDirection(it as C2Slideable, forward, foundSoFar) }
+        }
+    }
+
+    private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
         val stops = junctions[along]!!
-        var at = stops.indexOf(startingAt)
-        if (at == -1) {
-            return emptyList()
+
+        val forward = when(going) {
+            Direction.DOWN, Direction.RIGHT -> true
+            Direction.LEFT, Direction.UP -> false
         }
 
-        val incr = when(going) {
-            Direction.DOWN, Direction.RIGHT -> 1
-            Direction.LEFT, Direction.UP -> -1
-        }
+        val notAllowed = mutableSetOf<C2Slideable>()
+        collectInDirection(startingAt, !forward, notAllowed)
 
-        val out = mutableListOf<C2Slideable>()
-
-        while ((at > 0) && (at < stops.size-1)) {
-            at += incr
-            val stop = stops[at]
-            when (stop) {
-                is C2BufferSlideable -> out.add(stop)
-                else -> {
-                    out.add(stop)
-                    return out
-                }
-            }
-        }
-
+        val out = stops.toSet().minus(notAllowed)
         return out
     }
 
@@ -193,13 +192,20 @@ class C2SlideableSSP(
         }
 
         if (!intersectionOk) {
-            return false;
+            return false
         }
 
         return when (k.dimension) {
-            Dimension.H -> if (!horizontalConstraint) true else intersects(k, startPoint.get(k.dimension))
-            Dimension.V -> if (!verticalConstraint) true else intersects(k, startPoint.get(k.dimension))
+            Dimension.H -> if (!hasHorizontalConstraint()) true else intersects(k, startPoint.get(k.dimension))
+            Dimension.V -> if (!hasVerticalConstraint()) true else intersects(k, startPoint.get(k.dimension))
         }
+    }
+
+    private fun hasHorizontalConstraint() : Boolean {
+        return (direction != null) && Direction.isVertical(direction)
+    }
+    private fun hasVerticalConstraint() : Boolean {
+        return (direction != null) && Direction.isHorizontal(direction)
     }
 
     private fun intersects(k1: C2Slideable, k2: C2Slideable) : Boolean {
@@ -212,13 +218,23 @@ class C2SlideableSSP(
     }
 
     override fun createInitialPaths(s: State<C2Route>) {
-        start.forEach {
+        start
+            .filter { directionOk(it)}
+            .forEach {
             // head out from each point as far as possible in each direction
             val r = C2Route(null, it, C2Costing().setDistances(0, remainingDistance(it)))
             val along = r.point.getAlong() as C2BufferSlideable
             val perp = r.point.getPerp()
             val d = r.point.d
             advance(d, perp, r, along, s, r.cost)
+        }
+    }
+
+    private fun directionOk(p: C2Point) : Boolean {
+        return if (direction != null) {
+            p.d == direction
+        } else {
+            true
         }
     }
 

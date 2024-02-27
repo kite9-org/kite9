@@ -17,8 +17,6 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.testing.DiagramChecker;
 import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.pipeline.ArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.*;
 

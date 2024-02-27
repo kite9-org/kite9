@@ -12,7 +12,6 @@ import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.w3c.dom.*;
 import org.xmlunit.builder.Input;
 import org.xmlunit.diff.*;

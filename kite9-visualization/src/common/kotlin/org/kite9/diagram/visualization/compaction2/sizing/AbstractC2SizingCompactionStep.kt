@@ -2,10 +2,6 @@ package org.kite9.diagram.visualization.compaction2.sizing
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.visualization.compaction.AbstractCompactionStep
-import org.kite9.diagram.visualization.compaction.Compaction
-import org.kite9.diagram.visualization.compaction.Compactor
-import org.kite9.diagram.visualization.compaction.Embedding
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.display.CompleteDisplayer

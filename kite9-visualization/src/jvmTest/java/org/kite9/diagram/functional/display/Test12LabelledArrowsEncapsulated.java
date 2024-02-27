@@ -5,7 +5,6 @@ import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.adl.*;
 import org.kite9.diagram.adl.Symbol.SymbolShape;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -16,7 +15,6 @@ import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.functional.TestingEngine;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.position.Direction;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 
 import java.io.InputStreamReader;

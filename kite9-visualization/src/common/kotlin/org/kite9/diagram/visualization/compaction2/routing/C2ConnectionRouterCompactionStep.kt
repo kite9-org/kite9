@@ -23,7 +23,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
     private val usedStartEndPoints = mutableSetOf<C2Point>()
 
-    private fun createPoints(c2: C2Compaction, d: Connected, arriving: Boolean) : Set<C2Point> {
+    private fun createPoints(c2: C2Compaction, d: Connected, arriving: Boolean, drawDirection: Direction?) : Set<C2Point> {
         val h = c2.getSlackOptimisation(Dimension.H)
         val v = c2.getSlackOptimisation(Dimension.V)
         val hss = h.getSlideablesFor(d)!!
@@ -47,7 +47,9 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
         ) }.toSet()
 
-        return vertical + horizontal - usedStartEndPoints
+        return (vertical + horizontal - usedStartEndPoints)
+            .filter { (it.d == drawDirection) || (drawDirection == null) }
+            .toSet()
     }
 
     private fun createZone(c2: C2Compaction, r: Rectangular) : Zone {
@@ -61,14 +63,10 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
     private fun insertLink(c2: C2Compaction, c: Connection) : C2Route? {
         try {
-            val startingPoints = createPoints(c2, c.getFrom(), false)
-            val endingPoints = createPoints(c2, c.getTo(), true)
-            val allowTurns = (c.getDrawDirection() == null) || (c.getRenderingInformation().isContradicting)
-            val constrainedHorizontally = !allowTurns && Direction.isVertical(c.getDrawDirection()!!)
-            val constrainedVertically = !allowTurns && Direction.isHorizontal(c.getDrawDirection()!!)
-
+            val startingPoints = createPoints(c2, c.getFrom(), false, c.getDrawDirection())
+            val endingPoints = createPoints(c2, c.getTo(), true, c.getDrawDirection())
             val endZone = createZone(c2, c.getTo() as Rectangular)
-            val doer = C2SlideableSSP(startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, constrainedHorizontally, constrainedVertically, c2.junctions, log)
+            val doer = C2SlideableSSP(startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, c.getDrawDirection(), c2.junctions, log)
             log.send("Routing: $c via", doer.allowedTraversal)
             val out = doer.createShortestPath()
 

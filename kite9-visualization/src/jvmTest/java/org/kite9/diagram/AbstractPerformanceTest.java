@@ -1,9 +1,9 @@
 package org.kite9.diagram;
 
 import org.junit.Test;
-import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.StackHelp;
@@ -20,9 +20,7 @@ import org.kite9.diagram.performance.Metrics;
 import org.kite9.diagram.testing.DiagramElementVisitor;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.testing.VisitorAction;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.w3c.dom.Element;
 
 import java.io.File;

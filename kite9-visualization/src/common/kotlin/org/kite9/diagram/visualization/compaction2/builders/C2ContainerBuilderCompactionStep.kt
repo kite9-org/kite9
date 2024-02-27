@@ -2,11 +2,9 @@ package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.model.*
-import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction.rect.second.popout.BufferSlideable
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
+import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
