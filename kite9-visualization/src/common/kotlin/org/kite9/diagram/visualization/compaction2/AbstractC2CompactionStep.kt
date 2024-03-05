@@ -69,8 +69,8 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
                 val rightC = container.r
                 val leftI = contents.bl
                 val rightI = contents.br
-                cso.ensureMinimumDistance(leftC, leftI, 0);
-                cso.ensureMinimumDistance(rightI, rightC, 0);
+                if (leftI != null) cso.ensureMinimumDistance(leftC, leftI, 0)
+                if (rightI != null) cso.ensureMinimumDistance(rightI, rightC, 0)
             }
             null -> {
             }
@@ -99,17 +99,18 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
     }
 
     fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, r: Rectangular) {
-        val ss = cso.getSlideablesFor(r)
-        if (ss != null) {
-            ensureCentreSlideablePosition(cso, ss)
-        }
+//        val ss = cso.getSlideablesFor(r)
+//        if (ss != null) {
+//            ensureCentreSlideablePosition(cso, ss)
+//        }
+        log.send("Can't process this yet")
     }
 
-    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet) {
-        if (ss.c != null) {
+    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2IntersectionSlideable?) {
+        if (c != null) {
             val minDist = ss.l.minimumDistanceTo(ss.r)
-            cso.ensureMinimumDistance(ss.l, ss.c!!, (minDist / 2.0).toInt())
-            cso.ensureMinimumDistance(ss.c!!, ss.r, (minDist / 2.0).toInt())
+            cso.ensureMinimumDistance(ss.l, c, (minDist / 2.0).toInt())
+            cso.ensureMinimumDistance(c, ss.r, (minDist / 2.0).toInt())
         }
     }
 
@@ -120,7 +121,7 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
                 .forEach { visitRectangulars(it, f) }
         }
 
-        f(r);
+        f(r)
     }
 
 

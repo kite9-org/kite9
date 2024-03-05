@@ -130,7 +130,7 @@ class SingleDirection(
     }
 
     override fun toString(): String {
-        return owner.toString()
+        return """f: ${forward.size} b: ${backward.size} o: ${owner.toString()}"""
     }
 
     fun merge(sd: SingleDirection, exclude: Set<SingleDirection>) {
@@ -153,4 +153,6 @@ class SingleDirection(
             }
             return depth
         }
+
+
 }

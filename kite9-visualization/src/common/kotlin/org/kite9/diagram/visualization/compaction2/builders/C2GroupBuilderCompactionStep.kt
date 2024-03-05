@@ -2,16 +2,12 @@ package org.kite9.diagram.visualization.compaction2.builders
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9ProcessingException
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.Leaf
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
-import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
-import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -42,8 +38,8 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
                 val hr = hso.getSlideablesFor(e)!!
                 val vr = vso.getSlideablesFor(e)!!
 
-                val hss = checkCreate(hso, g, e, hr, Dimension.H)
-                val vss = checkCreate(vso, g, e, vr, Dimension.V)
+                val hss = checkCreate(hso, g, e, Dimension.H)
+                val vss = checkCreate(vso, g, e, Dimension.V)
                 c.createInitialJunctions(hss, vss, vr)
                 c.createInitialJunctions(vss, hss, hr)
             } else {
@@ -64,17 +60,15 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             return ss1
         }
 
-        val ic = C2IntersectionSlideable(cso, d, setOf(c))
-        val bl = C2OrbitSlideable(cso, d, setOf())
-        val br = C2OrbitSlideable(cso, d, setOf())
-        val out = RoutableSlideableSetImpl(ic, bl, br)
+        val ic = C2IntersectionSlideable(cso, d, g, setOf(c))
+        val out = RoutableSlideableSetImpl(ic, null, null)
 
         cso.add(g, out)
         log.send("Created a RouteableSlideableSet for $c: ", out.getAll())
         return out
     }
 
-    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, ss2: RectangularSlideableSet, d: Dimension) : RoutableSlideableSet {
+    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, d: Dimension) : RoutableSlideableSet {
         val ss1 = cso.getSlideablesFor(g)
 
         if (ss1 != null) {
@@ -87,12 +81,12 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             // we need to create these then
             val l = ss2.l
             val r = ss2.r
-            val c = ss2.c
+            val c = C2IntersectionSlideable(cso,d, g, setOf(de))
             val bl = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.START)))
             val br = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.END)))
             cso.ensureMinimumDistance(bl, l ,0 )
             cso.ensureMinimumDistance(r, br, 0)
-            val out = RoutableSlideableSetImpl(setOfNotNull(bl, br, c), c, bl, br)
+            val out = RoutableSlideableSetImpl(setOfNotNull(bl, br, c), setOfNotNull(c), bl, br)
             cso.contains(out, ss2)
             cso.add(g, out)
             log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())

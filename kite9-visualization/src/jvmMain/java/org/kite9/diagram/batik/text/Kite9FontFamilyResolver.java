@@ -45,13 +45,14 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
      * This keeps track of all the resolved font families. This is to hopefully
      * reduce the number of font family objects used.
      */
-    protected final Map<String, AWTFontFamily> resolvedFontFamilies = new HashMap<>();
+    private final Map<String, AWTFontFamily> resolvedFontFamilies = new HashMap<>();
     
     /**
      * This is used by FontFace to convert itself into a FontFamily.
      */
     public AWTFontFamily resolve(String familyName, FontFace fontFace) {
     	AWTFontFamily resolved = resolvedFontFamilies.get(getFaceKey(fontFace));
+		log.send("Resolving (2-arg) "+familyName+" as "+resolved);
     	return resolved;
     }
 
@@ -59,8 +60,9 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
      * This is used by FontFace when we are loading the font for the first time.
      */
     public GVTFontFamily loadFont(InputStream in, FontFace ff) throws Exception {
-    	
-    	try {
+		log.send("loadFont "+ff.getFamilyName());
+
+		try {
         	String faceKey = getFaceKey(ff);
 			AWTFontFamily resolved = resolvedFontFamilies.get(faceKey);
 			
@@ -68,7 +70,7 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
         		in.close();
         		return resolved;
         	}
-			
+			git 
 			// original version 
 			Font font = Font.createFont(Font.TRUETYPE_FONT, in);
 
@@ -80,9 +82,10 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
 
 			AWTFontFamily out = new AWTFontFamily(ff, font);
 			resolvedFontFamilies.put(faceKey, out);
+			log.send("Loaded "+faceKey+ " as "+out);
 			return out;
 		} catch (Exception e) {
-			log.error("Couldn't load font for "+ff.getFamilyName(), e);
+			log.send("Couldn't load font for "+ff.getFamilyName()+e.toString());
 		} 
     	
     	return null;
@@ -94,7 +97,8 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
      * font-face.  We're not going to do that with Kite9.
      */
     public GVTFontFamily resolve(String familyName) {
-    	return null;
+		log.send("Resolving (1 arg) "+familyName+" as null");
+		return null;
     }
 
     /**
@@ -102,6 +106,8 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
      * a given character.  
      */
     public GVTFontFamily getFamilyThatCanDisplay(char c) {
+		log.send("Get Family That Can Display "+c);
+
 //    	Font fonts = 
     		
     	//        for (int i = 0; i < awtFontFamilies.size(); i++) {
@@ -118,7 +124,8 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
 
     /** {@inheritDoc} */
     public GVTFontFamily getDefault() {
-        return DEFAULT_FONT_FAMILY;
+    	log.send("Getting default font");
+		return DEFAULT_FONT_FAMILY;
     }
 
 	@Override

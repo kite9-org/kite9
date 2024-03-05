@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
-import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Positioned
@@ -11,6 +10,7 @@ import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
 
 /**
@@ -48,16 +48,37 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return groupMap[group]
     }
 
-//    fun mergeSlideables(s1: C2IntersectionSlideable?, s2: C2RectangularSlideable?) : C2IntersectionSlideable? {
-//        return mergeSlideablesInner(s1, s2) as C2IntersectionSlideable?
-//    }
-//
-//    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2RectangularSlideable) : C2OrbitSlideable {
-//        return mergeSlideablesInner(s1, s2) as C2OrbitSlideable
-//    }
+    private fun groupAlignment(g1: Set<Group>, g2: Set<Group>) : Boolean {
+        return g1.find { ga ->
+            ga.processLowestLevelLinks(
+        } != null
+    }
 
-    fun mergeSlideables(s1: C2OrbitSlideable, s2: C2OrbitSlideable) : C2OrbitSlideable {
-        return mergeSlideablesInner(s1, s2) as C2OrbitSlideable
+    fun mergeSlideables(s1: Set<C2BufferSlideable>, s2: Set<C2BufferSlideable>) : Set<C2BufferSlideable> {
+        // slideables with the same groups can be merged
+        val mightMatch = s2.filterIsInstance<C2IntersectionSlideable>().toMutableSet()
+
+        val unchanged = s2.filter { !mightMatch.contains(it) }
+
+        val out = s1.mapNotNull { l ->
+            if (l is C2IntersectionSlideable) {
+                val matching = mightMatch.find { groupAlignment(it.intersectingGroups, l.intersectingGroups ) }
+                if (matching != null) {
+                    mightMatch.remove(matching)
+                    mergeSlideablesInner(l, matching)
+                } else {
+                    l
+                }
+            } else {
+                l
+            }
+        }.toSet()
+
+        return out.plus(mightMatch).plus(unchanged)
+    }
+
+    fun mergeSlideables(s1: C2OrbitSlideable?, s2: C2OrbitSlideable?) : C2OrbitSlideable? {
+        return mergeSlideablesInner(s1, s2)
     }
 
     private fun <X : C2RectangularSlideable> mergeSlideablesInner(s1: X?, s2: X?) : X? {
@@ -202,11 +223,15 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
         groupMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
 
-        slideables.flatMap { it.getForwardSlideables(true) }
-            .forEach { checkValid(it as C2Slideable, "*") }
+        slideables.forEach { k ->
+            k.getForwardSlideables(true)
+                .forEach { checkValid(it as C2Slideable, "referenced by $k") }
+        }
 
-        slideables.flatMap { it.getForwardSlideables(false) }
-            .forEach { checkValid(it as C2Slideable, "*") }
+        slideables.forEach { k ->
+            k.getForwardSlideables(false)
+                .forEach { checkValid(it as C2Slideable, "referenced by $k") }
+        }
 
         slideableMap.keys.forEach {
             if (it.done) {
@@ -233,9 +258,13 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return slideableMap[s]
     }
 
+    fun addSlideable(c: C2IntersectionSlideable) {
+        slideables.add(c)
+    }
+
     companion object {
 
-        var nn = 0;
+        private var nn = 0
 
         fun nextNumber(): Int {
             return nn++

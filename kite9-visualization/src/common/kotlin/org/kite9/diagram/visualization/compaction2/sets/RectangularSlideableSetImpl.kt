@@ -1,15 +1,14 @@
 package org.kite9.diagram.visualization.compaction2.sets;
 
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 data class RectangularSlideableSetImpl(
     override val d: Rectangular,
     override val l: C2RectangularSlideable,
-    override val r: C2RectangularSlideable,
-    override val c: C2IntersectionSlideable?) : RectangularSlideableSet {
+    override val r: C2RectangularSlideable) : RectangularSlideableSet {
 
     override var done = false
 
@@ -19,17 +18,6 @@ data class RectangularSlideableSetImpl(
             d,
             if (l == s) with else l,
             if (r == s) with else r,
-            c
-        )
-    }
-
-    override fun replaceIntersection(s: C2IntersectionSlideable, with: C2IntersectionSlideable): RectangularSlideableSet {
-        done = true
-        return RectangularSlideableSetImpl(
-            d,
-            if (l == s) with else l,
-            if (r == s) with else r,
-            if (c == s) with else c
         )
     }
 
@@ -38,7 +26,7 @@ data class RectangularSlideableSetImpl(
     }
 
     override fun getAll(): Set<C2Slideable> {
-        return setOfNotNull(l, r, c)
+        return setOf(l, r)
     }
 
     companion object {
@@ -51,16 +39,22 @@ data class RectangularSlideableSetImpl(
         }
     }
 
-    override fun wrapInRoutable(so: C2SlackOptimisation): RoutableSlideableSet {
+    override fun wrapInRoutable(so: C2SlackOptimisation, g: Group): RoutableSlideableSet {
         val bl = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.START)))
         val br = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.END)))
+        val c = C2IntersectionSlideable(so, l.dimension, g, setOf(d))
+
+        val size = l.minimumDistanceTo(r)
 
         so.ensureMinimumDistance(bl, l, 0)
         so.ensureMinimumDistance(r, br, 0)
+        so.ensureMinimumDistance(l, c, size / 2 )
+        so.ensureMinimumDistance(c, r,size / 2 )
+
 
         return RoutableSlideableSetImpl(
             setOfNotNull(bl, c, br),
-            c,
+            setOf(c),
             bl,
             br)
     }

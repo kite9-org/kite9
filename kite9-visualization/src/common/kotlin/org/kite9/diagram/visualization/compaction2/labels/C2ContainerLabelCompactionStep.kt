@@ -61,8 +61,11 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
     }
 
     private fun createSlideables(cso: C2SlackOptimisation, ll: Set<Label>, d: Dimension, dd: Direction) : List<RectangularSlideableSet> {
-        val needsIntersection = d.isHoriz() == Direction.isHorizontal(dd)
-        val c = if (needsIntersection) C2IntersectionSlideable(cso, d, ll) else null
+        val needsIntersection = (d.isHoriz() == Direction.isHorizontal(dd)) && (ll.size > 1)
+        val c = if (needsIntersection) C2IntersectionSlideable(cso, d, null, ll) else null
+        if (c != null) {
+            cso.addSlideable(c)
+        }
         return ll.map {
             log.send("Creating $it")
             checkCreate(it, d, cso, c, null)!!

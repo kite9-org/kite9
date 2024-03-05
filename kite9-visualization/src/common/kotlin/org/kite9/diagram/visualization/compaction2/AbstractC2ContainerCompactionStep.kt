@@ -33,7 +33,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                 val csx = sox.getSlideablesFor(container)!!
                 c.createContainerJunctions(csx, ss)
 
-                ss = embed(so, cs, ss, d)
+                ss = embed(so, cs, ss, d, g)
 
                 c.createContainerJunctions(csx, ss)
 
@@ -50,17 +50,17 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun embed(so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension): RoutableSlideableSet {
+    private fun embed(so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet {
 
         // first, ensure the buffer slideables are well-separated
-        so.ensureMinimumDistance(outer.l, inner.bl,0)
-        so.ensureMinimumDistance(inner.br, outer.r, 0)
+        if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,0)
+        if (inner.br != null) so.ensureMinimumDistance(inner.br!!, outer.r, 0)
 
         // now make sure that the rectangulars composing the routable are well-separated
         so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }
 
 
-        val out = outer.wrapInRoutable(so)
+        val out = outer.wrapInRoutable(so, g)
         so.contains(out, outer)
         return out
     }

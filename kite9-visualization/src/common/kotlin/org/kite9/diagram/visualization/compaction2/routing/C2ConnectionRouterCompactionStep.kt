@@ -157,10 +157,10 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val vso = c.getSlackOptimisation(Dimension.V)
         val hso = c.getSlackOptimisation(Dimension.H)
 
-        visitRectangulars(c.getDiagram()) {
-            ensureCentreSlideablePosition(hso, it)
-            ensureCentreSlideablePosition(vso, it)
-        }
+//        visitRectangulars(c.getDiagram()) {
+//            ensureCentreSlideablePosition(hso, it)
+//            ensureCentreSlideablePosition(vso, it)
+//        }
 
         queue.forEach {
             if (it is Connection) {

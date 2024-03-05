@@ -22,7 +22,7 @@ interface C2Compaction {
      * When wrapping a routable slideable set in a rectangular (container), we need to make sure that the
      * slideables leaving the routable intersect with the rectangular slideables.
      */
-    fun createContainerJunctions(c: RectangularSlideableSet, inside: RoutableSlideableSet)
+    fun createContainerJunctions(along: RectangularSlideableSet, inside: RoutableSlideableSet)
 
     /**
      * When wrapping a container inside a routable, we need to make sure that the
@@ -33,7 +33,7 @@ interface C2Compaction {
     /**
      * This is used when slideables merge
      */
-    fun replaceJunction(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable)
+    fun replaceJunction(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?)
 
     val junctions: Map<C2BufferSlideable, List<C2Slideable>>
 
