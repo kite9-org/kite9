@@ -1,5 +1,6 @@
 @import url('/public/templates/basic/basic-textures.css');
 @import url('/public/templates/votes/votes-textures.css');
+@import url('/public/fonts/metropolis/metropolis.css');
 
 [k9-elem=diagram][k9-texture=none] {
 	fill: white;
@@ -51,6 +52,7 @@
 
 [k9-elem=label] {
 	--kite9-padding: 10pt;
+  fill: white;
 }
 
 /* Arrow, Links */
