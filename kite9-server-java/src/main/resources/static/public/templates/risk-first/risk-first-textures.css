@@ -81,6 +81,7 @@
 [k9-elem=action] [k9-texture=background] {
    fill: url(#risk-background);
    stroke: black; 
+   stroke-width: 1pt;
 }
 
 [k9-elem=action] > g > [k9-elem=caption] > g > text {
@@ -116,6 +117,7 @@
 [k9-elem=block][k9-texture=background] {
    fill: url(#risk-background);
    stroke: black; 
+   stroke-width: 1pt;
 }
 
 /* Containers */

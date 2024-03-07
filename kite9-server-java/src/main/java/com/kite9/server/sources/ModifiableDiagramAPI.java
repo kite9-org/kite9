@@ -13,8 +13,11 @@ public interface ModifiableDiagramAPI extends ModifiableAPI, DiagramAPI  {
 	 */
 	default void commitRevision(String message, Authentication by, ADLDom data) throws Exception {
 		checkUserCanWrite(by);
-		ADLOutput out = data.process(getUnderlyingResourceURI(by), getWriteFormat());
-		commitRevisionAsBytes(message, by, out.getAsBytes());
+		DiagramWriteFormat df = getWriteFormat();
+		if (df != null) {
+			ADLOutput out = data.process(getUnderlyingResourceURI(by), df);
+			commitRevisionAsBytes(message, by, out.getAsBytes());
+		}
 	}
 
 	public DiagramWriteFormat getWriteFormat();
