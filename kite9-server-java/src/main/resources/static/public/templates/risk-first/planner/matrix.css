@@ -5,7 +5,7 @@ symbol {
   --kite9-type: svg;
   --kite9-margin: 0 2pt 0 2pt;
   --kite9-sizing: minimize;
-  --kite9-link-inset: 0px;
+  --kite9-link-inset: 0pt;
   --kite9-template: url(template.svg#symbol);
 }
 

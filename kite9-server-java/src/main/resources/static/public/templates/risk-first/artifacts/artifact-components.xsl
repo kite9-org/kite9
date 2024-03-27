@@ -18,7 +18,6 @@
   <xsl:template name="artifact" match="adl:artifact |  
     adl:document |
     adl:users |
-    adl:computer | 
     adl:interface |
     adl:component |
     adl:channel-artifact |
@@ -31,15 +30,15 @@
       <xsl:with-param name="k9-texture">artifact</xsl:with-param>
       <xsl:with-param name="href">
       	<xsl:choose>
+          <xsl:when test="@imgsrc"><xsl:value-of select="@imgsrc"></xsl:value-of></xsl:when>
           <xsl:when test="name() = 'agent-artifact'">/public/templates/risk-first/redesign/risks/agency_risk_v2.svg</xsl:when>
-          <xsl:when test="name() = 'document'">/public/templates/risk-first/redesign/artifacts/document_v2.svg</xsl:when>
           <xsl:when test="name() = 'users'">/public/templates/risk-first/redesign/artifacts/users_v2.svg</xsl:when>
           <xsl:when test="name() = 'interface'">/public/templates/risk-first/redesign/artifacts/interface_v2.svg</xsl:when>
           <xsl:when test="name() = 'protocol-artifact'">/public/templates/risk-first/redesign/risks/protocol_risk_v2.svg</xsl:when>
           <xsl:when test="name() = 'internal-model-artifact'">/public/templates/risk-first/redesign/risks/internal_model_risk.svg</xsl:when>
           <xsl:when test="name() = 'channel-artifact'">/public/templates/risk-first/redesign/risks/channel_risk_v2.svg</xsl:when>
           <xsl:when test="name() = 'component'">/public/templates/risk-first/redesign/artifacts/component_v2.svg</xsl:when>
-          <xsl:otherwise><xsl:value-of select="@imgsrc"></xsl:value-of></xsl:otherwise>
+          <xsl:otherwise>/public/templates/risk-first/redesign/artifacts/document_v2.svg</xsl:otherwise>
         </xsl:choose>
       </xsl:with-param> 
     </xsl:call-template>  

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram
+	xslt:template="/public/templates/risk-first/risk-first-template.xsl"
+	xmlns="http://www.kite9.org/schema/adl"
+	xmlns:xslt="http://www.kite9.org/schema/xslt" id="dia"
+	style="--kite9-min-width: 900pt;">
+
+	<container id="start"
+		style="--kite9-connection-align: 50%;   --kite9-traversal: none; ">
+		<risk class="goal" id="id_0">Interest Calculation</risk>
+		<label id="id_16">
+			Current Internal Model
+		</label>
+	</container>
+	<group style="--kite9-layout: down; ">
+		<group style="--kite9-layout: right;">
+
+			<action id="gl">
+				Single Function, Unit Tests
+			</action>
+			<container id="one" style="--kite9-traversal: none; ">
+				<risk id="a" class="attendant">Code is harder
+					to understand
+				</risk>
+				<risk id="b" class="attendant">Code is harder
+					to test
+				</risk>
+				<risk id="c" class="attendant">Easier to
+					modify
+				</risk>
+				<label id="id_16-ux">
+					Future Internal Model 1
+				</label>
+			</container>
+		</group>
+		<group id="sdf" style="--kite9-layout: right;">
+			<action id="gl" style="--kite9-horizontal-align: left; ">
+				Decompose Steps, Separate Unit Tests
+			</action>
+			<container id="two" style="--kite9-horizontal-sizing: maximise;">
+				<risk id="e" class="attendant">More Effort Overall</risk>
+				<label id="id_16-ng">
+					Future Internal Model 2
+				</label>
+			</container>
+		</group>
+	</group>
+	
+</diagram>
