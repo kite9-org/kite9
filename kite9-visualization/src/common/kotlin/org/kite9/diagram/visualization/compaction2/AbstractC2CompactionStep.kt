@@ -98,14 +98,6 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         }
     }
 
-    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, r: Rectangular) {
-//        val ss = cso.getSlideablesFor(r)
-//        if (ss != null) {
-//            ensureCentreSlideablePosition(cso, ss)
-//        }
-        log.send("Can't process this yet")
-    }
-
     fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2IntersectionSlideable?) {
         if (c != null) {
             val minDist = ss.l.minimumDistanceTo(ss.r)

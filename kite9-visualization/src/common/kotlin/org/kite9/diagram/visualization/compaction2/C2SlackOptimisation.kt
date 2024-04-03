@@ -48,10 +48,15 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return groupMap[group]
     }
 
+    private fun groupAlignment(g1: Group, g2: Group): Boolean {
+        val lm = g1.linkManager.get(g2)
+        return (lm?.direction != null)
+    }
+
     private fun groupAlignment(g1: Set<Group>, g2: Set<Group>) : Boolean {
-        return g1.find { ga ->
-            ga.processLowestLevelLinks(
-        } != null
+        // need to find just one aligned link between these two
+        val out = g1.find { ga -> g2.find { gb -> groupAlignment(ga, gb) } != null } != null
+        return out
     }
 
     fun mergeSlideables(s1: Set<C2BufferSlideable>, s2: Set<C2BufferSlideable>) : Set<C2BufferSlideable> {

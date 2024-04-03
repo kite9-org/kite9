@@ -62,8 +62,6 @@ import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;

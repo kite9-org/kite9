@@ -70,8 +70,8 @@ public final class Kite9FontFamilyResolver implements FontFamilyResolver, Logabl
         		in.close();
         		return resolved;
         	}
-			git 
-			// original version 
+
+			// original version
 			Font font = Font.createFont(Font.TRUETYPE_FONT, in);
 
 			// derive unique name by adding random weight
