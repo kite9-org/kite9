@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 
 /**
@@ -19,11 +20,11 @@ class C2IntersectionSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
     val intersects: Set<DiagramElement>,
-    val intersectingGroups: Set<Group>,
+    val intersectingGroups: Set<LeafGroup>,
     anchors: Set<Anchor>
 ) : C2BufferSlideable(so, dimension, anchors) {
 
-    constructor(so: C2SlackOptimisation, dimension: Dimension, ig: Group?, intersects: Set<DiagramElement>) : this(so, dimension, intersects, setOfNotNull(ig), emptySet())
+    constructor(so: C2SlackOptimisation, dimension: Dimension, ig: LeafGroup?, intersects: Set<DiagramElement>) : this(so, dimension, intersects, setOfNotNull(ig), emptySet())
 
     override fun merge(s: C2RectangularSlideable) : C2IntersectionSlideable {
         if (s.dimension == dimension) {

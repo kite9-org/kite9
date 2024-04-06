@@ -4,6 +4,7 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 data class RectangularSlideableSetImpl(
     override val d: Rectangular,
@@ -39,7 +40,7 @@ data class RectangularSlideableSetImpl(
         }
     }
 
-    override fun wrapInRoutable(so: C2SlackOptimisation, g: Group): RoutableSlideableSet {
+    override fun wrapInRoutable(so: C2SlackOptimisation, g: LeafGroup?): RoutableSlideableSet {
         val bl = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.START)))
         val br = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.END)))
         val c = C2IntersectionSlideable(so, l.dimension, g, setOf(d))

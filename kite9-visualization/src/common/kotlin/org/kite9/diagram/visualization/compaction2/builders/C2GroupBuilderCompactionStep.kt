@@ -53,7 +53,7 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
         }
     }
 
-    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: Group, c: Container, d: Dimension) : RoutableSlideableSet {
+    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
         val ss1 = cso.getSlideablesFor(g)
 
         if (ss1 != null) {
@@ -68,7 +68,7 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
         return out
     }
 
-    private fun checkCreate(cso: C2SlackOptimisation, g: Group, de: Rectangular, d: Dimension) : RoutableSlideableSet {
+    private fun checkCreate(cso: C2SlackOptimisation, g: LeafGroup, de: Rectangular, d: Dimension) : RoutableSlideableSet {
         val ss1 = cso.getSlideablesFor(g)
 
         if (ss1 != null) {

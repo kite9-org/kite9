@@ -59,8 +59,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         // now make sure that the rectangulars composing the routable are well-separated
         so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }
 
-
-        val out = outer.wrapInRoutable(so, g)
+        val lg = if (g is LeafGroup) g else null
+        val out = outer.wrapInRoutable(so, lg)
         so.contains(out, outer)
         return out
     }

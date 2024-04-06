@@ -5,12 +5,15 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
+import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
 
 /**
@@ -49,8 +52,19 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     }
 
     private fun groupAlignment(g1: Group, g2: Group): Boolean {
-        val lm = g1.linkManager.get(g2)
-        return (lm?.direction != null)
+        var aligns = false
+        val lp = object : LinkProcessor {
+            override fun process(originatingGroup: Group, destinationGroup: Group, ld: LinkManager.LinkDetail) {
+                if (destinationGroup == g2) {
+                    if (ld.direction != null) {
+                        aligns = true
+                    }
+                }
+            }
+        }
+
+        val ss = g1.processLowestLevelLinks(lp)
+        return aligns
     }
 
     private fun groupAlignment(g1: Set<Group>, g2: Set<Group>) : Boolean {
