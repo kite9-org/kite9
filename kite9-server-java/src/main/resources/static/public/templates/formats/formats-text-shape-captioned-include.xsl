@@ -74,6 +74,7 @@
     
     <xsl:param name="align">
       <g k9-elem="shape-align">
+        <xsl:attribute name="style">--kite9-direction: right;</xsl:attribute>   
         <g k9-elem="from">
           <xsl:attribute name="reference"><xsl:value-of select="$depiction-id" /></xsl:attribute>
         </g> 
