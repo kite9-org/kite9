@@ -72,18 +72,51 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
             log.send("Found shortest path: $out")
 
-            updateUsedStartEndPoints(out.point, c.getTo())
-            updateUsedStartEndPoints(getStart(out), c.getFrom())
+            val out2 = simplifyShortestPath(out, c2)
 
-            if (out.prev != null) {
-                ensureSlackForConnection(out.point, out.prev, c, true)
+            updateUsedStartEndPoints(out2.point, c.getTo())
+            updateUsedStartEndPoints(getStart(out2), c.getFrom())
+
+            if (out2.prev != null) {
+                ensureSlackForConnection(out2.point, out2.prev, c, true)
             }
 
-            return out
+            return out2
 
         } catch (e: NoFurtherPathException) {
             log.error("Couldn't route: $c")
             return null
+        }
+    }
+
+    /**
+     * This looks for opportunities to merge slideables where there is a "dog-leg"
+     * in the routing.
+     */
+    private fun simplifyShortestPath(r: C2Route, c2: C2Compaction) : C2Route {
+        var first = r
+        var second = r?.prev ?: null
+        val third = r?.prev?.prev ?: null
+
+        if (third != null) {
+            if (third.point.d  == first.point.d) {
+                val s1 = third.point.getAlong()
+                val s2 = first.point.getAlong()
+                if (C2SlideableSSP.intersects(s1, s2)) {
+                    // ok, these slideables can be merged and we can simplify the route
+                    val ssp = third.point.getAlong().so as C2SlackOptimisation
+                    val ns = ssp.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
+
+                    first = third
+                    second = third.prev
+                }
+            }
+        }
+
+        if (second != null) {
+            return C2Route(simplifyShortestPath(second, c2), first.point, first.cost)
+        } else {
+            return first
         }
     }
 

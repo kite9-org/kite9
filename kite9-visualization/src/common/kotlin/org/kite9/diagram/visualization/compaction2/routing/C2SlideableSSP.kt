@@ -208,14 +208,7 @@ class C2SlideableSSP(
         return (direction != null) && Direction.isHorizontal(direction)
     }
 
-    private fun intersects(k1: C2Slideable, k2: C2Slideable) : Boolean {
-        return intersects(k1.minimumPosition, k2.minimumPosition, k2.maximumPosition!!) ||
-                intersects(k1.maximumPosition!!, k2.minimumPosition, k2.maximumPosition!!)
-    }
 
-    private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {
-        return (i1 >= lower) && (i1<=upper)
-    }
 
     override fun createInitialPaths(s: State<C2Route>) {
         start
@@ -253,6 +246,15 @@ class C2SlideableSSP(
                 Direction.UP, Direction.LEFT -> false
                 Direction.DOWN, Direction.RIGHT -> true
             }
+        }
+
+        fun intersects(k1: C2Slideable, k2: C2Slideable) : Boolean {
+            return intersects(k1.minimumPosition, k2.minimumPosition, k2.maximumPosition!!) ||
+                    intersects(k1.maximumPosition!!, k2.minimumPosition, k2.maximumPosition!!)
+        }
+
+        private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {
+            return (i1 >= lower) && (i1<=upper)
         }
     }
 }

@@ -4,7 +4,7 @@ import org.kite9.diagram.common.algorithms.so.SlackOptimisation
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 
-sealed class C2Slideable(so: SlackOptimisation, val dimension: Dimension) : Slideable(so) {
+sealed class C2Slideable(so: C2SlackOptimisation, val dimension: Dimension) : Slideable(so) {
 
     val number: Int = nextNumber()
 
@@ -28,9 +28,8 @@ sealed class C2Slideable(so: SlackOptimisation, val dimension: Dimension) : Slid
                 .toMap()
         } else {
             maximum.forward
-                .map { (k,v) -> k.owner as C2Slideable to v }
+                .map { (k, v) -> k.owner as C2Slideable to v }
                 .toMap()
         }
     }
-
 }
