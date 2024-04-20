@@ -51,18 +51,10 @@
 	<xsl:template match="adl:diagram[contains(@class,'bg')]">
 		<xsl:param name="imageurl">
 			<xsl:choose>
-				<xsl:when test="@class = 'bg1'">
-					/public/templates/risk-first/backgrounds/vecteezy-5.jpg
-				</xsl:when>
-				<xsl:when test="@class = 'bg2'">
-					/public/templates/risk-first/backgrounds/vecteezy-1.jpg
-				</xsl:when>
-				<xsl:when test="@class = 'bg3'">
-					/public/templates/risk-first/backgrounds/vecteezy-3.jpg
-				</xsl:when>
-				<xsl:otherwise>
-					/public/templates/risk-first/backgrounds/vecteezy-2.jpg
-				</xsl:otherwise>
+				<xsl:when test="@class = 'bg1'">/public/templates/risk-first/backgrounds/vecteezy-5.jpg</xsl:when>
+				<xsl:when test="@class = 'bg2'">/public/templates/risk-first/backgrounds/vecteezy-1.jpg</xsl:when>
+				<xsl:when test="@class = 'bg3'">/public/templates/risk-first/backgrounds/vecteezy-3.jpg</xsl:when>
+				<xsl:otherwise>/public/templates/risk-first/backgrounds/vecteezy-2.jpg</xsl:otherwise>
 			</xsl:choose>
 		</xsl:param>
 
