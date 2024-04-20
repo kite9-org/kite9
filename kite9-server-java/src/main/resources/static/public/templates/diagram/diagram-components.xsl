@@ -79,7 +79,7 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template match="adl:diagram">
+  <xsl:template match="adl:diagram" priority="5">
     <xsl:call-template name="diagram-basic" />
   </xsl:template>
 

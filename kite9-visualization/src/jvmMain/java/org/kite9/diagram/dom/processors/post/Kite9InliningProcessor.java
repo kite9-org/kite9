@@ -96,6 +96,7 @@ public class Kite9InliningProcessor extends DiagramPositionProcessor {
 
 	private String encodeDataUrl(String uriStr, Element e)  {
 		try {
+			uriStr = uriStr.trim();
 			String baseURI = AbstractNode.getBaseURI(e);
 			ParsedURL purl;
 			if (baseURI == null) {
