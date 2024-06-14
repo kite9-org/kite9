@@ -1,6 +1,7 @@
 <xsl:stylesheet xmlns="http://www.w3.org/2000/svg"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	xmlns:adl="http://www.kite9.org/schema/adl"
+	xmlns:svg="http://www.w3.org/2000/svg" 
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:pp="http://www.kite9.org/schema/post-processor" version="1.0">
 
@@ -90,6 +91,29 @@
 		<xsl:call-template name="formats-text-fixed" />
 	</xsl:template>
 
+	<!--  steve mcconnel stuff -->
 
+   <xsl:template match="adl:leg">
+   		<xsl:call-template name="formats-text-shape-inline"> 
+     	</xsl:call-template>
+  	</xsl:template>
+ 
+    <xsl:template match="adl:plinth">
+   		<xsl:call-template name="formats-text-shape-inline"> 
+     		<xsl:with-param name="shape">triangle</xsl:with-param>
+     	</xsl:call-template>
+  	</xsl:template>
+  	
+  	<xsl:template match="adl:cloud">
+   		<xsl:call-template name="formats-text-fixed"> 
+     		<xsl:with-param name="shape">
+     		     <svg:polygon points="0, 100 50,0 100, 100" style='fill: url(#risk-background); ' class="glyph-back" />
+     		</xsl:with-param>
+     	</xsl:call-template>
+  	</xsl:template>
+ 
+  <xsl:template name="shape-triangle" match="*[@k9-shape='triangle']" mode="shape">
+    <svg:polygon points="0, 100 50,0 100, 100" style='fill: url(#risk-background); ' class="glyph-back" />
+  </xsl:template> 
 
 </xsl:stylesheet>

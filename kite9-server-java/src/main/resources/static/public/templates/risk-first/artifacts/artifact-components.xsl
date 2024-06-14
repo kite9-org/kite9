@@ -17,6 +17,7 @@
   
   <xsl:template name="artifact" match="adl:artifact |  
     adl:document |
+    adl:cash |
     adl:users |
     adl:interface |
     adl:component |
@@ -38,6 +39,7 @@
           <xsl:when test="name() = 'internal-model-artifact'">/public/templates/risk-first/redesign/risks/internal_model_risk.svg</xsl:when>
           <xsl:when test="name() = 'channel-artifact'">/public/templates/risk-first/redesign/risks/channel_risk_v2.svg</xsl:when>
           <xsl:when test="name() = 'component'">/public/templates/risk-first/redesign/artifacts/component_v2.svg</xsl:when>
+          <xsl:when test="name() = 'cash'">/public/templates/risk-first/redesign/artifacts/cash.svg</xsl:when>
           <xsl:otherwise>/public/templates/risk-first/redesign/artifacts/document_v2.svg</xsl:otherwise>
         </xsl:choose>
       </xsl:with-param> 
