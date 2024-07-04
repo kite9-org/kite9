@@ -286,12 +286,12 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                     val endPoint = route.point
                     writeRoute(it, route, 0)
                     hso.checkConsistency()
-                    handleLabel(it.getFromLabel(), startPoint, c, endPoint.d, it.getFrom())
+                    handleLabel(it.getFromLabel(), startPoint, c, startPoint.d, it.getFrom())
                     handleLabel(
                         it.getToLabel(),
                         getUpdatedPoint(endPoint, c, it),
                         c,
-                        Direction.reverse(startPoint.d)!!,
+                        Direction.reverse(endPoint.d)!!,
                         it.getTo()
                     )
                     hso.checkConsistency()
