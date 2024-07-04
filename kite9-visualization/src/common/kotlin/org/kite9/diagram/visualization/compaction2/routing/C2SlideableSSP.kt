@@ -1,10 +1,12 @@
 package org.kite9.diagram.visualization.compaction2.routing
 
 import C2Costing
+import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -19,6 +21,8 @@ class C2SlideableSSP(
     private val endZone: Zone,
     private val direction: Direction?,
     private val junctions: Map<C2BufferSlideable, List<C2Slideable>>,
+    private val hMatrix: Map<C2Slideable, Map<C2Slideable, Int>>,
+    private val vMatrix: Map<C2Slideable, Map<C2Slideable, Int>>,
     val log: Kite9Log
 ) : AbstractSSP<C2Route>() {
 
@@ -133,13 +137,38 @@ class C2SlideableSSP(
         }
     }
 
-    private fun collectInDirection(from: C2Slideable, forward: Boolean, foundSoFar: MutableSet<C2Slideable>) {
-        if (foundSoFar.contains(from)) {
-            return
-        } else {
-            foundSoFar.add(from)
-            from.getForwardSlideables(forward).forEach { collectInDirection(it as C2Slideable, forward, foundSoFar) }
+    private fun getCorrectDistanceMatrix(from: C2Slideable, stops: List<C2Slideable>) : Map<C2Slideable, Int> {
+        val mat = when (from.dimension) {
+            Dimension.H -> hMatrix
+            Dimension.V -> vMatrix
         }
+
+        return mat.get(from)!!.filter { stops.contains(it.key) }
+    }
+
+    private fun blockingSlideable(k: C2Slideable): Boolean {
+        return k is C2RectangularSlideable && k.anchors.size > 0
+    }
+
+    private fun collectInDirection(from: C2Slideable, forward: Boolean, stops: List<C2Slideable>) : Set<C2Slideable> {
+        val stopsDistances = getCorrectDistanceMatrix(from, stops)
+
+        // remove all the ones in the wrong direction
+        val stopDistRightDirection = when (forward) {
+            true -> stopsDistances.filter { it.value >= 0 }
+            false -> stopsDistances.filter { it.value <= 0 }
+        }.minus(from)
+
+        // find nearest blocker
+        val potentialBlockers = stopDistRightDirection.filter { blockingSlideable(it.key) }
+        val closestBlocker = potentialBlockers.minByOrNull { abs(it.value) }
+
+        if (closestBlocker != null) {
+            val stopDistBeforeBlocker = stopDistRightDirection.filter { abs(it.value) <= abs(closestBlocker.value) }
+            return stopDistBeforeBlocker.keys
+        }
+
+        return stopDistRightDirection.keys
     }
 
     private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
@@ -150,10 +179,7 @@ class C2SlideableSSP(
             Direction.LEFT, Direction.UP -> false
         }
 
-        val notAllowed = mutableSetOf<C2Slideable>()
-        collectInDirection(startingAt, !forward, notAllowed)
-
-        val out = stops.toSet().minus(notAllowed)
+        val out = collectInDirection(startingAt, forward, stops)
         return out
     }
 

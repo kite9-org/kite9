@@ -22,6 +22,10 @@ abstract class Slideable(val so: SlackOptimisation,
             maximum.increasePosition(i!!)
         }
 
+    fun getMinimumForwardConstraintTo(d: Slideable) : Int? {
+        return this.minimum.forward.get(d.minimum)
+    }
+
     /**
      * Works out how much closer the current slideable can get to s.
      * This works by fixing the position for s (temporarily, using the cache)

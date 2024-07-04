@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
+import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Positioned
@@ -279,6 +280,10 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
     fun addSlideable(c: C2IntersectionSlideable) {
         slideables.add(c)
+    }
+
+    override fun getAllSlideables(): Collection<C2Slideable> {
+        return super.getAllSlideables() as Collection<C2Slideable>
     }
 
     companion object {

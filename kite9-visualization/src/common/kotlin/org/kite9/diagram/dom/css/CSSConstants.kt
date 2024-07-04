@@ -1,6 +1,7 @@
 package org.kite9.diagram.dom.css
 
-interface CSSConstants {
+interface
+CSSConstants {
     companion object {
 
         const val LEFT = "left"
