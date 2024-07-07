@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.routing
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -17,7 +18,30 @@ import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
 
+data class Constraint(val forward: Boolean, val dist: Int) {
 
+    fun max(c2: Constraint?): Constraint {
+        if (c2 == null) {
+            return this
+        }
+        if (forward != c2.forward) {
+            throw LogicException("Constraints must be in same direction")
+        }
+
+        return Constraint(forward, max(c2.dist, dist))
+    }
+
+    operator fun plus(c2: Constraint?): Constraint {
+        if (c2 == null) {
+            return this
+        }
+        if (forward != c2.forward) {
+            throw LogicException("Constraints must be in same direction")
+        }
+
+        return Constraint(forward, c2.dist + dist)
+    }
+}
 class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
     AbstractC2BuilderCompactionStep(cd, gp) {
 
@@ -75,11 +99,13 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         )
     }
 
+
+
     /**
      * Implementation of Floyd-Warshall algorithm for transitive distances.  Runs in o(n^3)
      */
-    private fun createTDMatrix(so: C2SlackOptimisation): Map<C2Slideable, Map<C2Slideable, Int>> {
-        val out = mutableMapOf<C2Slideable, MutableMap<C2Slideable, Int>>()
+    private fun createTDMatrix(so: C2SlackOptimisation): Map<C2Slideable, Map<C2Slideable, Constraint>> {
+        val out = mutableMapOf<C2Slideable, MutableMap<C2Slideable, Constraint>>()
 
         // set initial constraints
 
@@ -91,15 +117,15 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
                     if ((d1 != null) || (d2 != null)) {
 
-                        val mapFrom = out.getOrPut(f) { mutableMapOf<C2Slideable, Int>() }
-                        val mapTo = out.getOrPut(t) { mutableMapOf<C2Slideable, Int>() }
+                        val mapFrom = out.getOrPut(f) { mutableMapOf<C2Slideable, Constraint>() }
+                        val mapTo = out.getOrPut(t) { mutableMapOf<C2Slideable, Constraint>() }
 
                         if (d1 != null) {
-                            mapFrom.put(t, d1)
-                            mapTo.put(f, -d1)
+                            mapFrom.put(t, Constraint(true, d1))
+                            mapTo.put(f, Constraint(false, d1))
                         } else if (d2 != null) {
-                            mapFrom.put(t, -d2)
-                            mapTo.put(f, d2)
+                            mapFrom.put(t, Constraint(false, d2))
+                            mapTo.put(f, Constraint(true, d2))
                         }
                     }
                 }
@@ -107,21 +133,19 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         }
 
         so.getAllSlideables().forEach { k ->
-            val kMap = out.getOrPut(k) { mutableMapOf<C2Slideable, Int>() }
+            val kMap = out.getOrPut(k) { mutableMapOf<C2Slideable, Constraint>() }
             so.getAllSlideables().forEach { f ->
                 if (f != k) {
-                    val fromMap = out.getOrPut(f) { mutableMapOf<C2Slideable, Int>() }
+                    val fromMap = out.getOrPut(f) { mutableMapOf<C2Slideable, Constraint>() }
                     so.getAllSlideables().forEach { t ->
                         if ((t != f) && (t != k)) {
-                            val ft = fromMap[t] ?: 0
+                            val ft = fromMap[t]
                             val kt = kMap[t]
                             val fk = fromMap[k]
-                            val vk = if ((fk != null) && (kt != null)) fk + kt else null
-                            if (vk != null) {
-                                if ((kt!! > 0) && (fk!! > 0)) {
-                                    fromMap[t] = max(vk, ft)
-                                } else if ((kt!! < 0) && (fk!! < 0)) {
-                                    fromMap[t] = min(vk, ft)
+                            if ((fk != null) && (kt != null)) {
+                                if (kt.forward == fk.forward) {
+                                    val kft = kt + fk
+                                    fromMap[t] = kft.max(ft)
                                 }
                             }
                         }

@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.routing
 
 import C2Costing
-import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
@@ -21,8 +20,8 @@ class C2SlideableSSP(
     private val endZone: Zone,
     private val direction: Direction?,
     private val junctions: Map<C2BufferSlideable, List<C2Slideable>>,
-    private val hMatrix: Map<C2Slideable, Map<C2Slideable, Int>>,
-    private val vMatrix: Map<C2Slideable, Map<C2Slideable, Int>>,
+    private val hMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>>,
+    private val vMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>>,
     val log: Kite9Log
 ) : AbstractSSP<C2Route>() {
 
@@ -78,7 +77,7 @@ class C2SlideableSSP(
         val along = r.point.getAlong()
         val perp = r.point.getPerp()
         val d = r.point.d
-        log.send("Extending: $r")
+         log.send("Extending: $r")
 
         if (along is C2BufferSlideable) {
             advance(d, perp, r, along, s, r.cost.addStep())
@@ -137,34 +136,39 @@ class C2SlideableSSP(
         }
     }
 
-    private fun getCorrectDistanceMatrix(from: C2Slideable, stops: List<C2Slideable>) : Map<C2Slideable, Int> {
+    private fun getCorrectDistanceMatrix(from: C2Slideable, stops: List<C2Slideable>) : Map<C2Slideable, Constraint?> {
         val mat = when (from.dimension) {
             Dimension.H -> hMatrix
             Dimension.V -> vMatrix
         }
 
-        return mat.get(from)!!.filter { stops.contains(it.key) }
+        val distances = mat.get(from)!!
+        val known = distances.filter { stops.contains(it.key) }
+        val unknown = stops.filter { !distances.containsKey(it) }.associateWith { null }
+        return known + unknown
     }
 
-    private fun blockingSlideable(k: C2Slideable): Boolean {
-        return k is C2RectangularSlideable && k.anchors.size > 0
+    private fun blockingSlideable(k: Map.Entry<C2Slideable, Constraint?>): Boolean {
+        return (k.key is C2RectangularSlideable) &&
+                ((k.key as C2RectangularSlideable).anchors.size > 0)
     }
 
     private fun collectInDirection(from: C2Slideable, forward: Boolean, stops: List<C2Slideable>) : Set<C2Slideable> {
         val stopsDistances = getCorrectDistanceMatrix(from, stops)
 
         // remove all the ones in the wrong direction
-        val stopDistRightDirection = when (forward) {
-            true -> stopsDistances.filter { it.value >= 0 }
-            false -> stopsDistances.filter { it.value <= 0 }
-        }.minus(from)
+        val stopDistRightDirection = stopsDistances.filter { it.value == null || it.value!!.forward == forward }
+            .minus(from)
 
         // find nearest blocker
-        val potentialBlockers = stopDistRightDirection.filter { blockingSlideable(it.key) }
-        val closestBlocker = potentialBlockers.minByOrNull { abs(it.value) }
+        val potentialBlockers = stopDistRightDirection
+            .filter { blockingSlideable(it) }
+            .filterValues { it != null } as Map<C2Slideable, Constraint>
+
+        val closestBlocker = potentialBlockers.minByOrNull { it.value.dist }
 
         if (closestBlocker != null) {
-            val stopDistBeforeBlocker = stopDistRightDirection.filter { abs(it.value) <= abs(closestBlocker.value) }
+            val stopDistBeforeBlocker = stopDistRightDirection.filter { it.value == null || it.value!!.dist <= closestBlocker.value.dist }
             return stopDistBeforeBlocker.keys
         }
 
