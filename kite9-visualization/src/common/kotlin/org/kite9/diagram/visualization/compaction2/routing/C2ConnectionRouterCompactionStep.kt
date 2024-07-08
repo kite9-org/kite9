@@ -201,18 +201,16 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         var second = r?.prev ?: null
         val third = r?.prev?.prev ?: null
 
-        if (third != null) {
-            if (third.point.d == first.point.d) {
-                val s1 = third.point.getAlong()
-                val s2 = first.point.getAlong()
-                if (C2SlideableSSP.intersects(s1, s2)) {
-                    // ok, these slideables can be merged and we can simplify the route
-                    val ssp = third.point.getAlong().so as C2SlackOptimisation
-                    val ns = ssp.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
+        if ((third != null) && (third.point.d == first.point.d)) {
+            val s1 = third.point.getAlong()
+            val s2 = first.point.getAlong()
+            if (C2SlideableSSP.intersects(s1, s2)) {
+                // ok, these slideables can be merged and we can simplify the route
+                val ssp = third.point.getAlong().so as C2SlackOptimisation
+                val ns = ssp.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
 
-                    first = third
-                    second = third.prev
-                }
+                // remove the second, rewrite the first
+                return C2Route(simplifyShortestPath(third, c2), C2Point(ns, first.point.getPerp(), first.point.d), first.cost)
             }
         }
 

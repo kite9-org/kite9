@@ -106,6 +106,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             return s2
         } else if (s2 == null) {
             return s1
+        } else if (s1 == s2) {
+            return s1
         } else {
             @Suppress("UNCHECKED_CAST") val sNew = s1.merge(s2) as X
             // now we need to replace s1 and s2 in their containers
