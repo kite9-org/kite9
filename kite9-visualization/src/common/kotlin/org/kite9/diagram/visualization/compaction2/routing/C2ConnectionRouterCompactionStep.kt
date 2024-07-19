@@ -94,8 +94,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val v = c2.getSlackOptimisation(Dimension.V)
         val vs = v.getSlideablesFor(r)!!
         return Zone(
-            hs.l.minimumPosition, hs.r.maximumPosition!!,
-            vs.l.minimumPosition, vs.r.maximumPosition!!
+            hs.l, hs.r,
+            vs.l, vs.r
         )
     }
 
@@ -175,16 +175,19 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
             log.send("Found shortest path: $out")
 
-            val out2 = simplifyShortestPath(out, c2)
+            val replacements = mutableMapOf<C2Slideable, C2Slideable>()
 
-            updateUsedStartEndPoints(out2.point, c.getTo())
-            updateUsedStartEndPoints(getStart(out2), c.getFrom())
+            val out2 = simplifyShortestPath(out, c2, doer, replacements)
+            val out3 = handleReplacements(out2, replacements)!!
+            c2.checkConsistency()
+            updateUsedStartEndPoints(out3.point, c.getTo())
+            updateUsedStartEndPoints(getStart(out3), c.getFrom())
 
-            if (out2.prev != null) {
-                ensureSlackForConnection(out2.point, out2.prev, c, true)
+            if (out3.prev != null) {
+                ensureSlackForConnection(out2.point, out3.prev, c, true)
             }
 
-            return out2
+            return out3
 
         } catch (e: NoFurtherPathException) {
             log.error("Couldn't route: $c")
@@ -192,11 +195,31 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         }
     }
 
+    private fun handleReplacements(p: C2Point, replacements: Map<C2Slideable, C2Slideable>) : C2Point {
+        if (replacements.containsKey(p.a) || replacements.containsKey(p.b)) {
+            val newA = replacements.get(p.a) ?: p.a
+            val newB = replacements.get(p.b) ?: p.b
+            return handleReplacements(C2Point(newA, newB, p.d), replacements)
+        } else {
+            return p
+        }
+    }
+
+    private fun handleReplacements(r: C2Route?, replacements: Map<C2Slideable, C2Slideable>) : C2Route? {
+        if (r != null) {
+            return C2Route(handleReplacements(r.prev, replacements), handleReplacements(r.point, replacements), r.cost)
+        } else {
+            return null
+        }
+    }
+
+
+
     /**
      * This looks for opportunities to merge slideables where there is a "dog-leg"
      * in the routing.
      */
-    private fun simplifyShortestPath(r: C2Route, c2: C2Compaction): C2Route {
+    private fun simplifyShortestPath(r: C2Route, c2: C2Compaction, ssp: C2SlideableSSP, replacements: MutableMap<C2Slideable, C2Slideable>): C2Route {
         var first = r
         var second = r?.prev ?: null
         val third = r?.prev?.prev ?: null
@@ -204,18 +227,22 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         if ((third != null) && (third.point.d == first.point.d)) {
             val s1 = third.point.getAlong()
             val s2 = first.point.getAlong()
-            if (C2SlideableSSP.intersects(s1, s2)) {
+
+            val absDist = ssp.getAbsoluteDistance(s1, s2)
+            if (absDist == 0) {
                 // ok, these slideables can be merged and we can simplify the route
-                val ssp = third.point.getAlong().so as C2SlackOptimisation
-                val ns = ssp.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
+                val so = third.point.getAlong().so as C2SlackOptimisation
+                val ns = so.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
+                replacements.put(s1, ns)
+                replacements.put(s2, ns)
 
                 // remove the second, rewrite the first
-                return C2Route(simplifyShortestPath(third, c2), C2Point(ns, first.point.getPerp(), first.point.d), first.cost)
+                return C2Route(simplifyShortestPath(third, c2, ssp, replacements), C2Point(ns, first.point.getPerp(), first.point.d), first.cost)
             }
         }
 
         if (second != null) {
-            return C2Route(simplifyShortestPath(second, c2), first.point, first.cost)
+            return C2Route(simplifyShortestPath(second, c2, ssp, replacements), first.point, first.cost)
         } else {
             return first
         }

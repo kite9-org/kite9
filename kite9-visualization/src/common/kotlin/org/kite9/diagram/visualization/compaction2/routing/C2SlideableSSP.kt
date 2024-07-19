@@ -5,12 +5,12 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import kotlin.math.abs
+import kotlin.math.max
 
 class C2SlideableSSP(
     val start: Set<C2Point>,
@@ -56,14 +56,22 @@ class C2SlideableSSP(
         out
     }
 
-    private fun remainingDistance1D(s: C2Slideable, from: Int, to: Int) : Int {
-        return if (s.maximumPosition!! < from) {
-            from - s.maximumPosition!!
-        } else if (s.minimumPosition > to) {
-            s.minimumPosition - to
+    private fun remainingDistance1D(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Int {
+        // first, let's see if there's min distance set
+        val knownDistance = getCorrectDistanceMatrix(s, listOf(from, to)).values
+            .filterNotNull()
+            .maxOfOrNull { it.dist }
+
+        return if (knownDistance != null) {
+            knownDistance
+        } else if (s.maximumPosition!! < from.minimumPosition) {
+            from.minimumPosition - s.maximumPosition!!
+        } else if (s.minimumPosition > to.maximumPosition!!) {
+            s.minimumPosition - to.maximumPosition!!
         } else {
             0
         }
+
     }
 
     private fun remainingDistance(p: C2Point) : Int {
@@ -77,7 +85,7 @@ class C2SlideableSSP(
         val along = r.point.getAlong()
         val perp = r.point.getPerp()
         val d = r.point.d
-         log.send("Extending: $r")
+        log.send("Extending: $r")
 
         if (along is C2BufferSlideable) {
             advance(d, perp, r, along, s, r.cost.addStep())
@@ -123,17 +131,49 @@ class C2SlideableSSP(
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
                 if (canAdvanceTo(common, k, startPoint)) {
-                    val dist = abs(k.minimumPosition - perp.minimumPosition)
                     val p = C2Point(along, k, d)
-                    val travelledDistance = c.minimumTravelledDistance + dist
-                    val possibleDistance = travelledDistance + remainingDistance(p)
-                    val newCost = c.setDistances(travelledDistance, possibleDistance)
+                    val travelledDistance = c.totalDistance + extraDistance(r, p)
+                    val possibleRemainingDistance = remainingDistance(p)
+                    val expensive = expensiveDirection(p)
+                    val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
                     val r2 = C2Route(r, p, newCost)
                     s.add(r2)
                     log.send("Added: $r2")
                 }
             }
         }
+    }
+
+    enum class RelativeDirection { SAME, PERP, REVERSED }
+
+    private fun extraDistance(existingRoute: C2Route?, newPoint: C2Point) : Int {
+        if (existingRoute == null) {
+            return 0
+        }
+
+        val routePoint = existingRoute.point
+        val rd = when (newPoint.d) {
+            routePoint.d -> RelativeDirection.SAME
+            Direction.reverse(routePoint.d) -> RelativeDirection.REVERSED
+            else -> RelativeDirection.PERP
+        }
+
+        val out = max(when (rd) {
+            RelativeDirection.SAME -> getAbsoluteDistance(newPoint.getPerp(), routePoint.getPerp())
+            RelativeDirection.PERP -> getAbsoluteDistance(newPoint.getPerp(), routePoint.getAlong())
+            RelativeDirection.REVERSED -> 0
+        }, extraDistance(existingRoute.prev, newPoint))
+
+        return out
+    }
+
+    fun getAbsoluteDistance(from: C2Slideable, to: C2Slideable): Int {
+        val mat = when (from.dimension) {
+            Dimension.H -> hMatrix
+            Dimension.V -> vMatrix
+        }
+
+        return mat[from]!![to]?.dist ?: 0
     }
 
     private fun getCorrectDistanceMatrix(from: C2Slideable, stops: List<C2Slideable>) : Map<C2Slideable, Constraint?> {
@@ -149,6 +189,7 @@ class C2SlideableSSP(
     }
 
     private fun blockingSlideable(k: Map.Entry<C2Slideable, Constraint?>): Boolean {
+        // this should also block at another link
         return (k.key is C2RectangularSlideable) &&
                 ((k.key as C2RectangularSlideable).anchors.size > 0)
     }
@@ -221,14 +262,7 @@ class C2SlideableSSP(
             is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
         }
 
-        if (!intersectionOk) {
-            return false
-        }
-
-        return when (k.dimension) {
-            Dimension.H -> if (!hasHorizontalConstraint()) true else intersects(k, startPoint.get(k.dimension))
-            Dimension.V -> if (!hasVerticalConstraint()) true else intersects(k, startPoint.get(k.dimension))
-        }
+        return intersectionOk
     }
 
     private fun hasHorizontalConstraint() : Boolean {
@@ -238,14 +272,19 @@ class C2SlideableSSP(
         return (direction != null) && Direction.isHorizontal(direction)
     }
 
-
+    private fun expensiveDirection(p: C2Point) : Boolean {
+        return when (p.getPerp().dimension) {
+            Dimension.V -> hasVerticalConstraint()
+            Dimension.H -> hasHorizontalConstraint()
+        }
+    }
 
     override fun createInitialPaths(s: State<C2Route>) {
         start
             .filter { directionOk(it)}
             .forEach {
             // head out from each point as far as possible in each direction
-            val r = C2Route(null, it, C2Costing().setDistances(0, remainingDistance(it)))
+            val r = C2Route(null, it, C2Costing().addDistance(0, remainingDistance(it), false))
             val along = r.point.getAlong() as C2BufferSlideable
             val perp = r.point.getPerp()
             val d = r.point.d
@@ -276,11 +315,6 @@ class C2SlideableSSP(
                 Direction.UP, Direction.LEFT -> false
                 Direction.DOWN, Direction.RIGHT -> true
             }
-        }
-
-        fun intersects(k1: C2Slideable, k2: C2Slideable) : Boolean {
-            return intersects(k1.minimumPosition, k2.minimumPosition, k2.maximumPosition!!) ||
-                    intersects(k1.maximumPosition!!, k2.minimumPosition, k2.maximumPosition!!)
         }
 
         private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {

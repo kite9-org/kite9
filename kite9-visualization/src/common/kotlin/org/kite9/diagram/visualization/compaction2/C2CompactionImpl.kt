@@ -136,7 +136,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
-
+    override fun checkConsistency() {
+        verticalSegmentSlackOptimisation.checkConsistency()
+        horizontalSegmentSlackOptimisation.checkConsistency()
+    }
 
     companion object {
 

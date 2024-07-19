@@ -40,4 +40,5 @@ interface C2Compaction {
     fun resortJunctions()
     fun consistentJunctions()
 
+    fun checkConsistency()
 }

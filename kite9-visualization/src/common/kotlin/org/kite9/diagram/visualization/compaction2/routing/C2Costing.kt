@@ -1,46 +1,57 @@
-data class C2Costing(  val legalEdgeCrossCost : Int = 0,
-                       val turns: Int = 0,
-                       val steps: Int = 1,
-                       val illegalEdgeCrossings : Int = 0,
-                       val minimumTravelledDistance : Int = 0,
-                       val minimumPossibleDistance: Int = 0,
-                       val minimumExpensiveAxisDistance : Int = 0,
-                       val minimumBoundedAxisDistance : Int = 0) : Comparable<C2Costing> {
+data class C2Costing(val allEdgeCrossings : Int = 0,
+                     val turns: Int = 0,
+                     val steps: Int = 1,
+                     val illegalEdgeCrossings : Int = 0,
+                     val totalDistance : Int = 0,
+                     val minimumPossibleDistance: Int = 0,
+                     val expensiveAxisDistance : Int = 0) : Comparable<C2Costing> {
 
     constructor() : this(0,0,0,0,0,0) {}
     constructor(c: C2Costing,
-                legalEdgeCrossCost : Int = c.legalEdgeCrossCost,
+                allEdgeCrossings : Int = c.allEdgeCrossings,
                 turns: Int = c.turns,
                 illegalEdgeCrossings : Int = c.illegalEdgeCrossings,
-                minimumTravelledDistance : Int = c.minimumTravelledDistance,
+                totalDistance : Int = c.totalDistance,
                 minimumPossibleDistance: Int = c.minimumPossibleDistance,
-                minimumExpensiveAxisDistance : Int = c.minimumExpensiveAxisDistance,
-                minimumBoundedAxisDistance : Int = c.minimumBoundedAxisDistance) : this(
-        legalEdgeCrossCost,
+                expensiveAxisDistance : Int = c.expensiveAxisDistance) : this(
+        allEdgeCrossings,
         turns,
         c.steps + 1,
         illegalEdgeCrossings,
-        minimumTravelledDistance,
+        totalDistance,
         minimumPossibleDistance,
-        minimumExpensiveAxisDistance,
-        minimumBoundedAxisDistance)
+        expensiveAxisDistance)
 
     fun addTurn() : C2Costing {
         return C2Costing(this, turns = this.turns + 1)
     }
 
-    fun setDistances(t: Int, p: Int) : C2Costing {
-        return C2Costing(this, minimumPossibleDistance = this.minimumPossibleDistance + p, minimumTravelledDistance = this.minimumTravelledDistance + t)
+    fun addDistance(stride: Int, left: Int, expensive: Boolean) : C2Costing {
+        val travelledDistance = this.totalDistance + stride
+        val expensiveDistance = this.expensiveAxisDistance + if (expensive) stride else 0
+        val possibleDistance = travelledDistance + left
+        return C2Costing(this,
+            minimumPossibleDistance = possibleDistance,
+            totalDistance = travelledDistance,
+            expensiveAxisDistance = expensiveDistance)
     }
 
     fun addStep(): C2Costing {
         return C2Costing(this)
     }
 
+    fun addCrossing(legal: Boolean) : C2Costing {
+        val crossings = this.allEdgeCrossings + 1
+        val illegalCrossings = this.illegalEdgeCrossings + if (legal) 0 else 1
+        return C2Costing(this,
+            allEdgeCrossings = crossings,
+            illegalEdgeCrossings = illegalCrossings)
+    }
+
     override fun compareTo(other: C2Costing): Int {
         // expensive (i.e. more important than crossings)
-        if (minimumExpensiveAxisDistance != other.minimumExpensiveAxisDistance) {
-            return minimumExpensiveAxisDistance.compareTo(other.minimumExpensiveAxisDistance)
+        if (expensiveAxisDistance != other.expensiveAxisDistance) {
+            return expensiveAxisDistance.compareTo(other.expensiveAxisDistance)
         }
 
         if (illegalEdgeCrossings != other.illegalEdgeCrossings) {
@@ -48,8 +59,8 @@ data class C2Costing(  val legalEdgeCrossCost : Int = 0,
         }
 
         // route with minimum amount of crossing
-        if (legalEdgeCrossCost != other.legalEdgeCrossCost) {
-            return legalEdgeCrossCost.compareTo(other.legalEdgeCrossCost)
+        if (allEdgeCrossings != other.allEdgeCrossings) {
+            return allEdgeCrossings.compareTo(other.allEdgeCrossings)
         }
 
         // try to minimize turns
@@ -63,8 +74,8 @@ data class C2Costing(  val legalEdgeCrossCost : Int = 0,
         }
 
         // minimum actual distance
-        if (minimumTravelledDistance != other.minimumTravelledDistance) {
-            return minimumTravelledDistance.compareTo(other.minimumTravelledDistance)
+        if (totalDistance != other.totalDistance) {
+            return totalDistance.compareTo(other.totalDistance)
         }
 
         if (steps != other.steps) {
@@ -75,7 +86,8 @@ data class C2Costing(  val legalEdgeCrossCost : Int = 0,
    }
 
     override fun toString(): String {
-        return "COST[el=$legalEdgeCrossCost t=$turns s=$steps ei=$illegalEdgeCrossings mtd=$minimumTravelledDistance mpd=$minimumPossibleDistance mbd=$minimumBoundedAxisDistance med=$minimumExpensiveAxisDistance]"
+        // reported in priority order
+        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalDistance s=$steps]"
     }
 
 }
