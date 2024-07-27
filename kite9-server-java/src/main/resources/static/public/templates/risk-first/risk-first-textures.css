@@ -9,7 +9,8 @@
 
 [k9-texture] {
 	font-family: metropolis;
-	font-size: 12pt;
+	font-size: 16pt;  /* Has to be same as action font-size */
+	font-weight: 500;
 }
 
 /* Artifacts */
@@ -21,17 +22,19 @@
 }
 
 [k9-texture=artifact] text {
-	font-size: 12pt;
-	font-weight: 200;
+	font-size: 16pt;
+	font-weight: 400;
 	fill: black;
 	text-align: center;
 	--kite9-text-bounds-width: 100pt;
 }
 
+
+[k9-elem=label] text,
 [k9-elem=description] text {
 	font-style: italic;
-	font-size: 12pt;
-	font-weight: 200;
+	/* font-size: 16pt;
+	font-weight: 500; */
 	--kite9-direction: right;
 }
 
@@ -56,6 +59,7 @@
 [k9-elem=arrow]>g>[k9-elem=caption]>g>text {
 	fill: white;
 	fill-opacity: 1;
+	font-size: 16pt;
 }
 
 [k9-elem=from],
@@ -69,6 +73,7 @@
 
 /* Actions, Glyphs */
 [k9-elem=glyph][k9-texture=background]>g>rect,
+[k9-elem=glyph][k9-texture=background]>g>ellipse,
 [k9-elem=action] [k9-texture=background] {
 	fill: url(#risk-background);
 	stroke: black;
@@ -77,8 +82,8 @@
 
 [k9-elem=action]>g>[k9-elem=caption]>g>text {
 	fill-opacity: 1;
-	font-size: 12pt;
-	font-weight: 200;
+	font-size: 16pt;
+	font-weight: 500;
 	fill: black;
 	text-align: center;
 }
@@ -91,15 +96,15 @@
 }
 
 [k9-elem=title] {
-	font-size: 12pt;
-	font-weight: 200;
+	font-size: 16pt;
+	font-weight: 500;
 	fill: black;
 	text-align: center;
 }
 
 [k9-elem=code] {
 	font-size: 22pt;
-	font-weight: 300;
+	font-weight: 500;
 	fill: black;
 	text-align: center;
 }

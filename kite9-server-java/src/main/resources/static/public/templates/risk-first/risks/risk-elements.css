@@ -6,8 +6,16 @@
 }
 
 
-[k9-elem=hidden] {
+[k9-elem=hidden],
+[k9-elem=mitigated] {
+	--kite9-margin: 10pt;
 	--kite9-min-size: 120pt 160pt;
+	--kite9-padding: 0;
+}
+
+[k9-elem=mitigated] .k9-content [k9-elem=risk],
+[k9-elem=hidden] .k9-content [k9-elem=risk] {
+	--kite9-margin: 0;
 }
 
 [k9-elem=risk] {
@@ -17,7 +25,7 @@
 	--kite9-link-inset: 10pt;
 	--kite9-link-gutter: 10pt;
 	--kite9-padding: 10pt;
-	--kite9-min-size: 120pt 160pt;
+	--kite9-min-size: 145pt 170pt;
 }
 
 

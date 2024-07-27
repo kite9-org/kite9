@@ -37,6 +37,15 @@
 	<xsl:template match="adl:celltext">
 		<xsl:call-template name="formats-text-fixed" />
 	</xsl:template>
+	
+	<xsl:template match="adl:tick">
+		<xsl:call-template name="formats-image-fixed">
+			<xsl:with-param name="k9-elem">image</xsl:with-param>
+			<xsl:with-param name="href">/public/templates/risk-first/posts/tick.svg</xsl:with-param>
+			<xsl:with-param name="width">30pt</xsl:with-param>
+			<xsl:with-param name="height">30pt</xsl:with-param>
+		</xsl:call-template>
+	</xsl:template>
 
 	<xsl:template name="risk-point"
 		match="*[@k9-shape='risk-point']" mode="shape" priority="2">
@@ -44,38 +53,6 @@
 			<xsl:attribute name="pp:cx">$x + $width div 2</xsl:attribute>
 			<xsl:attribute name="pp:cy">$y + $height div 2</xsl:attribute>
 		</ellipse>
-	</xsl:template>
-
-
-	<!-- singles for website article icons -->
-
-	<xsl:template match="adl:diagram[contains(@class,'bg')]">
-		<xsl:param name="imageurl">
-			<xsl:choose>
-				<xsl:when test="@class = 'bg1'">/public/templates/risk-first/backgrounds/vecteezy-5.jpg</xsl:when>
-				<xsl:when test="@class = 'bg2'">/public/templates/risk-first/backgrounds/vecteezy-1.jpg</xsl:when>
-				<xsl:when test="@class = 'bg3'">/public/templates/risk-first/backgrounds/vecteezy-3.jpg</xsl:when>
-				<xsl:otherwise>/public/templates/risk-first/backgrounds/vecteezy-2.jpg</xsl:otherwise>
-			</xsl:choose>
-		</xsl:param>
-
-		<xsl:call-template name="formats-container">
-			<xsl:with-param name="k9-texture">
-				none
-			</xsl:with-param>
-			<xsl:with-param name="shape">
-				<image x="0" y="0" width="100" height="100" pp:width="$width"
-					pp:height="$height">
-					<xsl:attribute name="xlink:href"><xsl:value-of
-						select="$imageurl" /></xsl:attribute>
-				</image>
-			</xsl:with-param>
-			<xsl:with-param name="content">
-				<g filter="url(#dropshadow)">
-					<xsl:apply-templates select="*" />
-				</g>
-			</xsl:with-param>
-		</xsl:call-template>
 	</xsl:template>
 
 	<xsl:template name="site-risk-first-diagram-element-css">

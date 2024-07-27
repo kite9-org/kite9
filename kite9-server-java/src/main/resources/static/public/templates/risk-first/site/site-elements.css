@@ -1,19 +1,18 @@
-[k9-elem=celltext] {
+[k9-elem=celltext][k9-format=text-fixed] {
 	--kite9-usage: regular;
 	--kite9-minimum-height: 250pt;
 	--kite9-padding: 10pt;
-	--kite9-vertical-align: center;
-	--kite9-horizontal-align: left;
+	--kite9-vertical-align: bottom;
+	--kite9-horizontal-align: center;
 	--kite9-sizing: minimize;
-	font-size: 40pt;
+	font-size: 15pt;
 	fill: black;
-	font-family: "gothic";
 	stroke: none;
 	--kite9-text-bounds-width: 350pt;
 }
 
 [k9-elem=celltext].bold {
-	font-family: "gothic-bold";
+	font-weight: bold;
 }
 
 [k9-elem=celltext].bottom {
@@ -25,37 +24,8 @@
 	--kite9-horizontal-align: left;
 }
 
-[k9-elem=bulleted] {
-	--kite9-usage: regular;
-	--kite9-type: container;
+[k9-elem=description].top {
 	--kite9-vertical-align: top;
-	--kite9-horizontal-align: left;
-	font-size: 40pt;
-	fill: black;
-	font-family: "gothic";
-	stroke: none;
-}
-
-[k9-elem=ctext] {
-	--kite9-usage: regular;
-	--kite9-vertical-align: top;
-	--kite9-horizontal-align: left;
-	font-size: 40pt;
-	fill: black;
-	font-family: "gothic";
-	stroke: none;
-	--kite9-type: text;
-}
-
-[k9-elem=btext] {
-	--kite9-usage: regular;
-	--kite9-vertical-align: top;
-	--kite9-horizontal-align: left;
-	font-size: 40pt;
-	fill: black;
-	font-family: "gothic-bold";
-	stroke: none;
-	--kite9-type: text;
 }
 
 [k9-elem=tick] {
@@ -77,34 +47,47 @@
 	--kite9-vertical-align: top;
 }
 
+[k9-elem=table] > rect,
+[k9-elem=table] > g > rect {
+	stroke: white;
+}
+
+[k9-elem=table].wide [k9-elem=description] {
+	--kite9-text-bounds-width: 450pt; 
+}
+
+[k9-elem=description].top {
+	--kite9-horizontal-align: left;
+	text-align: left;
+}
+
+[k9-elem=description].left {
+	--kite9-horizontal-align: left;
+	text-align: left;
+}
+
+[k9-elem=description].middle {
+	--kite9-horizontal-align: middle;
+}
+
+[k9-elem=cell] > g > rect {
+	stroke: white;
+}
+
 /* Risk Descriptions */
 
 [k9-elem=description],
 [k9-elem=long-description],
 .description {
 	font-size: 14pt;
-	font-family: "gothic-italic";
-	font-style: italic;
 	--kite9-padding: 10pt;
 	--kite9-text-bounds-width: 250pt;
 }
 
-/* Steve McConnell Stuff */
-
-[k9-elem=leg] {
-	--kite9-type: container;
-	--kite9-layout: down;
-	--kite9-min-height: 110pt;
-	--kite9-min-width: 70pt;
-	--kite9-sizing: minimize;
-	--kite9-margin: 0pt;
-	--kite9-vertical-align: bottom;
-}
-
-
-[k9-elem=plinth] {
-	--kite9-type: container;
-	--kite9-sizing: maximize;
+[k9-elem=description].bold {
+	fill: black;
+	font-style: normal;
+	font-weight: 600;
 }
 
 /** Book Icon */
@@ -233,4 +216,15 @@
 	text-align: center;
 	font-weight: 300;
 	font-style: italic;
+}
+
+/** Vroom and Yetton */
+[k9-elem=glyph].rect {
+	--kite9-min-height: 40pt;
+	--kite9-min-width: 30pt;
+}
+
+[k9-elem=glyph].circle {
+	--kite9-min-height: 30pt;
+	--kite9-min-width: 30pt;
 }
