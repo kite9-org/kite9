@@ -89,12 +89,32 @@ class C2SlideableSSP(
         if ((along is C2BufferSlideable) && (perp is C2BufferSlideable)) {
             // turns ok if both axes are buffer slideable
             val dc = Direction.rotateClockwise(d)
-            advance(dc, along, r, perp, s, r.cost.addTurn())
+            var nextScoreDc =  r.cost.addTurn(CostFreeTurn.CLOCKWISE)
+            advance(dc, along, r, perp, s, nextScoreDc)
 
             val dac = Direction.rotateAntiClockwise(d)
-            advance(dac, along, r, perp, s, r.cost.addTurn())
+            var nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
+            advance(dac, along, r, perp, s, nextScoreDac)
         }
 
+    }
+
+    private fun costFreeDogLeg(r: C2Route, d: Direction): Boolean {
+        val prev = r.prev
+        if (prev != null) {
+
+            if (d != prev.point.d) {
+                return false
+            }
+
+            val prevS = prev.point.getAlong()
+            var rS = r.point.getPerp()
+
+            val cost = getAbsoluteDistance(prevS, rS)
+            return (cost == null)
+        }
+
+        return false
     }
 
 

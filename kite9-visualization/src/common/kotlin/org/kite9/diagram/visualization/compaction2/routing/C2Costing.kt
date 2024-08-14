@@ -1,41 +1,61 @@
+import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.position.Direction
 import kotlin.math.max
+
+enum class CostFreeTurn { CLOCKWISE, ANTICLOCKWISE }
 
 data class C2Costing(val allEdgeCrossings : Int = 0,
                      val turns: Int = 0,
+                     val costFreeTurn: CostFreeTurn? = null,
                      val steps: Int = 1,
                      val illegalEdgeCrossings : Int = 0,
                      val totalDistance : Int = 0,
                      val minimumPossibleDistance: Int = 0,
                      val expensiveAxisDistance : Int = 0) : Comparable<C2Costing> {
 
-    constructor() : this(0,0,0,0,0,0) {}
+    constructor() : this(0,0,null, 0,0,0,0) {}
     constructor(c: C2Costing,
                 allEdgeCrossings : Int = c.allEdgeCrossings,
                 turns: Int = c.turns,
+                costFreeTurn: CostFreeTurn? = c.costFreeTurn,
                 illegalEdgeCrossings : Int = c.illegalEdgeCrossings,
                 totalDistance : Int = c.totalDistance,
                 minimumPossibleDistance: Int = c.minimumPossibleDistance,
                 expensiveAxisDistance : Int = c.expensiveAxisDistance) : this(
         allEdgeCrossings,
         turns,
+        costFreeTurn,
         c.steps + 1,
         illegalEdgeCrossings,
         totalDistance,
         minimumPossibleDistance,
         expensiveAxisDistance)
 
-    fun addTurn() : C2Costing {
-        return C2Costing(this, turns = this.turns + 1)
+    fun addTurn(d: CostFreeTurn) : C2Costing {
+        return if (this.costFreeTurn == null) {
+            C2Costing(this, costFreeTurn = d)
+        } else if (d == this.costFreeTurn) {
+            // complete 180
+            C2Costing(this, turns = this.turns + 2, costFreeTurn = null)
+        } else {
+            // dog-leg that paid off as there was no intervening distance cost
+            C2Costing(this, costFreeTurn = null)
+        }
     }
 
     fun addDistance(stride: Int, left: Int, expensive: Boolean) : C2Costing {
+        val cft = if (this.costFreeTurn != null) 1 else 0
         val travelledDistance = this.totalDistance + stride
         val expensiveDistance = this.expensiveAxisDistance + if (expensive) stride else 0
         val possibleDistance = max(travelledDistance + left, this.minimumPossibleDistance)
+        val turns = if (stride > 0) { this.turns + cft } else { this.turns }
+        val costFreeTurn = if (stride > 0) { null } else { this.costFreeTurn }
         return C2Costing(this,
             minimumPossibleDistance = possibleDistance,
             totalDistance = travelledDistance,
-            expensiveAxisDistance = expensiveDistance)
+            expensiveAxisDistance = expensiveDistance,
+            turns = turns,
+            costFreeTurn = costFreeTurn)
     }
 
     fun addStep(): C2Costing {
@@ -89,7 +109,7 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
 
     override fun toString(): String {
         // reported in priority order
-        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalDistance s=$steps]"
+        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalDistance s=$steps cft=$costFreeTurn]"
     }
 
 }

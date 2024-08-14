@@ -419,7 +419,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                     val bottomBuf = getOrbitSlideable(dest, Side.END, csov)!!
                     ensureDistanceFromBuffer(l, rightBuf, Dimension.V, csoh)
                     csov.mergeSlideables(vc, rssv.l)
-                    ensureDistanceFromBuffer(l, bottomBuf, Dimension.H, csov)
+//                    ensureDistanceFromBuffer(l, bottomBuf, Dimension.H, csov)
                 }
             }
 

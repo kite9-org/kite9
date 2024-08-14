@@ -47,6 +47,7 @@ class C2OrbitSlideable(
     }
 
     fun addForeignOrbits(a: Set<RectAnchor>) {
-        this.orbits = this.orbits + a.map { RectAnchor(it.e, null) }
+        val newAnchors = a.filter { n -> orbits.find { it.e == n.e }  == null }
+        this.orbits = this.orbits + newAnchors.map { RectAnchor(it.e, null) }
     }
 }
