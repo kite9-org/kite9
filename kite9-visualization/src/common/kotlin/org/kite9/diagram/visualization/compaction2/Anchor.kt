@@ -6,5 +6,5 @@ import org.kite9.diagram.visualization.compaction.Side
 
 interface Anchor {
     val e: DiagramElement
-    val s: Any
+    val s: Any?
 }

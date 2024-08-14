@@ -18,7 +18,7 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
 
     val log by lazy { Kite9Log.instance(this) }
 
-    private fun toDirection(s: Side, d: Dimension) : Direction {
+    private fun toDirection(s: Side?, d: Dimension) : Direction? {
         return if (d == Dimension.H) {
             if (s ==Side.START)
                 Direction.LEFT
@@ -38,14 +38,21 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
 
     fun getMinimumDistanceBetween(
         a: DiagramElement,
-        aSide: Side,
+        aSide: Side?,
         b: DiagramElement,
-        bSide: Side,
+        bSide: Side?,
         d: Dimension,
         along: DiagramElement?,
         concave: Boolean
-    ) : Double = cd.getMinimumDistanceBetween(a, toDirection(aSide, d), b, toDirection(bSide, d), toDirection(d), along, concave)
-
+    ) : Double {
+        val d1 =toDirection(aSide, d)
+        val d2 = toDirection(bSide, d)
+        if ((d1 != null) && (d2 != null)) {
+            return cd.getMinimumDistanceBetween(a, d1, b, d2, toDirection(d), along, concave)
+        } else {
+            return 0.0
+        }
+    }
     /**
      * Makes sure that the contents are within the container, with correct spacing either side.
      */

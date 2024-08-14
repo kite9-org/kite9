@@ -31,11 +31,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             completedContainers.forEach { container ->
                 val cs = so.getSlideablesFor(container)!!
                 val csx = sox.getSlideablesFor(container)!!
-                c.createContainerJunctions(csx, ss)
-
+                c.setupContainerBlockers(ss, csx)
                 ss = embed(so, cs, ss, d, g)
-
-                c.createContainerJunctions(csx, ss)
 
                 // replace the group slideable sets so we use these instead
                 so.add(g, ss)

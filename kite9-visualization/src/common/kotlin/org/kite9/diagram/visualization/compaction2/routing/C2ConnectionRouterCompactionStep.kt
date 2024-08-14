@@ -165,7 +165,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val endingPoints = createPoints(c2, c.getTo(), true, c.getDrawDirection())
             val endZone = createZone(c2, c.getTo() as Rectangular)
             val doer = C2SlideableSSP(
-                startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, c.getDrawDirection(), c2.junctions,
+                c, startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, c.getDrawDirection(), c2,
                 createTDMatrix(c2.getSlackOptimisation(Dimension.H)),
                 createTDMatrix(c2.getSlackOptimisation(Dimension.V)),
                 log
@@ -233,8 +233,12 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 // ok, these slideables can be merged and we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
                 val ns = so.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
-                replacements.put(s1, ns)
-                replacements.put(s2, ns)
+                if (s1 != ns) {
+                    replacements.put(s1, ns)
+                }
+                if (s2 != ns) {
+                    replacements.put(s2, ns)
+                }
 
                 // remove the second, rewrite the first
                 return C2Route(simplifyShortestPath(third, c2, ssp, replacements), C2Point(ns, first.point.getPerp(), first.point.d), first.cost)
@@ -316,8 +320,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-        c.consistentJunctions()
-        c.resortJunctions()
+        c.consistentBlockers()
 
         val vso = c.getSlackOptimisation(Dimension.V)
         val hso = c.getSlackOptimisation(Dimension.H)
@@ -412,8 +415,11 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
                 Direction.RIGHT -> {
                     ensureDistance(dest, l, Dimension.V, csoh)
-                    ensureDistanceFromBuffer(l, getOrbitSlideable(dest, Side.END, csoh)!!, Dimension.V, csoh)
+                    val rightBuf = getOrbitSlideable(dest, Side.END, csoh)!!
+                    val bottomBuf = getOrbitSlideable(dest, Side.END, csov)!!
+                    ensureDistanceFromBuffer(l, rightBuf, Dimension.V, csoh)
                     csov.mergeSlideables(vc, rssv.l)
+                    ensureDistanceFromBuffer(l, bottomBuf, Dimension.H, csov)
                 }
             }
 
@@ -454,11 +460,11 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         so: C2SlackOptimisation
     ) {
         val dist = from.anchors.filterIsInstance<RectAnchor>()
-            .maxOf { fa ->
+            .maxOfOrNull { fa ->
                 to.anchors
                     .filterIsInstance<RectAnchor>()
-                    .maxOf { ta -> getMinimumDistanceBetween(fa.e, fa.s, ta.e, ta.s, d, null, true).toInt() }
-            }
+                    .maxOfOrNull { ta -> getMinimumDistanceBetween(fa.e, fa.s, ta.e, ta.s, d, null, true).toInt() } ?: 0
+            } ?: 0
 
 
         so.ensureMinimumDistance(from, to, dist)
@@ -475,7 +481,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
     private fun getOrbitSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2OrbitSlideable? {
         return so.getAllSlideables()
             .filterIsInstance<C2OrbitSlideable>()
-            .firstOrNull { os -> os.orbits.any { it.e == de && it.s == side } }
+            .firstOrNull { os -> os.getOrbits().any { it.e == de && it.s == side } }
     }
 
     private fun getRectangularSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2RectangularSlideable? {

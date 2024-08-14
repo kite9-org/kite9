@@ -41,8 +41,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             val ssvc = sov.getContainer(ssv)
             val sshc = soh.getContainer(ssh)
 
-            c.createRoutableJunctions(ssvc, sshc)
-            c.createRoutableJunctions(sshc, ssvc)
+//            c.setupContainerBlockers(ssvc, sshc)
+//            c.createRoutableJunctions(sshc, ssvc)
         }
     }
 
@@ -96,11 +96,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         val b = g.b
 
         val so = c.getSlackOptimisation(d)
-        val soo = c.getSlackOptimisation(d.other())
         val ha = so.getSlideablesFor(a)
         val hb = so.getSlideablesFor(b)
-        val ta = soo.getSlideablesFor(a)
-        val tb = soo.getSlideablesFor(b)
 
         val hm = if ((ha == null) || (hb == null)) {
             ha ?: hb

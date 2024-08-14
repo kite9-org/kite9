@@ -2,25 +2,25 @@ package org.kite9.diagram.visualization.compaction2.sets
 
 import org.kite9.diagram.visualization.compaction2.*
 
-data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
-                                    override val c: Set<C2BufferSlideable>,
+data class RoutableSlideableSetImpl(override val c: Set<C2BufferSlideable>,
                                     override val bl: C2OrbitSlideable?,
                                     override val br: C2OrbitSlideable?,
 ) : RoutableSlideableSet {
 
-    constructor(c: C2IntersectionSlideable?, bl: C2OrbitSlideable?, br: C2OrbitSlideable?) : this(setOfNotNull(c, bl, br), setOfNotNull(c), bl, br)
+    val bs = c.plus(setOfNotNull(bl, br))
+
+    constructor(c: C2IntersectionSlideable?, bl: C2OrbitSlideable?, br: C2OrbitSlideable?) : this(setOfNotNull(c), bl, br)
 
     override var done = false
 
     override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
-        val newOrbit = c2.mergeSlideables(br, after.bl)
-        val allBs =
-            setOf(bs, after.getBufferSlideables()).asSequence().flatten().minus(br).minus(after.bl).plus(newOrbit)
-                .filterNotNull().toSet()
+        val newOrbit = c2.mergeSlideables(br, after.bl)!!
+        after.br?.addForeignOrbits(newOrbit.getOrbits())
+        bl?.addForeignOrbits(newOrbit.getOrbits())
         done = true
-        val new = RoutableSlideableSetImpl(allBs, this.c.plus(after.c), bl, after.br)
+        val newC = this.c.plus(after.c).plus(newOrbit)
+        val new = RoutableSlideableSetImpl(newC, bl, after.br)
         c2.contains(new, c2.getContents(this).plus(c2.getContents(after)))
-        c2.compaction.replaceJunction(br, after.bl, newOrbit)
         return new
     }
 
@@ -29,10 +29,8 @@ data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
         val newR = c2.mergeSlideables(over.br, br)
         val newC = c2.mergeSlideables(over.c, c)
         done = true
-        val out = RoutableSlideableSetImpl(setOfNotNull(newL, newR).plus(newC), newC, newL, newR)
+        val out = RoutableSlideableSetImpl(newC, newL, newR)
         c2.contains(out, c2.getContents(this).plus(c2.getContents(over)))
-        c2.compaction.replaceJunction(br, over.br, newR)
-        c2.compaction.replaceJunction(bl, over.bl, newL)
         return out
     }
 
@@ -47,7 +45,6 @@ data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
     override fun replaceRectangular(s: C2RectangularSlideable, with: C2RectangularSlideable): RoutableSlideableSetImpl {
         done = true
         return RoutableSlideableSetImpl(
-            bs,
             c,
             bl,
             br)
@@ -56,7 +53,6 @@ data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
     override fun replaceOrbit(s: C2OrbitSlideable, with: C2OrbitSlideable): RoutableSlideableSetImpl {
         done = true
         return RoutableSlideableSetImpl(
-            RectangularSlideableSetImpl.replaceIfPresent(bs, s, with),
             c,
             if (bl == s) with else bl,
             if (br == s) with else br)
@@ -65,7 +61,6 @@ data class RoutableSlideableSetImpl(val bs: Set<C2BufferSlideable>,
     override fun replaceIntersection(s: C2IntersectionSlideable, with: C2IntersectionSlideable): RoutableSlideableSetImpl {
         done = true
         return RoutableSlideableSetImpl(
-            RectangularSlideableSetImpl.replaceIfPresent(bs, s, with),
             RectangularSlideableSetImpl.replaceIfPresent(c, s, with),
             bl,
             br)

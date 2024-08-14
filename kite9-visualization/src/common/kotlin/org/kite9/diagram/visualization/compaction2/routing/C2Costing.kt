@@ -1,3 +1,5 @@
+import kotlin.math.max
+
 data class C2Costing(val allEdgeCrossings : Int = 0,
                      val turns: Int = 0,
                      val steps: Int = 1,
@@ -29,7 +31,7 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
     fun addDistance(stride: Int, left: Int, expensive: Boolean) : C2Costing {
         val travelledDistance = this.totalDistance + stride
         val expensiveDistance = this.expensiveAxisDistance + if (expensive) stride else 0
-        val possibleDistance = travelledDistance + left
+        val possibleDistance = max(travelledDistance + left, this.minimumPossibleDistance)
         return C2Costing(this,
             minimumPossibleDistance = possibleDistance,
             totalDistance = travelledDistance,
@@ -73,9 +75,9 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
             return minimumPossibleDistance.compareTo(other.minimumPossibleDistance)
         }
 
-        // minimum actual distance
+        // pick the route that has gone farthest
         if (totalDistance != other.totalDistance) {
-            return totalDistance.compareTo(other.totalDistance)
+            return -totalDistance.compareTo(other.totalDistance)
         }
 
         if (steps != other.steps) {

@@ -1,6 +1,8 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -29,122 +31,89 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return diagram
     }
 
-    override val junctions = mutableMapOf<C2BufferSlideable, List<C2Slideable>>()
+    override val blockers = mutableMapOf<C2BufferSlideable, Set<C2Slideable>>()
 
-    override fun createInitialJunctions(along: RoutableSlideableSet, r1: RoutableSlideableSet, r2: RectangularSlideableSet?) {
-        if (along.bl != null) {
-            junctions[along.bl!!] = listOfNotNull(r1.bl, r1.br).plus(r1.c)
+    private fun ensureBlocker(a: C2Slideable, b: C2Slideable) {
+        if (a is C2BufferSlideable) {
+            val items = blockers.getOrElse(a) { emptySet() } + b
+            blockers[a] = items
         }
-        along.c.forEach { c ->
-            junctions[c] = listOfNotNull(r1.bl, r2?.l, r2?.r, r1.br)
-                .plus(r1.c)
-                .distinct()
-        }
-        if (along.br != null) {
-            junctions[along.br!!] = listOfNotNull(r1.bl, r1.br).plus(r1.c)
+
+        if (b is C2BufferSlideable) {
+            val items = blockers.getOrElse(b) { emptySet() } + a
+            blockers[b] = items
         }
     }
 
-    override fun createContainerJunctions(along: RectangularSlideableSet, inside: RoutableSlideableSet) {
-        inside.getAll().forEach {
-            val orig = junctions[it] ?: emptyList()
-            junctions[it] = (listOf(along.l) + orig + listOfNotNull(along.r))
+    override fun setupRectangularBlockers(along: RoutableSlideableSet, perp: RectangularSlideableSet) {
+        along.c.forEach {
+            ensureBlocker(it, perp.l)
+            ensureBlocker(it, perp.r)
         }
     }
 
-    override fun createRoutableJunctions(along: RoutableSlideableSet, r1: RoutableSlideableSet) {
-        setOfNotNull(along.br, along.bl).plus(along.c).forEach {
-            val orig = junctions[it] ?: emptyList()
-            val full = (r1.getAll() + orig)
-                .sortedWith(comparator).distinct()
-            junctions[it] = full
+    /**
+     * Need to implement the rules
+     */
+    override fun setupContainerBlockers(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
+        val container = (inside.d as Container)
+        along.getAll().forEach {
+            ensureBlocker(it, inside.l)
+            ensureBlocker(it, inside.r)
         }
     }
 
-    override fun replaceJunction(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?) {
+    override fun replaceBlockers(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?) {
         // handle keys first
+        if (blockers[sNew] != null) {
+            throw LogicException("Calling replaceJunction Twice!")
+        }
         if (sNew is C2BufferSlideable) {
-            val k1 = junctions.remove(s1) ?: emptyList()
-            val k2 = junctions.remove(s2) ?: emptyList()
+            val k1 = blockers.remove(s1) ?: emptySet()
+            val k2 = blockers.remove(s2) ?: emptySet()
 
-            junctions[sNew] = interleave(k1,k2)
+            blockers[sNew] = k1 + k2
         }
 
         if (sNew != null) {
             // now check all values
-            val keys = junctions.keys
+            val keys = blockers.keys
             keys.forEach { k ->
-                var vals = junctions[k]!!
+                var vals = blockers[k]!!
                 vals = vals.map {
                     if ((it == s1) || (it == s2)) {
                         sNew
                     } else {
                         it
                     }
-                }
-                junctions[k] = vals
+                }.toSet()
+                blockers[k] = vals
             }
         }
     }
 
-    private fun interleave(k1: List<C2Slideable>, k2: List<C2Slideable>): List<C2Slideable> {
-        val out = (k1 + k2).sortedWith (comparator).distinct()
-        return out
-    }
-
-    override fun resortJunctions() {
-        junctions.keys.forEach {
-            val orig = junctions[it]
-            val sorted = orig!!.sortedWith(comparator).distinct()
-            junctions[it]=sorted
-        }
-    }
-
-    override fun consistentJunctions() {
-        val reversed = junctions.entries
-            .flatMap { (k, v) -> v.map { it to k } }
+    override fun consistentBlockers() {
+        val reversed = blockers.entries
+            .flatMap { (k, v) -> v.map { it to k }.toSet() }
             .groupBy( keySelector = { it.first }, valueTransform = { it.second })
+            .entries
+            .map { (k,v) -> k to v.toSet() }
+            .toMap()
 
-        junctions.keys.forEach {
-            val old = junctions[it] ?: mutableListOf()
-            val new = reversed[it] ?: mutableListOf()
-            junctions[it] = old.plus(new)
-        }
-
-        reversed.keys
-            .filterIsInstance<C2BufferSlideable>()
-            .forEach {
-                if (junctions[it] == null) {
-                    junctions[it] = reversed[it]!!
-                }
-            }
-    }
-
-    class SlideableComparator : Comparator<C2Slideable> {
-        override fun compare(a: C2Slideable, b: C2Slideable): Int {
-            return if (a.minimumPosition < b.minimumPosition) {
-                -1
-            } else if (b.minimumPosition < a.minimumPosition) {
-                1
-            } else if (a.routesTo(true).containsKey(b)) {
-                -1
-            } else if (b.routesTo(true).containsKey(a)) {
-                1
-            } else {
-                0
+        blockers.keys.forEach {
+            val old = (blockers[it] ?: mutableSetOf()).filterIsInstance<C2BufferSlideable>().toSet()
+            val new = (reversed[it] ?: mutableSetOf())
+            if (new != old) {
+                throw LogicException("These should match")
             }
         }
     }
+
+
 
     override fun checkConsistency() {
         verticalSegmentSlackOptimisation.checkConsistency()
         horizontalSegmentSlackOptimisation.checkConsistency()
-    }
-
-    companion object {
-
-        val comparator = SlideableComparator()
-
     }
 
 }

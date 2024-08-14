@@ -18,27 +18,35 @@ import org.kite9.diagram.logging.LogicException
 class C2OrbitSlideable(
     so: C2SlackOptimisation,
     dimension: Dimension,
-    val orbits: Set<RectAnchor>,
+    private var orbits: Set<RectAnchor>,
     anchors: Set<Anchor>
 ) : C2BufferSlideable(so, dimension, anchors) {
 
     constructor(so: C2SlackOptimisation, dimension: Dimension, orbits: Set<RectAnchor>) : this(so, dimension, orbits, emptySet())
 
-    override fun merge(with: C2RectangularSlideable) : C2OrbitSlideable {
-        if ((with.dimension == dimension) && (with !is C2IntersectionSlideable)) {
-            val newOrbits = orbits.plus(if (with is C2OrbitSlideable) with.orbits else emptySet())
+    override fun merge(s: C2RectangularSlideable) : C2OrbitSlideable {
+        if ((s.dimension == dimension) && (s !is C2IntersectionSlideable)) {
+            val newOrbits = orbits.plus(if (s is C2OrbitSlideable) s.orbits else emptySet())
             val out = C2OrbitSlideable(so as C2SlackOptimisation, dimension,
                 newOrbits,
-                with.anchors.plus(anchors).toSet())
+                s.anchors.plus(anchors).toSet())
 
-            handleMinimumMaximumAndDone(out, with)
+            handleMinimumMaximumAndDone(out, s)
             return out
         } else {
-            throw LogicException("Can't merge $this with $with")
+            throw LogicException("Can't merge $this with $s")
         }
     }
 
     override fun toString(): String {
         return "C2SO($number, $dimension, min=$minimumPosition, max=$maximumPosition orbits=$orbits done=$done${if (anchors.isNotEmpty()) " anchors=$anchors" else ""})"
+    }
+
+    fun getOrbits() : Set<RectAnchor> {
+        return orbits
+    }
+
+    fun addForeignOrbits(a: Set<RectAnchor>) {
+        this.orbits = this.orbits + a.map { RectAnchor(it.e, null) }
     }
 }

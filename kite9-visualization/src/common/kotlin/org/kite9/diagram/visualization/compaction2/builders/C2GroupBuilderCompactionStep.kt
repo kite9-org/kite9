@@ -40,15 +40,13 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
 
                 val hss = checkCreate(hso, g, e, Dimension.H)
                 val vss = checkCreate(vso, g, e, Dimension.V)
-                c.createInitialJunctions(hss, vss, vr)
-                c.createInitialJunctions(vss, hss, hr)
+                c.setupRectangularBlockers(hss, vr)
+                c.setupRectangularBlockers(vss, hr)
             } else {
                 // leaf node must be for container arrival
                 val f = g.container!!
-                val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
-                val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
-                c.createInitialJunctions(hss, vss, null)
-                c.createInitialJunctions(vss, hss, null)
+                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
             }
         }
     }
@@ -87,7 +85,7 @@ class C2GroupBuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2Compaction
             cso.ensureMinimumDistance(bl, l ,0)
             cso.ensureMinimumDistance(r, br, 0)
             ensureCentreSlideablePosition(cso, ss2, c)
-            val out = RoutableSlideableSetImpl(setOfNotNull(bl, br, c), setOfNotNull(c), bl, br)
+            val out = RoutableSlideableSetImpl(setOfNotNull(c), bl, br)
             cso.contains(out, ss2)
             cso.add(g, out)
             log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())

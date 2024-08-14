@@ -176,7 +176,7 @@ public class Test12LabelledArrowsEncapsulated extends AbstractDisplayFunctionalT
 		LinkBody i1 = new LinkBody("i1", "i1");
 		LinkBody i2 = new LinkBody("i2", "i2");
 		
-		new Link(i1, a, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 1"), Direction.RIGHT);
+		new Link(i1, a, null, null, null, new TextLabel("from \nthe \nwild\n side\ngoing east on\n the\n highway\nwith a\n frog 1"), Direction.RIGHT);
 		new Link(i1, b, null, null, null, new TextLabel("from the wild side\ngoing east on the highway\nwith a frog 2"), Direction.LEFT);
 		new TurnLink(i2, a, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side A"), null);
 		new TurnLink(i2, b, null, null, LinkEndStyle.ARROW, new TextLabel("to the safe side B"), null);

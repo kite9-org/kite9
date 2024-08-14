@@ -5,21 +5,23 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
-import kotlin.math.abs
 import kotlin.math.max
 
 class C2SlideableSSP(
+    val e: Connection,
     val start: Set<C2Point>,
     val end: Set<C2Point>,
     private val startElem: DiagramElement,
     private val endElem: DiagramElement,
     private val endZone: Zone,
     private val direction: Direction?,
-    private val junctions: Map<C2BufferSlideable, List<C2Slideable>>,
+    private val c2: C2Compaction,
     private val hMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>>,
     private val vMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>>,
     val log: Kite9Log
@@ -58,7 +60,7 @@ class C2SlideableSSP(
 
     private fun remainingDistance1D(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Int {
         // first, let's see if there's min distance set
-        val knownDistance = getCorrectDistanceMatrix(s, listOf(from, to)).values
+        val knownDistance = getCorrectDistanceMatrix(s, setOf(from, to)).values
             .filterNotNull()
             .maxOfOrNull { it.dist }
 
@@ -72,13 +74,6 @@ class C2SlideableSSP(
             0
         }
 
-    }
-
-    private fun remainingDistance(p: C2Point) : Int {
-        val h = p.get(Dimension.H)
-        val v = p.get(Dimension.V)
-        return remainingDistance1D(h, endZone.minY, endZone.maxY) +
-                remainingDistance1D(v, endZone.minX, endZone.maxX)
     }
 
     override fun generateSuccessivePaths(r: C2Route, s: State<C2Route>) {
@@ -108,7 +103,8 @@ class C2SlideableSSP(
     private fun includeParentsOf(s: C2IntersectionSlideable) : Set<DiagramElement> {
 
         return commonMap.getOrPut(s) {
-            s.intersects.flatMap { parents(it) }.toSet()
+            val v = s.intersects.flatMap { parents(it) }.toSet()
+            v
         }
     }
 
@@ -122,7 +118,8 @@ class C2SlideableSSP(
     ) {
         val common = when (along) {
             is C2IntersectionSlideable -> includeParentsOf(along)
-            is C2OrbitSlideable -> along.orbits.map { it.e }.toSet()
+            is C2OrbitSlideable -> along.getOrbits().map { it.e }.toSet()
+            else -> throw LogicException("huh")
         }
 
         val startPoint = C2ConnectionRouterCompactionStep.getStart(r)
@@ -133,7 +130,7 @@ class C2SlideableSSP(
                 if (canAdvanceTo(common, k, startPoint)) {
                     val p = C2Point(along, k, d)
                     val travelledDistance = c.totalDistance + extraDistance(r, p)
-                    val possibleRemainingDistance = remainingDistance(p)
+                    val possibleRemainingDistance = getMinimumRemainingDistance(k)
                     val expensive = expensiveDirection(p)
                     val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
                     val r2 = C2Route(r, p, newCost)
@@ -176,7 +173,13 @@ class C2SlideableSSP(
         return mat[from]!![to]?.dist ?: 0
     }
 
-    private fun getCorrectDistanceMatrix(from: C2Slideable, stops: List<C2Slideable>) : Map<C2Slideable, Constraint?> {
+    fun getMinimumRemainingDistance(from: C2Slideable): Int {
+        return end.map { it.get(from.dimension) }
+            .map { getAbsoluteDistance(it, from) }
+            .minOfOrNull { it } ?: 0
+    }
+
+    private fun getCorrectDistanceMatrix(from: C2Slideable, stops: Collection<C2Slideable>) : Map<C2Slideable, Constraint?> {
         val mat = when (from.dimension) {
             Dimension.H -> hMatrix
             Dimension.V -> vMatrix
@@ -188,43 +191,37 @@ class C2SlideableSSP(
         return known + unknown
     }
 
-    private fun blockingSlideable(k: Map.Entry<C2Slideable, Constraint?>): Boolean {
-        // this should also block at another link
-        return (k.key is C2RectangularSlideable) &&
-                ((k.key as C2RectangularSlideable).anchors.size > 0)
-    }
-
-    private fun collectInDirection(from: C2Slideable, forward: Boolean, stops: List<C2Slideable>) : Set<C2Slideable> {
+    private fun collectInDirection(from: C2Slideable, forward: Boolean, stops: Collection<C2Slideable>, blockers: Set<C2Slideable>) : Set<C2Slideable> {
         val stopsDistances = getCorrectDistanceMatrix(from, stops)
 
         // remove all the ones in the wrong direction
         val stopDistRightDirection = stopsDistances.filter { it.value == null || it.value!!.forward == forward }
             .minus(from)
 
-        // find nearest blocker
-        val potentialBlockers = stopDistRightDirection
-            .filter { blockingSlideable(it) }
-            .filterValues { it != null } as Map<C2Slideable, Constraint>
+        val potentialBlockers = blockers
+            .map { it to stopDistRightDirection[it] }
+            .filter { (f, t) -> t != null }
+            .associate { (f, t) -> f to t!! }
 
         val closestBlocker = potentialBlockers.minByOrNull { it.value.dist }
 
         if (closestBlocker != null) {
             val stopDistBeforeBlocker = stopDistRightDirection.filter { it.value == null || it.value!!.dist <= closestBlocker.value.dist }
-            return stopDistBeforeBlocker.keys
+            return stopDistBeforeBlocker.keys + closestBlocker.key
         }
 
         return stopDistRightDirection.keys
     }
 
     private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
-        val stops = junctions[along]!!
+        val stops = c2.getSlackOptimisation(along.dimension.other()).getAllSlideables()
 
         val forward = when(going) {
             Direction.DOWN, Direction.RIGHT -> true
             Direction.LEFT, Direction.UP -> false
         }
 
-        val out = collectInDirection(startingAt, forward, stops)
+        val out = collectInDirection(startingAt, forward, stops, c2.blockers[along] ?: emptySet())
         return out
     }
 
@@ -257,7 +254,7 @@ class C2SlideableSSP(
      */
     private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable, startPoint: C2Point): Boolean {
         val intersectionOk = when (k) {
-            is C2OrbitSlideable ->  k.orbits.any { common.contains(it.e) }
+            is C2OrbitSlideable ->  k.getOrbits().any { common.contains(it.e) }
             is C2IntersectionSlideable -> k.intersects.any { it == endElem || common.contains(it) }
             is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
         }
@@ -284,9 +281,11 @@ class C2SlideableSSP(
             .filter { directionOk(it)}
             .forEach {
             // head out from each point as far as possible in each direction
-            val r = C2Route(null, it, C2Costing().addDistance(0, remainingDistance(it), false))
-            val along = r.point.getAlong() as C2BufferSlideable
-            val perp = r.point.getPerp()
+            val along = it.getAlong() as C2BufferSlideable
+            val perp = it.getPerp()
+            val mrd1 = getMinimumRemainingDistance(perp)
+            val mrd2 = getMinimumRemainingDistance(along)
+            val r = C2Route(null, it, C2Costing().addDistance(0, mrd1+mrd2, false))
             val d = r.point.d
             advance(d, perp, r, along, s, r.cost)
         }
