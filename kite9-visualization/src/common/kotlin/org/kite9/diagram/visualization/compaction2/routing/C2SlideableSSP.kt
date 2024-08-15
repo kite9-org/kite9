@@ -247,6 +247,7 @@ class C2SlideableSSP(
 
     private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable): Boolean {
         return when (perp) {
+            is C2IntersectionSlideable -> perp.intersects.contains(endElem)
             is C2BufferSlideable -> true
             is C2RectangularSlideable -> {
                 if (along is C2IntersectionSlideable) {
