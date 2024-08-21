@@ -247,7 +247,7 @@ class C2SlideableSSP(
 
     private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable): Boolean {
         return when (perp) {
-            is C2IntersectionSlideable -> perp.intersects.contains(endElem)
+            is C2IntersectionSlideable -> perp.intersects.contains(endElem) || perp.intersects.contains(startElem)
             is C2BufferSlideable -> true
             is C2RectangularSlideable -> {
                 if (along is C2IntersectionSlideable) {
@@ -276,7 +276,7 @@ class C2SlideableSSP(
     private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable, startPoint: C2Point): Boolean {
         val intersectionOk = when (k) {
             is C2OrbitSlideable ->  k.getOrbits().any { common.contains(it.e) }
-            is C2IntersectionSlideable -> k.intersects.any { it == endElem || common.contains(it) }
+            is C2IntersectionSlideable -> k.intersects.any { it == endElem || it == startElem }
             is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
         }
 

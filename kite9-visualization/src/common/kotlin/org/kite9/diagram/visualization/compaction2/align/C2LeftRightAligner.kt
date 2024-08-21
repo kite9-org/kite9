@@ -36,12 +36,22 @@ class C2LeftRightAligner : Aligner {
         return sl.anchors
             .asSequence()
             .map { it.e }
-            .filterIsInstance<SizedRectangular>()
-            .map { it.getSizing(d.isHoriz())}
-            .map { des -> when (des) {
-                DiagramElementSizing.MAXIMIZE -> AlignStyle.MAX
-                DiagramElementSizing.MINIMIZE -> AlignStyle.MIN
-            } }
+            .filterIsInstance<AlignedRectangular>()
+            .map {
+                if (d.isHoriz()) {
+                    when (it.getVerticalAlignment()) {
+                        VerticalAlignment.TOP -> AlignStyle.MIN
+                        VerticalAlignment.CENTER -> AlignStyle.CENTER
+                        VerticalAlignment.BOTTOM -> AlignStyle.MAX
+                    }
+                } else {
+                    when (it.getHorizontalAlignment()) {
+                        HorizontalAlignment.LEFT -> AlignStyle.MIN
+                        HorizontalAlignment.CENTER -> AlignStyle.CENTER
+                        HorizontalAlignment.RIGHT -> AlignStyle.MAX
+                    }
+                }
+            }
             .firstOrNull()
     }
 
