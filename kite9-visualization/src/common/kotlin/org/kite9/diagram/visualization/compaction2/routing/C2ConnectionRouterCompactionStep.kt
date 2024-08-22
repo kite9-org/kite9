@@ -161,11 +161,12 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
     private fun insertLink(c2: C2Compaction, c: Connection): C2Route? {
         try {
-            val startingPoints = createPoints(c2, c.getFrom(), false, c.getDrawDirection())
-            val endingPoints = createPoints(c2, c.getTo(), true, c.getDrawDirection())
+            val d = if (c.getRenderingInformation().isContradicting) { null } else { c.getDrawDirection() }
+            val startingPoints = createPoints(c2, c.getFrom(), false, d)
+            val endingPoints = createPoints(c2, c.getTo(), true, d)
             val endZone = createZone(c2, c.getTo() as Rectangular)
             val doer = C2SlideableSSP(
-                c, startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, c.getDrawDirection(), c2,
+                c, startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, d, c2,
                 createTDMatrix(c2.getSlackOptimisation(Dimension.H)),
                 createTDMatrix(c2.getSlackOptimisation(Dimension.V)),
                 log
