@@ -14,8 +14,6 @@ import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
 import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionStep
 import org.kite9.diagram.visualization.compaction2.align.C2CenteringAligner
 import org.kite9.diagram.visualization.compaction2.align.C2LeftRightAligner
-import org.kite9.diagram.visualization.compaction2.builders.C2ContainerBuilderCompactionStep
-import org.kite9.diagram.visualization.compaction2.builders.C2GroupBuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
 import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositionCompactionStep
@@ -26,7 +24,6 @@ import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactio
 import org.kite9.diagram.visualization.compaction2.sizing.C2MaximizeCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2MinimizeCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.Planarization
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
@@ -124,13 +121,10 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         // essential compaction steps
         val gp = elementMapper.getGridPositioner()
         val steps = arrayOf<C2CompactionStep>(
-            C2ContainerBuilderCompactionStep(cd, gp),
-            C2LoggingCompactionStep(cd),
-            C2GroupBuilderCompactionStep(cd),
             C2HierarchicalCompactionStep(cd, mr),
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
-            C2ContainerLabelCompactionStep(cd, gp),
+            C2ContainerLabelCompactionStep(cd),
             C2MinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),

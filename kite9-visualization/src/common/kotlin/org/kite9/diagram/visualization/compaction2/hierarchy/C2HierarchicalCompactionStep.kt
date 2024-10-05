@@ -2,11 +2,17 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.ConnectedRectangular
+import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.AbstractC2ContainerCompactionStep
 import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2IntersectionSlideable
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
@@ -71,6 +77,30 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 slackOptimisationV.add(g, va ?: vb!!)
                 slackOptimisationH.add(g, ha ?: hb!!)
             }
+        } else if (g is LeafGroup) {
+            // leaf group
+            val e = g.connected
+            if (e is Rectangular) {
+                val hso = c.getSlackOptimisation(Dimension.H)
+                val vso = c.getSlackOptimisation(Dimension.V)
+                val hr = checkCreateElement(e, Dimension.H, hso, null, g)!!
+                val vr = checkCreateElement(e, Dimension.V, vso, null, g)!!
+
+                val hss = checkCreateLeaf(hso, g, e, Dimension.H)
+                val vss = checkCreateLeaf(vso, g, e, Dimension.V)
+                c.setupRectangularIntersections(hss, vr)
+                c.setupRectangularIntersections(vss, hr)
+                c.setupRoutableIntersections(hss, vss)
+            } else {
+                // leaf node must be for container arrival
+                val f = g.container!!
+                val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
+                c.setupRoutableIntersections(hss, vss)
+            }
+
+        } else {
+            throw LogicException("Unknown group type")
         }
 
         if (horizontalAxis(g)) {
@@ -88,6 +118,21 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             is LeafGroup -> listOf(g)
             else -> throw LogicException("wtf kotlin")
         }
+    }
+
+    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
+        val ss1 = cso.getSlideablesFor(g)
+
+        if (ss1 != null) {
+            return ss1
+        }
+
+        val ic = C2IntersectionSlideable(cso, d, g, setOf(c))
+        val out = RoutableSlideableSetImpl(ic, null, null)
+
+        cso.add(g, out)
+        log.send("Created a RouteableSlideableSet for $c: ", out.getAll())
+        return out
     }
 
 
@@ -176,6 +221,26 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             }
         }
     }
+
+    /**
+     * Either content are laid out using the Group process, or they aren't connected so we need
+     * to just follow layout.
+     */
+    override fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?) : Boolean {
+        val gm = contents.map { hasGroup(it, topGroup) }
+        return gm.reduceRightOrNull {  a, b -> a && b } ?: false
+    }
+
+    private fun hasGroup(item: Connected, group: Group?) : Boolean {
+        return if (group is CompoundGroup) {
+            hasGroup(item, group.a) || hasGroup(item, group.b)
+        } else if (group is LeafGroup){
+            (group.container == item) || (group.connected == item);
+        } else {
+            false;
+        }
+    }
+
     override val prefix: String
         get() = "HIER"
 

@@ -125,7 +125,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
                 it.replaceConstraint(s2, sNew)
             }
 
-            compaction.replaceBlockers(s1, s2, sNew)
+            compaction.replaceIntersections(s1, s2, sNew)
 
             log.send("Merging: \n\t$s1\n\t$s2\nAdded: $sNew")
 

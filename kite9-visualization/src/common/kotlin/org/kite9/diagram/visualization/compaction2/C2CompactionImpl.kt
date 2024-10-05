@@ -6,6 +6,7 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 
 /**
  * Flyweight class that handles the state of the compaction as it goes along.
@@ -31,55 +32,88 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return diagram
     }
 
-    override val blockers = mutableMapOf<C2BufferSlideable, Set<C2Slideable>>()
+    val intersections = mutableMapOf<C2Slideable, Set<C2Slideable>>()
 
-    private fun ensureBlocker(a: C2Slideable, b: C2Slideable) {
-        if (a is C2BufferSlideable) {
-            val items = blockers.getOrElse(a) { emptySet() } + b
-            blockers[a] = items
-        }
+    override fun setIntersection(s1: C2Slideable, s2: C2Slideable) {
+        var items = intersections.getOrElse(s1) { emptySet() } + s2
+        intersections[s1] = items
 
-        if (b is C2BufferSlideable) {
-            val items = blockers.getOrElse(b) { emptySet() } + a
-            blockers[b] = items
-        }
+        items = intersections.getOrElse(s2) { emptySet() } + s1
+        intersections[s2] = items
     }
 
-    override fun setupRectangularBlockers(along: RoutableSlideableSet, perp: RectangularSlideableSet) {
+    override fun getIntersections(s1: C2Slideable): Set<C2Slideable>? {
+        return intersections[s1]
+    }
+
+    override fun setupRectangularIntersections(along: RoutableSlideableSet, perp: RectangularSlideableSet) {
         along.c.forEach {
-            ensureBlocker(it, perp.l)
-            ensureBlocker(it, perp.r)
+            setIntersection(it, perp.l)
+            setIntersection(it, perp.r)
         }
     }
 
-    /**
-     * Need to implement the rules
-     */
-    override fun setupContainerBlockers(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
-        val container = (inside.d as Container)
+    private fun propagateIntersections(inside: C2Slideable?, outside: C2Slideable) {
+           intersections[outside] =
+               (intersections[outside] ?: emptySet()) +
+                       (intersections[inside] ?: emptySet())
+    }
+
+    override fun propagateIntersections(inside: RoutableSlideableSet, outside: RectangularSlideableSet) {
+        propagateIntersections(inside.bl, outside.l)
+        propagateIntersections(inside.br, outside.r)
+    }
+
+    override fun propagateIntersections(inside: RectangularSlideableSet, outside: RoutableSlideableSet) {
+        if (outside.bl is C2OrbitSlideable) {
+            propagateIntersections(inside.l, outside.bl!!)
+        }
+        if (outside.br is C2OrbitSlideable) {
+            propagateIntersections(inside.r, outside.br!!)
+        }
+    }
+
+    override fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
         along.getAll().forEach {
-            ensureBlocker(it, inside.l)
-            ensureBlocker(it, inside.r)
+            setIntersection(it, inside.l)
+            setIntersection(it, inside.r)
         }
     }
 
-    override fun replaceBlockers(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?) {
-        // handle keys first
-        if (blockers[sNew] != null) {
-            throw LogicException("Calling replaceJunction Twice!")
+    override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
+        a.getAll().forEach {
+            if (b .bl != null) {
+                setIntersection(it, b.bl!!)
+            }
+            if (b.br != null) {
+                setIntersection(it, b.br!!)
+            }
         }
-        if (sNew is C2BufferSlideable) {
-            val k1 = blockers.remove(s1) ?: emptySet()
-            val k2 = blockers.remove(s2) ?: emptySet()
 
-            blockers[sNew] = k1 + k2
+        b.getAll().forEach {
+            if (a.bl!=null ) {
+                setIntersection(it, a.bl!!)
+            }
+            if (a.br != null) {
+                setIntersection(it, a.br!!)
+            }
         }
+    }
+
+    override fun replaceIntersections(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?) {
+        if (intersections[sNew] != null) {
+            throw LogicException("Calling replaceIntersections Twice!")
+        }
+
+        val k1 = intersections.remove(s1) ?: emptySet()
+        val k2 = intersections.remove(s2) ?: emptySet()
 
         if (sNew != null) {
+            intersections[sNew] = k1 + k2
             // now check all values
-            val keys = blockers.keys
+            val keys = intersections.keys
             keys.forEach { k ->
-                var vals = blockers[k]!!
+                var vals = intersections[k]!!
                 vals = vals.map {
                     if ((it == s1) || (it == s2)) {
                         sNew
@@ -87,29 +121,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                         it
                     }
                 }.toSet()
-                blockers[k] = vals
+                intersections[k] = vals
             }
         }
     }
-
-    override fun consistentBlockers() {
-        val reversed = blockers.entries
-            .flatMap { (k, v) -> v.map { it to k }.toSet() }
-            .groupBy( keySelector = { it.first }, valueTransform = { it.second })
-            .entries
-            .map { (k,v) -> k to v.toSet() }
-            .toMap()
-
-        blockers.keys.forEach {
-            val old = (blockers[it] ?: mutableSetOf()).filterIsInstance<C2BufferSlideable>().toSet()
-            val new = (reversed[it] ?: mutableSetOf())
-            if (new != old) {
-                throw LogicException("These should match")
-            }
-        }
-    }
-
-
 
     override fun checkConsistency() {
         verticalSegmentSlackOptimisation.checkConsistency()

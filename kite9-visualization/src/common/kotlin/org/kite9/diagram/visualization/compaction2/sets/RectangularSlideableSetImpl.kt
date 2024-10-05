@@ -58,10 +58,13 @@ data class RectangularSlideableSetImpl(
         }
 
 
-        return RoutableSlideableSetImpl(
+        val out = RoutableSlideableSetImpl(
             setOfNotNull(c),
             bl,
             br)
+
+        so.compaction.propagateIntersections(this, out)
+        return out
     }
 
     override val number = C2SlackOptimisation.nextNumber()

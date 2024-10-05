@@ -143,19 +143,20 @@ class C2SlideableSSP(
         }
 
         val startPoint = C2ConnectionRouterCompactionStep.getStart(r)
+        val r2 =canAdvanceFrom(perp, d, common, along, r)
 
-        if (canAdvanceFrom(perp, d, common, along)) {
+        if (r2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
                 if (canAdvanceTo(common, k, startPoint)) {
                     val p = C2Point(along, k, d)
-                    val travelledDistance = c.totalDistance + extraDistance(r, p)
+                    val travelledDistance = c.totalDistance + extraDistance(r2, p)
                     val possibleRemainingDistance = getMinimumRemainingDistance(k)
                     val expensive = expensiveDirection(p)
                     val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
-                    val r2 = C2Route(r, p, newCost)
-                    s.add(r2)
-                    log.send("Added: $r2")
+                    val r3 = C2Route(r2, p, newCost)
+                    s.add(r3)
+                    log.send("Added: $r3")
                 }
             }
         }
@@ -211,14 +212,30 @@ class C2SlideableSSP(
         return known + unknown
     }
 
-    private fun collectInDirection(from: C2Slideable, forward: Boolean, stops: Collection<C2Slideable>, blockers: Set<C2Slideable>) : Set<C2Slideable> {
-        val stopsDistances = getCorrectDistanceMatrix(from, stops)
+    private fun hasRoutes(b: C2BufferSlideable) : Boolean {
+        val out = b.anchors.filterIsInstance<ConnAnchor>().isNotEmpty()
+        return out
+    }
+
+    private fun getBlockingIntersections(intersections: Set<C2Slideable>) : Set<C2Slideable> {
+        val out =  intersections.filter {
+            if (it is C2BufferSlideable) {
+                hasRoutes(it)
+            } else it is C2RectangularSlideable
+
+        }.toSet()
+
+        return out
+    }
+
+    private fun collectInDirection(from: C2Slideable, forward: Boolean, intersections: Set<C2Slideable>) : Set<C2Slideable> {
+        val stopsDistances = getCorrectDistanceMatrix(from, intersections)
 
         // remove all the ones in the wrong direction
         val stopDistRightDirection = stopsDistances.filter { it.value == null || it.value!!.forward == forward }
             .minus(from)
 
-        val potentialBlockers = blockers
+        val potentialBlockers = getBlockingIntersections(intersections)
             .map { it to stopDistRightDirection[it] }
             .filter { (f, t) -> t != null }
             .associate { (f, t) -> f to t!! }
@@ -234,36 +251,60 @@ class C2SlideableSSP(
     }
 
     private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
-        val stops = c2.getSlackOptimisation(along.dimension.other()).getAllSlideables()
-
         val forward = when(going) {
             Direction.DOWN, Direction.RIGHT -> true
             Direction.LEFT, Direction.UP -> false
         }
-
-        val out = collectInDirection(startingAt, forward, stops, c2.blockers[along] ?: emptySet())
+        val out = collectInDirection(startingAt, forward, c2.getIntersections(along) ?: emptySet())
         return out
     }
 
-    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable): Boolean {
+    /**
+     * Cost of crossing over another edge
+     */
+    private fun addCrossCost(r: C2Route, cbs: C2BufferSlideable) : C2Route {
+        val isCrossing = cbs.anchors.filter {
+            (it is RectAnchor) || ((it is ConnAnchor) && (it.s != null))
+        }.isNotEmpty()
+        if (isCrossing) {
+            return C2Route(r, r.point, r.cost.addCrossing(true))
+        } else {
+            return r
+        }
+    }
+
+    /**
+     * Cost of crossing into / out of a container
+     */
+    private fun addCrossCost(r: C2Route, c2: C2RectangularSlideable) : C2Route {
+        return r
+    }
+
+    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable, routeIn: C2Route): C2Route? {
         return when (perp) {
-            is C2IntersectionSlideable -> perp.intersects.contains(endElem) || perp.intersects.contains(startElem)
-            is C2BufferSlideable -> true
-            is C2RectangularSlideable -> {
-                if (along is C2IntersectionSlideable) {
-                    val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
-                    val matchingAnchors = perp.anchors
-                        .filter { common.contains(it.e) }
-                        .any {
-                            (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
-                        }
-                    if (!matchingAnchors) {
-                        log.send("Can't move on from $perp going $d")
-                    }
-                    return matchingAnchors
+            is C2IntersectionSlideable ->
+                // you can only travel from/to an intersection slideable if you are going to/from the start or end element.
+                if (perp.intersects.contains(endElem) || perp.intersects.contains(startElem)) {
+                    return routeIn
                 } else {
-                    return true
+                    return null
                 }
+            is C2BufferSlideable ->
+                // here, we are crossing an occupied slideable, so make sure we account for it's cost
+                return addCrossCost(routeIn, perp)
+            is C2RectangularSlideable -> {
+                // we can only cross a rectangular slideable if it's a container
+                val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
+                val matchingAnchors = perp.anchors
+                    .filter { common.contains(it.e) }
+                    .any {
+                        (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
+                    }
+                if (!matchingAnchors) {
+                    log.send("Can't move on from $perp going $d")
+                    return null
+                }
+                return addCrossCost(routeIn, perp)
             }
         }
     }

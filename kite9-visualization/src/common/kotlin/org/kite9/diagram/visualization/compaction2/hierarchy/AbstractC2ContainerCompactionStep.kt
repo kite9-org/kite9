@@ -1,8 +1,11 @@
-package org.kite9.diagram.visualization.compaction2
+package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -15,7 +18,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
  * This makes sure that any time we have all the groups to complete a container, we wrap the groups in the
  * container(s) and use that instead.
  */
-abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2CompactionStep(cd) {
+abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2BuilderCompactionStep(cd) {
 
     private val containerCompletionV: MutableMap<Group, MutableList<Container>> = mutableMapOf()
     private val containerCompletionH: MutableMap<Group, MutableList<Container>> = mutableMapOf()
@@ -29,10 +32,10 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val sox = c.getSlackOptimisation(d.other())
             var ss = so.getSlideablesFor(g)!!
             completedContainers.forEach { container ->
-                val cs = so.getSlideablesFor(container)!!
-                val csx = sox.getSlideablesFor(container)!!
-                c.setupContainerBlockers(ss, csx)
-                ss = embed(so, cs, ss, d, g)
+                val cs = checkCreateElement(container, d, so, null, g)!!
+                val csx = checkCreateElement(container, d.other(), sox, null, g)!!
+                ss = embed(c, so, cs, ss, d, g)
+                c.setupContainerIntersections(ss, csx)
 
                 // replace the group slideable sets so we use these instead
                 so.add(g, ss)
@@ -47,7 +50,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun embed(so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet {
+    private fun embed(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet {
 
         // first, ensure the buffer slideables are well-separated
         if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,0)
@@ -55,6 +58,9 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         // now make sure that the rectangulars composing the routable are well-separated
         so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }
+
+        // ensure that the intersections of the inner routable also intersect the outer
+        c.propagateIntersections(inner, outer)
 
         val lg = if (g is LeafGroup) g else null
         val out = outer.wrapInRoutable(so, lg)

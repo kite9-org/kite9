@@ -1,7 +1,8 @@
-package org.kite9.diagram.visualization.compaction2.builders
+package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
@@ -11,13 +12,20 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSetImpl
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
-abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) : AbstractC2CompactionStep(cd) {
+abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
 
 
-    fun checkCreate(
+    /**
+     * This is used to create a RectangularSlideableSet from a diagram element
+     * where the element doesn't have a Group
+     */
+    protected fun checkCreateElement(
         de: DiagramElement,
         d: Dimension,
         cso: C2SlackOptimisation,
@@ -45,7 +53,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, gp: GridPo
             cso.add(de, ss)
 
             if (de is Container) {
-                checkCreateItems(cso, de, d, de.getLayout(), ss, topGroup)
+                checkCreateElementContentItems(cso, de, d, de.getLayout(), ss, topGroup)
             }
 
             log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
@@ -54,7 +62,42 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, gp: GridPo
         return ss
     }
 
-    fun checkCreateItems(
+    /**
+     * This is used to create a RectangularSlideable set from a LeafGroup
+     */
+    protected fun checkCreateLeaf(cso: C2SlackOptimisation, g: LeafGroup, de: Rectangular, d: Dimension) : RoutableSlideableSet {
+        val ss1 = cso.getSlideablesFor(g)
+
+
+        if (ss1 != null) {
+            return ss1
+        }
+
+        val ss2 = cso.getSlideablesFor(de)
+
+        if (ss2 != null) {
+            // we need to create these then
+            val l = ss2.l
+            val r = ss2.r
+            val c = C2IntersectionSlideable(cso,d, g, setOf(de))
+            val bl = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.START)))
+            val br = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.END)))
+            cso.ensureMinimumDistance(bl, l ,0)
+            cso.ensureMinimumDistance(r, br, 0)
+            ensureCentreSlideablePosition(cso, ss2, c)
+            val out = RoutableSlideableSetImpl(setOfNotNull(c), bl, br)
+            cso.contains(out, ss2)
+            cso.add(g, out)
+            log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())
+            return out
+
+        } else {
+            throw Kite9ProcessingException("Should have been content here")
+        }
+    }
+
+
+    private fun checkCreateElementContentItems(
         cso: C2SlackOptimisation,
         de: Container,
         d: Dimension,
@@ -67,14 +110,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, gp: GridPo
             .filterIsInstance<ConnectedRectangular>()
 
         val relyOnGroupLayout = usingGroups(contents, topGroup)
-
-//        var central = if (requiresSharedCentralSlideable(l, d) && !relyOnGroupLayout) {
-//            C2IntersectionSlideable(cso, d, contents)
-//        } else {
-//            null
-//        }
-
-        val contentMap = contents.map { it to checkCreate(it, d, cso, null, topGroup) }
+        val contentMap = contents.map { it to checkCreateElement(it, d, cso, null, topGroup) }
 
         // ensure within container
         contentMap.forEach { (e, v) -> embed(d, container, v, cso, e) }
@@ -110,14 +146,4 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, gp: GridPo
             separateRectangular(prev.second!!, Side.END, current.second!!, Side.START, cso, dist)
         }
     }
-
-
-    private fun requiresSharedCentralSlideable(l: Layout?, d: Dimension): Boolean {
-        return when (l) {
-            null, Layout.GRID -> false
-            Layout.DOWN, Layout.UP, Layout.VERTICAL -> return d == Dimension.V
-            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> return d== Dimension.H
-        }
-    }
-
 }

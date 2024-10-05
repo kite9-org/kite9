@@ -8,15 +8,13 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
-import org.kite9.diagram.visualization.compaction2.builders.AbstractC2BuilderCompactionStep
+import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.links.RankBasedConnectionQueue
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
-import kotlin.math.abs
 import kotlin.math.max
-import kotlin.math.min
 
 data class Constraint(val forward: Boolean, val dist: Int) {
 
@@ -43,7 +41,7 @@ data class Constraint(val forward: Boolean, val dist: Int) {
     }
 }
 class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
-    AbstractC2BuilderCompactionStep(cd, gp) {
+    AbstractC2BuilderCompactionStep(cd) {
 
     override val prefix = "C2CR"
     override val isLoggingEnabled = true
@@ -321,8 +319,6 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-        c.consistentBlockers()
-
         val vso = c.getSlackOptimisation(Dimension.V)
         val hso = c.getSlackOptimisation(Dimension.H)
 
@@ -351,6 +347,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 }
             }
         }
+
+        println("Done")
     }
 
     private fun getUpdatedSlideable(
@@ -387,8 +385,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val csoh = c2.getSlackOptimisation(Dimension.H)
             val csov = c2.getSlackOptimisation(Dimension.V)
 
-            val rssh = checkCreate(l, Dimension.H, csoh, null, null)!!
-            val rssv = checkCreate(l, Dimension.V, csov, null, null)!!
+            val rssh = checkCreateElement(l, Dimension.H, csoh, null, null)!!
+            val rssv = checkCreateElement(l, Dimension.V, csov, null, null)!!
 
             val horiz = Direction.isHorizontal(d)
             val hc = (if (!horiz) start.getAlong() else start.getPerp()) as C2RectangularSlideable

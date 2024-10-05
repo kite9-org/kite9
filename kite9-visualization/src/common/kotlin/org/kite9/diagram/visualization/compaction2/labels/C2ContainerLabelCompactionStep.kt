@@ -6,12 +6,12 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
-import org.kite9.diagram.visualization.compaction2.builders.AbstractC2BuilderCompactionStep
+import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
-class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp)  {
+class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderCompactionStep(cd)  {
 
     private var firstGroup = true
     override fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?): Boolean {
@@ -68,7 +68,7 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         }
         return ll.map {
             log.send("Creating $it")
-            checkCreate(it, d, cso, c, null)!!
+            checkCreateElement(it, d, cso, c, null)!!
         }
     }
 
