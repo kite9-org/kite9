@@ -33,23 +33,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         // first, collect all groups and order
         val allGroups = collectGroups(g).sortedBy { it.height }.distinctBy { it.groupNumber }
         allGroups.forEach { processGroup(it, c) }
-
-        ensureCrossingPoints(c)
-    }
-
-    private fun ensureCrossingPoints(c: C2Compaction) {
-        val sov = c.getSlackOptimisation(Dimension.V)
-        val soh = c.getSlackOptimisation(Dimension.H)
-        allContainers.forEach {
-            val ssv = sov.getSlideablesFor(it)!!
-            val ssh = soh.getSlideablesFor(it)!!
-
-            val ssvc = sov.getContainer(ssv)
-            val sshc = soh.getContainer(ssh)
-
-//            c.setupContainerBlockers(ssvc, sshc)
-//            c.createRoutableJunctions(sshc, ssvc)
-        }
     }
 
     private fun processGroup(

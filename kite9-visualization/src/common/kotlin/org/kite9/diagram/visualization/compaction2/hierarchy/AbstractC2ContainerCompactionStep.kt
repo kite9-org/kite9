@@ -31,6 +31,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val so = c.getSlackOptimisation(d)
             val sox = c.getSlackOptimisation(d.other())
             var ss = so.getSlideablesFor(g)!!
+            var ssx = sox.getSlideablesFor(g)
             completedContainers.forEach { container ->
                 val cs = checkCreateElement(container, d, so, null, g)!!
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
@@ -39,6 +40,10 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
                 // replace the group slideable sets so we use these instead
                 so.add(g, ss)
+
+                if (ssx != null) {
+                    c.setupRoutableIntersections(ss, ssx)
+                }
             }
         }
     }
@@ -78,8 +83,14 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
     init {
         // collect the set of elements represented by groups,
         // mapped to those groups.
-        val groupedElements = relevantElements(r.groups().first())
-        val groupedContainers = relevantContainers(r.groups().first())
+        val topGroup = r.groups().first()
+        val groupedElements = relevantElements(topGroup)
+        val groupedContainers = relevantContainers(topGroup)
+
+        val parentContainers: MutableList<Container> = mutableListOf()
+        val justContainers = groupedContainers.keys
+
+        justContainers.forEach { collectParents(it, parentContainers, justContainers ) }
 
         // handy map of group's parents
         val parentage = mutableMapOf<Group, MutableList<Group>>()
@@ -122,8 +133,26 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             }
         }
 
-        allContainers.addAll(groupedContainers.keys)
+        allContainers.addAll(groupedContainers.keys + parentContainers)
+
+        if (parentContainers.isNotEmpty()) {
+            val topH = containerCompletionH.getOrElse(topGroup) { emptyList<Container>() }
+            val topV = containerCompletionV.getOrElse(topGroup) { emptyList<Container>() }
+            containerCompletionH.put(topGroup, (topH + parentContainers).toMutableList())
+            containerCompletionV.put(topGroup, (topV + parentContainers).toMutableList())
+        }
     }
+
+    fun collectParents(it: Container?, parentContainers: MutableList<Container>, justContainers: Set<Container>) {
+        if (it != null) {
+            if ((!justContainers.contains(it)) && (!parentContainers.contains(it))) {
+                parentContainers.add(it)
+            }
+
+            collectParents(it.getContainer(), parentContainers, justContainers)
+        }
+    }
+
 
     private fun contains(e: DiagramElement?, c: Container) : Boolean {
         return when (e) {
@@ -222,11 +251,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
     }
 
     fun horizontalAxis(g: Group): Boolean {
-        return g.axis.isHorizontal || g is LeafGroup
+        return g.axis.isHorizontal || g is LeafGroup || g.isActive()
     }
 
     fun verticalAxis(g: Group): Boolean {
-        return g.axis.isVertical || g is LeafGroup
+        return g.axis.isVertical || g is LeafGroup || g.isActive()
     }
 
 }

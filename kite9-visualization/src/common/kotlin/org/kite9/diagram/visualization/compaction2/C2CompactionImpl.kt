@@ -74,7 +74,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
     override fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
-        along.getAll().forEach {
+        along.c.forEach {
             setIntersection(it, inside.l)
             setIntersection(it, inside.r)
         }
@@ -82,7 +82,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
         a.getAll().forEach {
-            if (b .bl != null) {
+            if (b.bl != null) {
                 setIntersection(it, b.bl!!)
             }
             if (b.br != null) {
