@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="diagram" version="1.0" width="210" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: 10.0 10.0 10.0 10.0; padding: 15.0 15.0 15.0 15.0; sizing: MINIMIZE MINIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: diagram; rect-pos: BasicDimension2D(w=0.0, h=0.0); rect-size: BasicDimension2D(w=210.0, h=190.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@4ffc921e; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
+<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9-a-different-approach/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="diagram" version="1.0" width="150" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [15.0 15.0 15.0 15.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: diagram; rect-pos: [0.0, 0.0]; rect-size: [150.0, 150.0]; position: none; painter: direct-svg; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
-                    @import url("/Users/rob/Documents/kite9/kite9-visualization/visualization/kite9-visualization-java/target/test-classes/stylesheets/tester.css");
+                    @import url("/Users/rob/Documents/kite9/kite9-a-different-approach/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.css");
                 </style
   ></defs
   ><g filter="url(#dropshadow)"
   >
-  <g k9-elem="grid" id="outer" style="--kite9-layout: grid; --kite9-grid-size: 2 1;" transform="translate(15.0,15.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [2, 1]; cell-xs: [, 0, 120, 180]; cell-ys: [, 0, 160]; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=180.0, h=160.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@7d61dfa0; " rank="0"
-    ><rect x="0" y="0" width="180" pp:height="$height" class="grid-back" height="160" pp:width="$width"
+  <g k9-elem="grid" id="outer" style="--kite9-layout: grid; --kite9-grid-size: 2 1;" transform="translate(15.0,15.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [maximize maximize]; horiz: center; vert: center; layout: grid; grid-size: [0 0]; cell-xs: []; cell-ys: []; rectangular: connected; rect-pos: [15.0, 15.0]; rect-size: [120.0, 120.0]; position: none; painter: direct-svg; " rank="0"
+    ><rect x="0" y="0" width="120" pp:height="$height" class="grid-back" height="120" pp:width="$width"
       />
-    <g k9-elem="cell" id="l" style="--kite9-occupies: 0 0; --kite9-padding: 10px" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=15.0, h=15.0); rect-size: BasicDimension2D(w=120.0, h=160.0); position: [0,0,0,0]; grid-x: [0,1]; grid-y: [0,1]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@75d74321; "
-      ><rect x="0" y="0" width="120" pp:height="$height" class="cell-edge" height="160" pp:width="$width"
+    <g style="--kite9-occupies: 0 0; --kite9-padding: 10px" id="l" k9-elem="cell"
+      ><rect x="0" y="0" width="0" pp:height="$height" class="cell-edge" height="0" pp:width="$width"
         />
-      <g k9-elem="grid" id="lg" transform="translate(10.0,10.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 2]; cell-xs: [, 0, 100]; cell-ys: [, 0, 100, 140]; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=100.0, h=140.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@41710f71; "
-        ><rect x="0" y="0" width="100" pp:height="$height" class="grid-back" height="140" pp:width="$width"
+      <g id="lg" k9-elem="grid"
+        ><rect x="0" y="0" width="0" pp:height="$height" class="grid-back" height="0" pp:width="$width"
           />
-        <g k9-elem="cell" id="tl" style="--kite9-occupies: 0 0; --kite9-min-size: 100px 100px; " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=25.0); rect-size: BasicDimension2D(w=100.0, h=100.0); position: [0,0,0,0]; grid-x: [0,1]; grid-y: [0,1]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@26554852; "
-          ><rect x="0" y="0" width="100" pp:height="$height" class="cell-edge" height="100" pp:width="$width"
+        <g style="--kite9-occupies: 0 0; --kite9-min-size: 100px 100px; " id="tl" k9-elem="cell"
+          ><rect x="0" y="0" width="0" pp:height="$height" class="cell-edge" height="0" pp:width="$width"
           /></g
           >
-        <g k9-elem="cell" id="bl" style="--kite9-occupies: 0 1; --kite9-min-size: 40px 40px; " transform="translate(.0,100.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=25.0, h=125.0); rect-size: BasicDimension2D(w=100.0, h=40.0); position: [0,0,1,1]; grid-x: [0,1]; grid-y: [1,2]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@435eb4e9; "
-          ><rect x="0" y="0" width="100" pp:height="$height" class="cell-edge" height="40" pp:width="$width"
+        <g style="--kite9-occupies: 0 1; --kite9-min-size: 40px 40px; " id="bl" k9-elem="cell"
+          ><rect x="0" y="0" width="0" pp:height="$height" class="cell-edge" height="0" pp:width="$width"
           /></g
           >
       </g
           >
     </g
           >
-    <g k9-elem="cell" id="r" style="--kite9-occupies: 1 0; --kite9-padding: 10px" transform="translate(120.0,.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 10.0 10.0 10.0 10.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=135.0, h=15.0); rect-size: BasicDimension2D(w=60.0, h=160.0); position: [1,1,0,0]; grid-x: [1,2]; grid-y: [0,1]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@3da15c10; "
-          ><rect x="0" y="0" width="60" pp:height="$height" class="cell-edge" height="160" pp:width="$width"
+    <g style="--kite9-occupies: 1 0; --kite9-padding: 10px" id="r" k9-elem="cell"
+          ><rect x="0" y="0" width="0" pp:height="$height" class="cell-edge" height="0" pp:width="$width"
             />
-      <g k9-elem="grid" id="lg" transform="translate(10.0,10.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: GRID; grid-size: [1, 2]; cell-xs: [, 0, 40]; cell-ys: [, 0, 130, 140]; rectangular: connected; rect-pos: BasicDimension2D(w=145.0, h=25.0); rect-size: BasicDimension2D(w=40.0, h=140.0); position: none; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@27b00ff1; "
-            ><rect x="0" y="0" width="40" pp:height="$height" class="grid-back" height="140" pp:width="$width"
+      <g id="lg" k9-elem="grid"
+            ><rect x="0" y="0" width="0" pp:height="$height" class="grid-back" height="0" pp:width="$width"
               />
-        <g k9-elem="cell" id="tr" style="--kite9-occupies: 0 0; --kite9-min-size: 40px 40px; " k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=145.0, h=25.0); rect-size: BasicDimension2D(w=40.0, h=130.0); position: [0,0,0,0]; grid-x: [0,1]; grid-y: [0,1]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@6d5ffe89; "
-              ><rect x="0" y="0" width="40" pp:height="$height" class="cell-edge" height="130" pp:width="$width"
+        <g style="--kite9-occupies: 0 0; --kite9-min-size: 40px 40px; " id="tr" k9-elem="cell"
+              ><rect x="0" y="0" width="0" pp:height="$height" class="cell-edge" height="0" pp:width="$width"
               /></g
               >
-        <g k9-elem="cell" id="br" style="--kite9-occupies: 0 1; --kite9-min-size: 40px 10px; " transform="translate(.0,130.0)" k9-info="margin: 0.0 0.0 0.0 0.0; padding: 0.0 0.0 0.0 0.0; sizing: MAXIMIZE MAXIMIZE; horiz: CENTER; vert: CENTER; layout: null; rectangular: connected; rect-pos: BasicDimension2D(w=145.0, h=155.0); rect-size: BasicDimension2D(w=40.0, h=10.0); position: [0,0,1,1]; grid-x: [0,1]; grid-y: [1,2]; painter: org.kite9.diagram.dom.painter.SVGContainerRectangularPainter@2cafd2b0; "
-              ><rect x="0" y="0" width="40" pp:height="$height" class="cell-edge" height="10" pp:width="$width"
+        <g style="--kite9-occupies: 0 1; --kite9-min-size: 40px 10px; " id="br" k9-elem="cell"
+              ><rect x="0" y="0" width="0" pp:height="$height" class="cell-edge" height="0" pp:width="$width"
               /></g
               >
       </g

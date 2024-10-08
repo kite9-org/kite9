@@ -251,11 +251,13 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
     }
 
     fun horizontalAxis(g: Group): Boolean {
-        return g.axis.isHorizontal || g is LeafGroup || g.isActive()
+        return g.axis.isHorizontal || g is LeafGroup
+                || g.isActive()
     }
 
     fun verticalAxis(g: Group): Boolean {
-        return g.axis.isVertical || g is LeafGroup || g.isActive()
+        return g.axis.isVertical || g is LeafGroup
+                || g.isActive()
     }
 
 }

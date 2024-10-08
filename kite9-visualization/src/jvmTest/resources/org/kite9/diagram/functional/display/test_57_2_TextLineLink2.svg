@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.0//EN'
           'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
-<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="The Diagram" version="1.0" width="181" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [15.0 15.0 15.0 15.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: diagram; rect-pos: [0.0, 0.0]; rect-size: [181.0, 136.0]; position: none; painter: direct-svg; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
+<svg xmlns:pp="http://www.kite9.org/schema/post-processor" xslt:template="/Users/rob/Documents/kite9/kite9-a-different-approach/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.xslt" xmlns:xslt="http://www.kite9.org/schema/xslt" contentScriptType="text/ecmascript" zoomAndPan="magnify" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" id="The Diagram" version="1.0" width="179" pp:width="$width" preserveAspectRatio="xMidYMid" k9-elem="diagram" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [15.0 15.0 15.0 15.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: diagram; rect-pos: [0.0, 0.0]; rect-size: [179.0, 136.0]; position: none; painter: direct-svg; " xmlns="http://www.w3.org/2000/svg" pp:height="$height"
 ><defs
   ><style type="text/css" xml:space="preserve"
     >
-                    @import url("/Users/rob/Documents/kite9/kite9/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.css");
+                    @import url("/Users/rob/Documents/kite9/kite9-a-different-approach/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.css");
                 </style
   ></defs
   ><g filter="url(#dropshadow)"
   >
-  <g k9-elem="glyph" id="bigboy" transform="translate(40.0,15.0)" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [6.0 10.0 6.0 10.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: [40.0, 15.0]; rect-size: [101.0, 106.0]; position: none; painter: direct-svg; " rank="0"
-    ><rect x="0" y="0" width="101" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="106" pp:width="$width"
+  <g k9-elem="glyph" id="bigboy" transform="translate(40.0,15.0)" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [6.0 10.0 6.0 10.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: down; rectangular: connected; rect-pos: [40.0, 15.0]; rect-size: [99.0, 106.0]; position: none; painter: direct-svg; " rank="0"
+    ><rect x="0" y="0" width="99" style="fill: url(#glyph-background); " pp:height="$height" rx="8" class="glyph-back" ry="8" height="106" pp:width="$width"
       />
     <g k9-elem="text-label" id="bigboy-stereo" class="glyph-stereotype-text" transform="translate(30.4,18.0)" k9-info="margin: [3.0 3.0 3.0 3.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; rectangular: connected; rect-pos: [71.0, 21.0]; rect-size: [37.0, 14.0]; position: none; painter: direct-svg; "
       ><text x="0.0px" y="0.0px"
@@ -23,8 +23,8 @@
         >One</text
       ></g
       >
-    <g k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [maximize maximize]; horiz: center; vert: center; layout: vertical; rectangular: connected; rect-pos: [50.0, 59.0]; rect-size: [81.0, 56.0]; position: none; painter: direct-svg; " k9-elem="text-lines" transform="translate(10.0,44.0)"
-      ><g k9-elem="text-label" id="linker" class="generic-text" transform="translate(15.5,13.0)" k9-info="margin: [3.0 3.0 3.0 3.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: [66.0, 62.0]; rect-size: [45.0, 20.0]; position: none; painter: direct-svg; "
+    <g k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [maximize maximize]; horiz: center; vert: center; layout: vertical; rectangular: connected; rect-pos: [50.0, 59.0]; rect-size: [79.0, 56.0]; position: none; painter: direct-svg; " k9-elem="text-lines" transform="translate(10.0,44.0)"
+      ><g k9-elem="text-label" id="linker" class="generic-text" transform="translate(2.5,13.0)" k9-info="margin: [3.0 3.0 3.0 3.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: left; vert: center; rectangular: connected; rect-pos: [53.0, 62.0]; rect-size: [45.0, 20.0]; position: none; painter: direct-svg; "
         ><text x="0.0px" y="0.0px"
           >some row</text
         ></g
@@ -45,9 +45,9 @@
         ></g
       ></g
       >
-  <g k9-elem="link-body" id="b" transform="translate(151.0,92.0)" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [3.0 5.0 3.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: [151.0, 92.0]; rect-size: [15.0, 20.0]; position: none; painter: direct-svg; " rank="2"
+  <g k9-elem="link-body" id="b" transform="translate(149.0,92.0)" k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [3.0 5.0 3.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: [149.0, 92.0]; rect-size: [15.0, 20.0]; position: none; painter: direct-svg; " rank="2"
       ><rect x="0" y="0" width="15" pp:height="$height" rx="4" class="link-body-back" ry="4" height="20" pp:width="$width"
-        /><g k9-elem="text-label" id="lb-b" class="link-body-label-text" transform="translate(4.0,15.0)" k9-info="margin: [3.0 3.0 3.0 3.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; rectangular: connected; rect-pos: [156.0, 95.0]; rect-size: [5.0, 14.0]; position: none; painter: direct-svg; "
+        /><g k9-elem="text-label" id="lb-b" class="link-body-label-text" transform="translate(4.0,15.0)" k9-info="margin: [3.0 3.0 3.0 3.0]; padding: [0.0 0.0 0.0 0.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; rectangular: connected; rect-pos: [154.0, 95.0]; rect-size: [5.0, 14.0]; position: none; painter: direct-svg; "
         ><text x="0.0px" y="0.0px"
           >    b
 </text
@@ -58,21 +58,21 @@
       >
     <g k9-elem="from" reference="a" transform="translate(30.0,72.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [5.0 5.0 5.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; rectangular: terminator; rect-pos: [30.0, 72.0]; rect-size: [0.0, 0.0]; position: none; terminates: a-linker; terminates-at: a; end: from; direction: left; painter: direct-svg; "
         />
-    <g k9-elem="to" reference="linker" transform="translate(66.0,72.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [5.0 5.0 5.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; rectangular: terminator; rect-pos: [66.0, 72.0]; rect-size: [0.0, 0.0]; position: none; terminates: a-linker; terminates-at: linker; end: to; direction: right; painter: direct-svg; "
+    <g k9-elem="to" reference="linker" transform="translate(53.0,72.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [5.0 5.0 5.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; rectangular: terminator; rect-pos: [53.0, 72.0]; rect-size: [0.0, 0.0]; position: none; terminates: a-linker; terminates-at: linker; end: to; direction: right; painter: direct-svg; "
         />
   <g k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [3.0 5.0 3.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: ; rect-size: ; position: none; painter: direct-svg; " k9-elem="link-body"
-        ><path marker-start="url(#-start-marker)" d="M30 72 L66 72 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
+        ><path marker-start="url(#-start-marker)" d="M30 72 L53 72 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
         /></g
       ></g
       >
   <g k9-elem="link" id="b-linker2" drawDirection="LEFT" style="--kite9-link-corner-radius: 5px; " k9-info="link: ['b' 'linker2']; direction: left; painter: direct-svg; " rank="4"
       >
-    <g k9-elem="from" reference="b" transform="translate(151.0,102.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [5.0 5.0 5.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; rectangular: terminator; rect-pos: [151.0, 102.0]; rect-size: [0.0, 0.0]; position: none; terminates: b-linker2; terminates-at: b; end: from; direction: right; painter: direct-svg; "
+    <g k9-elem="from" reference="b" transform="translate(149.0,102.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [5.0 5.0 5.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; rectangular: terminator; rect-pos: [149.0, 102.0]; rect-size: [0.0, 0.0]; position: none; terminates: b-linker2; terminates-at: b; end: from; direction: right; painter: direct-svg; "
         />
     <g k9-elem="to" reference="linker2" transform="translate(126.0,102.0)" k9-info="margin: [0.0 0.0 0.0 0.0]; padding: [5.0 5.0 5.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; rectangular: terminator; rect-pos: [126.0, 102.0]; rect-size: [0.0, 0.0]; position: none; terminates: b-linker2; terminates-at: linker2; end: to; direction: left; painter: direct-svg; "
         />
   <g k9-info="margin: [10.0 10.0 10.0 10.0]; padding: [3.0 5.0 3.0 5.0]; min-size: [0.0 0.0]; sizing: [minimize minimize]; horiz: center; vert: center; layout: null; rectangular: connected; rect-pos: ; rect-size: ; position: none; painter: direct-svg; " k9-elem="link-body"
-        ><path marker-start="url(#-start-marker)" d="M151 102 L126 102 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
+        ><path marker-start="url(#-start-marker)" d="M149 102 L126 102 " marker-end="url(#-end-marker)" pp:d="$path" class="link"
         /></g
       ></g
       >
