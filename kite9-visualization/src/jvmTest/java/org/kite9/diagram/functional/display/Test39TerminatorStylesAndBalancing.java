@@ -141,17 +141,17 @@ public class Test39TerminatorStylesAndBalancing extends AbstractDisplayFunctiona
 
 	private DiagramKite9XMLElement createTerminatorDiagram() {
 		Glyph g1 = new Glyph("g1", null, "g1", null, null);
-		Glyph g2 = new Glyph("g2", null, "g1", null, null);
+		Glyph g2 = new Glyph("g2", null, "g2", null, null);
 		Glyph g3 = new Glyph("g3", null, "g3", null, null);
 		Glyph g4 = new Glyph("g4", null, "g4", null, null);
-		Context c1 = new Context(null, true, new TextLabel("c1"), null);
-		Context c2 = new Context(null, true, new TextLabel("c1"), null);
-		Context c3 = new Context(null, true, new TextLabel("c1"), null);
-		Context c4 = new Context(null, true, new TextLabel("c1"), null);
-	
+		Context c1 = new Context("c1", null, true, new TextLabel("c1"), null);
+		Context c2 = new Context("c2", null, true, new TextLabel("c2"), null);
+		Context c3 = new Context("c3", null, true, new TextLabel("c3"), null);
+		Context c4 = new Context("c4", null, true, new TextLabel("c4"), null);
+
 		new Link(g1, c1, LinkEndStyle.CIRCLE, null, LinkEndStyle.CIRCLE, null, Direction.RIGHT);	
-		new Link(g2, c2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null, Direction.RIGHT);	
-		new Link(g3, c3, LinkEndStyle.GAP, null, LinkEndStyle.GAP, null, Direction.LEFT);	
+		new Link(g2, c2, LinkEndStyle.ARROW, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
+		new Link(g3, c3, LinkEndStyle.GAP, null, LinkEndStyle.GAP, null, Direction.LEFT);
 		new Link(g4, c4, LinkEndStyle.NONE, null, LinkEndStyle.NONE, null, Direction.LEFT);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(g1, c1, g2, c2, g3, c3, g4, c4), null);

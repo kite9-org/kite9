@@ -86,13 +86,18 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             throw LogicException("Unknown group type")
         }
 
-        if (horizontalAxis(g)) {
+        if (horizontalAxis(g) || isTopmostGroup(g)) {
             completeContainers(c, g, Dimension.H)
         }
 
-        if (verticalAxis(g)) {
+        if (verticalAxis(g) || isTopmostGroup(g)) {
             completeContainers(c, g, Dimension.V)
         }
+    }
+
+    private fun isTopmostGroup(g: Group): Boolean {
+        // if it's the top group, then all containers need to be completed
+        return g.isActive()
     }
 
     private fun collectGroups(g: Group) : List<Group> {

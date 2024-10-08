@@ -143,7 +143,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    fun collectParents(it: Container?, parentContainers: MutableList<Container>, justContainers: Set<Container>) {
+    private fun collectParents(it: Container?, parentContainers: MutableList<Container>, justContainers: Set<Container>) {
         if (it != null) {
             if ((!justContainers.contains(it)) && (!parentContainers.contains(it))) {
                 parentContainers.add(it)
@@ -172,18 +172,23 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun getLowestGroup(groupsIn: List<Group>, parentage: Map<Group, List<Group>>, axis: Dimension) : Group? {
+    private fun hasOnlyCombiningAxis(groups: Set<Group>): Boolean {
+        val out = (groups.size == 1) && (combiningAxis(groups.first()))
+        return out
+    }
+
+    private fun getLowestGroup(groupsIn: List<Group>, parentage: Map<Group, List<Group>>, axis: Dimension) : Group {
         var groups = groupsIn.filter { matchesAxis(axis, it) }.toSet()
 
-        while (groups.size > 1) {
+        while ((groups.size > 1) || (hasOnlyCombiningAxis(groups))) {
             val lowestGroupHeight = groups.minOf { it.height }
             groups = groups
                 .flatMap { if (it.height == lowestGroupHeight) parentage[it].orEmpty() else listOf(it) }
-                .filter { matchesAxis(axis, it) }
+                .filter { matchesAxis(axis, it) || combiningAxis(it) }
                 .toSet()
         }
 
-        return groups.firstOrNull()
+        return groups.first()
     }
 
     private fun <X, Y> mergeMaps(a: Map<X, List<Y>>, b: Map<X, List<Y>>) : Map<X, List<Y>> {
@@ -243,21 +248,23 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             Dimension.H -> horizontalAxis(g)
         }
     }
-    fun combiningAxis(g: CompoundGroup) : Boolean {
-        val hasChildHorizontal = horizontalAxis(g.a) || horizontalAxis(g.b)
-        val hasChildVertical = verticalAxis(g.a) || verticalAxis(g.b)
+    fun combiningAxis(g: Group) : Boolean {
+        return if (g is CompoundGroup) {
+            val hasChildHorizontal = horizontalAxis(g.a) || horizontalAxis(g.b)
+            val hasChildVertical = verticalAxis(g.a) || verticalAxis(g.b)
 
-        return !horizontalAxis(g) && !verticalAxis(g) && hasChildHorizontal && hasChildVertical
+            !horizontalAxis(g) && !verticalAxis(g) && hasChildHorizontal && hasChildVertical
+        } else {
+            false
+        }
     }
 
     fun horizontalAxis(g: Group): Boolean {
         return g.axis.isHorizontal || g is LeafGroup
-                || g.isActive()
     }
 
     fun verticalAxis(g: Group): Boolean {
         return g.axis.isVertical || g is LeafGroup
-                || g.isActive()
     }
 
 }
