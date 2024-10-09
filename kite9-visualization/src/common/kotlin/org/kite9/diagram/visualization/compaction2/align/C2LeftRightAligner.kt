@@ -32,8 +32,8 @@ class C2LeftRightAligner : Aligner {
         }
     }
 
-    private fun getAlignStyle(sl: C2RectangularSlideable, d: Dimension) : AlignStyle? {
-        return sl.anchors
+    private fun getAlignStyle(sl: C2Slideable, d: Dimension) : AlignStyle? {
+        return sl.getRectangulars()
             .asSequence()
             .map { it.e }
             .filterIsInstance<AlignedRectangular>()
@@ -55,7 +55,7 @@ class C2LeftRightAligner : Aligner {
             .firstOrNull()
     }
 
-    private fun alignSegment(sl: C2RectangularSlideable, d: Dimension) {
+    private fun alignSegment(sl: C2Slideable, d: Dimension) {
         val style = getAlignStyle(sl, d)
         if (style == AlignStyle.MAX) {
             val max = sl.maximumPosition

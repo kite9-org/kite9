@@ -108,15 +108,15 @@ abstract class Slideable(val so: SlackOptimisation,
         }
     }
 
-    fun getForwardSlideables(increasing: Boolean): Set<Slideable> {
-        val out: MutableSet<Slideable> = HashSet()
+    fun getForwardSlideables(increasing: Boolean): Set<C2Slideable> {
+        val out: MutableSet<C2Slideable> = HashSet()
         if (increasing) {
             for (sd in minimum.forward.keys) {
-                out.add(sd.owner as Slideable)
+                out.add(sd.owner as C2Slideable)
             }
         } else {
             for (sd in maximum.forward.keys) {
-                out.add(sd.owner as Slideable)
+                out.add(sd.owner as C2Slideable)
             }
         }
         return out

@@ -8,9 +8,7 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.C2Compaction
-import org.kite9.diagram.visualization.compaction2.C2IntersectionSlideable
-import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
@@ -22,7 +20,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 
 class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2ContainerCompactionStep(cd, r) {
 
-    var first = true;
+    var first = true
     override fun compact(c: C2Compaction, g: Group) {
         if (!first) {
             return
@@ -113,7 +111,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         return when (g) {
             is CompoundGroup -> listOf(g) + collectGroups(g.a) + collectGroups(g.b)
             is LeafGroup -> listOf(g)
-            else -> throw LogicException("wtf kotlin")
         }
     }
 
@@ -124,11 +121,11 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             return ss1
         }
 
-        val ic = C2IntersectionSlideable(cso, d, g, setOf(c))
+        val ic = C2Slideable(cso, d, g, c)
         val out = RoutableSlideableSetImpl(ic, null, null)
 
         cso.add(g, out)
-        log.send("Created a RouteableSlideableSet for $c: ", out.getAll())
+        log.send("Created a RoutableSlideableSet for $c: ", out.getAll())
         return out
     }
 
@@ -144,8 +141,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         val hm = if ((ha == null) || (hb == null)) {
             ha ?: hb
         } else {
-            val rl = getRequiredLayout(g, d)
-            when (rl) {
+            when (val rl = getRequiredLayout(g, d)) {
                 l1 -> {
                     separateRectangular(ha, hb, so, d)
                     ha.mergeWithGutter(hb, so)
@@ -220,7 +216,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
     }
 
     /**
-     * Either content are laid out using the Group process, or they aren't connected so we need
+     * Either content are laid out using the Group process, or they aren't connected, so we need
      * to just follow layout.
      */
     override fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?) : Boolean {
@@ -229,12 +225,18 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
     }
 
     private fun hasGroup(item: Connected, group: Group?) : Boolean {
-        return if (group is CompoundGroup) {
-            hasGroup(item, group.a) || hasGroup(item, group.b)
-        } else if (group is LeafGroup){
-            (group.container == item) || (group.connected == item);
-        } else {
-            false;
+        return when (group) {
+            is CompoundGroup -> {
+                hasGroup(item, group.a) || hasGroup(item, group.b)
+            }
+
+            is LeafGroup -> {
+                (group.container == item) || (group.connected == item)
+            }
+
+            else -> {
+                false
+            }
         }
     }
 

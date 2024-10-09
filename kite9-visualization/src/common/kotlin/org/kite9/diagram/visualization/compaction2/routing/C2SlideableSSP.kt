@@ -11,6 +11,8 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import kotlin.math.max
 
 class C2SlideableSSP(
@@ -58,23 +60,23 @@ class C2SlideableSSP(
         out
     }
 
-    private fun remainingDistance1D(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Int {
-        // first, let's see if there's min distance set
-        val knownDistance = getCorrectDistanceMatrix(s, setOf(from, to)).values
-            .filterNotNull()
-            .maxOfOrNull { it.dist }
-
-        return if (knownDistance != null) {
-            knownDistance
-        } else if (s.maximumPosition!! < from.minimumPosition) {
-            from.minimumPosition - s.maximumPosition!!
-        } else if (s.minimumPosition > to.maximumPosition!!) {
-            s.minimumPosition - to.maximumPosition!!
-        } else {
-            0
-        }
-
-    }
+//    private fun remainingDistance1D(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Int {
+//        // first, let's see if there's min distance set
+//        val knownDistance = getCorrectDistanceMatrix(s, setOf(from, to)).values
+//            .filterNotNull()
+//            .maxOfOrNull { it.dist }
+//
+//        return if (knownDistance != null) {
+//            knownDistance
+//        } else if (s.maximumPosition!! < from.minimumPosition) {
+//            from.minimumPosition - s.maximumPosition!!
+//        } else if (s.minimumPosition > to.maximumPosition!!) {
+//            s.minimumPosition - to.maximumPosition!!
+//        } else {
+//            0
+//        }
+//
+//    }
 
     override fun generateSuccessivePaths(r: C2Route, s: State<C2Route>) {
         val along = r.point.getAlong()
@@ -82,11 +84,12 @@ class C2SlideableSSP(
         val d = r.point.d
         log.send("Extending: $r")
 
-        if (along is C2BufferSlideable) {
+        // we might be able to remove this
+        if (!along.isBlocker()) {
             advance(d, perp, r, along, s, r.cost.addStep())
         }
 
-        if ((along is C2BufferSlideable) && (perp is C2BufferSlideable)) {
+        if ((!along.isBlocker()) && (!perp.isBlocker())) {
             // turns ok if both axes are buffer slideable
             val dc = Direction.rotateClockwise(d)
             var nextScoreDc =  r.cost.addTurn(CostFreeTurn.CLOCKWISE)
@@ -99,31 +102,12 @@ class C2SlideableSSP(
 
     }
 
-    private fun costFreeDogLeg(r: C2Route, d: Direction): Boolean {
-        val prev = r.prev
-        if (prev != null) {
+    private val commonMap = mutableMapOf<C2Slideable, Set<DiagramElement>>()
 
-            if (d != prev.point.d) {
-                return false
-            }
-
-            val prevS = prev.point.getAlong()
-            var rS = r.point.getPerp()
-
-            val cost = getAbsoluteDistance(prevS, rS)
-            return (cost == null)
-        }
-
-        return false
-    }
-
-
-    private val commonMap = mutableMapOf<C2IntersectionSlideable, Set<DiagramElement>>()
-
-    private fun includeParentsOf(s: C2IntersectionSlideable) : Set<DiagramElement> {
+    private fun includeParentsOf(s: C2Slideable) : Set<DiagramElement> {
 
         return commonMap.getOrPut(s) {
-            val v = s.intersects.flatMap { parents(it) }.toSet()
+            val v = s.intersecting().flatMap { parents(it) }.toSet()
             v
         }
     }
@@ -132,13 +116,13 @@ class C2SlideableSSP(
         d: Direction,
         perp: C2Slideable,
         r: C2Route,
-        along: C2BufferSlideable,
+        along: C2Slideable,
         s: State<C2Route>,
         c: C2Costing
     ) {
-        val common = when (along) {
-            is C2IntersectionSlideable -> includeParentsOf(along)
-            is C2OrbitSlideable -> along.getOrbits().map { it.e }.toSet()
+        val common = when {
+            along.intersecting().isNotEmpty() -> includeParentsOf(along)
+            along.getOrbits().isNotEmpty() -> along.getOrbits().map { it.e }.toSet()
             else -> throw LogicException("huh")
         }
 
@@ -212,17 +196,14 @@ class C2SlideableSSP(
         return known + unknown
     }
 
-    private fun hasRoutes(b: C2BufferSlideable) : Boolean {
+    private fun hasRoutes(b: C2Slideable) : Boolean {
         val out = b.anchors.filterIsInstance<ConnAnchor>().isNotEmpty()
         return out
     }
 
     private fun getBlockingIntersections(intersections: Set<C2Slideable>) : Set<C2Slideable> {
         val out =  intersections.filter {
-            if (it is C2BufferSlideable) {
-                hasRoutes(it)
-            } else it is C2RectangularSlideable
-
+            hasRoutes(it) || it.isBlocker()
         }.toSet()
 
         return out
@@ -250,7 +231,7 @@ class C2SlideableSSP(
         return stopDistRightDirection.keys
     }
 
-    private fun getForwardSlideables(along: C2BufferSlideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
+    private fun getForwardSlideables(along: C2Slideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
         val forward = when(going) {
             Direction.DOWN, Direction.RIGHT -> true
             Direction.LEFT, Direction.UP -> false
@@ -262,51 +243,52 @@ class C2SlideableSSP(
     /**
      * Cost of crossing over another edge
      */
-    private fun addCrossCost(r: C2Route, cbs: C2BufferSlideable) : C2Route {
-        val isCrossing = cbs.anchors.filter {
-            (it is RectAnchor) || ((it is ConnAnchor) && (it.s != null))
-        }.isNotEmpty()
-        if (isCrossing) {
-            return C2Route(r, r.point, r.cost.addCrossing(true))
+    private fun addCrossCost(r: C2Route, cbs: C2Slideable) : C2Route {
+        val isCrossing = cbs.anchors.any {
+            (it is RectAnchor) || (it is ConnAnchor)
+        }
+
+        return if (isCrossing) {
+            C2Route(r, r.point, r.cost.addCrossing(true))
         } else {
-            return r
+            r
         }
     }
 
-    /**
-     * Cost of crossing into / out of a container
-     */
-    private fun addCrossCost(r: C2Route, c2: C2RectangularSlideable) : C2Route {
-        return r
-    }
+    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2Slideable, routeIn: C2Route): C2Route? {
+        // this is approximate - might need improvement later
+        val isIntersection = perp.intersecting().isNotEmpty()
+        val isRectangular = perp.isBlocker()
+        val isOrbit = perp.getOrbits().isNotEmpty()
 
-    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2BufferSlideable, routeIn: C2Route): C2Route? {
-        return when (perp) {
-            is C2IntersectionSlideable ->
-                // you can only travel from/to an intersection slideable if you are going to/from the start or end element.
-                if (perp.intersects.contains(endElem) || perp.intersects.contains(startElem)) {
-                    return routeIn
-                } else {
-                    return null
-                }
-            is C2BufferSlideable ->
-                // here, we are crossing an occupied slideable, so make sure we account for it's cost
-                return addCrossCost(routeIn, perp)
-            is C2RectangularSlideable -> {
-                // we can only cross a rectangular slideable if it's a container
-                val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
-                val matchingAnchors = perp.anchors
-                    .filter { common.contains(it.e) }
-                    .any {
-                        (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
-                    }
-                if (!matchingAnchors) {
-                    log.send("Can't move on from $perp going $d")
-                    return null
-                }
-                return addCrossCost(routeIn, perp)
+        if (isIntersection) {
+            return if (perp.intersecting().contains(endElem) || perp.intersecting().contains(startElem)) {
+                routeIn
+            } else {
+                null
             }
         }
+
+        if (isRectangular) {
+            // we can only cross a rectangular slideable if it's a container
+            val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
+            val matchingAnchors = perp.anchors
+                .filter { common.contains(it.e) }
+                .any {
+                    (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
+                }
+            if (!matchingAnchors) {
+                log.send("Can't move on from $perp going $d")
+                return null
+            }
+            return addCrossCost(routeIn, perp)
+        }
+
+        if (isOrbit) {
+            return addCrossCost(routeIn, perp)
+        }
+
+        return null
     }
 
 
@@ -315,9 +297,9 @@ class C2SlideableSSP(
      * doing so if so.
      */
     private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable, startPoint: C2Point): Boolean {
-        val intersectionOk = when (k) {
+        val intersectionOk = when {
             //is C2OrbitSlideable ->  k.getOrbits().any { common.contains(it.e) }
-            is C2IntersectionSlideable -> k.intersects.any { it == endElem || it == startElem }
+            k.intersecting().isNotEmpty() -> k.intersecting().any { it == endElem || it == startElem }
             //is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
             else -> true
         }
@@ -344,7 +326,7 @@ class C2SlideableSSP(
             .filter { directionOk(it)}
             .forEach {
             // head out from each point as far as possible in each direction
-            val along = it.getAlong() as C2BufferSlideable
+            val along = it.getAlong()
             val perp = it.getPerp()
             val mrd1 = getMinimumRemainingDistance(perp)
             val mrd2 = getMinimumRemainingDistance(along)

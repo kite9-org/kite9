@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
@@ -22,7 +21,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     private val containerCompletionV: MutableMap<Group, MutableList<Container>> = mutableMapOf()
     private val containerCompletionH: MutableMap<Group, MutableList<Container>> = mutableMapOf()
-    val allContainers : MutableList<Container> = mutableListOf()
+    private val allContainers : MutableList<Container> = mutableListOf()
 
     fun completeContainers(c: C2Compaction, g: Group, d: Dimension) {
         val completedContainers = popCompletedContainers(d, g)
@@ -31,7 +30,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val so = c.getSlackOptimisation(d)
             val sox = c.getSlackOptimisation(d.other())
             var ss = so.getSlideablesFor(g)!!
-            var ssx = sox.getSlideablesFor(g)
+            val ssx = sox.getSlideablesFor(g)
             completedContainers.forEach { container ->
                 val cs = checkCreateElement(container, d, so, null, g)!!
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
@@ -117,29 +116,25 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         // we need to reverse this map so that we get groups-to-containers
         relevantContainersV.mapNotNull { (c, g) ->
-            if (g != null) {
-                val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
-                listV.add(c)
-                listV.sortBy { -it.getDepth() }
-            }
+            val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
+            listV.add(c)
+            listV.sortBy { -it.getDepth() }
         }
 
         // we need to reverse this map so that we get groups-to-containers
         relevantContainersH.mapNotNull { (c, g) ->
-            if (g != null) {
-                val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
-                listH.add(c)
-                listH.sortBy { -it.getDepth() }
-            }
+            val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
+            listH.add(c)
+            listH.sortBy { -it.getDepth() }
         }
 
         allContainers.addAll(groupedContainers.keys + parentContainers)
 
         if (parentContainers.isNotEmpty()) {
-            val topH = containerCompletionH.getOrElse(topGroup) { emptyList<Container>() }
-            val topV = containerCompletionV.getOrElse(topGroup) { emptyList<Container>() }
-            containerCompletionH.put(topGroup, (topH + parentContainers).toMutableList())
-            containerCompletionV.put(topGroup, (topV + parentContainers).toMutableList())
+            val topH = containerCompletionH.getOrElse(topGroup) { emptyList() }
+            val topV = containerCompletionV.getOrElse(topGroup) { emptyList() }
+            containerCompletionH[topGroup] = (topH + parentContainers).toMutableList()
+            containerCompletionV[topGroup] = (topV + parentContainers).toMutableList()
         }
     }
 
@@ -199,7 +194,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun relevantElements(topGroup: Group) : Map<DiagramElement, List<Group>> {
+    private fun relevantElements(topGroup: Group) : Map<DiagramElement, List<LeafGroup>> {
         return when (topGroup) {
             is CompoundGroup -> mergeMaps(relevantElements(topGroup.a),(relevantElements(topGroup.b)))
             is LeafGroup -> {
@@ -210,11 +205,10 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                     mapOf()
                 }
             }
-            else -> mapOf()
         }
     }
 
-    private fun relevantContainers(topGroup: Group) : Map<Container, List<Group>> {
+    private fun relevantContainers(topGroup: Group) : Map<Container, List<LeafGroup>> {
         return when (topGroup) {
             is CompoundGroup -> mergeMaps(relevantContainers(topGroup.a),(relevantContainers(topGroup.b)))
             is LeafGroup -> {
@@ -225,7 +219,6 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                     emptyMap()
                 }
             }
-            else -> emptyMap()
         }
     }
 
@@ -248,7 +241,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             Dimension.H -> horizontalAxis(g)
         }
     }
-    fun combiningAxis(g: Group) : Boolean {
+    private fun combiningAxis(g: Group) : Boolean {
         return if (g is CompoundGroup) {
             val hasChildHorizontal = horizontalAxis(g.a) || horizontalAxis(g.b)
             val hasChildVertical = verticalAxis(g.a) || verticalAxis(g.b)

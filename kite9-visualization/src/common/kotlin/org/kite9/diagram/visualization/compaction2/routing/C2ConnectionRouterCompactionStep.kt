@@ -8,6 +8,8 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -60,12 +62,10 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val vss = v.getSlideablesFor(d)!!
 
         val hInter = h.getAllSlideables()
-            .filterIsInstance<C2IntersectionSlideable>()
-            .filter { it.intersects.contains(d) }
+            .filter { it.intersecting().contains(d) }
 
         val vInter = v.getAllSlideables()
-            .filterIsInstance<C2IntersectionSlideable>()
-            .filter { it.intersects.contains(d) }
+            .filter { it.intersecting().contains(d) }
 
         val vertical = hInter.flatMap {
             listOf(
@@ -220,8 +220,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
      */
     private fun simplifyShortestPath(r: C2Route, c2: C2Compaction, ssp: C2SlideableSSP, replacements: MutableMap<C2Slideable, C2Slideable>): C2Route {
         var first = r
-        var second = r?.prev ?: null
-        val third = r?.prev?.prev ?: null
+        var second = r?.prev
+        val third = r?.prev?.prev
 
         if ((third != null) && (third.point.d == first.point.d)) {
             val s1 = third.point.getAlong()
@@ -231,7 +231,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             if (absDist == 0) {
                 // ok, these slideables can be merged and we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
-                val ns = so.mergeSlideables(s1 as C2BufferSlideable, s2 as C2BufferSlideable)
+                val ns = so.mergeSlideables(s1, s2)!!
                 if (s1 != ns) {
                     replacements.put(s1, ns)
                 }
@@ -319,7 +319,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-        val vso = c.getSlackOptimisation(Dimension.V)
+//        val vso = c.getSlackOptimisation(Dimension.V)
         val hso = c.getSlackOptimisation(Dimension.H)
 
 //        visitRectangulars(c.getDiagram()) {
@@ -352,19 +352,18 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
     }
 
     private fun getUpdatedSlideable(
-        old: C2RectangularSlideable,
+        old: C2Slideable,
         so: C2SlackOptimisation,
         conn: Connection
     ): C2Slideable? {
         val connAnchor = old.anchors.first { it.e == conn }
         return so.getAllSlideables()
-            .filterIsInstance<C2RectangularSlideable>()
             .firstOrNull { it.anchors.contains(connAnchor) }
     }
 
     private fun getUpdatedPoint(p: C2Point, c: C2Compaction, conn: Connection): C2Point {
-        val oldAlong = p.getAlong() as C2RectangularSlideable
-        val oldPerp = p.getPerp() as C2RectangularSlideable
+        val oldAlong = p.getAlong()
+        val oldPerp = p.getPerp()
         return C2Point(
             if (oldAlong.done) getUpdatedSlideable(
                 oldAlong,
@@ -389,8 +388,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val rssv = checkCreateElement(l, Dimension.V, csov, null, null)!!
 
             val horiz = Direction.isHorizontal(d)
-            val hc = (if (!horiz) start.getAlong() else start.getPerp()) as C2RectangularSlideable
-            val vc = (if (!horiz) start.getPerp() else start.getAlong()) as C2RectangularSlideable
+            val hc = (if (!horiz) start.getAlong() else start.getPerp())
+            val vc = (if (!horiz) start.getPerp() else start.getAlong())
 
             // really simple merge for now
             when (d) {
@@ -427,11 +426,10 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         }
     }
 
-    private fun ensureDistanceFromBuffer(bs: C2BufferSlideable, to: Positioned, d: Dimension, so: C2SlackOptimisation) {
+    private fun ensureDistanceFromBuffer(bs: C2Slideable, to: Positioned, d: Dimension, so: C2SlackOptimisation) {
         val rs = getRectangularSlideable(to, Side.START, so)!!
         so.ensureMinimumDistance(bs, rs, 0)
         bs.getForwardSlideables(false)
-            .filterIsInstance<C2RectangularSlideable>()
             .forEach { ls ->
                 ensureMinimumDistanceBetweenRectangularSlideables(ls, rs, d, so)
             }
@@ -439,22 +437,21 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
     private fun ensureDistanceFromBuffer(
         from: Positioned,
-        bs: C2BufferSlideable,
+        bs: C2Slideable,
         d: Dimension,
         so: C2SlackOptimisation
     ) {
         val ls = getRectangularSlideable(from, Side.END, so)!!
         so.ensureMinimumDistance(ls, bs, 0)
         bs.getForwardSlideables(true)
-            .filterIsInstance<C2RectangularSlideable>()
             .forEach { rs ->
                 ensureMinimumDistanceBetweenRectangularSlideables(ls, rs, d, so)
             }
     }
 
     private fun ensureMinimumDistanceBetweenRectangularSlideables(
-        from: C2RectangularSlideable,
-        to: C2RectangularSlideable,
+        from: C2Slideable,
+        to: C2Slideable,
         d: Dimension,
         so: C2SlackOptimisation
     ) {
@@ -477,16 +474,14 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         so.ensureMinimumDistance(fromSS.r, toSS.l, ld)
     }
 
-    private fun getOrbitSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2OrbitSlideable? {
+    private fun getOrbitSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2Slideable? {
         return so.getAllSlideables()
-            .filterIsInstance<C2OrbitSlideable>()
             .firstOrNull { os -> os.getOrbits().any { it.e == de && it.s == side } }
     }
 
-    private fun getRectangularSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2RectangularSlideable? {
+    private fun getRectangularSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2Slideable? {
         return so.getAllSlideables()
-            .filterIsInstance<C2RectangularSlideable>()
-            .firstOrNull { os -> os.anchors.any { it.e == de && it.s == side } }
+            .firstOrNull { os -> os.getRectangulars().any { it.e == de && it.s == side } }
     }
 
     private fun inside(innerDe: Label, outerDe: Connected, d: Dimension, so: C2SlackOptimisation) {
@@ -509,8 +504,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
     private fun writeRoute(c: Connection, r: C2Route?, i: Int) {
         if (r != null) {
             val p = r.point
-            (p.getAlong() as C2RectangularSlideable).addAnchor(ConnAnchor(c, i))
-            (p.getPerp() as C2RectangularSlideable).addAnchor(ConnAnchor(c, i))
+            p.getAlong().addAnchor(ConnAnchor(c, i))
+            p.getPerp().addAnchor(ConnAnchor(c, i))
             writeRoute(c, r.prev, i + 1)
         }
     }

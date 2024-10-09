@@ -3,16 +3,18 @@ package org.kite9.diagram.visualization.compaction2.sets
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 data class RectangularSlideableSetImpl(
     override val d: Rectangular,
-    override val l: C2RectangularSlideable,
-    override val r: C2RectangularSlideable) : RectangularSlideableSet {
+    override val l: C2Slideable,
+    override val r: C2Slideable) : RectangularSlideableSet {
 
     override var done = false
 
-    override fun replaceRectangular(s: C2RectangularSlideable, with: C2RectangularSlideable): RectangularSlideableSet {
+    override fun replace(s: C2Slideable, with: C2Slideable): RectangularSlideableSet {
         done = true
         return RectangularSlideableSetImpl(
             d,
@@ -21,7 +23,7 @@ data class RectangularSlideableSetImpl(
         )
     }
 
-    override fun getRectangularSlideables(): Collection<C2RectangularSlideable> {
+    override fun getRectangularSlideables(): Collection<C2Slideable> {
         return setOf(l, r)
     }
 
@@ -40,10 +42,10 @@ data class RectangularSlideableSetImpl(
     }
 
     override fun wrapInRoutable(so: C2SlackOptimisation, g: LeafGroup?): RoutableSlideableSet {
-        val bl = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.START)))
-        val br = C2OrbitSlideable(so, l.dimension, setOf(RectAnchor(d, Side.END)))
+        val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.START)).toMutableSet())
+        val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.END)).toMutableSet())
         val c = if (d.getParent() != null) {
-            C2IntersectionSlideable(so, l.dimension, g, setOf(d))
+            C2Slideable(so, l.dimension,g,  d)
         } else {
             null
         }

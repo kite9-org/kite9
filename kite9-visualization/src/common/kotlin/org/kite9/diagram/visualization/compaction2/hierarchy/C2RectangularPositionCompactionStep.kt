@@ -108,9 +108,9 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
 
     private fun getSlideable(r: DiagramElement, s: Side, set: RectangularSlideableSet) : C2Slideable? {
         return set.getRectangularSlideables().firstOrNull { x ->
-            x.anchors
-                .filter { it.e == r }
-                .firstOrNull { it.s == s } != null
+            x?.getRectangulars()
+                ?.filter { it.e == r }
+                ?.firstOrNull { it.s == s } != null
         }
     }
 

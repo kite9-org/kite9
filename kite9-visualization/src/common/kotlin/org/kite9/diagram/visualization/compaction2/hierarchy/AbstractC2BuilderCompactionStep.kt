@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
@@ -10,6 +9,9 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.IntersectAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -29,7 +31,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
         de: DiagramElement,
         d: Dimension,
         cso: C2SlackOptimisation,
-        cExisting: C2IntersectionSlideable?,
+        cExisting: C2Slideable?,
         topGroup: Group?
     ): RectangularSlideableSet? {
         log.send("Creating $de")
@@ -43,8 +45,8 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             // we need to create these then
             val ms = getMinimumDistanceBetween(de, Side.START, de, Side.END, d, null, false)
 
-            val l = C2RectangularSlideable(cso, d, de, Side.START)
-            val r = C2RectangularSlideable(cso, d, de, Side.END)
+            val l = C2Slideable(cso, d, de, Side.START)
+            val r = C2Slideable(cso, d, de, Side.END)
             cso.ensureMinimumDistance(l, r, ms.toInt())
 
             ss = RectangularSlideableSetImpl(de, l, r)
@@ -63,7 +65,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
     }
 
     /**
-     * This is used to create a RectangularSlideable set from a LeafGroup
+     * This is used to create a RoutableSlideableSet set from a LeafGroup
      */
     protected fun checkCreateLeaf(cso: C2SlackOptimisation, g: LeafGroup, de: Rectangular, d: Dimension) : RoutableSlideableSet {
         val ss1 = cso.getSlideablesFor(g)
@@ -79,9 +81,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             // we need to create these then
             val l = ss2.l
             val r = ss2.r
-            val c = C2IntersectionSlideable(cso,d, g, setOf(de))
-            val bl = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.START)))
-            val br = C2OrbitSlideable(cso, d, setOf(RectAnchor(de, Side.END)))
+            val c = C2Slideable(cso,d, g, de)
+            val bl = C2Slideable(cso, d, setOf(OrbitAnchor(de, Side.START)))
+            val br = C2Slideable(cso, d, setOf(OrbitAnchor(de, Side.END)))
             cso.ensureMinimumDistance(bl, l ,0)
             cso.ensureMinimumDistance(r, br, 0)
             ensureCentreSlideablePosition(cso, ss2, c)

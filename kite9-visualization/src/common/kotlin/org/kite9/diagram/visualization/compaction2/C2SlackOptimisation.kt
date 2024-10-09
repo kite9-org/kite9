@@ -1,18 +1,15 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
-import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
@@ -32,7 +29,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
     }
 
-    fun getRectangularsOnSide(s: Side, ss: SlideableSet<*>) : Set<C2RectangularSlideable> {
+    fun getRectangularsOnSide(s: Side, ss: SlideableSet<*>) : Set<C2Slideable> {
         return when (ss) {
             is RectangularSlideableSet -> setOf(if (s == Side.START) ss.l else ss.r)
             is RoutableSlideableSet -> getContents(ss).flatMap { getRectangularsOnSide(s, it) }.toSet()
@@ -64,7 +61,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             }
         }
 
-        val ss = g1.processLowestLevelLinks(lp)
+        g1.processLowestLevelLinks(lp)
         return aligns
     }
 
@@ -74,14 +71,14 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return out
     }
 
-    fun mergeSlideables(s1: Set<C2BufferSlideable>, s2: Set<C2BufferSlideable>) : Set<C2BufferSlideable> {
+    fun mergeSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
         // slideables with the same groups can be merged
-        val mightMatch = s2.filterIsInstance<C2IntersectionSlideable>().toMutableSet()
+        val mightMatch = s2.filter { it.intersecting().isNotEmpty()}.toMutableSet()
 
         val unchanged = s2.filter { !mightMatch.contains(it) }
 
         val out = s1.mapNotNull { l ->
-            if (l is C2IntersectionSlideable) {
+            if (l.intersecting().isNotEmpty()) {
                 val matching = mightMatch.find { groupAlignment(it.intersectingGroups, l.intersectingGroups ) }
                 if (matching != null) {
                     mightMatch.remove(matching)
@@ -97,11 +94,11 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return out.plus(mightMatch).plus(unchanged)
     }
 
-    fun mergeSlideables(s1: C2OrbitSlideable?, s2: C2OrbitSlideable?) : C2OrbitSlideable? {
+    fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         return mergeSlideablesInner(s1, s2)
     }
 
-    private fun <X : C2RectangularSlideable> mergeSlideablesInner(s1: X?, s2: X?) : X? {
+    private fun mergeSlideablesInner(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         if (s1 == null) {
             return s2
         } else if (s2 == null) {
@@ -109,7 +106,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         } else if (s1 == s2) {
             return s1
         } else {
-            @Suppress("UNCHECKED_CAST") val sNew = s1.merge(s2) as X
+            val sNew = s1.merge(s2)
             // now we need to replace s1 and s2 in their containers
             val containsS1 = slideableMap.remove(s1)
             val containsS2 = slideableMap.remove(s2)
@@ -133,10 +130,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
-    fun mergeSlideables(s1: C2RectangularSlideable, s2: C2RectangularSlideable) : C2RectangularSlideable {
-       return mergeSlideablesInner(s1, s2)!!
-    }
-
     private fun updateSlideableSets(
         contains: Set<SlideableSet<*>>?,
         sOld1: C2Slideable,
@@ -144,7 +137,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         sNew: C2Slideable
     ) {
         contains?.forEach {
-            val ssNew : SlideableSet<*> = it.replaceGeneric(sOld1, sNew).replaceGeneric(sOld2, sNew)
+            val ssNew : SlideableSet<*> = it.replace(sOld1, sNew).replace(sOld2, sNew)
             removeFromSlideableMap(it)
             updateSlideableMap(ssNew)
             updateContainment(it, ssNew)
@@ -183,7 +176,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     fun add(de: Rectangular, ss: RectangularSlideableSet) {
         positionedMap[de] = ss
         updateSlideableMap(ss)
-        //compaction.interections.plus(ss.getJunctions())
     }
 
     private fun updateSlideableMap(ss: SlideableSet<*>) {
@@ -208,7 +200,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             groupMap[g] = ss
         }
         updateSlideableMap(ss)
-        //compaction.interections.plus(ss.getJunctions())
     }
 
     private fun checkValid(s: C2Slideable, k: Any) {
@@ -249,12 +240,12 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
         slideables.forEach { k ->
             k.getForwardSlideables(true)
-                .forEach { checkValid(it as C2Slideable, "referenced by $k") }
+                .forEach { checkValid(it, "referenced by $k") }
         }
 
         slideables.forEach { k ->
             k.getForwardSlideables(false)
-                .forEach { checkValid(it as C2Slideable, "referenced by $k") }
+                .forEach { checkValid(it, "referenced by $k") }
         }
 
         slideableMap.keys.forEach {
@@ -282,7 +273,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return slideableMap[s]
     }
 
-    fun addSlideable(c: C2IntersectionSlideable) {
+    fun addSlideable(c: C2Slideable) {
         slideables.add(c)
     }
 

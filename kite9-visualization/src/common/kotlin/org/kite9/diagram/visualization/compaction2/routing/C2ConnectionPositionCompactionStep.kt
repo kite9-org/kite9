@@ -7,6 +7,7 @@ import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.RouteRenderingInformation
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import kotlin.math.max
@@ -32,12 +33,11 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
             .forEach { (k, v) -> setRoute(k, v) }
     }
 
-    private fun create1DRouteMap(cso: C2SlackOptimisation) : Map<Connection,Map<Int, C2RectangularSlideable>> {
+    private fun create1DRouteMap(cso: C2SlackOptimisation) : Map<Connection,Map<Int, C2Slideable>> {
         cso.checkConsistency()
-        val out = mutableMapOf<Connection, MutableMap<Int, C2RectangularSlideable>>()
+        val out = mutableMapOf<Connection, MutableMap<Int, C2Slideable>>()
 
         cso.getAllSlideables()
-            .filterIsInstance<C2RectangularSlideable>()
             .forEach { rs -> rs.anchors
                 .filterIsInstance<ConnAnchor>()
                 .filter { it.e.getRenderingInformation().rendered }
@@ -59,7 +59,7 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
         return out.reversed()
     }
 
-    private fun buildRoutes(c: C2Compaction) : Map<Connection, List<Pair<C2RectangularSlideable, C2RectangularSlideable>>> {
+    private fun buildRoutes(c: C2Compaction) : Map<Connection, List<Pair<C2Slideable, C2Slideable>>> {
         val hs = c.getSlackOptimisation(Dimension.H);
         val vs = c.getSlackOptimisation(Dimension.V)
 
@@ -74,7 +74,7 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
     }
 
 
-    private fun setRoute(tle: Connection, points: List<Pair<C2RectangularSlideable, C2RectangularSlideable>>) {
+    private fun setRoute(tle: Connection, points: List<Pair<C2Slideable, C2Slideable>>) {
         val out = tle.getRenderingInformation()
         out.clear()
         var first = true
@@ -95,7 +95,7 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
         }
     }
 
-    private fun setPortPosition(v: Pair<C2RectangularSlideable, C2RectangularSlideable>, d2: Dimension2D?) {
+    private fun setPortPosition(v: Pair<C2Slideable, C2Slideable>, d2: Dimension2D?) {
 //        if (d2 == null) {
 //            return
 //        }
@@ -107,7 +107,7 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
 //            }
     }
 
-    private fun addToRoute(out: RouteRenderingInformation, p: Pair<C2RectangularSlideable, C2RectangularSlideable>, prev: Dimension2D?): Dimension2D? {
+    private fun addToRoute(out: RouteRenderingInformation, p: Pair<C2Slideable, C2Slideable>, prev: Dimension2D?): Dimension2D? {
         val horizSeg = p.first
         val vertSeg = p.second
         val y2 = vertSeg.minimumPosition.toDouble()

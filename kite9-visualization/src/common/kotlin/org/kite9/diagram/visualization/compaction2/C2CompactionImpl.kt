@@ -2,11 +2,9 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
-import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 
 /**
  * Flyweight class that handles the state of the compaction as it goes along.
@@ -32,7 +30,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return diagram
     }
 
-    val intersections = mutableMapOf<C2Slideable, Set<C2Slideable>>()
+    private val intersections = mutableMapOf<C2Slideable, Set<C2Slideable>>()
 
     override fun setIntersection(s1: C2Slideable, s2: C2Slideable) {
         var items = intersections.getOrElse(s1) { emptySet() } + s2
@@ -67,12 +65,8 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
     override fun propagateIntersections(inside: RectangularSlideableSet, outside: RoutableSlideableSet) {
-        if (outside.bl is C2OrbitSlideable) {
-            propagateIntersections(inside.l, outside.bl!!)
-        }
-        if (outside.br is C2OrbitSlideable) {
-            propagateIntersections(inside.r, outside.br!!)
-        }
+        propagateIntersections(inside.l, outside.bl!!)
+        propagateIntersections(inside.r, outside.br!!)
     }
 
     override fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet) {

@@ -4,7 +4,6 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
-import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 
 interface C2Compaction {
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
