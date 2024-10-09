@@ -203,8 +203,10 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
-    fun add(g: Group, ss: RoutableSlideableSet) {
-        groupMap[g] = ss
+    fun add(g: Group?, ss: RoutableSlideableSet) {
+        if (g != null) {
+            groupMap[g] = ss
+        }
         updateSlideableMap(ss)
         //compaction.interections.plus(ss.getJunctions())
     }

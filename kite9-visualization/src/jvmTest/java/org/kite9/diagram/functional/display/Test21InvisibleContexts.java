@@ -127,7 +127,7 @@ public class Test21InvisibleContexts extends AbstractDisplayFunctionalTest {
 		new TurnLink(directed, glad, null, null, LinkEndStyle.ARROW, null);
 		new TurnLink(directed, thelma, null, null, LinkEndStyle.ARROW, null);
 
-		Context hidden = new Context(listOf(bladerunner, glad, thelma), false, null, Layout.RIGHT);
+		Context hidden = new Context("ch", listOf(bladerunner, glad, thelma), false, null, Layout.RIGHT);
 		
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(rs, directed, hidden), null);
 		renderDiagram(d1);

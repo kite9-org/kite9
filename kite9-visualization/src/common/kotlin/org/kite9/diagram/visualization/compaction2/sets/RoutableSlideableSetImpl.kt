@@ -66,6 +66,13 @@ data class RoutableSlideableSetImpl(override val c: Set<C2BufferSlideable>,
             br)
     }
 
+    override fun toString(): String {
+        return "RoutableSlideableSetImpl(c=$c,\n" +
+                "\t` bs=$bs,\n" +
+                "\t done=$done,\n" +
+                "\t number=$number)"
+    }
+
     override val number = C2SlackOptimisation.nextNumber()
 
 }

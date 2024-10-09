@@ -63,10 +63,21 @@ data class RectangularSlideableSetImpl(
             bl,
             br)
 
+        so.add(g, out)
         so.compaction.propagateIntersections(this, out)
         return out
     }
 
+    override fun toString(): String {
+        return "RectangularSlideableSetImpl(d=$d,\n" +
+                "\t l=$l,\n" +
+                "\t r=$r,\n" +
+                "\t done=$done,\n" +
+                "\t number=$number)"
+    }
+
     override val number = C2SlackOptimisation.nextNumber()
+
+
 }
 

@@ -48,7 +48,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 mergeForAxis(c, g, Dimension.V, Layout.DOWN, Layout.UP)
             }
 
-            if (combiningAxis(g)) {
+            if (!horizontalAxis(g) && !verticalAxis(g)) {
                 // in this case, we need to store whatever is available.
                 val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
                 val va = slackOptimisationV.getSlideablesFor(g.a)
@@ -57,8 +57,17 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
                 val ha = slackOptimisationH.getSlideablesFor(g.a)
                 val hb = slackOptimisationH.getSlideablesFor(g.b)
+
+                if ((ha != null) && (hb != null)) {
+                    throw LogicException("Need to rethink this")
+                }
+
                 slackOptimisationV.add(g, va ?: vb!!)
                 slackOptimisationH.add(g, ha ?: hb!!)
+                slackOptimisationV.remove(g.a)
+                slackOptimisationV.remove(g.b)
+                slackOptimisationH.remove(g.a)
+                slackOptimisationH.remove(g.b)
             }
         } else if (g is LeafGroup) {
             // leaf group
