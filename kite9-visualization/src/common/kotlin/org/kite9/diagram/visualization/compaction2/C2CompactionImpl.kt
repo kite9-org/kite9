@@ -54,9 +54,11 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
     private fun propagateIntersections(inside: C2Slideable?, outside: C2Slideable) {
-           intersections[outside] =
-               (intersections[outside] ?: emptySet()) +
-                       (intersections[inside] ?: emptySet())
+        if (inside != null) {
+            (intersections[inside] ?: emptySet()).forEach {
+                setIntersection(outside, it)
+            }
+        }
     }
 
     override fun propagateIntersections(inside: RoutableSlideableSet, outside: RectangularSlideableSet) {
