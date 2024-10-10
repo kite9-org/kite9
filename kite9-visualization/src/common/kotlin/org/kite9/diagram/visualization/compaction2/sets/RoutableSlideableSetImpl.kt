@@ -15,8 +15,6 @@ data class RoutableSlideableSetImpl(override val c: Set<C2Slideable>,
 
     override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
         val newOrbit = c2.mergeSlideables(br, after.bl)!!
-//        after.br?.addForeignOrbits(newOrbit.getOrbits())
-//        bl?.addForeignOrbits(newOrbit.getOrbits())
         done = true
         val newC = this.c.plus(after.c).plus(newOrbit)
         val new = RoutableSlideableSetImpl(newC, bl, after.br)

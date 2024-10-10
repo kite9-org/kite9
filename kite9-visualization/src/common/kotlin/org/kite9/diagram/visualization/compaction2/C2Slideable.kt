@@ -73,7 +73,9 @@ class C2Slideable(
     }
 
     fun merge(s: C2Slideable) : C2Slideable {
-        if (s.dimension == dimension) {
+        if (this.done || s.done) {
+            throw LogicException("Already merged")
+        } else if (s.dimension == dimension) {
             val out = C2Slideable(
                 so as C2SlackOptimisation,
                 dimension,
@@ -158,7 +160,20 @@ class C2Slideable(
         anchors.add(a)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
 
+        other as C2Slideable
+
+        if (number != other.number) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return number
+    }
 
     companion object {
 

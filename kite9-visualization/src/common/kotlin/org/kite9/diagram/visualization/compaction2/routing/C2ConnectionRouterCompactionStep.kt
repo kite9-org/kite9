@@ -9,7 +9,6 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -173,18 +172,20 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val out = doer.createShortestPath()
 
             log.send("Found shortest path: $out")
+            c2.checkConsistency()
 
             val replacements = mutableMapOf<C2Slideable, C2Slideable>()
-
             val out2 = simplifyShortestPath(out, c2, doer, replacements)
             val out3 = handleReplacements(out2, replacements)!!
             c2.checkConsistency()
             updateUsedStartEndPoints(out3.point, c.getTo())
             updateUsedStartEndPoints(getStart(out3), c.getFrom())
+            c2.checkConsistency()
 
             if (out3.prev != null) {
-                ensureSlackForConnection(out2.point, out3.prev, c, true)
+                ensureSlackForConnection(out3.point, out3.prev, c, true)
             }
+            c2.checkConsistency()
 
             return out3
 
@@ -218,7 +219,12 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
      * This looks for opportunities to merge slideables where there is a "dog-leg"
      * in the routing.
      */
-    private fun simplifyShortestPath(r: C2Route, c2: C2Compaction, ssp: C2SlideableSSP, replacements: MutableMap<C2Slideable, C2Slideable>): C2Route {
+    private fun simplifyShortestPath(
+        r: C2Route,
+        c2: C2Compaction,
+        ssp: C2SlideableSSP,
+        replacements: MutableMap<C2Slideable, C2Slideable>
+    ): C2Route {
         var first = r
         var second = r?.prev
         val third = r?.prev?.prev
@@ -232,15 +238,12 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 // ok, these slideables can be merged and we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
                 val ns = so.mergeSlideables(s1, s2)!!
-                if (s1 != ns) {
-                    replacements.put(s1, ns)
-                }
-                if (s2 != ns) {
-                    replacements.put(s2, ns)
-                }
+                updateReplacements(s1, s2, ns, replacements)
 
                 // remove the second, rewrite the first
-                return C2Route(simplifyShortestPath(third, c2, ssp, replacements), C2Point(ns, first.point.getPerp(), first.point.d), first.cost)
+                val nsp = handleReplacements(third, replacements)!!
+                val newFirst = handleReplacements(first.point, replacements)
+                return C2Route(simplifyShortestPath(nsp, c2, ssp, replacements), C2Point(ns, newFirst.getPerp(), newFirst.d), first.cost)
             }
         }
 
@@ -249,6 +252,21 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         } else {
             return first
         }
+    }
+
+    private fun updateReplacements(s1: C2Slideable, s2: C2Slideable, ns: C2Slideable, replacements: MutableMap<C2Slideable, C2Slideable>) {
+        if (s1 != ns) {
+            replacements.put(s1, ns)
+            val keysToUpdate = replacements.filter { (k,v) -> v == s1 }.keys
+            keysToUpdate.forEach { replacements.put(it, ns) }
+        }
+
+        if (s2 != ns) {
+            replacements.put(s2, ns)
+            val keysToUpdate = replacements.filter { (k,v) -> v == s2 }.keys
+            keysToUpdate.forEach { replacements.put(it, ns) }
+        }
+
     }
 
     private fun ensureSlackForConnection(start: C2Point, rest: C2Route, c: Connection, connectionStart: Boolean) {
@@ -333,6 +351,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 if (route != null) {
                     val startPoint = getStart(route)
                     val endPoint = route.point
+                    hso.checkConsistency()
                     writeRoute(it, route, 0)
                     hso.checkConsistency()
                     handleLabel(it.getFromLabel(), startPoint, c, startPoint.d, it.getFrom())

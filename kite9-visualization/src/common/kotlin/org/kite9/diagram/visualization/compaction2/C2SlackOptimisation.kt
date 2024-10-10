@@ -254,14 +254,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             }
         }
 
-        // TBD - need to do this
-//        containment.entries.forEach { (e, v) ->
-//            e.getAll().forEach { checkValid(it, e) }
-//            v
-//                .flatMap { l -> l.getAll() }
-//                .forEach { checkValid(it, e) }
-//        }
-
         log.send("Consistent")
     }
 
