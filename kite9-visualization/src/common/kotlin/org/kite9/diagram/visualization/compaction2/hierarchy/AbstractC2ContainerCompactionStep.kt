@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
@@ -33,7 +34,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val ssx = sox.getSlideablesFor(g)
             completedContainers.forEach { container ->
                 val cs = checkCreateElement(container, d, so, null, g)!!
-                c.setupRectangularIntersections(cs, sox)
+                setupRectangularIntersections(cs, sox)
+                embedIntersectingSlideables(cs, so)
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
                 ss = embed(c, so, cs, ss, d, g)
                 c.setupContainerIntersections(ss, csx)
@@ -45,6 +47,25 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                     c.setupRoutableIntersections(ss, ssx)
                 }
             }
+        }
+    }
+
+    private fun setupRectangularIntersections(rect: RectangularSlideableSet, sox: C2SlackOptimisation) {
+        val d = rect.d
+        val intersects = sox.getAllSlideables().filter { it.intersecting().contains(d) }
+        intersects.forEach {
+            sox.compaction.setIntersection(rect.l, it)
+            sox.compaction.setIntersection(rect.r, it)
+        }
+    }
+
+    private fun embedIntersectingSlideables(rect: RectangularSlideableSet, so: C2SlackOptimisation) {
+        val d = rect.d
+        val intersects = so.getAllSlideables().filter { it.intersecting().contains(d) }
+        intersects.forEach {
+            val tDist = getMinimumDistanceBetween(d, Side.START, d, Side.END, rect.l.dimension, null, false)
+            so.ensureMinimumDistance(rect.l, it, (tDist/2.0).toInt())
+            so.ensureMinimumDistance(it, rect.r, (tDist/2.0).toInt())
         }
     }
 
