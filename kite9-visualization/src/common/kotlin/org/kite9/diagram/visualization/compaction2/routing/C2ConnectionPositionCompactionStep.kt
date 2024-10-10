@@ -38,8 +38,7 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
         val out = mutableMapOf<Connection, MutableMap<Int, C2Slideable>>()
 
         cso.getAllSlideables()
-            .forEach { rs -> rs.anchors
-                .filterIsInstance<ConnAnchor>()
+            .forEach { rs -> rs.getConnAnchors()
                 .filter { it.e.getRenderingInformation().rendered }
                 .forEach { a ->
                     val conn = a.e

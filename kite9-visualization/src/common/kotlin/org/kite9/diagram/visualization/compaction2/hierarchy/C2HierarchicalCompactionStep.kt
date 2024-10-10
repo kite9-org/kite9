@@ -197,11 +197,11 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         val bSlideables = cso.getRectangularsOnSide(Side.START, b)
 
         val aElements = aSlideables
-            .flatMap { r -> r.anchors }
+            .flatMap { r -> r.getRectangulars() }
             .map { it.e }
 
         val bElements = bSlideables
-            .flatMap { r -> r.anchors }
+            .flatMap { r -> r.getRectangulars() }
             .map { it.e }
 
         val distance = aElements.maxOfOrNull { ae ->

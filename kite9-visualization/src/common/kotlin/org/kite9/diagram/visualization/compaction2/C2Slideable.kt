@@ -7,10 +7,7 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.anchors.Anchor
-import org.kite9.diagram.visualization.compaction2.anchors.IntersectAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import kotlin.math.max
 import kotlin.math.min
@@ -18,7 +15,7 @@ import kotlin.math.min
 class C2Slideable(
     so: C2SlackOptimisation,
     val dimension: Dimension,
-    val anchors: MutableSet<Anchor<*>>,
+    private val anchors: MutableSet<Anchor<*>>,
     val intersectingGroups: Set<LeafGroup>
 ) : Slideable(so) {
 
@@ -90,11 +87,11 @@ class C2Slideable(
         }
     }
 
-    fun addForeignOrbits(a: Set<OrbitAnchor>) {
-        val existing = orbiting()
-        val newAnchors = a.filter { n -> existing.find { it == n.e }  == null }
-        this.anchors.addAll(newAnchors as Collection<Anchor<Any>>)
-    }
+//    fun addForeignOrbits(a: Set<OrbitAnchor>) {
+//        val existing = orbiting()
+//        val newAnchors = a.filter { n -> existing.find { it == n.e }  == null }
+//        this.anchors.addAll(newAnchors as Collection<Anchor<Any>>)
+//    }
 
     override fun toString(): String {
         val ints = intersecting()
@@ -129,6 +126,12 @@ class C2Slideable(
             .toSet()
     }
 
+    fun getConnAnchors(): Set<ConnAnchor> {
+        return anchors
+            .filterIsInstance<ConnAnchor>()
+            .toSet()
+    }
+
     fun getRectangulars(): Set<RectAnchor> {
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
@@ -151,9 +154,11 @@ class C2Slideable(
         s.done = true
     }
 
-    fun addAnchor(a: Anchor<*>) {
+    fun addAnchor(a: ConnAnchor) {
         anchors.add(a)
     }
+
+
 
     companion object {
 

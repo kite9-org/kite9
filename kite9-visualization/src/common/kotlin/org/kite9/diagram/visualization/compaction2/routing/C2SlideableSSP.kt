@@ -197,7 +197,7 @@ class C2SlideableSSP(
     }
 
     private fun hasRoutes(b: C2Slideable) : Boolean {
-        val out = b.anchors.filterIsInstance<ConnAnchor>().isNotEmpty()
+        val out = b.getConnAnchors().isNotEmpty()
         return out
     }
 
@@ -244,9 +244,7 @@ class C2SlideableSSP(
      * Cost of crossing over another edge
      */
     private fun addCrossCost(r: C2Route, cbs: C2Slideable) : C2Route {
-        val isCrossing = cbs.anchors.any {
-            (it is RectAnchor) || (it is ConnAnchor)
-        }
+        val isCrossing = cbs.getRectangulars().isNotEmpty() || cbs.getConnAnchors().isNotEmpty()
 
         return if (isCrossing) {
             C2Route(r, r.point, r.cost.addCrossing(true))
@@ -272,7 +270,7 @@ class C2SlideableSSP(
         if (isRectangular) {
             // we can only cross a rectangular slideable if it's a container
             val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
-            val matchingAnchors = perp.anchors
+            val matchingAnchors = perp.getRectangulars()
                 .filter { common.contains(it.e) }
                 .any {
                     (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))

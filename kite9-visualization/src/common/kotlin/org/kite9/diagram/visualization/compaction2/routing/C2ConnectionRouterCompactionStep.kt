@@ -356,9 +356,9 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         so: C2SlackOptimisation,
         conn: Connection
     ): C2Slideable? {
-        val connAnchor = old.anchors.first { it.e == conn }
+        val connAnchor = old.getConnAnchors().first { it.e == conn }
         return so.getAllSlideables()
-            .firstOrNull { it.anchors.contains(connAnchor) }
+            .firstOrNull { it.getConnAnchors().contains(connAnchor) }
     }
 
     private fun getUpdatedPoint(p: C2Point, c: C2Compaction, conn: Connection): C2Point {
@@ -392,32 +392,34 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             val vc = (if (!horiz) start.getPerp() else start.getAlong())
 
             // really simple merge for now
+            val leftBuffer = getOrbitSlideable(dest, Side.START, csoh)!!
+            val rightBuffer = getOrbitSlideable(dest, Side.END, csoh)!!
+            val topBuffer = getOrbitSlideable(dest, Side.START, csov)!!
+            val bottomBuffer = getOrbitSlideable(dest, Side.END, csov)!!
+
             when (d) {
                 Direction.UP -> {
                     ensureDistance(l, dest, Dimension.H, csov)
-                    ensureDistanceFromBuffer(l, getOrbitSlideable(dest, Side.END, csov)!!, Dimension.H, csov)
+                    ensureDistanceFromBuffer(topBuffer, l, Dimension.H, csov)
                     csoh.mergeSlideables(hc, rssh.l)
                 }
 
                 Direction.LEFT -> {
                     ensureDistance(l, dest, Dimension.V, csoh)
-                    ensureDistanceFromBuffer(l, getOrbitSlideable(dest, Side.END, csoh)!!, Dimension.V, csoh)
+                    ensureDistanceFromBuffer(leftBuffer, l, Dimension.V, csoh)
                     csov.mergeSlideables(vc, rssv.l)
                 }
 
                 Direction.DOWN -> {
                     ensureDistance(dest, l, Dimension.H, csov)
-                    ensureDistanceFromBuffer(l, getOrbitSlideable(dest, Side.END, csov)!!, Dimension.H, csov)
+                    ensureDistanceFromBuffer(l, bottomBuffer, Dimension.H, csov)
                     csoh.mergeSlideables(hc, rssh.l)
                 }
 
                 Direction.RIGHT -> {
                     ensureDistance(dest, l, Dimension.V, csoh)
-                    val rightBuf = getOrbitSlideable(dest, Side.END, csoh)!!
-                    val bottomBuf = getOrbitSlideable(dest, Side.END, csov)!!
-                    ensureDistanceFromBuffer(l, rightBuf, Dimension.V, csoh)
+                    ensureDistanceFromBuffer(l, rightBuffer, Dimension.V, csoh)
                     csov.mergeSlideables(vc, rssv.l)
-//                    ensureDistanceFromBuffer(l, bottomBuf, Dimension.H, csov)
                 }
             }
 
@@ -455,10 +457,9 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         d: Dimension,
         so: C2SlackOptimisation
     ) {
-        val dist = from.anchors.filterIsInstance<RectAnchor>()
+        val dist = from.getRectangulars()
             .maxOfOrNull { fa ->
-                to.anchors
-                    .filterIsInstance<RectAnchor>()
+                to.getRectangulars()
                     .maxOfOrNull { ta -> getMinimumDistanceBetween(fa.e, fa.s, ta.e, ta.s, d, null, true).toInt() } ?: 0
             } ?: 0
 
