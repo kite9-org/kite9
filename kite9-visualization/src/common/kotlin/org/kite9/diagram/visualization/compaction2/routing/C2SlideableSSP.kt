@@ -1,18 +1,17 @@
 package org.kite9.diagram.visualization.compaction2.routing
 
 import C2Costing
+import CostFreeTurn
 import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.*
-import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import kotlin.math.max
 
 class C2SlideableSSP(
@@ -60,24 +59,6 @@ class C2SlideableSSP(
         out
     }
 
-//    private fun remainingDistance1D(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Int {
-//        // first, let's see if there's min distance set
-//        val knownDistance = getCorrectDistanceMatrix(s, setOf(from, to)).values
-//            .filterNotNull()
-//            .maxOfOrNull { it.dist }
-//
-//        return if (knownDistance != null) {
-//            knownDistance
-//        } else if (s.maximumPosition!! < from.minimumPosition) {
-//            from.minimumPosition - s.maximumPosition!!
-//        } else if (s.minimumPosition > to.maximumPosition!!) {
-//            s.minimumPosition - to.maximumPosition!!
-//        } else {
-//            0
-//        }
-//
-//    }
-
     override fun generateSuccessivePaths(r: C2Route, s: State<C2Route>) {
         val along = r.point.getAlong()
         val perp = r.point.getPerp()
@@ -92,24 +73,14 @@ class C2SlideableSSP(
         if ((!along.isBlocker()) && (!perp.isBlocker())) {
             // turns ok if both axes are buffer slideable
             val dc = Direction.rotateClockwise(d)
-            var nextScoreDc =  r.cost.addTurn(CostFreeTurn.CLOCKWISE)
+            val nextScoreDc =  r.cost.addTurn(CostFreeTurn.CLOCKWISE)
             advance(dc, along, r, perp, s, nextScoreDc)
 
             val dac = Direction.rotateAntiClockwise(d)
-            var nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
+            val nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
             advance(dac, along, r, perp, s, nextScoreDac)
         }
 
-    }
-
-    private val commonMap = mutableMapOf<C2Slideable, Set<DiagramElement>>()
-
-    private fun includeParentsOf(s: C2Slideable) : Set<DiagramElement> {
-
-        return commonMap.getOrPut(s) {
-            val v = s.intersecting().flatMap { parents(it) }.toSet()
-            v
-        }
     }
 
     private fun advance(
@@ -120,19 +91,12 @@ class C2SlideableSSP(
         s: State<C2Route>,
         c: C2Costing
     ) {
-        val common = when {
-            along.intersecting().isNotEmpty() -> includeParentsOf(along)
-            along.getOrbits().isNotEmpty() -> along.getOrbits().map { it.e }.toSet()
-            else -> throw LogicException("huh")
-        }
-
-        val startPoint = C2ConnectionRouterCompactionStep.getStart(r)
-        val r2 =canAdvanceFrom(perp, d, common, along, r)
+        val r2 = canAdvanceFrom(perp, r, d)
 
         if (r2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
-                if (canAdvanceTo(common, k, startPoint)) {
+                if (canAdvanceTo(k)) {
                     val p = C2Point(along, k, d)
                     val travelledDistance = c.totalDistance + extraDistance(r2, p)
                     val possibleRemainingDistance = getMinimumRemainingDistance(k)
@@ -178,7 +142,7 @@ class C2SlideableSSP(
         return mat[from]!![to]?.dist ?: 0
     }
 
-    fun getMinimumRemainingDistance(from: C2Slideable): Int {
+    private fun getMinimumRemainingDistance(from: C2Slideable): Int {
         return end.map { it.get(from.dimension) }
             .map { getAbsoluteDistance(it, from) }
             .minOfOrNull { it } ?: 0
@@ -218,7 +182,7 @@ class C2SlideableSSP(
 
         val potentialBlockers = getBlockingIntersections(intersections)
             .map { it to stopDistRightDirection[it] }
-            .filter { (f, t) -> t != null }
+            .filter { (_, t) -> t != null }
             .associate { (f, t) -> f to t!! }
 
         val closestBlocker = potentialBlockers.minByOrNull { it.value.dist }
@@ -253,7 +217,7 @@ class C2SlideableSSP(
         }
     }
 
-    private fun canAdvanceFrom(perp: C2Slideable, d: Direction, common: Set<DiagramElement>, along: C2Slideable, routeIn: C2Route): C2Route? {
+    private fun canAdvanceFrom(perp: C2Slideable, routeIn: C2Route, d: Direction): C2Route? {
         // this is approximate - might need improvement later
         val isIntersection = perp.intersecting().isNotEmpty()
         val isRectangular = perp.isBlocker()
@@ -271,7 +235,6 @@ class C2SlideableSSP(
             // we can only cross a rectangular slideable if it's a container
             val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
             val matchingAnchors = perp.getRectangulars()
-                .filter { common.contains(it.e) }
                 .any {
                     (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
                 }
@@ -294,7 +257,7 @@ class C2SlideableSSP(
      * This looks at a slideable and says whether we can go to it, returning the cost of
      * doing so if so.
      */
-    private fun canAdvanceTo(common: Set<DiagramElement>, k: C2Slideable, startPoint: C2Point): Boolean {
+    private fun canAdvanceTo(k: C2Slideable): Boolean {
         val intersectionOk = when {
             //is C2OrbitSlideable ->  k.getOrbits().any { common.contains(it.e) }
             k.intersecting().isNotEmpty() -> k.intersecting().any { it == endElem || it == startElem }
@@ -344,13 +307,13 @@ class C2SlideableSSP(
 
     companion object {
 
-        fun parents(x: DiagramElement?) : Set<DiagramElement> {
-            return if (x == null) {
-                setOf()
-            } else {
-                return setOf(x).plus(parents(x.getParent()))
-            }
-        }
+//        fun parents(x: DiagramElement?) : Set<DiagramElement> {
+//            return if (x == null) {
+//                setOf()
+//            } else {
+//                return setOf(x).plus(parents(x.getParent()))
+//            }
+//        }
 
         fun isIncreasing(d: Direction): Boolean {
             return when (d) {
@@ -359,8 +322,8 @@ class C2SlideableSSP(
             }
         }
 
-        private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {
-            return (i1 >= lower) && (i1<=upper)
-        }
+//        private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {
+//            return (i1 >= lower) && (i1<=upper)
+//        }
     }
 }

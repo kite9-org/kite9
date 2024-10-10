@@ -33,6 +33,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val ssx = sox.getSlideablesFor(g)
             completedContainers.forEach { container ->
                 val cs = checkCreateElement(container, d, so, null, g)!!
+                c.setupRectangularIntersections(cs, sox)
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
                 ss = embed(c, so, cs, ss, d, g)
                 c.setupContainerIntersections(ss, csx)

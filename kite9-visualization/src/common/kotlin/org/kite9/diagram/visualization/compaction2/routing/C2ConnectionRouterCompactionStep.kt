@@ -60,30 +60,45 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val hss = h.getSlideablesFor(d)!!
         val vss = v.getSlideablesFor(d)!!
 
-        val hInter = h.getAllSlideables()
-            .filter { it.intersecting().contains(d) }
+        val up = if (allowed(arriving, drawDirection, Direction.UP)) {
+                c2.getIntersections(vss.l)
+                    ?.map { C2Point(it, vss.l, if (arriving) Direction.DOWN else Direction.UP) } ?: emptyList()
+            } else {
+                emptyList()
+            }
 
-        val vInter = v.getAllSlideables()
-            .filter { it.intersecting().contains(d) }
+        val down = if (allowed(arriving, drawDirection, Direction.DOWN)) {
+            c2.getIntersections(vss.r)
+                ?.map { C2Point(it, vss.r, if (arriving) Direction.UP else Direction.DOWN) } ?: emptyList()
+            } else {
+                emptyList()
+            }
 
-        val vertical = hInter.flatMap {
-            listOf(
-                C2Point(it, vss.l, if (arriving) Direction.DOWN else Direction.UP),  // top
-                C2Point(it, vss.r, if (arriving) Direction.UP else Direction.DOWN),  // bottom
-            )
-        }.toSet()
+        val left = if (allowed(arriving, drawDirection, Direction.LEFT)) {
+            c2.getIntersections(hss.l)
+                ?.map { C2Point(it, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT) } ?: emptyList()
+            } else {
+                emptyList()
+            }
 
-        val horizontal = vInter.flatMap {
-            listOf(
-                C2Point(it, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT),  // left
-                C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT),   // right
-            )
-        }.toSet()
+        val right = if (allowed(arriving, drawDirection, Direction.RIGHT)) {
+            c2.getIntersections(hss.r)
+                ?.map { C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT) } ?: emptyList()
+        } else {
+            emptyList()
+        }
 
-        return (vertical + horizontal - usedStartEndPoints)
-            .filter { (it.d == drawDirection) || (drawDirection == null) }
-            .toSet()
+        return (up+down+left+right-usedStartEndPoints).toSet()
     }
+
+private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction): Boolean {
+    if (drawDirection == null) {
+        return true
+    } else {
+        val dd = if (arriving) { Direction.reverse(drawDirection) } else { drawDirection }
+        return dd == d;
+    }
+}
 
     private fun createZone(c2: C2Compaction, r: Rectangular): Zone {
         val h = c2.getSlackOptimisation(Dimension.H)
@@ -168,6 +183,9 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
                 createTDMatrix(c2.getSlackOptimisation(Dimension.V)),
                 log
             )
+            log.send("Starting Points", startingPoints)
+            log.send("Ending Points", endingPoints)
+
             log.send("Routing: $c via", doer.allowedTraversal)
             val out = doer.createShortestPath()
 

@@ -76,6 +76,17 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
+    override fun setupRectangularIntersections(rect: RectangularSlideableSet, ssx: C2SlackOptimisation) {
+        val d = rect.d
+        val intersects = ssx.getAllSlideables().filter { it.intersecting().contains(d) }
+        intersects.forEach {
+            setIntersection(rect.l, it)
+            setIntersection(rect.r, it)
+        }
+
+    }
+
+
     override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
         a.getAll().forEach {
             if (b.bl != null) {

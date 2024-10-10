@@ -22,6 +22,11 @@ interface C2Compaction {
     fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet)
 
     /**
+     * Used to ensure the pre-existing intersections of a container are registered as intersections
+     * with the rectangle of the container itself
+     */
+    fun setupRectangularIntersections(rect: RectangularSlideableSet, ssx: C2SlackOptimisation)
+    /**
      * When wrapping a routable slideable set in a rectangular (container), we need to make sure that the
      * slideables leaving the routable intersect with the rectangular slideables.
      */
