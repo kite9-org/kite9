@@ -6,7 +6,6 @@ import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
@@ -47,8 +46,6 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
     override val prefix = "C2CR"
     override val isLoggingEnabled = true
 
-    private val usedStartEndPoints = mutableSetOf<C2Point>()
-
     private fun createPoints(
         c2: C2Compaction,
         d: Connected,
@@ -88,15 +85,15 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             emptyList()
         }
 
-        return (up+down+left+right-usedStartEndPoints).toSet()
+        return (up+down+left+right).toSet()
     }
 
 private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction): Boolean {
-    if (drawDirection == null) {
-        return true
+    return if (drawDirection == null) {
+        true
     } else {
         val dd = if (arriving) { Direction.reverse(drawDirection) } else { drawDirection }
-        return dd == d;
+        dd == d
     }
 }
 
@@ -129,15 +126,15 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
                     if ((d1 != null) || (d2 != null)) {
 
-                        val mapFrom = out.getOrPut(f) { mutableMapOf<C2Slideable, Constraint>() }
-                        val mapTo = out.getOrPut(t) { mutableMapOf<C2Slideable, Constraint>() }
+                        val mapFrom = out.getOrPut(f) { mutableMapOf() }
+                        val mapTo = out.getOrPut(t) { mutableMapOf() }
 
                         if (d1 != null) {
-                            mapFrom.put(t, Constraint(true, d1))
-                            mapTo.put(f, Constraint(false, d1))
+                            mapFrom[t] = Constraint(true, d1)
+                            mapTo[f] = Constraint(false, d1)
                         } else if (d2 != null) {
-                            mapFrom.put(t, Constraint(false, d2))
-                            mapTo.put(f, Constraint(true, d2))
+                            mapFrom[t] = Constraint(false, d2)
+                            mapTo[f] = Constraint(true, d2)
                         }
                     }
                 }
@@ -145,10 +142,10 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         }
 
         so.getAllSlideables().forEach { k ->
-            val kMap = out.getOrPut(k) { mutableMapOf<C2Slideable, Constraint>() }
+            val kMap = out.getOrPut(k) { mutableMapOf() }
             so.getAllSlideables().forEach { f ->
                 if (f != k) {
-                    val fromMap = out.getOrPut(f) { mutableMapOf<C2Slideable, Constraint>() }
+                    val fromMap = out.getOrPut(f) { mutableMapOf() }
                     so.getAllSlideables().forEach { t ->
                         if ((t != f) && (t != k)) {
                             val ft = fromMap[t]
@@ -186,19 +183,14 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             log.send("Starting Points", startingPoints)
             log.send("Ending Points", endingPoints)
 
-            log.send("Routing: $c via", doer.allowedTraversal)
+            log.send("Routing: $c via", doer.allowedToLeave)
             val out = doer.createShortestPath()
 
             log.send("Found shortest path: $out")
-            c2.checkConsistency()
 
             val replacements = mutableMapOf<C2Slideable, C2Slideable>()
             val out2 = simplifyShortestPath(out, c2, doer, replacements)
             val out3 = handleReplacements(out2, replacements)!!
-            c2.checkConsistency()
-            updateUsedStartEndPoints(out3.point, c.getTo())
-            updateUsedStartEndPoints(getStart(out3), c.getFrom())
-            c2.checkConsistency()
 
             if (out3.prev != null) {
                 ensureSlackForConnection(out3.point, out3.prev, c, true)
@@ -214,20 +206,20 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
     }
 
     private fun handleReplacements(p: C2Point, replacements: Map<C2Slideable, C2Slideable>) : C2Point {
-        if (replacements.containsKey(p.a) || replacements.containsKey(p.b)) {
-            val newA = replacements.get(p.a) ?: p.a
-            val newB = replacements.get(p.b) ?: p.b
-            return handleReplacements(C2Point(newA, newB, p.d), replacements)
+        return if (replacements.containsKey(p.a) || replacements.containsKey(p.b)) {
+            val newA = replacements[p.a] ?: p.a
+            val newB = replacements[p.b] ?: p.b
+            handleReplacements(C2Point(newA, newB, p.d), replacements)
         } else {
-            return p
+            p
         }
     }
 
     private fun handleReplacements(r: C2Route?, replacements: Map<C2Slideable, C2Slideable>) : C2Route? {
-        if (r != null) {
-            return C2Route(handleReplacements(r.prev, replacements), handleReplacements(r.point, replacements), r.cost)
+        return if (r != null) {
+            C2Route(handleReplacements(r.prev, replacements), handleReplacements(r.point, replacements), r.cost)
         } else {
-            return null
+            null
         }
     }
 
@@ -243,46 +235,49 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         ssp: C2SlideableSSP,
         replacements: MutableMap<C2Slideable, C2Slideable>
     ): C2Route {
-        var first = r
-        var second = r?.prev
-        val third = r?.prev?.prev
+        val second = r.prev
+        val third = r.prev?.prev
 
-        if ((third != null) && (third.point.d == first.point.d)) {
+        if ((third != null) && (third.point.d == r.point.d)) {
             val s1 = third.point.getAlong()
-            val s2 = first.point.getAlong()
+            val s2 = r.point.getAlong()
 
             val absDist = ssp.getAbsoluteDistance(s1, s2)
             if (absDist == 0) {
-                // ok, these slideables can be merged and we can simplify the route
+                // ok, these slideables can be merged then we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
                 val ns = so.mergeSlideables(s1, s2)!!
                 updateReplacements(s1, s2, ns, replacements)
 
                 // remove the second, rewrite the first
                 val nsp = handleReplacements(third, replacements)!!
-                val newFirst = handleReplacements(first.point, replacements)
-                return C2Route(simplifyShortestPath(nsp, c2, ssp, replacements), C2Point(ns, newFirst.getPerp(), newFirst.d), first.cost)
+                val newFirst = handleReplacements(r.point, replacements)
+                return C2Route(
+                    simplifyShortestPath(nsp, c2, ssp, replacements),
+                    C2Point(ns, newFirst.getPerp(), newFirst.d),
+                    r.cost
+                )
             }
         }
 
-        if (second != null) {
-            return C2Route(simplifyShortestPath(second, c2, ssp, replacements), first.point, first.cost)
+        return if (second != null) {
+            C2Route(simplifyShortestPath(second, c2, ssp, replacements), r.point, r.cost)
         } else {
-            return first
+            r
         }
     }
 
     private fun updateReplacements(s1: C2Slideable, s2: C2Slideable, ns: C2Slideable, replacements: MutableMap<C2Slideable, C2Slideable>) {
         if (s1 != ns) {
-            replacements.put(s1, ns)
-            val keysToUpdate = replacements.filter { (k,v) -> v == s1 }.keys
-            keysToUpdate.forEach { replacements.put(it, ns) }
+            replacements[s1] = ns
+            val keysToUpdate = replacements.filter { (_,v) -> v == s1 }.keys
+            keysToUpdate.forEach { replacements[it] = ns }
         }
 
         if (s2 != ns) {
-            replacements.put(s2, ns)
-            val keysToUpdate = replacements.filter { (k,v) -> v == s2 }.keys
-            keysToUpdate.forEach { replacements.put(it, ns) }
+            replacements[s2] = ns
+            val keysToUpdate = replacements.filter { (_,v) -> v == s2 }.keys
+            keysToUpdate.forEach { replacements[it] = ns }
         }
 
     }
@@ -332,14 +327,6 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         }
     }
 
-    private fun updateUsedStartEndPoints(out: C2Point, from: Connected) {
-        if (from is Port) {
-            // ports are allowed to have multiple connections
-        } else {
-            usedStartEndPoints.add(out)
-        }
-    }
-
     private fun buildQueue(g: Group, queue: RankBasedConnectionQueue) {
         if (g is CompoundGroup) {
             buildQueue(g.a, queue)
@@ -355,188 +342,16 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-//        val vso = c.getSlackOptimisation(Dimension.V)
-        val hso = c.getSlackOptimisation(Dimension.H)
-
-//        visitRectangulars(c.getDiagram()) {
-//            ensureCentreSlideablePosition(hso, it)
-//            ensureCentreSlideablePosition(vso, it)
-//        }
-
         queue.forEach {
             if (it is Connection) {
                 val route = insertLink(c, it)
                 if (route != null) {
-                    val startPoint = getStart(route)
-                    val endPoint = route.point
-                    hso.checkConsistency()
                     writeRoute(it, route, 0)
-                    hso.checkConsistency()
-                    handleLabel(it.getFromLabel(), startPoint, c, startPoint.d, it.getFrom())
-                    handleLabel(
-                        it.getToLabel(),
-                        getUpdatedPoint(endPoint, c, it),
-                        c,
-                        Direction.reverse(endPoint.d)!!,
-                        it.getTo()
-                    )
-                    hso.checkConsistency()
                 }
             }
         }
 
         println("Done")
-    }
-
-    private fun getUpdatedSlideable(
-        old: C2Slideable,
-        so: C2SlackOptimisation,
-        conn: Connection
-    ): C2Slideable? {
-        val connAnchor = old.getConnAnchors().first { it.e == conn }
-        return so.getAllSlideables()
-            .firstOrNull { it.getConnAnchors().contains(connAnchor) }
-    }
-
-    private fun getUpdatedPoint(p: C2Point, c: C2Compaction, conn: Connection): C2Point {
-        val oldAlong = p.getAlong()
-        val oldPerp = p.getPerp()
-        return C2Point(
-            if (oldAlong.done) getUpdatedSlideable(
-                oldAlong,
-                c.getSlackOptimisation(oldAlong.dimension),
-                conn
-            )!! else oldAlong,
-            if (oldPerp.done) getUpdatedSlideable(
-                oldPerp,
-                c.getSlackOptimisation(oldPerp.dimension),
-                conn
-            )!! else oldPerp,
-            p.d
-        )
-    }
-
-    private fun handleLabel(l: Label?, start: C2Point, c2: C2Compaction, d: Direction, dest: Connected) {
-        if (l != null) {
-            val csoh = c2.getSlackOptimisation(Dimension.H)
-            val csov = c2.getSlackOptimisation(Dimension.V)
-
-            val rssh = checkCreateElement(l, Dimension.H, csoh, null, null)!!
-            val rssv = checkCreateElement(l, Dimension.V, csov, null, null)!!
-
-            val horiz = Direction.isHorizontal(d)
-            val hc = (if (!horiz) start.getAlong() else start.getPerp())
-            val vc = (if (!horiz) start.getPerp() else start.getAlong())
-
-            // really simple merge for now
-            val leftBuffer = getOrbitSlideable(dest, Side.START, csoh)!!
-            val rightBuffer = getOrbitSlideable(dest, Side.END, csoh)!!
-            val topBuffer = getOrbitSlideable(dest, Side.START, csov)!!
-            val bottomBuffer = getOrbitSlideable(dest, Side.END, csov)!!
-
-            when (d) {
-                Direction.UP -> {
-                    ensureDistance(l, dest, Dimension.H, csov)
-                    ensureDistanceFromBuffer(topBuffer, l, Dimension.H, csov)
-                    csoh.mergeSlideables(hc, rssh.l)
-                }
-
-                Direction.LEFT -> {
-                    ensureDistance(l, dest, Dimension.V, csoh)
-                    ensureDistanceFromBuffer(leftBuffer, l, Dimension.V, csoh)
-                    csov.mergeSlideables(vc, rssv.l)
-                }
-
-                Direction.DOWN -> {
-                    ensureDistance(dest, l, Dimension.H, csov)
-                    ensureDistanceFromBuffer(l, bottomBuffer, Dimension.H, csov)
-                    csoh.mergeSlideables(hc, rssh.l)
-                }
-
-                Direction.RIGHT -> {
-                    ensureDistance(dest, l, Dimension.V, csoh)
-                    ensureDistanceFromBuffer(l, rightBuffer, Dimension.V, csoh)
-                    csov.mergeSlideables(vc, rssv.l)
-                }
-            }
-
-            inside(l, dest, Dimension.H, csoh)
-            inside(l, dest, Dimension.V, csov)
-        }
-    }
-
-    private fun ensureDistanceFromBuffer(bs: C2Slideable, to: Positioned, d: Dimension, so: C2SlackOptimisation) {
-        val rs = getRectangularSlideable(to, Side.START, so)!!
-        so.ensureMinimumDistance(bs, rs, 0)
-        bs.getForwardSlideables(false)
-            .forEach { ls ->
-                ensureMinimumDistanceBetweenRectangularSlideables(ls, rs, d, so)
-            }
-    }
-
-    private fun ensureDistanceFromBuffer(
-        from: Positioned,
-        bs: C2Slideable,
-        d: Dimension,
-        so: C2SlackOptimisation
-    ) {
-        val ls = getRectangularSlideable(from, Side.END, so)!!
-        so.ensureMinimumDistance(ls, bs, 0)
-        bs.getForwardSlideables(true)
-            .forEach { rs ->
-                ensureMinimumDistanceBetweenRectangularSlideables(ls, rs, d, so)
-            }
-    }
-
-    private fun ensureMinimumDistanceBetweenRectangularSlideables(
-        from: C2Slideable,
-        to: C2Slideable,
-        d: Dimension,
-        so: C2SlackOptimisation
-    ) {
-        val dist = from.getRectangulars()
-            .maxOfOrNull { fa ->
-                to.getRectangulars()
-                    .maxOfOrNull { ta -> getMinimumDistanceBetween(fa.e, fa.s, ta.e, ta.s, d, null, true).toInt() } ?: 0
-            } ?: 0
-
-
-        so.ensureMinimumDistance(from, to, dist)
-    }
-
-
-    private fun ensureDistance(from: Positioned, to: Positioned, d: Dimension, so: C2SlackOptimisation) {
-        val ld = getMinimumDistanceBetween(from, Side.END, to, Side.START, d, null, true).toInt()
-        val fromSS = so.getSlideablesFor(from)!!
-        val toSS = so.getSlideablesFor(to)!!
-        so.ensureMinimumDistance(fromSS.r, toSS.l, ld)
-    }
-
-    private fun getOrbitSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2Slideable? {
-        return so.getAllSlideables()
-            .firstOrNull { os -> os.getOrbits().any { it.e == de && it.s == side } }
-    }
-
-    private fun getRectangularSlideable(de: Positioned, side: Side, so: C2SlackOptimisation): C2Slideable? {
-        return so.getAllSlideables()
-            .firstOrNull { os -> os.getRectangulars().any { it.e == de && it.s == side } }
-    }
-
-    private fun inside(innerDe: Label, outerDe: Connected, d: Dimension, so: C2SlackOptimisation) {
-
-        val bl = getOrbitSlideable(outerDe, Side.START, so)!!
-        val br = getOrbitSlideable(outerDe, Side.END, so)!!
-
-        val inner = so.getSlideablesFor(innerDe)!!
-
-        if (inner.l != bl) {
-            ensureDistanceFromBuffer(bl, innerDe, d, so)
-        }
-
-        if (inner.r != br) {
-            ensureDistanceFromBuffer(innerDe, br, d, so)
-        }
-
     }
 
     private fun writeRoute(c: Connection, r: C2Route?, i: Int) {

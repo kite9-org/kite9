@@ -18,6 +18,7 @@ import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompa
 import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.labels.C2ContainerLabelCompactionStep
+import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionFanAndLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactionStep
@@ -72,7 +73,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     }
 
     private fun outputGroupInfo(g: Group, spc: Int, rr: RoutableHandler2D) {
-        val sb: StringBuilder = StringBuilder(spc)
+        val sb = StringBuilder(spc)
         for (i in 0 until spc) {
             sb.append(" ")
         }
@@ -124,6 +125,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2HierarchicalCompactionStep(cd, mr),
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
+            C2ConnectionFanAndLabelCompactionStep(cd, gp),
             C2ContainerLabelCompactionStep(cd),
             C2MinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
@@ -146,10 +148,10 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         get() = true
 
     fun getGrouping(): GroupResult? {
-        return mr;
+        return mr
     }
 
     fun getRoutableReader(): RoutableReader? {
-        return rr;
+        return rr
     }
 }

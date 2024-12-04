@@ -36,7 +36,7 @@ class C2SlideableSSP(
         }
     }
 
-    val allowedTraversal : Set<DiagramElement> = run {
+    val allowedToLeave : Set<DiagramElement> = run {
         var se = startElem
         var ee = endElem
         val out = mutableSetOf<DiagramElement>()
@@ -236,7 +236,7 @@ class C2SlideableSSP(
             val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
             val matchingAnchors = perp.getRectangulars()
                 .any {
-                    (it.s == okAnchorDirection ) || (allowedTraversal.contains(it.e))
+                    (it.s == okAnchorDirection ) || (allowedToLeave.contains(it.e))
                 }
             if (!matchingAnchors) {
                 log.send("Can't move on from $perp going $d")

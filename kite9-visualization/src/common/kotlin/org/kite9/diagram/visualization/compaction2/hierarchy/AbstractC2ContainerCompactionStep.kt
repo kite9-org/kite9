@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
@@ -37,14 +38,19 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                 setupRectangularIntersections(cs, sox)
                 embedIntersectingSlideables(cs, so)
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
-                ss = embed(c, so, cs, ss, d, g)
-                c.setupContainerIntersections(ss, csx)
+                val newss = embed(c, so, cs, ss, d, g)
+                if (newss == null) {
+                    return
+                } else {
+                    ss = newss
+                    c.setupContainerIntersections(ss, csx)
 
-                // replace the group slideable sets so we use these instead
-                so.add(g, ss)
+                    // replace the group slideable sets so we use these instead
+                    so.add(g, ss)
 
-                if (ssx != null) {
-                    c.setupRoutableIntersections(ss, ssx)
+                    if (ssx != null) {
+                        c.setupRoutableIntersections(ss, ssx)
+                    }
                 }
             }
         }
@@ -76,7 +82,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun embed(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet {
+    private fun embed(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet? {
 
         // first, ensure the buffer slideables are well-separated
         if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,0)
@@ -89,9 +95,14 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         c.propagateIntersections(inner, outer)
 
         val lg = if (g is LeafGroup) g else null
-        val out = outer.wrapInRoutable(so, lg)
-        so.contains(out, outer)
-        return out
+        if (outer.d is Diagram) {
+            // you can't route around the edge of the diagram
+            return null
+        } else {
+            val out = outer.wrapInRoutable(so, lg)
+            so.contains(out, outer)
+            return out
+        }
     }
 
     override val prefix: String

@@ -49,19 +49,6 @@ class C2Slideable(
     constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: List<Label>) : this(so, dimension,
         mutable2(intersects.map { IntersectAnchor(it) }.toSet() ), emptySet())
 
-    fun routesTo(increasing: Boolean) : Map<C2Slideable, Int> {
-        return if (increasing) {
-            minimum.forward
-                .map { (k, v) -> k.owner as C2Slideable to v }
-                .toMap()
-        } else {
-            maximum.forward
-                .map { (k, v) -> k.owner as C2Slideable to v }
-                .toMap()
-        }
-    }
-
-
     private fun optionalMin(s: C2Slideable) = if (this.maximumPosition != null) {
         if (s.maximumPosition != null) {
             min(this.maximumPosition!!, s.maximumPosition!!)
@@ -88,12 +75,6 @@ class C2Slideable(
             throw LogicException("Can't merge $this with $s")
         }
     }
-
-//    fun addForeignOrbits(a: Set<OrbitAnchor>) {
-//        val existing = orbiting()
-//        val newAnchors = a.filter { n -> existing.find { it == n.e }  == null }
-//        this.anchors.addAll(newAnchors as Collection<Anchor<Any>>)
-//    }
 
     override fun toString(): String {
         val ints = intersecting()

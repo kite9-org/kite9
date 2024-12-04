@@ -87,6 +87,76 @@ public class Test64LabelledFan extends AbstractDisplayFunctionalTest {
 
 	}
 
+	@Test
+	public void test_64_3_DoubleFanningLabelled() throws Exception {
+		Glyph g0 = new Glyph("g0", "", "g0", null, null);
+		Glyph g1 = new Glyph("g1", "", "g1", null, null);
+		Glyph g2 = new Glyph("g2", "", "g2", null, null);
+
+		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
+		new Link(g0, g1, null, null, null, null, Direction.DOWN);
+		new Link(g0, g2, null, null, null, null);
+
+		List<Element> out = new ArrayList<Element>();
+		out.add(g0);
+		out.add(g1);
+		out.add(g2);
+
+		Glyph[] l = GraphConstructionTools.createX("fan", 5, out);
+
+		labelledLink(g1, l, 0);
+		labelledLink(g1, l, 1);
+		labelledLink(g1, l, 2);
+		labelledLink(g1, l, 3);
+		labelledLink(g2, l, 2);
+		labelledLink(g2, l, 3);
+		labelledLink(g2, l, 4);
+
+		new Link(l[0], l[1], null, null, null, null, Direction.RIGHT);
+		new Link(l[1], l[2], null, null, null, null, Direction.RIGHT);
+		new Link(l[2], l[3], null, null, null, null, Direction.RIGHT);
+		new Link(l[3], l[4], null, null, null, null, Direction.RIGHT);
+
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(out, null);
+		renderDiagram(d1);
+
+
+	}
+
+	@Test
+	public void test_64_4_DifferentDirectionFanning() throws Exception {
+		Glyph g0 = new Glyph("g0", "", "g0", null, null);
+		Glyph g1 = new Glyph("g1", "", "g1", null, null);
+		Glyph g2 = new Glyph("g2", "", "g2", null, null);
+
+		new Link(g0, g1, null, null, null, null, Direction.DOWN);
+		new Link(g0, g2, null, null, null, null, Direction.RIGHT);
+
+		List<Element> out = new ArrayList<Element>();
+		out.add(g0);
+		out.add(g1);
+		out.add(g2);
+
+		Glyph[] l = GraphConstructionTools.createX("fan", 5, out);
+
+		labelledLink(g1, l, 0);
+		labelledLink(g1, l, 1);
+		labelledLink(g1, l, 2);
+		labelledLink(g1, l, 3);
+		labelledLink(g2, l, 2);
+		labelledLink(g2, l, 3);
+//		labelledLink(g2, l, 4);
+
+		new Link(l[0], l[1], null, null, null, null, Direction.RIGHT);
+		new Link(l[1], l[2], null, null, null, null, Direction.RIGHT);
+		new Link(l[2], l[3], null, null, null, null, Direction.RIGHT);
+		new Link(l[3], l[4], null, null, null, null, Direction.RIGHT);
+
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("diag", out, null);
+		renderDiagram(d1);
+
+
+	}
 
 	private void labelledLink(Glyph g1, Glyph[] l, int i) {
 		new Link(g1, l[i], null,
