@@ -96,16 +96,14 @@ class C2SlideableSSP(
         if (r2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
-                //if (canAdvanceTo(k)) {
-                    val p = C2Point(along, k, d)
-                    val travelledDistance = c.totalDistance + extraDistance(r2, p)
-                    val possibleRemainingDistance = getMinimumRemainingDistance(k)
-                    val expensive = expensiveDirection(p)
-                    val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
-                    val r3 = C2Route(r2, p, newCost)
-                    s.add(r3)
-                    log.send("Added: $r3")
-                //}
+                val p = C2Point(along, k, d)
+                val travelledDistance = c.totalDistance + extraDistance(r2, p)
+                val possibleRemainingDistance = getMinimumRemainingDistance(k)
+                val expensive = expensiveDirection(p)
+                val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
+                val r3 = C2Route(r2, p, newCost)
+                s.add(r3)
+                log.send("Added: $r3")
             }
         }
     }
@@ -223,14 +221,6 @@ class C2SlideableSSP(
         val isRectangular = perp.isBlocker()
         val isOrbit = perp.getOrbits().isNotEmpty()
 
-//        if (isIntersection) {
-//            return if (perp.intersecting().contains(endElem) || perp.intersecting().contains(startElem)) {
-//                routeIn
-//            } else {
-//                null
-//            }
-//        }
-
         if (isRectangular) {
             // we can only cross a rectangular slideable if it's a container
             val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
@@ -252,21 +242,6 @@ class C2SlideableSSP(
         return routeIn
     }
 
-
-    /**
-     * This looks at a slideable and says whether we can go to it, returning the cost of
-     * doing so if so.
-     */
-    private fun canAdvanceTo(k: C2Slideable): Boolean {
-        val intersectionOk = when {
-            //is C2OrbitSlideable ->  k.getOrbits().any { common.contains(it.e) }
-            k.intersecting().isNotEmpty() -> k.intersecting().any { it == endElem || it == startElem }
-            //is C2RectangularSlideable -> k.anchors.any { common.contains(it.e) }
-            else -> true
-        }
-
-        return intersectionOk
-    }
 
     private fun hasHorizontalConstraint() : Boolean {
         return (direction != null) && Direction.isVertical(direction)
