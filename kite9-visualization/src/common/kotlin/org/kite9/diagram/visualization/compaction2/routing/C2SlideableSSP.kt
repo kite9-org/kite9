@@ -91,12 +91,12 @@ class C2SlideableSSP(
         s: State<C2Route>,
         c: C2Costing
     ) {
-        val r2 = canAdvanceFrom(perp, r, d)
+        val r2 = canAdvancePast(perp, r, d)
 
         if (r2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
-                if (canAdvanceTo(k)) {
+                //if (canAdvanceTo(k)) {
                     val p = C2Point(along, k, d)
                     val travelledDistance = c.totalDistance + extraDistance(r2, p)
                     val possibleRemainingDistance = getMinimumRemainingDistance(k)
@@ -105,7 +105,7 @@ class C2SlideableSSP(
                     val r3 = C2Route(r2, p, newCost)
                     s.add(r3)
                     log.send("Added: $r3")
-                }
+                //}
             }
         }
     }
@@ -217,19 +217,19 @@ class C2SlideableSSP(
         }
     }
 
-    private fun canAdvanceFrom(perp: C2Slideable, routeIn: C2Route, d: Direction): C2Route? {
+    private fun canAdvancePast(perp: C2Slideable, routeIn: C2Route, d: Direction): C2Route? {
         // this is approximate - might need improvement later
-        val isIntersection = perp.intersecting().isNotEmpty()
+        //val isIntersection = perp.intersecting().isNotEmpty()
         val isRectangular = perp.isBlocker()
         val isOrbit = perp.getOrbits().isNotEmpty()
 
-        if (isIntersection) {
-            return if (perp.intersecting().contains(endElem) || perp.intersecting().contains(startElem)) {
-                routeIn
-            } else {
-                null
-            }
-        }
+//        if (isIntersection) {
+//            return if (perp.intersecting().contains(endElem) || perp.intersecting().contains(startElem)) {
+//                routeIn
+//            } else {
+//                null
+//            }
+//        }
 
         if (isRectangular) {
             // we can only cross a rectangular slideable if it's a container
@@ -249,7 +249,7 @@ class C2SlideableSSP(
             return addCrossCost(routeIn, perp)
         }
 
-        return null
+        return routeIn
     }
 
 
