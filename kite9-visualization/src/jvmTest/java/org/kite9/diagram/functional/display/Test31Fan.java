@@ -21,10 +21,10 @@ public class Test31Fan extends AbstractDisplayFunctionalTest {
 		Glyph g1 = new Glyph("g1", "g1", "a", null, null);
 		Glyph g2 = new Glyph("g2", "g2", "another long label", null, null);
 		Glyph g3 = new Glyph("g3", "g3", "g3", null, null);
-		
-		new Link(g1, g2, null, null, null, null, null);
+
 		new Link(g1, g3, null, null, null, null, null);
-	
+		new Link(g1, g2, null, null, null, null, null);
+
 		Glyph g5 = new Glyph("g5", "g5", "g5", null, null);
 		Glyph g6 = new Glyph("g6", "g6", "g6", null, null);
 		Glyph g7 = new Glyph("g7", "g7", "g7", null, null);

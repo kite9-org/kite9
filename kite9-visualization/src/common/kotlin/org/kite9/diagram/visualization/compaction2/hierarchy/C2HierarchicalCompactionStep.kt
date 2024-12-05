@@ -121,8 +121,10 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             return ss1
         }
 
-        val ic = C2Slideable(cso, d, g, c)
-        val out = RoutableSlideableSetImpl(ic, null, null)
+        val icStart = C2Slideable(cso, d, g, c, setOf(Side.START))
+        val icEnd = C2Slideable(cso, d, g, c, setOf(Side.END))
+
+        val out = RoutableSlideableSetImpl(setOf(icStart, icEnd), null, null)
 
         cso.add(g, out)
         log.send("Created a RoutableSlideableSet for $c: ", out.getAll())

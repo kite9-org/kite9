@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
@@ -71,26 +72,46 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     override fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
         along.c.forEach {
-            setIntersection(it, inside.l)
-            setIntersection(it, inside.r)
+            val meetsLeft = (it.getIntersectionAnchors().find { anc -> (inside.d == anc.e) && anc.s.contains(Side.START) })
+            val meetsRight = (it.getIntersectionAnchors().find { anc -> (inside.d == anc.e) && anc.s.contains(Side.END) })
+            if (meetsLeft != null) {
+                setIntersection(it, inside.l)
+            }
+            if (meetsRight != null) {
+                setIntersection(it, inside.r)
+            }
         }
     }
     override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
         a.getAll().forEach {
+            val buffer = it.getOrbits().isNotEmpty()
             if (b.bl != null) {
-                setIntersection(it, b.bl!!)
+                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
+                if (buffer || okIntersect) {
+                    setIntersection(it, b.bl!!)
+                }
             }
             if (b.br != null) {
-                setIntersection(it, b.br!!)
+                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
+                if (buffer || okIntersect) {
+                    setIntersection(it, b.br!!)
+                }
             }
         }
 
         b.getAll().forEach {
+            val buffer = it.getOrbits().isNotEmpty()
             if (a.bl!=null ) {
-                setIntersection(it, a.bl!!)
+                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
+                if (buffer || okIntersect) {
+                    setIntersection(it, a.bl!!)
+                }
             }
             if (a.br != null) {
-                setIntersection(it, a.br!!)
+                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
+                if (buffer || okIntersect) {
+                    setIntersection(it, a.br!!)
+                }
             }
         }
     }

@@ -58,9 +58,14 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     private fun setupRectangularIntersections(rect: RectangularSlideableSet, sox: C2SlackOptimisation) {
         val d = rect.d
-        val intersects = sox.getAllSlideables().filter { it.intersecting().contains(d) }
-        intersects.forEach {
+        val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
+        val intersectsRight = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }
+
+        intersectsLeft.forEach {
             sox.compaction.setIntersection(rect.l, it)
+        }
+
+        intersectsRight.forEach {
             sox.compaction.setIntersection(rect.r, it)
         }
     }

@@ -81,7 +81,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             // we need to create these then
             val l = ss2.l
             val r = ss2.r
-            val c = C2Slideable(cso,d, g, de)
+            val c = C2Slideable(cso,d, g, de, setOf(Side.START, Side.END))
             val bl = C2Slideable(cso, d, setOf(OrbitAnchor(de, Side.START)))
             val br = C2Slideable(cso, d, setOf(OrbitAnchor(de, Side.END)))
             cso.ensureMinimumDistance(bl, l ,0)

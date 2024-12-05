@@ -2,9 +2,9 @@ package org.kite9.diagram.visualization.compaction2.sets
 
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 data class RectangularSlideableSetImpl(
@@ -44,8 +44,21 @@ data class RectangularSlideableSetImpl(
     override fun wrapInRoutable(so: C2SlackOptimisation, g: LeafGroup?): RoutableSlideableSet {
         val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.START)).toMutableSet())
         val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.END)).toMutableSet())
+
+        val intersections = if (d.getParent() == null) {
+            // it's the diagram, no intersections needed.
+            emptySet<C2Slideable>()
+        } else if (g != null) {
+            // it's not a container, one intersection through entire shape
+            setOf(C2Slideable(so, l.dimension, g, d, setOf(Side.START, Side.END)))
+        } else {
+            setOf(
+                C2Slideable(so, l.dimension, g, d, setOf(Side.START)),
+                C2Slideable(so, l.dimension, g, d, setOf(Side.END)))
+        }
+
         val c = if (d.getParent() != null) {
-            C2Slideable(so, l.dimension,g,  d)
+
         } else {
             null
         }
@@ -54,14 +67,14 @@ data class RectangularSlideableSetImpl(
 
         so.ensureMinimumDistance(bl, l, 0)
         so.ensureMinimumDistance(r, br, 0)
-        if (c!= null) {
-            so.ensureMinimumDistance(l, c, size / 2)
-            so.ensureMinimumDistance(c, r, size / 2)
+        intersections.forEach {
+            so.ensureMinimumDistance(l, it, size / 2)
+            so.ensureMinimumDistance(it, r, size / 2)
         }
 
 
         val out = RoutableSlideableSetImpl(
-            setOfNotNull(c),
+            intersections,
             bl,
             br)
 

@@ -8,9 +8,8 @@ import org.kite9.diagram.visualization.compaction2.anchors.Anchor
 
 
 /**
- * The slideable intersects the element.  s isn't needed in this
+ * The slideable intersects the element.  s says which sides the intersection emerges from
  */
-data class IntersectAnchor(override val e: Rectangular) : Anchor<Boolean> {
+data class IntersectAnchor(override val e: Rectangular, override val s: Set<Side>) : Anchor<Set<Side>> {
 
-    override val s: Boolean = true;
 }
