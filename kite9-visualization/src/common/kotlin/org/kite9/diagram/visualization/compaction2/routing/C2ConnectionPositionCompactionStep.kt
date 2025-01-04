@@ -6,8 +6,10 @@ import org.kite9.diagram.model.Terminator
 import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.RouteRenderingInformation
-import org.kite9.diagram.visualization.compaction2.*
-import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
+import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import kotlin.math.max
@@ -33,9 +35,9 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
             .forEach { (k, v) -> setRoute(k, v) }
     }
 
-    private fun create1DRouteMap(cso: C2SlackOptimisation) : Map<Connection,Map<Int, C2Slideable>> {
+    private fun create1DRouteMap(cso: C2SlackOptimisation) : Map<Connection,Map<Float, C2Slideable>> {
         cso.checkConsistency()
-        val out = mutableMapOf<Connection, MutableMap<Int, C2Slideable>>()
+        val out = mutableMapOf<Connection, MutableMap<Float, C2Slideable>>()
 
         cso.getAllSlideables()
             .forEach { rs -> rs.getConnAnchors()
@@ -51,15 +53,18 @@ class C2ConnectionPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Comp
         return out
     }
 
-    private fun <A> zipMapsToList(h: Map<Int, A>, v: Map<Int, A>) : List<Pair<A, A>> {
-        val m = max(h.keys.max(), v.keys.max())
-        val out = (0..m)
-            .map { h[it]!! to v[it]!! }
+    private fun <A> zipMapsToList(h: Map<Float, A>, v: Map<Float, A>) : List<Pair<A, A>> {
+        val indices = (h.keys + v.keys).sorted()
+        val out = indices.map {
+            val ho = h[it]!!
+            val vo = v[it]!!
+            ho to vo
+        }
         return out.reversed()
     }
 
     private fun buildRoutes(c: C2Compaction) : Map<Connection, List<Pair<C2Slideable, C2Slideable>>> {
-        val hs = c.getSlackOptimisation(Dimension.H);
+        val hs = c.getSlackOptimisation(Dimension.H)
         val vs = c.getSlackOptimisation(Dimension.V)
 
         val hsMap = create1DRouteMap(hs)

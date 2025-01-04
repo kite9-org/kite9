@@ -357,8 +357,8 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
     private fun writeRoute(c: Connection, r: C2Route?, i: Int) {
         if (r != null) {
             val p = r.point
-            p.getAlong().addAnchor(ConnAnchor(c, i))
-            p.getPerp().addAnchor(ConnAnchor(c, i))
+            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat()))
+            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat()))
             writeRoute(c, r.prev, i + 1)
         }
     }

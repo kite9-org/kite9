@@ -30,6 +30,10 @@ class C2Slideable(
                 de: Rectangular,
                 side: Side) : this(so, dimension, mutable2(setOf(RectAnchor(de, side))), emptySet())
 
+    /**
+     * For new connection slideables
+     */
+    constructor(so: C2SlackOptimisation, dimension: Dimension, ca: ConnAnchor) : this(so, dimension, mutable2(setOf(ca)), emptySet())
 
     /**
      * Orbit slideables

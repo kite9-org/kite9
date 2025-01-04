@@ -1,13 +1,11 @@
 package org.kite9.diagram.visualization.compaction2.routing
 
-import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
-import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -16,7 +14,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.RankBasedConnecti
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
 import kotlin.math.max
 
-class C2ConnectionFanAndLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
+class C2ConnectionFanAndLabelCompactionStepOriginal(cd: CompleteDisplayer, gp: GridPositioner) :
     AbstractC2BuilderCompactionStep(cd) {
 
     override val prefix = "C2CR"
