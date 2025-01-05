@@ -30,15 +30,11 @@ class C2Slideable(
                 de: Rectangular,
                 side: Side) : this(so, dimension, mutable2(setOf(RectAnchor(de, side))), emptySet())
 
-    /**
-     * For new connection slideables
-     */
-    constructor(so: C2SlackOptimisation, dimension: Dimension, ca: ConnAnchor) : this(so, dimension, mutable2(setOf(ca)), emptySet())
 
     /**
-     * Orbit slideables
+     * For new connection slideables or Orbit Slideables
      */
-    constructor(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<OrbitAnchor>) : this(so, dimension, mutable2(anchors), emptySet())
+    constructor(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<Anchor<*>>) : this(so, dimension, mutable2(anchors), emptySet())
 
     /**
      * For intersection slideables
@@ -132,6 +128,15 @@ class C2Slideable(
     fun isBlocker() : Boolean {
         return getRectangulars().isNotEmpty()
     }
+
+    fun replaceConnAnchors(ca: Set<ConnAnchor>) {
+        val toKeep = anchors.filter { !(it is ConnAnchor) }
+        anchors.clear()
+        anchors.addAll(toKeep)
+        anchors.addAll(ca)
+    }
+
+
 
     private fun handleMinimumMaximumAndDone(
         out: C2Slideable,

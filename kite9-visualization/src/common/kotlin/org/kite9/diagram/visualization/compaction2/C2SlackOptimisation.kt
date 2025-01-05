@@ -15,6 +15,34 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
 
 
 /**
+ * Used for holding transitive distances
+ */
+data class Constraint(val forward: Boolean, val dist: Int) {
+
+    fun max(c2: Constraint?): Constraint {
+        if (c2 == null) {
+            return this
+        }
+        if (forward != c2.forward) {
+            throw LogicException("Constraints must be in same direction")
+        }
+
+        return Constraint(forward, kotlin.math.max(c2.dist, dist))
+    }
+
+    operator fun plus(c2: Constraint?): Constraint {
+        if (c2 == null) {
+            return this
+        }
+        if (forward != c2.forward) {
+            throw LogicException("Constraints must be in same direction")
+        }
+
+        return Constraint(forward, c2.dist + dist)
+    }
+}
+
+/**
  * Augments SlackOptimisation to keep track of diagram elements underlying the slideables.
  * @author robmoffat
  */
@@ -24,6 +52,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     private val groupMap: MutableMap<Group, RoutableSlideableSet> = HashMap()
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
     private val containment: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
+    private var transitiveDistanceMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>> = HashMap()
 
     override fun initialiseSlackOptimisation() {
 
@@ -283,8 +312,71 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         slideables.add(c)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getAllSlideables(): Collection<C2Slideable> {
         return super.getAllSlideables() as Collection<C2Slideable>
+    }
+
+    /**
+     * Implementation of Floyd-Warshall algorithm for transitive distances.  Runs in o(n^3)
+     */
+    fun updateTDMatrix(){
+        val out = mutableMapOf<C2Slideable, MutableMap<C2Slideable, Constraint>>()
+
+        // set initial constraints
+
+        this.getAllSlideables().forEach { f ->
+            this.getAllSlideables().forEach { t ->
+                if (f != t) {
+                    val d1 = f.getMinimumForwardConstraintTo(t)
+                    val d2 = t.getMinimumForwardConstraintTo(f)
+
+                    if ((d1 != null) || (d2 != null)) {
+
+                        val mapFrom = out.getOrPut(f) { mutableMapOf() }
+                        val mapTo = out.getOrPut(t) { mutableMapOf() }
+
+                        if (d1 != null) {
+                            mapFrom[t] = Constraint(true, d1)
+                            mapTo[f] = Constraint(false, d1)
+                        } else if (d2 != null) {
+                            mapFrom[t] = Constraint(false, d2)
+                            mapTo[f] = Constraint(true, d2)
+                        }
+                    }
+                }
+            }
+        }
+
+        this.getAllSlideables().forEach { k ->
+            val kMap = out.getOrPut(k) { mutableMapOf() }
+            this.getAllSlideables().forEach { f ->
+                if (f != k) {
+                    val fromMap = out.getOrPut(f) { mutableMapOf() }
+                    this.getAllSlideables().forEach { t ->
+                        if ((t != f) && (t != k)) {
+                            val ft = fromMap[t]
+                            val kt = kMap[t]
+                            val fk = fromMap[k]
+                            if ((fk != null) && (kt != null)) {
+                                if (kt.forward == fk.forward) {
+                                    val kft = kt + fk
+                                    fromMap[t] = kft.max(ft)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+        this.transitiveDistanceMatrix = out
+    }
+
+    fun getTransitiveDistanceMatrix() : Map<C2Slideable, Map<C2Slideable, Constraint>> {
+        return transitiveDistanceMatrix
     }
 
     companion object {

@@ -16,30 +16,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.RankBasedConnecti
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
 import kotlin.math.max
 
-data class Constraint(val forward: Boolean, val dist: Int) {
 
-    fun max(c2: Constraint?): Constraint {
-        if (c2 == null) {
-            return this
-        }
-        if (forward != c2.forward) {
-            throw LogicException("Constraints must be in same direction")
-        }
-
-        return Constraint(forward, max(c2.dist, dist))
-    }
-
-    operator fun plus(c2: Constraint?): Constraint {
-        if (c2 == null) {
-            return this
-        }
-        if (forward != c2.forward) {
-            throw LogicException("Constraints must be in same direction")
-        }
-
-        return Constraint(forward, c2.dist + dist)
-    }
-}
 class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
     AbstractC2BuilderCompactionStep(cd) {
 
@@ -110,63 +87,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
 
 
-    /**
-     * Implementation of Floyd-Warshall algorithm for transitive distances.  Runs in o(n^3)
-     */
-    private fun createTDMatrix(so: C2SlackOptimisation): Map<C2Slideable, Map<C2Slideable, Constraint>> {
-        val out = mutableMapOf<C2Slideable, MutableMap<C2Slideable, Constraint>>()
 
-        // set initial constraints
-
-        so.getAllSlideables().forEach { f ->
-            so.getAllSlideables().forEach { t ->
-                if (f != t) {
-                    val d1 = f.getMinimumForwardConstraintTo(t)
-                    val d2 = t.getMinimumForwardConstraintTo(f)
-
-                    if ((d1 != null) || (d2 != null)) {
-
-                        val mapFrom = out.getOrPut(f) { mutableMapOf() }
-                        val mapTo = out.getOrPut(t) { mutableMapOf() }
-
-                        if (d1 != null) {
-                            mapFrom[t] = Constraint(true, d1)
-                            mapTo[f] = Constraint(false, d1)
-                        } else if (d2 != null) {
-                            mapFrom[t] = Constraint(false, d2)
-                            mapTo[f] = Constraint(true, d2)
-                        }
-                    }
-                }
-            }
-        }
-
-        so.getAllSlideables().forEach { k ->
-            val kMap = out.getOrPut(k) { mutableMapOf() }
-            so.getAllSlideables().forEach { f ->
-                if (f != k) {
-                    val fromMap = out.getOrPut(f) { mutableMapOf() }
-                    so.getAllSlideables().forEach { t ->
-                        if ((t != f) && (t != k)) {
-                            val ft = fromMap[t]
-                            val kt = kMap[t]
-                            val fk = fromMap[k]
-                            if ((fk != null) && (kt != null)) {
-                                if (kt.forward == fk.forward) {
-                                    val kft = kt + fk
-                                    fromMap[t] = kft.max(ft)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-
-        return out
-    }
 
     private fun insertLink(c2: C2Compaction, c: Connection): C2Route? {
         try {
@@ -174,12 +95,18 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val startingPoints = createPoints(c2, c.getFrom(), false, d)
             val endingPoints = createPoints(c2, c.getTo(), true, d)
             val endZone = createZone(c2, c.getTo() as Rectangular)
+
+            // we might be able to reduce the call frequency of this - it's expensive
+            c2.getSlackOptimisation(Dimension.H).updateTDMatrix()
+            c2.getSlackOptimisation(Dimension.V).updateTDMatrix()
+
             val doer = C2SlideableSSP(
                 c, startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, d, c2,
-                createTDMatrix(c2.getSlackOptimisation(Dimension.H)),
-                createTDMatrix(c2.getSlackOptimisation(Dimension.V)),
+                c2.getSlackOptimisation(Dimension.H).getTransitiveDistanceMatrix(),
+                c2.getSlackOptimisation(Dimension.V).getTransitiveDistanceMatrix(),
                 log
             )
+
             log.send("Starting Points", startingPoints)
             log.send("Ending Points", endingPoints)
 
@@ -357,19 +284,11 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
     private fun writeRoute(c: Connection, r: C2Route?, i: Int) {
         if (r != null) {
             val p = r.point
-            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat()))
-            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat()))
+            val terminal = (i == 0) || (r.prev == null)
+            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(), terminal))
+            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), terminal))
             writeRoute(c, r.prev, i + 1)
         }
     }
 
-    companion object {
-        fun getStart(out: C2Route): C2Point {
-            return if (out.prev != null) {
-                getStart(out.prev)
-            } else {
-                out.point
-            }
-        }
-    }
 }

@@ -12,6 +12,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
+import org.kite9.diagram.visualization.compaction2.Constraint
 import kotlin.math.max
 
 class C2SlideableSSP(
