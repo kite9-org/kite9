@@ -122,4 +122,7 @@ abstract class Slideable(val so: SlackOptimisation,
         return out
     }
 
+    fun outputConstraints() {
+        println("maximum: \n${maximum}\nminimum: ${minimum}")
+    }
 }

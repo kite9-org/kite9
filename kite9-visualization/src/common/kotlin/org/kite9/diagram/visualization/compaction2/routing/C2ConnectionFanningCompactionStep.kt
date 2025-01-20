@@ -35,8 +35,11 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
         val connAnchorMap1 = prepareMap(so1)
         val connAnchorMap2 = prepareMap(so2)
 
-        so1.getAllSlideables().forEach { process(it, so1, V, so2, connAnchorMap2, c) }
-        so2.getAllSlideables().forEach { process(it, so2, H,  so1, connAnchorMap1, c) }
+        val initialSlideablesV = so1.getAllSlideables().toList()
+        initialSlideablesV.forEach { process(it, so1, V, so2, connAnchorMap2, c) }
+
+        val initialSlideablesH = so2.getAllSlideables().toList()
+        initialSlideablesH.forEach { process(it, so2, H,  so1, connAnchorMap1, c) }
     }
     private fun prepareMap(so1: C2SlackOptimisation): Map<ConnAnchor, C2Slideable> {
         return so1.getAllSlideables()
@@ -112,26 +115,30 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     s.replaceConnAnchors(connAnchors)
                     s
                 } else {
-                    C2Slideable(so, d, connAnchors )
+                    val o = C2Slideable(so, d, connAnchors )
+                    so.addSlideable(o)
+                    o
                 }
+            }
+
+            // ensure place within diagram
+            if (s != slideables.first()) {
+                so.copyMinimumConstraints(s, slideables.first())
+            }
+            if (s != slideables.last()) {
+                so.copyMinimumConstraints(s, slideables.last())
             }
 
             // ensure distance between each one
             slideables.forEachIndexed { i, s2 ->
                 if (i > 0) {
                     val s1 = slideables[i - 1]
-                    s1.addMinimumForwardConstraint(s2, 3)
+                    so.ensureMinimumDistance(s1, s2, 3)
                 }
             }
 
 
-            // ensure place within diagram
-            if (s != slideables.first()) {
-                so.copyConstraints(s, slideables.first())
-            }
-            if (s != slideables.last()) {
-                so.copyConstraints(s, slideables.last())
-            }
+
         }
     }
 

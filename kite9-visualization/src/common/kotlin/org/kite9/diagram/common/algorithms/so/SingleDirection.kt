@@ -142,6 +142,10 @@ class SingleDirection(
             .forEach { (k, v) -> this.addBackwardConstraint(k, v) }
     }
 
+    fun outputConstraints() {
+        println("  forward: ${forward} \n  backward: ${backward}")
+    }
+
     val maxDepth: Int
         get() {
             var depth = 0
