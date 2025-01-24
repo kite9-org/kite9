@@ -134,7 +134,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
 
         from.getForwardSlideables(false).forEach { s ->
-            val dist = from.minimumDistanceTo(s)
+            val dist = s.minimumDistanceTo(from)
             this.ensureMinimumDistance(s, to, dist)
         }
 
