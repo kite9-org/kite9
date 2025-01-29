@@ -107,6 +107,31 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		
 		
 	}
+
+	@Test
+	public void test_29_6_LabelledCrissCross() throws Exception {
+		Glyph g1 = new Glyph("g1", "", "method 1", null, null);
+		Glyph g2 = new Glyph("g2", "", "method 2", null, null);
+		Glyph g3 = new Glyph("g3", "", "method 3", null, null);
+		Glyph g4 = new Glyph("g4", "", "method 4", null, null);
+		Context c1 = new Context("c1", HelpMethods.listOf(g1, g2), true, new TextLabel("c1"), Layout.DOWN);
+		Context c2 = new Context("c2", HelpMethods.listOf(g3, g4), true, new TextLabel("c2"), Layout.DOWN);
+
+		new Link(g1, g3, null, new TextLabel("straight1"), null, new TextLabel("straight2"), Direction.RIGHT);
+		new Link(g2, g4, null, new TextLabel("straight3"), null, new TextLabel("straight4"), Direction.RIGHT);
+		TurnLink b1 = new TurnLink(g1, g4);
+		TurnLink b2 = new TurnLink(g2, g3);
+		b1.setFromLabel(new TextLabel("from"));
+		b2.setFromLabel(new TextLabel("from"));
+		b1.setToLabel(new TextLabel("to"));
+		b1.setToLabel(new TextLabel("to"));
+
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2), null);
+
+		renderDiagram(d1);
+
+
+	}
 	
 	@Test
 	public void test_29_5_EmptyDiagram() throws Exception {

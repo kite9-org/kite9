@@ -726,8 +726,12 @@ public class TestingEngine extends TestingHelp {
 
 	private static Rectangle2D createRect(RenderingInformation r) {
 		if (r instanceof RectangleRenderingInformation) {
-			RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
-			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getW(), ri.getSize().getH());
+			try {
+				RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
+				return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getW(), ri.getSize().getH());
+			} catch (Exception e) {
+				return new Rectangle2D.Double(0,0,0,0);
+			}
 		} else if (r instanceof RouteRenderingInformation) {
 			Optional<Rectangle2D> out = ((RouteRenderingInformation) r).getRoutePositions().stream()
 					.map(p -> (Rectangle2D) new Rectangle2D.Double(p.x(), p.y(), 0, 0))

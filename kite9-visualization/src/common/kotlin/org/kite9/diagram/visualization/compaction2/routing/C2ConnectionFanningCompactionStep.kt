@@ -25,21 +25,25 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
     }
 
+    enum class Placement {
+        OUTSIDE, INSIDE, ON
+    }
+
     override fun compact(c: C2Compaction, g: Group) {
-        val so1 = c.getSlackOptimisation(V)
-        val so2 = c.getSlackOptimisation(H)
+        val soV = c.getSlackOptimisation(V)
+        val soH = c.getSlackOptimisation(H)
 
-        so1.updateTDMatrix()
-        so2.updateTDMatrix()
+        soV.updateTDMatrix()
+        soH.updateTDMatrix()
 
-        val connAnchorMap1 = prepareMap(so1)
-        val connAnchorMap2 = prepareMap(so2)
+        val connAnchorMapV= prepareMap(soV)
+        val connAnchorMapH = prepareMap(soH)
 
-        val initialSlideablesV = so1.getAllSlideables().toList()
-        initialSlideablesV.forEach { process(it, so1, V, so2, connAnchorMap2, c) }
+        val initialSlideablesV = soV.getAllSlideables().toList()
+        initialSlideablesV.forEach { process(it, soV, V, soH, connAnchorMapH, c) }
 
-        val initialSlideablesH = so2.getAllSlideables().toList()
-        initialSlideablesH.forEach { process(it, so2, H,  so1, connAnchorMap1, c) }
+        val initialSlideablesH = soH.getAllSlideables().toList()
+        initialSlideablesH.forEach { process(it, soH, H,  soV, connAnchorMapV, c) }
     }
     private fun prepareMap(so1: C2SlackOptimisation): Map<ConnAnchor, C2Slideable> {
         return so1.getAllSlideables()
@@ -74,23 +78,64 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                 return transitiveDistances[p1]?.get(p2)
             }
 
-            fun dist(c1: ConnAnchor, c2: ConnAnchor): Constraint? {
-                return dist(connAnchorMap[c1]!!, connAnchorMap[c2]!!)
-            }
-
-            fun between(mid: ConnAnchor, a: ConnAnchor, b: ConnAnchor): Boolean {
-                val midToA = dist(mid, a)
-                val midToB = dist(mid, b)
-
-                if ((midToA != null) && (midToB != null)) {
-                    return midToA.forward != midToB.forward
+            fun dist(c1: ConnAnchor, c2: ConnAnchor): Int? {
+                val s1 = connAnchorMap[c1]!!
+                val s2 = connAnchorMap[c2]!!
+                if (s1==s2) {
+                    return 0
+                }
+                val c = dist(s1, s2)
+                if (c == null) {
+                    return null
+                } else if (c.forward) {
+                    return c.dist
                 } else {
-                    return false
+                    return -c.dist
                 }
             }
 
+
+
+            fun between(mid: ConnAnchor, a: ConnAnchor, b: ConnAnchor): Placement {
+                val midToA = dist(mid, a)
+                val midToB = dist(mid, b)
+
+                if ((midToA == null) || (midToB == null)) {
+                    return Placement.OUTSIDE
+                }
+
+                if ((midToA == 0) || (midToB == 0)) {
+                    return Placement.ON
+                }
+
+                val midToAForward = midToA >0
+                val midToBForward = midToB >0
+
+                val midToABackward = midToB <0
+                val midToBBackward = midToB <0
+
+                if (midToAForward && midToBBackward) {
+                    return Placement.INSIDE
+                } else if (midToABackward && midToBForward) {
+                    return Placement.INSIDE
+                } else {
+                    return Placement.OUTSIDE
+                }
+            }
+
+            fun inside(inner: ConnectionSection, outer: ConnectionSection) : Boolean {
+                val first = between(inner.from, outer.from, outer.to)
+                val second = between(inner.to, outer.from, outer.to)
+                return if ((first == Placement.INSIDE) || (second == Placement.INSIDE)) {
+                    true
+                } else (first == Placement.ON) && (second == Placement.ON)
+            }
+
             val overlaps =
-                currentLane.filter { between(toAdd.from, it.from, it.to) || between(toAdd.to, it.from, it.to) }
+                currentLane.filter {
+                    return inside(it, toAdd) || inside(toAdd, it)
+
+                }
             return overlaps.isNotEmpty()
         }
 
@@ -98,12 +143,12 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             // ok, we have overlaps on this section.
             val lanes = mutableListOf<MutableList<ConnectionSection>>()
 
-            sections.forEach { s ->
+            sections.forEach { si ->
                 // assign the sections to different lanes
-                if (lanes.isEmpty() || overlaps(s, lanes.last())) {
-                    lanes.add(mutableListOf(s))
+                if (lanes.isEmpty() || overlaps(si, lanes.last())) {
+                    lanes.add(mutableListOf(si))
                 } else {
-                    lanes.last().add(s)
+                    lanes.last().add(si)
                 }
             }
 
@@ -136,8 +181,6 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     so.ensureMinimumDistance(s1, s2, 3)
                 }
             }
-
-
 
         }
     }
