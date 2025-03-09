@@ -2,33 +2,37 @@ package org.kite9.diagram.visualization.compaction2.sets
 
 import org.kite9.diagram.visualization.compaction2.*
 
-data class RoutableSlideableSetImpl(override val c: Set<C2Slideable>,
-                                    override val bl: C2Slideable?,
-                                    override val br: C2Slideable?,
+data class RoutableSlideableSetImpl(
+    override val c: Set<C2Slideable>,
+    override val bl: C2Slideable?,
+    override val br: C2Slideable?,
+    override val number: Int = C2SlackOptimisation.nextNumber()
 ) : RoutableSlideableSet {
 
     val bs = c.plus(setOfNotNull(bl, br))
 
-    constructor(c: C2Slideable?, bl: C2Slideable?, br: C2Slideable?) : this(setOfNotNull(c), bl, br)
-
     override var done = false
 
     override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+        val con1 = c2.getContents(this)
+        val con2 = c2.getContents(after)
         val newOrbit = c2.mergeSlideables(br, after.bl)!!
         done = true
         val newC = this.c.plus(after.c).plus(newOrbit)
         val new = RoutableSlideableSetImpl(newC, bl, after.br)
-        c2.contains(new, c2.getContents(this).plus(c2.getContents(after)))
+        c2.contains(new, con1.plus(con2))
         return new
     }
 
     override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+        val con1 = c2.getContents(this)
+        val con2 = c2.getContents(over)
         val newL = c2.mergeSlideables(over.bl, bl)
         val newR = c2.mergeSlideables(over.br, br)
         val newC = c2.mergeSlideables(over.c, c)
         done = true
         val out = RoutableSlideableSetImpl(newC, newL, newR)
-        c2.contains(out, c2.getContents(this).plus(c2.getContents(over)))
+        c2.contains(out, con1.plus(con2))
         return out
     }
 
@@ -50,12 +54,9 @@ data class RoutableSlideableSetImpl(override val c: Set<C2Slideable>,
 
 
     override fun toString(): String {
-        return "RoutableSlideableSetImpl(c=$c,\n" +
+        return "RoutableSlideableSetImpl(number=$number"
+                "\t c=${c.map { it.number }.toString()},\n" +
                 "\t` bs=$bs,\n" +
-                "\t done=$done,\n" +
-                "\t number=$number)"
+                "\t done=$done,\n)"
     }
-
-    override val number = C2SlackOptimisation.nextNumber()
-
 }

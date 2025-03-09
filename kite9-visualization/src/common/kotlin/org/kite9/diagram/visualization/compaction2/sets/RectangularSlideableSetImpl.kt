@@ -10,7 +10,8 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 data class RectangularSlideableSetImpl(
     override val d: Rectangular,
     override val l: C2Slideable,
-    override val r: C2Slideable) : RectangularSlideableSet {
+    override val r: C2Slideable,
+    override val number: Int = C2SlackOptimisation.nextNumber()) : RectangularSlideableSet {
 
     override var done = false
 
@@ -84,14 +85,12 @@ data class RectangularSlideableSetImpl(
     }
 
     override fun toString(): String {
-        return "RectangularSlideableSetImpl(d=$d,\n" +
-                "\t l=$l,\n" +
-                "\t r=$r,\n" +
-                "\t done=$done,\n" +
-                "\t number=$number)"
+        return "RectangularSlideableSetImpl(number=$number" +
+                "\t d=$d,\n" +
+                "\t l=${l.number},\n" +
+                "\t r=${r.number},\n" +
+                "\t done=$done)"
     }
-
-    override val number = C2SlackOptimisation.nextNumber()
 
 
 }

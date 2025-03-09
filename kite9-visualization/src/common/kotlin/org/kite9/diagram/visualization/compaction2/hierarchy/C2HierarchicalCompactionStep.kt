@@ -37,6 +37,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         g: Group,
         c: C2Compaction
     ) {
+        c.checkConsistency()
         if (g is CompoundGroup) {
             if (horizontalAxis(g)) {
                 mergeForAxis(c, g, Dimension.H, Layout.RIGHT, Layout.LEFT)

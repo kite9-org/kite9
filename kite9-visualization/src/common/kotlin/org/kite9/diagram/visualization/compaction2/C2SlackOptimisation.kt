@@ -202,6 +202,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             val contains = containment[old]
             if (contains != null) {
                 containment[new] = contains
+                containment.remove(old)
             }
         }
 
@@ -268,7 +269,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     }
 
     fun getContainer(inner: RectangularSlideableSet) : RoutableSlideableSet {
-        return containment.filterValues { it.contains(inner) }
+        val filtered = containment.filterValues { it.contains(inner) }
+        return filtered
             .keys
             .first()
     }
