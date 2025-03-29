@@ -8,6 +8,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -21,6 +22,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
     }
 
+
+
     enum class Placement {
         OUTSIDE, INSIDE, ON
     }
@@ -31,14 +34,24 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
         val allV = soV.getAllSlideables().toList()
         val allH = soH.getAllSlideables().toList()
-        allV.forEach { handleFanning(it, soV, V, soH, prepareMap(soH), c) }
-        allH.forEach { handleFanning(it, soH, H, soV, prepareMap(soV), c) }
+        val hMap1 = prepareMap(soH)
+        val vMap1 = prepareMap(soV)
+
+        // keep track of splitters we create - we don't lane these
+        val splitterSlideables = mutableSetOf<C2Slideable>()
+        val branchInfo = mutableMapOf<C2Slideable, C2Slideable>()
+
+        allV.forEach { handleFanning(it, soV, V, soH, hMap1, splitterSlideables, branchInfo) }
+        allH.forEach { handleFanning(it, soH, H, soV, vMap1, splitterSlideables, branchInfo) }
 
         soV.updateTDMatrix()
         soH.updateTDMatrix()
 
-        soV.getAllSlideables().toList().forEach { handleLaning(it, soV, V, soH, prepareMap(soH), create1DRouteMap(soV), c) }
-        soH.getAllSlideables().toList().forEach { handleLaning(it, soH, H,  soV, prepareMap(soV), create1DRouteMap(soH), c) }
+        val hMap2 = prepareMap(soH)
+        val vMap2 = prepareMap(soV)
+
+        soV.getAllSlideables().toList().forEach { handleLaning(it, soV, V, soH, hMap2, create1DRouteMap(soV), splitterSlideables, branchInfo) }
+        soH.getAllSlideables().toList().forEach { handleLaning(it, soH, H,  soV, vMap2, create1DRouteMap(soH), splitterSlideables, branchInfo) }
     }
     private fun prepareMap(so1: C2SlackOptimisation): Map<ConnAnchor, C2Slideable> {
         return so1.getAllSlideables()
@@ -65,20 +78,44 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
         return out.map { (k, v) -> k to v.toList().sorted() }.toMap()
     }
 
-    private fun handleLaning(s: C2Slideable, so: C2SlackOptimisation, d: Dimension, soPerp: C2SlackOptimisation, perpConnAnchorMap: Map<ConnAnchor, C2Slideable>, routeMap: Map<Connection,List<Float>>, c: C2Compaction) {
+    private fun handleLaning(s: C2Slideable, so: C2SlackOptimisation, d: Dimension, soPerp: C2SlackOptimisation, perpConnAnchorMap: Map<ConnAnchor, C2Slideable>, routeMap: Map<Connection,List<Float>>, splitters: Set<C2Slideable>, branches: Map<C2Slideable, C2Slideable>) {
+
+        fun isFanning (a: ConnAnchor) : Boolean {
+            return when (a.type) {
+                AnchorType.PRE_FAN -> true
+                AnchorType.TERMINAL -> false
+                AnchorType.AFTER_FAN -> true
+                AnchorType.REGULAR -> false
+            }
+        }
+
+        fun isFanning (a: ConnectionSection) : Boolean {
+            return isFanning(a.to) && isFanning(a.from)
+        }
+
+        fun okToLane(a: ConnAnchor) : Boolean {
+            return when (a.type) {
+                AnchorType.PRE_FAN -> false
+                AnchorType.TERMINAL -> false
+                AnchorType.AFTER_FAN -> true
+                AnchorType.REGULAR -> true
+            }
+        }
+
         if (s.getRectangulars().isNotEmpty()) {
             // this is the edge of a glyph - don't process
             return
         }
 
-        if (s.getIntersectionAnchors().isNotEmpty()) {
-            // don't fan the bits of the slideable that actually meet the rectangulars
+        if (splitters.contains(s)) {
+            // splitter contents overlap
             return
         }
 
         val connections = s.getConnAnchors().map { it.e }.toSet()
         val sections = mutableListOf<ConnectionSection>()
         val transitiveDistances = soPerp.getTransitiveDistanceMatrix()
+        val fanningAnchorPairs = mutableListOf<Pair<ConnAnchor, ConnAnchor>>()
 
         connections.forEach { c ->
             val routeAnchors = routeMap[c]!!
@@ -91,23 +128,35 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     val from = anchorsForConnection[indexes.indexOf(prevI)]
                     val to = anchorsForConnection[indexes.indexOf(i)]
                     sections.add(ConnectionSection(from, to))
+                    if (isFanning(from) && isFanning(to)) {
+                        fanningAnchorPairs.add(from to to)
+                    }
                 }
             }
         }
 
-        fun overlaps(toAdd: ConnectionSection, currentLane: List<ConnectionSection>): Boolean {
+
+
+        // remove sections that won't get laned
+        val lanableSections = sections.filter { okToLane(it.from) && okToLane(it.to) }
+        val nonLanableSections = sections - lanableSections
+        val keptConnAnchorsOnS = mutableSetOf<ConnAnchor>()
+
+        fun overlaps(toAdd: ConnectionSection, overlapGroup: Set<ConnectionSection>): Boolean {
 
             fun dist(p1: C2Slideable, p2: C2Slideable): Constraint? {
                 return transitiveDistances[p1]?.get(p2)
             }
 
             fun dist(c1: ConnAnchor, c2: ConnAnchor): Int? {
-                val s1 = perpConnAnchorMap[c1]!!
-                val s2 = perpConnAnchorMap[c2]!!
+                val s1 = perpConnAnchorMap[c1]
+                val s2 = perpConnAnchorMap[c2]
+
+
                 if (s1==s2) {
                     return 0
                 }
-                val c = dist(s1, s2)
+                val c = dist(s1!!, s2!!)
                 if (c == null) {
                     return null
                 } else if (c.forward) {
@@ -155,56 +204,91 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             }
 
             val overlaps =
-                currentLane.filter {
+                overlapGroup.filter {
                     return inside(it, toAdd) || inside(toAdd, it)
 
                 }
             return overlaps.isNotEmpty()
         }
 
-        if ((sections.size > 1) && (connections.size > 1)) {
+        if ((lanableSections.size > 1) && (connections.size > 1)) {
             // ok, we have overlaps on this section.
-            val lanes = mutableListOf<MutableList<ConnectionSection>>()
+            val overlapGroups = mutableListOf<MutableSet<ConnectionSection>>()
 
-            sections.forEach { si ->
-                // assign the sections to different lanes
-                if (lanes.isEmpty() || overlaps(si, lanes.last())) {
-                    lanes.add(mutableListOf(si))
+            lanableSections.forEach { si ->
+                var overlapping = overlapGroups.filter { overlaps(si, it) }
+                if (overlapping.isEmpty()) {
+                    overlapGroups.add(mutableSetOf(si))
+                } else if (overlapGroups.size == 1) {
+                    overlapGroups.first().add(si)
                 } else {
-                    lanes.last().add(si)
+                    // merge overlap groups
+                    overlapGroups.removeAll(overlapping)
+                    val newOG = overlapping.flatMap { it }.toMutableSet()
+                    newOG.add(si)
+                    overlapGroups.add(newOG)
                 }
             }
 
-            // now map lanes to new slideables
-            val middleLane = (lanes.size / 2)
-            val slideables = lanes.mapIndexed { i, connectionSections ->
-                val connAnchors = connectionSections.flatMap { listOf(it.to, it.from) }.toSet()
-                if (i == middleLane) {
-                    s.replaceConnAnchors(connAnchors)
-                    s
+            overlapGroups.forEach { og ->
+                val lanes = og.toList() // naive ordering
+
+                // now map lanes to new slideables
+                val oddLaneCount = lanes.size % 2 == 1
+                val middleLane = if (oddLaneCount) {
+                    (lanes.size / 2) - 1
                 } else {
-                    val o = C2Slideable(so, d, connAnchors )
-                    so.addSlideable(o)
-                    o
+                    -1
                 }
-            }
 
-            // ensure place within diagram
-            if (s != slideables.first()) {
-                so.copyMinimumConstraints(s, slideables.first())
-            }
-            if (s != slideables.last()) {
-                so.copyMinimumConstraints(s, slideables.last())
-            }
-
-            // ensure distance between each one
-            slideables.forEachIndexed { i, s2 ->
-                if (i > 0) {
-                    val s1 = slideables[i - 1]
-                    so.ensureMinimumDistance(s1, s2, 3)
+                val slideables = lanes.mapIndexed { i, l ->
+                    val connAnchors = setOf(l.to, l.from)
+                    if (i == middleLane) {
+                        keptConnAnchorsOnS.addAll(connAnchors)
+                        s
+                    } else {
+                        val o = C2Slideable(so, d, connAnchors)
+                        so.addSlideable(o)
+                        o
+                    }
                 }
+
+                // ensure place within diagram
+                if (s != slideables.first()) {
+                    so.copyMinimumConstraints(s, slideables.first())
+                }
+                if (s != slideables.last()) {
+                    so.copyMinimumConstraints(s, slideables.last())
+                }
+
+                // ensure distance between each one
+                slideables.forEachIndexed { i, s2 ->
+                    if (i > 0) {
+                        val s1 = slideables[i - 1]
+                        so.ensureMinimumDistance(s1, s2, 4)
+                    }
+                }
+
+                // make branches even each side of the original slideable
+                if (slideables.size % 2 == 1) {
+                    // odd number of branches, do nothing
+                } else {
+                    val originalSlideable = branches[s]
+                    if (originalSlideable != null) {
+                        val middleLaneBefore = slideables[(slideables.size / 2) - 1]
+                        val middleLaneAfter = slideables[(slideables.size / 2)]
+                        so.ensureMinimumDistance(middleLaneBefore, originalSlideable, 2)
+                        so.ensureMinimumDistance(originalSlideable, middleLaneAfter, 2)
+                    }
+                }
+
             }
 
+
+            // replace non-lanable sections
+            val keptNonLanables = nonLanableSections.filter { !isFanning(it) }. flatMap { listOf(it.from, it.to) }.toSet()
+            val remainingConnAnchors = keptConnAnchorsOnS + keptNonLanables
+            s.replaceConnAnchors(remainingConnAnchors)
         }
     }
 
@@ -231,15 +315,15 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
      * which accommodates the "doglegs" and branch is a new branch containing all the ConnAnchors
      * that will be laned later.
      */
-    private fun handleFanning(sIn: C2Slideable, so: C2SlackOptimisation, d: Dimension, soPerp: C2SlackOptimisation, perpConnAnchorMap: Map<ConnAnchor, C2Slideable>, c: C2Compaction): C2Slideable {
-        if (sIn.getRectangulars().isNotEmpty()) {
-            // fanning isn't applied to the sides of a rectangular
+    private fun handleFanning(sIn: C2Slideable, so: C2SlackOptimisation, d: Dimension, soPerp: C2SlackOptimisation, perpConnAnchorMap: Map<ConnAnchor, C2Slideable>, splitters: MutableSet<C2Slideable>, branches: MutableMap<C2Slideable, C2Slideable>): C2Slideable {
+        if (sIn.getIntersectionAnchors().isEmpty()) {
+            // fanning is only applied at intersections
             return sIn
         }
 
         // maps which terminal ConnAnchors are on the slideable, per connection
         val terminalConnAnchors = sIn.getConnAnchors()
-            .filter { it.terminal }
+            .filter { it.type == AnchorType.TERMINAL }
             .map { if (it.s.compareTo(0.0) == 0 ) { getRectAnchor(perpConnAnchorMap, it, it.e.getTo()) } else { getRectAnchor(perpConnAnchorMap, it, it.e.getFrom()) } to it }
             .groupBy { ks -> ks.first }
             .mapValues { it.value.map { e -> e.second } }
@@ -251,48 +335,48 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
         // keep track of the ConnAnchors that remain on sIn
         val sInAnchors = sIn.getConnAnchors()
-            .filter { fanningConnections.contains(it.e) && it.terminal  }
+            .filter { fanningConnections.contains(it.e) && it.type == AnchorType.TERMINAL  }
             .toMutableSet()
 
         val branchAnchors = (sIn.getConnAnchors() - sInAnchors).toMutableSet()
 
         terminalConnAnchors.forEach { (ra, g) ->
-            if (g.size > 1) {
-                // keep track of which anchors go where here
-                val splitterAnchors = mutableSetOf<ConnAnchor>()
+            // keep track of which anchors go where here
+            val splitterAnchors = mutableSetOf<ConnAnchor>()
 
-                g.forEach {
-                    val newIndex1 = if (it.s.compareTo(0.0) == 0 )  0.2f else it.s - 0.2f
-                    val newIndex2 = if (it.s.compareTo(0.0) == 0 )  0.4f else it.s - 0.4f
+            g.forEach {
+                val newIndex1 = if (it.s.compareTo(0.0) == 0 )  0.2f else it.s - 0.2f
+                val newIndex2 = if (it.s.compareTo(0.0) == 0 )  0.4f else it.s - 0.4f
 
-                    val ca1 = ConnAnchor(it.e, newIndex1, false)
-                    val ca2 = ConnAnchor(it.e, newIndex2, false)
+                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN)
+                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN)
 
-                    sInAnchors.add(ca1)
+                sInAnchors.add(ca1)
 
-                    splitterAnchors.add(ca1)
-                    splitterAnchors.add(ca2)
+                splitterAnchors.add(ca1)
+                splitterAnchors.add(ca2)
 
-                    branchAnchors.add(ca2)
-                }
-
-                // create new slideables for the forking part.
-                val splitter = C2Slideable(soPerp, d.other(), splitterAnchors)
-                soPerp.addSlideable(splitter)
-
-                // ensure that the new slideable is in the right position
-                placeSplitter(splitter, soPerp, ra, g.toSet())
+                branchAnchors.add(ca2)
             }
+
+            // create new slideables for the forking part.
+            val splitter = C2Slideable(soPerp, d.other(), splitterAnchors)
+            soPerp.addSlideable(splitter)
+            splitters.add(splitter)
+
+            // ensure that the new slideable is in the right position
+            placeSplitter(splitter, soPerp, ra, g.toSet())
         }
 
         if (branchAnchors.isNotEmpty()) {
-            // ok, we need to create the branch
-            val branch = C2Slideable(so, d, branchAnchors)
-            so.addSlideable(branch)
+//            // ok, we need to create the branch
+//            val branch = C2Slideable(so, d, branchAnchors)
+//            so.addSlideable(branch)
+//            branches[branch] = sIn
 
             // remove the old anchors from the original slideable
-            sIn.replaceConnAnchors(sInAnchors)
-            so.copyMinimumConstraints(sIn, branch)
+            sIn.replaceConnAnchors(sInAnchors + branchAnchors)
+ //           so.copyMinimumConstraints(sIn, branch)
 
         }
 

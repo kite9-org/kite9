@@ -3,9 +3,16 @@ package org.kite9.diagram.visualization.compaction2.anchors
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.visualization.compaction2.anchors.Anchor
 
+
+enum class AnchorType {
+    REGULAR,
+    PRE_FAN,
+    AFTER_FAN,
+    TERMINAL
+}
 /**
  * Anchor for a point in a connection, numbered from zero
  *
  */
-data class ConnAnchor(override val e: Connection, override val s: Float, val terminal: Boolean) : Anchor<Float> {
+data class ConnAnchor(override val e: Connection, override val s: Float, val type: AnchorType) : Anchor<Float> {
 }

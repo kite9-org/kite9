@@ -110,14 +110,14 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_29_6_LabelledCrissCross() throws Exception {
-		Glyph g1 = new Glyph("g0", "", "method 1", null, null);
-		Glyph g2 = new Glyph("g1", "", "method 2", null, null);
+		Glyph g1 = new Glyph("g0", "", "method 0", null, null);
+		Glyph g2 = new Glyph("g1", "", "method 1", null, null);
 
-		Glyph g3 = new Glyph("g2", "", "method 3", null, null);
-		Glyph g4 = new Glyph("g3", "", "method 4", null, null);
+		Glyph g3 = new Glyph("g2", "", "method 2", null, null);
+		Glyph g4 = new Glyph("g3", "", "method 3", null, null);
 
-		Glyph g5= new Glyph("g4", "", "method 5", null, null);
-		Glyph g6= new Glyph("g5", "", "method 6", null, null);
+		Glyph g5= new Glyph("g4", "", "method 4", null, null);
+		Glyph g6= new Glyph("g5", "", "method 5", null, null);
 
 		Context c1 = new Context("c1", HelpMethods.listOf(g1, g2), true, new TextLabel("c1"), Layout.DOWN);
 		Context c2 = new Context("c2", HelpMethods.listOf(g3, g4), true, new TextLabel("c2"), Layout.DOWN);
@@ -137,7 +137,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 		// links from c2 to c3
 		new Link(g4, g5, null, new TextLabel("straight5"), null, new TextLabel("straight6"), Direction.RIGHT);
-		//new TurnLink(g4, g6);
+		new TurnLink(g4, g6);
 
 		TurnLink b3 = new TurnLink(g3, g6);
 		TurnLink b4 = new TurnLink(g3, g5);

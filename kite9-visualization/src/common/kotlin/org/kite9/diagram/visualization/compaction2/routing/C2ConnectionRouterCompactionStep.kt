@@ -7,6 +7,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -285,8 +286,9 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         if (r != null) {
             val p = r.point
             val terminal = (i == 0) || (r.prev == null)
-            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(), terminal))
-            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), terminal))
+            val anchorType =  if (terminal) { AnchorType.TERMINAL} else { AnchorType.REGULAR}
+            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(),anchorType))
+            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), anchorType))
             writeRoute(c, r.prev, i + 1)
         }
     }
