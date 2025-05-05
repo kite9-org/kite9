@@ -10,6 +10,7 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.FanAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -166,8 +167,6 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                 }
             }
 
-
-
             fun between(mid: ConnAnchor, a: ConnAnchor, b: ConnAnchor): Placement {
                 val midToA = dist(mid, a)
                 val midToB = dist(mid, b)
@@ -245,20 +244,16 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     val connAnchors = setOf(l.to, l.from)
                     if (i == middleLane) {
                         keptConnAnchorsOnS.addAll(connAnchors)
+                        s.addAnchor(FanAnchor(l.to.e.getFrom(), 0))
+                        s.addAnchor(FanAnchor(l.to.e.getTo(), 0))
                         s
                     } else {
                         val o = C2Slideable(so, d, connAnchors)
                         so.addSlideable(o)
+                        o.addAnchor(FanAnchor(l.to.e.getFrom(), i - middleLane))
+                        o.addAnchor(FanAnchor(l.to.e.getTo(), i - middleLane))
                         o
                     }
-                }
-
-                // ensure place within diagram
-                if (s != slideables.first()) {
-                    so.copyMinimumConstraints(s, slideables.first())
-                }
-                if (s != slideables.last()) {
-                    so.copyMinimumConstraints(s, slideables.last())
                 }
 
                 // ensure distance between each one
@@ -369,15 +364,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
         }
 
         if (branchAnchors.isNotEmpty()) {
-//            // ok, we need to create the branch
-//            val branch = C2Slideable(so, d, branchAnchors)
-//            so.addSlideable(branch)
-//            branches[branch] = sIn
-
             // remove the old anchors from the original slideable
             sIn.replaceConnAnchors(sInAnchors + branchAnchors)
- //           so.copyMinimumConstraints(sIn, branch)
-
         }
 
         return sIn

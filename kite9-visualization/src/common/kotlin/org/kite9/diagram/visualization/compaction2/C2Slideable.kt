@@ -20,7 +20,7 @@ class C2Slideable(
 ) : Slideable(so) {
 
     val number: Int = nextNumber()
-    var done = false
+    var mergedInto : C2Slideable? = null
 
     /**
      * This is for rectangular slideables
@@ -60,7 +60,7 @@ class C2Slideable(
     }
 
     fun merge(s: C2Slideable) : C2Slideable {
-        if (this.done || s.done) {
+        if (this.isDone() || s.isDone()) {
             throw LogicException("Already merged")
         } else if (s.dimension == dimension) {
             val out = C2Slideable(
@@ -87,7 +87,7 @@ class C2Slideable(
             rects.isNotEmpty() -> 'R'
             else -> 'X'
         }
-        return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=$done${if (anchors.isNotEmpty()) " i/s=${intersecting()} orbits=${orbiting()} anchors=$anchors" else ""})"
+        return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${intersecting()} orbits=${orbiting()} anchors=$anchors" else ""})"
     }
 
     fun intersecting() : Set<DiagramElement> {
@@ -125,6 +125,10 @@ class C2Slideable(
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
 
+    fun getFanAnchors(): Set<FanAnchor> {
+        return anchors.filterIsInstance<FanAnchor>().toSet()
+    }
+
     fun isBlocker() : Boolean {
         return getRectangulars().isNotEmpty()
     }
@@ -136,7 +140,7 @@ class C2Slideable(
         anchors.addAll(ca)
     }
 
-
+    fun isDone() : Boolean = this.mergedInto != null
 
     private fun handleMinimumMaximumAndDone(
         out: C2Slideable,
@@ -148,11 +152,15 @@ class C2Slideable(
         out.maximum.merge(s.maximum, setOf(s.maximum, maximum))
         out.minimumPosition = max(this.minimumPosition, s.minimumPosition)
         out.maximumPosition = optionalMin(s)
-        this.done = true
-        s.done = true
+        this.mergedInto = out
+        s.mergedInto = out
     }
 
     fun addAnchor(a: ConnAnchor) {
+        anchors.add(a)
+    }
+
+    fun addAnchor(a: FanAnchor) {
         anchors.add(a)
     }
 

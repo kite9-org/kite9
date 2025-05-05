@@ -150,9 +150,9 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         } else {
             val sNew = s1.merge(s2)
             // now we need to replace s1 and s2 in their containers
-            val containsS1 = slideableMap.remove(s1)
-            val containsS2 = slideableMap.remove(s2)
-            containsS1!!.addAll(containsS2!!)
+            val containsS1 = slideableMap.remove(s1) ?: mutableSetOf()
+            val containsS2 = slideableMap.remove(s2) ?: mutableSetOf()
+            containsS1.addAll(containsS2)
             updateSlideableSets(containsS1, s1, s2, sNew)
 
             slideables.add(sNew)
@@ -276,7 +276,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     }
 
     fun checkConsistency() {
-        slideables.removeAll { it is C2Slideable && it.done }
+        slideables.removeAll { it is C2Slideable && it.isDone() }
 
         positionedMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
 
@@ -293,7 +293,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
 
         slideableMap.keys.forEach {
-            if (it.done) {
+            if (it.isDone()) {
                 slideableMap.remove(it)
             }
         }
@@ -379,6 +379,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     fun getTransitiveDistanceMatrix() : Map<C2Slideable, Map<C2Slideable, Constraint>> {
         return transitiveDistanceMatrix
     }
+
 
     companion object {
 
