@@ -244,14 +244,23 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     val connAnchors = setOf(l.to, l.from)
                     if (i == middleLane) {
                         keptConnAnchorsOnS.addAll(connAnchors)
-                        s.addAnchor(FanAnchor(l.to.e.getFrom(), 0))
-                        s.addAnchor(FanAnchor(l.to.e.getTo(), 0))
+                        val f1 = FanAnchor(l.to.e.getFrom(), middleLane)
+                        val f2 = FanAnchor(l.to.e.getTo(), middleLane)
+                        s.addAnchor(f1)
+                        s.addAnchor(f2)
+                        println("Added anchor: ${connAnchors} ${f1}")
+                        println("Added anchor: ${connAnchors} ${f2}")
                         s
                     } else {
                         val o = C2Slideable(so, d, connAnchors)
                         so.addSlideable(o)
-                        o.addAnchor(FanAnchor(l.to.e.getFrom(), i - middleLane))
-                        o.addAnchor(FanAnchor(l.to.e.getTo(), i - middleLane))
+                        val f1 = FanAnchor(l.to.e.getFrom(), i)
+                        val f2 = FanAnchor(l.to.e.getTo(), i)
+                        o.addAnchor(f1)
+                        o.addAnchor(f2)
+                        println("Added anchor: ${connAnchors} ${f1}")
+                        println("Added anchor: ${connAnchors} ${f2}")
+
                         o
                     }
                 }
@@ -335,7 +344,9 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
         val branchAnchors = (sIn.getConnAnchors() - sInAnchors).toMutableSet()
 
-        terminalConnAnchors.forEach { (ra, g) ->
+        terminalConnAnchors
+            .filter { (ra, g) -> g.size > 1 }
+            .forEach { (ra, g) ->
             // keep track of which anchors go where here
             val splitterAnchors = mutableSetOf<ConnAnchor>()
 
@@ -395,10 +406,6 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
     }
 
-
-    private fun orderSlideables(connections: Set<Connection>, so: C2SlackOptimisation, c: C2Compaction): List<Connection> {
-        return connections.toList()
-    }
 
     override val prefix = "C2CF"
     override val isLoggingEnabled = true

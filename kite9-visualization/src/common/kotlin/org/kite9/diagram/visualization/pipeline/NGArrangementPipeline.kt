@@ -127,6 +127,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
             C2ConnectionFanningCompactionStep(cd, gp),
+            C2LoggingCompactionStep(cd),
             C2ConnectionLabelCompactionStep(cd, gp),
             C2ContainerLabelCompactionStep(cd),
             C2MinimizeCompactionStep(cd),
