@@ -2,8 +2,8 @@ package org.kite9.diagram.visualization.compaction2.anchors
 
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.anchors.Anchor
 
 
 enum class AnchorType {
@@ -21,5 +21,6 @@ data class ConnAnchor(
     override val s: Float,
     val type: AnchorType,
     val connectedSide: Side,
-    val connectedEnd : Connected?) : Anchor<Float> {
+    val connectedEnd : Connected?,
+    val heading: Direction) : Anchor<Float> {
 }

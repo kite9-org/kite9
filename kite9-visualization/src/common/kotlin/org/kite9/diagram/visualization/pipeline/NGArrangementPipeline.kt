@@ -22,9 +22,7 @@ import org.kite9.diagram.visualization.compaction2.labels.C2ContainerLabelCompac
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionFanningCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCompactionStep
-import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactionStep
-import org.kite9.diagram.visualization.compaction2.sizing.C2MaximizeCompactionStep
-import org.kite9.diagram.visualization.compaction2.sizing.C2MinimizeCompactionStep
+import org.kite9.diagram.visualization.compaction2.sizing.*
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.Util
@@ -135,7 +133,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2LoggingCompactionStep(cd),
             C2MaximizeCompactionStep(cd),
             C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
-            //C2FanMinimizationCompactionStep(cd),
+            C2FanMinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2RectangularPositionCompactionStep(cd),
             C2ConnectionPositionCompactionStep(cd),

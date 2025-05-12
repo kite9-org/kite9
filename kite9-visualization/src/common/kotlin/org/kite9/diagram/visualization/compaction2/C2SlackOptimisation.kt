@@ -53,6 +53,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
     private val containment: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
     private var transitiveDistanceMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>> = HashMap()
+    private val laneGroups = mutableSetOf<Set<C2Slideable>>()
 
     override fun initialiseSlackOptimisation() {
 
@@ -73,6 +74,16 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     fun getSlideablesFor(de: Positioned): RectangularSlideableSet? {
         return positionedMap[de]
     }
+
+
+    fun addLaneGroup(lg: Set<C2Slideable>) {
+        laneGroups.add(lg)
+    }
+
+    fun getLaneGroups() : Set<Set<C2Slideable>> {
+        return laneGroups
+    }
+
 
     fun getSlideablesFor(group: Group) : RoutableSlideableSet? {
         return groupMap[group]

@@ -309,8 +309,8 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
                 null
             }
 
-            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd))
-            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd))
+            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd, p.d))
+            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd, p.d))
             writeRoute(c, r.prev, i + 1)
         }
     }

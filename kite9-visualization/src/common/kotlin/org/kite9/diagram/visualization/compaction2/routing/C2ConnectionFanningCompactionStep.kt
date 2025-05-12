@@ -6,6 +6,7 @@ import org.kite9.diagram.common.elements.Dimension.V
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
@@ -13,6 +14,7 @@ import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import kotlin.math.abs
 
 class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
     AbstractC2CompactionStep(cd) {
@@ -222,7 +224,7 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             }
 
             overlapGroups.forEach { og ->
-                val lanes = og.toList() // naive ordering
+                val lanes = sortLanes(og.toList(), d, perpConnAnchorMap)
 
                 // now map lanes to new slideables
                 val oddLaneCount = lanes.size % 2 == 1
@@ -243,6 +245,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                         o
                     }
                 }
+
+                so.addLaneGroup(slideables.toSet())
 
                 // ensure distance between each one
                 slideables.forEachIndexed { i, s2 ->
@@ -267,6 +271,35 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             val remainingConnAnchors = keptConnAnchorsOnS + keptNonLanables
             s.replaceConnAnchors(remainingConnAnchors)
         }
+    }
+
+    /**
+     * Divide into three groups - up, down and straight.  The sections that turn
+     * first are on the outside of the groups.
+     */
+    private fun sortLanes(toList: List<ConnectionSection>, d: Dimension, map: Map<ConnAnchor, C2Slideable>):  List<ConnectionSection> {
+        val g1 = if (d == V) Direction.UP else Direction.LEFT
+        val g2 = if (d == V) Direction.DOWN else Direction.RIGHT
+
+        val g1Items = toList.filter { it.from.heading == g1 || it.to.heading == g1 }.toSet()
+        val g2Items =  toList.filter { it.from.heading == g2 || it.to.heading == g2 }.toSet()
+        val rest = toList - g1Items - g2Items
+
+        fun compareWidth(a: ConnectionSection, b: ConnectionSection) : Int {
+            val aWidth= abs(map[a.from]!!.minimumPosition - map[a.to]!!.minimumPosition)
+            val bWidth = abs(map[b.from]!!.minimumPosition - map[b.to]!!.minimumPosition)
+
+            println("Dist: $a $aWidth")
+            println("Dist: $b $bWidth")
+
+
+            return aWidth.compareTo(bWidth)
+        }
+
+        val g1Sorted = g1Items.sortedWith { a, b -> compareWidth(a, b) }
+        val g2Sorted = g2Items.sortedWith { a, b -> compareWidth(b, a) }
+
+        return g1Sorted + rest + g2Sorted
     }
 
     private fun previousAnchor(routeAnchors: List<Float>, f: Float): Float {
@@ -327,8 +360,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                 val newIndex1 = if (it.s.compareTo(0.0) == 0 )  0.2f else it.s - 0.2f
                 val newIndex2 = if (it.s.compareTo(0.0) == 0 )  0.4f else it.s - 0.4f
 
-                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN, it.connectedSide, it.connectedEnd)
-                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN, it.connectedSide, it.connectedEnd)
+                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN, it.connectedSide, it.connectedEnd, it.heading)
+                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN, it.connectedSide, it.connectedEnd, it.heading)
 
                 sInAnchors.add(ca1)
 
@@ -378,6 +411,7 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
         }
 
     }
+
 
 
     override val prefix = "C2CF"
