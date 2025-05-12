@@ -236,23 +236,10 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     val connAnchors = setOf(l.to, l.from)
                     if (i == middleLane) {
                         keptConnAnchorsOnS.addAll(connAnchors)
-//                        val f1 = FanAnchor(l.to.e.getFrom(), middleLane)
-//                        val f2 = FanAnchor(l.to.e.getTo(), middleLane)
-//                        s.addAnchor(f1)
-//                        s.addAnchor(f2)
-//                        println("Added anchor: ${connAnchors} ${f1}")
-//                        println("Added anchor: ${connAnchors} ${f2}")
                         s
                     } else {
                         val o = C2Slideable(so, d, connAnchors)
                         so.addSlideable(o)
-//                        val f1 = FanAnchor(l.to.e.getFrom(), i)
-//                        val f2 = FanAnchor(l.to.e.getTo(), i)
-//                        o.addAnchor(f1)
-//                        o.addAnchor(f2)
-//                        println("Added anchor: ${connAnchors} ${f1}")
-//                        println("Added anchor: ${connAnchors} ${f2}")
-
                         o
                     }
                 }
@@ -265,9 +252,13 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     }
                 }
 
-                // make branches even each side of the original slideable
-                val first = slideables.first()
-                so.copyMinimumConstraints(s, first)
+                // ensure the original slideable isn't in the same position as the fans
+                if (middleLane == -1) {
+                    val before = slideables[slideables.size / 2 - 1]
+                    val after = slideables[slideables.size / 2 ]
+                    so.ensureMinimumDistance(before, s, 2)
+                    so.ensureMinimumDistance(s, after, 2)
+                }
             }
 
 
@@ -336,8 +327,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                 val newIndex1 = if (it.s.compareTo(0.0) == 0 )  0.2f else it.s - 0.2f
                 val newIndex2 = if (it.s.compareTo(0.0) == 0 )  0.4f else it.s - 0.4f
 
-                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN)
-                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN)
+                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN, it.connectedSide, it.connectedEnd)
+                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN, it.connectedSide, it.connectedEnd)
 
                 sInAnchors.add(ca1)
 

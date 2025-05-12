@@ -6,6 +6,7 @@ import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
@@ -287,8 +288,29 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val p = r.point
             val terminal = (i == 0) || (r.prev == null)
             val anchorType =  if (terminal) { AnchorType.TERMINAL} else { AnchorType.REGULAR}
-            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(),anchorType))
-            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), anchorType))
+            val side = if (terminal) {
+                when (p.d) {
+                    Direction.LEFT -> if (i == 0) Side.END else Side.START
+                    Direction.UP -> if (i == 0) Side.END else Side.START
+                    Direction.DOWN -> if (i == 0) Side.START else Side.END
+                    Direction.RIGHT -> if (i == 0) Side.START else Side.END
+                }
+            } else {
+                Side.NEITHER
+            }
+
+            val connectedEnd = if (terminal) {
+                if (i < 1) {
+                    c.getTo()
+                } else {
+                    c.getFrom()
+                }
+            } else {
+                null
+            }
+
+            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd))
+            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd))
             writeRoute(c, r.prev, i + 1)
         }
     }

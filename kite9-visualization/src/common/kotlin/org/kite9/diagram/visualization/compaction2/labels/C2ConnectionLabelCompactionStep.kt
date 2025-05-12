@@ -2,12 +2,13 @@ package org.kite9.diagram.visualization.compaction2.labels
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction.Side.*
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2Point
@@ -94,6 +95,22 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         return out
     }
 
+    private fun prepareFanMap(so1: C2SlackOptimisation): Map<Pair<Connected, Side>, Set<C2Slideable>> {
+        val out = mutableMapOf<Pair<Connected, Side>, MutableSet<C2Slideable>>()
+        so1.getAllSlideables().forEach { s ->
+            s.getConnAnchors().forEach { ca ->
+                if ((ca.connectedEnd != null) && (ca.connectedSide != NEITHER)) {
+                    val p = Pair(ca.connectedEnd, ca.connectedSide)
+                    val l = out.getOrElse(p) { mutableSetOf() }
+                    l.add(s)
+                    out[p] = l
+                }
+            }
+        }
+
+        return out
+    }
+
 
     private fun prepareArrivalSideMap(c2: C2Compaction) : Map<Label, Direction> {
         val out = mutableMapOf<Label, Direction>()
@@ -148,31 +165,26 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         val vLabelMap = prepareLabelMap(c.getSlackOptimisation(Dimension.V))
         val hLabelMap = prepareLabelMap(c.getSlackOptimisation(Dimension.H))
 
+        val vFanMap = prepareFanMap(c.getSlackOptimisation(Dimension.V))
+        val hFanMap = prepareFanMap(c.getSlackOptimisation(Dimension.H))
+
         val directionMap = prepareArrivalSideMap(c)
         val connectedMap = prepareConnectedMap(c)
 
-        label1d(c, c.getSlackOptimisation(Dimension.V), c.getSlackOptimisation(Dimension.H), connectedMap, directionMap, hLabelMap, vLabelMap, Direction.LEFT)
-        label1d(c, c.getSlackOptimisation(Dimension.V), c.getSlackOptimisation(Dimension.H), connectedMap, directionMap, hLabelMap, vLabelMap, Direction.RIGHT)
-        label1d(c, c.getSlackOptimisation(Dimension.H), c.getSlackOptimisation(Dimension.V), connectedMap, directionMap, hLabelMap, vLabelMap, Direction.UP)
-        label1d(c, c.getSlackOptimisation(Dimension.H), c.getSlackOptimisation(Dimension.V), connectedMap, directionMap, hLabelMap, vLabelMap, Direction.DOWN)
+        label1d(c, c.getSlackOptimisation(Dimension.V), c.getSlackOptimisation(Dimension.H), connectedMap, vFanMap, directionMap, hLabelMap, vLabelMap, Direction.LEFT)
+        label1d(c, c.getSlackOptimisation(Dimension.V), c.getSlackOptimisation(Dimension.H), connectedMap, vFanMap, directionMap, hLabelMap, vLabelMap, Direction.RIGHT)
+        label1d(c, c.getSlackOptimisation(Dimension.H), c.getSlackOptimisation(Dimension.V), connectedMap, hFanMap, directionMap, hLabelMap, vLabelMap, Direction.UP)
+        label1d(c, c.getSlackOptimisation(Dimension.H), c.getSlackOptimisation(Dimension.V), connectedMap, hFanMap, directionMap, hLabelMap, vLabelMap, Direction.DOWN)
 
     }
 
     private fun getLabelOrder(c: Pair<Connected, Side>, allEdges: List<Pair<C2Slideable, C2Slideable>>) : List<Pair<C2Slideable, C2Slideable>> {
 
         fun compareLabelOrder(a: Pair<C2Slideable, C2Slideable>, b: Pair<C2Slideable, C2Slideable>) : Int {
-//            val aFanAnchor = (a.first.getFanAnchors() + a.second.getFanAnchors()).find { it.e == c.first }
-//            val bFanAnchor = (b.first.getFanAnchors() + b.second.getFanAnchors()).find { it.e == c.first }
-//            if ((aFanAnchor != null) && (bFanAnchor != null)) {
-//                return aFanAnchor.s.compareTo(bFanAnchor.s)
-//            } else {
-//                throw LogicException("Something went wrong")
-//            }
-
             return a.first.minimumPosition.compareTo(b.first.minimumPosition)
         }
 
-        val out = allEdges.sortedWith {  a, b ->  compareLabelOrder(a, b) }
+        val out = allEdges.toSet().sortedWith {  a, b ->  compareLabelOrder(a, b) }
         return out
     }
 
@@ -182,6 +194,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         so: C2SlackOptimisation,
         so2: C2SlackOptimisation,
         connectedMap: Map<Pair<Connected, Side>,  Set<Label>>,
+        fanMap: Map<Pair<Connected,Side>, Set<C2Slideable>>,
         directionMap: Map<Label, Direction>,
         hLabelMap:  Map<Label, C2Slideable>,
         vLabelMap: Map<Label, C2Slideable>,
@@ -190,16 +203,25 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
             // collect all labels
             val toDo = labels.filter { directionMap[it] == d }
 
-            if (toDo != null) {
-                // the list of all labels on one side.
+            // the list of all slideables on one side.
+            val fanEdges = fanMap.getOrElse(c) { emptySet() }
+                .toMutableSet()
 
-                val allEdges = toDo.map { label ->
+            if (toDo.isNotEmpty()) {
+                val labelledEdges = toDo.map { label ->
                     val vSlideable = getNonDoneVersion(vLabelMap[label]!!)
                     val hSlideable = getNonDoneVersion(hLabelMap[label]!!)
                     handleLabel(label, C2Point(vSlideable, hSlideable, Direction.DOWN), co, d, c)
                 }
 
-                val sortedEdges = getLabelOrder(c, allEdges)
+                val flattenedLabelEdges = labelledEdges.flatMap { p -> listOf(p.first, p.second) }
+
+                val unlabelledEdges = fanEdges
+                    .map { s -> getNonDoneVersion(s) }
+                    .filter { s -> !flattenedLabelEdges.contains(s) }
+                    .map { s -> Pair(getNonDoneVersion(s), getNonDoneVersion(s)) }
+
+                val sortedEdges = getLabelOrder(c, labelledEdges + unlabelledEdges)
 
                 // separate edges
                 var prev : Pair<C2Slideable, C2Slideable>? = null
@@ -221,16 +243,6 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         }
 
         return c2Slideable
-    }
-
-    private fun getUpdatedSlideable(
-        old: C2Slideable,
-        so: C2SlackOptimisation,
-        conn: Connection
-    ): C2Slideable? {
-        val connAnchor = old.getConnAnchors().first { it.e == conn }
-        return so.getAllSlideables()
-            .firstOrNull { it.getConnAnchors().contains(connAnchor) }
     }
 
     private fun handleLabel(l: Label, start: C2Point, c2: C2Compaction, d: Direction, p: Pair<Connected, Side>) : Pair<C2Slideable, C2Slideable> {
