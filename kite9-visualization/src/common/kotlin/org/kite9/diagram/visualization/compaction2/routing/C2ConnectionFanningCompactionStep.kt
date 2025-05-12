@@ -10,7 +10,6 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.FanAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -18,12 +17,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Gr
 class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
     AbstractC2CompactionStep(cd) {
 
-    data class ConnectionSection(val from: ConnAnchor, val to: ConnAnchor) {
-
-
-    }
-
-
+    data class ConnectionSection(val from: ConnAnchor, val to: ConnAnchor) {}
 
     enum class Placement {
         OUTSIDE, INSIDE, ON
@@ -136,8 +130,6 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             }
         }
 
-
-
         // remove sections that won't get laned
         val lanableSections = sections.filter { okToLane(it.from) && okToLane(it.to) }
         val nonLanableSections = sections - lanableSections
@@ -244,22 +236,22 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     val connAnchors = setOf(l.to, l.from)
                     if (i == middleLane) {
                         keptConnAnchorsOnS.addAll(connAnchors)
-                        val f1 = FanAnchor(l.to.e.getFrom(), middleLane)
-                        val f2 = FanAnchor(l.to.e.getTo(), middleLane)
-                        s.addAnchor(f1)
-                        s.addAnchor(f2)
-                        println("Added anchor: ${connAnchors} ${f1}")
-                        println("Added anchor: ${connAnchors} ${f2}")
+//                        val f1 = FanAnchor(l.to.e.getFrom(), middleLane)
+//                        val f2 = FanAnchor(l.to.e.getTo(), middleLane)
+//                        s.addAnchor(f1)
+//                        s.addAnchor(f2)
+//                        println("Added anchor: ${connAnchors} ${f1}")
+//                        println("Added anchor: ${connAnchors} ${f2}")
                         s
                     } else {
                         val o = C2Slideable(so, d, connAnchors)
                         so.addSlideable(o)
-                        val f1 = FanAnchor(l.to.e.getFrom(), i)
-                        val f2 = FanAnchor(l.to.e.getTo(), i)
-                        o.addAnchor(f1)
-                        o.addAnchor(f2)
-                        println("Added anchor: ${connAnchors} ${f1}")
-                        println("Added anchor: ${connAnchors} ${f2}")
+//                        val f1 = FanAnchor(l.to.e.getFrom(), i)
+//                        val f2 = FanAnchor(l.to.e.getTo(), i)
+//                        o.addAnchor(f1)
+//                        o.addAnchor(f2)
+//                        println("Added anchor: ${connAnchors} ${f1}")
+//                        println("Added anchor: ${connAnchors} ${f2}")
 
                         o
                     }
@@ -274,18 +266,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                 }
 
                 // make branches even each side of the original slideable
-                if (slideables.size % 2 == 1) {
-                    // odd number of branches, do nothing
-                } else {
-                    val originalSlideable = branches[s]
-                    if (originalSlideable != null) {
-                        val middleLaneBefore = slideables[(slideables.size / 2) - 1]
-                        val middleLaneAfter = slideables[(slideables.size / 2)]
-                        so.ensureMinimumDistance(middleLaneBefore, originalSlideable, 2)
-                        so.ensureMinimumDistance(originalSlideable, middleLaneAfter, 2)
-                    }
-                }
-
+                val first = slideables.first()
+                so.copyMinimumConstraints(s, first)
             }
 
 

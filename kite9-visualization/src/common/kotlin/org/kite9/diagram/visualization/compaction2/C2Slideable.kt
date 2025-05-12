@@ -125,9 +125,9 @@ class C2Slideable(
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
 
-    fun getFanAnchors(): Set<FanAnchor> {
-        return anchors.filterIsInstance<FanAnchor>().toSet()
-    }
+//    fun getFanAnchors(): Set<FanAnchor> {
+//        return anchors.filterIsInstance<FanAnchor>().toSet()
+//    }
 
     fun isBlocker() : Boolean {
         return getRectangulars().isNotEmpty()
@@ -160,9 +160,9 @@ class C2Slideable(
         anchors.add(a)
     }
 
-    fun addAnchor(a: FanAnchor) {
-        anchors.add(a)
-    }
+//    fun addAnchor(a: FanAnchor) {
+//        anchors.add(a)
+//    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

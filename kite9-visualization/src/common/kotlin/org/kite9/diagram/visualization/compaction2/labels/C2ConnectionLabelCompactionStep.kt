@@ -161,14 +161,15 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
     private fun getLabelOrder(c: Pair<Connected, Side>, allEdges: List<Pair<C2Slideable, C2Slideable>>) : List<Pair<C2Slideable, C2Slideable>> {
 
         fun compareLabelOrder(a: Pair<C2Slideable, C2Slideable>, b: Pair<C2Slideable, C2Slideable>) : Int {
-            val aFanAnchor = (a.first.getFanAnchors() + a.second.getFanAnchors()).find { it.e == c.first }
-            val bFanAnchor = (b.first.getFanAnchors() + b.second.getFanAnchors()).find { it.e == c.first }
-            if ((aFanAnchor != null) && (bFanAnchor != null)) {
-                return aFanAnchor.s.compareTo(bFanAnchor.s)
-            } else {
-                throw LogicException("Something went wrong")
-            }
+//            val aFanAnchor = (a.first.getFanAnchors() + a.second.getFanAnchors()).find { it.e == c.first }
+//            val bFanAnchor = (b.first.getFanAnchors() + b.second.getFanAnchors()).find { it.e == c.first }
+//            if ((aFanAnchor != null) && (bFanAnchor != null)) {
+//                return aFanAnchor.s.compareTo(bFanAnchor.s)
+//            } else {
+//                throw LogicException("Something went wrong")
+//            }
 
+            return a.first.minimumPosition.compareTo(b.first.minimumPosition)
         }
 
         val out = allEdges.sortedWith {  a, b ->  compareLabelOrder(a, b) }
@@ -176,7 +177,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
     }
 
 
-    fun label1d(
+    private fun label1d(
         co: C2Compaction,
         so: C2SlackOptimisation,
         so2: C2SlackOptimisation,
@@ -187,7 +188,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         d: Direction) {
         connectedMap.forEach { (c, labels) ->
             // collect all labels
-            val toDo = labels.filter { directionMap.get(it) == d }
+            val toDo = labels.filter { directionMap[it] == d }
 
             if (toDo != null) {
                 // the list of all labels on one side.

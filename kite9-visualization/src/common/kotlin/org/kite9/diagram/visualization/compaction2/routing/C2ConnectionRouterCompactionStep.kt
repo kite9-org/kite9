@@ -22,7 +22,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
     AbstractC2BuilderCompactionStep(cd) {
 
     override val prefix = "C2CR"
-    override val isLoggingEnabled = true
+    override val isLoggingEnabled = false
 
     private fun createPoints(
         c2: C2Compaction,

@@ -127,7 +127,6 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
             C2ConnectionFanningCompactionStep(cd, gp),
-            C2LoggingCompactionStep(cd),
             C2ConnectionLabelCompactionStep(cd, gp),
             C2ContainerLabelCompactionStep(cd),
             C2MinimizeCompactionStep(cd),
@@ -136,10 +135,12 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2LoggingCompactionStep(cd),
             C2MaximizeCompactionStep(cd),
             C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
+            //C2FanMinimizationCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2RectangularPositionCompactionStep(cd),
-            C2ConnectionPositionCompactionStep(cd)
-        )
+            C2ConnectionPositionCompactionStep(cd),
+            C2LoggingCompactionStep(cd)
+            )
 
         return C2PluggableCompactor(steps)
     }
