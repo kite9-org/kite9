@@ -37,10 +37,11 @@ class C2FanMinimizeCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionS
     }
 
     private fun minimizeFans(so: C2SlackOptimisation) {
-       so.getLaneGroups().forEach { v ->
-            val sortedSlideables = v.sortedBy { it.minimumPosition }
+       so.getLaneGroups().forEachIndexed { i, v ->
+            val sortedSlideables = v.map { getNonDoneVersion(it) }.sortedBy { it.minimumPosition }
             minimizeDistance(so, sortedSlideables.first(), sortedSlideables.last())
-        }
+            log.send("Minimizing ${sortedSlideables.first()} + ${sortedSlideables.last()}")
+       }
     }
 
     override val prefix: String

@@ -112,7 +112,6 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
         val connections = s.getConnAnchors().map { it.e }.toSet()
         val sections = mutableListOf<ConnectionSection>()
         val transitiveDistances = soPerp.getTransitiveDistanceMatrix()
-        val fanningAnchorPairs = mutableListOf<Pair<ConnAnchor, ConnAnchor>>()
 
         connections.forEach { c ->
             val routeAnchors = routeMap[c]!!
@@ -125,9 +124,6 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                     val from = anchorsForConnection[indexes.indexOf(prevI)]
                     val to = anchorsForConnection[indexes.indexOf(i)]
                     sections.add(ConnectionSection(from, to))
-                    if (isFanning(from) && isFanning(to)) {
-                        fanningAnchorPairs.add(from to to)
-                    }
                 }
             }
         }
@@ -225,16 +221,18 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
             overlapGroups.forEach { og ->
                 val lanes = sortLanes(og.toList(), d, perpConnAnchorMap)
+                val allLanes = lanes.up + lanes.middle + lanes.down
+                val oddLaneCount = allLanes.size % 2 == 1
 
-                // now map lanes to new slideables
-                val oddLaneCount = lanes.size % 2 == 1
-                val middleLane = if (oddLaneCount) {
-                    (lanes.size / 2) - 1
+                val middleLane = if (lanes.middle.isNotEmpty()) {
+                    (lanes.middle.size / 2) + lanes.up.size
+                } else if (oddLaneCount) {
+                    (allLanes.size / 2)
                 } else {
                     -1
                 }
 
-                val slideables = lanes.mapIndexed { i, l ->
+                val slideables = allLanes.mapIndexed { i, l ->
                     val connAnchors = setOf(l.to, l.from)
                     if (i == middleLane) {
                         keptConnAnchorsOnS.addAll(connAnchors)
@@ -273,17 +271,33 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
         }
     }
 
+    data class SplitList(val up: List<ConnectionSection>, val middle: List<ConnectionSection>, val down: List<ConnectionSection>) {
+    }
+
     /**
      * Divide into three groups - up, down and straight.  The sections that turn
      * first are on the outside of the groups.
      */
-    private fun sortLanes(toList: List<ConnectionSection>, d: Dimension, map: Map<ConnAnchor, C2Slideable>):  List<ConnectionSection> {
+    private fun sortLanes(toList: List<ConnectionSection>, d: Dimension, map: Map<ConnAnchor, C2Slideable>):  SplitList {
         val g1 = if (d == V) Direction.UP else Direction.LEFT
         val g2 = if (d == V) Direction.DOWN else Direction.RIGHT
 
-        val g1Items = toList.filter { it.from.heading == g1 || it.to.heading == g1 }.toSet()
-        val g2Items =  toList.filter { it.from.heading == g2 || it.to.heading == g2 }.toSet()
-        val rest = toList - g1Items - g2Items
+        val g1Items = toList.filter {
+            it.from.comingFrom == g1 ||
+            it.to.comingFrom == g1 ||
+            it.from.goingTo == g1 ||
+            it.to.goingTo == g1 }.toSet()
+
+        val g2Items =  toList.filter {
+            it.from.comingFrom == g2 ||
+            it.to.comingFrom == g2||
+            it.from.goingTo == g2 ||
+            it.to.goingTo == g2 }.toSet()
+
+        val intersect = g1Items.intersect(g2Items)
+        val g1ItemsReduced = g1Items - intersect
+        val g2ItemsReduced = g2Items - intersect
+        val rest = toList - g1ItemsReduced - g2ItemsReduced
 
         fun compareWidth(a: ConnectionSection, b: ConnectionSection) : Int {
             val aWidth= abs(map[a.from]!!.minimumPosition - map[a.to]!!.minimumPosition)
@@ -296,10 +310,10 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             return aWidth.compareTo(bWidth)
         }
 
-        val g1Sorted = g1Items.sortedWith { a, b -> compareWidth(a, b) }
-        val g2Sorted = g2Items.sortedWith { a, b -> compareWidth(b, a) }
+        val g1Sorted = g1ItemsReduced.sortedWith { a, b -> compareWidth(a, b) }
+        val g2Sorted = g2ItemsReduced.sortedWith { a, b -> compareWidth(b, a) }
 
-        return g1Sorted + rest + g2Sorted
+        return SplitList(g1Sorted, rest , g2Sorted)
     }
 
     private fun previousAnchor(routeAnchors: List<Float>, f: Float): Float {
@@ -360,8 +374,8 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
                 val newIndex1 = if (it.s.compareTo(0.0) == 0 )  0.2f else it.s - 0.2f
                 val newIndex2 = if (it.s.compareTo(0.0) == 0 )  0.4f else it.s - 0.4f
 
-                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN, it.connectedSide, it.connectedEnd, it.heading)
-                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN, it.connectedSide, it.connectedEnd, it.heading)
+                val ca1 = ConnAnchor(it.e, newIndex1, AnchorType.PRE_FAN, it.connectedSide, it.connectedEnd, it.comingFrom, it.goingTo)
+                val ca2 = ConnAnchor(it.e, newIndex2, AnchorType.AFTER_FAN, it.connectedSide, it.connectedEnd, it.comingFrom, it.goingTo)
 
                 sInAnchors.add(ca1)
 

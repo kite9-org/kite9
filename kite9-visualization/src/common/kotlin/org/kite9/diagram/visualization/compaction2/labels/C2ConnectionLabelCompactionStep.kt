@@ -237,14 +237,6 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
     }
 
 
-    private fun getNonDoneVersion(c2Slideable: C2Slideable): C2Slideable {
-        while (c2Slideable.isDone()) {
-            return getNonDoneVersion(c2Slideable.mergedInto!!)
-        }
-
-        return c2Slideable
-    }
-
     private fun handleLabel(l: Label, start: C2Point, c2: C2Compaction, d: Direction, p: Pair<Connected, Side>) : Pair<C2Slideable, C2Slideable> {
         val csoh = c2.getSlackOptimisation(Dimension.H)
         val csov = c2.getSlackOptimisation(Dimension.V)

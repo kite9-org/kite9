@@ -22,5 +22,6 @@ data class ConnAnchor(
     val type: AnchorType,
     val connectedSide: Side,
     val connectedEnd : Connected?,
-    val heading: Direction) : Anchor<Float> {
+    val comingFrom: Direction?,
+    val goingTo: Direction?) : Anchor<Float> {
 }

@@ -275,7 +275,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             if (it is Connection) {
                 val route = insertLink(c, it)
                 if (route != null) {
-                    writeRoute(it, route, 0)
+                    writeRoute(it, route, 0, null)
                 }
             }
         }
@@ -283,7 +283,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         println("Done")
     }
 
-    private fun writeRoute(c: Connection, r: C2Route?, i: Int) {
+    private fun writeRoute(c: Connection, r: C2Route?, i: Int, comingFrom: Direction?) {
         if (r != null) {
             val p = r.point
             val terminal = (i == 0) || (r.prev == null)
@@ -309,9 +309,10 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
                 null
             }
 
-            p.getAlong().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd, p.d))
-            p.getPerp().addAnchor(ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd, p.d))
-            writeRoute(c, r.prev, i + 1)
+            val ca = ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd, comingFrom, Direction.reverse(p.d))
+            p.getAlong().addAnchor(ca)
+            p.getPerp().addAnchor(ca)
+            writeRoute(c, r.prev, i + 1, p.d)
         }
     }
 
