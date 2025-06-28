@@ -160,8 +160,8 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		return new Glyph(name, "", name, null, null);
 	}
 
-	@Test
-	public void test_29_7_MiddleGuyFanning() throws Exception {
+	public void middleGuyTopology(boolean directedEdges, boolean labels, Layout l) throws Exception {
+
 		Glyph middle = createGlyph("middle");
 
 		List<Element> tops = HelpMethods.listOf(createGlyph("t1"), createGlyph("t2"), createGlyph("t3"));
@@ -176,10 +176,22 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 		for (int i=0; i<3; i++) {
 			if (i==1) {
-//				new Link(middle, tops.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.UP);
-//				new Link(middle, bottoms.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.DOWN);
-//				new Link(middle, lefts.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.LEFT);
-//				new Link(middle, rights.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.RIGHT);
+				if (directedEdges && labels) {
+					new Link(middle, tops.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.UP);
+					new Link(middle, bottoms.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.DOWN);
+					new Link(middle, lefts.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.LEFT);
+					new Link(middle, rights.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.RIGHT);
+				} else if (directedEdges) {
+					new Link(middle, tops.get(i), null, null, null, null, Direction.UP);
+					new Link(middle, bottoms.get(i), null, null, null,null, Direction.DOWN);
+					new Link(middle, lefts.get(i), null, null, null,null, Direction.LEFT);
+					new Link(middle, rights.get(i), null, null, null,null, Direction.RIGHT);
+				} else if (labels) {
+					new Link(middle, tops.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), null);
+					new Link(middle, bottoms.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), null);
+					new Link(middle, lefts.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), null);
+					new Link(middle, rights.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i),null);
+				}
 			} else {
 				new TurnLink(middle, tops.get(i));
 				new TurnLink(middle, bottoms.get(i));
@@ -188,13 +200,26 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 			}
 		}
 
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(middle, top, left, right, bottom), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("dia", HelpMethods.listOf(middle, top, left, right, bottom), l, null);
 
 		renderDiagram(d1);
 	}
 
+	@Test
+	public void test_29_7_MiddleGuyFanningRight() throws Exception {
+		middleGuyTopology(false, true, Layout.RIGHT);
+	}
 
-	
+	@Test
+	public void test_29_8_MiddleGuyFanningDown() throws Exception {
+		middleGuyTopology(false, true, Layout.DOWN);
+	}
+
+	@Test
+	public void test_29_9_MiddleGuyFanningDirected() throws Exception {
+		middleGuyTopology(true, true, null);
+	}
+
 	@Test
 	public void test_29_5_EmptyDiagram() throws Exception {
 		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement();

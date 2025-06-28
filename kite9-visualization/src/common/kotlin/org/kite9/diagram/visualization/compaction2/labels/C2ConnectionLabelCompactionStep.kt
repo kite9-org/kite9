@@ -244,9 +244,8 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         val rssh = checkCreateElement(l, Dimension.H, csoh, null, null)!!
         val rssv = checkCreateElement(l, Dimension.V, csov, null, null)!!
 
-        val horiz = Direction.isHorizontal(d)
-        val hc = (if (!horiz) start.getAlong() else start.getPerp())
-        val vc = (if (!horiz) start.getPerp() else start.getAlong())
+        val hc = start.get(Dimension.H)
+        val vc = start.get(Dimension.V)
         val dest = p.first
 
         // really simple merge for now
