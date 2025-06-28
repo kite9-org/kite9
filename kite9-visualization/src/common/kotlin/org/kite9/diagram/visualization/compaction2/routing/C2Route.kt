@@ -1,6 +1,5 @@
 package org.kite9.diagram.visualization.compaction2.routing
 
-import C2Costing
 import org.kite9.diagram.common.algorithms.ssp.PathLocation
 
 class C2Route : PathLocation<C2Route> {

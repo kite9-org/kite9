@@ -12,6 +12,9 @@ import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
+import org.w3c.dom.Element;
+
+import java.util.List;
 
 public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
@@ -152,6 +155,45 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 
 	}
+
+	private Glyph createGlyph(String name) {
+		return new Glyph(name, "", name, null, null);
+	}
+
+	@Test
+	public void test_29_7_MiddleGuyFanning() throws Exception {
+		Glyph middle = createGlyph("middle");
+
+		List<Element> tops = HelpMethods.listOf(createGlyph("t1"), createGlyph("t2"), createGlyph("t3"));
+		List<Element> bottoms = HelpMethods.listOf(createGlyph("b1"), createGlyph("b2"), createGlyph("b3"));
+		List<Element> lefts = HelpMethods.listOf(createGlyph("l1"), createGlyph("l2"), createGlyph("l3"));
+		List<Element> rights = HelpMethods.listOf(createGlyph("r1"), createGlyph("r2"), createGlyph("r3"));
+
+		Context top = new Context("top", tops, true, new TextLabel("top"), Layout.RIGHT);
+		Context bottom = new Context("bottom", bottoms, true, new TextLabel("bottom"), Layout.RIGHT);
+		Context left = new Context("left", lefts, true, new TextLabel("left"), Layout.DOWN);
+		Context right = new Context("right", rights, true, new TextLabel("riught"), Layout.DOWN);
+
+		for (int i=0; i<3; i++) {
+			if (i==1) {
+//				new Link(middle, tops.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.UP);
+//				new Link(middle, bottoms.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.DOWN);
+//				new Link(middle, lefts.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.LEFT);
+//				new Link(middle, rights.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.RIGHT);
+			} else {
+				new TurnLink(middle, tops.get(i));
+				new TurnLink(middle, bottoms.get(i));
+				new TurnLink(middle, lefts.get(i));
+				new TurnLink(middle, rights.get(i));
+			}
+		}
+
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(middle, top, left, right, bottom), null);
+
+		renderDiagram(d1);
+	}
+
+
 	
 	@Test
 	public void test_29_5_EmptyDiagram() throws Exception {

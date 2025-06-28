@@ -1,5 +1,5 @@
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.position.Direction
+package org.kite9.diagram.visualization.compaction2.routing
+
 import kotlin.math.max
 
 enum class CostFreeTurn { CLOCKWISE, ANTICLOCKWISE }
@@ -9,19 +9,21 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
                      val costFreeTurn: CostFreeTurn? = null,
                      val steps: Int = 1,
                      val illegalEdgeCrossings : Int = 0,
-                     val totalDistance : Int = 0,
+                     val totalWeightedDistance : Int = 0,
                      val minimumPossibleDistance: Int = 0,
-                     val expensiveAxisDistance : Int = 0) : Comparable<C2Costing> {
+                     val expensiveAxisDistance : Int = 0,
+                     val containerDepth: Int) : Comparable<C2Costing> {
 
-    constructor() : this(0,0,null, 0,0,0,0) {}
+    constructor(startContainerDepth: Int) : this(0,0,null, 0,0,0,0, 0, startContainerDepth)
     constructor(c: C2Costing,
                 allEdgeCrossings : Int = c.allEdgeCrossings,
                 turns: Int = c.turns,
                 costFreeTurn: CostFreeTurn? = c.costFreeTurn,
                 illegalEdgeCrossings : Int = c.illegalEdgeCrossings,
-                totalDistance : Int = c.totalDistance,
+                totalDistance : Int = c.totalWeightedDistance,
                 minimumPossibleDistance: Int = c.minimumPossibleDistance,
-                expensiveAxisDistance : Int = c.expensiveAxisDistance) : this(
+                expensiveAxisDistance : Int = c.expensiveAxisDistance,
+                containerDepth: Int = c.containerDepth) : this(
         allEdgeCrossings,
         turns,
         costFreeTurn,
@@ -29,7 +31,8 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
         illegalEdgeCrossings,
         totalDistance,
         minimumPossibleDistance,
-        expensiveAxisDistance)
+        expensiveAxisDistance,
+        containerDepth)
 
     fun addTurn(d: CostFreeTurn) : C2Costing {
         return if (this.costFreeTurn == null) {
@@ -45,7 +48,7 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
 
     fun addDistance(stride: Int, left: Int, expensive: Boolean) : C2Costing {
         val cft = if (this.costFreeTurn != null) 1 else 0
-        val travelledDistance = this.totalDistance + stride
+        val travelledDistance = this.totalWeightedDistance + (stride * containerDepth)
         val expensiveDistance = this.expensiveAxisDistance + if (expensive) stride else 0
         val possibleDistance = max(travelledDistance + left, this.minimumPossibleDistance)
         val turns = if (stride > 0) { this.turns + cft } else { this.turns }
@@ -62,12 +65,14 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
         return C2Costing(this)
     }
 
-    fun addCrossing(legal: Boolean) : C2Costing {
+    fun addCrossing(legal: Boolean, newContainerDepth: Int) : C2Costing {
         val crossings = this.allEdgeCrossings + 1
         val illegalCrossings = this.illegalEdgeCrossings + if (legal) 0 else 1
         return C2Costing(this,
             allEdgeCrossings = crossings,
-            illegalEdgeCrossings = illegalCrossings)
+            illegalEdgeCrossings = illegalCrossings,
+            containerDepth = newContainerDepth
+        )
     }
 
     override fun compareTo(other: C2Costing): Int {
@@ -96,8 +101,8 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
         }
 
         // pick the route that has gone farthest
-        if (totalDistance != other.totalDistance) {
-            return -totalDistance.compareTo(other.totalDistance)
+        if (totalWeightedDistance != other.totalWeightedDistance) {
+            return -totalWeightedDistance.compareTo(other.totalWeightedDistance)
         }
 
         if (steps != other.steps) {
@@ -109,7 +114,7 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
 
     override fun toString(): String {
         // reported in priority order
-        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalDistance s=$steps cft=$costFreeTurn]"
+        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalWeightedDistance s=$steps cft=$costFreeTurn]"
     }
 
 }

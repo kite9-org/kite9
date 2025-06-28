@@ -3,9 +3,12 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -125,8 +128,25 @@ class C2Slideable(
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
 
-    fun isBlocker() : Boolean {
-        return getRectangulars().isNotEmpty()
+    fun isBlocker(d: Direction) : Boolean {
+        return getRectangulars()
+            .filter {
+                if (it.e is Container) {
+                    if (it.s != null) {
+                        return when (it.e.getTraversalRule(d)) {
+                            BorderTraversal.ALWAYS -> false
+                            BorderTraversal.LEAVING -> it.s.isEntering(d)
+                            BorderTraversal.PREVENT -> true
+                        }
+                    } else {
+                        return false
+                    }
+
+                } else {
+                    return true
+                }
+
+            }.isNotEmpty()
     }
 
     fun replaceConnAnchors(ca: Set<ConnAnchor>) {
