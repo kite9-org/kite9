@@ -244,8 +244,9 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         val rssh = checkCreateElement(l, Dimension.H, csoh, null, null)!!
         val rssv = checkCreateElement(l, Dimension.V, csov, null, null)!!
 
-        val hc = start.get(Dimension.H)
-        val vc = start.get(Dimension.V)
+        //val horiz = Direction.isHorizontal(d)
+        val hc = start.getPerp()
+        val vc = start.getAlong()
         val dest = p.first
 
         // really simple merge for now
@@ -255,19 +256,19 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
         val bottomBuffer = getOrbitSlideable(dest, END, csov)!!
 
         val out = when (d) {
-            Direction.UP -> {
-                ensureDistance(l, dest, Dimension.H, csov)
-                ensureDistanceFromBuffer(topBuffer, l, Dimension.H, csov)
-                val left = csoh.mergeSlideables(hc, rssh.l)!!
-                csov.mergeSlideables(vc, rssv.r)
-                Pair(left, rssh.r)
+            Direction.RIGHT -> {
+                ensureDistance(dest, l, Dimension.V, csoh)
+                ensureDistanceFromBuffer(l, rightBuffer, Dimension.V, csoh)
+                val upper = csov.mergeSlideables(vc, rssv.l)!!
+                ensureAfter(hc, rssh.l, csoh)
+                Pair(upper, rssv.r)
             }
 
             Direction.DOWN -> {
                 ensureDistance(dest, l, Dimension.H, csov)
                 ensureDistanceFromBuffer(l, bottomBuffer, Dimension.H, csov)
                 val left = csoh.mergeSlideables(hc, rssh.l)!!
-                csov.mergeSlideables(vc, rssv.l)
+                ensureAfter(vc, rssv.l, csov)
                 Pair(left, rssh.r)
             }
 
@@ -275,22 +276,27 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
                 ensureDistance(l, dest, Dimension.V, csoh)
                 ensureDistanceFromBuffer(leftBuffer, l, Dimension.V, csoh)
                 val upper = csov.mergeSlideables(vc, rssv.l)!!
-                csoh.mergeSlideables(hc, rssh.r)
+                ensureAfter(rssh.r, hc, csoh)
                 Pair(upper, rssv.r)
             }
 
-            Direction.RIGHT -> {
-                ensureDistance(dest, l, Dimension.V, csoh)
-                ensureDistanceFromBuffer(l, rightBuffer, Dimension.V, csoh)
-                val upper = csov.mergeSlideables(vc, rssv.l)!!
-                csoh.mergeSlideables(hc, rssh.l)
-                Pair(upper, rssv.r)
+            Direction.UP -> {
+                ensureDistance(l, dest, Dimension.H, csov)
+                ensureDistanceFromBuffer(topBuffer, l, Dimension.H, csov)
+                val left = csoh.mergeSlideables(hc, rssh.l)!!
+                ensureAfter(rssv.r, vc, csov)
+                Pair(left, rssh.r)
             }
+
         }
 
         inside(l, dest, Dimension.H, csoh)
         inside(l, dest, Dimension.V, csov)
         return out
+    }
+
+    private fun ensureAfter(a: C2Slideable, b: C2Slideable, so: C2SlackOptimisation) {
+        so.ensureMinimumDistance(a, b, 0)
     }
 
     private fun ensureDistanceFromBuffer(bs: C2Slideable, to: Positioned, d: Dimension, so: C2SlackOptimisation) {
