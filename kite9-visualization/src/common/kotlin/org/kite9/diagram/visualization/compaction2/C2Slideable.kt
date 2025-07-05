@@ -15,6 +15,9 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 import kotlin.math.max
 import kotlin.math.min
 
+enum class BlockType { NOT_BLOCKING, BLOCKING, ENTERING_CONTAINER, LEAVING_CONTAINER }
+
+
 class C2Slideable(
     so: C2SlackOptimisation,
     val dimension: Dimension,
@@ -128,25 +131,76 @@ class C2Slideable(
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
 
-    fun isBlocker(d: Direction) : Boolean {
-        return getRectangulars()
-            .filter {
+
+    /**
+     * Figures out what crossing this slideable would mean for a route.
+     * Note that if you're on an intersection slideable, you can't cross the rectangular
+     * that it's part of.
+     */
+    fun isBlocker(d: Direction, along: C2Slideable) : BlockType {
+        val rs = getRectangulars()
+        val out = rs
+            .map {
                 if (it.e is Container) {
-                    if (it.s != null) {
-                        return when (it.e.getTraversalRule(d)) {
-                            BorderTraversal.ALWAYS -> false
-                            BorderTraversal.LEAVING -> it.s.isEntering(d)
-                            BorderTraversal.PREVENT -> true
+                    if (along.intersecting().contains(it.e)) {
+                        return BlockType.BLOCKING
+                    } else if (it.s != null) {
+                        if (alongDimension(d)) {
+                            when (it.e.getTraversalRule(d)) {
+                                BorderTraversal.ALWAYS -> if (it.s.isEntering(d)) BlockType.ENTERING_CONTAINER else BlockType.LEAVING_CONTAINER
+                                BorderTraversal.LEAVING -> if (it.s.isEntering(d)) BlockType.BLOCKING else  BlockType.LEAVING_CONTAINER
+                                BorderTraversal.PREVENT -> BlockType.BLOCKING
+                            }
+                        } else {
+                            BlockType.BLOCKING
                         }
                     } else {
-                        return false
+                        BlockType.BLOCKING
                     }
-
                 } else {
-                    return true
+                    BlockType.NOT_BLOCKING
                 }
 
-            }.isNotEmpty()
+            }
+
+        val out2 =  out.reduceOrNull { acc, v ->
+            when (acc) {
+                BlockType.BLOCKING -> BlockType.BLOCKING
+                BlockType.ENTERING_CONTAINER -> when (v) {
+                    BlockType.BLOCKING -> BlockType.BLOCKING
+                    BlockType.LEAVING_CONTAINER -> throw LogicException("Can't enter and leave!")
+                    else -> BlockType.ENTERING_CONTAINER
+                }
+                BlockType.LEAVING_CONTAINER -> when (v) {
+                    BlockType.BLOCKING -> BlockType.BLOCKING
+                    BlockType.ENTERING_CONTAINER -> throw LogicException("Can't enter and leave!")
+                    else -> BlockType.LEAVING_CONTAINER
+                }
+                BlockType.NOT_BLOCKING -> v
+            }
+        } ?: BlockType.NOT_BLOCKING
+
+        //println ("$d is $out2 on $this")
+
+        return out2
+    }
+
+    /**
+     *
+     */
+    fun isOrbitBlocker(intersections: List<Rectangular>) : Boolean {
+        val out = getOrbits()
+            .map { it.e.getParent() }.any { intersections.contains(it) }
+        return out
+    }
+
+    private fun alongDimension(d: Direction): Boolean {
+        return when (d) {
+            Direction.UP -> dimension == Dimension.V
+            Direction.DOWN ->  dimension == Dimension.V
+            Direction.LEFT -> dimension == Dimension.H
+            Direction.RIGHT -> dimension == Dimension.H
+        }
     }
 
     fun replaceConnAnchors(ca: Set<ConnAnchor>) {

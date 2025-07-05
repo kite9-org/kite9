@@ -6,9 +6,11 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction2.BlockType
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.Constraint
@@ -65,12 +67,10 @@ class C2SlideableSSP(
         val d = r.point.d
         log.send("Extending: $r")
 
-        // we might be able to remove this
-        if (!along.isBlocker(d)) {
-            advance(d, perp, r, along, s, r.cost.addStep())
-        }
+        // straight line advancement
+        advance(d, perp, r, along, s, r.cost.addStep())
 
-        if ((!along.isBlocker(d)) && (!perp.isBlocker(d))) {
+        if ((along.isBlocker(d, along) == BlockType.NOT_BLOCKING) && (perp.isBlocker(d, along) == BlockType.NOT_BLOCKING)) {
             // turns ok if both axes are buffer slideable
             val dc = Direction.rotateClockwise(d)
             val nextScoreDc =  r.cost.addTurn(CostFreeTurn.CLOCKWISE)
@@ -89,9 +89,10 @@ class C2SlideableSSP(
         r: C2Route,
         along: C2Slideable,
         s: State<C2Route>,
-        c: C2Costing
+        c: C2Costing,
+        skipInitialCheck: Boolean = false
     ) {
-        val r2 = canAdvancePast(perp, r, d)
+        val r2 = if (skipInitialCheck) r else canAdvancePast(perp, along, r, d)
 
         if (r2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
@@ -163,22 +164,23 @@ class C2SlideableSSP(
         return out
     }
 
-    private fun getBlockingIntersections(intersections: Set<C2Slideable>, d: Direction) : Set<C2Slideable> {
+    private fun getBlockingIntersections(intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Set<C2Slideable> {
+        val alongIs = along.getIntersectionAnchors().map { it.e }
         val out =  intersections.filter {
-            hasRoutes(it) || it.isBlocker(d)
+            hasRoutes(it) || (it.isBlocker(d, along) == BlockType.BLOCKING) || it.isOrbitBlocker(alongIs)
         }.toSet()
 
         return out
     }
 
-    private fun collectInDirection(from: C2Slideable, forward: Boolean, intersections: Set<C2Slideable>, d: Direction) : Set<C2Slideable> {
+    private fun collectInDirection(from: C2Slideable, forward: Boolean, intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Set<C2Slideable> {
         val stopsDistances = getCorrectDistanceMatrix(from, intersections)
 
         // remove all the ones in the wrong direction
         val stopDistRightDirection = stopsDistances.filter { it.value == null || it.value!!.forward == forward }
             .minus(from)
 
-        val potentialBlockers = getBlockingIntersections(intersections, d)
+        val potentialBlockers = getBlockingIntersections(stopDistRightDirection.keys, d, along)
             .map { it to stopDistRightDirection[it] }
             .filter { (_, t) -> t != null }
             .associate { (f, t) -> f to t!! }
@@ -198,7 +200,7 @@ class C2SlideableSSP(
             Direction.DOWN, Direction.RIGHT -> true
             Direction.LEFT, Direction.UP -> false
         }
-        val out = collectInDirection(startingAt, forward, c2.getIntersections(along) ?: emptySet(), going)
+        val out = collectInDirection(startingAt, forward, c2.getIntersections(along) ?: emptySet(), going, along)
         return out
     }
 
@@ -215,52 +217,35 @@ class C2SlideableSSP(
         }
     }
 
-    private fun canAdvancePast(perp: C2Slideable, routeIn: C2Route, d: Direction): C2Route? {
+    private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn: C2Route, d: Direction): C2Route? {
         // this is approximate - might need improvement later
-        //val isIntersection = perp.intersecting().isNotEmpty()
-        val isRectangular = perp.isBlocker(d)
+        val blockType = perp.isBlocker(d, along)
         val isOrbit = perp.getOrbits().isNotEmpty()
 
-        if (isRectangular) {
-            // we can only cross a rectangular slideable if it's a container
-            val okAnchorDirection = if (isIncreasing(d)) Side.END else Side.START
-            val endAnchors = perp.getRectangulars().filter { it.s == Side.END }
-            val startAnchors = perp.getRectangulars().filter { it.s == Side.START }
-            val matchingAnchors = perp.getRectangulars()
-                .any {
-                    (it.s == okAnchorDirection ) || (allowedToLeave.contains(it.e))
+        return when (blockType) {
+            BlockType.NOT_BLOCKING -> {
+                if (isOrbit) {
+                    addCrossCost(routeIn, perp, routeIn.cost.containerDepth)
                 }
-            if (!matchingAnchors) {
+
+                routeIn
+            }
+
+            BlockType.BLOCKING -> {
                 log.send("Can't move on from $perp going $d")
-                return null
+                null
             }
 
-            val oldDepth = routeIn.cost.containerDepth
-            val newDepth = if (startAnchors.isNotEmpty() && endAnchors.isNotEmpty()) {
-                oldDepth
-            } else if (startAnchors.isNotEmpty()) {
-                if (isIncreasing(d)) {
-                    oldDepth + 1
-                } else {
-                    oldDepth - 1
-                }
-            } else if (endAnchors.isNotEmpty()) {
-                if (isIncreasing(d)) {
-                    oldDepth - 1
-                } else {
-                    oldDepth + 1
-                }
-            } else {
-                throw LogicException("Not sure what this means")
+            BlockType.ENTERING_CONTAINER -> {
+                val oldDepth = routeIn.cost.containerDepth
+                return addCrossCost(routeIn, perp, oldDepth+1)
             }
-            return addCrossCost(routeIn, perp, newDepth)
-        }
 
-        if (isOrbit) {
-            return addCrossCost(routeIn, perp, routeIn.cost.containerDepth)
+            BlockType.LEAVING_CONTAINER -> {
+                val oldDepth = routeIn.cost.containerDepth
+                return addCrossCost(routeIn, perp, oldDepth-1)
+            }
         }
-
-        return routeIn
     }
 
 
@@ -282,16 +267,16 @@ class C2SlideableSSP(
         start
             .filter { directionOk(it)}
             .forEach {
-            // head out from each point as far as possible in each direction
-            val along = it.getAlong()
-            val perp = it.getPerp()
-            val mrd1 = getMinimumRemainingDistance(perp)
-            val mrd2 = getMinimumRemainingDistance(along)
-            val initialDepth = allowedToLeave.get(this.startElem)!!
-            val r = C2Route(null, it, C2Costing(initialDepth).addDistance(0, mrd1+mrd2, false))
-            val d = r.point.d
-            advance(d, perp, r, along, s, r.cost)
-        }
+                // head out from each point as far as possible in each direction
+                val along = it.getAlong()
+                val perp = it.getPerp()
+                val mrd1 = getMinimumRemainingDistance(perp)
+                val mrd2 = getMinimumRemainingDistance(along)
+                val initialDepth = allowedToLeave.get(this.startElem)!!
+                val r = C2Route(null, it, C2Costing(initialDepth).addDistance(0, mrd1+mrd2, false))
+                val d = r.point.d
+                advance(d, perp, r, along, s, r.cost, true)
+            }
     }
 
     private fun directionOk(p: C2Point) : Boolean {
@@ -304,14 +289,6 @@ class C2SlideableSSP(
 
     companion object {
 
-//        fun parents(x: DiagramElement?) : Set<DiagramElement> {
-//            return if (x == null) {
-//                setOf()
-//            } else {
-//                return setOf(x).plus(parents(x.getParent()))
-//            }
-//        }
-
         fun isIncreasing(d: Direction): Boolean {
             return when (d) {
                 Direction.UP, Direction.LEFT -> false
@@ -319,8 +296,5 @@ class C2SlideableSSP(
             }
         }
 
-//        private fun intersects(i1: Int, lower: Int, upper: Int): Boolean {
-//            return (i1 >= lower) && (i1<=upper)
-//        }
     }
 }
