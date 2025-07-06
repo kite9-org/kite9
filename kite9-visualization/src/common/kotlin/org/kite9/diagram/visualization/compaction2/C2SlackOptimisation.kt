@@ -138,19 +138,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return mergeSlideablesInner(s1, s2)
     }
 
-    fun copyMinimumConstraints(from: C2Slideable, to: C2Slideable) {
-        from.getForwardSlideables(true).forEach { s ->
-            val dist =  from.minimumDistanceTo(s)
-            this.ensureMinimumDistance(to, s, dist)
-        }
-
-        from.getForwardSlideables(false).forEach { s ->
-            val dist = s.minimumDistanceTo(from)
-            this.ensureMinimumDistance(s, to, dist)
-        }
-
-    }
-
     private fun mergeSlideablesInner(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         if (s1 == null) {
             return s2

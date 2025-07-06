@@ -92,17 +92,17 @@ class C2SlideableSSP(
         c: C2Costing,
         skipInitialCheck: Boolean = false
     ) {
-        val r2 = if (skipInitialCheck) r else canAdvancePast(perp, along, r, d)
+        val cost2 = if (skipInitialCheck) c else canAdvancePast(perp, along, r, d, c)
 
-        if (r2 !== null) {
+        if (cost2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
                 val p = C2Point(along, k, d)
-                val travelledDistance = c.totalWeightedDistance + extraDistance(r2, p)
+                val travelledDistance = cost2.totalWeightedDistance + extraDistance(r, p)
                 val possibleRemainingDistance = getMinimumRemainingDistance(k)
                 val expensive = expensiveDirection(p)
-                val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
-                val r3 = C2Route(r2, p, newCost)
+                val newCost = cost2.addDistance(travelledDistance, possibleRemainingDistance, expensive)
+                val r3 = C2Route(r, p, newCost)
                 if (s.add(r3)) {
                     log.send("Added: $r3")
                 }
@@ -208,17 +208,17 @@ class C2SlideableSSP(
     /**
      * Cost of crossing over another edge
      */
-    private fun addCrossCost(r: C2Route, cbs: C2Slideable, newDepth: Int) : C2Route {
+    private fun addCrossCost(cost: C2Costing, cbs: C2Slideable, newDepth: Int) : C2Costing {
         val isCrossing = cbs.getRectangulars().isNotEmpty() || cbs.getConnAnchors().isNotEmpty()
 
         return if (isCrossing) {
-            C2Route(r, r.point, r.cost.addCrossing(true, newDepth))
+            cost.addCrossing(true, newDepth)
         } else {
-            r
+            cost
         }
     }
 
-    private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn: C2Route, d: Direction): C2Route? {
+    private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing): C2Costing? {
         // this is approximate - might need improvement later
         val blockType = perp.isBlocker(d, along)
         val isOrbit = perp.getOrbits().isNotEmpty()
@@ -226,10 +226,10 @@ class C2SlideableSSP(
         return when (blockType) {
             BlockType.NOT_BLOCKING -> {
                 if (isOrbit) {
-                    addCrossCost(routeIn, perp, routeIn.cost.containerDepth)
+                    addCrossCost(c, perp, routeIn.cost.containerDepth)
                 }
 
-                routeIn
+                c
             }
 
             BlockType.BLOCKING -> {
@@ -239,12 +239,12 @@ class C2SlideableSSP(
 
             BlockType.ENTERING_CONTAINER -> {
                 val oldDepth = routeIn.cost.containerDepth
-                return addCrossCost(routeIn, perp, oldDepth+1)
+                return addCrossCost(c, perp, oldDepth+1)
             }
 
             BlockType.LEAVING_CONTAINER -> {
                 val oldDepth = routeIn.cost.containerDepth
-                return addCrossCost(routeIn, perp, oldDepth-1)
+                return addCrossCost(c, perp, oldDepth-1)
             }
         }
     }

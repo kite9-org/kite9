@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2.sets
 
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
+import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
@@ -46,6 +47,8 @@ data class RectangularSlideableSetImpl(
         val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.START)).toMutableSet())
         val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.END)).toMutableSet())
 
+        var margin = AbstractC2CompactionStep.getMargin(l.dimension, d)
+
         val intersections = if (d.getParent() == null) {
             // it's the diagram, no intersections needed.
             emptySet<C2Slideable>()
@@ -66,8 +69,8 @@ data class RectangularSlideableSetImpl(
 
         val size = l.minimumDistanceTo(r)
 
-        so.ensureMinimumDistance(bl, l, 0)
-        so.ensureMinimumDistance(r, br, 0)
+        so.ensureMinimumDistance(bl, l, margin.first / 2)
+        so.ensureMinimumDistance(r, br, margin.second / 2)
         intersections.forEach {
             so.ensureMinimumDistance(l, it, size / 2)
             so.ensureMinimumDistance(it, r, size / 2)

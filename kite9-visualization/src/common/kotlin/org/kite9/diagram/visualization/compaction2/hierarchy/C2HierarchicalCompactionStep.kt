@@ -209,7 +209,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
         val distance = aElements.maxOfOrNull { ae ->
             bElements.maxOf { be -> getMinimumDistanceBetween(ae, Side.END, be, Side.START, d, null, true) }
-        } ?: 0.0
+        } ?: 2.0
 
         aSlideables.forEach { aS ->
             bSlideables.forEach { bS ->

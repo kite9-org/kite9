@@ -351,34 +351,38 @@ public class TestingEngine extends TestingHelp {
 
 		final int[] nextCol = { 0 };
 		c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(s -> {
-			setColour(s, g);
-			g.drawLine(20, s.getMinimumPosition()*10+30, xSize*10+40, s.getMinimumPosition()*10+30);
-			nextCol[0]++;
-			g.drawString("v"+s.getNumber(), 0, s.getMinimumPosition()*10+30);
-			g.drawString(""+s.getMinimumPosition(),xSize*10, s.getMinimumPosition()*10+30 );
-			Set<C2Slideable> is = c2.getIntersections(s);
-			if (is != null) {
-				is.forEach(s2 -> {
-					g.setPaint(Color.BLACK);
-					g.fillRect(s2.getMinimumPosition()*10+20, s.getMinimumPosition()*10+20,
-							20, 20);
-				});
+			if (!s.isDone()) {
+				setColour(s, g);
+				g.drawLine(20, s.getMinimumPosition() * 10 + 30, xSize * 10 + 40, s.getMinimumPosition() * 10 + 30);
+				nextCol[0]++;
+				g.drawString("v" + s.getNumber(), 0, s.getMinimumPosition() * 10 + 30);
+				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 30);
+				Set<C2Slideable> is = c2.getIntersections(s);
+				if (is != null) {
+					is.forEach(s2 -> {
+						g.setPaint(Color.BLACK);
+						g.fillRect(s2.getMinimumPosition() * 10 + 20, s.getMinimumPosition() * 10 + 20,
+								20, 20);
+					});
+				}
 			}
 		});
 
 		c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(s -> {
-			setColour(s, g);
-			g.drawLine( s.getMinimumPosition()*10+30, 20, s.getMinimumPosition()*10+30, ySize*10+40);
-			nextCol[0]++;
-			g.drawString("h"+s.getNumber(), s.getMinimumPosition()*10+30, 10);
-			g.drawString(""+s.getMinimumPosition(),s.getMinimumPosition()*10+30, ySize*10+50 );
-			Set<C2Slideable> is = c2.getIntersections(s);
-			if (is != null) {
-				is.forEach(s2 -> {
-					g.setPaint(Color.BLACK);
-					g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
-							20, 20);
-				});
+			if (!s.isDone()) {
+				setColour(s, g);
+				g.drawLine(s.getMinimumPosition() * 10 + 30, 20, s.getMinimumPosition() * 10 + 30, ySize * 10 + 40);
+				nextCol[0]++;
+				g.drawString("h" + s.getNumber(), s.getMinimumPosition() * 10 + 30, 10);
+				g.drawString("" + s.getMinimumPosition(), s.getMinimumPosition() * 10 + 30, ySize * 10 + 50);
+				Set<C2Slideable> is = c2.getIntersections(s);
+				if (is != null) {
+					is.forEach(s2 -> {
+						g.setPaint(Color.BLACK);
+						g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
+								20, 20);
+					});
+				}
 			}
 		});
 

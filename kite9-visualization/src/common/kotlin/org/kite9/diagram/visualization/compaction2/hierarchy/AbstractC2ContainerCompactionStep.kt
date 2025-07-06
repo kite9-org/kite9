@@ -89,9 +89,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     private fun embed(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet? {
 
+        val margin = getMargin(d, outer.d)
+
         // first, ensure the buffer slideables are well-separated
-        if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,0)
-        if (inner.br != null) so.ensureMinimumDistance(inner.br!!, outer.r, 0)
+        if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,margin.first / 2)
+        if (inner.br != null) so.ensureMinimumDistance(inner.br!!, outer.r, margin.second / 2)
 
         // now make sure that the rectangulars composing the routable are well-separated
         so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }

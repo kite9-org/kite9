@@ -7,6 +7,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
@@ -76,16 +77,15 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
                 val rightC = container.r
                 val leftI = contents.bl
                 val rightI = contents.br
-                if (leftI != null) cso.ensureMinimumDistance(leftC, leftI, 0)
-                if (rightI != null) cso.ensureMinimumDistance(rightI, rightC, 0)
+                val padding = getPadding(d, container.d)
+                if (leftI != null) cso.ensureMinimumDistance(leftC, leftI, padding.first/ 2)
+                if (rightI != null) cso.ensureMinimumDistance(rightI, rightC, padding.second / 2)
             }
             null -> {
             }
             else -> throw LogicException("Unknown type")
         }
     }
-
-
 
     /**
      * Ensures that b is after a by a given distance
@@ -132,4 +132,28 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         return c2Slideable
     }
 
+    companion object {
+
+        fun getPadding(d: Dimension, r: Rectangular) : Pair<Int, Int> {
+            return if (r is SizedRectangular) {
+                when (d) {
+                    Dimension.H -> Pair(r.getPadding(Direction.LEFT).toInt(), r.getPadding(Direction.RIGHT).toInt())
+                    Dimension.V -> Pair(r.getPadding(Direction.UP).toInt(), r.getPadding(Direction.DOWN).toInt())
+                }
+            } else {
+                Pair(2,2)
+            }
+        }
+
+        fun getMargin(d: Dimension, r: Rectangular) : Pair<Int, Int> {
+            return if (r is SizedRectangular) {
+                when (d) {
+                    Dimension.H -> Pair(r.getMargin(Direction.LEFT).toInt(), r.getMargin(Direction.RIGHT).toInt())
+                    Dimension.V -> Pair(r.getMargin(Direction.UP).toInt(), r.getMargin(Direction.DOWN).toInt())
+                }
+            } else {
+                Pair(2,2)
+            }
+        }
+    }
 }

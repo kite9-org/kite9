@@ -227,17 +227,17 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
-	public void test_29_9_MiddleGuyFanningDirectedNoLabel() throws Exception {
+	public void test_29_10_MiddleGuyFanningDirectedNoLabel() throws Exception {
 		middleGuyTopology(true, false, null,4);
 	}
 
 	@Test
-	public void test_29_10_MiddleGuyFanningDownUndirected1() throws Exception {
+	public void test_29_11_MiddleGuyFanningDownUndirected1() throws Exception {
 		middleGuyTopology(false, true, Layout.DOWN,3);
 	}
 
 	@Test
-	public void test_29_11_MiddleGuyFanningUndirectedContainers() throws Exception {
+	public void test_29_12_MiddleGuyFanningUndirectedContainers() throws Exception {
 		middleGuyTopology(true, true, null,0);
 	}
 
