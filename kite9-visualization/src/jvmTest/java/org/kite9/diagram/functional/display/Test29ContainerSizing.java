@@ -161,7 +161,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		return new Glyph(name, "", name, null, null);
 	}
 
-	public void middleGuyTopology(boolean directedEdges, boolean labels, Layout l) throws Exception {
+	public void middleGuyTopology(boolean directedEdges, boolean labels, Layout l, int directedContainers) throws Exception {
 
 		Glyph middle = createGlyph("middle");
 
@@ -170,11 +170,11 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		List<Element> lefts = HelpMethods.listOf(createGlyph("l1"), createGlyph("l2"), createGlyph("l3"));
 		List<Element> rights = HelpMethods.listOf(createGlyph("r1"), createGlyph("r2"), createGlyph("r3"));
 
-		Context top = new Context("top", tops, true, new TextLabel("top"), Layout.RIGHT);
-		Context bottom = new Context("bottom", bottoms, true, new TextLabel("bottom"), Layout.RIGHT);
-		Context left = new Context("left", lefts, true, new TextLabel("left"), Layout.DOWN);
-		Context right = new Context("right", rights, true, new TextLabel("right"), Layout.DOWN);
-		right.setAttribute("style", CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY+": maximize; ");
+		Context top = new Context("top", tops, true, new TextLabel("top"), directedContainers > 0 ?  Layout.RIGHT :  null);
+		Context bottom = new Context("bottom", bottoms, true, new TextLabel("bottom"), directedContainers > 1 ? Layout.RIGHT: null);
+		Context left = new Context("left", lefts, true, new TextLabel("left"), directedContainers > 2? Layout.DOWN : null);
+		Context right = new Context("right", rights, true, new TextLabel("right"), directedContainers > 3?  Layout.DOWN  : null);
+		//right.setAttribute("style", CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY+": maximize; ");
 
 		for (int i=0; i<3; i++) {
 			if (i==1) {
@@ -213,24 +213,33 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_29_7_MiddleGuyFanningRight() throws Exception {
-		middleGuyTopology(false, true, Layout.RIGHT);
+		middleGuyTopology(false, true, Layout.RIGHT, 4);
 	}
 
 	@Test
 	public void test_29_8_MiddleGuyFanningDown() throws Exception {
-		middleGuyTopology(false, true, Layout.DOWN);
+		middleGuyTopology(false, true, Layout.DOWN,4);
 	}
 
 	@Test
 	public void test_29_9_MiddleGuyFanningDirected() throws Exception {
-		middleGuyTopology(true, true, null);
+		middleGuyTopology(true, true, null,4);
 	}
 
 	@Test
 	public void test_29_9_MiddleGuyFanningDirectedNoLabel() throws Exception {
-		middleGuyTopology(true, false, null);
+		middleGuyTopology(true, false, null,4);
 	}
 
+	@Test
+	public void test_29_10_MiddleGuyFanningDownUndirected1() throws Exception {
+		middleGuyTopology(false, true, Layout.DOWN,3);
+	}
+
+	@Test
+	public void test_29_11_MiddleGuyFanningUndirectedContainers() throws Exception {
+		middleGuyTopology(true, true, null,0);
+	}
 
 	@Test
 	public void test_29_5_EmptyDiagram() throws Exception {
