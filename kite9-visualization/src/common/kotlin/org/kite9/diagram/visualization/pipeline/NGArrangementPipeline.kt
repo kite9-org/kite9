@@ -9,6 +9,7 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
 import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionStep
@@ -47,6 +48,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     var em: ElementMapper? = null
     private var mr: GroupResult? = null
     private var rr: RoutableReader? = null
+    private var c2: C2Compaction? = null
 
     override fun arrange(d: Diagram): Diagram {
         val mr = buildGrouping(d)
@@ -58,7 +60,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
         layout(mr)
         val compactor = createCompactor(mr)
-        compactor.compactDiagram(d, mr)
+        c2 = compactor.compactDiagram(d, mr)
         return d
     }
 
@@ -124,8 +126,8 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2HierarchicalCompactionStep(cd, mr),
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
-            C2ConnectionFanningCompactionStep(cd, gp),
-            C2ConnectionLabelCompactionStep(cd, gp),
+//            C2ConnectionFanningCompactionStep(cd, gp),
+//            C2ConnectionLabelCompactionStep(cd, gp),
             C2ContainerLabelCompactionStep(cd),
             C2MinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
@@ -155,5 +157,9 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
     fun getRoutableReader(): RoutableReader? {
         return rr
+    }
+
+    fun getCompaction():  C2Compaction? {
+        return c2
     }
 }

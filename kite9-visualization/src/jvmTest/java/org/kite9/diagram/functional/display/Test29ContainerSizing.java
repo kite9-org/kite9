@@ -8,6 +8,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TextLabel;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -172,7 +173,8 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		Context top = new Context("top", tops, true, new TextLabel("top"), Layout.RIGHT);
 		Context bottom = new Context("bottom", bottoms, true, new TextLabel("bottom"), Layout.RIGHT);
 		Context left = new Context("left", lefts, true, new TextLabel("left"), Layout.DOWN);
-		Context right = new Context("right", rights, true, new TextLabel("riught"), Layout.DOWN);
+		Context right = new Context("right", rights, true, new TextLabel("right"), Layout.DOWN);
+		right.setAttribute("style", CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY+": maximize; ");
 
 		for (int i=0; i<3; i++) {
 			if (i==1) {

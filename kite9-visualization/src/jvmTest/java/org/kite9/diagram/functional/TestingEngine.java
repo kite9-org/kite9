@@ -6,6 +6,7 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
 import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
@@ -23,6 +24,9 @@ import org.kite9.diagram.testing.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.testing.DiagramChecker.ExpectedLayoutException;
 import org.kite9.diagram.testing.HopChecker.HopAction;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
+import org.kite9.diagram.visualization.compaction2.C2Compaction;
+import org.kite9.diagram.visualization.compaction2.C2Slideable;
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
@@ -80,6 +84,7 @@ public class TestingEngine extends TestingHelp {
 
 			if (pipeline.getGrouping() != null) {
 				TestingEngine.drawPositions(pipeline.getGrouping(), pipeline.getRoutableReader(), theTest, subtest, subtest + "-positions.png");
+				TestingEngine.drawSlideables(pipeline.getCompaction(), theTest, subtest, subtest+"-compaction.png");
 			}
 
 			if (out != null) {
@@ -284,6 +289,101 @@ public class TestingEngine extends TestingHelp {
 		Color[] cols = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY };
 
 		drawGroup(gr.groups().iterator().next(), rr, cols, g, size, new HashSet<Group>());
+		g.dispose();
+		renderToFile(theTest, subtest, item, bi);
+
+	}
+
+	private static void setColour(C2Slideable s, Graphics2D g) {
+		if (s.getOrbits().size() > 0) {
+			g.setColor(Color.GRAY);
+		} else if (s.getIntersectionAnchors().size() >0) {
+			g.setColor(Color.BLACK);
+		} else if (s.getRectangulars().size() > 0) {
+			g.setColor(Color.RED);
+		} else if (s.getConnAnchors().size() > 0) {
+			g.setColor(Color.BLUE);
+		} else {
+			g.setColor(Color.GREEN);
+		}
+	}
+
+	private static void outlineShape(Rectangular d, C2Compaction c, Graphics2D g) {
+		RectangularSlideableSet hs = c.getSlackOptimisation(Dimension.H).getSlideablesFor(d);
+		RectangularSlideableSet vs = c.getSlackOptimisation(Dimension.V).getSlideablesFor(d);
+		g.setPaint(new Color(0x77777722, true));
+		int width = hs.getR().getMinimumPosition() - hs.getL().getMinimumPosition();
+		int height = vs.getR().getMinimumPosition() - vs.getL().getMinimumPosition();
+		g.fillRect(hs.getL().getMinimumPosition()*10+30, vs.getL().getMinimumPosition()*10+30,
+				width*10, height*10);
+
+		if (d instanceof Container) {
+			((Container) d).getContents().forEach(i -> {
+				if (i instanceof Rectangular)
+					outlineShape((Rectangular) i, c, g);
+				}
+			);
+		}
+	}
+
+	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
+		File target = new File("build");
+		if (!target.isDirectory()) {
+			return;
+		}
+
+		int xSize = c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream()
+				.max((s1, s2) -> Integer.valueOf(s1.getMinimumPosition()).compareTo(s2.getMinimumPosition()))
+				.get().getMinimumPosition();
+
+		int ySize = c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream()
+				.max((s1, s2) -> Integer.valueOf(s1.getMinimumPosition()).compareTo(s2.getMinimumPosition()))
+				.get().getMinimumPosition();
+
+
+		BufferedImage bi = new BufferedImage((int) xSize*10 + 60, (int) ySize*10 + 60, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = bi.createGraphics();
+		//g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 1f));
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, (int) xSize*10 + 60, (int) ySize*10 + 60);
+
+		outlineShape(c2.getDiagram(), c2, g);
+
+		final int[] nextCol = { 0 };
+		c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(s -> {
+			setColour(s, g);
+			g.drawLine(20, s.getMinimumPosition()*10+30, xSize*10+40, s.getMinimumPosition()*10+30);
+			nextCol[0]++;
+			g.drawString(""+s.getNumber(), 0, s.getMinimumPosition()*10+30);
+			g.drawString(""+s.getMinimumPosition(),xSize*10, s.getMinimumPosition()*10+30 );
+			Set<C2Slideable> is = c2.getIntersections(s);
+			if (is != null) {
+				is.forEach(s2 -> {
+					g.setPaint(Color.BLACK);
+					g.fillRect(s2.getMinimumPosition()*10+20, s.getMinimumPosition()*10+20,
+							20, 20);
+				});
+			}
+		});
+
+		c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(s -> {
+			setColour(s, g);
+			g.drawLine( s.getMinimumPosition()*10+30, 20, s.getMinimumPosition()*10+30, ySize*10+40);
+			nextCol[0]++;
+			g.drawString(""+s.getNumber(), s.getMinimumPosition()*10+30, 10);
+			g.drawString(""+s.getMinimumPosition(),s.getMinimumPosition()*10+30, ySize*10+50 );
+			Set<C2Slideable> is = c2.getIntersections(s);
+			if (is != null) {
+				is.forEach(s2 -> {
+					g.setPaint(Color.BLACK);
+					g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
+							20, 20);
+				});
+			}
+		});
+
+
+
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);
 

@@ -185,15 +185,6 @@ class C2Slideable(
         return out2
     }
 
-    /**
-     *
-     */
-    fun isOrbitBlocker(intersections: List<Rectangular>) : Boolean {
-        val out = getOrbits()
-            .map { it.e.getParent() }.any { intersections.contains(it) }
-        return out
-    }
-
     private fun alongDimension(d: Direction): Boolean {
         return when (d) {
             Direction.UP -> dimension == Dimension.V

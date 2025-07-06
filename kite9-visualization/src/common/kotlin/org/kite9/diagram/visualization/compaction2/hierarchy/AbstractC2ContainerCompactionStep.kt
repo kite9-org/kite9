@@ -142,13 +142,13 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
 
         val relevantContainersV = relevantContainers
-            .mapValues { (_, elements) ->
-                getLowestGroup(elements, parentage, Dimension.V)
+            .mapValues { (c, elements) ->
+                getLowestGroup(elements, parentage, Dimension.V, c)
             }
 
         val relevantContainersH = relevantContainers
-            .mapValues { (_, elements) ->
-                getLowestGroup(elements, parentage, Dimension.H)
+            .mapValues { (c, elements) ->
+                getLowestGroup(elements, parentage, Dimension.H, c)
             }
 
 
@@ -195,7 +195,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun <X : DiagramElement> containsAnyLevel(groups: Map<X, List<Group>>, c: Container) : List<Group> {
+    private fun <X : DiagramElement> containsAnyLevel(groups: Map<X, List<LeafGroup>>, c: Container) : List<LeafGroup> {
         return groups.flatMap { (de, groups) ->
             if (contains(de, c)) {
                 groups
@@ -210,8 +210,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         return out
     }
 
-    private fun getLowestGroup(groupsIn: List<Group>, parentage: Map<Group, List<Group>>, axis: Dimension) : Group {
-        var groups = groupsIn.filter { matchesAxis(axis, it) }.toSet()
+    private fun getLowestGroup(groupsIn: List<LeafGroup>, parentage: Map<Group, List<Group>>, axis: Dimension, forContainer: Container) : Group {
+        var groups : Set<Group> = groupsIn
+            .filter { matchesAxis(axis, it) }
+            .filter { !((it.container == forContainer) && (it.connected == null))}
+            .toSet()
 
         while ((groups.size > 1) || (hasOnlyCombiningAxis(groups))) {
             val lowestGroupHeight = groups.minOf { it.height }

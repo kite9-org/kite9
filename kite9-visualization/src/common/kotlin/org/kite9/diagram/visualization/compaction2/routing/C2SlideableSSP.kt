@@ -103,8 +103,9 @@ class C2SlideableSSP(
                 val expensive = expensiveDirection(p)
                 val newCost = c.addDistance(travelledDistance, possibleRemainingDistance, expensive)
                 val r3 = C2Route(r2, p, newCost)
-                s.add(r3)
-                log.send("Added: $r3")
+                if (s.add(r3)) {
+                    log.send("Added: $r3")
+                }
             }
         }
     }
@@ -167,7 +168,7 @@ class C2SlideableSSP(
     private fun getBlockingIntersections(intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Set<C2Slideable> {
         val alongIs = along.getIntersectionAnchors().map { it.e }
         val out =  intersections.filter {
-            hasRoutes(it) || (it.isBlocker(d, along) == BlockType.BLOCKING) || it.isOrbitBlocker(alongIs)
+            hasRoutes(it) || (it.isBlocker(d, along) == BlockType.BLOCKING)
         }.toSet()
 
         return out
