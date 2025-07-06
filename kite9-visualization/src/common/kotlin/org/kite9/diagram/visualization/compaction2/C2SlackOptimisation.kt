@@ -117,21 +117,21 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
         val unchanged = s2.filter { !mightMatch.contains(it) }
 
-        val out = s1.mapNotNull { l ->
+        val out = s1.map { l ->
             if (l.intersecting().isNotEmpty()) {
                 val matching = mightMatch.find { groupAlignment(it.intersectingGroups, l.intersectingGroups ) }
                 if (matching != null) {
                     mightMatch.remove(matching)
                     mergeSlideablesInner(l, matching)
                 } else {
-                    l
+                    null
                 }
             } else {
-                l
+                null
             }
-        }.toSet()
+        }.filterNotNull().toSet()
 
-        return out.plus(mightMatch).plus(unchanged)
+        return out
     }
 
     fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {

@@ -354,7 +354,7 @@ public class TestingEngine extends TestingHelp {
 			setColour(s, g);
 			g.drawLine(20, s.getMinimumPosition()*10+30, xSize*10+40, s.getMinimumPosition()*10+30);
 			nextCol[0]++;
-			g.drawString(""+s.getNumber(), 0, s.getMinimumPosition()*10+30);
+			g.drawString("v"+s.getNumber(), 0, s.getMinimumPosition()*10+30);
 			g.drawString(""+s.getMinimumPosition(),xSize*10, s.getMinimumPosition()*10+30 );
 			Set<C2Slideable> is = c2.getIntersections(s);
 			if (is != null) {
@@ -370,7 +370,7 @@ public class TestingEngine extends TestingHelp {
 			setColour(s, g);
 			g.drawLine( s.getMinimumPosition()*10+30, 20, s.getMinimumPosition()*10+30, ySize*10+40);
 			nextCol[0]++;
-			g.drawString(""+s.getNumber(), s.getMinimumPosition()*10+30, 10);
+			g.drawString("h"+s.getNumber(), s.getMinimumPosition()*10+30, 10);
 			g.drawString(""+s.getMinimumPosition(),s.getMinimumPosition()*10+30, ySize*10+50 );
 			Set<C2Slideable> is = c2.getIntersections(s);
 			if (is != null) {
