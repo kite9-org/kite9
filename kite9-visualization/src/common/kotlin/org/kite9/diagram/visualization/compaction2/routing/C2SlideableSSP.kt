@@ -97,43 +97,23 @@ class C2SlideableSSP(
         if (cost2 !== null) {
             val leavers = getForwardSlideables(along, perp, d)
             leavers.forEach { k ->
-                val p = C2Point(along, k, d)
-                val travelledDistance = cost2.totalWeightedDistance + extraDistance(r, p)
-                val possibleRemainingDistance = getMinimumRemainingDistance(k)
-                val expensive = expensiveDirection(p)
-                val newCost = cost2.addDistance(travelledDistance, possibleRemainingDistance, expensive)
-                val r3 = C2Route(r, p, newCost)
-                if (s.add(r3)) {
-                    log.send("Added: $r3")
+                if (r.coords.isInBounds(k.key, d)) {
+                    val p = C2Point(along, k.key, d)
+                    val travelledDistance = cost2.totalWeightedDistance + r.coords.distanceTo(p)
+                    val possibleRemainingDistance = getMinimumRemainingDistance(k.key)
+                    val expensive = expensiveDirection(p)
+                    val newCost = cost2.addDistance(travelledDistance, possibleRemainingDistance, expensive)
+                    val r3 = C2Route(r, p, newCost)
+                    if (s.add(r3)) {
+                        log.send("Added (${k.value}): $r3")
+                    }
                 }
             }
         }
     }
 
-    enum class RelativeDirection { SAME, PERP, REVERSED }
 
-    private fun extraDistance(existingRoute: C2Route?, newPoint: C2Point) : Int {
-        if (existingRoute == null) {
-            return 0
-        }
-
-        val routePoint = existingRoute.point
-        val rd = when (newPoint.d) {
-            routePoint.d -> RelativeDirection.SAME
-            Direction.reverse(routePoint.d) -> RelativeDirection.REVERSED
-            else -> RelativeDirection.PERP
-        }
-
-        val out = max(when (rd) {
-            RelativeDirection.SAME -> getAbsoluteDistance(newPoint.getPerp(), routePoint.getPerp())
-            RelativeDirection.PERP -> getAbsoluteDistance(newPoint.getPerp(), routePoint.getAlong())
-            RelativeDirection.REVERSED -> 0
-        }, extraDistance(existingRoute.prev, newPoint))
-
-        return out
-    }
-
-    fun getAbsoluteDistance(from: C2Slideable, to: C2Slideable): Int {
+    private fun getAbsoluteDistance(from: C2Slideable, to: C2Slideable): Int {
         val mat = when (from.dimension) {
             Dimension.H -> hMatrix
             Dimension.V -> vMatrix
@@ -157,46 +137,31 @@ class C2SlideableSSP(
         val distances = mat.get(from)!!
         val known = distances.filter { stops.contains(it.key) }
         val unknown = stops.filter { !distances.containsKey(it) }.associateWith { null }
-        return known + unknown
+        return (known + unknown).minus(from)
     }
 
-    private fun hasRoutes(b: C2Slideable) : Boolean {
-        val out = b.getConnAnchors().isNotEmpty()
-        return out
-    }
-
-    private fun getBlockingIntersections(intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Set<C2Slideable> {
-        val alongIs = along.getIntersectionAnchors().map { it.e }
-        val out =  intersections.filter {
-            hasRoutes(it) || (it.isBlocker(d, along) == BlockType.BLOCKING)
-        }.toSet()
-
-        return out
-    }
-
-    private fun collectInDirection(from: C2Slideable, forward: Boolean, intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Set<C2Slideable> {
+    private fun collectInDirection(from: C2Slideable, forward: Boolean, intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Map<C2Slideable, Constraint?> {
         val stopsDistances = getCorrectDistanceMatrix(from, intersections)
 
         // remove all the ones in the wrong direction
-        val stopDistRightDirection = stopsDistances.filter { it.value == null || it.value!!.forward == forward }
-            .minus(from)
+        val stopDistRightDirection = stopsDistances.filter { it.value != null && it.value!!.forward == forward }
+        val unboundedStops = stopsDistances.filter { it.value == null }
 
-        val potentialBlockers = getBlockingIntersections(stopDistRightDirection.keys, d, along)
-            .map { it to stopDistRightDirection[it] }
-            .filter { (_, t) -> t != null }
-            .associate { (f, t) -> f to t!! }
+//        val potentialBlockers = getBlockingIntersections(stopDistRightDirection.keys, d, along)
+//            .map { it to stopDistRightDirection[it] }
+//            .filter { (_, t) -> t != null }
+//            .associate { (f, t) -> f to t!! }
 
-        val closestBlocker = potentialBlockers.minByOrNull { it.value.dist }
+        val closestBlocker = stopDistRightDirection.minByOrNull { it.value!!.dist }
 
         if (closestBlocker != null) {
-            val stopDistBeforeBlocker = stopDistRightDirection.filter { it.value == null || it.value!!.dist <= closestBlocker.value.dist }
-            return stopDistBeforeBlocker.keys + closestBlocker.key
+            return unboundedStops.plus(closestBlocker.toPair())
         }
 
-        return stopDistRightDirection.keys
+        return unboundedStops
     }
 
-    private fun getForwardSlideables(along: C2Slideable, startingAt: C2Slideable, going: Direction) : Set<C2Slideable> {
+    private fun getForwardSlideables(along: C2Slideable, startingAt: C2Slideable, going: Direction) : Map<C2Slideable, Constraint?> {
         val forward = when(going) {
             Direction.DOWN, Direction.RIGHT -> true
             Direction.LEFT, Direction.UP -> false

@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2.routing
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -116,6 +115,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val out = doer.createShortestPath()
 
             log.send("Found shortest path for $c: $out")
+            log.send("Using: ", out.getSlideables())
 
             val replacements = mutableMapOf<C2Slideable, C2Slideable>()
             val out2 = simplifyShortestPath(out, c2, doer, replacements)
@@ -125,6 +125,9 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
                 ensureSlackForConnection(out3.point, out3.prev, c, true)
             }
             c2.checkConsistency()
+
+            log.send("Horizontal Segments:", c2.getSlackOptimisation(Dimension.H).getAllSlideables())
+            log.send("Vertical Segments:", c2.getSlackOptimisation(Dimension.V).getAllSlideables())
 
             return out3
 
@@ -171,8 +174,8 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val s1 = third.point.getAlong()
             val s2 = r.point.getAlong()
 
-            val absDist = ssp.getAbsoluteDistance(s1, s2)
-            if (absDist == 0) {
+            val minDist = if (s1.minimumPosition < s2.minimumPosition) s1.minimumDistanceTo(s2) else s2.minimumDistanceTo(s1)
+            if (minDist == 0) {
                 // ok, these slideables can be merged then we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
                 val ns = so.mergeSlideables(s1, s2)!!

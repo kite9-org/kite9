@@ -41,7 +41,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 	@Test
 	public void test_29_2_ContainerSizes() throws Exception {
 		Glyph g1 = new Glyph("g1", "", "some quite long label", null, null);
-		Glyph g2 = new Glyph("g2", "", "another label", null, null);
+		Glyph g2 = new Glyph("g2", "", "another label\ntwo", null, null);
 		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
 		Glyph g4 = new Glyph("g4", "", "andon", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLabel("c1"), null);

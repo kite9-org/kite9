@@ -29,6 +29,7 @@ abstract class AbstractSSP<P : PathLocation<P>> : Logable {
                 generateSuccessivePaths(r, s)
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             throw NoFurtherPathException(e)
         }
     }

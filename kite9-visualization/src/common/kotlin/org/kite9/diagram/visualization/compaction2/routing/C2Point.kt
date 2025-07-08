@@ -18,6 +18,11 @@ class C2Point(along: C2Slideable, perp: C2Slideable, val d: Direction) : Pair<C2
         }
     }
 
+    fun samePlace(p: C2Point) : Boolean {
+        return (p.get(Dimension.H) == this.get(Dimension.H))
+                && (p.get(Dimension.V) == this.get(Dimension.V))
+    }
+
     override fun equals(o: Any?) : Boolean {
         return if (o is C2Point) {
             super.equals(o) && this.d == o.d
