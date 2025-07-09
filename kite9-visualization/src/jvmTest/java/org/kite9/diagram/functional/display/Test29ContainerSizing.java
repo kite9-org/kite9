@@ -179,10 +179,6 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		for (int i=0; i<3; i++) {
 			if (i==1) {
 				if (directedEdges && labels) {
-//					new Link(middle, tops.get(i), null, null, null, new TextLabel("breaker"), Direction.UP);
-//					new Link(middle, bottoms.get(i), null, null, null,null, Direction.DOWN);
-//					new Link(middle, lefts.get(i), null, null, null,null, Direction.LEFT);
-//					new Link(middle, rights.get(i), null, null, null,null, Direction.RIGHT);
 					new Link(middle, tops.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.UP);
 					new Link(middle, bottoms.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.DOWN);
 					new Link(middle, lefts.get(i), null, new TextLabel("straight"+i), null, new TextLabel("straight"+i), Direction.LEFT);

@@ -55,7 +55,11 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     private fun propagateIntersections(inside: C2Slideable?, outside: C2Slideable) {
         if (inside != null) {
             (intersections[inside] ?: emptySet()).forEach {
-                setIntersection(outside, it)
+                // you can't route on rectangulars outside the rectangle itself.
+                // but you can route on their intersections or internal buffer slideables
+                if (it.getRectangulars().isEmpty()) {
+                    setIntersection(outside, it)
+                }
             }
         }
     }
