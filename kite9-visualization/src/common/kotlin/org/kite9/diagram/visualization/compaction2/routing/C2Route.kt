@@ -53,6 +53,14 @@ class C2Route(r: C2Route?, val point: C2Point, val cost: C2Costing) : PathLocati
         return getPoints().flatMap { p -> listOf(p.b, p.a) }.distinct()
     }
 
+    fun explainRoute(): List<C2Route> {
+        return if (prev != null) {
+            this.prev.explainRoute().plus(this)
+        } else {
+            listOf(this)
+        }
+    }
+
     init {
         this.prev = simplifyRoute(r, point)
         this.coords = if (r == null) C2Coords.createInitialCoords(point) else C2Coords.createFollowingCoords(r.coords, point)

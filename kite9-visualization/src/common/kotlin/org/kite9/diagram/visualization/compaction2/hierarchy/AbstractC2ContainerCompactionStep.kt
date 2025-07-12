@@ -43,7 +43,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                     return
                 } else {
                     ss = newss
-                    c.setupContainerIntersections(ss, csx)
+                    //c.setupContainerIntersections(ss, csx)
 
                     // replace the group slideable sets so we use these instead
                     so.add(g, ss)

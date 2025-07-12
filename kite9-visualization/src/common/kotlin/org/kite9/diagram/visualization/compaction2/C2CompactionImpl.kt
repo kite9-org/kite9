@@ -39,6 +39,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
         items = intersections.getOrElse(s2) { emptySet() } + s1
         intersections[s2] = items
+        println("Intersecting ${s1.number} with ${s2.number}:  ${s1} ${s2}")
     }
 
     override fun getIntersections(s1: C2Slideable): Set<C2Slideable>? {
@@ -57,7 +58,11 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             (intersections[inside] ?: emptySet()).forEach {
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
-                if (it.getRectangulars().isEmpty()) {
+                val notRectangular = it.getRectangulars().isEmpty()
+                val theRectangulars = outside.getRectangulars().map { it.e }
+                val theOrbits = it.getOrbits().map { it.e }
+                val notOrbitForTheRectangular = theOrbits.intersect(theRectangulars).isEmpty()
+                if (notRectangular && notOrbitForTheRectangular) {
                     setIntersection(outside, it)
                 }
             }
@@ -74,18 +79,6 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         propagateIntersections(inside.r, outside.br!!)
     }
 
-    override fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
-        along.c.forEach {
-            val meetsLeft = (it.getIntersectionAnchors().find { anc -> (inside.d == anc.e) && anc.s.contains(Side.START) })
-            val meetsRight = (it.getIntersectionAnchors().find { anc -> (inside.d == anc.e) && anc.s.contains(Side.END) })
-            if (meetsLeft != null) {
-                setIntersection(it, inside.l)
-            }
-            if (meetsRight != null) {
-                setIntersection(it, inside.r)
-            }
-        }
-    }
     override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
         a.getAll().forEach {
             val buffer = it.getOrbits().isNotEmpty()

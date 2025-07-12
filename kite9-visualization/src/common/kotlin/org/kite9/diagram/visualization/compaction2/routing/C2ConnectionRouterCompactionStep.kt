@@ -116,6 +116,8 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
             log.send("Found shortest path for $c: $out")
             log.send("Using: ", out.getSlideables())
+            log.send("Route", out.explainRoute());
+
 
             val replacements = mutableMapOf<C2Slideable, C2Slideable>()
             val out2 = simplifyShortestPath(out, c2, doer, replacements)

@@ -35,30 +35,27 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
         containerDepth)
 
     fun addTurn(d: CostFreeTurn) : C2Costing {
-        return if (this.costFreeTurn == null) {
-            C2Costing(this, costFreeTurn = d)
-        } else if (d == this.costFreeTurn) {
+        return if (d == this.costFreeTurn) {
             // complete 180
-            C2Costing(this, turns = this.turns + 2, costFreeTurn = null)
+            C2Costing(this, turns = this.turns + 2, costFreeTurn = d)
         } else {
-            // dog-leg that paid off as there was no intervening distance cost
-            C2Costing(this, costFreeTurn = null)
+            // currently just a dog-leg or straight, count as zero
+            C2Costing(this, costFreeTurn = d)
         }
     }
 
     fun addDistance(stride: Int, left: Int, expensive: Boolean) : C2Costing {
-        val cft = if (this.costFreeTurn != null) 1 else 0
         val travelledDistance = this.totalWeightedDistance + (stride * containerDepth)
         val expensiveDistance = this.expensiveAxisDistance + if (expensive) stride else 0
         val possibleDistance = max(travelledDistance + left, this.minimumPossibleDistance)
-        val turns = if (stride > 0) { this.turns + cft } else { this.turns }
-        val costFreeTurn = if (stride > 0) { null } else { this.costFreeTurn }
+        val newCostFreeTurn = if (stride > 0) { null } else { this.costFreeTurn }
+        val newTurns = if ((this.costFreeTurn != null) && (stride > 0)) this.turns + 1 else this.turns
         return C2Costing(this,
             minimumPossibleDistance = possibleDistance,
             totalDistance = travelledDistance,
-            expensiveAxisDistance = expensiveDistance,
-            turns = turns,
-            costFreeTurn = costFreeTurn)
+            turns = newTurns,
+            costFreeTurn = newCostFreeTurn,
+            expensiveAxisDistance = expensiveDistance)
     }
 
     fun addStep(): C2Costing {

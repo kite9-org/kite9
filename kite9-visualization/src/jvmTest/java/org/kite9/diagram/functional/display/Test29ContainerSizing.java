@@ -202,7 +202,9 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 			}
 		}
 
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("dia", HelpMethods.listOf(middle, top, left, right, bottom), l, null);
+		Context uber = new Context("uber", HelpMethods.listOf(middle, top, left, right, bottom), true, null, l);
+
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("dia", HelpMethods.listOf(uber), l, null);
 
 		renderDiagram(d1);
 	}

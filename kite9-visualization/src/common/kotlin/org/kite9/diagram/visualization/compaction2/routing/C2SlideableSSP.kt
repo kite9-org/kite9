@@ -99,10 +99,10 @@ class C2SlideableSSP(
             leavers.forEach { k ->
                 if (r.coords.isInBounds(k.key, d)) {
                     val p = C2Point(along, k.key, d)
-                    val travelledDistance = cost2.totalWeightedDistance + r.coords.distanceTo(p)
+                    val stride = r.coords.distanceTo(p)
                     val possibleRemainingDistance = getMinimumRemainingDistance(k.key)
                     val expensive = expensiveDirection(p)
-                    val newCost = cost2.addDistance(travelledDistance, possibleRemainingDistance, expensive)
+                    val newCost = cost2.addDistance(stride, possibleRemainingDistance, expensive)
                     val r3 = C2Route(r, p, newCost)
                     if (s.add(r3)) {
                         log.send("Added (${k.value}): $r3")

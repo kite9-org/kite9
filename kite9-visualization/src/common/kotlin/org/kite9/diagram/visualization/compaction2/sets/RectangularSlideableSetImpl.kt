@@ -61,12 +61,6 @@ data class RectangularSlideableSetImpl(
                 C2Slideable(so, l.dimension, g, d, setOf(Side.END)))
         }
 
-        val c = if (d.getParent() != null) {
-
-        } else {
-            null
-        }
-
         val size = l.minimumDistanceTo(r)
 
         so.ensureMinimumDistance(bl, l, margin.first / 2)
@@ -75,7 +69,6 @@ data class RectangularSlideableSetImpl(
             so.ensureMinimumDistance(l, it, size / 2)
             so.ensureMinimumDistance(it, r, size / 2)
         }
-
 
         val out = RoutableSlideableSetImpl(
             intersections,
