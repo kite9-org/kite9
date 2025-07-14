@@ -60,10 +60,10 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 	
 	@Test
 	public void test_29_3_LikeASequence() throws Exception {
-		Glyph g1 = new Glyph("g1", "", "method method method 1", null, null);
+		Glyph g1 = new Glyph("g1", "", "method \nmethod method 1", null, null);
 		Glyph g2 = new Glyph("g2", "", "method method method 2", null, null);
-		Glyph g3 = new Glyph("g3", "", "method method method 3", null, null);
-		Glyph g4 = new Glyph("g4", "", "method method method 4", null, null);
+		Glyph g3 = new Glyph("g3", "", "method \nmethod\n method 3", null, null);
+		Glyph g4 = new Glyph("g4", "", "method \nmethod \nmethod \n4", null, null);
 		Glyph g5 = new Glyph("g5", "", "method method method 5", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLabel("c1"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLabel("c2"), null);

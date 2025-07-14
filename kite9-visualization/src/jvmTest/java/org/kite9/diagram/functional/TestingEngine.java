@@ -355,7 +355,7 @@ public class TestingEngine extends TestingHelp {
 				setColour(s, g);
 				g.drawLine(20, s.getMinimumPosition() * 10 + 30, xSize * 10 + 40, s.getMinimumPosition() * 10 + 30);
 				nextCol[0]++;
-				g.drawString("v" + s.getNumber(), 0, s.getMinimumPosition() * 10 + 20);
+				g.drawString("v" + s.getNumber(), new Random().nextInt(20), s.getMinimumPosition() * 10 + 15+new Random().nextInt(10));
 				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 20);
 				Set<C2Slideable> is = c2.getIntersections(s);
 				if (is != null) {

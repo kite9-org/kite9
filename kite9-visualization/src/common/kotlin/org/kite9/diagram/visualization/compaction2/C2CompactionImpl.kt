@@ -79,6 +79,18 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         propagateIntersections(inside.r, outside.br!!)
     }
 
+    override fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet) {
+        along.c.forEach {
+            val meetsLeft = (it.getIntersectionAnchors().find { anc -> (inside.d == anc.e) && anc.s.contains(Side.START) })
+            val meetsRight = (it.getIntersectionAnchors().find { anc -> (inside.d == anc.e) && anc.s.contains(Side.END) })
+            if (meetsLeft != null) {
+                setIntersection(it, inside.l)
+            }
+            if (meetsRight != null) {
+                setIntersection(it, inside.r)
+            }
+        }
+    }
     override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
         a.getAll().forEach {
             val buffer = it.getOrbits().isNotEmpty()
