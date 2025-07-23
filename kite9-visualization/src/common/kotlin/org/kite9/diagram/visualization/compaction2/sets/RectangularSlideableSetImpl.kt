@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.sets
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
+import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
@@ -43,7 +44,9 @@ data class RectangularSlideableSetImpl(
         }
     }
 
-    override fun wrapInRoutable(so: C2SlackOptimisation, g: LeafGroup?): RoutableSlideableSet {
+    override fun wrapInRoutable(c: C2Compaction, g: LeafGroup?): RoutableSlideableSet {
+        val so = c.getSlackOptimisation(l.dimension)
+
         val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.START)).toMutableSet())
         val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.END)).toMutableSet())
 
@@ -76,7 +79,17 @@ data class RectangularSlideableSetImpl(
             br)
 
         so.add(g, out)
-        so.compaction.propagateIntersections(this, out)
+
+        // see if we can set up intersections
+        if (g != null) {
+            val sox = c.getSlackOptimisation(l.dimension.other())
+            val thisx = sox.getSlideablesFor(this.d)
+            val outx = sox.getSlideablesFor(g)
+
+            if ((thisx != null) && (outx != null)) {
+                so.compaction.propagateIntersectionsRectangularToRoutable(this, thisx, out, outx)
+            }
+        }
         return out
     }
 

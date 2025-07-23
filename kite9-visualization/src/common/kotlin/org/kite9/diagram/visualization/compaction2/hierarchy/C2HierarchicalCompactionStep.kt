@@ -79,8 +79,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
                 val hss = checkCreateLeaf(hso, g, e, Dimension.H)
                 val vss = checkCreateLeaf(vso, g, e, Dimension.V)
-                c.setupRectangularIntersections(hss, vr)
-                c.setupRectangularIntersections(vss, hr)
+                c.setupLeafRectangularIntersections(hss, vss, hr, vr)
                 c.setupRoutableIntersections(hss, vss)
             } else {
                 // leaf node must be for container arrival

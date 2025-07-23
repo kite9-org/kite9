@@ -35,10 +35,12 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val ssx = sox.getSlideablesFor(g)
             completedContainers.forEach { container ->
                 val cs = checkCreateElement(container, d, so, null, g)!!
-                setupRectangularIntersections(cs, sox)
-                embedIntersectingSlideables(cs, so)
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
+                embedIntersectingSlideables(cs, so)
                 val newss = embed(c, so, cs, ss, d, g)
+                if (ssx != null) {
+                    c.propagateIntersectionsRoutableToRectangular(ss, ssx, cs, csx)
+                }
                 if (newss == null) {
                     return
                 } else {
@@ -52,23 +54,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                         c.setupRoutableIntersections(ss, ssx)
                     }
                 }
+                c.setupContainerRectangularIntersections(cs, csx)
             }
         }
     }
 
-    private fun setupRectangularIntersections(rect: RectangularSlideableSet, sox: C2SlackOptimisation) {
-        val d = rect.d
-        val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
-        val intersectsRight = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }
-
-        intersectsLeft.forEach {
-            sox.compaction.setIntersection(rect.l, it)
-        }
-
-        intersectsRight.forEach {
-            sox.compaction.setIntersection(rect.r, it)
-        }
-    }
 
     private fun embedIntersectingSlideables(rect: RectangularSlideableSet, so: C2SlackOptimisation) {
         val d = rect.d
@@ -98,15 +88,12 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         // now make sure that the rectangulars composing the routable are well-separated
         so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }
 
-        // ensure that the intersections of the inner routable also intersect the outer
-        c.propagateIntersections(inner, outer)
-
         val lg = if (g is LeafGroup) g else null
         if (outer.d is Diagram) {
             // you can't route around the edge of the diagram
             return null
         } else {
-            val out = outer.wrapInRoutable(so, lg)
+            val out = outer.wrapInRoutable(c, lg)
             so.contains(out, outer)
             return out
         }

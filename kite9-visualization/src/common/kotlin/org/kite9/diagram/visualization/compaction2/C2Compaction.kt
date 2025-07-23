@@ -13,7 +13,14 @@ interface C2Compaction {
      * Makes sure we know the points in a routable slideable set intersect with a routable slideable set going the
      * other way, and also the rectangular object within it.
      */
-    fun setupRectangularIntersections(along: RoutableSlideableSet, perp: RectangularSlideableSet)
+    fun setupLeafRectangularIntersections(ho: RoutableSlideableSet, vo: RoutableSlideableSet, hi: RectangularSlideableSet, vi: RectangularSlideableSet)
+
+    /**
+     * Similar to the above, but this does the same thing for containers.  The intersections of the container must meet the edges of the container
+     * in the other dimension.
+     */
+    fun setupContainerRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet)
+
 
     /**
      * This is used when wrapping containers into a RoutableSlideableSet.  The container's leavers
@@ -21,14 +28,13 @@ interface C2Compaction {
      */
     fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet)
 
-
     /**
      * When wrapping a routable slideable set in a rectangular (container), we need to make sure that the
      * slideables leaving the routable intersect with the rectangular slideables.
      */
-    fun propagateIntersections(inside: RoutableSlideableSet, outside: RectangularSlideableSet)
+    fun propagateIntersectionsRoutableToRectangular(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
 
-    fun propagateIntersections(inside: RectangularSlideableSet, outside: RoutableSlideableSet)
+    fun propagateIntersectionsRectangularToRoutable(hi: RectangularSlideableSet, vi: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet)
 
     /**
      * Used when we create the routable slideable sets, to join their corners.
