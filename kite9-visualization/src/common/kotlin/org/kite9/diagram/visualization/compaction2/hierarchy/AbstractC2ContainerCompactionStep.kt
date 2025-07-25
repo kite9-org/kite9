@@ -48,16 +48,13 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                         c.setupRoutableCorners(ssx, ssOuter)
                     }
 
-                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
                     c.setupContainerRectangularIntersections(cs, csx)
+                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
 
                     val newss = embedInContainerAndWrap(c, so, cs, ssInner, d, g)
                     if (newss != null) {
                         ssInner = newss
                         c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
-
-                        //c.setupContainerIntersections(ss, csx)
-
                         // replace the group slideable sets so we use these instead
                         so.add(g, ssInner)
                     }

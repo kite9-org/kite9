@@ -29,7 +29,7 @@ data class RoutableSlideableSetImpl(
         val con2 = c2.getContents(over)
         val newL = c2.mergeSlideables(over.bl, bl)
         val newR = c2.mergeSlideables(over.br, br)
-        val newC = c2.mergeSlideables(over.c, c)
+        val newC = emptySet<C2Slideable>() //c2.mergeSlideables(over.c, c)
         done = true
         val out = RoutableSlideableSetImpl(newC, newL, newR)
         c2.contains(out, con1.plus(con2))
