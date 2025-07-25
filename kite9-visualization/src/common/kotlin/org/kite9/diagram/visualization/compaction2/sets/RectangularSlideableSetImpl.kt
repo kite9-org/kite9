@@ -87,7 +87,7 @@ data class RectangularSlideableSetImpl(
             val outx = sox.getSlideablesFor(g)
 
             if ((thisx != null) && (outx != null)) {
-                so.compaction.propagateIntersectionsRectangularToRoutable(this, thisx, out, outx)
+                so.compaction.propagateIntersectionsRoutableWithRectangular(out, outx, this, thisx, )
             }
         }
         return out

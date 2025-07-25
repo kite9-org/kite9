@@ -266,11 +266,11 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return containment.getOrElse(outer) { emptyList() }.toList()
     }
 
-    fun getContainer(inner: RectangularSlideableSet) : RoutableSlideableSet {
+    fun getContainer(inner: RectangularSlideableSet) : RoutableSlideableSet? {
         val filtered = containment.filterValues { it.contains(inner) }
         return filtered
             .keys
-            .first()
+            .firstOrNull()
     }
 
     fun checkConsistency() {

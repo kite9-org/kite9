@@ -410,7 +410,7 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
     ) {
 
         val rectSS = so.getSlideablesFor(ra.e)!!
-        var orbitSS = so.getContainer(rectSS)
+        var orbitSS = so.getContainer(rectSS)!!
 
         if (ra.s == Side.START) {
             // left side
