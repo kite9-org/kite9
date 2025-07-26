@@ -43,7 +43,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
         items = intersections.getOrElse(s2) { emptySet() } + s1
         intersections[s2] = items
-        println("Intersecting ${s1.number}: ${s1}\n        with ${s2.number}:  ${s2}")
+        //println("Intersecting ${s1.number}: ${s1}\n        with ${s2.number}:  ${s2}")
     }
 
     override fun getIntersections(s1: C2Slideable): Set<C2Slideable>? {
@@ -123,7 +123,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     private fun setupContainerRectangularIntersections(rect: RectangularSlideableSet) {
         val sox = getSlackOptimisation(rect.l.dimension.other())
         val d = rect.d
-        println("Intersections for ${d}")
+        //println("Intersections for ${d}")
         val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
         val intersectsRight = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }
 

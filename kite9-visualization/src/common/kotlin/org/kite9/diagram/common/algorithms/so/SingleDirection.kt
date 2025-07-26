@@ -28,7 +28,7 @@ class SingleDirection(
         var on: SingleDirection? = null
     }
 
-    private fun update(newPos: Int, ci: Any?, changedConstraints: Boolean): Boolean {
+    private fun update(newPos: Int, ci: Any?, changedConstraints: Boolean, depth: Int): Boolean {
         return try {
             if (cacheItem === ci && ci is QuitOnChange && ci.on === this) {
                 // we've visited here before - return false if we move
@@ -41,35 +41,36 @@ class SingleDirection(
             val moved = cachePosition == null || if (increasing) cachePosition!! < newPos else cachePosition!! > newPos
             var ok = true
             if (moved || changedConstraints) {
-//				System.out.println("moving: "+this+" to "+newPos);
+
+                //println("moving: ${this} to ${newPos} depth ${depth}");
                 cachePosition = newPos
                 //				System.out.println("(fwd)");
                 for (fwd in forward.keys) {
                     val dist = forward[fwd]!!
                     val newPositionFwd = if (increasing) cachePosition!! + dist else cachePosition!! - dist
-                    ok = ok && fwd.update(newPositionFwd, ci, false)
+                    ok = ok && fwd.update(newPositionFwd, ci, false, depth+1)
                 }
 
-//				System.out.println("(bck)");
+				//println("(bck) depth ${depth}");
                 for (bck in backward.keys) {
                     val dist = backward[bck]
                     val newPositionBck = if (increasing) cachePosition!! - dist!! else cachePosition!! + dist!!
-                    ok = ok && bck.update(newPositionBck, ci, false)
+                    ok = ok && bck.update(newPositionBck, ci, false, depth+1)
                 }
-                //				System.out.println("(done)");
+                //println("(done) ${depth}");
                 if (ci == null) {
                     position = cachePosition!!
                     owner.changedPosition(position)
                 }
             }
             ok
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             throw LogicException("Couldn't adjust (SO): $this pos: $position cachePos: $cachePosition")
         }
     }
 
     fun increasePosition(pos: Int) {
-        update(pos, null, false)
+        update(pos, null, false, 0)
     }
 
     /**
@@ -78,7 +79,7 @@ class SingleDirection(
      */
     fun minimumDistanceTo(ci: SingleDirection, startPosition: Int): Int? {
         val cacheMarker = Any()
-        update(startPosition, cacheMarker, false)
+        update(startPosition, cacheMarker, false, 0)
         return if (ci.cacheItem !== cacheMarker) {
             // the two elements are independent, one doesn't push the other.
             null
@@ -92,9 +93,9 @@ class SingleDirection(
         if (existing == null || existing < distance) {
             val curPos: Int
             curPos = position
-            update(curPos, qoc, false)
+            update(curPos, qoc, false,0)
             val newPos = if (increasing) curPos + distance else curPos - distance
-            return to.update(newPos, qoc, true)
+            return to.update(newPos, qoc, true,0)
         }
         return true
     }
@@ -103,7 +104,7 @@ class SingleDirection(
         val existing = forward[to]
         if (existing == null || existing < distance) {
             forward[to] = distance
-            update(position, null, true)
+            update(position, null, true, 0)
         }
     }
 
@@ -111,7 +112,7 @@ class SingleDirection(
         val existing = backward[to]
         if (existing == null || existing > distance) {
             backward[to] = distance
-            update(position, null, true)
+            update(position, null, true,0 )
         }
     }
 
