@@ -70,42 +70,6 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
         return ss
     }
 
-    /**
-     * This is used to create a RoutableSlideableSet set from a LeafGroup
-     */
-    protected fun checkCreateLeaf(cso: C2SlackOptimisation, g: LeafGroup, de: Rectangular, d: Dimension) : RoutableSlideableSet {
-        val ss1 = cso.getSlideablesFor(g)
-
-
-        if (ss1 != null) {
-            return ss1
-        }
-
-        val ss2 = cso.getSlideablesFor(de)
-
-        if (ss2 != null) {
-            // we need to create these then
-            val l = ss2.l
-            val r = ss2.r
-            val c = C2Slideable(cso,d, g, de, setOf(Side.START, Side.END))
-            val bl = C2Slideable(cso, d, setOf(OrbitAnchor(de, Side.START)))
-            val br = C2Slideable(cso, d, setOf(OrbitAnchor(de, Side.END)))
-            val margin = getMargin(d, de)
-            cso.ensureMinimumDistance(bl, l ,margin.first / 2)
-            cso.ensureMinimumDistance(r, br, margin.second / 2)
-            ensureCentreSlideablePosition(cso, ss2, c)
-            val out = RoutableSlideableSetImpl(setOfNotNull(c), bl, br)
-            cso.contains(out, ss2)
-            cso.add(g, out)
-            log.send("Created RoutableSlideableSetImpl for $de: ", out.getAll())
-            return out
-
-        } else {
-            throw Kite9ProcessingException("Should have been content here")
-        }
-    }
-
-
     private fun checkCreateElementContentItems(
         cso: C2SlackOptimisation,
         de: Container,

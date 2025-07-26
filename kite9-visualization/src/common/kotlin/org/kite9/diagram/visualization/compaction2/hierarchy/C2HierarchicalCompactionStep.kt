@@ -77,8 +77,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val hr = checkCreateElement(e, Dimension.H, hso, null, g)!!
                 val vr = checkCreateElement(e, Dimension.V, vso, null, g)!!
 
-                val hss = checkCreateLeaf(hso, g, e, Dimension.H)
-                val vss = checkCreateLeaf(vso, g, e, Dimension.V)
+                val hss = hr.wrapInRoutable(c, g)
+                val vss = vr.wrapInRoutable(c, g)
                 c.setupLeafRectangularIntersections(hss, vss, hr, vr)
                 c.setupRoutableIntersections(hss, vss)
             } else {
