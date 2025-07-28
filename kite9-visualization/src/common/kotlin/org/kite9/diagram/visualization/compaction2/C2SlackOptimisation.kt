@@ -51,7 +51,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     private val positionedMap: MutableMap<Positioned, RectangularSlideableSet> = HashMap()
     private val groupMap: MutableMap<Group, RoutableSlideableSet> = HashMap()
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
-    private val containment: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
+    private val containment1: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
+    private val containment2: MutableMap<RectangularSlideableSet, RoutableSlideableSet> = HashMap()
     private var transitiveDistanceMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>> = HashMap()
     private val laneGroups = mutableSetOf<Set<C2Slideable>>()
 
@@ -180,7 +181,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             val ssNew : SlideableSet<*> = it.replace(sOld1, sNew).replace(sOld2, sNew)
             removeFromSlideableMap(it)
             updateSlideableMap(ssNew)
-            updateContainment(it, ssNew)
+            updateContainment1(it, ssNew)
+            updateContainment2(it, ssNew)
 
             if (ssNew is RectangularSlideableSet) {
                 val toReplaceDiagramElements = positionedMap.filter { (_, v) -> v == it }.keys
@@ -194,24 +196,41 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
-    private fun updateContainment(old: SlideableSet<*>, new: SlideableSet<*>) {
+    private fun updateContainment1(old: SlideableSet<*>, new: SlideableSet<*>) {
         if ((old is RoutableSlideableSet) && (new is RoutableSlideableSet)) {
             // replace key
-            val contains = containment[old]
+            val contains = containment1[old]
             if (contains != null) {
-                containment[new] = contains
-                containment.remove(old)
+                containment1[new] = contains
+                containment1.remove(old)
             }
         }
 
         if (new is RectangularSlideableSet) {
-            containment.values.forEach {
+            containment1.values.forEach {
                 val i = it.indexOf(old)
                 if (i > -1) {
                     it[i] = new
                 }
             }
         }
+    }
+
+    private fun updateContainment2(old: SlideableSet<*>, new: SlideableSet<*>) {
+        if ((old is RectangularSlideableSet) && (new is RectangularSlideableSet)) {
+            // replace key
+            containment2[new] == containment2[old]
+            containment2.remove(old)
+        } else if ((old is RoutableSlideableSet) && (new is RoutableSlideableSet)) {
+            for ((key, value) in containment2) {
+                if (value == old) {
+                    containment2[key] = new
+                }
+            }
+        } else {
+            throw LogicException("Type mismatch")
+        }
+
     }
 
     fun add(de: Rectangular, ss: RectangularSlideableSet) {
@@ -249,25 +268,37 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
+    fun contains(outer: RectangularSlideableSet, inner: RoutableSlideableSet) {
+        if (containment2.containsKey(outer)) {
+            throw LogicException("Already set containment")
+        }
+
+        containment2[outer] = inner
+    }
+
     fun contains(outer: RoutableSlideableSet, inner: RectangularSlideableSet) {
-        val contents = containment.getOrPut(outer) { mutableListOf() }
+        val contents = containment1.getOrPut(outer) { mutableListOf() }
         contents.add(inner)
         log.send("Containment: $outer has contents", contents)
     }
 
     fun contains(outer: RoutableSlideableSet, all: List<RectangularSlideableSet>) {
-        val contents = containment.getOrPut(outer) { mutableListOf() }
+        val contents = containment1.getOrPut(outer) { mutableListOf() }
         contents.clear()
         contents.addAll(all)
         log.send("Containment: $outer has contents", contents)
     }
 
     fun getContents(outer: RoutableSlideableSet) : List<RectangularSlideableSet> {
-        return containment.getOrElse(outer) { emptyList() }.toList()
+        return containment1.getOrElse(outer) { emptyList() }.toList()
+    }
+
+    fun getContents(outer: RectangularSlideableSet) : RoutableSlideableSet? {
+        return containment2.get(outer)
     }
 
     fun getContainer(inner: RectangularSlideableSet) : RoutableSlideableSet? {
-        val filtered = containment.filterValues { it.contains(inner) }
+        val filtered = containment1.filterValues { it.contains(inner) }
         return filtered
             .keys
             .firstOrNull()

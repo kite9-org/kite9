@@ -32,27 +32,20 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             val so = c.getSlackOptimisation(d)
             val sox = c.getSlackOptimisation(d.other())
             var ssInner = so.getSlideablesFor(g)!!   // the routable inside the container
-            val lg = if (g is LeafGroup) g else null
 
             completedContainers.forEach { container ->
                 // these are the container itself
                 val cs = checkCreateElement(container, d, so, null, g)!!
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
                 ensureRectangularEmbedding(cs, so)
+                c.setupContainerRectangularIntersections(cs, csx)
 
-                // the routeable outside the container
-                val ssx = sox.getContainer(csx)
+                // the routable inside the container
+                val ssx1 = sox.getContents(csx)
 
-                if (ssx != null) {
-                    c.setupRoutableCorners(ssx, ssInner)
-
-                    val ssOuter = so.getContainer(cs)
-                    if (ssOuter != null) {
-                        c.setupRoutableCorners(ssx, ssOuter)
-                    }
-
-                    c.setupContainerRectangularIntersections(cs, csx)
-                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
+                if (ssx1 != null) {
+                    c.setupRoutableCorners(ssx1, ssInner)
+                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx1, cs, csx)
                 }
 
                 val newss = embedInContainerAndWrap(c, so, cs, ssInner, d, g)
@@ -61,8 +54,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                     so.add(g, ssInner)
                 }
 
-                if (ssx != null) {
-                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
+                // routable outside the container
+                val ssx2 = sox.getContainer(csx)
+                if (ssx2 != null) {
+                    c.setupRoutableCorners(ssx2, ssInner)
+                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx2, cs, csx)
                 }
 
             }
@@ -88,7 +84,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
     }
 
     private fun embedInContainerAndWrap(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet? {
-
+        so.contains(outer, inner)
         val margin = getMargin(d, outer.d)
 
         // first, ensure the buffer slideables are well-separated
@@ -104,6 +100,9 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             return null
         } else {
             val out = outer.wrapInRoutable(c, lg)
+            if (out != null) {
+                so.contains(out, outer)
+            }
             return out
         }
     }

@@ -80,6 +80,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val hss = hr.wrapInRoutable(c, g)
                 val vss = vr.wrapInRoutable(c, g)
                 if ((hss != null) && (vss != null)) {
+                    hso.contains(hss, hr)
+                    vso.contains(vss, vr)
                     c.setupLeafRectangularIntersections(hss, vss, hr, vr)
                     c.setupRoutableIntersections(hss, vss)
                 }
