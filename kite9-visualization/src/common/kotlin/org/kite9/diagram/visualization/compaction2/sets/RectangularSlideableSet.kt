@@ -14,7 +14,7 @@ interface RectangularSlideableSet : SlideableSet<RectangularSlideableSet> {
 
     fun getRectangularSlideables(): Collection<C2Slideable>
 
-    fun wrapInRoutable(c: C2Compaction, g: LeafGroup?) : RoutableSlideableSet
+    fun wrapInRoutable(c: C2Compaction, g: LeafGroup?) : RoutableSlideableSet?
 
 
 }

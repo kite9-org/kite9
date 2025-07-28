@@ -44,11 +44,15 @@ data class RectangularSlideableSetImpl(
         }
     }
 
-    override fun wrapInRoutable(c: C2Compaction, g: LeafGroup?): RoutableSlideableSet {
+    override fun wrapInRoutable(c: C2Compaction, g: LeafGroup?): RoutableSlideableSet? {
         val so = c.getSlackOptimisation(l.dimension)
         val existing = so.getContainer(this)
         if (existing != null) {
             return existing
+        }
+
+        if (this.d.getParent() == null) {
+            return null
         }
 
         val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.START)).toMutableSet())

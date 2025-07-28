@@ -31,13 +31,16 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         if (completedContainers.isNotEmpty()) {
             val so = c.getSlackOptimisation(d)
             val sox = c.getSlackOptimisation(d.other())
-            var ssInner = so.getSlideablesFor(g)!!
+            var ssInner = so.getSlideablesFor(g)!!   // the routable inside the container
+            val lg = if (g is LeafGroup) g else null
 
             completedContainers.forEach { container ->
+                // these are the container itself
                 val cs = checkCreateElement(container, d, so, null, g)!!
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
                 ensureRectangularEmbedding(cs, so)
 
+                // the routeable outside the container
                 val ssx = sox.getContainer(csx)
 
                 if (ssx != null) {
@@ -50,15 +53,18 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
                     c.setupContainerRectangularIntersections(cs, csx)
                     c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
-
-                    val newss = embedInContainerAndWrap(c, so, cs, ssInner, d, g)
-                    if (newss != null) {
-                        ssInner = newss
-                        c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
-                        // replace the group slideable sets so we use these instead
-                        so.add(g, ssInner)
-                    }
                 }
+
+                val newss = embedInContainerAndWrap(c, so, cs, ssInner, d, g)
+                if (newss != null) {
+                    ssInner = newss
+                    so.add(g, ssInner)
+                }
+
+                if (ssx != null) {
+                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx, cs, csx)
+                }
+
             }
         }
     }
@@ -97,7 +103,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             // you can't route around the edge of the diagram
             return null
         } else {
-            val out = so.getContainer(outer)
+            val out = outer.wrapInRoutable(c, lg)
             return out
         }
     }

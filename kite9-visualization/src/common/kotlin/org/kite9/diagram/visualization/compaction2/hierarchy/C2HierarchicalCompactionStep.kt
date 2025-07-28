@@ -79,8 +79,10 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
                 val hss = hr.wrapInRoutable(c, g)
                 val vss = vr.wrapInRoutable(c, g)
-                c.setupLeafRectangularIntersections(hss, vss, hr, vr)
-                c.setupRoutableIntersections(hss, vss)
+                if ((hss != null) && (vss != null)) {
+                    c.setupLeafRectangularIntersections(hss, vss, hr, vr)
+                    c.setupRoutableIntersections(hss, vss)
+                }
             } else {
                 // leaf node must be for container arrival
                 val f = g.container!!

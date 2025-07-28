@@ -59,12 +59,6 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             }
 
             log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
-
-            val lg = if (topGroup is LeafGroup) topGroup else null
-            if (de.getParent() != null) {
-                val ssr = ss!!.wrapInRoutable(cso.compaction, lg)
-                cso.contains(ssr, ss)
-            }
         }
 
         return ss
