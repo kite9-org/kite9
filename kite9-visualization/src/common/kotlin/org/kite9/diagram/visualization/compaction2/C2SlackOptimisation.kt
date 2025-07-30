@@ -391,7 +391,11 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
                             if ((fk != null) && (kt != null)) {
                                 if (kt.forward == fk.forward) {
                                     val kft = kt + fk
-                                    fromMap[t] = kft.max(ft)
+                                    try {
+                                        fromMap[t] = kft.max(ft)
+                                    } catch (e: LogicException) {
+                                        throw LogicException(e.message + "with: \n ${f} \n ${t}")
+                                    }
                                 }
                             }
                         }

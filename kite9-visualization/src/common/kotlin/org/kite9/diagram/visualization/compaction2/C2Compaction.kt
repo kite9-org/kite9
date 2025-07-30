@@ -21,13 +21,6 @@ interface C2Compaction {
      */
     fun setupContainerRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet)
 
-
-    /**
-     * This is used when wrapping containers into a RoutableSlideableSet.  The container's leavers
-     * must intersect with the RoutableSlideableSet
-     */
-    //fun setupContainerIntersections(along: RoutableSlideableSet, inside: RectangularSlideableSet)
-
     /**
      * When wrapping a routable slideable set in a rectangular (container), we need to make sure that the
      * slideables leaving the routable intersect with the rectangular slideables.
@@ -37,9 +30,8 @@ interface C2Compaction {
     /**
      * Used when we create the routable slideable sets, to join their corners.
      */
-    fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet)
+    fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet)
 
-    fun setupRoutableCorners(a: RoutableSlideableSet, b: RoutableSlideableSet)
     /**
      * This is used when slideables merge
      */

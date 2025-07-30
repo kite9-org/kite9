@@ -108,18 +108,6 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         propagateIntersections(vo.r, vi.br)
     }
 
-//    override fun propagateIntersectionsRectangularToRoutable(
-//        hi: RectangularSlideableSet,
-//        vi: RectangularSlideableSet,
-//        ho: RoutableSlideableSet,
-//        vo: RoutableSlideableSet
-//    ) {
-//        propagateIntersections(hi.l, ho.bl)
-//        propagateIntersections(hi.r, ho.br)
-//        propagateIntersections(vi.l, vo.bl)
-//        propagateIntersections(vi.r, vo.br)
-//    }
-
     private fun setupContainerRectangularIntersections(rect: RectangularSlideableSet) {
         val sox = getSlackOptimisation(rect.l.dimension.other())
         val d = rect.d
@@ -136,51 +124,49 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
-    private fun setupRoutableIntersections(a: C2Slideable) {
-        val okIntersect = a.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) || anc.s.contains(Side.END) }.isNotEmpty()
-
-    }
+//    override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
+//        a.getAll().forEach {
+//            val buffer = it.getOrbits().isNotEmpty()
+//            if (b.bl != null) {
+//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
+//                if (buffer || okIntersect) {
+//                    setIntersection(it, b.bl!!)
+//                }
+//            }
+//            if (b.br != null) {
+//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
+//                if (buffer || okIntersect) {
+//                    setIntersection(it, b.br!!)
+//                }
+//            }
+//        }
+//
+//        b.getAll().forEach {
+//            val buffer = it.getOrbits().isNotEmpty()
+//            if (a.bl != null) {
+//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
+//                if (buffer || okIntersect) {
+//                    setIntersection(it, a.bl!!)
+//                }
+//            }
+//            if (a.br != null) {
+//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
+//                if (buffer || okIntersect) {
+//                    setIntersection(it, a.br!!)
+//                }
+//            }
+//        }
+//    }
 
     override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
-        a.getAll().forEach {
-            val buffer = it.getOrbits().isNotEmpty()
-            if (b.bl != null) {
-                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
-                if (buffer || okIntersect) {
-                    setIntersection(it, b.bl!!)
-                }
-            }
-            if (b.br != null) {
-                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
-                if (buffer || okIntersect) {
-                    setIntersection(it, b.br!!)
+        a.getAll().forEach { ai ->
+            b.getAll().forEach {bi ->
+                if ((ai.getOrbits().isNotEmpty()) || (bi.getOrbits().isNotEmpty())) {
+                    setIntersection(ai, bi)
                 }
             }
         }
-
-        b.getAll().forEach {
-            val buffer = it.getOrbits().isNotEmpty()
-            if (a.bl != null) {
-                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
-                if (buffer || okIntersect) {
-                    setIntersection(it, a.bl!!)
-                }
-            }
-            if (a.br != null) {
-                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
-                if (buffer || okIntersect) {
-                    setIntersection(it, a.br!!)
-                }
-            }
-        }
-    }
-
-    override fun setupRoutableCorners(a: RoutableSlideableSet, b: RoutableSlideableSet) {
-        setIntersection(a.bl!!, b.bl!!)
-        setIntersection(a.bl!!, b.br!!)
-        setIntersection(a.br!!, b.bl!!)
-        setIntersection(a.br!!, b.br!!)
-    }
+   }
 
     override fun replaceIntersections(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?) {
         if (intersections[sNew] != null) {

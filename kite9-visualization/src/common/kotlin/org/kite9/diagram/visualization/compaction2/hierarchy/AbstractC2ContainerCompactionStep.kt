@@ -44,7 +44,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                 val ssx1 = sox.getContents(csx)
 
                 if (ssx1 != null) {
-                    c.setupRoutableCorners(ssx1, ssInner)
+                    c.setupRoutableIntersections(ssx1, ssInner)
                     c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx1, cs, csx)
                 }
 
@@ -57,7 +57,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                 // routable outside the container
                 val ssx2 = sox.getContainer(csx)
                 if (ssx2 != null) {
-                    c.setupRoutableCorners(ssx2, ssInner)
+                    c.setupRoutableIntersections(ssx2, ssInner)
                     c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx2, cs, csx)
                 }
 
