@@ -38,7 +38,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                 val cs = checkCreateElement(container, d, so, null, g)!!
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
                 ensureRectangularEmbedding(cs, so)
-                c.setupContainerRectangularIntersections(cs, csx)
+                c.setupRectangularIntersections(cs, csx)
 
                 // the routable inside the container
                 val ssx1 = sox.getContents(csx)

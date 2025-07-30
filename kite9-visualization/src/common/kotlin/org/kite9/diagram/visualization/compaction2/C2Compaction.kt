@@ -10,19 +10,13 @@ interface C2Compaction {
     fun getDiagram(): Diagram
 
     /**
-     * Makes sure we know the points in a routable slideable set intersect with a routable slideable set going the
-     * other way, and also the rectangular object within it.
+     * Around a rectangular (e.g. container or glyph) the intersection slideables of one dimension should meet
+     * the rectangular slideables of the other.
      */
-    fun setupLeafRectangularIntersections(ho: RoutableSlideableSet, vo: RoutableSlideableSet, hi: RectangularSlideableSet, vi: RectangularSlideableSet)
+    fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet)
 
     /**
-     * Similar to the above, but this does the same thing for containers.  The intersections of the container must meet the edges of the container
-     * in the other dimension.
-     */
-    fun setupContainerRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet)
-
-    /**
-     * When wrapping a routable slideable set in a rectangular (container), we need to make sure that the
+     * When wrapping a routable slideable set in a rectangular (container or glyph), we need to make sure that the
      * slideables leaving the routable intersect with the rectangular slideables.
      */
     fun propagateIntersectionsRoutableWithRectangular(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
@@ -36,8 +30,6 @@ interface C2Compaction {
      * This is used when slideables merge
      */
     fun replaceIntersections(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?)
-
-    fun setIntersection(s1: C2Slideable, s2: C2Slideable)
 
     fun getIntersections(s1: C2Slideable) : Set<C2Slideable>?
 

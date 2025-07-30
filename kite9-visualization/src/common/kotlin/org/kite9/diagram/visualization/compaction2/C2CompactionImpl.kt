@@ -33,7 +33,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private val intersections = mutableMapOf<C2Slideable, Set<C2Slideable>>()
 
-    override fun setIntersection(s1: C2Slideable, s2: C2Slideable) {
+    private fun setIntersection(s1: C2Slideable, s2: C2Slideable) {
         if (s1.dimension == s2.dimension) {
             throw LogicException("Oops")
         }
@@ -50,24 +50,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return intersections[s1]
     }
 
-    override fun setupLeafRectangularIntersections(
-        ho: RoutableSlideableSet,
-        vo: RoutableSlideableSet,
-        hi: RectangularSlideableSet,
-        vi: RectangularSlideableSet
-    ) {
-        ho.c.forEach {
-            setIntersection(it, vi.l)
-            setIntersection(it, vi.r)
-        }
-
-        vo.c.forEach {
-            setIntersection(it, hi.l)
-            setIntersection(it, hi.r)
-        }
-    }
-
-    override fun setupContainerRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet) {
+    override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet) {
         setupContainerRectangularIntersections(hr)
         setupContainerRectangularIntersections(vr)
     }
@@ -76,15 +59,15 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private fun propagateIntersections(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) &&  (to!= null)) {
-            (intersections[from] ?: emptySet()).forEach {
+            (intersections[from] ?: emptySet()).forEach { slideable ->
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
-                val notRectangular = it.getRectangulars().isEmpty()
+                val notRectangular = slideable.getRectangulars().isEmpty()
                 val theRectangulars = to.getRectangulars().map { it.e }
-                val theOrbits = it.getOrbits().map { it.e }
-                val notOrbitForTheRectangular = theOrbits.intersect(theRectangulars).isEmpty()
+                val theOrbits = slideable.getOrbits().map { it.e }
+                val notOrbitForTheRectangular = theOrbits.intersect(theRectangulars.toSet()).isEmpty()
                 if (notRectangular && notOrbitForTheRectangular) {
-                    setIntersection(to, it)
+                    setIntersection(to, slideable)
                 }
             }
         }
@@ -124,43 +107,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
-//    override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
-//        a.getAll().forEach {
-//            val buffer = it.getOrbits().isNotEmpty()
-//            if (b.bl != null) {
-//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
-//                if (buffer || okIntersect) {
-//                    setIntersection(it, b.bl!!)
-//                }
-//            }
-//            if (b.br != null) {
-//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
-//                if (buffer || okIntersect) {
-//                    setIntersection(it, b.br!!)
-//                }
-//            }
-//        }
-//
-//        b.getAll().forEach {
-//            val buffer = it.getOrbits().isNotEmpty()
-//            if (a.bl != null) {
-//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.START) }.isNotEmpty()
-//                if (buffer || okIntersect) {
-//                    setIntersection(it, a.bl!!)
-//                }
-//            }
-//            if (a.br != null) {
-//                val okIntersect = it.getIntersectionAnchors().filter { anc -> anc.s.contains(Side.END) }.isNotEmpty()
-//                if (buffer || okIntersect) {
-//                    setIntersection(it, a.br!!)
-//                }
-//            }
-//        }
-//    }
-
-    override fun setupRoutableIntersections(a: RoutableSlideableSet, b: RoutableSlideableSet) {
-        a.getAll().forEach { ai ->
-            b.getAll().forEach {bi ->
+    override fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
+        h.getAll().forEach { ai ->
+            v.getAll().forEach { bi ->
                 if ((ai.getOrbits().isNotEmpty()) || (bi.getOrbits().isNotEmpty())) {
                     setIntersection(ai, bi)
                 }
