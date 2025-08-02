@@ -1,6 +1,7 @@
 package org.kite9.diagram.common.elements.factory
 
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 
@@ -38,5 +39,13 @@ abstract class AbstractDiagramElement(private val p: DiagramElement?) : DiagramE
 
     override fun getParent(): DiagramElement? {
         return p
+    }
+
+    override fun deepContains(d: DiagramElement): Boolean {
+        return if ((d.getDepth() > this.depth) && (this is Container)) {
+            getContents().firstOrNull { it == d || it.deepContains(d) } != null
+        } else {
+            false
+        }
     }
 }

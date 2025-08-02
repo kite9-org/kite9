@@ -25,4 +25,9 @@ interface DiagramElement : Comparable<DiagramElement>, Deterministic {
      * container will be the thing the terminator is in, whereas the parent will be the link.
      */
     fun getContainer() : Container?
+
+    /**
+     * Returns true if this element or any of its children contains d
+     */
+    fun deepContains(d: DiagramElement) : Boolean
 }

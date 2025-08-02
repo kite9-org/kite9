@@ -184,8 +184,14 @@ class C2SlideableSSP(
         }
 
         val rectangulars = perp.getRectAnchors()
-        val intersections = perp.getIntersectingElements()
-        val crossingRectangulars = rectangulars.filter { intersections.contains(it.e) }
+        val intersections = along.getIntersectingElements()
+
+        if (rectangulars.isEmpty() || intersections.isEmpty()) {
+            // short-cut the effort
+            return c
+        }
+
+        val crossingRectangulars = rectangulars.filter { r -> intersections.firstOrNull{ i -> r.e == i || r.e.deepContains(i) } != null }
 
         if (crossingRectangulars.isEmpty()) {
             return c
