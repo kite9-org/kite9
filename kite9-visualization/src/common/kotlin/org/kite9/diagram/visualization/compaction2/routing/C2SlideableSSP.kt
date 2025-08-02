@@ -66,13 +66,16 @@ class C2SlideableSSP(
         // straight line advancement
         advance(d, perp, r, along, s, r.cost.addStep())
 
-        val dc = Direction.rotateClockwise(d)
-        val nextScoreDc = r.cost.addTurn(CostFreeTurn.CLOCKWISE)
-        advance(dc, along, r, perp, s, nextScoreDc)
+        if (perp.getRectAnchors().isEmpty()) {
+            val dc = Direction.rotateClockwise(d)
+            val nextScoreDc = r.cost.addTurn(CostFreeTurn.CLOCKWISE)
+            advance(dc, along, r, perp, s, nextScoreDc)
 
-        val dac = Direction.rotateAntiClockwise(d)
-        val nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
-        advance(dac, along, r, perp, s, nextScoreDac)
+
+            val dac = Direction.rotateAntiClockwise(d)
+            val nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
+            advance(dac, along, r, perp, s, nextScoreDac)
+        }
     }
 
     private fun advance(
