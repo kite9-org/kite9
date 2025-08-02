@@ -295,11 +295,11 @@ public class TestingEngine extends TestingHelp {
 	}
 
 	private static void setColour(C2Slideable s, Graphics2D g) {
-		if (s.getOrbits().size() > 0) {
+		if (s.getOrbitAnchors().size() > 0) {
 			g.setColor(Color.GRAY);
-		} else if (s.getIntersectionAnchors().size() >0) {
+		} else if (s.getIntersectAnchors().size() >0) {
 			g.setColor(Color.BLACK);
-		} else if (s.getRectangulars().size() > 0) {
+		} else if (s.getRectAnchors().size() > 0) {
 			g.setColor(Color.RED);
 		} else if (s.getConnAnchors().size() > 0) {
 			g.setColor(Color.BLUE);

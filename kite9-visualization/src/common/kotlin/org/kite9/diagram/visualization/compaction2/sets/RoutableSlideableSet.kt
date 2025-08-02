@@ -13,7 +13,7 @@ interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
     override fun getAll() : Set<C2Slideable>
 
-    fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
+    fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation, alignIntersects: Boolean) : RoutableSlideableSet
 
     fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
 

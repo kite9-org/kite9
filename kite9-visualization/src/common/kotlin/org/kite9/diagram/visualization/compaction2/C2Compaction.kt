@@ -22,15 +22,18 @@ interface C2Compaction {
     fun propagateIntersectionsRoutableWithRectangular(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
 
     /**
-     * Used when we create the routable slideable sets, to join their corners.
+     * Used when we create the routable slideable sets, anything meeting an orbit slideable should form an intersection.
      */
     fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet)
 
     /**
-     * This is used when slideables merge
+     * This is used when slideables merge (in C2SlackOptimisation)
      */
     fun replaceIntersections(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?)
 
+    /**
+     * Used to retrieve intersections when we're doing routing.
+     */
     fun getIntersections(s1: C2Slideable) : Set<C2Slideable>?
 
     fun checkConsistency()

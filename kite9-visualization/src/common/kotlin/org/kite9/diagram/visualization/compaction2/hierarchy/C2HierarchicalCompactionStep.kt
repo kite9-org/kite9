@@ -142,6 +142,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         val b = g.b
 
         val so = c.getSlackOptimisation(d)
+        val sox = c.getSlackOptimisation(d.other())
         val ha = so.getSlideablesFor(a)
         val hb = so.getSlideablesFor(b)
 
@@ -160,7 +161,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 }
 
                 null -> {
-                    hb.mergeWithOverlap(ha, so)
+                    val lr = g.axis.isLayoutRequired
+                    hb.mergeWithOverlap(ha, so, true)
                 }
 
                 else -> {
@@ -204,11 +206,11 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         val bSlideables = cso.getRectangularsOnSide(Side.START, b)
 
         val aElements = aSlideables
-            .flatMap { r -> r.getRectangulars() }
+            .flatMap { r -> r.getRectAnchors() }
             .map { it.e }
 
         val bElements = bSlideables
-            .flatMap { r -> r.getRectangulars() }
+            .flatMap { r -> r.getRectAnchors() }
             .map { it.e }
 
         val distance = aElements.maxOfOrNull { ae ->

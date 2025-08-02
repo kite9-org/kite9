@@ -3,12 +3,10 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -29,16 +27,17 @@ class C2Slideable(
     var mergedInto : C2Slideable? = null
 
     /**
-     * This is for rectangular slideables
+     * This is for rectangular Slideables
      */
     constructor(so: C2SlackOptimisation,
                 dimension: Dimension,
                 de: Rectangular,
-                side: Side) : this(so, dimension, mutable2(setOf(RectAnchor(de, side))), emptySet())
+                side: Side,
+                p: Permeability) : this(so, dimension, mutable2(setOf(RectAnchor(de, side, p))), emptySet())
 
 
     /**
-     * For new connection slideables or Orbit Slideables
+     * For new connection slideables or orbit Slideables
      */
     constructor(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<Anchor<*>>) : this(so, dimension, mutable2(anchors), emptySet())
 
@@ -83,9 +82,9 @@ class C2Slideable(
     }
 
     override fun toString(): String {
-        val ints = intersecting()
-        val orbs = orbiting()
-        val rects = getRectangulars()
+        val ints = getIntersectingElements()
+        val orbs = getOrbitingElements()
+        val rects = getRectAnchors()
 
         val char = when {
             ints.isNotEmpty() -> 'I'
@@ -93,23 +92,31 @@ class C2Slideable(
             rects.isNotEmpty() -> 'R'
             else -> 'X'
         }
-        return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${intersecting()} orbits=${orbiting()} anchors=$anchors" else ""})"
+        return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${getIntersectingElements()} orbits=${getOrbitingElements()} anchors=$anchors" else ""})"
     }
 
-    fun intersecting() : Set<DiagramElement> {
+    fun getNonPermeables(d: Direction) : Set<DiagramElement> {
+        return anchors
+            .filterIsInstance<PermeableAnchor>()
+            .filter { !it.canCross(d) }
+            .map { it.e }
+            .toSet()
+    }
+
+    fun getIntersectingElements() : Set<DiagramElement> {
         return anchors
             .filterIsInstance<IntersectAnchor>()
             .map { it.e }
             .toSet()
     }
 
-    fun orbiting() : Set<DiagramElement> {
-        return getOrbits()
+    fun getOrbitingElements() : Set<DiagramElement> {
+        return getOrbitAnchors()
             .map { it.e }
             .toSet()
     }
 
-    fun getOrbits(): Set<OrbitAnchor> {
+    fun getOrbitAnchors(): Set<OrbitAnchor> {
         return anchors
             .filterIsInstance<OrbitAnchor>()
             .toSet()
@@ -121,77 +128,27 @@ class C2Slideable(
             .toSet()
     }
 
-    fun getIntersectionAnchors(): Set<IntersectAnchor> {
+    fun getIntersectAnchors(): Set<IntersectAnchor> {
         return anchors
             .filterIsInstance<IntersectAnchor>()
             .toSet()
     }
 
-    fun getRectangulars(): Set<RectAnchor> {
+    fun getRectAnchors(): Set<RectAnchor> {
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
 
 
     /**
      * Figures out what crossing this slideable would mean for a route.
-     * Note that if you're on an intersection slideable, you can't cross the rectangular
-     * that it's part of.
+     * Note that if an anchor is marked as non-permeable and you're on an intersection
+     * slideable for element e, then you can't cross if the anchor
+     * is for the same element.
      */
-    fun isBlocker(d: Direction, along: C2Slideable) : BlockType {
-        val rs = getRectangulars()
-        val out = rs
-            .map {
-                if (it.e is Container) {
-                    if (along.intersecting().contains(it.e)) {
-                        return BlockType.BLOCKING
-                    } else if (it.s != null) {
-                        if (alongDimension(d)) {
-                            when (it.e.getTraversalRule(d)) {
-                                BorderTraversal.ALWAYS -> if (it.s.isEntering(d)) BlockType.ENTERING_CONTAINER else BlockType.LEAVING_CONTAINER
-                                BorderTraversal.LEAVING -> if (it.s.isEntering(d)) BlockType.BLOCKING else  BlockType.LEAVING_CONTAINER
-                                BorderTraversal.PREVENT -> BlockType.BLOCKING
-                            }
-                        } else {
-                            BlockType.BLOCKING
-                        }
-                    } else {
-                        BlockType.BLOCKING
-                    }
-                } else {
-                    BlockType.NOT_BLOCKING
-                }
-
-            }
-
-        val out2 =  out.reduceOrNull { acc, v ->
-            when (acc) {
-                BlockType.BLOCKING -> BlockType.BLOCKING
-                BlockType.ENTERING_CONTAINER -> when (v) {
-                    BlockType.BLOCKING -> BlockType.BLOCKING
-                    BlockType.LEAVING_CONTAINER -> throw LogicException("Can't enter and leave!")
-                    else -> BlockType.ENTERING_CONTAINER
-                }
-                BlockType.LEAVING_CONTAINER -> when (v) {
-                    BlockType.BLOCKING -> BlockType.BLOCKING
-                    BlockType.ENTERING_CONTAINER -> throw LogicException("Can't enter and leave!")
-                    else -> BlockType.LEAVING_CONTAINER
-                }
-                BlockType.NOT_BLOCKING -> v
-            }
-        } ?: BlockType.NOT_BLOCKING
-
-        //println ("$d is $out2 on $this")
-
-        return out2
-    }
-
-    private fun alongDimension(d: Direction): Boolean {
-        return when (d) {
-            Direction.UP -> dimension == Dimension.V
-            Direction.DOWN ->  dimension == Dimension.V
-            Direction.LEFT -> dimension == Dimension.H
-            Direction.RIGHT -> dimension == Dimension.H
-        }
+    fun isBlocker(d: Direction, along: C2Slideable) : Boolean {
+        val intersectingElements = along.getIntersectingElements()
+        val nonPermeableElements = getNonPermeables(d)
+        return intersectingElements.intersect(nonPermeableElements).isNotEmpty()
     }
 
     fun replaceConnAnchors(ca: Set<ConnAnchor>) {
@@ -217,9 +174,14 @@ class C2Slideable(
         s.mergedInto = out
     }
 
-    fun addAnchor(a: ConnAnchor) {
+    fun addConnAnchor(a: ConnAnchor) {
         anchors.add(a)
     }
+
+    fun addBlockAnchor(a: BlockAnchor) {
+        anchors.add(a)
+    }
+
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

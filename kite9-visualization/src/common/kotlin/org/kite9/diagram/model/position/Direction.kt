@@ -1,5 +1,6 @@
 package org.kite9.diagram.model.position
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.position.Turn
 
 enum class Direction {
@@ -36,15 +37,6 @@ enum class Direction {
             return values()[ord]
         }
 
-        fun getDirection(s: String?): Direction? {
-            return if (s == null || s.trim { it <= ' ' }.length == 0) {
-                null
-            } else {
-                valueOf(s)
-            }
-        }
-
-
 		fun isHorizontal(d: Direction): Boolean {
             return d == LEFT || d == RIGHT
         }
@@ -52,6 +44,23 @@ enum class Direction {
 
 		fun isVertical(d: Direction): Boolean {
             return d == UP || d == DOWN
+        }
+
+
+        fun getDirection(d: Dimension, increasing: Boolean) : Direction {
+            return if (d == Dimension.V) {
+                if (increasing) {
+                    RIGHT
+                } else {
+                    LEFT
+                }
+            } else {
+                if (increasing) {
+                    DOWN
+                } else {
+                    UP
+                }
+            }
         }
     }
 }

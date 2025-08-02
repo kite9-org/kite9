@@ -180,7 +180,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             if (minDist == 0) {
                 // ok, these slideables can be merged then we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
-                val ns = so.mergeSlideables(s1, s2)!!
+                val ns = so.mergeCSlideables(s1, s2)!!
                 updateReplacements(s1, s2, ns, replacements)
 
                 // remove the second, rewrite the first
@@ -315,8 +315,8 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             }
 
             val ca = ConnAnchor(c, i.toFloat(), anchorType, side, connectedEnd, comingFrom, Direction.reverse(p.d))
-            p.getAlong().addAnchor(ca)
-            p.getPerp().addAnchor(ca)
+            p.getAlong().addConnAnchor(ca)
+            p.getPerp().addConnAnchor(ca)
             writeRoute(c, r.prev, i + 1, p.d)
         }
     }

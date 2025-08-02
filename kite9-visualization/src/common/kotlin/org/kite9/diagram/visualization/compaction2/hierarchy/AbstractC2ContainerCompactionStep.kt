@@ -7,6 +7,8 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.anchors.BlockAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.Permeability
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -34,6 +36,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             var ssInner = so.getSlideablesFor(g)!!   // the routable inside the container
 
             completedContainers.forEach { container ->
+                // make sure the inner orbitals can't be crossed by intersections
+                // on this container
+                ssInner.bl?.addBlockAnchor(BlockAnchor(container, Side.START, Permeability.DECREASING))
+                ssInner.br?.addBlockAnchor(BlockAnchor(container, Side.END, Permeability.INCREASING))
+
                 // these are the container itself
                 val cs = checkCreateElement(container, d, so, null, g)!!
                 val csx = checkCreateElement(container, d.other(), sox, null, g)!!
@@ -68,7 +75,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     private fun ensureRectangularEmbedding(rect: RectangularSlideableSet, so: C2SlackOptimisation) {
         val d = rect.d
-        val intersects = so.getAllSlideables().filter { it.intersecting().contains(d) }
+        val intersects = so.getAllSlideables().filter { it.getIntersectingElements().contains(d) }
         intersects.forEach {
             val tDist = getMinimumDistanceBetween(d, Side.START, d, Side.END, rect.l.dimension, null, false)
             so.ensureMinimumDistance(rect.l, it, (tDist/2.0).toInt())

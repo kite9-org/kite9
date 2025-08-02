@@ -6,15 +6,11 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.BlockType
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.Constraint
-import kotlin.math.max
 
 class C2SlideableSSP(
     val e: Connection,
@@ -70,17 +66,13 @@ class C2SlideableSSP(
         // straight line advancement
         advance(d, perp, r, along, s, r.cost.addStep())
 
-        if ((along.isBlocker(d, along) == BlockType.NOT_BLOCKING) && (perp.isBlocker(d, along) == BlockType.NOT_BLOCKING)) {
-            // turns ok if both axes are buffer slideable
-            val dc = Direction.rotateClockwise(d)
-            val nextScoreDc =  r.cost.addTurn(CostFreeTurn.CLOCKWISE)
-            advance(dc, along, r, perp, s, nextScoreDc)
+        val dc = Direction.rotateClockwise(d)
+        val nextScoreDc = r.cost.addTurn(CostFreeTurn.CLOCKWISE)
+        advance(dc, along, r, perp, s, nextScoreDc)
 
-            val dac = Direction.rotateAntiClockwise(d)
-            val nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
-            advance(dac, along, r, perp, s, nextScoreDac)
-        }
-
+        val dac = Direction.rotateAntiClockwise(d)
+        val nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
+        advance(dac, along, r, perp, s, nextScoreDac)
     }
 
     private fun advance(
@@ -174,7 +166,7 @@ class C2SlideableSSP(
      * Cost of crossing over another edge
      */
     private fun addCrossCost(cost: C2Costing, cbs: C2Slideable, newDepth: Int) : C2Costing {
-        val isCrossing = cbs.getRectangulars().isNotEmpty() || cbs.getConnAnchors().isNotEmpty()
+        val isCrossing = cbs.getRectAnchors().isNotEmpty() || cbs.getConnAnchors().isNotEmpty()
 
         return if (isCrossing) {
             cost.addCrossing(true, newDepth)
@@ -185,32 +177,24 @@ class C2SlideableSSP(
 
     private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing): C2Costing? {
         // this is approximate - might need improvement later
-        val blockType = perp.isBlocker(d, along)
-        val isOrbit = perp.getOrbits().isNotEmpty()
+        val blocking = perp.isBlocker(d, along)
 
-        return when (blockType) {
-            BlockType.NOT_BLOCKING -> {
-                if (isOrbit) {
-                    addCrossCost(c, perp, routeIn.cost.containerDepth)
-                }
+        if (blocking) {
+            return null // can't go this way
+        }
 
-                c
-            }
+        val rectangulars = perp.getRectAnchors()
+        val intersections = perp.getIntersectingElements()
+        val crossingRectangulars = rectangulars.filter { intersections.contains(it.e) }
 
-            BlockType.BLOCKING -> {
-                log.send("Can't move on from $perp going $d")
-                null
-            }
-
-            BlockType.ENTERING_CONTAINER -> {
-                val oldDepth = routeIn.cost.containerDepth
-                return addCrossCost(c, perp, oldDepth+1)
-            }
-
-            BlockType.LEAVING_CONTAINER -> {
-                val oldDepth = routeIn.cost.containerDepth
-                return addCrossCost(c, perp, oldDepth-1)
-            }
+        if (crossingRectangulars.isEmpty()) {
+            return c
+        } else if (crossingRectangulars.size == 1) {
+            val entering = crossingRectangulars.first().s.isEntering(d)
+            val oldDepth = routeIn.cost.containerDepth
+            return addCrossCost(c, perp, if (entering) oldDepth+1 else oldDepth -1)
+        } else {
+            throw LogicException("A slideable shouldn't be for multu")
         }
     }
 

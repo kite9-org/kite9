@@ -62,9 +62,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             (intersections[from] ?: emptySet()).forEach { slideable ->
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
-                val notRectangular = slideable.getRectangulars().isEmpty()
-                val theRectangulars = to.getRectangulars().map { it.e }
-                val theOrbits = slideable.getOrbits().map { it.e }
+                val notRectangular = slideable.getRectAnchors().isEmpty()
+                val theRectangulars = to.getRectAnchors().map { it.e }
+                val theOrbits = slideable.getOrbitAnchors().map { it.e }
                 val notOrbitForTheRectangular = theOrbits.intersect(theRectangulars.toSet()).isEmpty()
                 if (notRectangular && notOrbitForTheRectangular) {
                     setIntersection(to, slideable)
@@ -95,8 +95,8 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         val sox = getSlackOptimisation(rect.l.dimension.other())
         val d = rect.d
         //println("Intersections for ${d}")
-        val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
-        val intersectsRight = sox.getAllSlideables().filter { it.getIntersectionAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }
+        val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
+        val intersectsRight = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }
 
         intersectsLeft.forEach {
             sox.compaction.setIntersection(rect.l, it)
@@ -110,7 +110,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     override fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
         h.getAll().forEach { ai ->
             v.getAll().forEach { bi ->
-                if ((ai.getOrbits().isNotEmpty()) || (bi.getOrbits().isNotEmpty())) {
+                if ((ai.getOrbitAnchors().isNotEmpty()) || (bi.getOrbitAnchors().isNotEmpty())) {
                     setIntersection(ai, bi)
                 }
             }

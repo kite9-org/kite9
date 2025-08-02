@@ -99,7 +99,7 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
             }
         }
 
-        if (s.getRectangulars().isNotEmpty()) {
+        if (s.getRectAnchors().isNotEmpty()) {
             // this is the edge of a glyph - don't process
             return
         }
@@ -327,7 +327,7 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
 
     private fun getRectAnchor(perpConnAnchorMap: Map<ConnAnchor, C2Slideable>, ca: ConnAnchor, e: Positioned) : RectAnchor {
         val perpSlideable = perpConnAnchorMap.get(ca)!!
-        val rectAnchor = perpSlideable.getRectangulars().find { it.e == e }
+        val rectAnchor = perpSlideable.getRectAnchors().find { it.e == e }
         return rectAnchor!!
     }
 
@@ -340,7 +340,7 @@ class C2ConnectionFanningCompactionStep(cd: CompleteDisplayer, gp: GridPositione
      * that will be laned later.
      */
     private fun handleFanning(sIn: C2Slideable, so: C2SlackOptimisation, d: Dimension, soPerp: C2SlackOptimisation, perpConnAnchorMap: Map<ConnAnchor, C2Slideable>, splitters: MutableSet<C2Slideable>, branches: MutableMap<C2Slideable, C2Slideable>): C2Slideable {
-        if (sIn.getIntersectionAnchors().isEmpty()) {
+        if (sIn.getIntersectAnchors().isEmpty()) {
             // fanning is only applied at intersections
             return sIn
         }

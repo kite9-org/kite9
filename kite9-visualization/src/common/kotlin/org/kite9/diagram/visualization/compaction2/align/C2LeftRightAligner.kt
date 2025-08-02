@@ -5,8 +5,6 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.AlignedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.model.SizedRectangular
-import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction2.*
@@ -33,7 +31,7 @@ class C2LeftRightAligner : Aligner {
     }
 
     private fun getAlignStyle(sl: C2Slideable, d: Dimension) : AlignStyle? {
-        return sl.getRectangulars()
+        return sl.getRectAnchors()
             .asSequence()
             .map { it.e }
             .filterIsInstance<AlignedRectangular>()

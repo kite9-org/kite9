@@ -112,14 +112,14 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return out
     }
 
-    fun mergeSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
+    fun mergeCSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
         // slideables with the same groups can be merged
-        val mightMatch = s2.filter { it.intersecting().isNotEmpty()}.toMutableSet()
+        val mightMatch = s2.filter { it.getIntersectingElements().isNotEmpty()}.toMutableSet()
 
         val unchanged = s2.filter { !mightMatch.contains(it) }
 
         val out = s1.map { l ->
-            if (l.intersecting().isNotEmpty()) {
+            if (l.getIntersectingElements().isNotEmpty()) {
                 val matching = mightMatch.find { groupAlignment(it.intersectingGroups, l.intersectingGroups ) }
                 if (matching != null) {
                     mightMatch.remove(matching)
@@ -135,7 +135,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return out
     }
 
-    fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
+    fun mergeCSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         return mergeSlideablesInner(s1, s2)
     }
 
