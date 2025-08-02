@@ -24,16 +24,12 @@ data class RoutableSlideableSetImpl(
         return new
     }
 
-    override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation, alignIntersects: Boolean): RoutableSlideableSet {
+    override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
         val con1 = c2.getContents(this)
         val con2 = c2.getContents(over)
         val newL = c2.mergeCSlideables(over.bl, bl)
         val newR = c2.mergeCSlideables(over.br, br)
-        val newC = if (alignIntersects) {
-            c2.mergeCSlideables(over.c, c)
-        } else {
-            emptySet()
-        }
+        val newC = c2.mergeCSlideables(over.c, c)
 
         done = true
         val out = RoutableSlideableSetImpl(newC, newL, newR)

@@ -161,8 +161,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 }
 
                 null -> {
-                    val lr = g.axis.isLayoutRequired
-                    hb.mergeWithOverlap(ha, so, true)
+                    hb.mergeWithOverlap(ha, so)
                 }
 
                 else -> {
