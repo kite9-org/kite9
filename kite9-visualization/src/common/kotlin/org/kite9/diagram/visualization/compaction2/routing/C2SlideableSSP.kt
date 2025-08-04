@@ -11,6 +11,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.Constraint
+import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 
 class C2SlideableSSP(
     val e: Connection,
@@ -165,19 +166,6 @@ class C2SlideableSSP(
         return out
     }
 
-    /**
-     * Cost of crossing over another edge
-     */
-    private fun addCrossCost(cost: C2Costing, cbs: C2Slideable, newDepth: Int) : C2Costing {
-        val isCrossing = cbs.getRectAnchors().isNotEmpty() || cbs.getConnAnchors().isNotEmpty()
-
-        return if (isCrossing) {
-            cost.addCrossing(true, newDepth)
-        } else {
-            cost
-        }
-    }
-
     private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing): C2Costing? {
         // this is approximate - might need improvement later
         val blocking = perp.isBlocker(d, along)
@@ -188,25 +176,33 @@ class C2SlideableSSP(
 
         val rectangulars = perp.getRectAnchors()
         val intersections = along.getIntersectingElements()
+        val orbits = along.getOrbitingElements()
 
-        if (rectangulars.isEmpty() || intersections.isEmpty()) {
+        if (rectangulars.isEmpty() || (intersections.isEmpty() && orbits.isEmpty())) {
             // short-cut the effort
             return c
         }
 
-        val crossingRectangulars = rectangulars.filter { r -> intersections.firstOrNull{ i -> r.e == i || r.e.deepContains(i) } != null }
+        val crossingRectangulars = rectangulars.filter {
+            containsTheIntersection(intersections, it) || containsTheOrbit(orbits, it)
+        }
 
         if (crossingRectangulars.isEmpty()) {
             return c
         } else if (crossingRectangulars.size == 1) {
             val entering = crossingRectangulars.first().s.isEntering(d)
             val oldDepth = routeIn.cost.containerDepth
-            return addCrossCost(c, perp, if (entering) oldDepth+1 else oldDepth -1)
+            return c.addCrossing(true, if (entering) oldDepth+1 else oldDepth -1)
         } else {
-            throw LogicException("A slideable shouldn't be for multu")
+            throw LogicException("A slideable shouldn't be for multiple rectangulars")
         }
     }
 
+    private fun containsTheIntersection(intersections: Set<DiagramElement>, r: RectAnchor)
+        = intersections.firstOrNull { i -> r.e == i || r.e.deepContains(i) } != null
+
+    private fun containsTheOrbit(orbits: Set<DiagramElement>, r: RectAnchor)
+        = orbits.firstOrNull { o -> r.e.deepContains(o) } != null
 
     private fun hasHorizontalConstraint() : Boolean {
         return (direction != null) && Direction.isVertical(direction)
