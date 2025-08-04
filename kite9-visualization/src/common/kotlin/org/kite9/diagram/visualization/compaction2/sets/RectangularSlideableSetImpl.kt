@@ -10,7 +10,7 @@ import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 data class RectangularSlideableSetImpl(
-    override val d: Rectangular,
+    override val e: Rectangular,
     override val l: C2Slideable,
     override val r: C2Slideable,
     override val number: Int = C2SlackOptimisation.nextNumber()) : RectangularSlideableSet {
@@ -20,7 +20,7 @@ data class RectangularSlideableSetImpl(
     override fun replace(s: C2Slideable, with: C2Slideable): RectangularSlideableSet {
         done = true
         return RectangularSlideableSetImpl(
-            d,
+            e,
             if (l == s) with else l,
             if (r == s) with else r,
         )
@@ -51,25 +51,31 @@ data class RectangularSlideableSetImpl(
             return existing
         }
 
-        if (this.d.getParent() == null) {
+        if (this.e.getParent() == null) {
             return null
         }
 
-        val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.START)).toMutableSet())
-        val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(d, Side.END)).toMutableSet())
+        val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(e, Side.START)).toMutableSet())
+        val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(e, Side.END)).toMutableSet())
 
-        var margin = AbstractC2CompactionStep.getMargin(l.dimension, d)
+        var margin = AbstractC2CompactionStep.getMargin(l.dimension, e)
 
-        val intersections = if (d.getParent() == null) {
+        val intersections = if (e.getParent() == null) {
             // it's the diagram, no intersections needed.
             emptySet<C2Slideable>()
-        } else if (g != null) {
-            // it's not a container, one intersection through entire shape
-            setOf(C2Slideable(so, l.dimension, g, d, setOf(Side.START, Side.END)))
         } else {
-            setOf(
-                C2Slideable(so, l.dimension, g, d, setOf(Side.START)),
-                C2Slideable(so, l.dimension, g, d, setOf(Side.END)))
+            // first, check to see if we already have some intersections
+            val existing = so.getAllSlideables().filter { it.getIntersectAnchors().firstOrNull { it.e == this.e } != null }
+            if (existing.isNotEmpty()) {
+                existing.toSet()
+            } else if (g != null) {
+                // it's not a container, one intersection through entire shape
+                setOf(C2Slideable(so, l.dimension, g, e, setOf(Side.START, Side.END)))
+            } else {
+                setOf(
+                    C2Slideable(so, l.dimension, g, e, setOf(Side.START)),
+                    C2Slideable(so, l.dimension, g, e, setOf(Side.END)))
+            }
         }
 
         val size = l.minimumDistanceTo(r)
@@ -91,7 +97,7 @@ data class RectangularSlideableSetImpl(
         // see if we can set up intersections
         if (g != null) {
             val sox = c.getSlackOptimisation(l.dimension.other())
-            val thisx = sox.getSlideablesFor(this.d)
+            val thisx = sox.getSlideablesFor(this.e)
             val outx = sox.getSlideablesFor(g)
 
             if ((thisx != null) && (outx != null)) {
@@ -103,7 +109,7 @@ data class RectangularSlideableSetImpl(
 
     override fun toString(): String {
         return "RectangularSlideableSetImpl(number=$number" +
-                "\t d=$d,\n" +
+                "\t d=$e,\n" +
                 "\t l=${l.number},\n" +
                 "\t r=${r.number},\n" +
                 "\t done=$done)"

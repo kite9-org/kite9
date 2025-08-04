@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.labels
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -128,10 +127,10 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderC
 
     private fun ensureSeparated(above: Collection<RectangularSlideableSet?>, below: Collection<RectangularSlideableSet?>, d: Dimension, cso: C2SlackOptimisation) {
         above.filterNotNull().forEach {a ->
-            val deA = a.d
+            val deA = a.e
 
             below.filterNotNull().forEach { b ->
-                val deB = b.d
+                val deB = b.e
                 val dist = getMinimumDistanceBetween(deA, Side.END, deB, Side.START, d, null, true)
                 cso.ensureMinimumDistance(a.r, b.l, dist.toInt())
             }
@@ -139,10 +138,10 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderC
     }
 
     private fun ensureSeparateInternal(inside: Collection<RectangularSlideableSet?>, o: RectangularSlideableSet, d: Dimension, cso: C2SlackOptimisation) {
-        val deOut = o.d
+        val deOut = o.e
 
         inside.filterNotNull().forEach { i ->
-            val deIn = i.d
+            val deIn = i.e
             val distUp = getMinimumDistanceBetween(deOut, Side.START, deIn, Side.START, d, null, true)
             val distDown = getMinimumDistanceBetween(deIn, Side.END, deOut, Side.END, d, null, true)
             cso.ensureMinimumDistance(o.l, i.l, distUp.toInt())
@@ -182,7 +181,7 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderC
     ) {
         val from = left.r
         val to = right.l
-        val dist = getMinimumDistanceBetween(left.d, Side.END, right.d, Side.START, d, null, false)
+        val dist = getMinimumDistanceBetween(left.e, Side.END, right.e, Side.START, d, null, false)
         cso.ensureMinimumDistance(from, to, dist.toInt())
     }
 
@@ -194,7 +193,7 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderC
     ) {
         val from = outer.l
         val to = inner.l
-        val dist = getMinimumDistanceBetween(outer.d, Side.START, inner.d, Side.START, d, null, true)
+        val dist = getMinimumDistanceBetween(outer.e, Side.START, inner.e, Side.START, d, null, true)
         cso.ensureMinimumDistance(from, to, dist.toInt())
     }
 
@@ -206,7 +205,7 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderC
     ) {
         val from = inner.r
         val to = outer.r
-        val dist = getMinimumDistanceBetween(inner.d, Side.END, outer.d, Side.START, d, null, true)
+        val dist = getMinimumDistanceBetween(inner.e, Side.END, outer.e, Side.START, d, null, true)
         cso.ensureMinimumDistance(from, to, dist.toInt())
     }
 

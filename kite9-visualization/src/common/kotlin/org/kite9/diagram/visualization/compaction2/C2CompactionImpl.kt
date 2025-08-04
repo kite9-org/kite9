@@ -93,7 +93,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private fun setupContainerRectangularIntersections(rect: RectangularSlideableSet) {
         val sox = getSlackOptimisation(rect.l.dimension.other())
-        val d = rect.d
+        val d = rect.e
         //println("Intersections for ${d}")
         val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
         val intersectsRight = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }

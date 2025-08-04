@@ -56,7 +56,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
                 checkCreateElementContentItems(cso, de, d, de.getLayout(), ss, topGroup)
             }
 
-            log.send("Created RectangularSlideableSetImpl: ${ss.d}", ss.getAll())
+            log.send("Created RectangularSlideableSetImpl: ${ss.e}", ss.getAll())
         }
 
         return ss

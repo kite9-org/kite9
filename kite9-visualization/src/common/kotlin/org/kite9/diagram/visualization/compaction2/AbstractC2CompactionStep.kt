@@ -67,8 +67,8 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         log.send("Embedding $e inside $container.d")
         when (contents) {
             is RectangularSlideableSet -> {
-                val distL = getMinimumDistanceBetween(container.d, Side.START, contents.d, Side.START, d, null, true)
-                val distR = getMinimumDistanceBetween(container.d, Side.END, contents.d, Side.END, d, null, true)
+                val distL = getMinimumDistanceBetween(container.e, Side.START, contents.e, Side.START, d, null, true)
+                val distR = getMinimumDistanceBetween(container.e, Side.END, contents.e, Side.END, d, null, true)
                 separateRectangular(container, Side.START, contents, Side.START, cso, distL)
                 separateRectangular(contents, Side.END, container, Side.END, cso, distR)
             }
@@ -77,7 +77,7 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
                 val rightC = container.r
                 val leftI = contents.bl
                 val rightI = contents.br
-                val padding = getPadding(d, container.d)
+                val padding = getPadding(d, container.e)
                 if (leftI != null) cso.ensureMinimumDistance(leftC, leftI, padding.first/ 2)
                 if (rightI != null) cso.ensureMinimumDistance(rightI, rightC, padding.second / 2)
             }

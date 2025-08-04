@@ -74,7 +74,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
 
     private fun ensureRectangularEmbedding(rect: RectangularSlideableSet, so: C2SlackOptimisation) {
-        val d = rect.d
+        val d = rect.e
         val intersects = so.getAllSlideables().filter { it.getIntersectingElements().contains(d) }
         intersects.forEach {
             val tDist = getMinimumDistanceBetween(d, Side.START, d, Side.END, rect.l.dimension, null, false)
@@ -92,17 +92,17 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
     private fun embedInContainerAndWrap(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet? {
         so.contains(outer, inner)
-        val margin = getMargin(d, outer.d)
+        val margin = getMargin(d, outer.e)
 
         // first, ensure the buffer slideables are well-separated
         if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,margin.first / 2)
         if (inner.br != null) so.ensureMinimumDistance(inner.br!!, outer.r, margin.second / 2)
 
         // now make sure that the rectangulars composing the routable are well-separated
-        so.getContents(inner).forEach { embed(d, outer, it, so, it.d) }
+        so.getContents(inner).forEach { embed(d, outer, it, so, it.e) }
 
         val lg = if (g is LeafGroup) g else null
-        if (outer.d is Diagram) {
+        if (outer.e is Diagram) {
             // you can't route around the edge of the diagram
             return null
         } else {

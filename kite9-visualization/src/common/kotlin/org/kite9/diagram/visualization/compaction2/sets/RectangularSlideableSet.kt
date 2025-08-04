@@ -2,13 +2,12 @@ package org.kite9.diagram.visualization.compaction2.sets
 
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction2.C2Compaction
-import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 interface RectangularSlideableSet : SlideableSet<RectangularSlideableSet> {
 
-    val d: Rectangular
+    val e: Rectangular
     val l: C2Slideable
     val r: C2Slideable
 

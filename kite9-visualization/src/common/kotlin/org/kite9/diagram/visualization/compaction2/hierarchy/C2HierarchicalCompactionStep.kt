@@ -28,8 +28,16 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
         first = true
 
+        fun groupType(g: Group) : Int {
+            return when {
+                g is CompoundGroup -> 2
+                g is LeafGroup && g.connected != null -> 1
+                else -> 0
+            }
+        }
+
         // first, collect all groups and order
-        val allGroups = collectGroups(g).sortedBy { it.height }.distinctBy { it.groupNumber }
+        val allGroups = collectGroups(g).sortedWith(compareBy({it.height} , { groupType(it) })).distinctBy { it.groupNumber }
         allGroups.forEach { processGroup(it, c) }
     }
 
