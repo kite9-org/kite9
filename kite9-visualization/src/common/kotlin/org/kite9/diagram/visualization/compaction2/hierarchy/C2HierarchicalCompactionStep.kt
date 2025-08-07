@@ -2,10 +2,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
@@ -30,14 +27,23 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
         fun groupType(g: Group) : Int {
             return when {
-                g is CompoundGroup -> 2
+                g is CompoundGroup && g.layout == null -> 3
+                g is CompoundGroup && g.layout != null -> 2
                 g is LeafGroup && g.connected != null -> 1
                 else -> 0
             }
         }
 
+        fun distinctOperation(g: Group) : Pair<DiagramElement?, Int?> {
+            return when {
+                g is CompoundGroup -> Pair(null, g.groupNumber)
+                g is LeafGroup && g.connected != null -> Pair(g.connected, 1)
+                else -> Pair((g as LeafGroup).container, 2)
+            }
+        }
+
         // first, collect all groups and order
-        val allGroups = collectGroups(g).sortedWith(compareBy({it.height} , { groupType(it) })).distinctBy { it.groupNumber }
+        val allGroups = collectGroups(g).sortedWith(compareBy({it.height} , { groupType(it) })).distinctBy { distinctOperation(it) }
         allGroups.forEach { processGroup(it, c) }
     }
 
@@ -134,7 +140,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             return ss1
         }
 
-        val icStart = C2Slideable(cso, d, g, c, setOf(Side.START))
+        val icStart = C2Slideable(cso, d, g, c, setOf(Side.START, Side.END))
         val icEnd = C2Slideable(cso, d, g, c, setOf(Side.END))
 
         val out = RoutableSlideableSetImpl(setOf(icStart, icEnd), null, null)
