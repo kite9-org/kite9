@@ -6,6 +6,7 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.anchors.Purpose
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
@@ -140,10 +141,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             return ss1
         }
 
-        val icStart = C2Slideable(cso, d, g, c, setOf(Side.START, Side.END))
-        val icEnd = C2Slideable(cso, d, g, c, setOf(Side.END))
-
-        val out = RoutableSlideableSetImpl(setOf(icStart, icEnd), null, null)
+        val ic = C2Slideable(cso, d, g, c, Purpose.PORT)
+        val out = RoutableSlideableSetImpl(setOf(ic), null, null)
 
         cso.add(g, out)
         log.send("Created a RoutableSlideableSet for $c: ", out.getAll())

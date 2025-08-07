@@ -2,12 +2,7 @@ package org.kite9.diagram.functional.display;
 
 import org.junit.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.TextLabel;
-import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.adl.*;
 import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.functional.TestingEngine.Checks;
 import org.kite9.diagram.model.position.Direction;
@@ -15,6 +10,7 @@ import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.common.HelpMethods;
 import org.w3c.dom.Element;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
@@ -52,7 +48,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.DOWN);
 				
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), new Key("Container positions enforced by links","", new ArrayList<>()));
 		renderDiagram(d1);
 		
 		
@@ -78,7 +74,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		new Link(g5, g4, null, null, null, null, Direction.RIGHT);
 		new Link(g1, g4, null, null, null, null, Direction.RIGHT);
 				
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), new Key("Right layout and links go right","", new ArrayList<>()));
 		d1.setLayoutDirection(Layout.RIGHT);
 		
 		renderDiagram(d1);
@@ -105,7 +101,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		
 		
 				
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3, c4), new Key("Container positions enforced by two links","", new ArrayList<>()));
 		
 		renderDiagram(d1);
 		
@@ -150,7 +146,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		b3.setToLabel(new TextLabel("to"));
 		b4.setToLabel(new TextLabel("to"));
 
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3), null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3), new Key("Some down, some right links","", new ArrayList<>()));
 
 		renderDiagram(d1);
 
@@ -161,7 +157,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		return new Glyph(name, "", name, null, null);
 	}
 
-	public void middleGuyTopology(boolean directedEdges, boolean labels, Layout l, int directedContainers) throws Exception {
+	public void middleGuyTopology(boolean directedEdges, boolean labels, Layout l, int directedContainers, String k) throws Exception {
 
 		Glyph middle = createGlyph("middle");
 
@@ -204,39 +200,39 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 		Context uber = new Context("uber", HelpMethods.listOf(middle, top, left, right, bottom), true, null, l);
 
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("dia", HelpMethods.listOf(uber), l, null);
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("dia", HelpMethods.listOf(uber), l, new Key(k,"", new ArrayList<>()));
 
 		renderDiagram(d1);
 	}
 
 	@Test
 	public void test_29_7_MiddleGuyFanningRight() throws Exception {
-		middleGuyTopology(false, true, Layout.RIGHT, 4);
+		middleGuyTopology(false, true, Layout.RIGHT, 4, "layout right, no directed edges");
 	}
 
 	@Test
 	public void test_29_8_MiddleGuyFanningDown() throws Exception {
-		middleGuyTopology(false, true, Layout.DOWN,4);
+		middleGuyTopology(false, true, Layout.DOWN,4, "layout down, no directed edges");
 	}
 
 	@Test
 	public void test_29_9_MiddleGuyFanningDirected() throws Exception {
-		middleGuyTopology(true, true, null,4);
+		middleGuyTopology(true, true, null,4,  "directed middle edges");
 	}
 
 	@Test
 	public void test_29_10_MiddleGuyFanningDirectedNoLabel() throws Exception {
-		middleGuyTopology(true, false, null,4);
+		middleGuyTopology(true, false, null,4, "directed middle edges");
 	}
 
 	@Test
 	public void test_29_11_MiddleGuyFanningDownUndirected1() throws Exception {
-		middleGuyTopology(false, true, Layout.DOWN,3);
+		middleGuyTopology(false, true, Layout.DOWN,3, "diagram layout down, no directed edges, 3 directed containers");
 	}
 
 	@Test
 	public void test_29_12_MiddleGuyFanningUndirectedContainers() throws Exception {
-		middleGuyTopology(true, true, null,0);
+		middleGuyTopology(true, true, null,0, "directed edges, no directed ctoaniners");
 	}
 
 	@Test

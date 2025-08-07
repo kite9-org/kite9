@@ -147,6 +147,9 @@ abstract class AbstractPainter : Painter {
     }
 
     private fun scale(p: OPair<LongFraction>?, s: Int): Pair<Int> {
+        if (p == null) {
+            return Pair(1,1)  // todo: fix this for diagram keys
+        }
         val a = p!!.a
         val `as` = a.multiply(s)
         val b = p.b

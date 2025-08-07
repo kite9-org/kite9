@@ -7,6 +7,7 @@ import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.Purpose
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 data class RectangularSlideableSetImpl(
@@ -70,11 +71,11 @@ data class RectangularSlideableSetImpl(
                 existing.toSet()
             } else if (g != null) {
                 // it's not a container, one intersection through entire shape
-                setOf(C2Slideable(so, l.dimension, g, e, setOf(Side.START, Side.END)))
+                setOf(C2Slideable(so, l.dimension, g, e, Purpose.GLYPH_MIDPOINT))
             } else {
                 setOf(
-                    C2Slideable(so, l.dimension, g, e, setOf(Side.START)),
-                    C2Slideable(so, l.dimension, g, e, setOf(Side.END)))
+                    C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_MIDPOINT))
+                    //C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_MIDPOINT))
             }
         }
 

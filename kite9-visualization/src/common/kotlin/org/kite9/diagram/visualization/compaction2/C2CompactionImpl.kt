@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
-import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
@@ -95,14 +94,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         val sox = getSlackOptimisation(rect.l.dimension.other())
         val d = rect.e
         //println("Intersections for ${d}")
-        val intersectsLeft = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.START)) } != null }
-        val intersectsRight = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> (anc.e == d) && (anc.s.contains(Side.END)) } != null }
+        val intersects = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> anc.e == d } != null }
 
-        intersectsLeft.forEach {
+        intersects.forEach {
             sox.compaction.setIntersection(rect.l, it)
-        }
-
-        intersectsRight.forEach {
             sox.compaction.setIntersection(rect.r, it)
         }
     }

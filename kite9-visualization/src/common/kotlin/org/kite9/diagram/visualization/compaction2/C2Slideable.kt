@@ -44,15 +44,15 @@ class C2Slideable(
     /**
      * For intersection slideables
      */
-    constructor(so: C2SlackOptimisation, dimension: Dimension, g: LeafGroup?, intersects: Rectangular, sides: Set<Side>) : this(so, dimension,
-        mutable2(setOf(IntersectAnchor(intersects, sides))), setOfNotNull(g)
+    constructor(so: C2SlackOptimisation, dimension: Dimension, g: LeafGroup?, intersects: Rectangular, purpose: Purpose) : this(so, dimension,
+        mutable2(setOf(IntersectAnchor(intersects, purpose))), setOfNotNull(g)
     )
 
     /**
      * Used for labels
      */
     constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: List<Label>) : this(so, dimension,
-        mutable2(intersects.map { IntersectAnchor(it, setOf(Side.START, Side.END)) }.toSet() ), emptySet())
+        mutable2(intersects.map { IntersectAnchor(it, Purpose.LABEL_MIDPOINT) }.toSet() ), emptySet())
 
     private fun optionalMin(s: C2Slideable) = if (this.maximumPosition != null) {
         if (s.maximumPosition != null) {

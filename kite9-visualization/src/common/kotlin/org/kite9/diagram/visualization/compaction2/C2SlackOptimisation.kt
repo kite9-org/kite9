@@ -115,7 +115,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     fun mergeCSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
         // slideables with the same groups can be merged
         val mightMatch = s2.filter { it.getIntersectingElements().isNotEmpty()}.toMutableSet()
-
+        val same = s1.intersect(s2)
         val unchanged = s2.filter { !mightMatch.contains(it) }
 
         val out = s1.map { l ->
