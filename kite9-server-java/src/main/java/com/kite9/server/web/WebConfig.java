@@ -2,7 +2,7 @@ package com.kite9.server.web;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.kite9.diagram.dom.cache.Cache;
 import org.kite9.diagram.logging.Kite9Log;
@@ -24,26 +24,26 @@ import com.kite9.pipeline.adl.format.media.Format;
 import com.kite9.pipeline.adl.format.media.K9MediaType;
 
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebConfig implements WebMvcConfigurer, InitializingBean {
 
 	@Override
 	public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 		converters.add(adlMessageWriter());
 	}
-	
+
 	@Autowired
 	Cache cache;
 
 	@Autowired
 	FormatSupplier fs;
-	
+
 	@Bean
 	public HttpMessageConverter<?> adlMessageWriter() {
 		return new ADLDomMessageWriter(fs, cache);
 	}
-	
-	@Bean 
+
+	@Bean
 	public ADLInputMessageReader adlMessageReader() {
 		return new ADLInputMessageReader(fs);
 	}
@@ -61,26 +61,26 @@ public class WebConfig implements WebMvcConfigurer, InitializingBean {
 
 		public LoggingFilter() {
 			super();
-			 this.setIncludeClientInfo(true);
-			 this.setIncludeQueryString(true);
-			 this.setIncludePayload(true);
-			 this.setMaxPayloadLength(1000);		
+			this.setIncludeClientInfo(true);
+			this.setIncludeQueryString(true);
+			this.setIncludePayload(true);
+			this.setMaxPayloadLength(1000);
 		}
-		
+
 		@Override
 		protected String createMessage(HttpServletRequest request, String prefix, String suffix) {
 			return request.getMethod() + " " + super.createMessage(request, prefix, suffix);
 		}
-		
+
 	}
-	
+
 	@Bean
 	public CommonsRequestLoggingFilter requestLoggingFilter() {
-	   return new LoggingFilter();
+		return new LoggingFilter();
 	}
 
 	/**
-	 * This allows the user to add the ?format=html parameter to the query 
+	 * This allows the user to add the ?format=html parameter to the query
 	 * to modify the type of content required.
 	 */
 	@Override
@@ -90,9 +90,7 @@ public class WebConfig implements WebMvcConfigurer, InitializingBean {
 			for (K9MediaType mt : f.getMediaTypes()) {
 				configurer.mediaType(f.getExtension(), MediaType.parseMediaType(mt.toString()));
 			}
-		}		
+		}
 	}
-	
-	
 
 }

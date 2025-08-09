@@ -10,7 +10,7 @@ import org.gradle.plugins.ide.eclipse.model.Variable
 
 plugins {
     id("org.kite9.java-conventions")
-    id("org.springframework.boot").version("2.7.0")
+    id("org.springframework.boot").version("3.2.0")
     id("com.github.node-gradle.node").version("3.5.1")
     id("eclipse")
 }
@@ -19,29 +19,30 @@ dependencies {
     api(project(":kite9-visualization"))
     api(project(":kite9-pipeline-common"))
     api("org.kohsuke:github-api:1.306")
-    api("org.springframework.boot:spring-boot-starter-actuator:2.7.0")
-    api("org.springframework.boot:spring-boot-starter-hateoas:2.7.0")
-    api("org.springframework.boot:spring-boot-starter-web:2.7.0")
-    api("org.springframework.boot:spring-boot-starter-oauth2-client:2.7.0")
-    api("org.springframework.boot:spring-boot-starter-webflux:2.7.0")
-    api("org.springframework.boot:spring-boot-starter-websocket:2.7.0")
-    api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.3")
+    api("org.springframework.boot:spring-boot-starter-actuator:3.2.0")
+    api("org.springframework.boot:spring-boot-starter-hateoas:3.2.0")
+    api("org.springframework.boot:spring-boot-starter-web:3.2.0")
+    api("org.springframework.boot:spring-boot-starter-oauth2-client:3.2.0")
+    api("org.springframework.boot:spring-boot-starter-webflux:3.2.0")
+    api("org.springframework.boot:spring-boot-starter-websocket:3.2.0")
+    api("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.2")
     implementation("org.apache.xmlgraphics:batik-util:1.14")
     implementation("org.apache.xmlgraphics:batik-bridge:1.14")
     implementation("org.apache.xmlgraphics:batik-transcoder:1.14") {
         exclude(group = "xml-apis")
     }
-    api("net.sf.saxon:Saxon-HE:10.5")
+    api("net.sf.saxon:Saxon-HE:12.3")
     api("org.xmlunit:xmlunit-core:2.9.0")
     api("org.webjars:bootstrap:4.3.1")
     api("org.webjars.npm:codemirror:5.58.3")
     api("org.webjars:highlightjs:9.6.0")
     api("org.webjars.npm:hint.css:2.3.2")
     api("org.webjars.npm:kotlin:1.4.30")
-    testImplementation("org.springframework.security:spring-security-test:5.7.1")
-    testImplementation("org.springframework.boot:spring-boot-starter-test:2.7.0")
+    testImplementation("org.springframework.security:spring-security-test:6.2.0")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.0")
     
-    implementation("io.netty:netty-resolver-dns-native-macos:4.1.59.Final:osx-x86_64")
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.100.Final:osx-x86_64")
+    implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
     
 }
 
