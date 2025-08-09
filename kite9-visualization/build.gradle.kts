@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile;
 
 plugins {
-    id("org.kite9.java-conventions")
     kotlin("multiplatform")
     id("com.dorongold.task-tree") version "2.1.1"
     id("distribution")
@@ -11,21 +10,7 @@ kotlin {
 
     jvmToolchain(17)
 
-
-    jvm {
-        withJava()
-        dependencies {
-            implementation("org.apache.xmlgraphics:batik-svggen:1.14")
-            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
-            implementation("org.apache.xmlgraphics:batik-bridge:1.14")
-            implementation("org.apache.xmlgraphics:batik-ext:1.14")
-            implementation("org.apache.xmlgraphics:xmlgraphics-commons:2.7")
-            implementation("org.apache.xmlgraphics:batik-rasterizer:1.14")
-            implementation("org.apache.xmlgraphics:batik-codec:1.14")
-            testImplementation("junit:junit:4.13.2")
-            testImplementation("org.xmlunit:xmlunit-core:2.9.0")
-        }
-    }
+    jvm()
 
     js(IR) {
         browser()
@@ -33,15 +18,28 @@ kotlin {
     }
 
     sourceSets {
-        val common by creating
+        val commonMain by getting
 
-        getByName("jvmMain") {
-            dependsOn(common)
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.apache.xmlgraphics:batik-svggen:1.14")
+                implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
+                implementation("org.apache.xmlgraphics:batik-bridge:1.14")
+                implementation("org.apache.xmlgraphics:batik-ext:1.14")
+                implementation("org.apache.xmlgraphics:xmlgraphics-commons:2.7")
+                implementation("org.apache.xmlgraphics:batik-rasterizer:1.14")
+                implementation("org.apache.xmlgraphics:batik-codec:1.14")
+            }
         }
 
-        getByName("jsMain") {
-            dependsOn(common)
+        val jvmTest by getting {
+            dependencies {
+                implementation("junit:junit:4.13.2")
+                implementation("org.xmlunit:xmlunit-core:2.9.0")
+            }
         }
+
+        val jsMain by getting 
     }
 
 }
@@ -50,18 +48,17 @@ gradle.taskGraph.whenReady {
     // this is necessary because otherwise the metadata for the
     // common sourceSet fails to compile (due to DOM classes).
     tasks {
-        getByName("compileCommonKotlinMetadata") {
+        getByName("compileKotlinMetadata") {
             enabled = false
         }
     }
 }
 
 tasks.withType<Kotlin2JsCompile>().configureEach {
-    // there are loads of name shadowed warnings which we should eventually fix
-    kotlinOptions.suppressWarnings = true
-
-    // this means source maps work in safari but it blows out the time
-    kotlinOptions.sourceMapEmbedSources = "always"
+    compilerOptions {
+        // this means source maps work in safari but it blows out the time
+        //sourceMapEmbedSources.set(org.jetbrains.kotlin.gradle.targets.js.dsl.JsSourceMapEmbedMode.SOURCE_MAP_SOURCE_CONTENT_ALWAYS)
+    }
 }
 
 description = "Kite9 Visualization"
