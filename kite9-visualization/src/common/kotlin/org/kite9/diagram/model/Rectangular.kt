@@ -9,4 +9,12 @@ import org.kite9.diagram.model.style.ContainerPosition
  *
  * @author robmoffat
  */
-interface Rectangular : Positioned
+interface Rectangular : Positioned {
+
+    /**
+     * Returns true if this element or any of its children contains d
+     */
+    fun deepContains(d: DiagramElement) : Boolean
+
+
+}

@@ -3,7 +3,21 @@ package org.kite9.diagram.visualization.compaction2.anchors
 import org.kite9.diagram.model.Rectangular
 
 enum class Purpose {
-    PORT, LAYOUT, GLYPH_MIDPOINT, CONTAINER_MIDPOINT, LABEL_MIDPOINT
+    PORT,
+    CONTAINER_NON_LAYOUT,
+    GLYPH_LAYOUT_MIDPOINT,
+    CONTAINER_LAYOUT_MIDPOINT,
+    LABEL_LAYOUT;
+
+    fun isLayout() : Boolean {
+        return when(this) {
+            PORT,
+            CONTAINER_NON_LAYOUT -> false
+            GLYPH_LAYOUT_MIDPOINT,
+            CONTAINER_LAYOUT_MIDPOINT,
+            LABEL_LAYOUT -> true
+        }
+    }
 }
 
 /**

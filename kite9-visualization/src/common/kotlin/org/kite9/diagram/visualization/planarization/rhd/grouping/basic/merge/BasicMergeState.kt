@@ -154,9 +154,6 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         } else true
     }
 
-    val containers: Collection<Container>
-        get() = containerStates.keys
-
     fun getContainersFor(a: Group?): Map<Container, GroupContainerState>? {
         if (a is LeafGroup) {
              return groupContainers.getOrPut(a, { mutableMapOf(a.container!! to GroupContainerState.HAS_CONTENT) } )

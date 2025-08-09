@@ -128,4 +128,15 @@ abstract class AbstractRectangular(
             }
         }
     }
+
+
+    override fun deepContains(d: DiagramElement): Boolean {
+        return if ((d.getDepth() > this.getDepth()) && (this is Container)) {
+            getContents()
+                .filterIsInstance<Rectangular>().
+                firstOrNull { it == d || it.deepContains(d) } != null
+        } else {
+            false
+        }
+    }
 }

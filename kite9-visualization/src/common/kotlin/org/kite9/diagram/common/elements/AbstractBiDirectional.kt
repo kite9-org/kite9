@@ -40,6 +40,6 @@ abstract class AbstractBiDirectional<X> : BiDirectional<X> {
     }
 
     override fun hashCode(): Int {
-        return getID().hashCode();
+        return getID().hashCode()
     }
 }

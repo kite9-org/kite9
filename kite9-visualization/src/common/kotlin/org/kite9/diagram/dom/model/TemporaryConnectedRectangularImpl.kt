@@ -44,6 +44,10 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
         return DiagramElementSizing.MINIMIZE
     }
 
+    override fun deepContains(d: DiagramElement): Boolean {
+        return false
+    }
+
     override fun getConnectionsSeparationApproach(): ConnectionsSeparation {
         return ConnectionsSeparation.SEPARATE // irrelevant, won't have connections
     }

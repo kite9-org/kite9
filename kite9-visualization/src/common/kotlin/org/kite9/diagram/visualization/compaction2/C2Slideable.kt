@@ -52,7 +52,7 @@ class C2Slideable(
      * Used for labels
      */
     constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: List<Label>) : this(so, dimension,
-        mutable2(intersects.map { IntersectAnchor(it, Purpose.LABEL_MIDPOINT) }.toSet() ), emptySet())
+        mutable2(intersects.map { IntersectAnchor(it, Purpose.LABEL_LAYOUT) }.toSet() ), emptySet())
 
     private fun optionalMin(s: C2Slideable) = if (this.maximumPosition != null) {
         if (s.maximumPosition != null) {

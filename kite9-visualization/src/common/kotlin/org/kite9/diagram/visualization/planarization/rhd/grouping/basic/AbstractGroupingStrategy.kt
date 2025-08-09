@@ -248,7 +248,7 @@ abstract class AbstractGroupingStrategy(
         for (g in allGroups) {
             initContained(ms, mutableListOf(), g as LeafGroup)
         }
-        val bottomLevelContainers = ArrayList(ms.containers)
+        val bottomLevelContainers = ArrayList(ms.getContainers())
         if (bottomLevelContainers.size > 0) {
             for (c in bottomLevelContainers) {
                 if (isContainerMergeable(c, ms)) {

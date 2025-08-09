@@ -71,10 +71,10 @@ data class RectangularSlideableSetImpl(
                 existing.toSet()
             } else if (g != null) {
                 // it's not a container, one intersection through entire shape
-                setOf(C2Slideable(so, l.dimension, g, e, Purpose.GLYPH_MIDPOINT))
+                setOf(C2Slideable(so, l.dimension, g, e, Purpose.GLYPH_LAYOUT_MIDPOINT))
             } else {
                 setOf(
-                    C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_MIDPOINT))
+                    C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_LAYOUT_MIDPOINT))
                     //C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_MIDPOINT))
             }
         }

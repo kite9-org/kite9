@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
-import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
@@ -19,8 +18,8 @@ abstract class GroupResult {
         return containerStates[c]
     }
 
-    fun containers() : Collection<Container> {
-        return containerStates.keys;
+    fun getContainers() : Collection<Container> {
+        return containerStates.keys
     }
 
     inner class ContainerStateInfo(c: Container) {
