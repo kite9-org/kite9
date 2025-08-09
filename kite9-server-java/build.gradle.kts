@@ -11,8 +11,7 @@ import org.gradle.plugins.ide.eclipse.model.Variable
 plugins {
     id("org.kite9.java-conventions")
     id("org.springframework.boot").version("3.2.0")
-    id("com.github.node-gradle.node").version("3.5.1")
-    id("eclipse")
+    id("com.github.node-gradle.node").version("4.0.0")
 }
 
 dependencies {
@@ -76,85 +75,4 @@ java {
 
 
 description = "Kite9 Server (Spring-Boot)"
-
-
-eclipse {
-
-    this.pathVariables(mapOf(
-        "GRADLE_CACHE" to File("/Users/rob/.gradle/caches/modules-2/files-2.1")
-    ))
-
-    project {
-        buildCommand(
-            mapOf("LaunchConfigHandle" to "<project>/.externalToolBuilders/Typescript Builder.launch"),
-            "org.eclipse.ui.externaltools.ExternalToolBuilder"
-        )
-    }
-
-    classpath {
-        defaultOutputDir = file("build/classes/java/main")
-
-       file {
-           whenMerged {
-               var cpEntries = (this as Classpath).entries
-               cpEntries.forEach { entry ->
-                   if (entry.kind == "src" && entry is SourceFolder) {
-                       if (entry.output != null) {
-                           if (entry.path == "src/main/java") {
-                               entry.output = "build/classes/java/main"
-                           } else if (entry.path == "src/main/resources") {
-                               entry.output = "build/resources/main"
-                           } else if (entry.path == "src/test/java") {
-                               entry.output = "build/classes/java/test"
-                           } else if (entry.path == "src/test/resources") {
-                               entry.output = "build/resources/test"
-                           }
-                       }
-                   }
-               }
-
-               // for the visualization library
-               var gen = "src/generated/resources"
-               var genOutput = "build/resources/generated"
-               var genSrc = SourceFolder(gen, genOutput)
-               cpEntries.add(genSrc)
-
-               // typescript
-               var ts = "src/main/typescript"
-               var tsOutput = "build/resources/typescript"
-               var tsSrc = SourceFolder(ts, tsOutput)
-               cpEntries.add(tsSrc)
-
-               // remove references to other subprojects and replace with jars
-               cpEntries.removeAll { it ->
-                   if (it is ProjectDependency) {
-                       println("Checking ${it.path}")
-                       (it.path == "/kite9-visualization") || (it.path == "/kite9-pipeline-common")
-                   } else {
-                       false
-                   }
-               }
-               var vis = FileReferenceFactory().fromPath("KITE9_HOME/kite9-visualization/build/libs/kite9-visualization-jvm-0.1-SNAPSHOT.jar")
-               var visSource = FileReferenceFactory().fromPath("KITE9_HOME/kite9-visualization/src/jvmMain/java")
-               var pipe = FileReferenceFactory().fromPath("KITE9_HOME/kite9-pipeline-common/build/libs/kite9-pipeline-common-0.1-SNAPSHOT.jar")
-               var pipeSource = FileReferenceFactory().fromPath("KITE9_HOME/kite9-pipeline-common/src/main/kotlin")
-               var visLib = Variable(vis)
-               var pipeLib = Variable(pipe)
-               visLib.sourcePath = visSource
-               pipeLib.sourcePath = pipeSource
-               cpEntries.add(visLib)
-               cpEntries.add(pipeLib)
-
-               // remove xml-apis (should already have happened from dependencies but hasn't)
-               cpEntries.removeAll { it ->
-                   if (it is Variable) {
-                       (it.path.indexOf("/xml-apis/xml-apis/") > -1)
-                   } else {
-                       false
-                   }
-               }
-           }
-       }
-    }
-}
 
