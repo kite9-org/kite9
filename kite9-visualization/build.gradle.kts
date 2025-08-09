@@ -18,10 +18,15 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+            }
+        }
 
         val jvmMain by getting {
             dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib")
                 implementation("org.apache.xmlgraphics:batik-svggen:1.14")
                 implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
                 implementation("org.apache.xmlgraphics:batik-bridge:1.14")
@@ -39,7 +44,11 @@ kotlin {
             }
         }
 
-        val jsMain by getting 
+        val jsMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
+            }
+        }
     }
 
 }
@@ -48,7 +57,7 @@ gradle.taskGraph.whenReady {
     // this is necessary because otherwise the metadata for the
     // common sourceSet fails to compile (due to DOM classes).
     tasks {
-        getByName("compileKotlinMetadata") {
+        getByName("compileCommonMainKotlinMetadata") {
             enabled = false
         }
     }
