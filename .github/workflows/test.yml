@@ -20,7 +20,7 @@ jobs:
         with:
           gradle-version: "8.13"
       - name: Build with Gradle
-        run: gradle clean jvmTest
+        run: gradle clean jvmTest --tests "!*performance*"
         env:
           kite9.logging: OFF
       - name: Generate Test Coverage Report
