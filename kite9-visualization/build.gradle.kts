@@ -8,6 +8,12 @@ plugins {
     kotlin("multiplatform")
     id("com.dorongold.task-tree") version "2.1.1"
     id("distribution")
+    id("jacoco")
+}
+
+jacoco {
+    toolVersion = "0.8.12"
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
 }
 
 kotlin {
@@ -84,4 +90,21 @@ java {
 val jvmMainSourceJar by tasks.registering(Jar::class) {
     from(kotlin.sourceSets["jvmMain"].kotlin)
     archiveClassifier.set("jvm-sources")
+}
+
+// Create a custom jacocoTestReport task for Kotlin Multiplatform
+tasks.register("jacocoTestReport", JacocoReport::class) {
+    dependsOn(tasks.named("jvmTest"))
+    
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
+    
+    executionData(tasks.named("jvmTest"))
+    
+    sourceSets {
+        sourceDirectories.from(kotlin.sourceSets["jvmMain"].kotlin)
+        classDirectories.from(kotlin.targets["jvm"].compilations["main"].output.allOutputs)
+    }
 }
