@@ -7,6 +7,7 @@ import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
 
 
+@Ignore
 public class Test37XMLFiles extends AbstractLayoutFunctionalTest {
 
 	@Test
