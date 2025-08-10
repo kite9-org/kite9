@@ -1,21 +1,20 @@
 package org.kite9.diagram.common.algorithms.ssp
 
-
 /**
- * Taken from Java standard Library and turned into Kotlin.
- * Only works with comparable elements now, for simplicity.
+ * Taken from Java standard Library and turned into Kotlin. Only works with comparable elements now,
+ * for simplicity.
  *
  * @author Josh Bloch, Doug Lea
- * @param <E> the type of elements held in this queue
-</E> */
+ * @param <E> the type of elements held in this queue </E>
+ */
 @Suppress("UNCHECKED_CAST")
-class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? = null) {
+class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E>? = null) {
 
     private val MAX_ARRAY_SIZE = Int.MAX_VALUE - 8
 
-    private var queue : Array<Any?> = arrayOfNulls<Any?>(initialCapacity)
+    private var queue: Array<Any?> = arrayOfNulls<Any?>(initialCapacity)
     private var modCount = 0
-    private var _size : Int = 0
+    private var _size: Int = 0
 
     fun size(): Int {
         return _size
@@ -39,7 +38,7 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
         queue = queue.copyOf(newCapacity)
     }
 
-    fun add(e: E) : Boolean {
+    fun add(e: E): Boolean {
         modCount++
         val i = _size
         if (i >= queue.size) grow(i + 1)
@@ -60,10 +59,8 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
         val n = --_size
         val x = es[n]
         if (n > 0) {
-            if (comparator == null)
-                siftDownComparable(0, x, es, n)
-            else
-                siftDownUsingComparator(0, x as E, es, n, comparator)
+            if (comparator == null) siftDownComparable(0, x, es, n)
+            else siftDownUsingComparator(0, x as E, es, n, comparator)
         }
 
         return result
@@ -71,7 +68,7 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
 
     private fun siftDown(k: Int, x: E) {
         if (comparator != null) siftDownUsingComparator(k, x, queue, _size, comparator)
-            else siftDownComparable(k, x, queue, _size)
+        else siftDownComparable(k, x, queue, _size)
     }
 
     private fun <T> siftDownComparable(k: Int, x: T, es: Array<Any?>, n: Int) {
@@ -83,9 +80,8 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
             var child = (k shl 1) + 1 // assume left child is least
             var c = es[child]
             val right = child + 1
-            if (right < n &&
-                (c as Comparable<T>).compareTo(es[right] as T) > 0
-            ) c = es[right.also { child = it }]
+            if (right < n && (c as Comparable<T>).compareTo(es[right] as T) > 0)
+                    c = es[right.also { child = it }]
             if (key.compareTo(c as T) <= 0) break
             es[k] = c
             k = child
@@ -93,7 +89,13 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
         es[k] = key
     }
 
-    private fun <T> siftDownUsingComparator(k: Int, x: T, es: Array<Any?>, n: Int, cmp: Comparator<in T>) {
+    private fun <T> siftDownUsingComparator(
+            k: Int,
+            x: T,
+            es: Array<Any?>,
+            n: Int,
+            cmp: Comparator<in T>
+    ) {
         // assert n > 0;
         var k = k
         val half = n ushr 1
@@ -101,7 +103,8 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
             var child = (k shl 1) + 1
             var c = es[child]
             val right = child + 1
-            if (right < n && cmp.compare(c as T, es[right] as T) > 0) c = es[right.also { child = it }]
+            if (right < n && cmp.compare(c as T, es[right] as T) > 0)
+                    c = es[right.also { child = it }]
             if (cmp.compare(x, c as T) <= 0) break
             es[k] = c
             k = child
@@ -110,7 +113,8 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
     }
 
     private fun siftUp(k: Int, x: E) {
-        if (comparator != null) siftUpUsingComparator(k, x, queue, comparator) else siftUpComparable(k, x, queue)
+        if (comparator != null) siftUpUsingComparator(k, x, queue, comparator)
+        else siftUpComparable(k, x, queue)
     }
 
     private fun <T> siftUpComparable(k: Int, x: T, es: Array<Any?>) {
@@ -142,7 +146,4 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
         if (minCapacity < 0) throw SSPTooLargeException("can't continue")
         return if (minCapacity > MAX_ARRAY_SIZE) Int.MAX_VALUE else MAX_ARRAY_SIZE
     }
-
-
-
 }

@@ -25,23 +25,21 @@ class RescalingTransformer(private val l: Leaf) :
         val height = size.height()
         if (p is LeafPainter && out != null) {
             val myBounds = p.bounds()
-            if (myBounds != null) {
-                val xs = width / myBounds.width
-                val ys = height / myBounds.height
-                out.setAttribute(
-                        "transform",
-                        "scale(" +
-                                xs +
-                                "," +
-                                ys +
-                                ")" +
-                                "translate(" +
-                                oneDecimal(-myBounds.x) +
-                                "," +
-                                oneDecimal(-myBounds.y) +
-                                ")"
-                )
-            }
+            val xs = width / myBounds.width
+            val ys = height / myBounds.height
+            out.setAttribute(
+                    "transform",
+                    "scale(" +
+                            xs +
+                            "," +
+                            ys +
+                            ")" +
+                            "translate(" +
+                            oneDecimal(-myBounds.x) +
+                            "," +
+                            oneDecimal(-myBounds.y) +
+                            ")"
+            )
         }
         return out
     }

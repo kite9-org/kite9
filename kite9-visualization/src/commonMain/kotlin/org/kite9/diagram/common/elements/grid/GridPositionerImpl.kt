@@ -229,8 +229,10 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         return diagramElement is ConnectedRectangular
     }
 
-    /** Deprecated, because we wanted to have immutable containers. */
-    @Deprecated("")
+    /**
+     * TODO: fix this
+     */
+    @Deprecated("because we wanted to have immutable containers.")
     @Suppress("DEPRECATION")
     private fun modifyContainerContents(ord: Container, d: DiagramElement) {
         ord.getContents().add(d)
