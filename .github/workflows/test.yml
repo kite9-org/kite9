@@ -24,7 +24,7 @@ jobs:
         env:
           kite9.logging: OFF
       - name: Generate Test Coverage Report
-        run: gradle jacocoTestReport jacocoTestCoverageVerification
+        run: gradle jacocoTestReport jacocoTestCoverageVerification --tests "!*performance*"
         if: always() # always run even if the previous step fails
         env:
           kite9.logging: OFF
