@@ -5,6 +5,7 @@ plugins {
     kotlin("multiplatform")
     id("com.dorongold.task-tree") version "2.1.1"
     id("distribution")
+    id("jacoco")
 }
 
 kotlin {
