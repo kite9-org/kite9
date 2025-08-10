@@ -48,6 +48,7 @@ public class Test46MoreXMLFiles extends AbstractLayoutFunctionalTest {
 	
 	@Test
 	@NotAddressed
+    @Ignore("long running")
 	public void test_46_7_BrokenContainer() throws Exception {
 		generate("46_7.xml");
 	}

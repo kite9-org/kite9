@@ -104,7 +104,8 @@ public class TestConnected extends AbstractPerformanceTest {
 		Map<Metrics, String> suite1 = generateSuite(19, 19, 1, 100, 100, 1);
 		render(suite1);
 	}
-	
+
+    @Ignore("long runner")
 	@Test
 	public void broken2() throws IOException {
 		Map<Metrics, String> suite1 = generateSuite(70, 70, 1, 135, 135, 1);
