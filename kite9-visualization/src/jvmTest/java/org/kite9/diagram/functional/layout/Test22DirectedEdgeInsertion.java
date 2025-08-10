@@ -17,11 +17,9 @@ import org.kite9.diagram.adl.TurnLink;
 import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
-import org.kite9.diagram.visualization.planarization.mgt.builder.DirectedEdgePlanarizationBuilder;
 
 /**
- * LEMMA: If the user provides a set of directed edges which don't overlap, the
- * {@link DirectedEdgePlanarizationBuilder} will always provide the optimal
+ * LEMMA: If the user provides a set of directed edges which don't overlap, therewill always provide the optimal
  * arrangement of the edges.
  * 
  * @author robmoffat

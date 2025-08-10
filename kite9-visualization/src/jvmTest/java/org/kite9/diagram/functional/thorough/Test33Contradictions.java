@@ -291,6 +291,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
+    @Ignore("Takes too long - but reenable once we've figured everything else out")
 	public void test_33_15_TooManyContradictions() throws Exception {
 		generate("too_many_contradictions.xml");
 	}

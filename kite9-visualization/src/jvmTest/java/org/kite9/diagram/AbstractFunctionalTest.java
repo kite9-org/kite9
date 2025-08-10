@@ -46,6 +46,7 @@ public abstract class AbstractFunctionalTest extends AbstractTest {
 	}
 
 	protected void transcodePNG(String s) throws Exception {
+		System.out.println("Beginning PNG Transcode "+getTestMethod());
 		TranscoderOutput out = getTranscoderOutputPNG();
 		TranscoderInput in = getTranscoderInput(s);
 		Transcoder transcoder = new Kite9PNGTranscoder();
@@ -55,6 +56,7 @@ public abstract class AbstractFunctionalTest extends AbstractTest {
 	
 	
 	protected void transcodeSVG(String s) throws Exception {
+		System.out.println("Beginning SVG Transcode "+getTestMethod());
 		TranscoderOutput out = getTranscoderOutputSVG();
 		TranscoderInput in = getTranscoderInput(s);
 		Transcoder transcoder = new Kite9SVGTranscoder();

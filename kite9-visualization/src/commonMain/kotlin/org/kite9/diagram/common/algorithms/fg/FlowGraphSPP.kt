@@ -8,8 +8,8 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 
 /**
- * This algorithm uses a Dijkstra-style shortest path in order to maximise flow
- * and minimise cost over the network.
+ * This algorithm uses a Dijkstra-style shortest path in order to maximise flow and minimise cost
+ * over the network.
  *
  * @author robmoffat
  */
@@ -34,15 +34,25 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
             cost += p.getCost()
             val s: State<Path> = lastState!!
             log.send(
-                if (log.go()) null else "Round " + iterations + " generated " + s.getAdds() + " paths, maxstack " + s.getMaxStack() + " chose " + displayPath(
-                    p
-                )
-                        + " pushing 1 with cost " + p.getCost()
+                    if (log.go()) null
+                    else
+                            "Round " +
+                                    iterations +
+                                    " generated " +
+                                    s.getAdds() +
+                                    " paths, maxstack " +
+                                    s.getMaxStack() +
+                                    " chose " +
+                                    displayPath(p) +
+                                    " pushing 1 with cost " +
+                                    p.getCost()
             )
             paths += s.getAdds()
         }
         log.send(
-            if (log.go()) null else """Completed flow maximisation with: 
+                if (log.go()) null
+                else
+                        """Completed flow maximisation with: 
 	iterations: $iterations
 	paths:    $paths
 	cost:     $cost
@@ -79,8 +89,14 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
                 }
             }
             lines.add(
-                "Flow on: " + n.getID() + " = " + n.flow + ", requires " + n.supply + ", due to "
-                        + arcInfo
+                    "Flow on: " +
+                            n.getID() +
+                            " = " +
+                            n.flow +
+                            ", requires " +
+                            n.supply +
+                            ", due to " +
+                            arcInfo
             )
         }
 
@@ -89,9 +105,7 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
         log.send(if (log.go()) null else "Flow Information", lines)
     }
 
-    /**
-     * Returns a lowest-cost path from source to sink, using Dijkstra algorithm
-     */
+    /** Returns a lowest-cost path from source to sink, using Dijkstra algorithm */
     fun getShortestPath(fg: FlowGraph): Path? {
         iterations++
         destination = getResidualSources(fg)
@@ -103,7 +117,14 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
             // we have a problem, since you need both a starting point and a
             // destination
             displayFlowInformation(fg)
-            log.send(if (log.go()) null else "New path not available from " + startingPoints.toString() + " TO: " + destination.toString())
+            log.send(
+                    if (log.go()) null
+                    else
+                            "New path not available from " +
+                                    startingPoints.toString() +
+                                    " TO: " +
+                                    destination.toString()
+            )
             throw LogicException("Graph is unbalanced: $startingPoints vs $destination")
         }
         return try {
@@ -113,14 +134,30 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
             displayRemainderInfo(startingPoints)
             displayRemainderInfo(destination)
             throw LogicException(
-                "Graph cannot be completed after " + iterations + ".  Please check directional constraints don't prohibit diagram from drawing: "
-                        + startingPoints + " to " + destination, nsee
+                    "Graph cannot be completed after " +
+                            iterations +
+                            ".  Please check directional constraints don't prohibit diagram from drawing: " +
+                            startingPoints +
+                            " to " +
+                            destination,
+                    nsee
             )
         } catch (other: Throwable) {
             throw LogicException(
-                "Graph cannot be completed after " + iterations + ":" + startingPoints + " to " + destination + " has "
-                        + fg.allNodes.size + " nodes and " + fg.allArcs.size + " arcs"
-                        + " paths, lowest cost " + cost, other
+                    "Graph cannot be completed after " +
+                            iterations +
+                            ":" +
+                            startingPoints +
+                            " to " +
+                            destination +
+                            " has " +
+                            fg.allNodes.size +
+                            " nodes and " +
+                            fg.allArcs.size +
+                            " arcs" +
+                            " paths, lowest cost " +
+                            cost,
+                    other
             )
         }
     }
@@ -132,23 +169,23 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
         }
     }
 
-    override fun generateSuccessivePaths(p: Path, pq: State<Path>) {
-        val fromNode = p.endNode
+    override fun generateSuccessivePaths(r: Path, s: State<Path>) {
+        val fromNode = r.endNode
         for (a in fromNode.arcs) {
-            if (!p.contains(a)) {
+            if (!r.contains(a)) {
                 val reversed = a.from !== fromNode
                 val to = if (reversed) a.from else a.to
                 val capacity = a.hasCapacity(reversed)
-                if (capacity && !checkForLoopback(to, p)) {
-                    val np = generateNewPath(p, reversed, a)
-                    if (np != null) pq.add(np)
+                if (capacity && !checkForLoopback(to, r)) {
+                    val np = generateNewPath(r, reversed, a)
+                    if (np != null) s.add(np)
                 }
             }
         }
     }
 
     private fun checkForLoopback(to: Node, p: Path): Boolean {
-        //return p.contains(to);
+        // return p.contains(to);
         return false
     }
 
@@ -180,9 +217,9 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
         return out
     }
 
-    override fun createInitialPaths(pq: State<Path>) {
+    override fun createInitialPaths(s: State<Path>) {
         for (n in destination!!) {
-            pq.add(Path(n))
+            s.add(Path(n))
         }
     }
 
@@ -190,7 +227,7 @@ open class FlowGraphSPP<X : FlowGraph> : AbstractSSP<Path>(), FlowAlgorithm<X>, 
         return startingPoints!!.contains(r.endNode)
     }
 
-    fun getDestination() : List<Node> {
+    fun getDestination(): List<Node> {
         return destination!!
     }
 

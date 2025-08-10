@@ -6,26 +6,27 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 
-class C2Point(along: C2Slideable, perp: C2Slideable, val d: Direction) : Pair<C2Slideable>(along, perp) {
+class C2Point(along: C2Slideable, perp: C2Slideable, val d: Direction) :
+        Pair<C2Slideable>(along, perp) {
 
-    fun get(d: Dimension) : C2Slideable {
+    fun get(d: Dimension): C2Slideable {
         return if (a.dimension == d) {
-            a;
+            a
         } else if (b.dimension == d) {
-            b;
+            b
         } else {
             throw LogicException("Couldn't find slideable in dimension $d")
         }
     }
 
-    fun samePlace(p: C2Point) : Boolean {
-        return (p.get(Dimension.H) == this.get(Dimension.H))
-                && (p.get(Dimension.V) == this.get(Dimension.V))
+    fun samePlace(p: C2Point): Boolean {
+        return (p.get(Dimension.H) == this.get(Dimension.H)) &&
+                (p.get(Dimension.V) == this.get(Dimension.V))
     }
 
-    override fun equals(o: Any?) : Boolean {
-        return if (o is C2Point) {
-            super.equals(o) && this.d == o.d
+    override fun equals(other: Any?): Boolean {
+        return if (other is C2Point) {
+            super.equals(other) && this.d == other.d
         } else {
             false
         }
@@ -39,11 +40,11 @@ class C2Point(along: C2Slideable, perp: C2Slideable, val d: Direction) : Pair<C2
         return "[${get(Dimension.H).number},${get(Dimension.V).number} $d]"
     }
 
-    fun getAlong() : C2Slideable {
+    fun getAlong(): C2Slideable {
         return a
     }
 
-    fun getPerp() : C2Slideable {
+    fun getPerp(): C2Slideable {
         return b
     }
 }

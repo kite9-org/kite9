@@ -8,12 +8,11 @@ import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
-import org.kite9.diagram.common.elements.vertex.Vertex;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
@@ -29,7 +28,6 @@ import org.kite9.diagram.visualization.compaction2.C2Slideable;
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
@@ -44,8 +42,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -260,19 +258,6 @@ public class TestingEngine extends TestingHelp {
 			}
 		});
 	}
-
-	private void writeVertexOrder(MGTPlanarization pln, Class<?> theTest, String subtest, String item) {
-		List<Vertex> vertices = pln.getVertexOrder();
-		StringBuilder sb = new StringBuilder();
-		for (Vertex vertex : vertices) {
-			sb.append(vertex);
-			sb.append("\t" + vertex.getRoutingInfo());
-			sb.append("\n");
-		}
-
-		writeOutput(theTest, subtest, item, sb.toString().getBytes());
-	}
-
 
 	public static void drawPositions(GroupResult gr, RoutableReader rr, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");

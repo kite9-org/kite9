@@ -4,19 +4,18 @@ import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ONE_HALF
 import org.kite9.diagram.common.fraction.LongFraction.Companion.ZERO
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.HPos
 import org.kite9.diagram.model.position.VPos
 
 /**
- * Represents corners of diagrams, containers and any other rectangular content.
- * For elements with grid-layout, these also represent points within the grid that will need to be connected up.
+ * Represents corners of diagrams, containers and any other rectangular content. For elements with
+ * grid-layout, these also represent points within the grid that will need to be connected up.
  * Multi-corners can be the corners of multiple different diagram elements.
  */
 open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdinal: LongFraction) :
-    AbstractAnchoringVertex(id + "_" + xOrdinal + "_" + yOrdinal), MultiElementVertex {
+        AbstractAnchoringVertex(id + "_" + xOrdinal + "_" + yOrdinal), MultiElementVertex {
 
     override fun hasDimension(): Boolean {
         return false
@@ -41,27 +40,25 @@ open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdina
         return false
     }
 
-    override fun isPartOf(c: DiagramElement?): Boolean {
-        return if (c == null) false else hasAnchorFor(c)
+    override fun isPartOf(de: DiagramElement?): Boolean {
+        return if (de == null) false else hasAnchorFor(de)
     }
 
     override fun getDiagramElements(): Set<DiagramElement> {
-        return anchors
-            .map { a: Anchor -> a.de }
-            .toSet()
+        return anchors.map { a: Anchor -> a.de }.toSet()
     }
 
     companion object {
 
-		fun isMin(b: LongFraction): Boolean {
+        fun isMin(b: LongFraction): Boolean {
             return b.equals(ZERO)
         }
 
-		fun isMax(b: LongFraction): Boolean {
+        fun isMax(b: LongFraction): Boolean {
             return b.equals(ONE)
         }
 
-		fun getOrdForXDirection(d: Direction?): LongFraction {
+        fun getOrdForXDirection(d: Direction?): LongFraction {
             return when (d) {
                 Direction.LEFT -> ZERO
                 Direction.RIGHT -> ONE
@@ -69,7 +66,7 @@ open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdina
             }
         }
 
-		fun getOrdForYDirection(d: Direction?): LongFraction {
+        fun getOrdForYDirection(d: Direction?): LongFraction {
             return when (d) {
                 Direction.UP -> ZERO
                 Direction.DOWN -> ONE
@@ -77,5 +74,4 @@ open class MultiCornerVertex(id: String, val xOrdinal: LongFraction, val yOrdina
             }
         }
     }
-
 }

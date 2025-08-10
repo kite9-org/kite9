@@ -73,6 +73,5 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-
 description = "Kite9 Server (Spring-Boot)"
 

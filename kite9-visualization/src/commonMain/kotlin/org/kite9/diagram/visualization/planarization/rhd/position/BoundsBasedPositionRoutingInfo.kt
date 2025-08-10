@@ -38,8 +38,8 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
         return getMaxY() - getMinY()
     }
 
-    override fun compareTo(arg0: RoutingInfo): Int {
-        val bbri = arg0 as BoundsBasedPositionRoutingInfo
+    override fun compareTo(other: RoutingInfo): Int {
+        val bbri = other as BoundsBasedPositionRoutingInfo
         val yc = y.compareTo(bbri.y)
         return if (yc != 0) {
             yc
@@ -57,5 +57,4 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
     }
 
     var avoidanceCorners: Map<Routing, Corner>? = null
-
 }

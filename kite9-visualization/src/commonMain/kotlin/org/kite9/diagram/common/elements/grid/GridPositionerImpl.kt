@@ -30,9 +30,12 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
     var placed: MutableMap<Container, Array<Array<DiagramElement>>> = HashMap()
 
-    override fun placeOnGrid(ord: Container, allowSpanning: Boolean): Array<Array<DiagramElement>> {
-        if (placed.containsKey(ord)) {
-            return placed[ord]!!
+    override fun placeOnGrid(
+            gridContainer: Container,
+            allowSpanning: Boolean
+    ): Array<Array<DiagramElement>> {
+        if (placed.containsKey(gridContainer)) {
+            return placed[gridContainer]!!
         }
 
         val overlaps: MutableList<DiagramElement> = ArrayList()
@@ -40,13 +43,16 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         val xOrdinals: MutableSet<Int> = mutableSetOf()
         val yOrdinals: MutableSet<Int> = mutableSetOf()
 
-        // place elements in their correct positions, as far as possible.  
+        // place elements in their correct positions, as far as possible.
         // move overlaps to array.
-        for (diagramElement in ord.getContents()) {
+        for (diagramElement in gridContainer.getContents()) {
             if (shoudAddToGrid(diagramElement)) {
                 val xpos = getXOccupies(diagramElement as Rectangular)
                 val ypos = getYOccupies(diagramElement)
-                if (!notSet(xpos) && !notSet(ypos) && ensureGrid(out, xpos, ypos, null, xOrdinals, yOrdinals) == null) {
+                if (!notSet(xpos) &&
+                                !notSet(ypos) &&
+                                ensureGrid(out, xpos, ypos, null, xOrdinals, yOrdinals) == null
+                ) {
                     ensureGrid(out, xpos, ypos, diagramElement, xOrdinals, yOrdinals)
                 } else {
                     overlaps.add(diagramElement)
@@ -57,8 +63,8 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         // add remaining/dummy elements elements, by adding extra rows if need be.
         var cell = 0
         if (overlaps.size > 0) {
-            padOrdinal(xOrdinals, 1.coerceAtLeast(ord.getGridColumns()))
-            padOrdinal(yOrdinals, 1.coerceAtLeast(ord.getGridRows()))
+            padOrdinal(xOrdinals, 1.coerceAtLeast(gridContainer.getGridColumns()))
+            padOrdinal(yOrdinals, 1.coerceAtLeast(gridContainer.getGridRows()))
         }
         var xSize = xOrdinals.size
         var ySize = yOrdinals.size
@@ -69,7 +75,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
             val xOrder = xOrdinals.toMutableList().also { it.sort() }
             if (row >= yOrder.size) {
                 ySize++
-                val max : Int = yOrder.reduceOrNull { a: Int, b: Int -> a.coerceAtLeast(b) } ?: 0
+                val max: Int = yOrder.reduceOrNull { a: Int, b: Int -> a.coerceAtLeast(b) } ?: 0
                 yOrder.add(max + 1)
             }
             val co = xOrder[col]
@@ -91,15 +97,12 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         // to array
         val yOrder = yOrdinals.toMutableList().also { it.sort() }
         val xOrder = xOrdinals.toMutableList().also { it.sort() }
-        fillInTheBlanks(out, ord, xOrder, yOrder)
+        fillInTheBlanks(out, gridContainer, xOrder, yOrder)
 
-        val done: Array<Array<DiagramElement>> = yOrder
-            .map { y: Int ->
-                xOrder
-                    .map { x: Int -> out[y]!![x]!! }
-                    .toTypedArray()
-            }
-            .toTypedArray()
+        val done: Array<Array<DiagramElement>> =
+                yOrder
+                        .map { y: Int -> xOrder.map { x: Int -> out[y]!![x]!! }.toTypedArray() }
+                        .toTypedArray()
 
         val size = OPair(xSize, ySize)
         scaleCoordinates(done, size)
@@ -110,10 +113,10 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
             }
             log.send("Grid Positions: \n", t)
         }
-        val crri = ord.getRenderingInformation()
+        val crri = gridContainer.getRenderingInformation()
         crri.setGridXSize(size.a)
         crri.setGridYSize(size.b)
-        placed[ord] = done
+        placed[gridContainer] = done
         return done
     }
 
@@ -126,10 +129,10 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     private fun fillInTheBlanks(
-        contents: MutableMap<Int, MutableMap<Int, DiagramElement>>,
-        ord: Container,
-        xs: List<Int>,
-        ys: List<Int>
+            contents: MutableMap<Int, MutableMap<Int, DiagramElement>>,
+            ord: Container,
+            xs: List<Int>,
+            ys: List<Int>
     ) {
         for (y in ys) {
             for (x in xs) {
@@ -145,7 +148,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
                 if (toPlace == null) {
                     toPlace = factory.createTemporaryConnected(ord, "$x-$y")
                     toPlace.setContainerPosition(
-                        GridContainerPosition(BasicIntegerRange(x, x), BasicIntegerRange(y, y))
+                            GridContainerPosition(BasicIntegerRange(x, x), BasicIntegerRange(y, y))
                     )
                     modifyContainerContents(ord, toPlace)
                     xMap[x] = toPlace
@@ -155,21 +158,21 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     private fun removeDuplicatesAndEmptyRows(
-        out: Map<Int, MutableMap<Int, DiagramElement>>,
-        height: Int,
-        yOrdinals: MutableSet<Int>,
-        xOrdinals: MutableSet<Int>
+            out: Map<Int, MutableMap<Int, DiagramElement>>,
+            height: Int,
+            yOrdinals: MutableSet<Int>,
+            xOrdinals: MutableSet<Int>
     ): Int {
         var height = height
         var last: List<DiagramElement?>? = null
         val yIt = yOrdinals.iterator()
         while (yIt.hasNext()) {
             val y = yIt.next()
-            val line: List<DiagramElement?> = xOrdinals
-                .map { x: Int ->
-                    val row: Map<Int, DiagramElement>? = out[y]
-                    row?.get(x)
-                }
+            val line: List<DiagramElement?> =
+                    xOrdinals.map { x: Int ->
+                        val row: Map<Int, DiagramElement>? = out[y]
+                        row?.get(x)
+                    }
             if (last != null && last == line) {
                 yIt.remove()
                 height--
@@ -183,21 +186,21 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     private fun removeDuplicatesAndEmptyCols(
-        out: Map<Int, MutableMap<Int, DiagramElement>>,
-        width: Int,
-        yOrdinals: MutableSet<Int>,
-        xOrdinals: MutableSet<Int>
+            out: Map<Int, MutableMap<Int, DiagramElement>>,
+            width: Int,
+            yOrdinals: MutableSet<Int>,
+            xOrdinals: MutableSet<Int>
     ): Int {
         var width = width
         var last: List<DiagramElement?>? = null
         val xIt = xOrdinals.iterator()
         while (xIt.hasNext()) {
             val x = xIt.next()
-            val line: List<DiagramElement?> = yOrdinals
-                .map { y: Int ->
-                    val row: Map<Int, DiagramElement>? = out[y]
-                    row?.get(x)
-                }
+            val line: List<DiagramElement?> =
+                    yOrdinals.map { y: Int ->
+                        val row: Map<Int, DiagramElement>? = out[y]
+                        row?.get(x)
+                    }
             var remove = false
             if (last != null && last == line) {
                 remove = true
@@ -226,9 +229,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         return diagramElement is ConnectedRectangular
     }
 
-    /**
-     * Deprecated, because we wanted to have immutable containers.
-     */
+    /** Deprecated, because we wanted to have immutable containers. */
     @Deprecated("")
     private fun modifyContainerContents(ord: Container, d: DiagramElement) {
         ord.getContents().add(d)
@@ -256,28 +257,20 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
             val ri = de.getRenderingInformation() as RectangleRenderingInformation
             val (a, b) = xp[de]!!
             val (a1, b1) = yp[de]!!
-            val xin = OPair(
-                getReducedFraction(a, size.a), getReducedFraction(
-                    b, size.a
-                )
-            )
-            val yin = OPair(
-                getReducedFraction(a1, size.b), getReducedFraction(
-                    b1, size.b
-                )
-            )
+            val xin = OPair(getReducedFraction(a, size.a), getReducedFraction(b, size.a))
+            val yin = OPair(getReducedFraction(a1, size.b), getReducedFraction(b1, size.b))
             ri.setGridXPosition(xin)
             ri.setGridYPosition(yin)
         }
     }
 
-    override fun getClockwiseOrderedContainerVertices(cvs: CornerVertices): List<MultiCornerVertex> {
+    override fun getClockwiseOrderedContainerVertices(cv: CornerVertices): List<MultiCornerVertex> {
         var minx: LongFraction? = null
         var maxx: LongFraction? = null
         var miny: LongFraction? = null
         var maxy: LongFraction? = null
-        cvs.identifyPerimeterVertices()
-        val perimeterVertices = cvs.getPerimeterVertices()
+        cv.identifyPerimeterVertices()
+        val perimeterVertices = cv.getPerimeterVertices()
         for (cv in perimeterVertices) {
             val xb = cv.xOrdinal
             val yb = cv.yOrdinal
@@ -290,7 +283,8 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         val right = sort(0, +1, collect(maxx, maxx, miny, maxy, perimeterVertices))
         val bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy, perimeterVertices))
         val left = sort(0, -1, collect(minx, minx, miny, maxy, perimeterVertices))
-        val plist: MutableList<MultiCornerVertex> = ArrayList(top.size + right.size + left.size + bottom.size)
+        val plist: MutableList<MultiCornerVertex> =
+                ArrayList(top.size + right.size + left.size + bottom.size)
         addAllExceptLast(plist, top)
         addAllExceptLast(plist, right)
         addAllExceptLast(plist, bottom)
@@ -306,37 +300,47 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         return current
     }
 
-    private fun sort(xorder: Int, yorder: Int, collect: List<MultiCornerVertex>): List<MultiCornerVertex> {
-        val sorted = collect.sortedWith { o1, o2 ->
-            val ys = o1.yOrdinal.compareTo(o2.yOrdinal) * yorder
-            val xs = o1.xOrdinal.compareTo(o2.xOrdinal) * xorder
-            xs + ys
-        }
+    private fun sort(
+            xorder: Int,
+            yorder: Int,
+            collect: List<MultiCornerVertex>
+    ): List<MultiCornerVertex> {
+        val sorted =
+                collect.sortedWith { o1, o2 ->
+                    val ys = o1.yOrdinal.compareTo(o2.yOrdinal) * yorder
+                    val xs = o1.xOrdinal.compareTo(o2.xOrdinal) * xorder
+                    xs + ys
+                }
         return sorted
     }
 
     /*
-	 * Prevents duplicating the corner vertices
-	 */
-    private fun addAllExceptLast(out: MutableList<MultiCornerVertex>, `in`: List<MultiCornerVertex>) {
+     * Prevents duplicating the corner vertices
+     */
+    private fun addAllExceptLast(
+            out: MutableList<MultiCornerVertex>,
+            `in`: List<MultiCornerVertex>
+    ) {
         for (i in 0 until `in`.size - 1) {
             out.add(`in`[i])
         }
     }
 
     private fun collect(
-        minx: LongFraction?,
-        maxx: LongFraction?,
-        miny: LongFraction?,
-        maxy: LongFraction?,
-        elements: Collection<MultiCornerVertex>
+            minx: LongFraction?,
+            maxx: LongFraction?,
+            miny: LongFraction?,
+            maxy: LongFraction?,
+            elements: Collection<MultiCornerVertex>
     ): List<MultiCornerVertex> {
         val out: MutableList<MultiCornerVertex> = ArrayList()
         for (cv in elements) {
             val xb = cv.xOrdinal
             val yb = cv.yOrdinal
-            if (minx!!.compareTo(xb) != 1 && maxx!!.compareTo(xb) != -1
-                && miny!!.compareTo(yb) != 1 && maxy!!.compareTo(yb) != -1
+            if (minx!!.compareTo(xb) != 1 &&
+                            maxx!!.compareTo(xb) != -1 &&
+                            miny!!.compareTo(yb) != 1 &&
+                            maxy!!.compareTo(yb) != -1
             ) {
                 out.add(cv)
             }
@@ -349,28 +353,27 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     override val isLoggingEnabled: Boolean
         get() = true
 
-
     companion object {
 
-		fun getYOccupies(diagramElement: Rectangular): IntegerRange {
+        fun getYOccupies(diagramElement: Rectangular): IntegerRange {
             return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.y
         }
 
-		fun getXOccupies(diagramElement: Rectangular): IntegerRange {
+        fun getXOccupies(diagramElement: Rectangular): IntegerRange {
             return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.x
         }
 
         /**
-         * Iterates over the grid squares occupied by the ranges and either checks that they are empty,
-         * or sets their value.
+         * Iterates over the grid squares occupied by the ranges and either checks that they are
+         * empty, or sets their value.
          */
         private fun ensureGrid(
-            out: MutableMap<Int, MutableMap<Int, DiagramElement>>,
-            xpos: IntegerRange,
-            ypos: IntegerRange,
-            `in`: DiagramElement?,
-            xOrdinals: MutableSet<Int>,
-            yOrdinals: MutableSet<Int>
+                out: MutableMap<Int, MutableMap<Int, DiagramElement>>,
+                xpos: IntegerRange,
+                ypos: IntegerRange,
+                `in`: DiagramElement?,
+                xOrdinals: MutableSet<Int>,
+                yOrdinals: MutableSet<Int>
         ): DiagramElement? {
             for (x in xpos.from..xpos.to) {
                 xOrdinals.add(x)

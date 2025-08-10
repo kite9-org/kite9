@@ -11,7 +11,8 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
 
 /**
  * Modifies the queue so that we layout the groups with the most disparate group of links first.
- * This is based on a count of the number of groups that are already placed that the candidate groups link to.
+ * This is based on a count of the number of groups that are already placed that the candidate
+ * groups link to.
  */
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     var log = Kite9Log.instance(this)
@@ -47,15 +48,18 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         return if (complete) {
             // drill down looking for first ready group
             val out = intArrayOf(0)
-            ld.processToLevel(object : LinkProcessor {
-                override fun process(
-                    originatingGroup: Group,
-                    destinationGroup: Group,
-                    ld2: LinkDetail
-                ) {
-                    out[0] += countLinkNetworkSize(ld2!!)
-                }
-            }, 1)
+            ld.processToLevel(
+                    object : LinkProcessor {
+                        override fun process(
+                                originatingGroup: Group,
+                                destinationGroup: Group,
+                                ld: LinkDetail
+                        ) {
+                            out[0] += countLinkNetworkSize(ld!!)
+                        }
+                    },
+                    1
+            )
             out[0]
         } else {
             log.send(if (log.go()) null else " -- link to " + ld.group)
@@ -63,31 +67,36 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         }
     }
 
-    var todo: PriorityQueue<NetworkedItem> = PriorityQueue(size, Comparator { arg0, arg1 ->
+    var todo: PriorityQueue<NetworkedItem> =
+            PriorityQueue(
+                    size,
+                    Comparator { arg0, arg1 ->
 
-        /**
-         * Although priority is top down, within a given level, do groups in the same order than they were merged
-         * in. This means that we do "hub" groups before "edge" ones.
-         */
-        // most networked first
-        var a0d = arg0.size
-        var a1d = arg1.size
-        if (a0d != a1d) {
-            return@Comparator -a0d.compareTo(a1d)
-        }
+                        /**
+                         * Although priority is top down, within a given level, do groups in the
+                         * same order than they were merged in. This means that we do "hub" groups
+                         * before "edge" ones.
+                         */
+                        // most networked first
+                        var a0d = arg0.size
+                        var a1d = arg1.size
+                        if (a0d != a1d) {
+                            return@Comparator -a0d.compareTo(a1d)
+                        }
 
-        // largest first
-        a0d = arg0.group.size
-        a1d = arg1.group.size
-        if (a0d != a1d) {
-            return@Comparator -a0d.compareTo(a1d)
-        }
+                        // largest first
+                        a0d = arg0.group.size
+                        a1d = arg1.group.size
+                        if (a0d != a1d) {
+                            return@Comparator -a0d.compareTo(a1d)
+                        }
 
-        // lowest number first
-        val a0n = arg0.group.groupNumber
-        val a1n = arg1.group.groupNumber
-        a0n.compareTo(a1n)
-    })
+                        // lowest number first
+                        val a0n = arg0.group.groupNumber
+                        val a1n = arg1.group.groupNumber
+                        a0n.compareTo(a1n)
+                    }
+            )
     var networkSizes: MutableMap<Group, Int> = HashMap(size * 2)
     var completedGroups: MutableSet<Group> = UnorderedSet(size * 2)
     override fun poll(): Group? {
@@ -103,9 +112,7 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         return null
     }
 
-    /**
-     * Updates (by creating new NetworkedItems) the groups currently in todo.
-     */
+    /** Updates (by creating new NetworkedItems) the groups currently in todo. */
     override fun complete(item: CompoundGroup) {
         completedGroups.add(item)
         val a = item.a
@@ -119,25 +126,28 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     }
 
     private fun checkAndIncrementGroup(
-        group: Group?,
-        a: Group,
-        b: Group,
-        ld: LinkDetail,
-        horiz: Boolean
+            group: Group?,
+            a: Group,
+            b: Group,
+            ld: LinkDetail,
+            horiz: Boolean
     ) {
         var group: Group? = group
         if (completedGroups.contains(group)) {
             if (group is CompoundGroup) {
                 // need to work our way down to incomplete ones, no point updating complete groups
-                ld.processToLevel(object : LinkProcessor {
-                    override fun process(
-                        originatingGroup: Group,
-                        destinationGroup: Group,
-                        ld2: LinkDetail
-                    ) {
-                        checkAndIncrementGroup(destinationGroup, a, b, ld2!!, horiz)
-                    }
-                }, 1)
+                ld.processToLevel(
+                        object : LinkProcessor {
+                            override fun process(
+                                    originatingGroup: Group,
+                                    destinationGroup: Group,
+                                    ld: LinkDetail
+                            ) {
+                                checkAndIncrementGroup(destinationGroup, a, b, ld!!, horiz)
+                            }
+                        },
+                        1
+                )
             }
         } else {
             group = getGroupBeingLaidOut(group!!, horiz)
@@ -170,5 +180,4 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
         get() = "MNFQ"
     override val isLoggingEnabled: Boolean
         get() = true
-
 }

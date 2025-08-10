@@ -16,11 +16,9 @@ import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionSt
 import org.kite9.diagram.visualization.compaction2.align.C2CenteringAligner
 import org.kite9.diagram.visualization.compaction2.align.C2LeftRightAligner
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
-import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositionCompactionStep
-import org.kite9.diagram.visualization.compaction2.labels.C2ConnectionLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.labels.C2ContainerLabelCompactionStep
-import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionFanningCompactionStep
+import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.*

@@ -6,7 +6,6 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.Tools
@@ -28,7 +27,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
     var log = Kite9Log.instance(this)
     private var hasContradictions = false
 
-    val comp  = { arg0: BiDirectional<Connected>, arg1: BiDirectional<Connected> ->
+    val comp = { arg0: BiDirectional<Connected>, arg1: BiDirectional<Connected> ->
         val r0 = getRankFor(arg0)
         val r1 = getRankFor(arg1)
         r1.compareTo(r0)
@@ -55,7 +54,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
 
         x.sortWith(comp)
         y.sortWith(comp)
-       // u.sortWith(comp)
+        // u.sortWith(comp)
 
         return object : MutableIterator<BiDirectional<Connected>> {
 
@@ -97,9 +96,6 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
         }
     }
 
-
-
-
     override fun handleLinks(g: Group) {
         if (g is AbstractCompoundGroup) {
             val cg = g
@@ -107,7 +103,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
             if (internalLinkA != null) {
                 for (c in internalLinkA.connections) {
                     if (considerThis(c, cg)) {
-                        //checkForPositionContradiction(c);
+                        // checkForPositionContradiction(c);
                         add(c)
                     }
                 }
@@ -130,34 +126,32 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
     fun considerThisB(c: BiDirectional<Connected>, cg: AbstractCompoundGroup): Boolean {
         return if (c is Connection) {
             val d = c.getDrawDirection()
-            (d == null && !u!!.contains(c)
-                    || (d === Direction.LEFT || d === Direction.RIGHT) && cg.axis.isHorizontal
-                    || (d === Direction.UP || d === Direction.DOWN) && cg.axis.isVertical)
+            (d == null && !u!!.contains(c) ||
+                    (d === Direction.LEFT || d === Direction.RIGHT) && cg.axis.isHorizontal ||
+                    (d === Direction.UP || d === Direction.DOWN) && cg.axis.isVertical)
         } else {
             false
         }
     }
 
-    override fun add(c2: BiDirectional<Connected>): Boolean {
-        //System.out.println("Admitting: "+c2);
-        val d = c2.getDrawDirection()
-        val contradiction = c2 is Connection && Tools.isConnectionContradicting(
-            c2
-        )
+    override fun add(element: BiDirectional<Connected>): Boolean {
+        // System.out.println("Admitting: "+element);
+        val d = element.getDrawDirection()
+        val contradiction = element is Connection && Tools.isConnectionContradicting(element)
         if (contradiction) {
             hasContradictions = true
         }
         return if (d == null || contradiction) {
-            u!!.add(c2)
+            u!!.add(element)
             true
         } else {
             when (d) {
                 Direction.UP, Direction.DOWN -> {
-                    y!!.add(c2)
+                    y!!.add(element)
                     true
                 }
                 Direction.LEFT, Direction.RIGHT -> {
-                    x!!.add(c2)
+                    x!!.add(element)
                     true
                 }
             }
@@ -166,7 +160,7 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
     }
 
     override fun addAll(elements: Collection<BiDirectional<Connected>>): Boolean {
-        elements.forEach { add (it) }
+        elements.forEach { add(it) }
         return true
     }
 
@@ -180,15 +174,18 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
         return x.isEmpty() && y.isEmpty() && u.isEmpty()
     }
 
-    override fun remove(o: BiDirectional<Connected>): Boolean {
-        return x.remove(o) || y.remove(o) || u.remove(o)
+    override fun remove(element: BiDirectional<Connected>): Boolean {
+        return x.remove(element) || y.remove(element) || u.remove(element)
     }
 
-    override fun contains(o: BiDirectional<Connected>): Boolean {
-        return alreadyAdded.contains(o) || u.contains(o) || x.contains(o) || y.contains(o)
+    override fun contains(element: BiDirectional<Connected>): Boolean {
+        return alreadyAdded.contains(element) ||
+                u.contains(element) ||
+                x.contains(element) ||
+                y.contains(element)
     }
 
-    override fun containsAll(c: Collection<BiDirectional<Connected>>): Boolean {
+    override fun containsAll(elements: Collection<BiDirectional<Connected>>): Boolean {
         throw UnsupportedOperationException()
     }
 
@@ -200,9 +197,8 @@ class RankBasedConnectionQueue(rh: RoutableHandler2D) : ConnectionManager, Logab
         throw UnsupportedOperationException()
     }
 
-
     override val size: Int
-        get() =  x.size + y.size + u.size
+        get() = x.size + y.size + u.size
 
     override val prefix: String
         get() = "CQ  "

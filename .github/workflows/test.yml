@@ -20,7 +20,12 @@ jobs:
         with:
           gradle-version: "8.13"
       - name: Build with Gradle
-        run: gradle clean build jacocoTestReport
+        run: gradle clean test
+        env:
+          kite9.logging: OFF
+      - name: Generate Test Coverage Report
+        run: gradle jacocoTestReport jacocoTestCoverageVerification
+        if: always() # always run even if the previous step fails
         env:
           kite9.logging: OFF
       - name: Publish Test Report

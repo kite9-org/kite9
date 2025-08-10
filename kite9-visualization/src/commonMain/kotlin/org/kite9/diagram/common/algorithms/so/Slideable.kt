@@ -1,11 +1,12 @@
 package org.kite9.diagram.common.algorithms.so
 
+import kotlin.math.max
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.visualization.compaction2.C2Slideable
-import kotlin.math.max
 
-abstract class Slideable(val so: SlackOptimisation,
-    ) : PositionChangeNotifiable {
+abstract class Slideable(
+        val so: SlackOptimisation,
+) : PositionChangeNotifiable {
 
     protected val minimum = SingleDirection(this, true)
     protected val maximum = SingleDirection(this, false)
@@ -22,14 +23,13 @@ abstract class Slideable(val so: SlackOptimisation,
             maximum.increasePosition(i!!)
         }
 
-    fun getMinimumForwardConstraintTo(d: Slideable) : Int? {
+    fun getMinimumForwardConstraintTo(d: Slideable): Int? {
         return this.minimum.forward.get(d.minimum)
     }
 
     /**
-     * Works out how much closer the current slideable can get to s.
-     * This works by fixing the position for s (temporarily, using the cache)
-     * and then taking the max position for *this*.
+     * Works out how much closer the current slideable can get to s. This works by fixing the
+     * position for s (temporarily, using the cache) and then taking the max position for *this*.
      *
      * We can't move the element any further than the max position without breaking other
      * constraints.
@@ -54,7 +54,7 @@ abstract class Slideable(val so: SlackOptimisation,
         }
     }
 
-    override fun changedPosition(pos: Int) {
+    override fun changedPosition(newPos: Int) {
         so.pushCount++
         val min = minimumPosition
         val max = maximumPosition

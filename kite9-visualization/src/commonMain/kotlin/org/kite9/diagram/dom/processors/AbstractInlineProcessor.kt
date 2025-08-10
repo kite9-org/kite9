@@ -12,8 +12,8 @@ import org.w3c.dom.Text
  */
 abstract class AbstractInlineProcessor : AbstractProcessor() {
 
-    override fun processContents(n: Node?): Node? {
-        return processContents(n!!, null)
+    override fun processContents(from: Node?): Node? {
+        return processContents(from!!, null)
     }
 
     override fun processTag(n: Element): Element {

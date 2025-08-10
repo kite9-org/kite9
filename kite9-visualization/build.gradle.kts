@@ -1,4 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile;
+import org.gradle.api.tasks.testing.Test
+import org.gradle.api.tasks.testing.TestDescriptor
+import org.gradle.api.tasks.testing.TestResult
+import java.util.Collections
 
 plugins {
     kotlin("multiplatform")

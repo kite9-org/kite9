@@ -10,14 +10,14 @@ import org.kite9.diagram.model.style.VerticalAlignment
 import org.kite9.diagram.visualization.compaction2.*
 
 /**
- * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right wants to align left)
- * then this is going to be inconsistent.
+ * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right
+ * wants to align left) then this is going to be inconsistent.
  */
 class C2LeftRightAligner : Aligner {
 
-    override fun alignFor(co: Container, des: Set<Rectangular>, c: C2Compaction, d: Dimension) {
+    override fun alignFor(co: Container, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
         val sso = c.getSlackOptimisation(d)
-        for (r in des) {
+        for (r in de) {
             alignRectangular(r, sso, d)
         }
     }
@@ -30,27 +30,27 @@ class C2LeftRightAligner : Aligner {
         }
     }
 
-    private fun getAlignStyle(sl: C2Slideable, d: Dimension) : AlignStyle? {
+    private fun getAlignStyle(sl: C2Slideable, d: Dimension): AlignStyle? {
         return sl.getRectAnchors()
-            .asSequence()
-            .map { it.e }
-            .filterIsInstance<AlignedRectangular>()
-            .map {
-                if (d.isHoriz()) {
-                    when (it.getVerticalAlignment()) {
-                        VerticalAlignment.TOP -> AlignStyle.MIN
-                        VerticalAlignment.CENTER -> AlignStyle.CENTER
-                        VerticalAlignment.BOTTOM -> AlignStyle.MAX
-                    }
-                } else {
-                    when (it.getHorizontalAlignment()) {
-                        HorizontalAlignment.LEFT -> AlignStyle.MIN
-                        HorizontalAlignment.CENTER -> AlignStyle.CENTER
-                        HorizontalAlignment.RIGHT -> AlignStyle.MAX
+                .asSequence()
+                .map { it.e }
+                .filterIsInstance<AlignedRectangular>()
+                .map {
+                    if (d.isHoriz()) {
+                        when (it.getVerticalAlignment()) {
+                            VerticalAlignment.TOP -> AlignStyle.MIN
+                            VerticalAlignment.CENTER -> AlignStyle.CENTER
+                            VerticalAlignment.BOTTOM -> AlignStyle.MAX
+                        }
+                    } else {
+                        when (it.getHorizontalAlignment()) {
+                            HorizontalAlignment.LEFT -> AlignStyle.MIN
+                            HorizontalAlignment.CENTER -> AlignStyle.CENTER
+                            HorizontalAlignment.RIGHT -> AlignStyle.MAX
+                        }
                     }
                 }
-            }
-            .firstOrNull()
+                .firstOrNull()
     }
 
     private fun alignSegment(sl: C2Slideable, d: Dimension) {

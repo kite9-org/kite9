@@ -11,11 +11,11 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
      * expression, needing to be replaced.
      * - If not, then it assumes the entire input is an xpath.
      */
-    override fun performValueReplace(input: String, at: Element): String {
-        if (input.contains(EMBEDDED_EXPRESSION)) {
-            return performEmbeddedValueReplace(input, at)
+    override fun performValueReplace(s: String, at: Element): String {
+        if (s.contains(EMBEDDED_EXPRESSION)) {
+            return performEmbeddedValueReplace(s, at)
         } else {
-            return performCompleteValueReplace(input, at)
+            return performCompleteValueReplace(s, at)
         }
     }
 

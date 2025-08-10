@@ -1,5 +1,4 @@
 /**
- *
  */
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
@@ -18,14 +17,12 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * @author robmoffat
  */
 class DistancePlacementApproach(
-    log: Kite9Log,
-    aDirection: Layout?,
-    overall: CompoundGroup,
-    val rh: RoutableHandler2D,
-    natural: Boolean
-) : AbstractPlacementApproach(
-    log, aDirection, overall, natural
-) {
+        log: Kite9Log,
+        aDirection: Layout?,
+        overall: CompoundGroup,
+        val rh: RoutableHandler2D,
+        natural: Boolean
+) : AbstractPlacementApproach(log, aDirection, overall, natural) {
 
     override fun evaluate() {
         overall.layout = aDirection
@@ -39,18 +36,24 @@ class DistancePlacementApproach(
     }
 
     private fun evaluateLinks(group: Group) {
-        group.processLowestLevelLinks(object : LinkProcessor {
-            override fun process(from: Group, to: Group, ld: LinkDetail) {
-                val aRI = from.axis.getPosition(rh, true)
-                val bRI = to.axis.getPosition(rh, true)
-                val cost = rh.cost(aRI, bRI) * ld!!.numberOfLinks
-                score += cost
-                log.send(
-                    """Evaluating: $cost
-	from ${(from as LeafGroup).connected} at $aRI
-	to ${(to as LeafGroup).connected} at $bRI"""
-                )
-            }
-        })
+        group.processLowestLevelLinks(
+                object : LinkProcessor {
+                    override fun process(
+                            originatingGroup: Group,
+                            destinationGroup: Group,
+                            ld: LinkDetail
+                    ) {
+                        val aRI = originatingGroup.axis.getPosition(rh, true)
+                        val bRI = destinationGroup.axis.getPosition(rh, true)
+                        val cost = rh.cost(aRI, bRI) * ld!!.numberOfLinks
+                        score += cost
+                        log.send(
+                                """Evaluating: $cost
+	from ${(originatingGroup as LeafGroup).connected} at $aRI
+	to ${(destinationGroup as LeafGroup).connected} at $bRI"""
+                        )
+                    }
+                }
+        )
     }
 }
