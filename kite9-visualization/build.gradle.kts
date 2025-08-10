@@ -95,7 +95,10 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
     archiveClassifier.set("jvm-sources")
 }
 
-
+// Configure JUnit 5
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
 
 // Create a custom jacocoTestReport task for Kotlin Multiplatform
 tasks.register("jacocoTestReport", JacocoReport::class) {

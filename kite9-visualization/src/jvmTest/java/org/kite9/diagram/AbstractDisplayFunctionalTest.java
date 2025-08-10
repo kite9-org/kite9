@@ -1,8 +1,8 @@
 package org.kite9.diagram;
 
-import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StackHelp;
 import org.kite9.diagram.common.StreamHelp;
