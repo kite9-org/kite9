@@ -1,7 +1,7 @@
 package org.kite9.diagram;
 
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -28,7 +28,7 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
-@Category(CITest.class)
+@Tag("ci")
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected void renderDiagram(Element d) throws Exception {

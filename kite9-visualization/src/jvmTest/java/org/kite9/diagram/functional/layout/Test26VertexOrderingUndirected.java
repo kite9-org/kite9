@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.Context;
@@ -128,8 +128,7 @@ public class Test26VertexOrderingUndirected extends AbstractLayoutFunctionalTest
 		renderDiagram(new DiagramKite9XMLElement("bob", out2, null));
 
 	}
-	
-	
+
 	@Test
 	public void test_26_7_BigSquare3() throws Exception {
 		List<Element> contents = new ArrayList<Element>();
@@ -149,7 +148,7 @@ public class Test26VertexOrderingUndirected extends AbstractLayoutFunctionalTest
 		renderDiagram(new DiagramKite9XMLElement("bob", out2, null));
 
 	}
-	
+
 	@Test
 	public void test_26_8_BigRow2() throws Exception {
 		List<Element> contents = new ArrayList<Element>();
@@ -168,7 +167,6 @@ public class Test26VertexOrderingUndirected extends AbstractLayoutFunctionalTest
 		renderDiagram(new DiagramKite9XMLElement("bob", out2, Layout.HORIZONTAL, null));
 
 	}
-	
 
 	@Test
 	public void test_26_9_BigSquareDebug() throws Exception {
@@ -186,6 +184,5 @@ public class Test26VertexOrderingUndirected extends AbstractLayoutFunctionalTest
 		renderDiagram(new DiagramKite9XMLElement("bob", out2, null));
 
 	}
-	
 
 }

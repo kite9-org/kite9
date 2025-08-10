@@ -49,7 +49,10 @@ kotlin {
 
         val jvmTest by getting {
             dependencies {
-                implementation("junit:junit:4.13.2")
+                implementation("org.junit.jupiter:junit-jupiter:5.10.0")
+                implementation("org.junit.vintage:junit-vintage-engine:5.10.0")
+                implementation("org.junit.platform:junit-platform-suite:1.10.0")
+                implementation("org.junit.platform:junit-platform-suite-engine:1.10.0")
                 implementation("org.xmlunit:xmlunit-core:2.9.0")
             }
         }
@@ -91,6 +94,8 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
     from(kotlin.sourceSets["jvmMain"].kotlin)
     archiveClassifier.set("jvm-sources")
 }
+
+
 
 // Create a custom jacocoTestReport task for Kotlin Multiplatform
 tasks.register("jacocoTestReport", JacocoReport::class) {

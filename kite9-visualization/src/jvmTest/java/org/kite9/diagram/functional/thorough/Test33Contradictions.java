@@ -2,7 +2,7 @@ package org.kite9.diagram.functional.thorough;
 
 import org.junit.Assert;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.*;
@@ -64,7 +64,6 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.createList((Element) g1, g2), true, null, Layout.RIGHT);
 		Link l = new ContradictingLink(g1, g2, null, null, null, null, Direction.DOWN);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
-
 
 		renderDiagram(d);
 		assertContradicting(l);
@@ -208,7 +207,8 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.createList((Element) g1), true, null, Layout.DOWN);
 		Link l1 = new ContradictingLink(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new ContradictingLink(g1, g3, null, null, null, null, Direction.UP);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL, null);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, g2, g3), Layout.VERTICAL,
+				null);
 
 		renderDiagram(d);
 		Assert.assertTrue(isContradicting(l1));
@@ -233,7 +233,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		renderDiagram(d);
 		assertContradicting(l1);
 		assertContradicting(l2);
-		
+
 	}
 
 	@Test
@@ -251,16 +251,15 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, o2), null);
 
-
 		renderDiagram(d);
-		
+
 		int contCount = 0;
-		contCount = contCount + (isContradicting(l2) ? 1 :0);
-		contCount = contCount + (isContradicting(l3) ? 1 :0);
-		contCount = contCount + (isContradicting(l4) ? 1 :0);
-		contCount = contCount + (isContradicting(l5) ? 1 :0);
-		
-		Assert.assertTrue(contCount <=2);
+		contCount = contCount + (isContradicting(l2) ? 1 : 0);
+		contCount = contCount + (isContradicting(l3) ? 1 : 0);
+		contCount = contCount + (isContradicting(l4) ? 1 : 0);
+		contCount = contCount + (isContradicting(l5) ? 1 : 0);
+
+		Assert.assertTrue(contCount <= 2);
 	}
 
 	@Test
@@ -274,8 +273,8 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.createList((Element) o1, o2), true, null, null);
 		Link l2 = new Link(o2, i2, null, null, null, null, Direction.UP);
 
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN, null);
-
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1, i1, i2, i3), Layout.DOWN,
+				null);
 
 		renderDiagram(d);
 
@@ -291,7 +290,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	@Test
-    @Ignore("Takes too long - but reenable once we've figured everything else out")
+	@Ignore("Takes too long - but reenable once we've figured everything else out")
 	public void test_33_15_TooManyContradictions() throws Exception {
 		generate("too_many_contradictions.xml");
 	}
@@ -330,7 +329,8 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	}
 
 	/**
-	 * Groupwise planarizer doesn't allow you to bend the container, so this should throw an exception
+	 * Groupwise planarizer doesn't allow you to bend the container, so this should
+	 * throw an exception
 	 * 
 	 * @throws Exception
 	 */
@@ -474,28 +474,28 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	public void test_33_30_ADLHierarchy() throws Exception {
 		generate("ADLClassHierarchy.xml");
 	}
-	
+
 	@Test
 	public void test_33_31_ADLHierarchyNoBorder() throws Exception {
 		generate("ADLClassHierarchyNoBorder.xml");
 	}
-	
+
 	@Test
 	public void test_33_32_ADLHierarchyStrictNoBorder() throws Exception {
 		generate("ContradictingADLClassHierarchyNoBorder.xml");
 	}
-	
-//	@Ignore("Broken in sprint 7")
+
+	// @Ignore("Broken in sprint 7")
 	@Test
 	public void test_33_33_LayoutDirection() throws Exception {
 		generate("layout_direction.xml");
 	}
-	
+
 	@Test
 	public void test_33_34_CouldntEstablishDirection() throws Exception {
 		generate("couldnt_establish_direction.xml");
 	}
-	
+
 	@Test
 	public void test_33_35_RankedContradictionLoop() throws Exception {
 
@@ -513,12 +513,12 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		l2.setRank(10);
 		l3.setRank(15);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("d1", HelpMethods.listOf(c1), null);
-		
+
 		renderDiagram(d);
 		assertContradicting(l1);
 
 	}
-	
+
 	@Test
 	public void test_33_36_ContradictingLastLink() throws Exception {
 		Glyph g1 = new Glyph("1", null, "1", null, null);
@@ -526,7 +526,6 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g3 = new Glyph("3", null, "3", null, null);
 
 		Context c1 = new Context("c1", HelpMethods.createList((Element) g1, g2), true, null, null);
-
 
 		Link l1 = new Link(g1, g2, null, null, null, null, Direction.RIGHT);
 		Link l2 = new Link(g2, g3, null, null, null, null, Direction.RIGHT);
@@ -540,8 +539,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		renderDiagram(d);
 		assertContradicting(l1);
 	}
-	
-	
+
 	@Test
 	@Ignore("We don't do invisible elements anymore - fix in sprint 15")
 	public void test_33_38_AssertInvisibleContradictionsNotRendered() throws Exception {
@@ -550,7 +548,6 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 		Glyph g2 = new Glyph("2", null, "2", null, null);
 
 		Context c1 = new Context("c1", HelpMethods.createList((Element) g1, g2), true, null, Layout.RIGHT);
-
 
 		Link l = new Link(g1, g2, null, null, null, null, Direction.LEFT);
 		l.setAttribute("class", "INVISIBLE");
@@ -581,7 +578,7 @@ public class Test33Contradictions extends AbstractLayoutFunctionalTest {
 	protected boolean checkNoContradictions() {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean checkMidConnections() {
 		return false;

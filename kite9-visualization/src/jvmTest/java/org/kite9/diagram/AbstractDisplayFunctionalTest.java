@@ -1,8 +1,9 @@
 package org.kite9.diagram;
 
-import org.junit.Assert;
-import org.junit.Test;
+
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StackHelp;
 import org.kite9.diagram.common.StreamHelp;
@@ -23,7 +24,7 @@ import javax.xml.transform.Source;
 import java.io.*;
 import java.lang.reflect.Method;
 
-@Category(CITest.class)
+@Tag("ci")
 public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
 	protected boolean checkXML() {
@@ -84,7 +85,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
 		} catch (Exception e1) {
 			copyToErrors(output);
-			Assert.fail("Couldn't perform comparison (no expected file): " + output + " " + e1.getMessage());
+			Assertions.fail("Couldn't perform comparison (no expected file): " + output + " " + e1.getMessage());
 			return false;
 		}
 
@@ -147,7 +148,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
 					if ((!v.contains("file:")) && (!v.startsWith("pp:"))) {
 						copyToErrors(output);
-						Assert.fail("found a difference at " + comparison.getControlDetails().getXPath() + ":  "
+						Assertions.fail("found a difference at " + comparison.getControlDetails().getXPath() + ":  "
 								+ comparison);
 					}
 				}
@@ -171,7 +172,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			diff.compare(in1, in2);
 		} catch (NullPointerException e) {
 			copyToErrors(output);
-			Assert.fail("Missing diagram file: " + e.getMessage());
+			Assertions.fail("Missing diagram file: " + e.getMessage());
 			return false;
 		}
 
@@ -179,7 +180,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 
 	protected InputStream getExpectedInputStream(String ending) throws FileNotFoundException {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Method m = StackHelp.getAnnotatedMethod(org.junit.jupiter.api.Test.class);
 		Class<?> theTest = m.getDeclaringClass();
 		String name = m.getName() + ending;
 		File f = new File(theTest.getResource("/org/kite9/diagram/functional/display/shape.svg").getFile());
@@ -190,7 +191,7 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 	}
 
 	protected File getOutputFile(String ending) {
-		Method m = StackHelp.getAnnotatedMethod(Test.class);
+		Method m = StackHelp.getAnnotatedMethod(org.junit.jupiter.api.Test.class);
 		Class<?> theTest = m.getDeclaringClass();
 		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName() + ending);
 		return f;

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.Context;
@@ -23,30 +23,28 @@ import org.kite9.diagram.logging.Kite9Log.Destination;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 
-	
-	
-	public void testGrid(int glyphs, int containers, Layout withinContainer, Layout overallL, Direction d) throws Exception {
+	public void testGrid(int glyphs, int containers, Layout withinContainer, Layout overallL, Direction d)
+			throws Exception {
 		Random r = new Random(101);
 		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", glyphs, containers, contents, withinContainer);
-		
+
 		for (int i = 0; i < glyphs; i++) {
-			for (int j = 0; j < containers-1; j++) {
-				new Link(out[j][i],out[j+1][i], null, null, LinkEndStyle.ARROW, null, d);
+			for (int j = 0; j < containers - 1; j++) {
+				new Link(out[j][i], out[j + 1][i], null, null, LinkEndStyle.ARROW, null, d);
 			}
 		}
-		
+
 		for (Element c : contents) {
 			shuffleElements(r, c);
 		}
-		
+
 		Context overall = new Context("co", contents, true, null, overallL);
 		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
-		
+
 		renderDiagram(new DiagramKite9XMLElement(out2, null));
 	}
 
@@ -57,25 +55,24 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 			items.add(l.item(i));
 			c.removeChild(l.item(i));
 		}
-		
+
 		Collections.shuffle(items, r);
-		
+
 		for (Node node : items) {
 			c.appendChild(node);
 		}
 	}
-	
+
 	@Test
 	public void test_25_1_6Glyphs3LinkedContainersHVNull() throws Exception {
 		testGrid(6, 3, Layout.HORIZONTAL, Layout.VERTICAL, null);
 	}
-	
 
 	@Test
 	public void test_25_2_6Glyphs3LinkedContainersVHNull() throws Exception {
 		testGrid(6, 3, Layout.VERTICAL, Layout.HORIZONTAL, null);
 	}
-	
+
 	@Test
 	public void test_25_3_3Glyphs3LinkedContainersHVDown() throws Exception {
 		testGrid(3, 3, Layout.HORIZONTAL, Layout.VERTICAL, Direction.DOWN);
@@ -85,57 +82,57 @@ public class Test25NLinkedContainers extends AbstractLayoutFunctionalTest {
 	public void test_25_4_6Glyphs3LinkedContainersVHRight() throws Exception {
 		testGrid(6, 3, Layout.VERTICAL, Layout.HORIZONTAL, Direction.RIGHT);
 	}
-	
+
 	@Test
 	public void test_25_5_TwoFourLinkedContainersV() throws Exception {
-		testGrid(2, 3, Layout.HORIZONTAL, null, null);		
+		testGrid(2, 3, Layout.HORIZONTAL, null, null);
 	}
-	
+
 	@Test
 	public void test_25_6_TwoSevenLinkedContainers() throws Exception {
-		testGrid(2, 15, Layout.HORIZONTAL, null, null);		
+		testGrid(2, 15, Layout.HORIZONTAL, null, null);
 	}
-	
+
 	@Test
 	public void test_25_7_10Glyphs3LinkedContainersHVNull() throws Exception {
 		testGrid(10, 3, Layout.HORIZONTAL, Layout.VERTICAL, null);
 	}
-	
+
 	@Test
 	public void test_25_8_6Glyphs3LinkedContainersNUllNUllRight() throws Exception {
 		testGrid(6, 3, null, null, Direction.RIGHT);
 	}
-	
+
 	@Test
 	public void test_25_9_TwoFourLinkedContainersH() throws Exception {
-		testGrid(2, 3, Layout.VERTICAL, null, null);		
+		testGrid(2, 3, Layout.VERTICAL, null, null);
 	}
-	
+
 	@Test
-    @Ignore("Seems to go on forever")
+	@Ignore("Seems to go on forever")
 	public void test_25_10_30Glyphs3LinkedContainersPartialRightHV() throws Exception {
 		Kite9LogImpl.setLogging(Destination.OFF);
 		Random r = new Random(101);
 		int n = 30;
 		List<Element> contents = new ArrayList<Element>();
 		Glyph[][] out = GraphConstructionTools.createXContainers("g", n, 3, contents, Layout.HORIZONTAL);
-		
+
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < 2; j++) {
-				new Link(out[j][i],out[j+1][i], null, null, LinkEndStyle.ARROW, null, null);
+				new Link(out[j][i], out[j + 1][i], null, null, LinkEndStyle.ARROW, null, null);
 			}
 		}
-		
-		((Context)contents.get(0)).setLayoutDirection(Layout.RIGHT);
-		
+
+		((Context) contents.get(0)).setLayoutDirection(Layout.RIGHT);
+
 		for (Element c : contents) {
 			shuffleElements(r, c);
 		}
-		
+
 		Context overall = new Context("co", contents, true, null, Layout.VERTICAL);
 		List<Element> out2 = new ArrayList<Element>();
 		out2.add(overall);
-		
+
 		renderDiagram(new DiagramKite9XMLElement(out2, null));
 	}
 }

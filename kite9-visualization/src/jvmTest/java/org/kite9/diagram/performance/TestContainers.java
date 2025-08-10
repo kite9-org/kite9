@@ -10,7 +10,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.*;
 import org.w3c.dom.Element;
@@ -18,14 +18,13 @@ import org.kite9.diagram.model.position.Layout;
 
 public class TestContainers extends AbstractPerformanceTest {
 
-
 	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int minConnection,
 			int maxConnection, int step2, int containers, Layout l) {
 		Map<Metrics, String> out = new HashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
 			for (int j = minConnection; j <= maxConnection; j += step2) {
 				Metrics m = new Metrics("c+" + containers + "r" + i + "x" + j);
-				//System.out.println("Generating Metrics: " + m);
+				// System.out.println("Generating Metrics: " + m);
 				m.connecteds = i;
 				m.connections = j;
 				String d = generateDiagram(m, containers, l);
@@ -40,7 +39,7 @@ public class TestContainers extends AbstractPerformanceTest {
 		DiagramKite9XMLElement.TESTING_DOCUMENT = DiagramKite9XMLElement.newDocument();
 		Random r = new Random(m.name.hashCode());
 
-		//System.out.println("Generating diagram for " + m);
+		// System.out.println("Generating diagram for " + m);
 
 		Glyph[] items = new Glyph[m.connecteds];
 
@@ -52,17 +51,18 @@ public class TestContainers extends AbstractPerformanceTest {
 		Context[] contexts = new Context[containers];
 
 		for (int i = 0; i < contexts.length; i++) {
-			contexts[i] = new Context("c" + i, new ArrayList<Element>(), true, new TextLine("ctx"+i, "Context " + i), l);
+			contexts[i] = new Context("c" + i, new ArrayList<Element>(), true, new TextLine("ctx" + i, "Context " + i),
+					l);
 		}
 
 		for (int i = 0; i < items.length; i++) {
 			int c = r.nextInt(containers);
 			contexts[c].appendChild(items[i]);
-			items[i].setID(items[i].getID()+"("+contexts[c].getID()+")");
+			items[i].setID(items[i].getID() + "(" + contexts[c].getID() + ")");
 		}
 
 		int tc = 0;
-		
+
 		List<Element> cl = new ArrayList<Element>(items.length);
 		Collections.addAll(cl, contexts);
 		Set<String> connections = new HashSet<>();
@@ -72,7 +72,7 @@ public class TestContainers extends AbstractPerformanceTest {
 			int g2 = r.nextInt(items.length + contexts.length);
 
 			if (g1 != g2) {
-				String conId = Math.min(g1, g2)+"-"+Math.max(g1, g2);
+				String conId = Math.min(g1, g2) + "-" + Math.max(g1, g2);
 				Element g1g = (g1 < items.length) ? items[g1] : contexts[g1 - items.length];
 				Element g2g = (g2 < items.length) ? items[g2] : contexts[g2 - items.length];
 				if (!connections.contains(conId) && checkContainment(g1g, g2g) && checkContainment(g2g, g1g)) {
@@ -85,7 +85,6 @@ public class TestContainers extends AbstractPerformanceTest {
 
 		DiagramKite9XMLElement out = new DiagramKite9XMLElement(cl, null);
 
-	
 		return wrap(out);
 	}
 
@@ -97,7 +96,7 @@ public class TestContainers extends AbstractPerformanceTest {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -123,17 +122,17 @@ public class TestContainers extends AbstractPerformanceTest {
 		Map<Metrics, String> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 6, null);
 		render(suite1);
 	}
-	
+
 	@Test
 	@Ignore("Getting Travis CI Working")
 	public void increasingConnections8Containers() throws Exception {
 		Map<Metrics, String> suite1 = generateSuite(10, 20, 1, 5, 30, 5, 8, null);
 		render(suite1);
 	}
-	
+
 	@Test
 	public void brokenEdgesOutAndIn() throws Exception {
-		Map<Metrics, String> suite1 = generateSuite(17, 17, 1, 5, 5, 5 , 6, null);
+		Map<Metrics, String> suite1 = generateSuite(17, 17, 1, 5, 5, 5, 6, null);
 		render(suite1);
 	}
 

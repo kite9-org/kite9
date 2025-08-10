@@ -4,7 +4,7 @@ import org.apache.batik.anim.dom.SVG12OMDocument;
 import org.apache.batik.dom.GenericDocument;
 import org.apache.batik.dom.GenericElement;
 import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
@@ -52,8 +52,9 @@ public class TestConnected extends AbstractPerformanceTest {
 	}
 
 	private String generateDiagram(Metrics m) {
-		AbstractMutableXMLElement.TESTING_DOCUMENT = new GenericDocument(null, AbstractMutableXMLElement.DOM_IMPLEMENTATION);
-		
+		AbstractMutableXMLElement.TESTING_DOCUMENT = new GenericDocument(null,
+				AbstractMutableXMLElement.DOM_IMPLEMENTATION);
+
 		r = new Random(m.toString().hashCode());
 		Glyph[] items = new Glyph[m.connecteds];
 		for (int i = 0; i < items.length; i++) {
@@ -70,10 +71,10 @@ public class TestConnected extends AbstractPerformanceTest {
 			if (g1 != g2) {
 				Glyph g1g = items[g1];
 				Glyph g2g = items[g2];
-				//if (!g1g.isConnectedDirectlyTo(g2g)) {
+				// if (!g1g.isConnectedDirectlyTo(g2g)) {
 				new Link(g1g, g2g);
 				tc++;
-			// }
+				// }
 			}
 		}
 
@@ -82,7 +83,7 @@ public class TestConnected extends AbstractPerformanceTest {
 
 		DiagramKite9XMLElement out = new DiagramKite9XMLElement(cl, null);
 		Arrays.stream(items).forEach(i -> out.appendChild(i));
-		
+
 		return wrap(out);
 	}
 
@@ -98,14 +99,14 @@ public class TestConnected extends AbstractPerformanceTest {
 		Map<Metrics, String> suite1 = generateSuite(20, 80, 5, 50, 50, 5);
 		render(suite1);
 	}
-	
+
 	@Test
 	public void broken() throws IOException {
 		Map<Metrics, String> suite1 = generateSuite(19, 19, 1, 100, 100, 1);
 		render(suite1);
 	}
 
-    @Ignore("long runner")
+	@Ignore("long runner")
 	@Test
 	public void broken2() throws IOException {
 		Map<Metrics, String> suite1 = generateSuite(70, 70, 1, 135, 135, 1);

@@ -1,6 +1,6 @@
 package org.kite9.diagram.functional.layout;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
@@ -137,7 +137,7 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		new Link(bottom, bl, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(bottom, br, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);
 
-		new Link(left, tl, null, null, LinkEndStyle.ARROW, null,Direction.UP);
+		new Link(left, tl, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(left, bl, null, null, LinkEndStyle.ARROW, null, Direction.DOWN);
 		new Link(right, tr, null, null, LinkEndStyle.ARROW, null, Direction.UP);
 		new Link(right, br);
@@ -155,10 +155,10 @@ public class Test7DirectedArrows extends AbstractLayoutFunctionalTest {
 		Glyph tr = new Glyph("TR", "", "TR", null, null);
 		Glyph bl = new Glyph("BL", "", "BL", null, null);
 
-		LinkBody top = new LinkBody("top","top\ntop\ntop");
-		LinkBody left = new LinkBody("left","left lefty left left");
-		LinkBody right = new LinkBody("right","right");
-		LinkBody bottom = new LinkBody("bottom","bottom");
+		LinkBody top = new LinkBody("top", "top\ntop\ntop");
+		LinkBody left = new LinkBody("left", "left lefty left left");
+		LinkBody right = new LinkBody("right", "right");
+		LinkBody bottom = new LinkBody("bottom", "bottom");
 
 		new Link(top, tl, null, null, LinkEndStyle.ARROW, null, Direction.LEFT);
 		new Link(top, tr, null, null, LinkEndStyle.ARROW, null, Direction.RIGHT);

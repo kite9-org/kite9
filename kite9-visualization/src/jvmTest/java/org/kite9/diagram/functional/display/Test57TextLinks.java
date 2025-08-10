@@ -1,6 +1,6 @@
 package org.kite9.diagram.functional.display;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
@@ -14,14 +14,14 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.common.HelpMethods;
 
 public class Test57TextLinks extends AbstractDisplayFunctionalTest {
-	
+
 	protected Checks checks() {
 		Checks out = new Checks();
 		out.checkMidConnection = false;
 		out.everythingStraight = false;
 		return out;
 	}
-	
+
 	@Test
 	public void test_57_1_TextLineLink1() throws Exception {
 		TextLine tl = new TextLine("linker", "some row");
@@ -32,7 +32,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_57_2_TextLineLink2() throws Exception {
 		TextLine tl = new TextLine("linker", "some row");
@@ -46,7 +46,6 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 
 		renderDiagram(d);
 	}
-	
 
 	@Test
 	public void test_57_3_ExpandingArrow1() throws Exception {
@@ -54,14 +53,14 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One", HelpMethods.listOf(tl), null);
 		Glyph two = new Glyph("Stereo", "Two", null, null);
 		LinkBody a = new LinkBody("a");
-		a.setAttribute("style","	--kite9-sizing: maximize;");
+		a.setAttribute("style", "	--kite9-sizing: maximize;");
 		new Link(a, one, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
 
 		renderDiagram(d);
 	}
-	
+
 	/**
 	 * Unlike 57_3, this one joins to the text line.
 	 */
@@ -69,20 +68,20 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 	public void test_57_4_ExpandingArrow2() throws Exception {
 		TextLine tl = new TextLine("linker", "some row blah blah blah");
 		Glyph one = new Glyph("one", "Stereo", "One", HelpMethods.listOf(tl), null);
-		Glyph two = new Glyph("two","Stereo", "Two", null, null);
+		Glyph two = new Glyph("two", "Stereo", "Two", null, null);
 		LinkBody a = new LinkBody("a", "a");
-		a.setAttribute("style","	--kite9-sizing: maximize;");
+		a.setAttribute("style", "	--kite9-sizing: maximize;");
 		new Link(a, tl, null, null, null, null, Direction.UP);
 		new Link(one, two, null, null, null, null, Direction.LEFT);
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one, two, a));
 
 		renderDiagram(d);
 	}
-	
+
 	Symbol s1, s4;
 	TextLine tls;
 	Glyph one, two, three;
-	
+
 	public void initTestDocument() {
 		super.initTestDocument();
 		s1 = new Symbol("Some text", 'a', SymbolShape.CIRCLE);
@@ -96,7 +95,7 @@ public class Test57TextLinks extends AbstractDisplayFunctionalTest {
 				createList(
 						tls),
 				createList(s4));
-		
+
 		two = new Glyph("two", "two", null, null);
 	}
 

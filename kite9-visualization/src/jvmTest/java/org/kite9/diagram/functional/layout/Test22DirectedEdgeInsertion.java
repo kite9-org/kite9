@@ -3,7 +3,7 @@ package org.kite9.diagram.functional.layout;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.GraphConstructionTools;
 import org.kite9.diagram.adl.LinkBody;
@@ -19,7 +19,8 @@ import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
 
 /**
- * LEMMA: If the user provides a set of directed edges which don't overlap, therewill always provide the optimal
+ * LEMMA: If the user provides a set of directed edges which don't overlap,
+ * therewill always provide the optimal
  * arrangement of the edges.
  * 
  * @author robmoffat
@@ -71,7 +72,8 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 	@Test
 	public void test_22_4_javaArchitecture2Broken() throws Exception {
 		Glyph diagram = new Glyph("xml", "A Diagram Definition", null, null);
-		Glyph response = new Glyph("zip file", "Response", createList(new TextLine("PNG Image (or) "), new TextLine("PDF Image"), new TextLine("Client-side image map")), null);
+		Glyph response = new Glyph("zip file", "Response", createList(new TextLine("PNG Image (or) "),
+				new TextLine("PDF Image"), new TextLine("Client-side image map")), null);
 
 		LinkBody sends = new LinkBody("sends");
 		LinkBody receives = new LinkBody("receives");
@@ -84,10 +86,11 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 
 		Glyph diagramServer = new Glyph("web-app", "Kite9 Diagram Server", null, null);
 
-		Context transport = new Context("Over the wire", createList(diagram, sends, receives, response), true, new TextLine("HTTP Over Internet"), Layout.DOWN);
-		Context yourside = new Context("yours", createList(converts, client, xstream, objects), true, new TextLine("Your Server / PC"), null);
+		Context transport = new Context("Over the wire", createList(diagram, sends, receives, response), true,
+				new TextLine("HTTP Over Internet"), Layout.DOWN);
+		Context yourside = new Context("yours", createList(converts, client, xstream, objects), true,
+				new TextLine("Your Server / PC"), null);
 		Context ourside = new Context("ours", createList(diagramServer), true, new TextLine("Kite9 Servers"), null);
-
 
 		// converts
 
@@ -114,7 +117,6 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 
-
 		new TurnLink(a, b, null, null, null, null, Direction.DOWN);
 		new TurnLink(a, b, null, null, null, null, null);
 		new TurnLink(a, b, null, null, null, null, null);
@@ -131,7 +133,6 @@ public class Test22DirectedEdgeInsertion extends AbstractLayoutFunctionalTest {
 		Glyph a = new Glyph("a", "", "a", null, null);
 		Glyph b = new Glyph("b", "", "b", null, null);
 		Glyph c = new Glyph("c", "", "c", null, null);
-
 
 		new TurnLink(a, b, null, null, null, null, Direction.DOWN);
 		new TurnLink(a, c, null, null, null, null, Direction.DOWN);
