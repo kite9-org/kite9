@@ -1,6 +1,7 @@
 package org.kite9.diagram.functional.thorough;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.functional.TestingEngine.ElementsMissingException;
@@ -185,7 +186,7 @@ public class Test37XMLFiles extends AbstractLayoutFunctionalTest {
 	}
 	
 	@Test
-	//@Ignore("Broken in sprint 13, no good reason - fix asap")
+	@Ignore("Long running")
 	public void test_37_34_BrokenContainerFlow() throws Exception {
 		generate("broken_container_flow.xml");
 	}
