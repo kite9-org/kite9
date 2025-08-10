@@ -35,6 +35,7 @@ jobs:
           report_paths: "**/TEST-*.xml"
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
+        if: always() # always run even if the previous step fails
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ./**/build/reports/jacoco/test/jacocoTestReport.xml
