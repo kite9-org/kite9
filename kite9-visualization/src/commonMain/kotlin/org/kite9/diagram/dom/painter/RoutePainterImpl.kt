@@ -1,24 +1,21 @@
 package org.kite9.diagram.dom.painter
 
+import kotlin.math.abs
+import kotlin.math.min
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.RouteRenderingInformation
-import kotlin.math.abs
-import kotlin.math.min
 
 /**
- * This class knows how to render anything with a
- * [RouteRenderingInformation] item. i.e. Context edges and links. It
- * provides functionality for handling rounded corners.
+ * This class knows how to render anything with a [RouteRenderingInformation] item. i.e. Context
+ * edges and links. It provides functionality for handling rounded corners.
  *
  * @author robmoffat
  */
 class RoutePainterImpl {
 
     interface EndDisplayer {
-        /**
-         * Call this method before draw to set the position of the EndDisplayer
-         */
+        /** Call this method before draw to set the position of the EndDisplayer */
         fun reserve(m: Move, start: Boolean)
     }
 
@@ -73,16 +70,23 @@ class RoutePainterImpl {
         fun cornerRadius(): Float
     }
 
-    val NULL_END_DISPLAYER: EndDisplayer = object : EndDisplayer {
-        override fun reserve(m: Move, start: Boolean) {}
-    }
+    val NULL_END_DISPLAYER: EndDisplayer =
+            object : EndDisplayer {
+                override fun reserve(m: Move, start: Boolean) {}
+            }
 
     class CurvedCornerHopDisplayer(radius: Float) : AbstractCurveCornerDisplayer(radius) {
         override fun drawMove(m1: Move, next: Move?, prev: Move?, gp: Route) {
             if (m1.hopStart) {
                 val c = m1.copy()
                 c.trim(hopSize, 0f)
-                drawHopStart(m1.xs.toDouble(), m1.ys.toDouble(), m1.xe.toDouble(), m1.ye.toDouble(), gp)
+                drawHopStart(
+                        m1.xs.toDouble(),
+                        m1.ys.toDouble(),
+                        m1.xe.toDouble(),
+                        m1.ye.toDouble(),
+                        gp
+                )
             }
 
             // draws a section of the line, plus bend into next one.
@@ -90,14 +94,27 @@ class RoutePainterImpl {
                 val c = m1.copy()
                 c.trim(0f, hopSize)
                 gp.lineTo(c.xe.toDouble(), c.ye.toDouble())
-                drawHopEnd(m1.xe.toDouble(), m1.ye.toDouble(), m1.xs.toDouble(), m1.ys.toDouble(), gp)
+                drawHopEnd(
+                        m1.xe.toDouble(),
+                        m1.ye.toDouble(),
+                        m1.xs.toDouble(),
+                        m1.ys.toDouble(),
+                        gp
+                )
             } else if (next != null) {
                 val c = m1.copy()
-                val aRadius : Float = min(radius, m1.length / 2.0f)
-                val bRadius : Float = min(radius, next.length / 2.0f)
+                val aRadius: Float = min(radius, m1.length / 2.0f)
+                val bRadius: Float = min(radius, next.length / 2.0f)
                 c.trim(0f, aRadius)
                 gp.lineTo(c.xe.toDouble(), c.ye.toDouble())
-                drawCorner(gp, m1, m1.direction, next.direction, aRadius.toDouble(), bRadius.toDouble())
+                drawCorner(
+                        gp,
+                        m1,
+                        m1.direction,
+                        next.direction,
+                        aRadius.toDouble(),
+                        bRadius.toDouble()
+                )
             } else {
                 gp.lineTo(m1.xe.toDouble(), m1.ye.toDouble())
             }
@@ -108,10 +125,22 @@ class RoutePainterImpl {
         fun drawHopStart(x1: Double, y1: Double, x2: Double, y2: Double, gp: Route): Double {
             if (x1 < x2) {
                 // hop left
-                gp.arc(x1 - hopSize, y1 - hopSize, (hopSize * 2).toDouble(), (hopSize * 2).toDouble(), false)
+                gp.arc(
+                        x1 - hopSize,
+                        y1 - hopSize,
+                        (hopSize * 2).toDouble(),
+                        (hopSize * 2).toDouble(),
+                        false
+                )
             } else if (x1 > x2) {
                 // hop right
-                gp.arc(x1 - hopSize, y1 - hopSize, (hopSize * 2).toDouble(), (hopSize * 2).toDouble(), true)
+                gp.arc(
+                        x1 - hopSize,
+                        y1 - hopSize,
+                        (hopSize * 2).toDouble(),
+                        (hopSize * 2).toDouble(),
+                        true
+                )
             } else {
                 return 0.0
             }
@@ -121,12 +150,23 @@ class RoutePainterImpl {
         fun drawHopEnd(x1: Double, y1: Double, x2: Double, y2: Double, gp: Route): Double {
             if (x1 < x2) {
                 // hop left
-                gp.arc(x1 - hopSize, y1 - hopSize, (hopSize * 2).toDouble(), (hopSize * 2).toDouble(), false)
+                gp.arc(
+                        x1 - hopSize,
+                        y1 - hopSize,
+                        (hopSize * 2).toDouble(),
+                        (hopSize * 2).toDouble(),
+                        false
+                )
             } else if (x1 > x2) {
 
                 // hop right
-                gp.arc(x1 - hopSize, y1 - hopSize, (hopSize * 2).toDouble(), (hopSize * 2).toDouble(), true)
-
+                gp.arc(
+                        x1 - hopSize,
+                        y1 - hopSize,
+                        (hopSize * 2).toDouble(),
+                        (hopSize * 2).toDouble(),
+                        true
+                )
             } else {
                 return 0.0
             }
@@ -139,41 +179,101 @@ class RoutePainterImpl {
             return radius
         }
 
-        protected fun drawCorner(gp: Route, a: Move, da: Direction, db: Direction, aRadius: Double, bRadius: Double) {
+        protected fun drawCorner(
+                gp: Route,
+                a: Move,
+                da: Direction,
+                db: Direction,
+                aRadius: Double,
+                bRadius: Double
+        ) {
             if (radius == 0f) {
                 return
             }
             when (da) {
-                Direction.RIGHT -> if (db === Direction.UP) {
-                    gp.arc(a.xe - aRadius, a.ye.toDouble() ,a.xe.toDouble(), a.ye-bRadius, false)
-                } else if (db === Direction.DOWN) {
-                    gp.arc(a.xe - aRadius, a.ye.toDouble(), a.xe.toDouble(), a.ye+bRadius, true)
-                }
-                Direction.LEFT -> if (db === Direction.UP) {
-                    gp.arc(a.xe + aRadius, a.ye.toDouble(),  a.xe.toDouble(), a.ye - bRadius, true)
-                } else if (db === Direction.DOWN) {
-                    gp.arc(a.xe + aRadius, a.ye.toDouble(), a.xe.toDouble(), a.ye + bRadius, false)
-                }
-                Direction.UP -> if (db === Direction.LEFT) {
-                    gp.arc(a.xe.toDouble(), a.ye + aRadius, a.xe - bRadius, a.ye.toDouble(), false)
-                } else if (db === Direction.RIGHT) {
-                    gp.arc(a.xe.toDouble(), a.ye + aRadius, a.xe + bRadius, a.ye.toDouble(), true)
-                }
-                Direction.DOWN -> if (db === Direction.LEFT) {
-                    gp.arc(a.xe.toDouble(), a.ye - aRadius, a.xe - bRadius, a.ye.toDouble(), true)
-                } else if (db === Direction.RIGHT) {
-                    gp.arc(a.xe.toDouble(), a.ye - aRadius, a.xe + bRadius, a.ye.toDouble(), false)
-                }
+                Direction.RIGHT ->
+                        if (db === Direction.UP) {
+                            gp.arc(
+                                    a.xe - aRadius,
+                                    a.ye.toDouble(),
+                                    a.xe.toDouble(),
+                                    a.ye - bRadius,
+                                    false
+                            )
+                        } else if (db === Direction.DOWN) {
+                            gp.arc(
+                                    a.xe - aRadius,
+                                    a.ye.toDouble(),
+                                    a.xe.toDouble(),
+                                    a.ye + bRadius,
+                                    true
+                            )
+                        }
+                Direction.LEFT ->
+                        if (db === Direction.UP) {
+                            gp.arc(
+                                    a.xe + aRadius,
+                                    a.ye.toDouble(),
+                                    a.xe.toDouble(),
+                                    a.ye - bRadius,
+                                    true
+                            )
+                        } else if (db === Direction.DOWN) {
+                            gp.arc(
+                                    a.xe + aRadius,
+                                    a.ye.toDouble(),
+                                    a.xe.toDouble(),
+                                    a.ye + bRadius,
+                                    false
+                            )
+                        }
+                Direction.UP ->
+                        if (db === Direction.LEFT) {
+                            gp.arc(
+                                    a.xe.toDouble(),
+                                    a.ye + aRadius,
+                                    a.xe - bRadius,
+                                    a.ye.toDouble(),
+                                    false
+                            )
+                        } else if (db === Direction.RIGHT) {
+                            gp.arc(
+                                    a.xe.toDouble(),
+                                    a.ye + aRadius,
+                                    a.xe + bRadius,
+                                    a.ye.toDouble(),
+                                    true
+                            )
+                        }
+                Direction.DOWN ->
+                        if (db === Direction.LEFT) {
+                            gp.arc(
+                                    a.xe.toDouble(),
+                                    a.ye - aRadius,
+                                    a.xe - bRadius,
+                                    a.ye.toDouble(),
+                                    true
+                            )
+                        } else if (db === Direction.RIGHT) {
+                            gp.arc(
+                                    a.xe.toDouble(),
+                                    a.ye - aRadius,
+                                    a.xe + bRadius,
+                                    a.ye.toDouble(),
+                                    false
+                            )
+                        }
             }
         }
     }
 
-    /**
-     * Draws the routing of the edge.
-     */
+    /** Draws the routing of the edge. */
     fun drawRouting(
-        r: RouteRenderingInformation?,
-        start: EndDisplayer, end: EndDisplayer, line: LineDisplayer, closed: Boolean
+            r: RouteRenderingInformation?,
+            start: EndDisplayer,
+            end: EndDisplayer,
+            line: LineDisplayer,
+            closed: Boolean
     ): String {
         if (r == null || r.routePositions!!.size == 0) {
             return ""
@@ -203,7 +303,12 @@ class RoutePainterImpl {
                 // middle
                 line.drawMove(a, next, prev, gp)
             } else {
-                line.drawMove(a, if (i == moves.size - 1) null else next, if (i == 0) null else prev, gp)
+                line.drawMove(
+                        a,
+                        if (i == moves.size - 1) null else next,
+                        if (i == 0) null else prev,
+                        gp
+                )
             }
         }
         if (closed) {
@@ -212,16 +317,22 @@ class RoutePainterImpl {
         return gp.toString()
     }
 
-
     /**
      * Moves are straight-line sections within the route
      *
      * @author robmoffat
      */
-    data class Move(var xs: Float, var ys: Float, var xe: Float, var ye: Float, val hs: Boolean, val he: Boolean) {
+    data class Move(
+            var xs: Float,
+            var ys: Float,
+            var xe: Float,
+            var ye: Float,
+            val hs: Boolean,
+            val he: Boolean
+    ) {
 
-        val hopStart : Boolean
-        val hopEnd : Boolean
+        val hopStart: Boolean
+        val hopEnd: Boolean
 
         val length = abs(xe - xs) + abs(ye - ys)
 
@@ -249,7 +360,7 @@ class RoutePainterImpl {
                 }
             }
 
-            //throw new LogicException("Don't know what to do here");
+            // throw new LogicException("Don't know what to do here");
         }
 
         val direction: Direction
@@ -286,8 +397,10 @@ class RoutePainterImpl {
     }
 
     private fun createMoves(r: RouteRenderingInformation, closed: Boolean): List<Move> {
-        var fx = (if (closed) r.getWaypoint(r.getLength() - 1)!!.w else r.getWaypoint(0)!!.w).toInt()
-        var fy = (if (closed) r.getWaypoint(r.getLength() - 1)!!.h else r.getWaypoint(0)!!.h).toInt()
+        var fx =
+                (if (closed) r.getWaypoint(r.getLength() - 1)!!.w else r.getWaypoint(0)!!.w).toInt()
+        var fy =
+                (if (closed) r.getWaypoint(r.getLength() - 1)!!.h else r.getWaypoint(0)!!.h).toInt()
         var fh = if (closed) r.isHop(r.getLength() - 1) else r.isHop(0)
         val out = ArrayList<Move>()
         var a: Move? = null
@@ -297,9 +410,7 @@ class RoutePainterImpl {
             val xn = r.getWaypoint(i % r.getLength())!!.w.toInt()
             val yn = r.getWaypoint(i % r.getLength())!!.h.toInt()
             val hn = r.isHop(i % r.getLength())
-            var b = Move(
-                fx.toFloat(), fy.toFloat(), xn.toFloat(), yn.toFloat(), fh, hn
-            )
+            var b = Move(fx.toFloat(), fy.toFloat(), xn.toFloat(), yn.toFloat(), fh, hn)
             if (a != null) {
                 // not the first stroke
                 val da = a.direction
@@ -308,10 +419,6 @@ class RoutePainterImpl {
                     // route parts in the same direction are part of the same
                     // move
                     b = Move(a.xs, a.ys, b.xe, b.ye, a.hopStart, b.hopEnd)
-                } else if (da == null) {
-                    // don't bother adding a null a
-                } else if (db == null) {
-                    b = a
                 } else {
                     out.add(a)
                 }
@@ -335,7 +442,8 @@ class RoutePainterImpl {
             out.add(Move(last.xs, last.ys, first.xe, first.ye, first.hopEnd, last.hopStart))
         }
         if (!closed) {
-            // trim the first and last moves so that they don't get occluded by the shape they are meeting
+            // trim the first and last moves so that they don't get occluded by the shape they are
+            // meeting
         }
         return out
     }

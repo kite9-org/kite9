@@ -7,10 +7,10 @@ import org.kite9.diagram.model.style.ContentTransform
 
 object TransformFactory {
 
-	fun initializeTransformer(
-        diagramElement: DiagramElement,
-        t: ContentTransform,
-        defaultTransform: ContentTransform
+    fun initializeTransformer(
+            diagramElement: DiagramElement,
+            t: ContentTransform,
+            defaultTransform: ContentTransform
     ): SVGTransformer {
         var t = t
         if (t === ContentTransform.NORMAL) {
@@ -29,8 +29,8 @@ object TransformFactory {
             }
             ContentTransform.POSITION -> PositioningTransformer(diagramElement)
             ContentTransform.NONE -> NoopTransformer()
-            ContentTransform.NORMAL -> throw Kite9ProcessingException("No transform defined for $diagramElement")
-            else -> throw Kite9ProcessingException("No transform defined for $diagramElement")
+            ContentTransform.NORMAL ->
+                    throw Kite9ProcessingException("No transform defined for $diagramElement")
         }
     }
 }

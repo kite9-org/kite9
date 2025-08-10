@@ -4,6 +4,5 @@ import org.w3c.dom.Element
 
 interface ValueReplacer {
 
-    open fun performValueReplace(input: String, at: Element): String
-
+    fun performValueReplace(input: String, at: Element): String
 }

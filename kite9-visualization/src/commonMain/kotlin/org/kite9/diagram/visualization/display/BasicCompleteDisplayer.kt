@@ -10,9 +10,9 @@ import org.kite9.diagram.model.position.RenderingInformation
 
 class BasicCompleteDisplayer(buffer: Boolean) : AbstractCompleteDisplayer(buffer) {
 
-    override fun size(element: DiagramElement, within: Dimension2D): CostedDimension2D {
-        return if (element is SizedRectangular) {
-            element.getSize(within)
+    override fun size(a: DiagramElement, s: Dimension2D): CostedDimension2D {
+        return if (a is SizedRectangular) {
+            a.getSize(s)
         } else ZERO
     }
 
@@ -20,11 +20,11 @@ class BasicCompleteDisplayer(buffer: Boolean) : AbstractCompleteDisplayer(buffer
         throw LogicException("Unsupported operation")
     }
 
-    override fun getPadding(element: DiagramElement, d: Direction): Double {
-        return if (element is AlignedRectangular) {
-            (element as SizedRectangular).getPadding(d!!)
-        } else if (element is Connection) {
-            (element as SizedRectangular).getPadding(d!!)
+    override fun getPadding(a: DiagramElement, d: Direction): Double {
+        return if (a is AlignedRectangular) {
+            (a as SizedRectangular).getPadding(d!!)
+        } else if (a is Connection) {
+            (a as SizedRectangular).getPadding(d!!)
         } else {
             0.0
         }

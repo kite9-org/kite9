@@ -1,5 +1,7 @@
 package org.kite9.diagram.visualization.compaction2
 
+import kotlin.math.max
+import kotlin.math.min
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
@@ -10,69 +12,83 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
-import kotlin.math.max
-import kotlin.math.min
 
-enum class BlockType { NOT_BLOCKING, BLOCKING, ENTERING_CONTAINER, LEAVING_CONTAINER }
-
+enum class BlockType {
+    NOT_BLOCKING,
+    BLOCKING,
+    ENTERING_CONTAINER,
+    LEAVING_CONTAINER
+}
 
 class C2Slideable(
-    so: C2SlackOptimisation,
-    val dimension: Dimension,
-    private val anchors: MutableSet<Anchor<*>>,
-    val intersectingGroups: Set<LeafGroup>
+        so: C2SlackOptimisation,
+        val dimension: Dimension,
+        private val anchors: MutableSet<Anchor<*>>,
+        val intersectingGroups: Set<LeafGroup>
 ) : Slideable(so) {
 
     val number: Int = nextNumber()
-    var mergedInto : C2Slideable? = null
+    var mergedInto: C2Slideable? = null
 
-    /**
-     * This is for rectangular Slideables
-     */
-    constructor(so: C2SlackOptimisation,
-                dimension: Dimension,
-                de: Rectangular,
-                side: Side,
-                p: Permeability) : this(so, dimension, mutable2(setOf(RectAnchor(de, side, p))), emptySet())
+    /** This is for rectangular Slideables */
+    constructor(
+            so: C2SlackOptimisation,
+            dimension: Dimension,
+            de: Rectangular,
+            side: Side,
+            p: Permeability
+    ) : this(so, dimension, mutable2(setOf(RectAnchor(de, side, p))), emptySet())
 
+    /** For new connection slideables or orbit Slideables */
+    constructor(
+            so: C2SlackOptimisation,
+            dimension: Dimension,
+            anchors: Set<Anchor<*>>
+    ) : this(so, dimension, mutable2(anchors), emptySet())
 
-    /**
-     * For new connection slideables or orbit Slideables
-     */
-    constructor(so: C2SlackOptimisation, dimension: Dimension, anchors: Set<Anchor<*>>) : this(so, dimension, mutable2(anchors), emptySet())
+    /** For intersection slideables */
+    constructor(
+            so: C2SlackOptimisation,
+            dimension: Dimension,
+            g: LeafGroup?,
+            intersects: Rectangular,
+            purpose: Purpose
+    ) : this(so, dimension, mutable2(setOf(IntersectAnchor(intersects, purpose))), setOfNotNull(g))
 
-    /**
-     * For intersection slideables
-     */
-    constructor(so: C2SlackOptimisation, dimension: Dimension, g: LeafGroup?, intersects: Rectangular, purpose: Purpose) : this(so, dimension,
-        mutable2(setOf(IntersectAnchor(intersects, purpose))), setOfNotNull(g)
+    /** Used for labels */
+    constructor(
+            so: C2SlackOptimisation,
+            dimension: Dimension,
+            intersects: List<Label>
+    ) : this(
+            so,
+            dimension,
+            mutable2(intersects.map { IntersectAnchor(it, Purpose.LABEL_LAYOUT) }.toSet()),
+            emptySet()
     )
 
-    /**
-     * Used for labels
-     */
-    constructor(so: C2SlackOptimisation, dimension: Dimension, intersects: List<Label>) : this(so, dimension,
-        mutable2(intersects.map { IntersectAnchor(it, Purpose.LABEL_LAYOUT) }.toSet() ), emptySet())
+    private fun optionalMin(s: C2Slideable) =
+            if (this.maximumPosition != null) {
+                if (s.maximumPosition != null) {
+                    min(this.maximumPosition!!, s.maximumPosition!!)
+                } else {
+                    this.maximumPosition
+                }
+            } else {
+                null
+            }
 
-    private fun optionalMin(s: C2Slideable) = if (this.maximumPosition != null) {
-        if (s.maximumPosition != null) {
-            min(this.maximumPosition!!, s.maximumPosition!!)
-        } else {
-            this.maximumPosition
-        }
-    } else {
-        null
-    }
-
-    fun merge(s: C2Slideable) : C2Slideable {
+    fun merge(s: C2Slideable): C2Slideable {
         if (this.isDone() || s.isDone()) {
             throw LogicException("Already merged")
         } else if (s.dimension == dimension) {
-            val out = C2Slideable(
-                so as C2SlackOptimisation,
-                dimension,
-                this.anchors.plus(s.anchors).toMutableSet(),
-                this.intersectingGroups.plus(s.intersectingGroups))
+            val out =
+                    C2Slideable(
+                            so as C2SlackOptimisation,
+                            dimension,
+                            this.anchors.plus(s.anchors).toMutableSet(),
+                            this.intersectingGroups.plus(s.intersectingGroups)
+                    )
 
             handleMinimumMaximumAndDone(out, s)
             return out
@@ -86,66 +102,53 @@ class C2Slideable(
         val orbs = getOrbitingElements()
         val rects = getRectAnchors()
 
-        val char = when {
-            ints.isNotEmpty() -> 'I'
-            orbs.isNotEmpty() -> 'O'
-            rects.isNotEmpty() -> 'R'
-            else -> 'X'
-        }
+        val char =
+                when {
+                    ints.isNotEmpty() -> 'I'
+                    orbs.isNotEmpty() -> 'O'
+                    rects.isNotEmpty() -> 'R'
+                    else -> 'X'
+                }
         return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${getIntersectingElements()} orbits=${getOrbitingElements()} anchors=$anchors" else ""})"
     }
 
-    fun getNonPermeables(d: Direction) : Set<DiagramElement> {
-        return anchors
-            .filterIsInstance<PermeableAnchor>()
-            .filter { !it.canCross(d) }
-            .map { it.e }
-            .toSet()
+    fun getNonPermeables(d: Direction): Set<DiagramElement> {
+        return anchors.filterIsInstance<PermeableAnchor>()
+                .filter { !it.canCross(d) }
+                .map { it.e }
+                .toSet()
     }
 
-    fun getIntersectingElements() : Set<DiagramElement> {
-        return anchors
-            .filterIsInstance<IntersectAnchor>()
-            .map { it.e }
-            .toSet()
+    fun getIntersectingElements(): Set<DiagramElement> {
+        return anchors.filterIsInstance<IntersectAnchor>().map { it.e }.toSet()
     }
 
-    fun getOrbitingElements() : Set<DiagramElement> {
-        return getOrbitAnchors()
-            .map { it.e }
-            .toSet()
+    fun getOrbitingElements(): Set<DiagramElement> {
+        return getOrbitAnchors().map { it.e }.toSet()
     }
 
     fun getOrbitAnchors(): Set<OrbitAnchor> {
-        return anchors
-            .filterIsInstance<OrbitAnchor>()
-            .toSet()
+        return anchors.filterIsInstance<OrbitAnchor>().toSet()
     }
 
     fun getConnAnchors(): Set<ConnAnchor> {
-        return anchors
-            .filterIsInstance<ConnAnchor>()
-            .toSet()
+        return anchors.filterIsInstance<ConnAnchor>().toSet()
     }
 
     fun getIntersectAnchors(): Set<IntersectAnchor> {
-        return anchors
-            .filterIsInstance<IntersectAnchor>()
-            .toSet()
+        return anchors.filterIsInstance<IntersectAnchor>().toSet()
     }
 
     fun getRectAnchors(): Set<RectAnchor> {
         return anchors.filterIsInstance<RectAnchor>().toSet()
     }
 
-
     /**
-     * Figures out what crossing this slideable would mean for a route.
-     * Note that if an anchor is marked as non-permeable and you're on an intersection
-     * slideable for element e, then you can't cross if the anchor
-     * is for the same element.
+     * Figures out what crossing this slideable would mean for a route. Note that if an anchor is
+     * marked as non-permeable and you're on an intersection slideable for element e, then you can't
+     * cross if the anchor is for the same element.
      */
-    fun isBlocker(d: Direction, along: C2Slideable) : Boolean {
+    fun isBlocker(d: Direction, along: C2Slideable): Boolean {
         val intersectingElements = along.getIntersectingElements()
         val nonPermeableElements = getNonPermeables(d)
         return intersectingElements.intersect(nonPermeableElements).isNotEmpty()
@@ -158,12 +161,9 @@ class C2Slideable(
         anchors.addAll(ca)
     }
 
-    fun isDone() : Boolean = this.mergedInto != null
+    fun isDone(): Boolean = this.mergedInto != null
 
-    private fun handleMinimumMaximumAndDone(
-        out: C2Slideable,
-        s: C2Slideable
-    ) {
+    private fun handleMinimumMaximumAndDone(out: C2Slideable, s: C2Slideable) {
         out.minimum.merge(minimum, setOf(s.minimum, minimum))
         out.minimum.merge(s.minimum, setOf(s.minimum, minimum))
         out.maximum.merge(maximum, setOf(s.maximum, maximum))
@@ -181,7 +181,6 @@ class C2Slideable(
     fun addBlockAnchor(a: BlockAnchor) {
         anchors.add(a)
     }
-
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -202,15 +201,13 @@ class C2Slideable(
 
         var n: Int = 0
 
-        fun nextNumber() : Int {
+        fun nextNumber(): Int {
             n++
             return n
         }
 
         private fun mutable2(anchors: Set<Anchor<*>>): MutableSet<Anchor<*>> {
-            return (anchors as Set<Anchor<Any>>).toMutableSet()
+            @Suppress("UNCHECKED_CAST") return (anchors as Set<Anchor<Any>>).toMutableSet()
         }
     }
-
-
 }

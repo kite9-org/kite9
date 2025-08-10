@@ -1,37 +1,33 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.visualization.planarization.rhd.GroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
-abstract sealed class AbstractGroup protected constructor(
-    override val groupNumber: Int,
-    val hc: Int) :
-    Group {
+sealed class AbstractGroup protected constructor(override val groupNumber: Int, val hc: Int) :
+        Group {
 
-    /**
-     * Returns the leaf group number (or numbers for compound group)
-     * composing this group.
-     */
+    /** Returns the leaf group number (or numbers for compound group) composing this group. */
     override val leafList by lazy {
-            val gs = mutableSetOf<Int>()
-            addLeafGroupOrdinalsToSet(gs)
-            val sortedList = gs.sorted();
-            sortedList.toString()
-        }
+        val gs = mutableSetOf<Int>()
+        addLeafGroupOrdinalsToSet(gs)
+        val sortedList = gs.sorted()
+        sortedList.toString()
+    }
 
-    override var live : Boolean = false
+    override var live: Boolean = false
 
-    override fun isActive() : Boolean = (this.axis==null) || (this.axis.active);
+    override fun isActive(): Boolean = this.axis.active
 
-    /**
-     * TODO: use the group number for hashcode in a more normal way.
-     */
+    /** TODO: use the group number for hashcode in a more normal way. */
     override fun getID(): String {
         return "g$groupNumber"
     }
 
-    override fun processAllLeavingLinks(compound: Boolean, mask: Int, lp: LinkManager.LinkProcessor) {
+    override fun processAllLeavingLinks(
+            compound: Boolean,
+            mask: Int,
+            lp: LinkManager.LinkProcessor
+    ) {
         linkManager.processAllLeavingLinks(compound, mask, lp)
     }
 
@@ -44,11 +40,7 @@ abstract sealed class AbstractGroup protected constructor(
         log.send("  Links:", linkManager.forLogging())
     }
 
-
     override fun hashCode(): Int {
         return hc
     }
-
-
-
 }

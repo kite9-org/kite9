@@ -6,24 +6,22 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AbstractRuleBasedGroupingStrategy
-import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis.Companion.getState
 
 /**
- * Generates some merge options for mergable containers.  We store live groups in exactly
- * the same way as the other generators, but instead of generating a single merge option
- * we generate all the ones needed to merge the whole container.   This is because it's quciker
- * to do this, and you're likely to need them.
+ * Generates some merge options for mergable containers. We store live groups in exactly the same
+ * way as the other generators, but instead of generating a single merge option we generate all the
+ * ones needed to merge the whole container. This is because it's quciker to do this, and you're
+ * likely to need them.
  *
  * @author robmoffat
  */
 class ContainerUndirectedNeighbourMergeGenerator(
-    gp: GroupPhase,
-    ms: BasicMergeState,
-    grouper: GeneratorBasedGroupingStrategy
-) : AbstractMergeGenerator(
-    gp, ms, grouper
-) {
+        gp: GroupPhase,
+        ms: BasicMergeState,
+        grouper: GeneratorBasedGroupingStrategy
+) : AbstractMergeGenerator(gp, ms, grouper) {
     override fun containerIsLive(c: Container) {
         super.containerIsLive(c)
         dontDo[c] = UnorderedSet()
@@ -33,10 +31,15 @@ class ContainerUndirectedNeighbourMergeGenerator(
     var dontDo: MutableMap<Container, MutableSet<Group>> = HashMap()
 
     private fun generateNeighboursForContainer(
-        c: Container, ms: BasicMergeState,
-        grouper: GeneratorBasedGroupingStrategy, mp: MergePlane
+            c: Container,
+            ms: BasicMergeState,
+            grouper: GeneratorBasedGroupingStrategy,
+            mp: MergePlane
     ) {
-        log.send(if (log.go()) null else "Generating " + getCode() + " options for " + c + " in axis " + mp)
+        log.send(
+                if (log.go()) null
+                else "Generating " + getCode() + " options for " + c + " in axis " + mp
+        )
         val csi = ms.getStateFor(c)
         val contentCount = csi!!.contents.size
         val myDontDo = dontDo[c]!!
@@ -55,12 +58,10 @@ class ContainerUndirectedNeighbourMergeGenerator(
         var prev: Group? = null
         for (i in orderedItems.indices) {
             val current = orderedItems[i]
-            if (current != null) {
-                if (prev != null) {
-                    addMergeOption(prev, current, null, null)
-                }
-                prev = current
+            if (prev != null) {
+                addMergeOption(prev, current, null, null)
             }
+            prev = current
         }
     }
 
@@ -80,8 +81,10 @@ class ContainerUndirectedNeighbourMergeGenerator(
                         generateNeighboursForContainer(c, ms, grouper, MergePlane.X_FIRST_MERGE)
                         generateNeighboursForContainer(c, ms, grouper, MergePlane.Y_FIRST_MERGE)
                     }
-                    MergePlane.X_FIRST_MERGE -> generateNeighboursForContainer(c, ms, grouper, MergePlane.X_FIRST_MERGE)
-                    MergePlane.Y_FIRST_MERGE -> generateNeighboursForContainer(c, ms, grouper, MergePlane.Y_FIRST_MERGE)
+                    MergePlane.X_FIRST_MERGE ->
+                            generateNeighboursForContainer(c, ms, grouper, MergePlane.X_FIRST_MERGE)
+                    MergePlane.Y_FIRST_MERGE ->
+                            generateNeighboursForContainer(c, ms, grouper, MergePlane.Y_FIRST_MERGE)
                 }
             } else if (dontDo.containsKey(c)) {
                 dontDo.remove(c)

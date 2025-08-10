@@ -1,9 +1,9 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 
+import kotlin.math.max
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -16,7 +16,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
-import kotlin.math.max
 
 class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group) : LinkManager {
 
@@ -25,9 +24,9 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
     private val xFirstNearestNeighbours: MutableSet<Direction> = mutableSetOf()
 
     protected abstract class AbstractLinkDetail(
-        override val direction: Direction?,
-        override val group: Group?,
-        val originatingGroup: Group?
+            override val direction: Direction?,
+            override val group: Group?,
+            val originatingGroup: Group?
     ) : LinkDetail {
         var inContainer = false
         var nearestNeighbour = false
@@ -44,18 +43,28 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         }
 
         override fun toString(): String {
-            return numberOfLinks.toString() + "/d=" + direction + "/" + (if (isOrderingLink) "O" else "~O") + "/" + (if (inContainer) "C" else "~C") + "/" + (if (nearestNeighbour) "N" else "~N") + "/" + group!!.groupNumber
+            return numberOfLinks.toString() +
+                    "/d=" +
+                    direction +
+                    "/" +
+                    (if (isOrderingLink) "O" else "~O") +
+                    "/" +
+                    (if (inContainer) "C" else "~C") +
+                    "/" +
+                    (if (nearestNeighbour) "N" else "~N") +
+                    "/" +
+                    group!!.groupNumber
         }
     }
 
     protected class ActualLinkDetail(
-        g: Group?,
-        o: Group?,
-        override val numberOfLinks: Float,
-        d: Direction?,
-        override var isOrderingLink: Boolean,
-        override val linkRank: Int,
-        c: Iterable<BiDirectional<Connected>>
+            g: Group?,
+            o: Group?,
+            override val numberOfLinks: Float,
+            d: Direction?,
+            override var isOrderingLink: Boolean,
+            override val linkRank: Int,
+            c: Iterable<BiDirectional<Connected>>
     ) : AbstractLinkDetail(d, g, o) {
         override val connections: MutableList<BiDirectional<Connected>> = mutableListOf()
 
@@ -81,9 +90,8 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
      * This is used where we want to inherit a link detail in a compound group from one of the
      * contained groups.
      */
-    protected class WrapLinkDetail(var inside: LinkDetail, lmsGroup: Group?) : AbstractLinkDetail(
-        inside.direction, inside.group, lmsGroup
-    ) {
+    protected class WrapLinkDetail(var inside: LinkDetail, lmsGroup: Group?) :
+            AbstractLinkDetail(inside.direction, inside.group, lmsGroup) {
         override fun from(b: Group): Boolean {
             return super.from(b) || inside.from(b)
         }
@@ -103,10 +111,12 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
             get() = inside.linkRank
     }
 
-    protected inner class CompoundLinkDetail(cg: Group?, lmsGroup: Group?, a: LinkDetail?, b: LinkDetail?) :
-        AbstractLinkDetail(
-            ms.contradictionHandler.checkContradiction(a, b, null), cg, lmsGroup
-        ) {
+    protected inner class CompoundLinkDetail(
+            cg: Group?,
+            lmsGroup: Group?,
+            a: LinkDetail?,
+            b: LinkDetail?
+    ) : AbstractLinkDetail(ms.contradictionHandler.checkContradiction(a, b, null), cg, lmsGroup) {
         var a: LinkDetail?
         var b: LinkDetail?
         override val isOrderingLink: Boolean
@@ -114,29 +124,30 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         override val numberOfLinks: Float
             get() = a!!.numberOfLinks + b!!.numberOfLinks
         override val connections: Iterable<BiDirectional<Connected>>
-            get() = object : Iterable<BiDirectional<Connected>> {
-                override fun iterator(): Iterator<BiDirectional<Connected>> {
-                    return object : MutableIterator<BiDirectional<Connected>> {
-                        var ai = a!!.connections.iterator()
-                        var bi = b!!.connections.iterator()
-                        override fun hasNext(): Boolean {
-                            return ai.hasNext() || bi.hasNext()
-                        }
+            get() =
+                    object : Iterable<BiDirectional<Connected>> {
+                        override fun iterator(): Iterator<BiDirectional<Connected>> {
+                            return object : MutableIterator<BiDirectional<Connected>> {
+                                var ai = a!!.connections.iterator()
+                                var bi = b!!.connections.iterator()
+                                override fun hasNext(): Boolean {
+                                    return ai.hasNext() || bi.hasNext()
+                                }
 
-                        override fun next(): BiDirectional<Connected> {
-                            return if (ai.hasNext()) {
-                                ai.next()
-                            } else {
-                                bi.next()
+                                override fun next(): BiDirectional<Connected> {
+                                    return if (ai.hasNext()) {
+                                        ai.next()
+                                    } else {
+                                        bi.next()
+                                    }
+                                }
+
+                                override fun remove() {
+                                    throw UnsupportedOperationException()
+                                }
                             }
                         }
-
-                        override fun remove() {
-                            throw UnsupportedOperationException()
-                        }
                     }
-                }
-            }
 
         override fun processToLevel(lp: LinkProcessor, i: Int) {
             if (i > 0) {
@@ -165,20 +176,24 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
             b = b ?: NULL
             this.a = a
             this.b = b
-            inContainer = (a as AbstractLinkDetail).inContainer || (b as AbstractLinkDetail) .inContainer
-            nearestNeighbour = (a as AbstractLinkDetail).nearestNeighbour || (b as AbstractLinkDetail).nearestNeighbour
+            inContainer =
+                    (a as AbstractLinkDetail).inContainer || (b as AbstractLinkDetail).inContainer
+            nearestNeighbour =
+                    (a as AbstractLinkDetail).nearestNeighbour ||
+                            (b as AbstractLinkDetail).nearestNeighbour
         }
     }
 
     fun getAxisDirection(mp: MergePlane, d: Direction?, incontainer: Boolean): Int {
         var mask = if (incontainer) 2048 else 0
-        mask = if (mp === MergePlane.X_FIRST_MERGE) {
-            mask + 1024
-        } else if (mp === MergePlane.Y_FIRST_MERGE) {
-            mask + 512
-        } else {
-            mask + 128
-        }
+        mask =
+                if (mp === MergePlane.X_FIRST_MERGE) {
+                    mask + 1024
+                } else if (mp === MergePlane.Y_FIRST_MERGE) {
+                    mask + 512
+                } else {
+                    mask + 128
+                }
         return if (d == null) {
             mask
         } else when (d) {
@@ -186,24 +201,22 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
             Direction.DOWN -> mask + 2
             Direction.LEFT -> mask + 3
             Direction.RIGHT -> mask + 4
-            else -> mask + 4
         }
     }
 
-    /**
-     * Set if the nearest neighbour is single.
-     */
+    /** Set if the nearest neighbour is single. */
     private val singleDirectedMergeOption: MutableMap<Int, Any?> = HashMap(10)
     fun getSingleDirectedMergeOption(
-        l: Direction?,
-        axis: MergePlane,
-        ms: BasicMergeState?,
-        inContainer: Boolean
+            l: Direction?,
+            axis: MergePlane,
+            ms: BasicMergeState?,
+            inContainer: Boolean
     ): Group? {
         val ad = getAxisDirection(axis, l, inContainer)
         var out = singleDirectedMergeOption[ad]
         if (out == null) {
-            //System.out.println("Recalc of SDM "+axis+" "+l+" "+inContainer+" group="+g.getGroupNumber());
+            // System.out.println("Recalc of SDM "+axis+" "+l+" "+inContainer+"
+            // group="+g.getGroupNumber());
             out = NONE
             val mask = createMask(axis, true, inContainer, l)
             val options = subsetGroup(mask)
@@ -214,11 +227,8 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
                 val reverse = lm.subsetGroup(rmask)
                 if (reverse.size == 1 && reverse.contains(g)) {
                     out = first
-                    lm.singleDirectedMergeOption[getAxisDirection(
-                        axis,
-                        reverse(l),
-                        inContainer
-                    )] = g
+                    lm.singleDirectedMergeOption[getAxisDirection(axis, reverse(l), inContainer)] =
+                            g
                 }
             }
             singleDirectedMergeOption[ad] = out
@@ -231,9 +241,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
     }
 
     fun sameContainer(`in`: Group?, ms: BasicMergeState): Boolean {
-        var ac = containersFor(
-            g, ms
-        )
+        var ac = containersFor(g, ms)
         var bc: Set<Container?>? = emptySet()
         if (ac == null) {
             // deal with containers not being set to start with
@@ -321,8 +329,14 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         }
     }
 
-    private fun checkForExclusions(group: Group, d: Direction, mp: MergePlane, level: Int, gc: GroupChain) {
-        //System.out.println("Exc check: "+group+" level "+level);
+    private fun checkForExclusions(
+            group: Group,
+            d: Direction,
+            mp: MergePlane,
+            level: Int,
+            gc: GroupChain
+    ) {
+        // System.out.println("Exc check: "+group+" level "+level);
         val mask = createMask(mp, false, false, d)
         val groupNeighbours = group.linkManager.subsetGroup(mask)
         for (g1 in groupNeighbours) {
@@ -352,7 +366,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         while (groupChain!!.g !== stop) {
             val current = groupChain!!.g.getLink(groupChain.prev!!.g)
             if (current!!.isOrderingLink == false && ordering == true ||
-                current.numberOfLinks < bestCount
+                            current.numberOfLinks < bestCount
             ) {
                 best = current
                 bestCount = current.numberOfLinks
@@ -366,12 +380,12 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
     }
 
     override fun sortLink(
-        d: Direction?,
-        otherGroup: Group,
-        linkValue: Float,
-        ordering: Boolean,
-        linkRank: Int,
-        c: Iterable<BiDirectional<Connected>>
+            d: Direction?,
+            otherGroup: Group,
+            linkValue: Float,
+            ordering: Boolean,
+            linkRank: Int,
+            c: Iterable<BiDirectional<Connected>>
     ) {
         if (keepLinkTo(otherGroup)) {
             checkAddLinkDetail(d, otherGroup, linkValue, ordering, linkRank, c)
@@ -387,27 +401,31 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
     private fun checkAddLinkDetail(other: LinkDetail) {
         val existing = links.remove(other.group)
         var cld: AbstractLinkDetail? = null
-        cld = if (existing == null) {
-            WrapLinkDetail(other, g)
-        } else {
-            CompoundLinkDetail(other.group, g, existing, other as AbstractLinkDetail)
-        }
+        cld =
+                if (existing == null) {
+                    WrapLinkDetail(other, g)
+                } else {
+                    CompoundLinkDetail(other.group, g, existing, other as AbstractLinkDetail)
+                }
         cld.inContainer = sameContainer(other.group, ms)
         links[other.group!!] = cld
         linkCount += other.numberOfLinks.toInt()
     }
 
     private fun checkAddLinkDetail(
-        d: Direction?, otherGroup: Group,
-        linkValue: Float, ordering: Boolean, linkRank: Int,
-        c: Iterable<BiDirectional<Connected>>
+            d: Direction?,
+            otherGroup: Group,
+            linkValue: Float,
+            ordering: Boolean,
+            linkRank: Int,
+            c: Iterable<BiDirectional<Connected>>
     ) {
         val ld = ActualLinkDetail(otherGroup, g, linkValue, d, ordering, linkRank, c)
         checkAddLinkDetail(ld)
     }
 
     abstract class FilterIterator<X>(links: Collection<Map.Entry<Group, LinkDetail>>, mask: Int) :
-        MutableIterator<X> {
+            MutableIterator<X> {
         var i: Iterator<Map.Entry<Group, LinkDetail>>
         var mask: Int
         var nxt: Map.Entry<Group, LinkDetail>? = null
@@ -436,7 +454,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
     }
 
     class GroupFilterIterator(links: Collection<Map.Entry<Group, LinkDetail>>, mask: Int) :
-        FilterIterator<Group>(links, mask) {
+            FilterIterator<Group>(links, mask) {
         override fun next(): Group {
             ensureNext()
             if (nxt == null) {
@@ -449,7 +467,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
     }
 
     class LinkDetailFilterIterator(links: Collection<Map.Entry<Group, LinkDetail>>, mask: Int) :
-        FilterIterator<LinkDetail>(links, mask) {
+            FilterIterator<LinkDetail>(links, mask) {
         override fun next(): LinkDetail {
             ensureNext()
             if (nxt == null) {
@@ -545,14 +563,19 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
             val d = cLD.direction
             if (d != null && cLD.nearestNeighbour) {
                 checkNearestNeighbourInPlane(g, d, plane)
-                //System.out.println("Clear SDM "+plane+" "+d+" group="+this.g.getGroupNumber());
+                // System.out.println("Clear SDM "+plane+" "+d+" group="+this.g.getGroupNumber());
                 singleDirectedMergeOption.remove(getAxisDirection(plane, d, true))
                 singleDirectedMergeOption.remove(getAxisDirection(plane, d, false))
             }
         }
     }
 
-    private fun maybeKeepLink(oldGroup: Group, aLD: LinkDetail?, remains: Boolean, plane: MergePlane) {
+    private fun maybeKeepLink(
+            oldGroup: Group,
+            aLD: LinkDetail?,
+            remains: Boolean,
+            plane: MergePlane
+    ) {
         if (remains && aLD != null && keepLinkTo(oldGroup)) {
             links[oldGroup] = aLD
         }
@@ -607,7 +630,12 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
         const val MASK_RIGHT = 128
         const val MASK_NO_DIRECTION = 256
 
-		fun createMask(mp: MergePlane?, nearestNeighbour: Boolean, inContainer: Boolean, vararg d: Direction?): Int {
+        fun createMask(
+                mp: MergePlane?,
+                nearestNeighbour: Boolean,
+                inContainer: Boolean,
+                vararg d: Direction?
+        ): Int {
             var outMask = 0
             if (mp === MergePlane.X_FIRST_MERGE || mp === MergePlane.UNKNOWN || mp == null) {
                 outMask += MASK_X_FIRST
@@ -622,42 +650,41 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
                 outMask += MASK_IN_CONTAINER
             }
             for (direction in d) {
-                outMask += if (direction == null) {
-                    MASK_NO_DIRECTION
-                } else {
-                    when (direction) {
-                        Direction.UP -> MASK_UP
-                        Direction.DOWN -> MASK_DOWN
-                        Direction.LEFT -> MASK_LEFT
-                        Direction.RIGHT -> MASK_RIGHT
-                    }
-                }
+                outMask +=
+                        if (direction == null) {
+                            MASK_NO_DIRECTION
+                        } else {
+                            when (direction) {
+                                Direction.UP -> MASK_UP
+                                Direction.DOWN -> MASK_DOWN
+                                Direction.LEFT -> MASK_LEFT
+                                Direction.RIGHT -> MASK_RIGHT
+                            }
+                        }
             }
             return outMask
         }
 
-        val NULL: LinkDetail = object : AbstractLinkDetail(null, null, null) {
-            override val isOrderingLink: Boolean
-                get() = false
-            override val numberOfLinks: Float
-                get() = 0F
-            override val connections: Iterable<BiDirectional<Connected>>
-                get() = emptyList()
+        val NULL: LinkDetail =
+                object : AbstractLinkDetail(null, null, null) {
+                    override val isOrderingLink: Boolean
+                        get() = false
+                    override val numberOfLinks: Float
+                        get() = 0F
+                    override val connections: Iterable<BiDirectional<Connected>>
+                        get() = emptyList()
 
-            override fun processToLevel(lp: LinkProcessor, i: Int) {}
-            override fun from(b: Group): Boolean {
-                return false
-            }
+                    override fun processToLevel(lp: LinkProcessor, i: Int) {}
+                    override fun from(b: Group): Boolean {
+                        return false
+                    }
 
-            override val linkRank: Int
-                get() = 0
-        }
+                    override val linkRank: Int
+                        get() = 0
+                }
 
         private val NONE = Any()
-        private fun containersFor(
-            a: Group?,
-            ms: BasicMergeState
-        ): Set<Container>? {
+        private fun containersFor(a: Group?, ms: BasicMergeState): Set<Container>? {
             val cf = ms.getContainersFor(a)
             return cf?.keys
         }

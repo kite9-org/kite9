@@ -11,11 +11,11 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
      * expression, needing to be replaced.
      * - If not, then it assumes the entire input is an xpath.
      */
-    override fun performValueReplace(s: String, at: Element): String {
-        if (s.contains(EMBEDDED_EXPRESSION)) {
-            return performEmbeddedValueReplace(s, at)
+    override fun performValueReplace(input: String, at: Element): String {
+        if (input.contains(EMBEDDED_EXPRESSION)) {
+            return performEmbeddedValueReplace(input, at)
         } else {
-            return performCompleteValueReplace(s, at)
+            return performCompleteValueReplace(input, at)
         }
     }
 
@@ -42,7 +42,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
         return (at == at.ownerDocument?.documentElement)
     }
 
-    override fun getReplacementStringValue(v: String, at: Element): String {
+    override fun getReplacementStringValue(s: String, at: Element): String {
         var at: Element? = at
         do {
             if (at is Element) {
@@ -53,7 +53,7 @@ class XPathValueReplacer(val ctx: ElementContext) : PatternValueReplacer() {
                             ctx.getRegisteredDiagramElement(at)
                         }
                 if (de is XPathAware) {
-                    val out = de.getXPathVariable(v)
+                    val out = de.getXPathVariable(s)
                     if (out != null) {
                         return out
                     }

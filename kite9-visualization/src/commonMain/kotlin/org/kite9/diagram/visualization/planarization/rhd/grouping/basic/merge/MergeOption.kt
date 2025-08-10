@@ -1,25 +1,24 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge
 
+import kotlin.math.abs
+import kotlin.math.round
 import org.kite9.diagram.common.hints.PositioningHints.planarizationDistance
 import org.kite9.diagram.common.hints.PositioningHints.positionDistance
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import kotlin.math.abs
-import kotlin.math.round
 
 /**
- * Holds details about a potential merge. Best merges are done first.
- * Because merge options are used in priority queues, they should not be altered while
- * the object is in the queue.
+ * Holds details about a potential merge. Best merges are done first. Because merge options are used
+ * in priority queues, they should not be altered while the object is in the queue.
  */
 class MergeOption(
-    a: Group,
-    b: Group,
-    val number: Int,
-    var p: Int,
-    var alignedGroup: Group?,
-    var alignedDirection: Direction?
+        a: Group,
+        b: Group,
+        val number: Int,
+        var p: Int,
+        var alignedGroup: Group?,
+        var alignedDirection: Direction?
 ) : Comparable<MergeOption> {
     var mk = MergeKey(a, b)
 
@@ -31,16 +30,15 @@ class MergeOption(
     private var linksAligned = 0f
     private var planarDistance: Float? = null
     private var renderedDistance: Float? = null
-    private var size = mk.a.size + mk.b.size // size of the groups, in terms of contained items subsumed
+    private var size =
+            mk.a.size + mk.b.size // size of the groups, in terms of contained items subsumed
 
-    /**
-     * Higher numbers indicate worse priority.  100 or more is illegal.
-     */
+    /** Higher numbers indicate worse priority. 100 or more is illegal. */
     var priority = p
         private set
 
     /**
-     * WARNING:  this should only be called if the merge option has been removed from the merge
+     * WARNING: this should only be called if the merge option has been removed from the merge
      * state.
      */
     fun resetPriority(p: Int) {
@@ -48,13 +46,14 @@ class MergeOption(
     }
 
     val mergeType: MergeType
-        get() = if (linksIncluded >= GroupPhase.LINK_WEIGHT) {
-            MergeType.LINKED
-        } else if (linksAligned > 0) {
-            MergeType.ALIGNED
-        } else {
-            MergeType.NEIGHBOUR
-        }
+        get() =
+                if (linksIncluded >= GroupPhase.LINK_WEIGHT) {
+                    MergeType.LINKED
+                } else if (linksAligned > 0) {
+                    MergeType.ALIGNED
+                } else {
+                    MergeType.NEIGHBOUR
+                }
 
     override fun compareTo(other: MergeOption): Int {
         // order by priority first
@@ -89,7 +88,8 @@ class MergeOption(
                 }
             }
             MergeType.ALIGNED -> {
-                // join groups with smallest alignment group size (i.e. the group they both link to is smallest)
+                // join groups with smallest alignment group size (i.e. the group they both link to
+                // is smallest)
                 if (alignmentGroupSize != other.alignmentGroupSize) {
                     return alignmentGroupSize.compareTo(other.alignmentGroupSize)
                 }
@@ -101,7 +101,9 @@ class MergeOption(
 
                 // leave group with least non-aligned links
                 if (totalLinks - linksAligned != other.totalLinks - linksAligned) {
-                    return (totalLinks - linksAligned).compareTo(other.totalLinks - other.linksAligned)
+                    return (totalLinks - linksAligned).compareTo(
+                            other.totalLinks - other.linksAligned
+                    )
                 }
 
                 // we need to combine lowest-level stuff first
@@ -117,8 +119,7 @@ class MergeOption(
                     return thistl.compareTo(arg0tl)
                 }
 
-
-                // merge closest neighbours first, to respect the ordering in the 
+                // merge closest neighbours first, to respect the ordering in the
                 // xml
                 if (ordinalDistance != other.ordinalDistance) {
                     return ordinalDistance.compareTo(other.ordinalDistance)
@@ -138,9 +139,15 @@ class MergeOption(
     }
 
     private fun distanceCompare(a: MergeOption, b: MergeOption): Int {
-        return if (a.planarDistance != null && b.planarDistance != null && a.planarDistance !== b.planarDistance) {
+        return if (a.planarDistance != null &&
+                        b.planarDistance != null &&
+                        a.planarDistance != b.planarDistance
+        ) {
             a.planarDistance!!.compareTo(b.planarDistance!!)
-        } else if (a.renderedDistance != null && b.renderedDistance != null && a.renderedDistance !== b.renderedDistance) {
+        } else if (a.renderedDistance != null &&
+                        b.renderedDistance != null &&
+                        a.renderedDistance != b.renderedDistance
+        ) {
             a.renderedDistance!!.compareTo(b.renderedDistance!!)
         } else {
             0
@@ -148,13 +155,40 @@ class MergeOption(
     }
 
     override fun toString(): String {
-        return ("[MO: " + number + " " + mk.a.groupNumber + "(" + mk.a.size + ")  " + mk.b.groupNumber + "(" + mk.b.size + "): t= " + mergeType + " i=" + linksIncluded + " a="
-                + linksAligned + " t=" + totalLinks + "ags=" + alignmentGroupSize + " od=" + ordinalDistance + ", p=" + priority + " a=" + alignedGroup + " ad=" + alignedDirection + " lr=" + linkRank + "]")
+        return ("[MO: " +
+                number +
+                " " +
+                mk.a.groupNumber +
+                "(" +
+                mk.a.size +
+                ")  " +
+                mk.b.groupNumber +
+                "(" +
+                mk.b.size +
+                "): t= " +
+                mergeType +
+                " i=" +
+                linksIncluded +
+                " a=" +
+                linksAligned +
+                " t=" +
+                totalLinks +
+                "ags=" +
+                alignmentGroupSize +
+                " od=" +
+                ordinalDistance +
+                ", p=" +
+                priority +
+                " a=" +
+                alignedGroup +
+                " ad=" +
+                alignedDirection +
+                " lr=" +
+                linkRank +
+                "]")
     }
 
-    /**
-     * Call this function on a merge option to figure out it's priority.
-     */
+    /** Call this function on a merge option to figure out it's priority. */
     fun calculateMergeOptionMetrics(ms: BasicMergeState) {
         totalLinks = 0f
         linksAligned = 0f
@@ -186,5 +220,4 @@ class MergeOption(
             }
         }
     }
-
 }

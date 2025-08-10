@@ -8,6 +8,7 @@ package org.kite9.diagram.common.algorithms.ssp
  * @author Josh Bloch, Doug Lea
  * @param <E> the type of elements held in this queue
 </E> */
+@Suppress("UNCHECKED_CAST")
 class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? = null) {
 
     private val MAX_ARRAY_SIZE = Int.MAX_VALUE - 8
@@ -17,7 +18,7 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
     private var _size : Int = 0
 
     fun size(): Int {
-        return _size;
+        return _size
     }
 
     fun peek(): E? {
@@ -48,16 +49,16 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
     }
 
     fun remove(): E? {
-        val es = queue;
+        val es = queue
 
         if (_size == 0) {
             return null
         }
 
-        var result = es[0] as E
-        modCount++;
+        val result = es[0] as E
+        modCount++
         val n = --_size
-        val x = es[n];
+        val x = es[n]
         if (n > 0) {
             if (comparator == null)
                 siftDownComparable(0, x, es, n)
@@ -65,7 +66,7 @@ class PriorityQueue<E>(initialCapacity: Int, val comparator: Comparator<in E> ? 
                 siftDownUsingComparator(0, x as E, es, n, comparator)
         }
 
-        return result;
+        return result
     }
 
     private fun siftDown(k: Int, x: E) {
