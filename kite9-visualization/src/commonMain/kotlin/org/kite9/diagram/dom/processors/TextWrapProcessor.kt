@@ -3,6 +3,8 @@ package org.kite9.diagram.dom.processors
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.ns.Kite9Namespaces
+import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.TextAlign
 import org.w3c.dom.Document
@@ -16,11 +18,13 @@ import kotlin.math.max
  * set of <tspan> elements.
  *
  */
-class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
+class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor(), Logable {
+
+    private val LOG: Kite9Log = Kite9Log.instance(this)
 
     private val PUNCTUATION = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".toCharArray().toSet()
 
-    private fun replaceZero(v: Double) : Double {
+    private fun replaceZero(v: Double): Double {
         if (v == 0.0) {
             return 10000.0
         } else {
@@ -39,6 +43,11 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             val spans = splitIntoSpans(n)
             val lines = buildLines(spans, replaceZero(width))
             val simplifiedLines = simplifyLines(lines)
+
+            if (!LOG.go()) {
+                val text = simplifiedLines.map { it.toString() + "\n" }
+                LOG.send("Wrapping: \n " + text + "\n   " + width + " " + height + " " + align)
+            }
 
             // replace original svg
             removeAllContent(n)
@@ -82,7 +91,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
     }
 
     fun removeAllContent(e: Element) {
-        val childNodes : NodeList = e.childNodes
+        val childNodes: NodeList = e.childNodes
         var kept = 0
         while (childNodes.length > kept) {
             val item = childNodes.item(kept)!!
@@ -97,13 +106,20 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         }
     }
 
-    fun replaceContents(od: Document, lines: List<List<Span>>, align: TextAlign, maxLineWidth: Double, maxHeight: Double, tagName: String)  {
+    fun replaceContents(
+        od: Document,
+        lines: List<List<Span>>,
+        align: TextAlign,
+        maxLineWidth: Double,
+        maxHeight: Double,
+        tagName: String
+    ) {
 
         for ((lineNumber, t) in lines.withIndex()) {
             val sumOfWidths = t.sumOf { it.width }
 
-            var sx =  when (align) {
-                TextAlign.END ->  maxLineWidth - sumOfWidths
+            var sx = when (align) {
+                TextAlign.END -> maxLineWidth - sumOfWidths
                 TextAlign.MIDDLE -> (maxLineWidth - sumOfWidths) / 2.0
                 else -> 0.0
             }
@@ -115,16 +131,16 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                     val tag = od.createElementNS(Kite9Namespaces.SVG_NAMESPACE, tagName)
                     val text = od.createTextNode(it.s)
                     tag.appendChild(text)
-                    tag.setAttribute("y", ""+  (lineHeight * lineNumber) +"px")
+                    tag.setAttribute("y", "" + (lineHeight * lineNumber) + "px")
                     tag
                 } else {
                     val tag = (it as ImageSpan).e
                     // make the image sit on the line
-                    tag.setAttribute("y", ""+((lineHeight * lineNumber) - it.height) + "px")
+                    tag.setAttribute("y", "" + ((lineHeight * lineNumber) - it.height) + "px")
                     tag
                 }
 
-                cspan.setAttribute("x", ""+sx+"px")
+                cspan.setAttribute("x", "" + sx + "px")
 
                 if (lineHeight * (lineNumber + 1) > maxHeight) {
                     cspan.setAttribute("display", "none")
@@ -132,7 +148,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
                 it.parent.appendChild(cspan)
 
-                sx += when(align) {
+                sx += when (align) {
                     TextAlign.FULL -> it.width + sumOfWidths / t.size
                     else -> it.width
                 }
@@ -151,23 +167,46 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
 
     }
 
-    data class StringSpan(val s: String, val type: SpanType, override val width: Double, override val height: Double, override val parent: Element) : Span {}
+    data class StringSpan(
+        val s: String,
+        val type: SpanType,
+        override val width: Double,
+        override val height: Double,
+        override val parent: Element
+    ) : Span {
+        override fun toString(): String {
+            return "StringSpan(s='$s', type=$type, width=$width)"
+        }
+    }
 
-    data class ImageSpan(val e: Element, override val width: Double, override val height: Double, override val parent: Element) : Span {}
+    data class ImageSpan(
+        val e: Element,
+        override val width: Double,
+        override val height: Double,
+        override val parent: Element
+    ) : Span {
+        override fun toString(): String {
+            return "ImageSpan()"
+        }
+    }
 
-    fun splitIntoSpans(n: Node) : List<Span> {
+    fun splitIntoSpans(n: Node): List<Span> {
         return if (isTextNode(n)) {
             val text = n.textContent ?: ""
             splitIntoSpans(text, n as Element)
-        } else if (isImageNode(n))  {
+        } else if (isImageNode(n)) {
             val bounds = ctx.bounds(n as Element)
-            return listOf(ImageSpan(n,
-                bounds?.width ?: 0.0,
-                bounds?.height ?: 0.0, getNonTextParent(n)))
+            return listOf(
+                ImageSpan(
+                    n,
+                    bounds?.width ?: 0.0,
+                    bounds?.height ?: 0.0, getNonTextParent(n)
+                )
+            )
         } else {
             val list = n.childNodes
             val out = mutableListOf<Span>()
-            for (i in 0..list.length-1) {
+            for (i in 0..list.length - 1) {
                 val ret = splitIntoSpans(list.item(i)!!)
                 out.addAll(ret)
             }
@@ -191,10 +230,14 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         (n is Element) && (n.localName == "image") && (n.namespaceURI == Kite9Namespaces.SVG_NAMESPACE)
 
     private fun isWrapContents(n: Element) =
-        ElementContext.getCssStyleEnumProperty<DiagramElementType>(CSSConstants.ELEMENT_TYPE_PROPERTY, n, ctx) == DiagramElementType.TEXT
+        ElementContext.getCssStyleEnumProperty<DiagramElementType>(
+            CSSConstants.ELEMENT_TYPE_PROPERTY,
+            n,
+            ctx
+        ) == DiagramElementType.TEXT
 
 
-    fun splitIntoSpans(s: String, inside: Element) : List<Span> {
+    fun splitIntoSpans(s: String, inside: Element): List<Span> {
         val out = mutableListOf<Span>()
         var last = SpanType.WORD_PART
         val buf = StringBuilder()
@@ -216,18 +259,21 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
                         else -> {}
                     }
                 }
+
                 SpanType.PUNCTUATION -> {
                     when (current) {
                         SpanType.PUNCTUATION, SpanType.SPACE, SpanType.NEW_LINE -> breakBuffer()
                         else -> {}
                     }
                 }
+
                 SpanType.WORD_PART -> {
                     when (current) {
                         SpanType.SPACE, SpanType.NEW_LINE -> breakBuffer()
                         else -> {}
                     }
                 }
+
                 SpanType.NEW_LINE -> breakBuffer()
             }
 
@@ -271,7 +317,7 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
             }
         }
 
-        fun parentChange(span: Span) : Boolean{
+        fun parentChange(span: Span): Boolean {
             return (currentParent != null) && (span.parent != currentParent)
         }
 
@@ -314,16 +360,22 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         return out
     }
 
-    fun simplifyLines(lines: List<List<Span>>) : List<List<Span>> {
+    fun simplifyLines(lines: List<List<Span>>): List<List<Span>> {
         return lines.map { mergeSpans(it) }
     }
 
-    fun mergeSpans(spans: List<Span>) : List<Span> {
+    fun mergeSpans(spans: List<Span>): List<Span> {
         val out = mutableListOf<Span>()
         spans.forEach {
             if ((out.lastOrNull() is StringSpan) && (it is StringSpan)) {
                 val last = out.removeLast() as StringSpan
-                val newLast = StringSpan(last.s + it.s, SpanType.WORD_PART, last.width + it.width, max(last.height, it.height), last.parent)
+                val newLast = StringSpan(
+                    last.s + it.s,
+                    SpanType.WORD_PART,
+                    last.width + it.width,
+                    max(last.height, it.height),
+                    last.parent
+                )
                 out.add(newLast)
             } else {
                 out.add(it)
@@ -331,4 +383,9 @@ class TextWrapProcessor(val ctx: ElementContext) : AbstractInlineProcessor() {
         }
         return out
     }
+
+    override val prefix: String?
+        get() = "TEXT"
+
+    override val isLoggingEnabled = true
 }

@@ -13,8 +13,8 @@
  */
 [k9-texture=none] {
 	fill: white;
-	fill-opacity: .01;
-	stroke-opacity: .01;
+	fill-opacity: .001;
+	stroke-opacity: .001;
 }
 
 /** 
@@ -42,7 +42,7 @@
  */
 [k9-texture~=outline] {
 	fill: white;
-	fill-opacity: .01;
+	fill-opacity: .001;
 	stroke: black;
 	stroke-opacity: 1;
 }

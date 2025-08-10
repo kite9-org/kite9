@@ -20,6 +20,31 @@
     </xsl:call-template>
   </xsl:template>
   
+  <xsl:template name="glyph-circle" match="adl:glyph[contains(@class, 'circle')]">
+    <xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-elem">glyph</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect edit vote</xsl:with-param>
+      <xsl:with-param name="k9-texture">background</xsl:with-param>
+      <xsl:with-param name="shape">
+      	<ellipse cx="0" cy="0" rx="0" ry="0">
+	      <xsl:attribute name="pp:cx">$x + $width div 2</xsl:attribute>
+	      <xsl:attribute name="pp:cy">$y + $height div 2</xsl:attribute>
+	      <xsl:attribute name="pp:rx">$width div 2</xsl:attribute>
+	      <xsl:attribute name="pp:ry">$height div 2</xsl:attribute>
+	    </ellipse>
+    </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+    
+  <xsl:template name="glyph-rect" match="adl:glyph[contains(@class, 'rect')]">
+    <xsl:call-template name="formats-text-shape-inline">
+      <xsl:with-param name="k9-elem">glyph</xsl:with-param>
+      <xsl:with-param name="k9-ui">size drag delete align connect autoconnect edit vote</xsl:with-param>
+      <xsl:with-param name="k9-texture">background</xsl:with-param>
+      <xsl:with-param name="k9-rounding">0</xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+  
   <xsl:template name="glyph" match="adl:glyph">
     <xsl:call-template name="formats-text-shape-inline">
       <xsl:with-param name="k9-elem">glyph</xsl:with-param>

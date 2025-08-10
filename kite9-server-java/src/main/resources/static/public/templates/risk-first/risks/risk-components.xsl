@@ -109,7 +109,7 @@
     </xsl:call-template>
   </xsl:template>
   
-  <xsl:template match="adl:risk[@class='goal']">
+  <xsl:template name="goal" match="adl:risk[@class='goal']">
     <xsl:call-template name="risks-fixed">
       <xsl:with-param name="code">Goal</xsl:with-param>
   
@@ -401,11 +401,13 @@
   
   <xsl:template match="adl:hidden">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-contains">risk</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected port label terminator</xsl:with-param>
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect xml</xsl:with-param>
+      <xsl:with-param name="k9-texture">background</xsl:with-param>
       <xsl:with-param name="decoration">
         <xsl:apply-templates mode="container-decoration" select="." />
-          <g pp:transform="scale([[$width div 230]]) translate(140,-20)">
-            <image xlink:href="/public/templates/risk-first/redesign/decals/hidden_risk_v2.svg" width="100px" height="100px"/>
+          <g pp:transform="scale([[$width div 230]]) translate(140,-40)">
+            <image xlink:href="/public/templates/risk-first/redesign/decals/hidden_risk_v2.svg" width="100px" height="100px" opacity=".2" />
           </g>
       </xsl:with-param>
     </xsl:call-template>
@@ -413,10 +415,11 @@
 
   <xsl:template match="adl:mitigated">
     <xsl:call-template name="formats-container">
-      <xsl:with-param name="k9-contains">risk</xsl:with-param>
+      <xsl:with-param name="k9-ui">drag delete align connect autoconnect xml</xsl:with-param>
+      <xsl:with-param name="k9-contains">connected port label terminator</xsl:with-param>
       <xsl:with-param name="k9-texture">none</xsl:with-param>
       <xsl:with-param name="decoration">
-        <line x1="0" y1="0" pp:y1="$height" x2="0" pp:x2="$width" y2="0" stroke="black" stroke-width="10pt" stroke-opacity="0.2"/>
+        <line x1="-10" y1="-10" pp:y1="$height+10" x2="-10" pp:x2="$width+10" y2="-10" stroke="black" stroke-width="10pt" stroke-opacity="0.2"/>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
