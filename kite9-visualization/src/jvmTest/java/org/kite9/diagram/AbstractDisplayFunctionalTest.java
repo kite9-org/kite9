@@ -2,6 +2,7 @@ package org.kite9.diagram;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.StackHelp;
 import org.kite9.diagram.common.StreamHelp;
@@ -22,6 +23,7 @@ import javax.xml.transform.Source;
 import java.io.*;
 import java.lang.reflect.Method;
 
+@Category(CITest.class)
 public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 
 	protected boolean checkXML() {
@@ -40,7 +42,8 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 			}
 			if (lastDiagram != null) {
 				NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
-				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true, lastPipeline);
+				new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), true,
+						lastPipeline);
 			}
 			if (checkXML()) {
 				checkIdenticalXML();
@@ -54,14 +57,14 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		out.checkNoHops = false;
 		return out;
 	}
-	
+
 	protected void renderDiagram(Element d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument(), true);
 		renderDiagram(xml);
 	}
-	
+
 	protected void renderDiagram(String xml) throws Exception {
-		//transcodePNG(addSVGFurniture(xml));
+		// transcodePNG(addSVGFurniture(xml));
 		transcodeSVG(xml);
 	}
 
@@ -71,124 +74,125 @@ public class AbstractDisplayFunctionalTest extends AbstractFunctionalTest {
 		Source in2;
 		try {
 			InputStream is2 = getExpectedInputStream(".svg");
-			
+
 			// copy input file to output dir for ease of comparison
 			File expectedOut = getOutputFile("-expected.svg");
 			StreamHelp.streamCopy(is2, new FileOutputStream(expectedOut), true);
 			is2 = getExpectedInputStream(".svg");
-			
+
 			in2 = streamToDom(is2);
-			
+
 		} catch (Exception e1) {
 			copyToErrors(output);
-			Assert.fail("Couldn't perform comparison (no expected file): "+output+" "+e1.getMessage());
+			Assert.fail("Couldn't perform comparison (no expected file): " + output + " " + e1.getMessage());
 			return false;
 		}
-		
+
 		try {
 			InputStream is1 = new FileInputStream(output);
 			in1 = streamToDom(is1);
-			
-			DOMDifferenceEngine diff = new DOMDifferenceEngine();
-		
-			
-			diff.addDifferenceListener(new ComparisonListener() {
-				
-		        public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
-		        	if (comparison.getType() == ComparisonType.ATTR_VALUE) {
-		        		if (comparison.getControlDetails().getXPath().contains("@k9-")) {
-		        			// ignore the info
-		        			return;
-		        		}
 
-		        		if (comparison.getControlDetails().getXPath().endsWith("@template")) {
-		        			// ignore template location
+			DOMDifferenceEngine diff = new DOMDifferenceEngine();
+
+			diff.addDifferenceListener(new ComparisonListener() {
+
+				public void comparisonPerformed(Comparison comparison, ComparisonResult outcome) {
+					if (comparison.getType() == ComparisonType.ATTR_VALUE) {
+						if (comparison.getControlDetails().getXPath().contains("@k9-")) {
+							// ignore the info
 							return;
 						}
-		        		
-		        		if (comparison.getControlDetails().getXPath().endsWith("@d")) {
-		        			if ((((String) comparison.getControlDetails().getValue()).length() > 20) &&
-		        					(((String) comparison.getTestDetails().getValue()).length() > 20)) {
+
+						if (comparison.getControlDetails().getXPath().endsWith("@template")) {
+							// ignore template location
+							return;
+						}
+
+						if (comparison.getControlDetails().getXPath().endsWith("@d")) {
+							if ((((String) comparison.getControlDetails().getValue()).length() > 20) &&
+									(((String) comparison.getTestDetails().getValue()).length() > 20)) {
 								// in this case, we are likely looking at fonts being rendered into paths.
 								// these never seem to be consistent between machines.
-		        				return;
-		        			}
-		        		}
-		        		
-		        	}
+								return;
+							}
+						}
+
+					}
 					String v = comparison.getControlDetails().getValue().toString();
 					if (comparison.getType() == ComparisonType.TEXT_VALUE) {
-		        		String c1 = v.trim();
-		        		String c2 = comparison.getTestDetails().getValue().toString().trim();
-		        		if (c1.equals(c2)) {
-		        			return;
-		        		}
-		        		
-		        	}
-		        	if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH) {
-		        		if (countNonWSChildren(comparison.getControlDetails().getTarget()) == 
-		        			countNonWSChildren(comparison.getTestDetails().getTarget())) {
-		        			return;
-		        		}
+						String c1 = v.trim();
+						String c2 = comparison.getTestDetails().getValue().toString().trim();
+						if (c1.equals(c2)) {
+							return;
+						}
 
-		        	}
+					}
+					if (comparison.getType() == ComparisonType.CHILD_NODELIST_LENGTH) {
+						if (countNonWSChildren(comparison.getControlDetails().getTarget()) == countNonWSChildren(
+								comparison.getTestDetails().getTarget())) {
+							return;
+						}
 
-		        	if (v.contains("@import")) {
-		        		// this will always be relative
+					}
+
+					if (v.contains("@import")) {
+						// this will always be relative
 						return;
 					}
 
-		        	if (v.contains("tester.xslt")) {
-		        		// position of stylesheet, often relative so ignore
+					if (v.contains("tester.xslt")) {
+						// position of stylesheet, often relative so ignore
 						return;
 					}
-		        	
+
 					if ((!v.contains("file:")) && (!v.startsWith("pp:"))) {
-						copyToErrors(output);	
-						Assert.fail("found a difference at "+comparison.getControlDetails().getXPath()+ ":  "+comparison);
+						copyToErrors(output);
+						Assert.fail("found a difference at " + comparison.getControlDetails().getXPath() + ":  "
+								+ comparison);
 					}
-		        }
+				}
 
 				private Object countNonWSChildren(Node target) {
 					NodeList nl = target.getChildNodes();
 					int count = 0;
 					for (int i = 0; i < nl.getLength(); i++) {
-						if ((nl.item(i) instanceof Text) && (((Text)nl.item(i)).getTextContent().trim().length()==0)) {
+						if ((nl.item(i) instanceof Text)
+								&& (((Text) nl.item(i)).getTextContent().trim().length() == 0)) {
 							// whitespace text, ignore
 						} else {
 							count++;
 						}
 					}
-					
+
 					return count;
 				}
-		    });
-			
+			});
+
 			diff.compare(in1, in2);
 		} catch (NullPointerException e) {
 			copyToErrors(output);
 			Assert.fail("Missing diagram file: " + e.getMessage());
 			return false;
 		}
-	
+
 		return true;
 	}
 
 	protected InputStream getExpectedInputStream(String ending) throws FileNotFoundException {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		String name = m.getName()+ending;
+		String name = m.getName() + ending;
 		File f = new File(theTest.getResource("/org/kite9/diagram/functional/display/shape.svg").getFile());
 		File f2 = new File(f.getParent(), name);
-		
+
 		InputStream is2 = new FileInputStream(f2);
 		return is2;
 	}
-	
+
 	protected File getOutputFile(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName()+ending);
+		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName() + ending);
 		return f;
 	}
 
