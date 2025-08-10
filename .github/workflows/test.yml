@@ -19,12 +19,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: "8.13"
-      - name: Build with Gradle
-        run: gradle clean jvmTest --tests "!*performance*"
-        env:
-          kite9.logging: OFF
       - name: Generate Test Coverage Report
-        run: gradle jacocoTestReport jacocoTestCoverageVerification --tests "!*performance*"
+        run: gradle clean jvmTest jacocoTestReport jacocoTestCoverageVerification --tests "!*performance*"
         if: always() # always run even if the previous step fails
         env:
           kite9.logging: OFF
