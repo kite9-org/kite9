@@ -26,16 +26,17 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
  * @author robmoffat
  */
 abstract class AbstractGroupingStrategy(
-    top: DiagramElement,
-    elements: Int,
-    ch: ContradictionHandler,
-    gp: GridPositioner,
-    em: ElementMapper,
-    ef: DiagramElementFactory<*>
+        top: DiagramElement,
+        elements: Int,
+        ch: ContradictionHandler,
+        gp: GridPositioner,
+        em: ElementMapper,
+        ef: DiagramElementFactory<*>
 ) : GroupPhase(top, elements, ch, gp, em, ef), GroupingStrategy {
 
     /**
-     * Actually does the merge suggested by the merge option, replacing the individual groups with a compound group.
+     * Actually does the merge suggested by the merge option, replacing the individual groups with a
+     * compound group.
      */
     protected fun performMerge(ms: BasicMergeState, mo: MergeOption) {
         if (mo.priority >= ILLEGAL_PRIORITY) {
@@ -48,9 +49,9 @@ abstract class AbstractGroupingStrategy(
     }
 
     protected open fun doCompoundGroupInsertion(
-        ms: BasicMergeState,
-        combined: CompoundGroup,
-        skipContainerCompletionCheck: Boolean
+            ms: BasicMergeState,
+            combined: CompoundGroup,
+            skipContainerCompletionCheck: Boolean
     ) {
         updateContainers(combined, ms)
         removeOldGroups(ms, combined)
@@ -65,10 +66,7 @@ abstract class AbstractGroupingStrategy(
      * See if the merging of this group completes any containers, and change the container states
      * accordingly.
      */
-    private fun updateContainers(
-        group: CompoundGroup,
-        ms: BasicMergeState
-    ) {
+    private fun updateContainers(group: CompoundGroup, ms: BasicMergeState) {
         val containersA = ms.getContainersFor(group.a)!!
         val containersB = ms.getContainersFor(group.b)!!
         val combined: MutableSet<Container> = LinkedHashSet(containersA.keys)
@@ -78,51 +76,53 @@ abstract class AbstractGroupingStrategy(
             val container = iterator.next()
             val aContained = containersA[container]
             val bContained = containersB[container]
-            val contained = aContained != null && aContained.hasContent() ||
-                    bContained != null && bContained.hasContent()
-            val isComplete = aContained != null && aContained.isComplete ||
-                    bContained != null && bContained.isComplete
+            val contained =
+                    aContained != null && aContained.hasContent() ||
+                            bContained != null && bContained.hasContent()
+            val isComplete =
+                    aContained != null && aContained.isComplete ||
+                            bContained != null && bContained.isComplete
             val out = GroupContainerState.get(contained, isComplete)
             ms.addGroupContainerMapping(group, container, out)
         }
     }
 
-    /**
-     * Performs the functions needed to add the new compound group to the merge state
-     */
-    protected abstract fun introduceCombinedGroup(
-        ms: BasicMergeState,
-        combined: CompoundGroup
-    )
+    /** Performs the functions needed to add the new compound group to the merge state */
+    protected abstract fun introduceCombinedGroup(ms: BasicMergeState, combined: CompoundGroup)
 
-    protected abstract fun createCompoundGroup(
-        ms: BasicMergeState,
-        mo: MergeOption
-    ): CompoundGroup
+    protected abstract fun createCompoundGroup(ms: BasicMergeState, mo: MergeOption): CompoundGroup
 
-    /**
-     * This works out how to handle references going to the components of a new compound group.
-     */
+    /** This works out how to handle references going to the components of a new compound group. */
     protected fun handleReferences(group: CompoundGroup) {
         val a = group.a
         val b = group.b
-        group.processAllLeavingLinks(true, group.linkManager.allMask(), object : LinkProcessor {
-            override fun process(originatingGroup: Group, to: Group, ld: LinkDetail) {
-                if (to.isActive()) {
-                    to.linkManager.notifyMerge(group, a.isActive(), b.isActive())
+        group.processAllLeavingLinks(
+                true,
+                group.linkManager.allMask(),
+                object : LinkProcessor {
+                    override fun process(
+                            originatingGroup: Group,
+                            destinationGroup: Group,
+                            ld: LinkDetail
+                    ) {
+                        if (destinationGroup.isActive()) {
+                            destinationGroup.linkManager.notifyMerge(
+                                    group,
+                                    a.isActive(),
+                                    b.isActive()
+                            )
+                        }
+                    }
                 }
-            }
-        })
+        )
     }
 
-    /**
-     * Checks the groups that were part of the merge and removes them.
-     */
+    /** Checks the groups that were part of the merge and removes them. */
     protected abstract fun removeOldGroups(ms: BasicMergeState, combined: CompoundGroup)
 
     /**
-     * If the provided group doesn't need any more merging, remove it from the merge state, and potentially, promote
-     * it's container.
+     * If the provided group doesn't need any more merging, remove it from the merge state, and
+     * potentially, promote it's container.
      */
     protected fun checkGroupsContainersAreComplete(group: Group, ms: BasicMergeState) {
         val containerMap = ms.getContainersFor(group)!!
@@ -192,10 +192,10 @@ abstract class AbstractGroupingStrategy(
     }
 
     private fun checkGroupChangeContainer(
-        ms: BasicMergeState,
-        c: Container,
-        cc: Container,
-        g: Group
+            ms: BasicMergeState,
+            c: Container,
+            cc: Container,
+            g: Group
     ): Boolean {
         log.send("Moving group: " + g.groupOrdinal + " from " + c + " to " + cc)
         ms.removeGroupContainerMapping(g, c)
@@ -206,16 +206,18 @@ abstract class AbstractGroupingStrategy(
     protected abstract fun groupChangedContainer(ms: BasicMergeState, g: Group)
 
     protected fun initContained(
-        ms: BasicMergeState,
-        leaves: MutableList<LeafGroup>,
-        toAdd: LeafGroup
+            ms: BasicMergeState,
+            leaves: MutableList<LeafGroup>,
+            toAdd: LeafGroup
     ) {
         // set up container details
         val c2 = toAdd.container
         if (c2 != null) {
             ms.addGroupContainerMapping(
-                toAdd, c2,
-                if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT else GroupContainerState.NO_CONTENT
+                    toAdd,
+                    c2,
+                    if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT
+                    else GroupContainerState.NO_CONTENT
             )
         }
         leaves.add(toAdd)
@@ -226,17 +228,17 @@ abstract class AbstractGroupingStrategy(
      *
      * Priority is returned, or null if the merge is irrelevant
      *
-     * This is called before we add merge options to the queue, and also when we take them
-     * off the queue, as the state will change.
+     * This is called before we add merge options to the queue, and also when we take them off the
+     * queue, as the state will change.
      *
      * Extra parameters about aligned group are added to simplify the process for
      */
     open fun canGroupsMerge(
-        a: Group,
-        b: Group,
-        ms: BasicMergeState,
-        alignedGroup: Group?,
-        d: Direction?
+            a: Group,
+            b: Group,
+            ms: BasicMergeState,
+            alignedGroup: Group?,
+            d: Direction?
     ): Int {
         // not a real merge
         return if (a === b) {

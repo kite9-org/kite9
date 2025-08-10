@@ -2,8 +2,8 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge
 
 import kotlin.math.abs
 import kotlin.math.round
-import org.kite9.diagram.common.hints.PositioningHints.planarizationDistance
-import org.kite9.diagram.common.hints.PositioningHints.positionDistance
+import org.kite9.diagram.common.hints.planarizationDistance
+import org.kite9.diagram.common.hints.positionDistance
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group

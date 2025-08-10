@@ -1,9 +1,11 @@
 package org.kite9.diagram.visualization.planarization.rhd.position
 
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 import org.kite9.diagram.common.HintMap
 import org.kite9.diagram.common.elements.Routable
 import org.kite9.diagram.common.elements.RoutingInfo
-import org.kite9.diagram.common.hints.PositioningHints
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
@@ -15,12 +17,10 @@ import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
 import org.kite9.diagram.visualization.planarization.rhd.position.Tools.contains
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 
 /**
- * Implementation of the [RoutableReader] functionality, but using 2D RoutableHandler Bounds as the underlying storage.
+ * Implementation of the [RoutableReader] functionality, but using 2D RoutableHandler Bounds as the
+ * underlying storage.
  *
  * @author robmoffat
  */
@@ -54,9 +54,8 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
     }
 
     /**
-     * Limits to a given side of the parent container.  Since ports don't occupy
-     * corners (i.e. they are on a given side) this also applies a haircut in other directions
-     * too.
+     * Limits to a given side of the parent container. Since ports don't occupy corners (i.e. they
+     * are on a given side) this also applies a haircut in other directions too.
      */
     override fun portEdge(d: Direction, b: Bounds, horiz: Boolean): Bounds {
         return if (horiz) {
@@ -79,9 +78,13 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         `in` = `in` ?: getTopLevelBounds(horiz)
         val multiplicationFrame = getMultiplicationFrame(d, horiz)
         val bbounds = `in` as BasicBounds?
-        var gx = bbounds!!.distanceMin + (bbounds.distanceMax - bbounds.distanceMin) * multiplicationFrame.distanceMin
+        var gx =
+                bbounds!!.distanceMin +
+                        (bbounds.distanceMax - bbounds.distanceMin) *
+                                multiplicationFrame.distanceMin
         var gw =
-            (bbounds.distanceMax - bbounds.distanceMin) * (multiplicationFrame.distanceMax - multiplicationFrame.distanceMin)
+                (bbounds.distanceMax - bbounds.distanceMin) *
+                        (multiplicationFrame.distanceMax - multiplicationFrame.distanceMin)
         if (applyGutters) {
             val thick = isThickGutter(d, horiz)
             val g = gw * if (thick) THICK_GUTTER else THIN_GUTTER
@@ -92,24 +95,26 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
     }
 
     /**
-     * Given a direction, returns a rectangle with details of how the
-     * coordinates should be multiplied to achieve the new orientation.
+     * Given a direction, returns a rectangle with details of how the coordinates should be
+     * multiplied to achieve the new orientation.
      */
     fun getMultiplicationFrame(d: Layout?, horiz: Boolean): Bounds {
         return if (d == null) {
             TOP
-        } else when (d) {
-            Layout.LEFT -> if (horiz) TOP_HALF else TOP
-            Layout.UP -> if (horiz) TOP else TOP_HALF
-            Layout.RIGHT -> if (horiz) BOTTOM_HALF else TOP
-            Layout.DOWN -> if (horiz) TOP else BOTTOM_HALF
-            else -> TOP
-        }
+        } else
+                when (d) {
+                    Layout.LEFT -> if (horiz) TOP_HALF else TOP
+                    Layout.UP -> if (horiz) TOP else TOP_HALF
+                    Layout.RIGHT -> if (horiz) BOTTOM_HALF else TOP
+                    Layout.DOWN -> if (horiz) TOP else BOTTOM_HALF
+                    else -> TOP
+                }
     }
 
     /**
-     * Note: "HORIZONTAL" and "VERTICAL" seem to go against the grain. This is deliberate so that if for example, a
-     * container is horizontal, then links to it are placed preferentially above or below it.
+     * Note: "HORIZONTAL" and "VERTICAL" seem to go against the grain. This is deliberate so that if
+     * for example, a container is horizontal, then links to it are placed preferentially above or
+     * below it.
      */
     fun isThickGutter(d: Layout?, horiz: Boolean): Boolean {
         if (d == null) {
@@ -239,20 +244,19 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         val cx = ax.compareTo(bx)
         val cy = ay.compareTo(by)
         return if (cy == 0) {
-            //System.out.println("cx = "+cx);
+            // System.out.println("cx = "+cx);
             cx
         } else if (cx == 0) {
-            //System.out.println("cy = "+cy);
+            // System.out.println("cy = "+cy);
             cy
         } else if (abs(cx) < abs(cy)) {
-            //System.out.println("cx = "+cx);
+            // System.out.println("cx = "+cx);
             cx
         } else {
-            //System.out.println("cy = "+cy);
+            // System.out.println("cy = "+cy);
             cy
         }
     }
-
 
     override fun isWithin(area: RoutingInfo, pos: RoutingInfo): Boolean {
         val areax = (area as BoundsBasedPositionRoutingInfo).x
@@ -277,7 +281,11 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
     }
 
     override fun move(current: LineRoutingInfo?, past: RoutingInfo, r: Routing?): LineRoutingInfo {
-        return LinePositionRoutingInfo(current as LinePositionRoutingInfo?, (past as BoundsBasedPositionRoutingInfo), r)
+        return LinePositionRoutingInfo(
+                current as LinePositionRoutingInfo?,
+                (past as BoundsBasedPositionRoutingInfo),
+                r
+        )
     }
 
     private fun getBoundsInternal(o: Any): BoundsBasedPositionRoutingInfo? {
@@ -297,19 +305,20 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         val TOP_HALF = BasicBounds(0.0, .5)
         val BOTTOM_HALF = BasicBounds(.5, 1.0)
 
-		val BASIC_AVOIDANCE_CORNERS: MutableMap<Routing, Corner> = HashMap()
+        val BASIC_AVOIDANCE_CORNERS: MutableMap<Routing, Corner> = HashMap()
 
         /**
-         * Although we have a planarization line (1d) and a set of positions (2d), there is no description of how the planarization
-         * line progresses through 2d space.   So, we make the assumption that it always moves to the right or down as it goes forward.
-         * This assumption appears to be true for all of the test cases we have constructed, but it's not guaranteed by the system, it's only a
-         * result of the grid-based layout that we are using.
+         * Although we have a planarization line (1d) and a set of positions (2d), there is no
+         * description of how the planarization line progresses through 2d space. So, we make the
+         * assumption that it always moves to the right or down as it goes forward. This assumption
+         * appears to be true for all of the test cases we have constructed, but it's not guaranteed
+         * by the system, it's only a result of the grid-based layout that we are using.
          */
         private const val THROW_ON_ASSUMPTION_FAIL = true
         val OVERLAP = Any()
         private const val TOLERANCE = 0.000000001
 
-		fun eq(a: Double, b: Double): Boolean {
+        fun eq(a: Double, b: Double): Boolean {
             return abs(a - b) < TOLERANCE
         }
 
@@ -368,7 +377,10 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         return ac
     }
 
-    private fun getDirectionOfB(a: BoundsBasedPositionRoutingInfo?, b: BoundsBasedPositionRoutingInfo?): Any? {
+    private fun getDirectionOfB(
+            a: BoundsBasedPositionRoutingInfo?,
+            b: BoundsBasedPositionRoutingInfo?
+    ): Any? {
         return if (a == null || b == null) {
             null
         } else if (overlaps(a, b)) {
@@ -388,26 +400,36 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         }
     }
 
-    private fun isSamePoint(a: BoundsBasedPositionRoutingInfo, b: BoundsBasedPositionRoutingInfo): Boolean {
+    private fun isSamePoint(
+            a: BoundsBasedPositionRoutingInfo,
+            b: BoundsBasedPositionRoutingInfo
+    ): Boolean {
         return isSamePointBounds(a.x, b.x) && isSamePointBounds(a.y, b.y)
     }
 
     private fun isSamePointBounds(b1: Bounds, b2: Bounds): Boolean {
-        return (eq(b1.distanceMin, b2.distanceMin)
-                && eq(b1.distanceMax, b2.distanceMax)
-                && eq(b1.distanceMin, b2.distanceMax))
+        return (eq(b1.distanceMin, b2.distanceMin) &&
+                eq(b1.distanceMax, b2.distanceMax) &&
+                eq(b1.distanceMin, b2.distanceMax))
     }
 
     override fun setHints(hm: HintMap?, bounds: RoutingInfo?) {
         val pri = bounds as PositionRoutingInfo?
-        hm!![PositioningHints.PLAN_MIN_X] = pri!!.getMinX().toFloat()
-        hm[PositioningHints.PLAN_MIN_Y] = pri.getMinY().toFloat()
-        hm[PositioningHints.PLAN_MAX_X] = pri.getMaxX().toFloat()
-        hm[PositioningHints.PLAN_MAX_Y] = pri.getMaxY().toFloat()
+        hm!!["px1"] = pri!!.getMinX().toFloat()
+        hm["py1"] = pri.getMinY().toFloat()
+        hm["px2"] = pri.getMaxX().toFloat()
+        hm["py2"] = pri.getMaxY().toFloat()
     }
 
-    override fun narrow(bounds: RoutingInfo?, vertexTrimX: Double, vertexTrimY: Double): RoutingInfo? {
+    override fun narrow(
+            bounds: RoutingInfo?,
+            vertexTrimX: Double,
+            vertexTrimY: Double
+    ): RoutingInfo? {
         val pri = bounds as BoundsBasedPositionRoutingInfo?
-        return BoundsBasedPositionRoutingInfo(pri!!.x.narrow(vertexTrimX), pri.y.narrow(vertexTrimY))
+        return BoundsBasedPositionRoutingInfo(
+                pri!!.x.narrow(vertexTrimX),
+                pri.y.narrow(vertexTrimY)
+        )
     }
 }

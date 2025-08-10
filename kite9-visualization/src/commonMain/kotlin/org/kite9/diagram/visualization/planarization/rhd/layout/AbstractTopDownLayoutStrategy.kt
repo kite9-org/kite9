@@ -1,8 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
-import org.kite9.diagram.common.hints.PositioningHints
-import org.kite9.diagram.common.hints.PositioningHints.compareEitherXBounds
-import org.kite9.diagram.common.hints.PositioningHints.compareEitherYBounds
+import org.kite9.diagram.common.hints.compareEitherXBounds
+import org.kite9.diagram.common.hints.compareEitherYBounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
@@ -11,22 +10,21 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.model.position.Layout.Companion.rotateAntiClockwise
 import org.kite9.diagram.model.position.Layout.Companion.rotateClockwise
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
- * Provides the basic code for a top-down approach to laying out groups, but doesn't specify
- * either the algorithm used to choose the approach or the ordering of the groups.
+ * Provides the basic code for a top-down approach to laying out groups, but doesn't specify either
+ * the algorithm used to choose the approach or the ordering of the groups.
  *
  * @author robmoffat
  */
 abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : LayoutStrategy, Logable {
 
-
-	var log = Kite9Log.instance(this)
+    var log = Kite9Log.instance(this)
 
     private fun chooseBestCompoundGroupPlacement(gg: CompoundGroup) {
         rh.clearTempPositions(true)
@@ -41,51 +39,69 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         log.send("Group A: " + gg.a)
         log.send("Group B: " + gg.b)
         if (canDecideLayout) {
-            val layoutNeeded = groupsNeedLayout(gg.a, gg.b, horizLayoutUnknown, vertLayoutUnknown, ld)
+            val layoutNeeded =
+                    groupsNeedLayout(gg.a, gg.b, horizLayoutUnknown, vertLayoutUnknown, ld)
             if (layoutNeeded) {
                 // this is the expensive part - layout is required. Choose one
                 val hintedLayout = getHintedLayout(gg, canBeHoriz, canBeVert, ld)
                 var best: PlacementApproach? = null
-                best = tryPlacement(
-                    gg,
-                    best,
-                    filterLayout(hintedLayout, horizLayoutUnknown, vertLayoutUnknown),
-                    canBeHoriz,
-                    canBeVert,
-                    true
-                )
-                best = tryPlacement(
-                    gg,
-                    best,
-                    filterLayout(reverse(hintedLayout), horizLayoutUnknown, vertLayoutUnknown),
-                    canBeHoriz,
-                    canBeVert,
-                    false
-                )
-                best = tryPlacement(
-                    gg,
-                    best,
-                    filterLayout(rotateClockwise(hintedLayout), horizLayoutUnknown, vertLayoutUnknown),
-                    canBeHoriz,
-                    canBeVert,
-                    false
-                )
-                best = tryPlacement(
-                    gg,
-                    best,
-                    filterLayout(rotateAntiClockwise(hintedLayout), horizLayoutUnknown, vertLayoutUnknown),
-                    canBeHoriz,
-                    canBeVert,
-                    false
-                )
+                best =
+                        tryPlacement(
+                                gg,
+                                best,
+                                filterLayout(hintedLayout, horizLayoutUnknown, vertLayoutUnknown),
+                                canBeHoriz,
+                                canBeVert,
+                                true
+                        )
+                best =
+                        tryPlacement(
+                                gg,
+                                best,
+                                filterLayout(
+                                        reverse(hintedLayout),
+                                        horizLayoutUnknown,
+                                        vertLayoutUnknown
+                                ),
+                                canBeHoriz,
+                                canBeVert,
+                                false
+                        )
+                best =
+                        tryPlacement(
+                                gg,
+                                best,
+                                filterLayout(
+                                        rotateClockwise(hintedLayout),
+                                        horizLayoutUnknown,
+                                        vertLayoutUnknown
+                                ),
+                                canBeHoriz,
+                                canBeVert,
+                                false
+                        )
+                best =
+                        tryPlacement(
+                                gg,
+                                best,
+                                filterLayout(
+                                        rotateAntiClockwise(hintedLayout),
+                                        horizLayoutUnknown,
+                                        vertLayoutUnknown
+                                ),
+                                canBeHoriz,
+                                canBeVert,
+                                false
+                        )
                 best?.choose()
             }
         } else {
-            val ld2 = if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
-                null
-            } else {
-                ld
-            }
+            val ld2 =
+                    if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
+                        null
+                    } else {
+                        ld
+                    }
 
             val pa = createPlacementApproach(gg, ld2, canBeHoriz, canBeVert, true)
             pa.choose()
@@ -97,16 +113,24 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         return when (naturalLayout) {
             Layout.LEFT, Layout.RIGHT -> if (horiz) naturalLayout else null
             Layout.DOWN, Layout.UP -> if (vert) naturalLayout else null
-            else -> throw LogicException("Layout should be definite for an approach: $naturalLayout")
+            else ->
+                    throw LogicException(
+                            "Layout should be definite for an approach: $naturalLayout"
+                    )
         }
     }
 
     /**
-     * Layout can be hinted either by the [PositioningHints] of the groups, or by the ordinal
-     * order of the elements in the container.  If the layout of the container is HORIZONTAL or
-     * VERTICAL, favour the ordinal, otherwise favour the [PositioningHints] where available.
+     * Layout can be hinted either by the [PositioningHints] of the groups, or by the ordinal order
+     * of the elements in the container. If the layout of the container is HORIZONTAL or VERTICAL,
+     * favour the ordinal, otherwise favour the [PositioningHints] where available.
      */
-    private fun getHintedLayout(gg: CompoundGroup, setHoriz: Boolean, setVert: Boolean, prescribed: Layout?): Layout? {
+    private fun getHintedLayout(
+            gg: CompoundGroup,
+            setHoriz: Boolean,
+            setVert: Boolean,
+            prescribed: Layout?
+    ): Layout? {
         var bx: Int? = null
         var by: Int? = null
         var out: Layout? = null
@@ -154,11 +178,11 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     private fun groupsNeedLayout(
-        a: Group,
-        b: Group,
-        horizLayoutUnknown: Boolean,
-        vertLayoutUnknown: Boolean,
-        l: Layout?
+            a: Group,
+            b: Group,
+            horizLayoutUnknown: Boolean,
+            vertLayoutUnknown: Boolean,
+            l: Layout?
     ): Boolean {
         if (groupsOverlap(a, b)) {
             return true
@@ -174,13 +198,14 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     private fun groupsHaveStraightEdges(a: Group, b: Group, horiz: Boolean): Boolean {
-        val mask = DirectedLinkManager.createMask(
-            null,
-            false,
-            false,
-            if (horiz) Direction.LEFT else Direction.UP,
-            if (horiz) Direction.RIGHT else Direction.DOWN
-        )
+        val mask =
+                DirectedLinkManager.createMask(
+                        null,
+                        false,
+                        false,
+                        if (horiz) Direction.LEFT else Direction.UP,
+                        if (horiz) Direction.RIGHT else Direction.DOWN
+                )
         val aHasLinks = a.linkManager.subset(mask).size > 0
         val bHasLinks = b.linkManager.subset(mask).size > 0
         return aHasLinks || bHasLinks
@@ -193,12 +218,12 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     private fun tryPlacement(
-        gg: CompoundGroup,
-        best: PlacementApproach?,
-        d: Layout?,
-        setHoriz: Boolean,
-        setVert: Boolean,
-        natural: Boolean
+            gg: CompoundGroup,
+            best: PlacementApproach?,
+            d: Layout?,
+            setHoriz: Boolean,
+            setVert: Boolean,
+            natural: Boolean
     ): PlacementApproach? {
         if (d != null && (best == null || best.score > 0)) {
             val newpl = createPlacementApproach(gg, d, setHoriz, setVert, natural)
@@ -224,15 +249,27 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     protected abstract fun createPlacementApproach(
-        gg: CompoundGroup, ld: Layout?,
-        setHoriz: Boolean, setVert: Boolean, natural: Boolean
+            gg: CompoundGroup,
+            ld: Layout?,
+            setHoriz: Boolean,
+            setVert: Boolean,
+            natural: Boolean
     ): PlacementApproach
 
     private fun chooseBestPlacement(lq: LayoutQueue) {
         var g = lq.poll()
         while (g != null) {
             g.axis.getPosition(rh, false)
-            log.send(if (log.go()) null else "Ordering " + g.groupNumber + " size=" + g.size + " links=" + g.linkManager.linkCount)
+            log.send(
+                    if (log.go()) null
+                    else
+                            "Ordering " +
+                                    g.groupNumber +
+                                    " size=" +
+                                    g.size +
+                                    " links=" +
+                                    g.linkManager.linkCount
+            )
             val out = StringBuilder(1000)
             log.send(out.toString())
             if (g is CompoundGroup) {
