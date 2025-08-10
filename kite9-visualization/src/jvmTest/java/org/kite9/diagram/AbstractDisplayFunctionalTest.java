@@ -1,6 +1,5 @@
 package org.kite9.diagram;
 
-
 import org.junit.experimental.categories.Category;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
