@@ -75,3 +75,8 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
     from(kotlin.sourceSets["jvmMain"].kotlin)
     archiveClassifier.set("jvm-sources")
 }
+
+// Exclude performance tests from regular test runs to avoid coverage instrumentation overhead
+tasks.named<Test>("test") {
+    exclude("**/performance/**")
+}
