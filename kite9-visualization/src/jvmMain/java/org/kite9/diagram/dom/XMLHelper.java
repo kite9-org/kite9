@@ -9,6 +9,7 @@ import org.w3c.dom.Node;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
 /**
@@ -104,6 +105,25 @@ public class XMLHelper {
 			} else {
 				transFact = TransformerFactory.newInstance();
 			}
+
+            if (transFact.getURIResolver() == null) {
+                transFact.setURIResolver(new URIResolver() {
+                    @Override
+                    public Source resolve(String href, String base) throws TransformerException {
+                        try {
+                            if (href.startsWith("/")) {
+                                InputStream is = new FileInputStream(href);
+                                Source s = new StreamSource(is);
+                                return s;
+                            } else {
+                                return null;
+                            }
+                        } catch (FileNotFoundException e) {
+                            throw new TransformerException(e);
+                        }
+                    }
+                });
+            }
 
 			if (eh != null) {
 				transFact.setErrorListener(this.eh);
