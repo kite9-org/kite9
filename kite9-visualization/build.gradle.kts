@@ -107,11 +107,10 @@ tasks.withType<Test>().configureEach {
 
 // Configure JaCoCo to generate XML reports
 tasks.register("jacocoTestReport", JacocoReport::class) {
-  dependsOn(tasks.withType(Test::class))
-  val coverageSourceDirs = arrayOf(
-    "src/jvmMain/kotlin",
-    "src/commonMain/kotlin"
-  )
+      val coverageSourceDirs = arrayOf(
+      "src/jvmMain/kotlin",
+      "src/commonMain/kotlin"
+    )
 
     val buildDirectory = layout.buildDirectory
 
@@ -120,7 +119,12 @@ tasks.register("jacocoTestReport", JacocoReport::class) {
         .toSet()
 
     classDirectories.setFrom(classFiles)
-    sourceDirectories.setFrom(files(coverageSourceDirs))
+    
+    // Add path prefix to help Codecov map package paths correctly
+    sourceDirectories.setFrom(files(
+        projectDir.resolve("src/jvmMain/kotlin"),
+        projectDir.resolve("src/commonMain/kotlin")
+    ))
 
     buildDirectory.files("jacoco/jvmTest.exec").let {
         executionData.setFrom(it)
