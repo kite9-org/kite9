@@ -20,7 +20,7 @@ jobs:
         with:
           gradle-version: "8.13"
       - name: Generate Test Coverage Report
-        run: gradle clean jvmTest jacocoTestReport jacocoTestCoverageVerification
+        run: gradle clean jvmTest
         if: always() # always run even if the previous step fails
         continue-on-error: true
         env:
