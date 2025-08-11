@@ -1,5 +1,6 @@
 package org.kite9.diagram.functional.layout;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.LinkBody;
@@ -8,6 +9,7 @@ import org.kite9.diagram.adl.Glyph;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
 
+@Tag("minimal")
 public class Test3MultiArrows extends AbstractLayoutFunctionalTest {
 
 	@Test

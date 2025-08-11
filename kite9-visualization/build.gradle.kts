@@ -55,6 +55,9 @@ kotlin {
                 implementation("org.junit.platform:junit-platform-suite-engine:1.10.0")
                 implementation("org.xmlunit:xmlunit-core:2.9.0")
             }
+            tasks.withType<Test> {
+                finalizedBy(tasks.withType(JacocoReport::class))
+            }
         }
 
         val jsMain by getting {
@@ -98,23 +101,40 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
 // Configure JUnit 5
 tasks.withType<Test>().configureEach {
     useJUnitPlatform {
-        includeTags("ci")
+        includeTags("minimal")
     }
 }
 
-// Create a custom jacocoTestReport task for Kotlin Multiplatform
+// Configure JaCoCo to generate XML reports
 tasks.register("jacocoTestReport", JacocoReport::class) {
-    dependsOn(tasks.named("jvmTest"))
-    
+  dependsOn(tasks.withType(Test::class))
+  val coverageSourceDirs = arrayOf(
+    "src/jvmMain/kotlin",
+    "src/commonMain/kotlin"
+  )
+
+    val buildDirectory = layout.buildDirectory
+
+    val classFiles = buildDirectory.dir("classes/kotlin/jvm").get().asFile
+        .walkBottomUp()
+        .toSet()
+
+    classDirectories.setFrom(classFiles)
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+
+    buildDirectory.files("jacoco/jvmTest.exec").let {
+        executionData.setFrom(it)
+    }
+
     reports {
-        xml.required.set(true)
-        html.required.set(true)
+        xml.required = true
+        csv.required = true
+        html.required = true
     }
-    
-    executionData(tasks.named("jvmTest"))
-    
-    sourceSets {
-        sourceDirectories.from(kotlin.sourceSets["jvmMain"].kotlin)
-        classDirectories.from(kotlin.targets["jvm"].compilations["main"].output.allOutputs)
-    }
+
+}
+
+// Make tests always generate coverage reports, even if they fail
+tasks.withType<Test>().configureEach {
+    finalizedBy(tasks.named("jacocoTestReport"))
 }
