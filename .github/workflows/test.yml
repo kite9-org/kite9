@@ -20,19 +20,21 @@ jobs:
         with:
           gradle-version: "8.13"
       - name: Generate Test Coverage Report
-        run: gradle clean jvmTest
+        run: gradle clean jvmTest jacocoTestReport
         if: always() # always run even if the previous step fails
         continue-on-error: true
         env:
           kite9.logging: OFF
       - name: Debug Coverage Files
         run: |
-          echo "=== Looking for coverage files ==="
-          find . -name "*.xml" -path "*/jacoco/*" 2>/dev/null | head -20 || echo "No jacoco XML files found"
-          echo "=== Looking for any XML files in build directories ==="
-          find . -name "*.xml" -path "*/build/*" 2>/dev/null | head -20 || echo "No build XML files found"
-          echo "=== Looking for jacocoTestReport files ==="
-          find . -name "*jacocoTestReport*" 2>/dev/null | head -20 || echo "No jacocoTestReport files found"
+          echo "=== Looking for coverage files with sizes ==="
+          find . -name "*.xml" -path "*/jacoco/*" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No jacoco XML files found"
+          echo "=== Looking for any XML files in build directories with sizes ==="
+          find . -name "*.xml" -path "*/build/*" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No build XML files found"
+          echo "=== Looking for jacocoTestReport files with sizes ==="
+          find . -name "*jacocoTestReport*" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No jacocoTestReport files found"
+          echo "=== Looking for execution data files with sizes ==="
+          find . -name "*.exec" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No .exec files found"
         if: always()
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
