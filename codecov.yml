@@ -1,5 +1,3 @@
-paths:
-  - "kite9-visualization/src/jvmMain/kotlin"
-  - "kite9-visualization/src/commonMain/kotlin"
-  - "kite9-server-java/src/main/java"
-  - "kite9-pipeline-common/src/main/java"
+fixes:
+  - "::kite9-visualization/src/jvmMain/kotlin"
+  - "::kite9-visualization/src/commonMain/kotlin"
