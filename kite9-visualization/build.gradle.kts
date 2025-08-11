@@ -97,7 +97,9 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
 
 // Configure JUnit 5
 tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        includeTags("ci")
+    }
 }
 
 // Create a custom jacocoTestReport task for Kotlin Multiplatform
