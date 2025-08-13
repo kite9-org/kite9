@@ -101,7 +101,7 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
 // Configure JUnit 5
 tasks.withType<Test>().configureEach {
     useJUnitPlatform {
-        includeTags("minimal")
+        includeTags("ci")
     }
 }
 

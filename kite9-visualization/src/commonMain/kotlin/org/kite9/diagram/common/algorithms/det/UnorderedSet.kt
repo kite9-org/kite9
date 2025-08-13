@@ -12,33 +12,3 @@ package org.kite9.diagram.common.algorithms.det
  */
 typealias UnorderedSet<K> = HashSet<K>
 
-class UnorderedSetCompanion {
-
-    /**
-     * Use sparingly - provided for logging only.
-     */
-    fun <K> toArray(a: Set<K>): Array<Any?> {
-        val r = arrayOfNulls<Any>(a.size)
-        var i = 0
-        val iterator: Iterator<K> = a.iterator()
-        while (iterator.hasNext()) {
-            val type = iterator.next()
-            r[i] = type
-            i++
-        }
-        return r
-    }
-
-    fun <K> retainAll(elements: MutableCollection<K>): Boolean {
-        var modified = false
-        val it = elements.iterator()
-        while (it.hasNext()) {
-            if (!elements.contains(it.next())) {
-                it.remove()
-                modified = true
-            }
-        }
-        return modified
-    }
-}
-

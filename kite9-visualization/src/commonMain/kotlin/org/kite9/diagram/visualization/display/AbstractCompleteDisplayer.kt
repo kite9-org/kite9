@@ -1,8 +1,5 @@
 package org.kite9.diagram.visualization.display
 
-import kotlin.math.abs
-import kotlin.math.max
-import org.kite9.diagram.common.elements.mapping.GeneratedLayoutBiDirectional
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
@@ -13,6 +10,8 @@ import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.style.Measurement
+import kotlin.math.abs
+import kotlin.math.max
 
 abstract class AbstractCompleteDisplayer(buffer: Boolean) :
         CompleteDisplayer, DiagramSizer, Logable {
@@ -54,9 +53,7 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) :
     ): Double {
         val length: Double
         length =
-                if (a is GeneratedLayoutBiDirectional || b is GeneratedLayoutBiDirectional) {
-                    return 0.0
-                } else if (a is Connection && b is Connection) {
+                if (a is Connection && b is Connection) {
                     getMinimumDistanceConnectionToConnection(
                             a,
                             aSide,

@@ -1,9 +1,7 @@
 package org.kite9.diagram.common.elements.grid
 
-import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.common.elements.mapping.CornerVertices
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
 import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 
 /**
  * Handles positioning of elements for [Layout].GRID.
@@ -21,9 +19,4 @@ interface GridPositioner {
      */
     fun placeOnGrid(gridContainer: Container, allowSpanning: Boolean): Array<Array<DiagramElement>>
 
-    /**
-     * Used for creating the perimeter of a grid.  Returns the perimeter vertices in clockwise
-     * order.
-     */
-    fun getClockwiseOrderedContainerVertices(cv: CornerVertices): List<MultiCornerVertex>
 }

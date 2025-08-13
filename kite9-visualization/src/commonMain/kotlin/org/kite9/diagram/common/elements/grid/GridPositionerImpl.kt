@@ -1,9 +1,6 @@
 package org.kite9.diagram.common.elements.grid
 
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
-import org.kite9.diagram.common.elements.mapping.CornerVertices
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex
-import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.fraction.LongFraction.Companion.getReducedFraction
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.common.range.BasicIntegerRange
@@ -267,89 +264,6 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         }
     }
 
-    override fun getClockwiseOrderedContainerVertices(cv: CornerVertices): List<MultiCornerVertex> {
-        var minx: LongFraction? = null
-        var maxx: LongFraction? = null
-        var miny: LongFraction? = null
-        var maxy: LongFraction? = null
-        cv.identifyPerimeterVertices()
-        val perimeterVertices = cv.getPerimeterVertices()
-        for (cv in perimeterVertices) {
-            val xb = cv.xOrdinal
-            val yb = cv.yOrdinal
-            minx = limit(minx, xb, -1)
-            miny = limit(miny, yb, -1)
-            maxx = limit(maxx, xb, 1)
-            maxy = limit(maxy, yb, 1)
-        }
-        val top = sort(+1, 0, collect(minx, maxx, miny, miny, perimeterVertices))
-        val right = sort(0, +1, collect(maxx, maxx, miny, maxy, perimeterVertices))
-        val bottom = sort(-1, 0, collect(minx, maxx, maxy, maxy, perimeterVertices))
-        val left = sort(0, -1, collect(minx, minx, miny, maxy, perimeterVertices))
-        val plist: MutableList<MultiCornerVertex> =
-                ArrayList(top.size + right.size + left.size + bottom.size)
-        addAllExceptLast(plist, top)
-        addAllExceptLast(plist, right)
-        addAllExceptLast(plist, bottom)
-        addAllExceptLast(plist, left)
-        return plist
-    }
-
-    private fun limit(current: LongFraction?, `in`: LongFraction, compare: Int): LongFraction? {
-        var current = current
-        if (current == null || `in`.compareTo(current) == compare) {
-            current = `in`
-        }
-        return current
-    }
-
-    private fun sort(
-            xorder: Int,
-            yorder: Int,
-            collect: List<MultiCornerVertex>
-    ): List<MultiCornerVertex> {
-        val sorted =
-                collect.sortedWith { o1, o2 ->
-                    val ys = o1.yOrdinal.compareTo(o2.yOrdinal) * yorder
-                    val xs = o1.xOrdinal.compareTo(o2.xOrdinal) * xorder
-                    xs + ys
-                }
-        return sorted
-    }
-
-    /*
-     * Prevents duplicating the corner vertices
-     */
-    private fun addAllExceptLast(
-            out: MutableList<MultiCornerVertex>,
-            `in`: List<MultiCornerVertex>
-    ) {
-        for (i in 0 until `in`.size - 1) {
-            out.add(`in`[i])
-        }
-    }
-
-    private fun collect(
-            minx: LongFraction?,
-            maxx: LongFraction?,
-            miny: LongFraction?,
-            maxy: LongFraction?,
-            elements: Collection<MultiCornerVertex>
-    ): List<MultiCornerVertex> {
-        val out: MutableList<MultiCornerVertex> = ArrayList()
-        for (cv in elements) {
-            val xb = cv.xOrdinal
-            val yb = cv.yOrdinal
-            if (minx!!.compareTo(xb) != 1 &&
-                            maxx!!.compareTo(xb) != -1 &&
-                            miny!!.compareTo(yb) != 1 &&
-                            maxy!!.compareTo(yb) != -1
-            ) {
-                out.add(cv)
-            }
-        }
-        return out
-    }
 
     override val prefix: String
         get() = "GP  "
