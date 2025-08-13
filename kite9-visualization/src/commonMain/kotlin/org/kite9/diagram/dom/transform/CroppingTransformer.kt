@@ -26,21 +26,23 @@ open class CroppingTransformer(private val owner: Leaf) :
         val out = p.output(d, postProcessor)
         if (p is LeafPainter && out != null) {
             val content = p.bounds()
-            position = position.minus(BasicDimension2D(content.x, content.y))
-            if (owner is SizedRectangular) {
-                val left = (owner as SizedRectangular).getPadding(Direction.LEFT)
-                val top = (owner as SizedRectangular).getPadding(Direction.UP)
-                position = position.add(BasicDimension2D(left, top))
-            }
-            if (position.x() != 0.0 || position.y() != 0.0) {
-                out.setAttribute(
-                    "transform",
-                    "translate(" +
-                            oneDecimal(position.x()) +
-                            "," +
-                            oneDecimal(position.y()) +
-                            ")"
-                )
+            if (content != null) {
+                position = position.minus(BasicDimension2D(content.x, content.y))
+                if (owner is SizedRectangular) {
+                    val left = (owner as SizedRectangular).getPadding(Direction.LEFT)
+                    val top = (owner as SizedRectangular).getPadding(Direction.UP)
+                    position = position.add(BasicDimension2D(left, top))
+                }
+                if (position.x() != 0.0 || position.y() != 0.0) {
+                    out.setAttribute(
+                        "transform",
+                        "translate(" +
+                                oneDecimal(position.x()) +
+                                "," +
+                                oneDecimal(position.y()) +
+                                ")"
+                    )
+                }
             }
         }
         return out

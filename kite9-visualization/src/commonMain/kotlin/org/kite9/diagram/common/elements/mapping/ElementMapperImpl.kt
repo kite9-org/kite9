@@ -11,31 +11,6 @@ import org.kite9.diagram.model.style.Placement
 class ElementMapperImpl(private val gp: GridPositioner) : ElementMapper {
 
     private var hasConnections: MutableMap<DiagramElement?, Boolean> = HashMap()
-    private var fractions: MutableMap<Pair<DiagramElement, Direction>, Map<DiagramElement, LongFraction>> = hashMapOf()
-
-    override fun getFractions(c: DiagramElement, d: Direction): Map<DiagramElement, LongFraction> {
-        return fractions.getOrPut(Pair(c, d), {
-            val allItems: List<Pair<DiagramElement, Placement>> = if (c is Container) {
-                c.getContents()
-                    .filterIsInstance<Port>()
-                    .filter { it.getPortDirection() == d }
-                    .map { it to it.getContainerPosition() }
-            } else {
-                emptyList()
-            } + if (c is Connected) {
-                listOf(c to c.getConnectionAlignment(d))
-            } else {
-                emptyList()
-            }
-
-            val denom = allItems.size + 1
-
-            allItems
-                .sortedBy { it.second }
-                .mapIndexed { idx, v -> v.first to LongFraction((idx+1).toLong(), denom.toLong()) }
-                .toMap()
-        })
-    }
 
     override fun requiresPlanarizationCornerVertices(c: DiagramElement): Boolean {
         if (c is Diagram) {
