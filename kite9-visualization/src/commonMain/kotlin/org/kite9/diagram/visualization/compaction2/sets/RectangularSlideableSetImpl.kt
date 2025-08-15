@@ -94,17 +94,6 @@ data class RectangularSlideableSetImpl(
             br)
 
         so.add(g, out)
-
-        // see if we can set up intersections
-        if (g != null) {
-            val sox = c.getSlackOptimisation(l.dimension.other())
-            val thisx = sox.getSlideablesFor(this.e)
-            val outx = sox.getSlideablesFor(g)
-
-            if ((thisx != null) && (outx != null)) {
-                so.compaction.propagateIntersectionsRoutableWithRectangular(out, outx, this, thisx, )
-            }
-        }
         return out
     }
 
