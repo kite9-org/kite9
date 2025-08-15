@@ -45,8 +45,8 @@ data class RectangularSlideableSetImpl(
         }
     }
 
-    override fun wrapInRoutable(c: C2Compaction, g: LeafGroup?): RoutableSlideableSet? {
-        val so = c.getSlackOptimisation(l.dimension)
+    override fun wrapInRoutable(): RoutableSlideableSet? {
+        val so = l.so as C2SlackOptimisation
         val existing = so.getContainer(this)
         if (existing != null) {
             return existing
@@ -61,24 +61,7 @@ data class RectangularSlideableSetImpl(
 
         var margin = AbstractC2CompactionStep.getMargin(l.dimension, e)
 
-        val intersections = if (e.getParent() == null) {
-            // it's the diagram, no intersections needed.
-            emptySet<C2Slideable>()
-        } else {
-            // first, check to see if we already have some intersections
-            val existing = so.getAllSlideables().filter { it.getIntersectAnchors().firstOrNull { it.e == this.e } != null }
-            if (existing.isNotEmpty()) {
-                existing.toSet()
-            } else if (g != null) {
-                // it's not a container, one intersection through entire shape
-                setOf(C2Slideable(so, l.dimension, g, e, Purpose.GLYPH_LAYOUT_MIDPOINT))
-            } else {
-                setOf(
-                    C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_LAYOUT_MIDPOINT))
-                    //C2Slideable(so, l.dimension, g, e, Purpose.CONTAINER_MIDPOINT))
-            }
-        }
-
+        val intersections = setOf(C2Slideable(so, l.dimension, e, Purpose.GLYPH_LAYOUT_MIDPOINT))
         val size = l.minimumDistanceTo(r)
 
         so.ensureMinimumDistance(bl, l, margin.first / 2)
@@ -93,7 +76,6 @@ data class RectangularSlideableSetImpl(
             bl,
             br)
 
-        so.add(g, out)
         return out
     }
 

@@ -1,8 +1,12 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
@@ -90,37 +94,37 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return groupMap[group]
     }
 
-    private fun groupAlignment(g1: Group, g2: Group): Boolean {
-        var aligns = false
-        val lp = object : LinkProcessor {
-            override fun process(originatingGroup: Group, destinationGroup: Group, ld: LinkManager.LinkDetail) {
-                if (destinationGroup == g2) {
-                    if (ld.direction != null) {
-                        aligns = true
-                    }
-                }
+
+
+    private fun aligned(a: DiagramElement, b: DiagramElement) : Boolean {
+        if (a == b) {
+            return true
+        } else if ((a is Connected) && (b is Connected)) {
+            if (a.isConnectedDirectlyTo(b)) {
+                return true
+            }
+        } else {
+            val pa = a.getParent()
+            val pb = b.getParent()
+            if ((pa == pb) && (pa is Container) && (pa.getLayout() != null)) {
+                return true
             }
         }
 
-        g1.processLowestLevelLinks(lp)
-        return aligns
+        return false
     }
 
-    private fun groupAlignment(g1: Set<Group>, g2: Set<Group>) : Boolean {
-        // need to find just one aligned link between these two
-        val out = g1.find { ga -> g2.find { gb -> groupAlignment(ga, gb) } != null } != null
-        return out
-    }
+    private fun anyAlignment(a: Set<DiagramElement>, b: Set<DiagramElement>) : Boolean =
+        a.any { a1 -> b.any { b1 -> aligned(a1, b1) }}
 
     fun mergeCSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
         // slideables with the same groups can be merged
         val mightMatch = s2.filter { it.getIntersectingElements().isNotEmpty()}.toMutableSet()
         val same = s1.intersect(s2)
-        val unchanged = s2.filter { !mightMatch.contains(it) }
 
-        val out = s1.map { l ->
+        val new = s1.map { l ->
             if (l.getIntersectingElements().isNotEmpty()) {
-                val matching = mightMatch.find { groupAlignment(it.intersectingGroups, l.intersectingGroups ) }
+                val matching = mightMatch.find { r -> anyAlignment(l.getIntersectingElements(), r.getIntersectingElements() ) }
                 if (matching != null) {
                     mightMatch.remove(matching)
                     mergeSlideablesInner(l, matching)
@@ -132,7 +136,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             }
         }.filterNotNull().toSet()
 
-        return out
+        return new + same
     }
 
     fun mergeCSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
@@ -257,6 +261,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
     fun add(g: Group?, ss: RoutableSlideableSet) {
         if (g != null) {
+            println("GROUPMAP: ${g.groupNumber} ${ss.bl?.dimension} ${g} ${ss.toString()}")
             groupMap[g] = ss
         }
         updateSlideableMap(ss)

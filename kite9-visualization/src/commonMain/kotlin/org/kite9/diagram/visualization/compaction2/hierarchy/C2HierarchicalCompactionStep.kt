@@ -92,9 +92,11 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val hr = checkCreateElement(e, Dimension.H, hso, null, g)!!
                 val vr = checkCreateElement(e, Dimension.V, vso, null, g)!!
 
-                val hss = hr.wrapInRoutable(c, g)
-                val vss = vr.wrapInRoutable(c, g)
+                val hss = hr.wrapInRoutable()
+                val vss = vr.wrapInRoutable()
                 if ((hss != null) && (vss != null)) {
+                    hso.add(g, hss)
+                    vso.add(g, vss)
                     hso.contains(hss, hr)
                     vso.contains(vss, vr)
                     c.setupRectangularIntersections(hr, vr)
@@ -141,7 +143,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             return ss1
         }
 
-        val ic = C2Slideable(cso, d, g, c, Purpose.PORT)
+        val ic = C2Slideable(cso, d,  c, Purpose.PORT)
         val out = RoutableSlideableSetImpl(setOf(ic), null, null)
 
         cso.add(g, out)

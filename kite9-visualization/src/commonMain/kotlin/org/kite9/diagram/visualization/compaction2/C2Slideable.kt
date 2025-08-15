@@ -13,13 +13,6 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
-enum class BlockType {
-    NOT_BLOCKING,
-    BLOCKING,
-    ENTERING_CONTAINER,
-    LEAVING_CONTAINER
-}
-
 class C2Slideable(
         so: C2SlackOptimisation,
         val dimension: Dimension,
@@ -50,10 +43,9 @@ class C2Slideable(
     constructor(
             so: C2SlackOptimisation,
             dimension: Dimension,
-            g: LeafGroup?,
             intersects: Rectangular,
             purpose: Purpose
-    ) : this(so, dimension, mutable2(setOf(IntersectAnchor(intersects, purpose))), setOfNotNull(g))
+    ) : this(so, dimension, mutable2(setOf(IntersectAnchor(intersects, purpose))), emptySet())
 
     /** Used for labels */
     constructor(
