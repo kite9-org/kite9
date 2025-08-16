@@ -85,8 +85,13 @@ public class XMLHelper {
 		TransformerFactory transfac = getTransformerFactory();
 		Transformer trans = null;
 		if (templateUri != null) {
-			Source source = transfac.getURIResolver().resolve(templateUri, baseUri);
-			trans = transfac.newTransformer(source);
+			if (transFact.getURIResolver() != null) {
+				Source source = transfac.getURIResolver().resolve(templateUri, baseUri);
+				trans = transfac.newTransformer(source);
+			} else {
+				Source source = new StreamSource(templateUri);
+				trans = transfac.newTransformer(source);
+			}
 		} else {
 			trans = transfac.newTransformer(); // identity transform
 		}

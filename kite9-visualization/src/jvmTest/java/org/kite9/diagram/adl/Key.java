@@ -34,10 +34,12 @@ public class Key extends AbstractMutableXMLElement {
 			return out;
 		}
 
+		var r = 0;
+
 		for (Symbol s : symbols) {
 			List<Symbol> sl = new ArrayList<Symbol>(1);
 			sl.add(s);
-			out.appendChild(new TextLine(s.getText()));
+			out.appendChild(new TextLine(""+(r++), s.getText()));
 		}
 		return out;
 	}
@@ -56,11 +58,11 @@ public class Key extends AbstractMutableXMLElement {
 		super(id, "key", doc);
 		
 		if (boldText != null) {
-			setBoldText(new TextLine(boldText));
+			setBoldText(new TextLine(id+"-key-bl", boldText));
 		}
 
 		if (bodyText != null) {
-			setBodyText(new TextLine(bodyText));
+			setBodyText(new TextLine(id+"-key-bt",bodyText));
 		}
 
 		if (symbols != null) {

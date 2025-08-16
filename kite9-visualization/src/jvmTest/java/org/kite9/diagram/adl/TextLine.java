@@ -27,7 +27,7 @@ public class TextLine extends AbstractMutableXMLElement {
 	}
 	
 	public TextLine(String text, Document doc) {
-		this(null, "text-line", text, doc);
+		this(createID(), "text-line", text, doc);
 	}
 
 	public TextLine(String id, String text) {

@@ -1,6 +1,6 @@
 package org.kite9.diagram.functional.layout;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
 import org.kite9.diagram.adl.LinkBody;
@@ -100,7 +100,7 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con2, a), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	@NotAddressed
 	public void test_8_6_ContainerWithLayoutConnection() throws Exception {
@@ -113,7 +113,6 @@ public class Test8ContainersAndDirectedArrows extends AbstractLayoutFunctionalTe
 		l.setAttribute("class", "INVISIBLE");
 		new Link(one, two);
 
-		
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, two), null);
 		renderDiagram(d);
 
