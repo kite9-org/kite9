@@ -65,12 +65,12 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             if (!horizontalAxis(g) && !verticalAxis(g)) {
                 // in this case, we need to store whatever is available.
                 val slackOptimisationV = c.getSlackOptimisation(Dimension.V)
-                val va = slackOptimisationV.getSlideablesFor(g.a)
-                val vb = slackOptimisationV.getSlideablesFor(g.b)
+                val va = slackOptimisationV.getSlideablesFor(g.a).lastOrNull()
+                val vb = slackOptimisationV.getSlideablesFor(g.b).lastOrNull()
 
                 val slackOptimisationH = c.getSlackOptimisation(Dimension.H)
-                val ha = slackOptimisationH.getSlideablesFor(g.a)
-                val hb = slackOptimisationH.getSlideablesFor(g.b)
+                val ha = slackOptimisationH.getSlideablesFor(g.a).lastOrNull()
+                val hb = slackOptimisationH.getSlideablesFor(g.b).lastOrNull()
 
                 if ((ha != null) && (hb != null)) {
                     throw LogicException("Need to rethink this")
@@ -137,7 +137,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
     }
 
     private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
-        val ss1 = cso.getSlideablesFor(g)
+        val ss1 = cso.getSlideablesFor(g).lastOrNull()
 
         if (ss1 != null) {
             return ss1
@@ -158,8 +158,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
         val so = c.getSlackOptimisation(d)
         val sox = c.getSlackOptimisation(d.other())
-        val ha = so.getSlideablesFor(a)
-        val hb = so.getSlideablesFor(b)
+        val ha = so.getSlideablesFor(a).lastOrNull()
+        val hb = so.getSlideablesFor(b).lastOrNull()
 
         val hm = if ((ha == null) || (hb == null)) {
             ha ?: hb

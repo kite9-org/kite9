@@ -11,6 +11,10 @@ data class RoutableSlideableSetImpl(
 
     val bs = c.plus(setOfNotNull(bl, br))
 
+    init {
+        println("New slideable set $this")
+    }
+
     override var done = false
 
     override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {

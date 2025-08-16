@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
@@ -26,20 +25,16 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
      * where the element doesn't have a Group
      */
     protected fun checkCreateElement(
-        de: DiagramElement,
+        de: Rectangular,
         d: Dimension,
         cso: C2SlackOptimisation,
         cExisting: C2Slideable?,
         topGroup: Group?
-    ): RectangularSlideableSet? {
-        log.send("Creating $de")
-        if (de !is Rectangular) {
-            return null
-        }
-
+    ): RectangularSlideableSet {
         var ss = cso.getSlideablesFor(de)
 
         if (ss == null) {
+            log.send("Creating $de")
             // we need to create these then
             val ms = getMinimumDistanceBetween(de, Side.START, de, Side.END, d, null, false)
 
@@ -57,6 +52,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             }
 
             log.send("Created RectangularSlideableSetImpl: ${ss.e}", ss.getAll())
+
         }
 
         return ss
@@ -66,7 +62,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
      * This works out whether we can route connections through this element (and in which direction).
      */
     fun getRectangularPermeability(de: Rectangular, d: Dimension, increasing: Boolean): Permeability {
-        val direction = Direction.getDirection(d, increasing);
+        val direction = Direction.getDirection(d, increasing)
         val rule = if (de is Container) {
             val bt = de.getTraversalRule(direction)
             when (bt) {

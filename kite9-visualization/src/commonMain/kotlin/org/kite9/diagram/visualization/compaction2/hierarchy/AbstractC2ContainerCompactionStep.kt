@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
@@ -33,39 +32,39 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         if (completedContainers.isNotEmpty()) {
             val so = c.getSlackOptimisation(d)
             val sox = c.getSlackOptimisation(d.other())
-            var ssInner = so.getSlideablesFor(g)!!   // the routable inside the container
+            val potentialSets = so.getSlideablesFor(g)
+            var soInnerRoutable = potentialSets.first()!!   // the routable inside the container
 
             completedContainers.forEach { container ->
                 // make sure the inner orbitals can't be crossed by intersections
                 // on this container
-                ssInner.bl?.addBlockAnchor(BlockAnchor(container, Side.START, Permeability.DECREASING))
-                ssInner.br?.addBlockAnchor(BlockAnchor(container, Side.END, Permeability.INCREASING))
+                soInnerRoutable.bl?.addBlockAnchor(BlockAnchor(container, Side.START, Permeability.DECREASING))
+                soInnerRoutable.br?.addBlockAnchor(BlockAnchor(container, Side.END, Permeability.INCREASING))
 
                 // these are the container itself
-                val cs = checkCreateElement(container, d, so, null, g)!!
-                val csx = checkCreateElement(container, d.other(), sox, null, g)!!
-                ensureRectangularEmbedding(cs, so)
-                c.setupRectangularIntersections(cs, csx)
+                val soContainer = checkCreateElement(container, d, so, null, g)
+                val soxContainer = checkCreateElement(container, d.other(), sox, null, g)
+                ensureRectangularEmbedding(soContainer, so)
+                c.setupRectangularIntersections(soContainer, soxContainer)
 
                 // the routable inside the container
-                val ssx1 = sox.getContents(csx)
+                val soxInnerRoutable = sox.getContents(soxContainer)
 
-                if (ssx1 != null) {
-                    c.setupRoutableIntersections(ssx1, ssInner)
-                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx1, cs, csx)
+                if (soxInnerRoutable != null) {
+                    c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
+                    c.propagateIntersectionsRoutableWithRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
                 }
 
-                val newss = embedInContainerAndWrap(c, so, cs, ssInner, d, g)
-                if (newss != null) {
-                    ssInner = newss
-                    so.add(g, ssInner)
+                val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
+                if (soOuterRoutable != null) {
+                    soInnerRoutable = soOuterRoutable
                 }
 
                 // routable outside the container
-                val ssx2 = sox.getContainer(csx)
-                if (ssx2 != null) {
-                    c.setupRoutableIntersections(ssx2, ssInner)
-                    c.propagateIntersectionsRoutableWithRectangular(ssInner, ssx2, cs, csx)
+                val soxOuterRoutable = sox.getContainer(soxContainer)
+                if (soxOuterRoutable != null) {
+                    c.setupRoutableIntersections(soxOuterRoutable, soInnerRoutable)
+                    c.propagateIntersectionsRoutableWithRectangular(soInnerRoutable, soxOuterRoutable, soContainer, soxContainer)
                 }
 
             }
@@ -101,17 +100,12 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         // now make sure that the rectangulars composing the routable are well-separated
         so.getContents(inner).forEach { embed(d, outer, it, so, it.e) }
 
-        if (outer.e is Diagram) {
-            // you can't route around the edge of the diagram
-            return null
-        } else {
-            val out = outer.wrapInRoutable()
-            if (out != null) {
-                so.add(g, out)
-                so.contains(out, outer)
-            }
-            return out
+        val out = outer.wrapInRoutable()
+        if (out != null) {
+            so.contains(out, outer)
+            so.add(g, out)
         }
+        return out
     }
 
     override val prefix: String
