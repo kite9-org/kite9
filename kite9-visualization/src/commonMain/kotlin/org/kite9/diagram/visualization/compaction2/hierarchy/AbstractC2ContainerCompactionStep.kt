@@ -22,54 +22,69 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
  */
 abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: GroupResult) : AbstractC2BuilderCompactionStep(cd) {
 
-    private val containerCompletionV: MutableMap<Group, MutableList<Container>> = mutableMapOf()
-    private val containerCompletionH: MutableMap<Group, MutableList<Container>> = mutableMapOf()
+    private val containerCompletionV: Map<Group, List<Set<Container>>>
+    private val containerCompletionH: Map<Group, List<Set<Container>>>
     private val allContainers : MutableList<Container> = mutableListOf()
 
     fun completeContainers(c: C2Compaction, g: Group, d: Dimension) {
-        val completedContainers = popCompletedContainers(d, g)
+        val completedContainers = getCompletedContainers(d, g)
 
-        if (completedContainers.isNotEmpty()) {
+        completedContainers.forEach { set ->
+            val containerRoutables =
+                set.map { container -> handleContainerGroupEmbedding(c, d, container, g) }.filterNotNull()
+
             val so = c.getSlackOptimisation(d)
-            val sox = c.getSlackOptimisation(d.other())
-            val potentialSets = so.getSlideablesFor(g)
-            var soInnerRoutable = potentialSets.first()!!   // the routable inside the container
+            containerRoutables.forEach { so.add(g, it) }
 
-            completedContainers.forEach { container ->
-                // make sure the inner orbitals can't be crossed by intersections
-                // on this container
-                soInnerRoutable.bl?.addBlockAnchor(BlockAnchor(container, Side.START, Permeability.DECREASING))
-                soInnerRoutable.br?.addBlockAnchor(BlockAnchor(container, Side.END, Permeability.INCREASING))
-
-                // these are the container itself
-                val soContainer = checkCreateElement(container, d, so, null, g)
-                val soxContainer = checkCreateElement(container, d.other(), sox, null, g)
-                ensureRectangularEmbedding(soContainer, so)
-                c.setupRectangularIntersections(soContainer, soxContainer)
-
-                // the routable inside the container
-                val soxInnerRoutable = sox.getContents(soxContainer)
-
-                if (soxInnerRoutable != null) {
-                    c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
-                    c.propagateIntersectionsRoutableWithRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
-                }
-
-                val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
-                if (soOuterRoutable != null) {
-                    soInnerRoutable = soOuterRoutable
-                }
-
-                // routable outside the container
-                val soxOuterRoutable = sox.getContainer(soxContainer)
-                if (soxOuterRoutable != null) {
-                    c.setupRoutableIntersections(soxOuterRoutable, soInnerRoutable)
-                    c.propagateIntersectionsRoutableWithRectangular(soInnerRoutable, soxOuterRoutable, soContainer, soxContainer)
-                }
-
+            // now combine and make this the last routable for the group
+            val soOuterRoutable = containerRoutables.reduceOrNull { a, b -> a.mergeWithOverlap(b, so) }
+            if (soOuterRoutable != null) {
+                so.add(g, soOuterRoutable)
             }
         }
     }
+
+
+    private fun handleContainerGroupEmbedding(c: C2Compaction, d: Dimension, container: Container, g: Group) : RoutableSlideableSet? {
+        val so = c.getSlackOptimisation(d)
+        val sox = c.getSlackOptimisation(d.other())
+        // make sure the inner orbitals can't be crossed by intersections
+        // on this container
+        val potentialSets = so.getSlideablesFor(g)
+        val soInnerRoutable = potentialSets.last()   // the routable inside the container
+        soInnerRoutable.bl?.addBlockAnchor(BlockAnchor(container, Side.START, Permeability.DECREASING))
+        soInnerRoutable.br?.addBlockAnchor(BlockAnchor(container, Side.END, Permeability.INCREASING))
+
+        // these are the container itself
+        val soContainer = checkCreateElement(container, d, so, null, g)
+        val soxContainer = checkCreateElement(container, d.other(), sox, null, g)
+        ensureRectangularEmbedding(soContainer, so)
+        c.setupRectangularIntersections(soContainer, soxContainer)
+
+        // the routable inside the container
+        val soxInnerRoutable = sox.getContents(soxContainer)
+
+        if (soxInnerRoutable != null) {
+            c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
+            c.propagateIntersectionsRoutableWithRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
+        }
+
+        val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
+        val soxOuterRoutable = sox.getContainer(soxContainer)
+
+        if (soxOuterRoutable != null) {
+            c.setupRoutableIntersections(soxOuterRoutable, soInnerRoutable)
+            c.propagateIntersectionsRoutableWithRectangular(
+                soInnerRoutable,
+                soxOuterRoutable,
+                soContainer,
+                soxContainer
+            )
+        }
+
+        return soOuterRoutable
+    }
+
 
 
     private fun ensureRectangularEmbedding(rect: RectangularSlideableSet, so: C2SlackOptimisation) {
@@ -82,19 +97,19 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
     }
 
-    private fun popCompletedContainers(d: Dimension, g: Group) : List<Container> {
+    private fun getCompletedContainers(d: Dimension, g: Group) : List<Set<Container>> {
         return when (d) {
-            Dimension.H -> containerCompletionH.remove(g) ?: emptyList()
-            Dimension.V -> containerCompletionV.remove(g) ?: emptyList()
+            Dimension.H -> containerCompletionH[g] ?: emptyList()
+            Dimension.V -> containerCompletionV[g] ?: emptyList()
         }
     }
 
-    private fun embedInContainerAndWrap(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group): RoutableSlideableSet? {
+    private fun embedInContainerAndWrap(c: C2Compaction, so: C2SlackOptimisation, outer: RectangularSlideableSet, inner: RoutableSlideableSet, d: Dimension, g: Group) : RoutableSlideableSet? {
         so.contains(outer, inner)
         val margin = getMargin(d, outer.e)
 
         // first, ensure the buffer slideables are well-separated
-        if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!,margin.first / 2)
+        if (inner.bl != null) so.ensureMinimumDistance(outer.l, inner.bl!!, margin.first / 2)
         if (inner.br != null) so.ensureMinimumDistance(inner.br!!, outer.r, margin.second / 2)
 
         // now make sure that the rectangulars composing the routable are well-separated
@@ -103,8 +118,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         val out = outer.wrapInRoutable()
         if (out != null) {
             so.contains(out, outer)
-            so.add(g, out)
         }
+
         return out
     }
 
@@ -139,26 +154,28 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             (o + n).distinct()
         }
 
-        val relevantContainersV = relevantContainers
+        val lowestContainersV = relevantContainers
             .mapValues { (c, elements) ->
                 getLowestGroup(elements, parentage, Dimension.V, c)
             }
 
-        val relevantContainersH = relevantContainers
+        val lowestContainersH = relevantContainers
             .mapValues { (c, elements) ->
                 getLowestGroup(elements, parentage, Dimension.H, c)
             }
 
+        val containerCompletionV = mutableMapOf<Group, MutableList<Container>>()
+        val containerCompletionH = mutableMapOf<Group, MutableList<Container>>()
 
         // we need to reverse this map so that we get groups-to-containers
-        relevantContainersV.mapNotNull { (c, g) ->
+        lowestContainersV.mapNotNull { (c, g) ->
             val listV = containerCompletionV.getOrPut(g) { mutableListOf() }
             listV.add(c)
             listV.sortBy { -it.getDepth() }
         }
 
         // we need to reverse this map so that we get groups-to-containers
-        relevantContainersH.mapNotNull { (c, g) ->
+        lowestContainersH.mapNotNull { (c, g) ->
             val listH = containerCompletionH.getOrPut(g) { mutableListOf() }
             listH.add(c)
             listH.sortBy { -it.getDepth() }
@@ -172,6 +189,16 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             containerCompletionH[topGroup] = (topH + parentContainers).toMutableList()
             containerCompletionV[topGroup] = (topV + parentContainers).toMutableList()
         }
+
+        this.containerCompletionH = containerCompletionH.mapValues { levelContainers(it.value) }
+        this.containerCompletionV = containerCompletionV.mapValues { levelContainers(it.value) }
+    }
+
+    private fun levelContainers(containers: List<Container>) : List<Set<Container>> {
+        val grouped = containers.groupBy { it.getDepth() }.mapValues { it.value.toSet() }
+        val maxIndex = grouped.keys.max()
+        val structured = (0..maxIndex).map { grouped[it] }.filterNotNull()
+        return structured.reversed()
     }
 
     private fun collectParents(it: Container?, parentContainers: MutableList<Container>, justContainers: Set<Container>) {
@@ -209,20 +236,20 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
     }
 
     private fun getLowestGroup(groupsIn: List<LeafGroup>, parentage: Map<Group, List<Group>>, axis: Dimension, forContainer: Container) : Group {
-        var groups : Set<Group> = groupsIn
+        var groupsForContainer : Set<Group> = groupsIn
             .filter { matchesAxis(axis, it) }
             .filter { !((it.container == forContainer) && (it.connected == null))}
             .toSet()
 
-        while ((groups.size > 1) || (hasOnlyCombiningAxis(groups))) {
-            val lowestGroupHeight = groups.minOf { it.height }
-            groups = groups
+        while ((groupsForContainer.size > 1) || (hasOnlyCombiningAxis(groupsForContainer))) {
+            val lowestGroupHeight = groupsForContainer.minOf { it.height }
+            groupsForContainer = groupsForContainer
                 .flatMap { if (it.height == lowestGroupHeight) parentage[it].orEmpty() else listOf(it) }
                 .filter { matchesAxis(axis, it) || combiningAxis(it) }
                 .toSet()
         }
 
-        return groups.first()
+        return groupsForContainer.first()
     }
 
     private fun <X, Y> mergeMaps(a: Map<X, List<Y>>, b: Map<X, List<Y>>) : Map<X, List<Y>> {
