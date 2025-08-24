@@ -116,7 +116,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
             log.send("Found shortest path for $c: $out")
             log.send("Using: ", out.getSlideables())
-            log.send("Route", out.explainRoute());
+            log.send("Route", out.explainRoute())
 
 
             val replacements = mutableMapOf<C2Slideable, C2Slideable>()
@@ -151,7 +151,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
     private fun handleReplacements(r: C2Route?, replacements: Map<C2Slideable, C2Slideable>) : C2Route? {
         return if (r != null) {
-            C2Route(handleReplacements(r.prev, replacements), handleReplacements(r.point, replacements), r.cost)
+            C2Route(handleReplacements(r.prev, replacements), handleReplacements(r.point, replacements), r.cost, r.container)
         } else {
             null
         }
@@ -180,7 +180,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             if (minDist == 0) {
                 // ok, these slideables can be merged then we can simplify the route
                 val so = third.point.getAlong().so as C2SlackOptimisation
-                val ns = so.mergeCSlideables(s1, s2)!!
+                val ns = so.mergeSlideables(s1, s2)!!
                 updateReplacements(s1, s2, ns, replacements)
 
                 // remove the second, rewrite the first
@@ -189,13 +189,14 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
                 return C2Route(
                     simplifyShortestPath(nsp, c2, ssp, replacements),
                     C2Point(ns, newFirst.getPerp(), newFirst.d),
-                    r.cost
+                    r.cost,
+                    container = r.container
                 )
             }
         }
 
         return if (second != null) {
-            C2Route(simplifyShortestPath(second, c2, ssp, replacements), r.point, r.cost)
+            C2Route(simplifyShortestPath(second, c2, ssp, replacements), r.point, r.cost, r.container)
         } else {
             r
         }

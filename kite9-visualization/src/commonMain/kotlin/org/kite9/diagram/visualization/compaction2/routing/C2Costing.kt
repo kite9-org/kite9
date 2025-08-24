@@ -111,7 +111,7 @@ data class C2Costing(val allEdgeCrossings : Int = 0,
 
     override fun toString(): String {
         // reported in priority order
-        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalWeightedDistance s=$steps cft=$costFreeTurn]"
+        return "COST[ead=$expensiveAxisDistance, ix=$illegalEdgeCrossings x=$allEdgeCrossings t=$turns mpd=$minimumPossibleDistance td=$totalWeightedDistance s=$steps cft=$costFreeTurn d=${containerDepth}]"
     }
 
 }

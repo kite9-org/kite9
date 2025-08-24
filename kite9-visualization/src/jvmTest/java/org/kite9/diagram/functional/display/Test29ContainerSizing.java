@@ -120,14 +120,13 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		Context c3 = new Context("c3", HelpMethods.listOf(g4, g5), true, new TextLabel("c3"), Layout.DOWN);
 
 		// links from c1 to c2
+        TurnLink b1 = new TurnLink(g0, g3);
 		new Link(g0, g2, null, new TextLabel("straight1"), null, new TextLabel("straight2"), Direction.RIGHT);
 		new Link(g1, g3, null, new TextLabel("straight3"), null, new TextLabel("straight4"), Direction.RIGHT);
 
-		TurnLink b1 = new TurnLink(g0, g3);
-		TurnLink b2 = new TurnLink(g1, g2);
+        TurnLink b2 = new TurnLink(g1, g2);
 		b1.setFromLabel(new TextLabel("from"));
 		b2.setFromLabel(new TextLabel("from"));
-		b1.setToLabel(new TextLabel("to"));
 		b1.setToLabel(new TextLabel("to"));
 
 		// links from c2 to c3

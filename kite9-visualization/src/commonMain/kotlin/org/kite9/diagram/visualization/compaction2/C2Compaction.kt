@@ -19,7 +19,12 @@ interface C2Compaction {
      * When wrapping a routable slideable set in a rectangular (container or glyph), we need to make sure that the
      * slideables leaving the routable intersect with the rectangular slideables.
      */
-    fun propagateIntersectionsRoutableWithRectangular(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
+    fun propagateIntersectionsFromRoutableToRectangular(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
+
+    /**
+     * When wrapping a rectangular slideable set in its routable, ensure that intersections are propagated.
+     */
+    fun propagateIntersectionsFromRectangularToRoutable(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
 
     /**
      * Used when we create the routable slideable sets, anything meeting an orbit slideable should form an intersection.

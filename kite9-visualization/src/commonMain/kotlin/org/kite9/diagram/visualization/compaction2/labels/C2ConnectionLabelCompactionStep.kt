@@ -259,7 +259,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
             Direction.RIGHT -> {
                 ensureDistance(dest, l, Dimension.V, csoh)
                 ensureDistanceFromBuffer(l, rightBuffer, Dimension.V, csoh)
-                val upper = csov.mergeCSlideables(vc, rssv.l)!!
+                val upper = csov.mergeSlideables(vc, rssv.l)!!
                 ensureAfter(hc, rssh.l, csoh)
                 Pair(upper, rssv.r)
             }
@@ -267,7 +267,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
             Direction.DOWN -> {
                 ensureDistance(dest, l, Dimension.H, csov)
                 ensureDistanceFromBuffer(l, bottomBuffer, Dimension.H, csov)
-                val left = csoh.mergeCSlideables(hc, rssh.l)!!
+                val left = csoh.mergeSlideables(hc, rssh.l)!!
                 ensureAfter(vc, rssv.l, csov)
                 Pair(left, rssh.r)
             }
@@ -275,7 +275,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
             Direction.LEFT -> {
                 ensureDistance(l, dest, Dimension.V, csoh)
                 ensureDistanceFromBuffer(leftBuffer, l, Dimension.V, csoh)
-                val upper = csov.mergeCSlideables(vc, rssv.l)!!
+                val upper = csov.mergeSlideables(vc, rssv.l)!!
                 ensureAfter(rssh.r, hc, csoh)
                 Pair(upper, rssv.r)
             }
@@ -283,7 +283,7 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
             Direction.UP -> {
                 ensureDistance(l, dest, Dimension.H, csov)
                 ensureDistanceFromBuffer(topBuffer, l, Dimension.H, csov)
-                val left = csoh.mergeCSlideables(hc, rssh.l)!!
+                val left = csoh.mergeSlideables(hc, rssh.l)!!
                 ensureAfter(rssv.r, vc, csov)
                 Pair(left, rssh.r)
             }

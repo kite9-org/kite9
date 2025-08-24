@@ -54,11 +54,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         setupContainerRectangularIntersections(vr)
     }
 
-
-
-    private fun propagateIntersections(from: C2Slideable?, to: C2Slideable?) {
+    private fun propagateAllIntersections(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) &&  (to!= null)) {
-            (intersections[from] ?: emptySet()).forEach { slideable ->
+            val toPropagate = intersections[from] ?: emptySet()
+            toPropagate.forEach { slideable ->
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
                 val notRectangular = slideable.getRectAnchors().isEmpty()
@@ -72,22 +71,42 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
+    private fun propagateElementIntersections(from: C2Slideable?, to: C2Slideable?) {
+        if ((from != null) &&  (to!= null)) {
+            val toPropagate = intersections[from] ?: emptySet()
+            toPropagate.forEach { slideable ->
+                // you can't route on rectangulars outside the rectangle itself.
+                // but you can route on their intersections or internal buffer slideables
+                val notRectangular = slideable.getRectAnchors().isEmpty()
+                val inElement = to.inElementIntersection(slideable) != null
+                if (notRectangular && inElement) {
+                    setIntersection(to, slideable)
+                }
+            }
+        }
+    }
 
-    override fun propagateIntersectionsRoutableWithRectangular(
+    override fun propagateIntersectionsFromRectangularToRoutable(
         hi: RoutableSlideableSet,
         vi: RoutableSlideableSet,
         ho: RectangularSlideableSet,
         vo: RectangularSlideableSet
     ) {
-        propagateIntersections(hi.bl, ho.l)
-        propagateIntersections(hi.br, ho.r)
-        propagateIntersections(vi.bl, vo.l)
-        propagateIntersections(vi.br, vo.r)
-
-        propagateIntersections(ho.l, hi.bl)
-        propagateIntersections(ho.r, hi.br)
-        propagateIntersections(vo.l, vi.bl)
-        propagateIntersections(vo.r, vi.br)
+        propagateAllIntersections(ho.l, hi.bl)
+        propagateAllIntersections(ho.r, hi.br)
+        propagateAllIntersections(vo.l, vi.bl)
+        propagateAllIntersections(vo.r, vi.br)
+    }
+    override fun propagateIntersectionsFromRoutableToRectangular(
+        hi: RoutableSlideableSet,
+        vi: RoutableSlideableSet,
+        ho: RectangularSlideableSet,
+        vo: RectangularSlideableSet
+    ) {
+        propagateElementIntersections(hi.bl, ho.l)
+        propagateElementIntersections(hi.br, ho.r)
+        propagateElementIntersections(vi.bl, vo.l)
+        propagateElementIntersections(vi.br, vo.r)
     }
 
     private fun setupContainerRectangularIntersections(rect: RectangularSlideableSet) {

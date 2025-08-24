@@ -20,7 +20,7 @@ data class RoutableSlideableSetImpl(
     override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
         val con1 = c2.getContents(this)
         val con2 = c2.getContents(after)
-        val newOrbit = c2.mergeCSlideables(br, after.bl)!!
+        val newOrbit = c2.mergeSlideables(br, after.bl)!!
         done = true
         val newC = this.c.plus(after.c).plus(newOrbit)
         val new = RoutableSlideableSetImpl(newC, bl, after.br)
@@ -31,8 +31,8 @@ data class RoutableSlideableSetImpl(
     override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
         val con1 = c2.getContents(this)
         val con2 = c2.getContents(over)
-        val newL = c2.mergeCSlideables(over.bl, bl)
-        val newR = c2.mergeCSlideables(over.br, br)
+        val newL = c2.mergeSlideables(over.bl, bl)
+        val newR = c2.mergeSlideables(over.br, br)
         val newC = c2.mergeCSlideables(over.c, c)
 
         done = true

@@ -311,6 +311,28 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
+    public static boolean hasConnectedContents(DiagramElement e) {
+        if (e instanceof Container) {
+            Container c = (Container) e;
+            long count = c.getContents()
+                    .stream()
+                    .filter(o -> o instanceof Connected)
+                    .count();
+            return count > 0;
+        }
+
+        return false;
+    }
+
+
+    public static boolean isContainerIntersection(C2Slideable s) {
+        return s.getIntersectingElements()
+                .stream()
+                .filter(it -> hasConnectedContents(it))
+                .collect(Collectors.toList())
+                .size() > 0;
+    }
+
 	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");
 		if (!target.isDirectory()) {
@@ -363,7 +385,12 @@ public class TestingEngine extends TestingHelp {
 				Set<C2Slideable> is = c2.getIntersections(s);
 				if (is != null) {
 					is.forEach(s2 -> {
-						g.setPaint(Color.BLACK);
+                        if (isContainerIntersection(s2) || isContainerIntersection(s)) {
+                            g.setPaint(Color.BLUE);
+                            g.setPaint(new Color(60, 60, 255, 189));
+                        } else {
+                            g.setPaint(Color.BLACK);
+                        }
 						g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
 								20, 20);
 					});

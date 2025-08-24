@@ -5,12 +5,14 @@ import kotlin.math.min
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
+import org.kite9.diagram.visualization.compaction2.routing.C2Route
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 class C2Slideable(
@@ -108,8 +110,8 @@ class C2Slideable(
         return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${getIntersectingElements()} orbits=${getOrbitingElements()} anchors=$anchors" else ""})"
     }
 
-    fun getNonPermeables(d: Direction): Set<DiagramElement> {
-        return anchors.filterIsInstance<PermeableAnchor>()
+    private fun getNonPermeables(anchors: List<PermeableAnchor>, d: Direction): Set<DiagramElement> {
+        return anchors
                 .filter { !it.canCross(d) }
                 .map { it.e }
                 .toSet()
@@ -140,14 +142,44 @@ class C2Slideable(
     }
 
     /**
-     * Figures out what crossing this slideable would mean for a route. Note that if an anchor is
-     * marked as non-permeable and you're on an intersection slideable for element e, then you can't
-     * cross if the anchor is for the same element.
+     * For the current slideable (this), works out which anchor represents the intersection
+     * with along.
      */
-    fun isBlocker(d: Direction, along: C2Slideable): Boolean {
+    fun inElementIntersection(along: C2Slideable) : PermeableAnchor? {
+
+        fun containsTheIntersection(intersections: Set<DiagramElement>, r: PermeableAnchor)
+                = intersections.firstOrNull { i -> r.e == i || r.e.deepContains(i) } != null
+
+        fun containsTheOrbit(orbits: Set<DiagramElement>, r: PermeableAnchor)
+                = orbits.firstOrNull { o -> r.e.deepContains(o) } != null
+
+
         val intersectingElements = along.getIntersectingElements()
-        val nonPermeableElements = getNonPermeables(d)
-        return intersectingElements.intersect(nonPermeableElements).isNotEmpty()
+        val orbitElements = along.getOrbitingElements()
+
+        val out = this.anchors.filterIsInstance<PermeableAnchor>()
+            .filter {
+                containsTheIntersection(intersectingElements, it) ||
+                        containsTheOrbit(orbitElements,  it)
+            }
+
+        if (out.isEmpty()) {
+            return null
+        } else if (out.size == 1) {
+            return out.first()
+        } else {
+            throw LogicException("Multiple permeable anchors for $this")
+        }
+    }
+
+    /**
+     * You can't move along an intersection element if you're inside the element itself.
+     * Only the visible part of the kebab stick.
+     */
+    fun canMoveAlongInside(container: DiagramElement) : Boolean {
+        val intersecting = getIntersectingElements()
+        val somethingContains = intersecting.filterIsInstance<Container>().find { it == container || it.deepContains(container)  } != null
+        return !somethingContains
     }
 
     fun replaceConnAnchors(ca: Set<ConnAnchor>) {

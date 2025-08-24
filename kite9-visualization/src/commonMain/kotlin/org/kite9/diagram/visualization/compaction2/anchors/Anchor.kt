@@ -13,5 +13,5 @@ import org.kite9.diagram.visualization.compaction.Side
  */
 sealed interface Anchor<X> {
     val e: DiagramElement
-    val s: X?
+    val s: X
 }

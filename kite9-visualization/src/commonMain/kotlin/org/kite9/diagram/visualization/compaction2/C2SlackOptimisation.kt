@@ -136,7 +136,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return new + same
     }
 
-    fun mergeCSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
+    fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         return mergeSlideablesInner(s1, s2)
     }
 

@@ -1,12 +1,17 @@
 package org.kite9.diagram.visualization.compaction2.routing
 
 import org.kite9.diagram.common.algorithms.ssp.PathLocation
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 
-class C2Route(r: C2Route?, val point: C2Point, val cost: C2Costing) : PathLocation<C2Route> {
+data class C2Route(val r: C2Route?, val point: C2Point, val cost: C2Costing, val container: DiagramElement) : PathLocation<C2Route> {
 
     val prev: C2Route?
     val coords: C2Coords
+
+    constructor(r: C2Route, cost: C2Costing) : this(r, r.point, cost, r.container)
+    constructor(r: C2Route, point: C2Point, cost: C2Costing) : this(r, point, cost, r.container)
+    constructor(r: C2Route, cost: C2Costing, container: DiagramElement) : this(r, r.point, cost, container)
 
     /**
      * Removes parts of the route in the same direction, so we only record changes
@@ -40,8 +45,7 @@ class C2Route(r: C2Route?, val point: C2Point, val cost: C2Costing) : PathLocati
     }
 
     override fun toString(): String {
-        return "Route(points=${getPoints()}, cost=$cost, coords=$coords active=$active)"
-
+        return "Route(points=${getPoints()}, cost=$cost, coords=$coords active=$active container=$container)"
     }
 
     private fun getPoints() : List<C2Point> {
@@ -59,6 +63,10 @@ class C2Route(r: C2Route?, val point: C2Point, val cost: C2Costing) : PathLocati
         } else {
             listOf(this)
         }
+    }
+
+    fun changeContainer(container: DiagramElement): C2Route {
+        return C2Route(this, this.cost, container)
     }
 
     init {
