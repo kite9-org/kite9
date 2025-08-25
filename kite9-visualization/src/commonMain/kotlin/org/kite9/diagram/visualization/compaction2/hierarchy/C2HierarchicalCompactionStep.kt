@@ -144,7 +144,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         }
 
         val ic = C2Slideable(cso, d,  c, Purpose.PORT)
-        val out = RoutableSlideableSetImpl(setOf(ic), null, null)
+        val out = RoutableSlideableSetImpl(ic, null, null)
 
         cso.add(g, out)
         log.send("Created a RoutableSlideableSet for $c: ", out.getAll())
@@ -157,7 +157,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         val b = g.b
 
         val so = c.getSlackOptimisation(d)
-        val sox = c.getSlackOptimisation(d.other())
         val ha = so.getSlideablesFor(a).lastOrNull()
         val hb = so.getSlideablesFor(b).lastOrNull()
 

@@ -25,6 +25,7 @@ import org.kite9.diagram.testing.HopChecker.HopAction;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.compaction2.C2Compaction;
 import org.kite9.diagram.visualization.compaction2.C2Slideable;
+import org.kite9.diagram.visualization.compaction2.IntersectionType;
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
@@ -325,12 +326,15 @@ public class TestingEngine extends TestingHelp {
     }
 
 
-    public static boolean isContainerIntersection(C2Slideable s) {
-        return s.getIntersectingElements()
-                .stream()
-                .filter(it -> hasConnectedContents(it))
-                .collect(Collectors.toList())
-                .size() > 0;
+    public static Paint getPaintForType(IntersectionType s) {
+        switch (s) {
+            case BUFFER: return new Color(128, 128,128, 128);
+            case INTERSECT: return new Color(0, 0,0, 128);
+            case PROPAGATED: return new Color(255, 128,20, 128);
+            case RECTANGULAR: return new Color(255, 50,50, 128);
+        }
+
+        return null;
     }
 
 	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
@@ -364,10 +368,10 @@ public class TestingEngine extends TestingHelp {
 				nextCol[0]++;
 				g.drawString("v" + s.getNumber(), new Random().nextInt(20), s.getMinimumPosition() * 10 + 15+new Random().nextInt(10));
 				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 20);
-				Set<C2Slideable> is = c2.getIntersections(s);
+				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
 				if (is != null) {
-					is.forEach(s2 -> {
-						g.setPaint(Color.BLACK);
+					is.forEach((s2, v) -> {
+						g.setPaint(getPaintForType(v));
 						g.fillRect(s2.getMinimumPosition() * 10 + 20, s.getMinimumPosition() * 10 + 20,
 								20, 20);
 					});
@@ -382,16 +386,11 @@ public class TestingEngine extends TestingHelp {
 				nextCol[0]++;
 				g.drawString("h" + s.getNumber(), s.getMinimumPosition() * 10 + 30, 10);
 				g.drawString("" + s.getMinimumPosition(), s.getMinimumPosition() * 10 + 30, ySize * 10 + 50);
-				Set<C2Slideable> is = c2.getIntersections(s);
+				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
 				if (is != null) {
-					is.forEach(s2 -> {
-                        if (isContainerIntersection(s2) || isContainerIntersection(s)) {
-                            g.setPaint(Color.BLUE);
-                            g.setPaint(new Color(60, 60, 255, 189));
-                        } else {
-                            g.setPaint(Color.BLACK);
-                        }
-						g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
+					is.forEach((s2, v) -> {
+                        g.setPaint(getPaintForType(v));
+                        g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
 								20, 20);
 					});
 				}

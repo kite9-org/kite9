@@ -5,6 +5,15 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
+
+enum class IntersectionType {
+    INTERSECT,
+    PROPAGATED,
+    RECTANGULAR,
+    BUFFER
+}
+
+
 interface C2Compaction {
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
     fun getDiagram(): Diagram
@@ -39,7 +48,9 @@ interface C2Compaction {
     /**
      * Used to retrieve intersections when we're doing routing.
      */
-    fun getIntersections(s1: C2Slideable) : Set<C2Slideable>?
+    fun getIntersections(s1: C2Slideable) : Set<C2Slideable>
+
+    fun getTypedIntersections(s1: C2Slideable) : Map<C2Slideable, IntersectionType>
 
     fun checkConsistency()
 }

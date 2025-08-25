@@ -7,7 +7,7 @@ import org.kite9.diagram.visualization.compaction2.*
  */
 interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
-    val c: Set<C2Slideable>
+    val c: C2Slideable? // this is only set
     val bl: C2Slideable?
     val br: C2Slideable?
 

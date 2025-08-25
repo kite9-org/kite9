@@ -30,23 +30,27 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return diagram
     }
 
-    private val intersections = mutableMapOf<C2Slideable, Set<C2Slideable>>()
+    private val intersections = mutableMapOf<C2Slideable, Map<C2Slideable, IntersectionType>>()
 
-    private fun setIntersection(s1: C2Slideable, s2: C2Slideable) {
+    private fun setIntersection(s1: C2Slideable, s2: C2Slideable, type: IntersectionType) {
         if (s1.dimension == s2.dimension) {
             throw LogicException("Oops")
         }
 
-        var items = intersections.getOrElse(s1) { emptySet() } + s2
+        var items = intersections.getOrElse(s1) { mutableMapOf() } + Pair(s2,type)
         intersections[s1] = items
 
-        items = intersections.getOrElse(s2) { emptySet() } + s1
+        items = intersections.getOrElse(s2) { emptyMap() } + Pair(s1, type)
         intersections[s2] = items
         //println("Intersecting ${s1.number}: ${s1}\n        with ${s2.number}:  ${s2}")
     }
 
-    override fun getIntersections(s1: C2Slideable): Set<C2Slideable>? {
-        return intersections[s1]
+    override fun getIntersections(s1: C2Slideable): Set<C2Slideable> {
+        return intersections[s1]?.keys ?: emptySet()
+    }
+
+    override fun getTypedIntersections(s1: C2Slideable): Map<C2Slideable, IntersectionType> {
+        return intersections[s1] ?: emptyMap()
     }
 
     override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet) {
@@ -56,8 +60,8 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private fun propagateAllIntersections(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) &&  (to!= null)) {
-            val toPropagate = intersections[from] ?: emptySet()
-            toPropagate.forEach { slideable ->
+            val toPropagate = intersections[from] ?: emptyMap()
+            toPropagate.forEach { (slideable, _) ->
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
                 val notRectangular = slideable.getRectAnchors().isEmpty()
@@ -65,7 +69,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 val theOrbits = slideable.getOrbitAnchors().map { it.e }
                 val notOrbitForTheRectangular = theOrbits.intersect(theRectangulars.toSet()).isEmpty()
                 if (notRectangular && notOrbitForTheRectangular) {
-                    setIntersection(to, slideable)
+                    setIntersection(to, slideable, IntersectionType.PROPAGATED)
                 }
             }
         }
@@ -73,14 +77,14 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private fun propagateElementIntersections(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) &&  (to!= null)) {
-            val toPropagate = intersections[from] ?: emptySet()
-            toPropagate.forEach { slideable ->
+            val toPropagate = intersections[from] ?: emptyMap()
+            toPropagate.forEach { (slideable, _) ->
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
                 val notRectangular = slideable.getRectAnchors().isEmpty()
                 val inElement = to.inElementIntersection(slideable) != null
                 if (notRectangular && inElement) {
-                    setIntersection(to, slideable)
+                    setIntersection(to, slideable, IntersectionType.PROPAGATED)
                 }
             }
         }
@@ -116,8 +120,8 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         val intersects = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> anc.e == d } != null }
 
         intersects.forEach {
-            sox.compaction.setIntersection(rect.l, it)
-            sox.compaction.setIntersection(rect.r, it)
+            sox.compaction.setIntersection(rect.l, it, IntersectionType.INTERSECT)
+            sox.compaction.setIntersection(rect.r, it, IntersectionType.INTERSECT)
         }
     }
 
@@ -125,7 +129,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         h.getAll().forEach { ai ->
             v.getAll().forEach { bi ->
                 if ((ai.getOrbitAnchors().isNotEmpty()) || (bi.getOrbitAnchors().isNotEmpty())) {
-                    setIntersection(ai, bi)
+                    setIntersection(ai, bi, IntersectionType.BUFFER)
                 }
             }
         }
@@ -136,8 +140,8 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             throw LogicException("Calling replaceIntersections Twice!")
         }
 
-        val k1 = intersections.remove(s1) ?: emptySet()
-        val k2 = intersections.remove(s2) ?: emptySet()
+        val k1 = intersections.remove(s1) ?: mutableMapOf()
+        val k2 = intersections.remove(s2) ?: mutableMapOf()
 
         if (sNew != null) {
             intersections[sNew] = k1 + k2
@@ -145,13 +149,13 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             val keys = intersections.keys
             keys.forEach { k ->
                 var vals = intersections[k]!!
-                vals = vals.map {
-                    if ((it == s1) || (it == s2)) {
-                        sNew
+                vals = vals.map { (k,v) ->
+                    if ((k == s1) || (k == s2)) {
+                        Pair(sNew, v)
                     } else {
-                        it
+                        Pair(k ,v)
                     }
-                }.toSet()
+                }.toMap()
                 intersections[k] = vals
             }
         }

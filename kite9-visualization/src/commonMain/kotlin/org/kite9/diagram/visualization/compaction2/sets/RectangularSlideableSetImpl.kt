@@ -3,12 +3,10 @@ package org.kite9.diagram.visualization.compaction2.sets
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
-import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.Purpose
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 data class RectangularSlideableSetImpl(
     override val e: Rectangular,
@@ -35,16 +33,6 @@ data class RectangularSlideableSetImpl(
         return setOf(l, r)
     }
 
-    companion object {
-        fun <X> replaceIfPresent(s: Set<X>, o: X, n: X): Set<X> {
-            return if (s.contains(o)) {
-                s.minus(o).plus(n)
-            } else {
-                s
-            }
-        }
-    }
-
     override fun wrapInRoutable(): RoutableSlideableSet? {
         val so = l.so as C2SlackOptimisation
         val existing = so.getContainer(this)
@@ -61,18 +49,16 @@ data class RectangularSlideableSetImpl(
 
         var margin = AbstractC2CompactionStep.getMargin(l.dimension, e)
 
-        val intersections = setOf(C2Slideable(so, l.dimension, e, Purpose.GLYPH_LAYOUT_MIDPOINT))
+        val intersection = C2Slideable(so, l.dimension, e, Purpose.GLYPH_LAYOUT_MIDPOINT)
         val size = l.minimumDistanceTo(r)
 
         so.ensureMinimumDistance(bl, l, margin.first / 2)
         so.ensureMinimumDistance(r, br, margin.second / 2)
-        intersections.forEach {
-            so.ensureMinimumDistance(l, it, size / 2)
-            so.ensureMinimumDistance(it, r, size / 2)
-        }
+        so.ensureMinimumDistance(l, intersection, size / 2)
+        so.ensureMinimumDistance(intersection, r, size / 2)
 
         val out = RoutableSlideableSetImpl(
-            intersections,
+            intersection,
             bl,
             br)
 

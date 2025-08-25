@@ -114,27 +114,27 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     private fun anyAlignment(a: Set<DiagramElement>, b: Set<DiagramElement>) : Boolean =
         a.any { a1 -> b.any { b1 -> aligned(a1, b1) }}
 
-    fun mergeCSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
-        // slideables with the same groups can be merged
-        val mightMatch = s2.filter { it.getIntersectingElements().isNotEmpty()}.toMutableSet()
-        val same = s1.intersect(s2)
-
-        val new = s1.map { l ->
-            if (l.getIntersectingElements().isNotEmpty()) {
-                val matching = mightMatch.find { r -> anyAlignment(l.getIntersectingElements(), r.getIntersectingElements() ) }
-                if (matching != null) {
-                    mightMatch.remove(matching)
-                    mergeSlideablesInner(l, matching)
-                } else {
-                    null
-                }
-            } else {
-                null
-            }
-        }.filterNotNull().toSet()
-
-        return new + same
-    }
+//    fun mergeCSlideables(s1: Set<C2Slideable>, s2: Set<C2Slideable>) : Set<C2Slideable> {
+//        // slideables with the same groups can be merged
+//        val mightMatch = s2.filter { it.getIntersectingElements().isNotEmpty()}.toMutableSet()
+//        val same = s1.intersect(s2)
+//
+//        val new = s1.map { l ->
+//            if (l.getIntersectingElements().isNotEmpty()) {
+//                val matching = mightMatch.find { r -> anyAlignment(l.getIntersectingElements(), r.getIntersectingElements() ) }
+//                if (matching != null) {
+//                    mightMatch.remove(matching)
+//                    mergeSlideablesInner(l, matching)
+//                } else {
+//                    null
+//                }
+//            } else {
+//                null
+//            }
+//        }.filterNotNull().toSet()
+//
+//        return new + same
+//    }
 
     fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         return mergeSlideablesInner(s1, s2)
