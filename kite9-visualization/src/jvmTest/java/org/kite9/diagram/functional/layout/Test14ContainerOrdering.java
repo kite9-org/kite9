@@ -1,6 +1,6 @@
 package org.kite9.diagram.functional.layout;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
@@ -28,7 +28,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		three = new Glyph("a2", "", "a2", null, null);
 		four = new Glyph("a3", "", "a3", null, null);
 		con1 = new Context("b1", createList(one, two, three, four),
-				true, new TextLine("inside"),  Layout.RIGHT);
+				true, new TextLine("inside"), Layout.RIGHT);
 		outside = new LinkBody("outside", "outside");
 	}
 
@@ -39,7 +39,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_14_2_OneInsideConnection() throws Exception {
 		setUp();
@@ -47,7 +47,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_14_3_OneInsideOneOutside() throws Exception {
 		setUp();
@@ -56,7 +56,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_14_4_OneInsideAndOutside() throws Exception {
 		setUp();
@@ -65,7 +65,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	/**
 	 * @see http://www.kite9.com/content/planarization-no-merges-available-145
@@ -77,7 +77,7 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_14_6_TwoJoinedInside() throws Exception {
 		setUp();
@@ -86,25 +86,26 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(con1, outside), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_14_7_contextDirection() throws Exception {
 		Glyph[] g = new Glyph[12];
 		for (int i = 0; i < g.length; i++) {
-			g[i] = new Glyph(""+i, null, ""+i, null, null);
+			g[i] = new Glyph("" + i, null, "" + i, null, null);
 		}
-	
+
 		Context leftToRight = new Context(listOf(g[0], g[1], g[2]), true, new TextLine("Left to Right"), Layout.RIGHT);
 		Context bottomToTop = new Context(listOf(g[3], g[4], g[5]), true, new TextLine("Bottom to Top"), Layout.UP);
 		Context topToBottom = new Context(listOf(g[6], g[7], g[8]), true, new TextLine("Top to Bottom"), Layout.DOWN);
 		Context rightToLeft = new Context(listOf(g[9], g[10], g[11]), true, new TextLine("Right to Left"), Layout.LEFT);
-		
-		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram", listOf(leftToRight, bottomToTop, topToBottom, rightToLeft), null);
-		
+
+		DiagramKite9XMLElement d1 = new DiagramKite9XMLElement("my_diagram",
+				listOf(leftToRight, bottomToTop, topToBottom, rightToLeft), null);
+
 		renderDiagram(d1);
-		
+
 	}
-	
+
 	@Test
 	public void test_14_8_PileOnFour() throws Exception {
 		setUp();
@@ -120,6 +121,5 @@ public class Test14ContainerOrdering extends AbstractLayoutFunctionalTest {
 	protected boolean checkEverythingStraight() {
 		return false;
 	}
-	
-	
+
 }

@@ -6,38 +6,34 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.common.elements.Dimension;
+import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
+import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
+import org.kite9.diagram.logging.LogicException;
+import org.kite9.diagram.model.*;
+import org.kite9.diagram.model.Container;
+import org.kite9.diagram.model.Label;
+import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ContainerPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
 import org.kite9.diagram.model.style.GridContainerPosition;
-import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
-import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
-import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
-import org.kite9.diagram.common.elements.vertex.MultiCornerVertex;
-import org.kite9.diagram.common.elements.vertex.Vertex;
-import org.kite9.diagram.common.fraction.LongFraction;
-import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
-import org.kite9.diagram.logging.LogicException;
-import org.kite9.diagram.model.Container;
-import org.kite9.diagram.model.Label;
-import org.kite9.diagram.model.*;
-import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.Placement;
-import org.kite9.diagram.testing.DiagramChecker;
+import org.kite9.diagram.testing.*;
 import org.kite9.diagram.testing.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.testing.DiagramChecker.ExpectedLayoutException;
-import org.kite9.diagram.testing.DiagramElementVisitor;
-import org.kite9.diagram.testing.HopChecker;
 import org.kite9.diagram.testing.HopChecker.HopAction;
-import org.kite9.diagram.testing.VisitorAction;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.planarization.AbstractPlanarizer;
-import org.kite9.diagram.visualization.planarization.Planarization;
-import org.kite9.diagram.visualization.planarization.PlanarizationException;
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
-import org.kite9.diagram.visualization.planarization.mgt.builder.HierarchicalPlanarizationBuilder;
-import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarization;
-import org.kite9.diagram.visualization.planarization.rhd.RHDPlanarizationBuilder;
+import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
+import org.kite9.diagram.visualization.compaction2.C2Compaction;
+import org.kite9.diagram.visualization.compaction2.C2Slideable;
+import org.kite9.diagram.visualization.compaction2.IntersectionType;
+import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
+import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
+import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 
@@ -47,8 +43,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -71,35 +67,23 @@ public class TestingEngine extends TestingHelp {
 		public boolean checkMidConnection = true;
 	}
 	
-	public void testDiagram(Diagram d, Class<?> theTest, String subtest, Checks c, boolean addressed, AbstractArrangementPipeline pipeline) throws IOException {
+	public void testDiagram(Diagram d, Class<?> theTest, String subtest, Checks c, boolean addressed, NGArrangementPipeline pipeline) throws IOException {
 		try {
 			LogicException out = null;
-			Planarization pln = null;
+			GroupResult gr = null;
 			try {
 				// write the outputs
 				writeOutput(theTest, subtest, "positions-adl.txt", getPositionalInformationADL(d).getBytes());
-				if (HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
-					writeOutput(theTest, subtest, "planarization.txt", HierarchicalPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG().getBytes());
-				}
 				if (AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG() != null) {
 					writeOutput(theTest, subtest, "merges.txt", AxisHandlingGroupingStrategy.Companion.getLAST_MERGE_DEBUG().getBytes());
 				}
-				if (RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG() != null) {
-					TestingEngine.drawPositions(RHDPlanarizationBuilder.Companion.getLAST_PLANARIZATION_DEBUG(), theTest, subtest, subtest + "-positions.png");
-				}
-			} catch (PlanarizationException pe) {
-				pln = pe.getPlanarization();
-				out = pe;
 			} catch (LogicException le) {
 				out = le;
 			}
 
-			if (pipeline.getPln() != null) {
-				pln = pipeline.getPln();
-			}
-
-			if (pln != null) {
-				writeVertexOrder((MGTPlanarization) pln, theTest, subtest, subtest + "-vertex-order.txt");
+			if (pipeline.getGrouping() != null) {
+				TestingEngine.drawPositions(pipeline.getGrouping(), pipeline.getRoutableReader(), theTest, subtest, subtest + "-positions.png");
+				TestingEngine.drawSlideables(pipeline.getCompaction(), theTest, subtest, subtest+"-compaction.png");
 			}
 
 			if (out != null) {
@@ -276,26 +260,13 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
-	private void writeVertexOrder(MGTPlanarization pln, Class<?> theTest, String subtest, String item) {
-		List<Vertex> vertices = pln.getVertexOrder();
-		StringBuilder sb = new StringBuilder();
-		for (Vertex vertex : vertices) {
-			sb.append(vertex);
-			sb.append("\t" + vertex.getRoutingInfo());
-			sb.append("\n");
-		}
-
-		writeOutput(theTest, subtest, item, sb.toString().getBytes());
-	}
-
-	public static void drawPositions(Collection<Vertex> out, Class<?> theTest, String subtest, String item) {
+	public static void drawPositions(GroupResult gr, RoutableReader rr, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");
 		if (!target.isDirectory()) {
 			return;
 		}
 
-		double size = out.size() * 40;
-		size = Math.min(size, 1000);
+		int size = 1000;
 		BufferedImage bi = new BufferedImage((int) size + 60, (int) size + 60, BufferedImage.TYPE_3BYTE_BGR);
 		Graphics2D g = bi.createGraphics();
 		g.setColor(Color.WHITE);
@@ -303,33 +274,162 @@ public class TestingEngine extends TestingHelp {
 
 		Color[] cols = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY };
 
-		for (Vertex vertex : out) {
-			int xoffset = 0;
-			int yoffset = 0;
-			if (vertex instanceof MultiCornerVertex) {
-				if (((MultiCornerVertex) vertex).getXOrdinal().equals(LongFraction.Companion.getONE())) {
-					xoffset = -20;
-				} else {
-					yoffset = 5;
-				}
-				if (((MultiCornerVertex) vertex).getYOrdinal().equals(LongFraction.Companion.getONE())) {
-					yoffset = -20;
-				} else {
-					yoffset = 5;
-				}
-
-			}
-			PositionRoutingInfo pri = (PositionRoutingInfo) vertex.getRoutingInfo();
-			if (pri != null) {
-				g.setColor(cols[Math.abs(vertex.hashCode()) % 4]);
-				g.setStroke(new BasicStroke(1));
-				g.drawRoundRect((int) (pri.getMinX() * size + 20), (int) (pri.getMinY() * size + 20), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
-				g.drawString(vertex.getID(), (int) (pri.centerX() * size + 20) + xoffset, (int) (pri.centerY() * size + 20) + yoffset);
-			}
-		}
+		drawGroup(gr.groups().iterator().next(), rr, cols, g, size, new HashSet<Group>());
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);
 
+	}
+
+	private static void setColour(C2Slideable s, Graphics2D g) {
+		if (s.getOrbitAnchors().size() > 0) {
+			g.setColor(Color.GRAY);
+		} else if (s.getIntersectAnchors().size() >0) {
+			g.setColor(Color.BLACK);
+		} else if (s.getRectAnchors().size() > 0) {
+			g.setColor(Color.RED);
+		} else if (s.getConnAnchors().size() > 0) {
+			g.setColor(Color.BLUE);
+		} else {
+			g.setColor(Color.GREEN);
+		}
+	}
+
+	private static void outlineShape(Rectangular d, C2Compaction c, Graphics2D g) {
+		RectangularSlideableSet hs = c.getSlackOptimisation(Dimension.H).getSlideablesFor(d);
+		RectangularSlideableSet vs = c.getSlackOptimisation(Dimension.V).getSlideablesFor(d);
+		g.setPaint(new Color(0x77777722, true));
+		int width = hs.getR().getMinimumPosition() - hs.getL().getMinimumPosition();
+		int height = vs.getR().getMinimumPosition() - vs.getL().getMinimumPosition();
+		g.fillRect(hs.getL().getMinimumPosition()*10+30, vs.getL().getMinimumPosition()*10+30,
+				width*10, height*10);
+
+		if (d instanceof Container) {
+			((Container) d).getContents().forEach(i -> {
+				if (i instanceof Rectangular)
+					outlineShape((Rectangular) i, c, g);
+				}
+			);
+		}
+	}
+
+    public static boolean hasConnectedContents(DiagramElement e) {
+        if (e instanceof Container) {
+            Container c = (Container) e;
+            long count = c.getContents()
+                    .stream()
+                    .filter(o -> o instanceof Connected)
+                    .count();
+            return count > 0;
+        }
+
+        return false;
+    }
+
+
+    public static Paint getPaintForType(IntersectionType s) {
+        switch (s) {
+            case BUFFER: return new Color(128, 128,128, 128);
+            case INTERSECT: return new Color(0, 0,0, 128);
+            case PROPAGATED: return new Color(255, 128,20, 128);
+            case RECTANGULAR: return new Color(255, 50,50, 128);
+        }
+
+        return null;
+    }
+
+	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
+		File target = new File("build");
+		if (!target.isDirectory()) {
+			return;
+		}
+
+		int xSize = c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream()
+				.max((s1, s2) -> Integer.valueOf(s1.getMinimumPosition()).compareTo(s2.getMinimumPosition()))
+				.get().getMinimumPosition();
+
+		int ySize = c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream()
+				.max((s1, s2) -> Integer.valueOf(s1.getMinimumPosition()).compareTo(s2.getMinimumPosition()))
+				.get().getMinimumPosition();
+
+
+		BufferedImage bi = new BufferedImage((int) xSize*10 + 60, (int) ySize*10 + 60, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = bi.createGraphics();
+		//g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_IN, 1f));
+		g.setColor(Color.WHITE);
+		g.fillRect(0, 0, (int) xSize*10 + 60, (int) ySize*10 + 60);
+
+		outlineShape(c2.getDiagram(), c2, g);
+
+		final int[] nextCol = { 0 };
+		c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(s -> {
+			if (!s.isDone()) {
+				setColour(s, g);
+				g.drawLine(20, s.getMinimumPosition() * 10 + 30, xSize * 10 + 40, s.getMinimumPosition() * 10 + 30);
+				nextCol[0]++;
+				g.drawString("v" + s.getNumber(), new Random().nextInt(20), s.getMinimumPosition() * 10 + 15+new Random().nextInt(10));
+				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 20);
+				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
+				if (is != null) {
+					is.forEach((s2, v) -> {
+						g.setPaint(getPaintForType(v));
+						g.fillRect(s2.getMinimumPosition() * 10 + 20, s.getMinimumPosition() * 10 + 20,
+								20, 20);
+					});
+				}
+			}
+		});
+
+		c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(s -> {
+			if (!s.isDone()) {
+				setColour(s, g);
+				g.drawLine(s.getMinimumPosition() * 10 + 30, 20, s.getMinimumPosition() * 10 + 30, ySize * 10 + 40);
+				nextCol[0]++;
+				g.drawString("h" + s.getNumber(), s.getMinimumPosition() * 10 + 30, 10);
+				g.drawString("" + s.getMinimumPosition(), s.getMinimumPosition() * 10 + 30, ySize * 10 + 50);
+				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
+				if (is != null) {
+					is.forEach((s2, v) -> {
+                        g.setPaint(getPaintForType(v));
+                        g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
+								20, 20);
+					});
+				}
+			}
+		});
+
+
+
+		g.dispose();
+		renderToFile(theTest, subtest, item, bi);
+
+	}
+
+	private static void drawGroup(Group group, RoutableReader rr, Color[] cols, Graphics2D g, int size, HashSet<Group> done) {
+		if (group instanceof LeafGroup) {
+			if (!done.contains(group)) {
+				PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);
+
+				if (pri != null) {
+					int xr = new Random().nextInt(10) - 5;
+					int yr = new Random().nextInt(10) - 5;
+
+					g.setColor(cols[Math.abs(group.hashCode()) % 4]);
+					g.setStroke(new BasicStroke(1));
+					g.drawRoundRect((int) (pri.getMinX() * size + xr), (int) (pri.getMinY() * size + yr), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
+
+					String id = group.getID();
+					if (((LeafGroup) group).getConnected() != null) {
+						id += " "+((LeafGroup) group).getConnected().getID();
+					}
+
+					g.drawString(id, (int) (pri.centerX() * size + xr), (int) (pri.centerY() * size + yr));
+				}
+				done.add(group);
+			}
+		} else {
+			drawGroup(((CompoundGroup) group).getA(), rr, cols, g, size, done);
+			drawGroup(((CompoundGroup) group).getB(), rr, cols, g, size, done);
+		}
 	}
 
 	public static void testConnectionPresence(Diagram d, final boolean checkStraight, final boolean checkEdgeDirections, final boolean checkNoContradictions) {
@@ -480,12 +580,14 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
-				RenderingInformation ri = cc.getRenderingInformation();
-				if ((ri instanceof RectangleRenderingInformation)) {
-					checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
-				}
-				if (cc instanceof Container) {
-					testLayout((Container) cc);
+				if (!(cc instanceof Label)) {
+					RenderingInformation ri = cc.getRenderingInformation();
+					if ((ri instanceof RectangleRenderingInformation)) {
+						checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
+					}
+					if (cc instanceof Container) {
+						testLayout((Container) cc);
+					}
 				}
 			}
 		}
@@ -500,6 +602,7 @@ public class TestingEngine extends TestingHelp {
 			inR = createRect(inside);
 			outR = createRect(outside);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new ElementsMissingException(cc.getID(), 1);
 		}
 		
@@ -533,18 +636,26 @@ public class TestingEngine extends TestingHelp {
 	}
 		
 	private void checkOverlap(Rectangular outer, Diagram d, BasicCompleteDisplayer disp) {
-		RectangleRenderingInformation ri = (RectangleRenderingInformation) outer.getRenderingInformation();
-		Rectangle2D outerRect;
-		try {
-			outerRect = createRect(ri);
-		} catch (NullPointerException e) {
-			throw new ElementsMissingException(outer.getID(), 1);
-		}
+
 		new DiagramElementVisitor().visit(d, new VisitorAction() {
 			
 			@Override
 			public void visit(DiagramElement inner) {
 				if (inner instanceof Rectangular) {
+					Rectangular outer = inner.getContainer();
+
+					if (outer == null) {
+						return;
+					}
+
+					Rectangle2D outerRect;
+					try {
+						RectangleRenderingInformation ri = outer.getRenderingInformation();
+						outerRect = createRect(ri);
+					} catch (NullPointerException e) {
+						throw new ElementsMissingException(outer.getID(), 1);
+					}
+
 					if ((inner != outer) && (!(inner instanceof Decal)) && (!isChildOf(outer, inner))) {
 						Rectangle2D innerRect = createRect(inner.getRenderingInformation());
 	
@@ -554,11 +665,31 @@ public class TestingEngine extends TestingHelp {
 	
 						if (isChildOf(inner, outer)) {
 							checkContainmentPadding(outer, disp, outerRect, inner, innerRect);
-	 					} else if (inner instanceof Rectangular) {
+	 					} else if (isIgnorableLabel((Rectangular) inner, outer)) {
+							// don't do the check
+						} else if (inner instanceof Rectangular) {
 							checkSiblingMargins(outer, disp, outerRect, inner, innerRect);
 						}
 					}
 				} 
+			}
+
+			private boolean isIgnorableLabel(Rectangular r, Rectangular o) {
+				if (r instanceof Label) {
+					DiagramElement p = r.getParent();
+					if (p instanceof Connection) {
+						Connection c= (Connection) p;
+						if ((c.getFromLabel() == r) && (c.getFrom().getParent() == o)) {
+							return true;
+						}
+
+						if ((c.getToLabel() == r) && (c.getTo().getParent() == o)) {
+							return true;
+						}
+					}
+				}
+
+				return false;
 			}
 
 		
@@ -569,10 +700,6 @@ public class TestingEngine extends TestingHelp {
 				
 				if (isInGrid((Rectangular) inner)) {
 					return;
-				}
-				
-				if ((inner instanceof Label) && (outer instanceof Label)) {
-					return; // could be next to each other
 				}
 				
 				if (alongside(innerRect.getMinX(), innerRect.getMaxX(), outerRect.getMinX(), outerRect.getMaxX())) {
@@ -714,8 +841,12 @@ public class TestingEngine extends TestingHelp {
 
 	private static Rectangle2D createRect(RenderingInformation r) {
 		if (r instanceof RectangleRenderingInformation) {
-			RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
-			return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getW(), ri.getSize().getH());
+			try {
+				RectangleRenderingInformation ri = (RectangleRenderingInformation) r;
+				return new Rectangle2D.Double(ri.getPosition().x(), ri.getPosition().y(), ri.getSize().getW(), ri.getSize().getH());
+			} catch (Exception e) {
+				return new Rectangle2D.Double(0,0,0,0);
+			}
 		} else if (r instanceof RouteRenderingInformation) {
 			Optional<Rectangle2D> out = ((RouteRenderingInformation) r).getRoutePositions().stream()
 					.map(p -> (Rectangle2D) new Rectangle2D.Double(p.x(), p.y(), 0, 0))

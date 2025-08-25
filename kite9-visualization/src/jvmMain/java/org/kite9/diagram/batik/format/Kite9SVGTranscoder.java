@@ -62,8 +62,7 @@ import org.kite9.diagram.logging.Kite9Log;
 import org.kite9.diagram.logging.Logable;
 import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -205,7 +204,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 	}
 
 	public static Diagram lastDiagram; // for testing only
-	public static AbstractArrangementPipeline lastPipeline; // testing only
+	public static NGArrangementPipeline lastPipeline; // testing only
 	public static Kite9BridgeContext lastContext; //testing only
 	public static Document lastOutputDocument; // testing only
 
@@ -236,7 +235,7 @@ public class Kite9SVGTranscoder extends SVGAbstractTranscoder implements Logable
 			for (Diagram d: p.getDiagrams()) {
 
 				// arrange diagram
-				BasicArrangementPipeline pipeline = new BasicArrangementPipeline(def, new BasicCompleteDisplayer(false));
+				NGArrangementPipeline pipeline = new NGArrangementPipeline(def, new BasicCompleteDisplayer(false));
 				try {
 					d = pipeline.arrange(d);
 				} finally {

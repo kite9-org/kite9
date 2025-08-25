@@ -157,6 +157,7 @@
             <xsl:copy-of select="@*" />
             <rect x='0' y='0' width="0" height="0" pp:width='$width' pp:height='$height' rx='4' ry='4' class="link-body-back" />
             <g k9-elem="text-label" class="link-body-label-text">
+                <xsl:attribute name="id">lb-<xsl:value-of select="@id" /></xsl:attribute>
                 <text><xsl:value-of select="@label" /><xsl:value-of select="string(.)" /></text>
             </g>
         </g>
@@ -189,12 +190,14 @@
 
     <xsl:template match="glyph/label">
         <g class="glyph-label-text" k9-elem="text-label">
+            <xsl:copy-of select="@*" />
             <text><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
 
     <xsl:template match="glyph/stereotype">
         <g k9-elem="text-label" class="glyph-stereotype-text">
+            <xsl:copy-of select="@*" />
             <text><xsl:apply-templates select="text()" /></text>
         </g>
     </xsl:template>
@@ -204,6 +207,7 @@
             <xsl:for-each select="text-line">
                 <g k9-elem="text-label" class="generic-text">
                     <xsl:copy-of select="@*" />
+                    <xsl:attribute name="id"><xsl:value-of select="@id" /></xsl:attribute>
                     <text><xsl:apply-templates select="text()" /></text>
                 </g>
             </xsl:for-each>
