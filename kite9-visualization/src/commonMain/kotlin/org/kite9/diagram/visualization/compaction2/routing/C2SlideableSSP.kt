@@ -171,7 +171,11 @@ class C2SlideableSSP(
             // update the container for the route if we cross any blockers
             val entering = a.s.isEntering(d);
             val newContainer = if (!entering) a.e.getContainer() else a.e
-            routeIn1.changeContainer(newContainer!!)
+            if (newContainer == null) {
+                return null
+            } else {
+                routeIn1.changeContainer(newContainer)
+            }
         } else {
             routeIn1
         }

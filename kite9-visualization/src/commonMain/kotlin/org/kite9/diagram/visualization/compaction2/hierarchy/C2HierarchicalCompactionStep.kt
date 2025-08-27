@@ -99,8 +99,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     vso.add(g, vss)
                     hso.contains(hss, hr)
                     vso.contains(vss, vr)
-                    c.setupRectangularIntersections(hr, vr)
-                    c.propagateIntersectionsFromRectangularToRoutable(hss, vss, hr, vr)
+                    c.setupRectangularIntersections(hr, vr, hss, vss)
+                    c.propagateIntersectionsFromRectangularToOuterRoutable(hss, vss, hr, vr)
                     c.setupRoutableIntersections(hss, vss)
                 }
             } else {

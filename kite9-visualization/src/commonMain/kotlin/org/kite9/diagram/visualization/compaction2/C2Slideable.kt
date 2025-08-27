@@ -110,11 +110,8 @@ class C2Slideable(
         return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${getIntersectingElements()} orbits=${getOrbitingElements()} anchors=$anchors" else ""})"
     }
 
-    private fun getNonPermeables(anchors: List<PermeableAnchor>, d: Direction): Set<DiagramElement> {
-        return anchors
-                .filter { !it.canCross(d) }
-                .map { it.e }
-                .toSet()
+    fun getBlockElements(): Set<DiagramElement> {
+        return anchors.filterIsInstance<BlockAnchor>().map { it.e }.toSet()
     }
 
     fun getIntersectingElements(): Set<DiagramElement> {

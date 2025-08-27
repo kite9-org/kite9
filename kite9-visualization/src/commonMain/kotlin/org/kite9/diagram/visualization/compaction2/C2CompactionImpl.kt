@@ -53,9 +53,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return intersections[s1] ?: emptyMap()
     }
 
-    override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet) {
-        setupContainerRectangularIntersections(hr)
-        setupContainerRectangularIntersections(vr)
+    override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
+        setupContainerRectangularIntersections(hr, vo)
+        setupContainerRectangularIntersections(vr, ho)
     }
 
     private fun propagateAllIntersections(from: C2Slideable?, to: C2Slideable?) {
@@ -69,7 +69,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 val theOrbits = slideable.getOrbitAnchors().map { it.e }
                 val notOrbitForTheRectangular = theOrbits.intersect(theRectangulars.toSet()).isEmpty()
                 if (notRectangular && notOrbitForTheRectangular) {
-                    setIntersection(to, slideable, IntersectionType.PROPAGATED)
+                    setIntersection(to, slideable, IntersectionType.PROPAGATED_OUTWARD)
                 }
             }
         }
@@ -77,20 +77,34 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private fun propagateElementIntersections(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) &&  (to!= null)) {
-            val toPropagate = intersections[from] ?: emptyMap()
-            toPropagate.forEach { (slideable, _) ->
+            val toPropagate1 = intersections[from] ?: emptyMap()
+            val toPropagate2 = intersections[to] ?: emptyMap()
+            toPropagate1.forEach { (slideable, _) ->
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
                 val notRectangular = slideable.getRectAnchors().isEmpty()
                 val inElement = to.inElementIntersection(slideable) != null
                 if (notRectangular && inElement) {
-                    setIntersection(to, slideable, IntersectionType.PROPAGATED)
+                    setIntersection(to, slideable, IntersectionType.PROPAGATED_OUTWARD)
                 }
+            }
+
+            if (toPropagate2.size == 1) {
+                toPropagate2.forEach { (slideable, _) ->
+                    // intersection must be for the block
+                    val blocks = from.getBlockElements()
+                    val intersections = slideable.getIntersectingElements()
+                    if (blocks.intersect(intersections).isNotEmpty()) {
+                        setIntersection(from, slideable, IntersectionType.PROPAGATED_INWARD)
+                    }
+                }
+            } else if (toPropagate2.size > 1){
+                throw LogicException("Some issue here")
             }
         }
     }
 
-    override fun propagateIntersectionsFromRectangularToRoutable(
+    override fun propagateIntersectionsFromRectangularToOuterRoutable(
         hi: RoutableSlideableSet,
         vi: RoutableSlideableSet,
         ho: RectangularSlideableSet,
@@ -101,7 +115,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         propagateAllIntersections(vo.l, vi.bl)
         propagateAllIntersections(vo.r, vi.br)
     }
-    override fun propagateIntersectionsFromRoutableToRectangular(
+    override fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
         hi: RoutableSlideableSet,
         vi: RoutableSlideableSet,
         ho: RectangularSlideableSet,
@@ -113,15 +127,13 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         propagateElementIntersections(vi.br, vo.r)
     }
 
-    private fun setupContainerRectangularIntersections(rect: RectangularSlideableSet) {
-        val sox = getSlackOptimisation(rect.l.dimension.other())
-        val d = rect.e
-        //println("Intersections for ${d}")
-        val intersects = sox.getAllSlideables().filter { it.getIntersectAnchors().find { anc -> anc.e == d } != null }
+    private fun setupContainerRectangularIntersections(rect: RectangularSlideableSet, orbit: RoutableSlideableSet) {
+        val compaction = (rect.l.so as C2SlackOptimisation).compaction
+        val it = orbit.c
 
-        intersects.forEach {
-            sox.compaction.setIntersection(rect.l, it, IntersectionType.INTERSECT)
-            sox.compaction.setIntersection(rect.r, it, IntersectionType.INTERSECT)
+        if (it != null) {
+            compaction.setIntersection(rect.l, it, IntersectionType.INTERSECT)
+            compaction.setIntersection(rect.r, it, IntersectionType.INTERSECT)
         }
     }
 

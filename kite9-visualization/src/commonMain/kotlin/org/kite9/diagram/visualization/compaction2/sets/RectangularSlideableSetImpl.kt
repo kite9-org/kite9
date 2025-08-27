@@ -47,7 +47,7 @@ data class RectangularSlideableSetImpl(
         val bl = C2Slideable(so, l.dimension, setOf(OrbitAnchor(e, Side.START)).toMutableSet())
         val br = C2Slideable(so, l.dimension, setOf(OrbitAnchor(e, Side.END)).toMutableSet())
 
-        var margin = AbstractC2CompactionStep.getMargin(l.dimension, e)
+        val margin = AbstractC2CompactionStep.getMargin(l.dimension, e)
 
         val intersection = C2Slideable(so, l.dimension, e, Purpose.GLYPH_LAYOUT_MIDPOINT)
         val size = l.minimumDistanceTo(r)

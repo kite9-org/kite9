@@ -312,25 +312,18 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-    public static boolean hasConnectedContents(DiagramElement e) {
-        if (e instanceof Container) {
-            Container c = (Container) e;
-            long count = c.getContents()
-                    .stream()
-                    .filter(o -> o instanceof Connected)
-                    .count();
-            return count > 0;
-        }
+    static Color[] colors = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.WHITE, Color.BLACK, Color.GRAY };
 
-        return false;
+    public static Color getColor(int i) {
+        return colors[i % colors.length];
     }
-
 
     public static Paint getPaintForType(IntersectionType s) {
         switch (s) {
             case BUFFER: return new Color(128, 128,128, 128);
             case INTERSECT: return new Color(0, 0,0, 128);
-            case PROPAGATED: return new Color(255, 128,20, 128);
+            case PROPAGATED_OUTWARD: return new Color(255, 128,20, 128);
+            case PROPAGATED_INWARD: return new Color(128, 255,20, 128);
             case RECTANGULAR: return new Color(255, 50,50, 128);
         }
 
@@ -366,6 +359,7 @@ public class TestingEngine extends TestingHelp {
 				setColour(s, g);
 				g.drawLine(20, s.getMinimumPosition() * 10 + 30, xSize * 10 + 40, s.getMinimumPosition() * 10 + 30);
 				nextCol[0]++;
+                g.setColor(getColor(nextCol[0]));
 				g.drawString("v" + s.getNumber(), new Random().nextInt(20), s.getMinimumPosition() * 10 + 15+new Random().nextInt(10));
 				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 20);
 				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
@@ -384,6 +378,7 @@ public class TestingEngine extends TestingHelp {
 				setColour(s, g);
 				g.drawLine(s.getMinimumPosition() * 10 + 30, 20, s.getMinimumPosition() * 10 + 30, ySize * 10 + 40);
 				nextCol[0]++;
+                g.setColor(getColor(nextCol[0]));
 				g.drawString("h" + s.getNumber(), s.getMinimumPosition() * 10 + 30, 10);
 				g.drawString("" + s.getMinimumPosition(), s.getMinimumPosition() * 10 + 30, ySize * 10 + 50);
 				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
