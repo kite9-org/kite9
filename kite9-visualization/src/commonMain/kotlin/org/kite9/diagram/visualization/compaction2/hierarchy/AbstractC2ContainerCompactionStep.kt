@@ -64,8 +64,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         val soxInnerRoutable = sox.getContents(soxContainer)
 
         if (soxInnerRoutable != null) {
-            c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
             c.propagateIntersectionsBetweenRoutableAndOuterRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
+            c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
         }
 
         val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
@@ -74,6 +74,18 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         if ((soxOuterRoutable != null) && (soOuterRoutable != null)) {
             c.setupRectangularIntersections(soContainer, soxContainer, soOuterRoutable, soxOuterRoutable)
             c.setupRoutableIntersections(soxOuterRoutable, soInnerRoutable)
+
+            if (soxInnerRoutable != null) {
+                // we redo this here as we want to propagate some of the intersections created
+                // in the above if too.
+                c.propagateIntersectionsBetweenRoutableAndOuterRectangular(
+                    soInnerRoutable,
+                    soxInnerRoutable,
+                    soContainer,
+                    soxContainer
+                )
+            }
+
             c.propagateIntersectionsFromRectangularToOuterRoutable(
                 soOuterRoutable,
                 soxOuterRoutable,

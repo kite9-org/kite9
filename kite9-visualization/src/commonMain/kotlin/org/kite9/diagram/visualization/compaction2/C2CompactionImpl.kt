@@ -89,17 +89,13 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 }
             }
 
-            if (toPropagate2.size == 1) {
-                toPropagate2.forEach { (slideable, _) ->
-                    // intersection must be for the block
-                    val blocks = from.getBlockElements()
-                    val intersections = slideable.getIntersectingElements()
-                    if (blocks.intersect(intersections).isNotEmpty()) {
-                        setIntersection(from, slideable, IntersectionType.PROPAGATED_INWARD)
-                    }
+            toPropagate2.forEach { (slideable, _) ->
+                // intersection must be for the block
+                val blocks = from.getBlockElements()
+                val intersections = slideable.getIntersectingElements()
+                if (blocks.intersect(intersections).isNotEmpty()) {
+                    setIntersection(from, slideable, IntersectionType.PROPAGATED_INWARD)
                 }
-            } else if (toPropagate2.size > 1){
-                throw LogicException("Some issue here")
             }
         }
     }
