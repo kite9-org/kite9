@@ -108,10 +108,6 @@ class C2Slideable(
         return "C2S${char}($number, $dimension, min=$minimumPosition, max=$maximumPosition done=${isDone()} ${if (anchors.isNotEmpty()) " i/s=${getIntersectingElements()} orbits=${getOrbitingElements()} anchors=$anchors" else ""})"
     }
 
-    fun getBlockElements(): Set<DiagramElement> {
-        return anchors.filterIsInstance<BlockAnchor>().map { it.e }.toSet()
-    }
-
     fun getIntersectingElements(): Set<DiagramElement> {
         return anchors.filterIsInstance<IntersectAnchor>().map { it.e }.toSet()
     }
@@ -140,14 +136,14 @@ class C2Slideable(
      * For the current slideable (this), works out which anchor represents the intersection
      * with along.
      */
-    fun inElement(along: C2Slideable) : PermeableAnchor? {
+    fun inElement(along: C2Slideable) : RectAnchor? {
 
-        fun containsAny(intersections: Set<DiagramElement>, r: PermeableAnchor)
+        fun containsAny(intersections: Set<DiagramElement>, r: RectAnchor)
                 = intersections.firstOrNull { i -> r.e == i || r.e.deepContains(i) } != null
 
-        val elements = along.getIntersectingElements() + along.getOrbitingElements() + along.getBlockElements()
+        val elements = along.getIntersectingElements() + along.getOrbitingElements()
 
-        val out = this.anchors.filterIsInstance<PermeableAnchor>()
+        val out = this.anchors.filterIsInstance<RectAnchor>()
             .filter { containsAny(elements, it)  }
 
         if (out.isEmpty()) {
@@ -163,11 +159,16 @@ class C2Slideable(
      * For the current slideable (this), works out which anchor represents the intersection
      * with along.
      */
-    fun getRelevantBlockAnchor(c: DiagramElement) : PermeableAnchor? {
-        return anchors
-            .filterIsInstance<BlockAnchor>()
-            .filter { it.e == c }
-            .firstOrNull()
+    fun getRelevantRectAnchor(c: DiagramElement) : RectAnchor? {
+        val relevant = anchors
+            .filterIsInstance<RectAnchor>()
+            .filter { it.e == c || ((c is Container) && (c.getContents().contains(it.e)))}
+
+        if (relevant.size > 1) {
+            throw LogicException("Not sure how this can be a permeable anchor for multiple things")
+        }
+
+        return relevant.firstOrNull()
     }
 
     /**
@@ -201,10 +202,6 @@ class C2Slideable(
     }
 
     fun addConnAnchor(a: ConnAnchor) {
-        anchors.add(a)
-    }
-
-    fun addBlockAnchor(a: BlockAnchor) {
         anchors.add(a)
     }
 

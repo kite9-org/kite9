@@ -9,7 +9,6 @@ data class C2Route(val r: C2Route?, val point: C2Point, val cost: C2Costing, val
     val prev: C2Route?
     val coords: C2Coords
 
-    constructor(r: C2Route, cost: C2Costing) : this(r, r.point, cost, r.container)
     constructor(r: C2Route, point: C2Point, cost: C2Costing) : this(r, point, cost, r.container)
     constructor(r: C2Route, cost: C2Costing, container: DiagramElement) : this(r, r.point, cost, container)
 
@@ -65,8 +64,8 @@ data class C2Route(val r: C2Route?, val point: C2Point, val cost: C2Costing, val
         }
     }
 
-    fun changeContainer(container: DiagramElement): C2Route {
-        return C2Route(this, this.cost, container)
+    fun changeContainer(container: DiagramElement, c2: C2Costing): C2Route {
+        return C2Route(this, c2, container)
     }
 
     init {

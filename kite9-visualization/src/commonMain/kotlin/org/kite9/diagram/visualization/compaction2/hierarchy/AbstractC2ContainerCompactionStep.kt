@@ -6,7 +6,6 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
-import org.kite9.diagram.visualization.compaction2.anchors.BlockAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.Permeability
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -52,8 +51,6 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         // on this container
         val potentialSets = so.getSlideablesFor(g)
         val soInnerRoutable = potentialSets.last()   // the routable inside the container
-        soInnerRoutable.bl?.addBlockAnchor(BlockAnchor(container, Side.START, Permeability.DECREASING))
-        soInnerRoutable.br?.addBlockAnchor(BlockAnchor(container, Side.END, Permeability.INCREASING))
 
         // these are the container itself
         val soContainer = checkCreateElement(container, d, so, null, g)

@@ -4,13 +4,13 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.Constraint
-import org.kite9.diagram.visualization.compaction2.anchors.BlockAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 
 class C2SlideableSSP(
@@ -33,6 +33,10 @@ class C2SlideableSSP(
         } else {
             true
         }
+    }
+
+    fun isDestination(ra: Set<RectAnchor>) : Boolean {
+        return ra.find { it.e == endElem } != null
     }
 
     val allowedToLeave : Map<DiagramElement, Int> = run {
@@ -79,6 +83,25 @@ class C2SlideableSSP(
         }
     }
 
+    private fun generateNextSteps( d: Direction,
+                                   perp: C2Slideable,
+                                   r: C2Route,
+                                   along: C2Slideable) : List<C2Route> {
+        val leavers = getForwardSlideables(along, perp, d)
+        val out = leavers
+            .filter { k -> r.coords.isInBounds(k.key, d) }
+            .map { k ->
+                val p = C2Point(along, k.key, d)
+                val stride = r.coords.distanceTo(p)
+                val possibleRemainingDistance = getMinimumRemainingDistance(k.key)
+                val expensive = expensiveDirection(p)
+                val newCost = r.cost.addDistance(stride, possibleRemainingDistance, expensive)
+                C2Route(r, p, newCost)
+            }
+
+        return out
+    }
+
     private fun advance(
         d: Direction,
         perp: C2Slideable,
@@ -86,28 +109,34 @@ class C2SlideableSSP(
         along: C2Slideable,
         s: State<C2Route>,
         c: C2Costing,
-        skipInitialCheck: Boolean = false
     ) {
-        val route2 = if (skipInitialCheck) r else canAdvancePast(perp, along, r, d, c)
-
-        if (route2 !== null) {
-            val leavers = getForwardSlideables(along, perp, d)
-            leavers.forEach { k ->
-                if (r.coords.isInBounds(k.key, d)) {
-                    val p = C2Point(along, k.key, d)
-                    val stride = r.coords.distanceTo(p)
-                    val possibleRemainingDistance = getMinimumRemainingDistance(k.key)
-                    val expensive = expensiveDirection(p)
-                    val newCost = route2.cost.addDistance(stride, possibleRemainingDistance, expensive)
-                    val r3 = C2Route(route2, p, newCost)
-                    if (s.add(r3)) {
-                        log.send("Added (${k.value}): $r3")
+        if (along.canMoveAlongInside(r.container)) {
+            val out1 = generateNextSteps(d, perp, r, along)
+            val out2 = out1.flatMap { r ->
+                val along = r.point.getAlong()
+                val perp = r.point.getPerp()
+                val d = r.point.d
+                val ra = perp.getRectAnchors()
+                if (ra.isNotEmpty() && !isDestination(ra)) {
+                    // if we arrive at a rectangular, we need to cross it
+                    val route2 = crossThreshold(perp, r, d, r.cost)
+                    if (route2 != null) {
+                        val ns = generateNextSteps(d, perp, route2, along)
+                        ns
+                    } else {
+                        emptyList()
                     }
+                } else {
+                    listOf(r)
+                }
+            }
+            out2.forEach {
+                if (s.add(it)) {
+                    log.send("Added: $it")
                 }
             }
         }
     }
-
 
     private fun getAbsoluteDistance(from: C2Slideable, to: C2Slideable): Int {
         val mat = when (from.dimension) {
@@ -161,42 +190,27 @@ class C2SlideableSSP(
         return out
     }
 
-    private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn1: C2Route, d: Direction, c: C2Costing): C2Route? {
-        val a = perp.getRelevantBlockAnchor(routeIn1.container)
+    private fun crossThreshold(perp: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing): C2Route? {
+        val a = perp.getRelevantRectAnchor(routeIn.container)
 
-        // handle container transitions first
-        val routeIn2 = if (a is BlockAnchor) {
-            // update the container for the route if we cross any blockers
+        if (a == null) {
+            // trying to leave the diagram
+            return null
+        } else if (a.canCross(d)) {
             val entering = a.s.isEntering(d);
             val newContainer = if (!entering) a.e.getContainer() else a.e
             if (newContainer == null) {
                 return null
             } else {
-                routeIn1.changeContainer(newContainer)
+                val oldDepth = routeIn.cost.containerDepth
+                val newDepth = if (entering) oldDepth+1 else oldDepth -1
+                val newCost = c.addCrossing(true, newDepth)
+                val out = routeIn.changeContainer(newContainer, newCost)
+                return out
             }
+
         } else {
-            routeIn1
-        }
-
-        // next, check that we are allowed to move along "along", given the
-        // container we're in.  We can't use intersection slideables past the internal
-        // blocker inside each container.
-        val canMoveAlong = along.canMoveAlongInside(routeIn2.container)
-
-        if (!canMoveAlong) {
-            return null
-        }
-
-        // finally, if we're crossing a container boundary, make sure to
-        // add this to the cost.
-        return if (a is RectAnchor) {
-            val entering = a.s.isEntering(d)
-            val oldDepth = routeIn2.cost.containerDepth
-            val newDepth = if (entering) oldDepth+1 else oldDepth -1
-            val newCost = c.addCrossing(true, newDepth)
-            C2Route(routeIn2, newCost)
-        } else {
-            routeIn2
+            return null;
         }
     }
 
@@ -228,7 +242,7 @@ class C2SlideableSSP(
                 val initialContainer = this.startElem.getParent()!!
                 val r = C2Route(null, it, C2Costing(initialDepth).addDistance(0, mrd1+mrd2, false), initialContainer)
                 val d = r.point.d
-                advance(d, perp, r, along, s, r.cost, true)
+                advance(d, perp, r, along, s, r.cost)
             }
     }
 
