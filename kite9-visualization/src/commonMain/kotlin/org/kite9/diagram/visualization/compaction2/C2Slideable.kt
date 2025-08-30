@@ -9,10 +9,8 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
-import org.kite9.diagram.visualization.compaction2.routing.C2Route
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 class C2Slideable(
@@ -142,23 +140,15 @@ class C2Slideable(
      * For the current slideable (this), works out which anchor represents the intersection
      * with along.
      */
-    fun inElementIntersection(along: C2Slideable) : PermeableAnchor? {
+    fun inElement(along: C2Slideable) : PermeableAnchor? {
 
-        fun containsTheIntersection(intersections: Set<DiagramElement>, r: PermeableAnchor)
+        fun containsAny(intersections: Set<DiagramElement>, r: PermeableAnchor)
                 = intersections.firstOrNull { i -> r.e == i || r.e.deepContains(i) } != null
 
-        fun containsTheOrbit(orbits: Set<DiagramElement>, r: PermeableAnchor)
-                = orbits.firstOrNull { o -> r.e.deepContains(o) } != null
-
-
-        val intersectingElements = along.getIntersectingElements()
-        val orbitElements = along.getOrbitingElements()
+        val elements = along.getIntersectingElements() + along.getOrbitingElements() + along.getBlockElements()
 
         val out = this.anchors.filterIsInstance<PermeableAnchor>()
-            .filter {
-                containsTheIntersection(intersectingElements, it) ||
-                        containsTheOrbit(orbitElements,  it)
-            }
+            .filter { containsAny(elements, it)  }
 
         if (out.isEmpty()) {
             return null
@@ -167,6 +157,17 @@ class C2Slideable(
         } else {
             throw LogicException("Multiple permeable anchors for $this")
         }
+    }
+
+    /**
+     * For the current slideable (this), works out which anchor represents the intersection
+     * with along.
+     */
+    fun getRelevantBlockAnchor(c: DiagramElement) : PermeableAnchor? {
+        return anchors
+            .filterIsInstance<BlockAnchor>()
+            .filter { it.e == c }
+            .firstOrNull()
     }
 
     /**

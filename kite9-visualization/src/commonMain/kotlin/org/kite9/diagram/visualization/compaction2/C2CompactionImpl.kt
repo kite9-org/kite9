@@ -83,7 +83,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
                 val notRectangular = slideable.getRectAnchors().isEmpty()
-                val inElement = to.inElementIntersection(slideable) != null
+                val inElement = to.inElement(slideable) != null
                 if (notRectangular && inElement) {
                     setIntersection(to, slideable, IntersectionType.PROPAGATED_OUTWARD)
                 }

@@ -4,7 +4,6 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -12,7 +11,6 @@ import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.Constraint
 import org.kite9.diagram.visualization.compaction2.anchors.BlockAnchor
-import org.kite9.diagram.visualization.compaction2.anchors.PermeableAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 
 class C2SlideableSSP(
@@ -164,7 +162,7 @@ class C2SlideableSSP(
     }
 
     private fun canAdvancePast(perp: C2Slideable, along: C2Slideable, routeIn1: C2Route, d: Direction, c: C2Costing): C2Route? {
-        val a = perp.inElementIntersection(along)
+        val a = perp.getRelevantBlockAnchor(routeIn1.container)
 
         // handle container transitions first
         val routeIn2 = if (a is BlockAnchor) {
