@@ -156,7 +156,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
     private fun handleReplacements(r: C2Route?, replacements: Map<C2Slideable, C2Slideable>) : C2Route? {
         return if (r != null) {
-            C2Route(handleReplacements(r.prev, replacements), handleReplacements(r.point, replacements), r.cost, r.container)
+            C2Route(handleReplacements(r.prev, replacements), r.coords, handleReplacements(r.point, replacements), r.cost, r.container)
         } else {
             null
         }

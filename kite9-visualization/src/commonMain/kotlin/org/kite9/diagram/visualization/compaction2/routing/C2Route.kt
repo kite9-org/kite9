@@ -4,26 +4,11 @@ import org.kite9.diagram.common.algorithms.ssp.PathLocation
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 
-data class C2Route(val r: C2Route?, val point: C2Point, val cost: C2Costing, val container: DiagramElement) : PathLocation<C2Route> {
+data class C2Route(val prev: C2Route?, val coords: C2Coords, val point: C2Point, val cost: C2Costing, val container: DiagramElement) : PathLocation<C2Route> {
 
-    val prev: C2Route?
-    val coords: C2Coords
-
-    constructor(r: C2Route, point: C2Point, cost: C2Costing) : this(r, point, cost, r.container)
-    constructor(r: C2Route, cost: C2Costing, container: DiagramElement) : this(r, r.point, cost, container)
-
-    /**
-     * Removes parts of the route in the same direction, so we only record changes
-     * in direction
-     */
-    private fun simplifyRoute(r: C2Route?, point: C2Point): C2Route? {
-        var out = r
-        while ((out != null) && (out.prev != null) && (out.point.d == point.d)) {
-            out = out.prev
-        }
-
-        return out
-    }
+    constructor(r: C2Route?, point: C2Point, cost: C2Costing, container: DiagramElement) : this(r, buildCoords(r, point), point, cost, container)
+    constructor(r: C2Route, point: C2Point, cost: C2Costing) : this(simplifyRoute(r, point), buildCoords(r, point), point, cost, r.container)
+    constructor(r: C2Route, cost: C2Costing, container: DiagramElement) : this(simplifyRoute(r, r.point), buildCoords(r, r.point), r.point, cost, container)
 
     private var active = true
 
@@ -68,9 +53,29 @@ data class C2Route(val r: C2Route?, val point: C2Point, val cost: C2Costing, val
         return C2Route(this, c2, container)
     }
 
-    init {
-        this.prev = simplifyRoute(r, point)
-        this.coords = if (r == null) C2Coords.createInitialCoords(point) else C2Coords.createFollowingCoords(r.coords, point)
+    companion object {
+
+        private fun buildCoords(r: C2Route?, point: C2Point) : C2Coords {
+            return if (r == null) {
+                C2Coords.createInitialCoords(point)
+            } else {
+                C2Coords.createFollowingCoords(r.coords, point)
+            }
+        }
+
+        /**
+         * Removes parts of the route in the same direction, so we only record changes
+         * in direction
+         */
+        private fun simplifyRoute(r: C2Route?, point: C2Point): C2Route? {
+            var out = r
+            while ((out != null) && (out.prev != null) && (out.point.d == point.d)) {
+                out = out.prev
+            }
+
+            return out
+        }
+
     }
 
 }

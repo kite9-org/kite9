@@ -30,12 +30,7 @@ data class RoutableSlideableSetImpl(
         val con2 = c2.getContents(over)
         val newL = c2.mergeSlideables(over.bl, bl)
         val newR = c2.mergeSlideables(over.br, br)
-        val so = if (this.c?.so != null) this.c.so else over.c?.so
-        val newC = if (so != null) {
-            (so as C2SlackOptimisation).considerMergingCSlideables(this.c, over.c)
-        } else {
-            null
-        }
+        val newC = c2.mergeSlideables(over.c, c)
 
         done = true
         (over as RoutableSlideableSetImpl).done = true
