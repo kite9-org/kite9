@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.routing
 import org.kite9.diagram.common.algorithms.ssp.NoFurtherPathException
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -136,6 +137,10 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         } catch (e: NoFurtherPathException) {
             log.error("Couldn't route: $c")
             return null
+        } catch (e: LogicException) {
+            e.printStackTrace()
+            log.error("Couldn't route: $c")
+            return null
         }
     }
 
@@ -176,6 +181,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val s1 = third.point.getAlong()
             val s2 = r.point.getAlong()
 
+            println("Comparing: \n   ${s1}\n   ${s2}")
             val minDist = if (s1.minimumPosition < s2.minimumPosition) s1.minimumDistanceTo(s2) else s2.minimumDistanceTo(s1)
             if (minDist == 0) {
                 // ok, these slideables can be merged then we can simplify the route

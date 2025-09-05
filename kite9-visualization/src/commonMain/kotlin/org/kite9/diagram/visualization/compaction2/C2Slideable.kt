@@ -23,10 +23,6 @@ class C2Slideable(
     val number: Int = nextNumber()
     var mergedInto: C2Slideable? = null
 
-    init {
-        println("New slideable $this")
-    }
-
     /** This is for rectangular Slideables */
     constructor(
             so: C2SlackOptimisation,

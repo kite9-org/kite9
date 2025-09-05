@@ -12,10 +12,6 @@ data class RoutableSlideableSetImpl(
     val bs = setOfNotNull(bl, br)
     val a = setOfNotNull(c, bl, br)
 
-    init {
-        println("New slideable set $this")
-    }
-
     override var done = false
 
     override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
@@ -34,9 +30,16 @@ data class RoutableSlideableSetImpl(
         val con2 = c2.getContents(over)
         val newL = c2.mergeSlideables(over.bl, bl)
         val newR = c2.mergeSlideables(over.br, br)
-        val newC = null
+        val so = if (this.c?.so != null) this.c.so else over.c?.so
+        val newC = if (so != null) {
+            (so as C2SlackOptimisation).considerMergingCSlideables(this.c, over.c)
+        } else {
+            null
+        }
 
         done = true
+        (over as RoutableSlideableSetImpl).done = true
+
         val out = RoutableSlideableSetImpl(newC, newL, newR)
         c2.contains(out, con1.plus(con2))
         return out
