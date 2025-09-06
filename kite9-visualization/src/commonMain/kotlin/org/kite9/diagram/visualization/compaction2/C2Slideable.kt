@@ -132,29 +132,6 @@ class C2Slideable(
      * For the current slideable (this), works out which anchor represents the intersection
      * with along.
      */
-    fun inElement(along: C2Slideable) : RectAnchor? {
-
-        fun containsAny(intersections: Set<DiagramElement>, r: RectAnchor)
-                = intersections.firstOrNull { i -> r.e == i || r.e.deepContains(i) } != null
-
-        val elements = along.getIntersectingElements() + along.getOrbitingElements()
-
-        val out = this.anchors.filterIsInstance<RectAnchor>()
-            .filter { containsAny(elements, it)  }
-
-        if (out.isEmpty()) {
-            return null
-        } else if (out.size == 1) {
-            return out.first()
-        } else {
-            throw LogicException("Multiple permeable anchors for $this")
-        }
-    }
-
-    /**
-     * For the current slideable (this), works out which anchor represents the intersection
-     * with along.
-     */
     fun getRelevantRectAnchor(c: DiagramElement) : RectAnchor? {
         val relevant = anchors
             .filterIsInstance<RectAnchor>()

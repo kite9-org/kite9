@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -10,7 +11,6 @@ enum class IntersectionType {
     INTERSECT,
     PROPAGATED_OUTWARD,
     PROPAGATED_INWARD,
-    RECTANGULAR,
     BUFFER
 }
 
@@ -30,7 +30,12 @@ interface C2Compaction {
      * 1) slideables leaving the routable intersect with the rectangular slideables.
      * 2) intersections on the rectangular slideable are propagated to the inner slideables.
      */
-    fun propagateIntersectionsBetweenRoutableAndOuterRectangular(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
+    fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
+        hi: RoutableSlideableSet,
+        vi: RoutableSlideableSet,
+        ho: RectangularSlideableSet,
+        vo: RectangularSlideableSet
+    )
 
     /**
      * When wrapping a rectangular slideable set in its routable, ensure that intersections are propagated.

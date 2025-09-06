@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -37,10 +38,12 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             throw LogicException("Oops")
         }
 
-        var items = intersections.getOrElse(s1) { mutableMapOf() } + Pair(s2,type)
+        var items = intersections.getOrElse(s1) { emptyMap() }
+        items = if (!items.containsKey(s2)) items + Pair(s2,type) else items
         intersections[s1] = items
 
-        items = intersections.getOrElse(s2) { emptyMap() } + Pair(s1, type)
+        items = intersections.getOrElse(s2) { emptyMap() }
+        items = if (!items.containsKey(s1)) items + Pair(s1,type) else items
         intersections[s2] = items
         //println("Intersecting ${s1.number}: ${s1}\n        with ${s2.number}:  ${s2}")
     }
@@ -83,19 +86,13 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 // you can't route on rectangulars outside the rectangle itself.
                 // but you can route on their intersections or internal buffer slideables
                 val notRectangular = slideable.getRectAnchors().isEmpty()
-                val inElement = to.inElement(slideable) != null
-                if (notRectangular && inElement) {
+                if (notRectangular) {
                     setIntersection(to, slideable, IntersectionType.PROPAGATED_OUTWARD)
                 }
             }
 
             toPropagate2.forEach { (slideable, _) ->
-                // intersection must be for the block
-//                val blocks = from.getIntersectingElements()
-//                val intersections = slideable.getIntersectingElements()
-//                if (blocks.intersect(intersections).isNotEmpty()) {
-                    setIntersection(from, slideable, IntersectionType.PROPAGATED_INWARD)
-                //}
+                setIntersection(from, slideable, IntersectionType.PROPAGATED_INWARD)
             }
         }
     }
@@ -115,7 +112,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         hi: RoutableSlideableSet,
         vi: RoutableSlideableSet,
         ho: RectangularSlideableSet,
-        vo: RectangularSlideableSet
+        vo: RectangularSlideableSet,
     ) {
         propagateElementIntersections(hi.bl, ho.l)
         propagateElementIntersections(hi.br, ho.r)

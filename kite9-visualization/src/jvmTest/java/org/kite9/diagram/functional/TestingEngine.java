@@ -324,7 +324,6 @@ public class TestingEngine extends TestingHelp {
             case INTERSECT: return new Color(0, 0,0, 128);
             case PROPAGATED_OUTWARD: return new Color(255, 128,20, 128);
             case PROPAGATED_INWARD: return new Color(128, 255,20, 128);
-            case RECTANGULAR: return new Color(255, 50,50, 128);
         }
 
         return null;

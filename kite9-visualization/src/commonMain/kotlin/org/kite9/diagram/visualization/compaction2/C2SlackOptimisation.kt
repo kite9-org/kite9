@@ -3,9 +3,6 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side

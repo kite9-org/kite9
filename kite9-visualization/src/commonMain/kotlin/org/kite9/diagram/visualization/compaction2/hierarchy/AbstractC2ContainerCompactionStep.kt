@@ -6,7 +6,6 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
-import org.kite9.diagram.visualization.compaction2.anchors.Permeability
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
@@ -61,8 +60,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         val soxInnerRoutable = sox.getContents(soxContainer)
 
         if (soxInnerRoutable != null) {
-            c.propagateIntersectionsBetweenRoutableAndOuterRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
             c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
+            c.propagateIntersectionsBetweenRoutableAndOuterRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
         }
 
         val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
