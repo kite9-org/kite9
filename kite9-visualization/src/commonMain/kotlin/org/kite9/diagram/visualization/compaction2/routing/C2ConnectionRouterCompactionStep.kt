@@ -194,6 +194,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
                 val newFirst = handleReplacements(r.point, replacements)
                 return C2Route(
                     simplifyShortestPath(nsp, c2, ssp, replacements),
+                    r.coords,
                     C2Point(ns, newFirst.getPerp(), newFirst.d),
                     r.cost,
                     container = r.container
@@ -202,7 +203,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         }
 
         return if (second != null) {
-            C2Route(simplifyShortestPath(second, c2, ssp, replacements), r.point, r.cost, r.container)
+            C2Route(simplifyShortestPath(second, c2, ssp, replacements), r.coords, r.point, r.cost, r.container)
         } else {
             r
         }

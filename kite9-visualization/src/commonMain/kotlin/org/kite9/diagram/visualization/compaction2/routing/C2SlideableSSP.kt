@@ -69,17 +69,16 @@ class C2SlideableSSP(
         log.send("Extending: $r")
 
         // straight line advancement
-        advance(d, perp, r, along, s, r.cost.addStep())
+        advance(d, perp, r.updateCost(r.cost.addStep()), along, s)
 
         if (perp.getRectAnchors().isEmpty()) {
             val dc = Direction.rotateClockwise(d)
             val nextScoreDc = r.cost.addTurn(CostFreeTurn.CLOCKWISE)
-            advance(dc, along, r, perp, s, nextScoreDc)
-
+            advance(dc, along, r.updateCost(nextScoreDc), perp, s)
 
             val dac = Direction.rotateAntiClockwise(d)
             val nextScoreDac = r.cost.addTurn(CostFreeTurn.ANTICLOCKWISE)
-            advance(dac, along, r, perp, s, nextScoreDac)
+            advance(dac, along, r.updateCost(nextScoreDac), perp, s)
         }
     }
 
@@ -96,7 +95,7 @@ class C2SlideableSSP(
                 val possibleRemainingDistance = getMinimumRemainingDistance(k.key)
                 val expensive = expensiveDirection(p)
                 val newCost = r.cost.addDistance(stride, possibleRemainingDistance, expensive)
-                C2Route(r, p, newCost)
+                r.advance(p, newCost)
             }
 
         return out
@@ -107,8 +106,7 @@ class C2SlideableSSP(
         perp: C2Slideable,
         r: C2Route,
         along: C2Slideable,
-        s: State<C2Route>,
-        c: C2Costing,
+        s: State<C2Route>
     ) {
         if (along.canMoveAlongInside(r.container)) {
             val out1 = generateNextSteps(d, perp, r, along)
@@ -240,9 +238,11 @@ class C2SlideableSSP(
                 val mrd2 = getMinimumRemainingDistance(along)
                 val initialDepth = allowedToLeave.get(this.startElem)!!
                 val initialContainer = this.startElem.getParent()!!
-                val r = C2Route(null, it, C2Costing(initialDepth).addDistance(0, mrd1+mrd2, false), initialContainer)
+                val initialCoords = C2Coords.createInitialCoords(it)
+                val initialCost = C2Costing(initialDepth).addDistance(0, mrd1+mrd2, false)
+                val r = C2Route(null, initialCoords, it, initialCost, initialContainer)
                 val d = r.point.d
-                advance(d, perp, r, along, s, r.cost)
+                advance(d, perp, r, along, s)
             }
     }
 

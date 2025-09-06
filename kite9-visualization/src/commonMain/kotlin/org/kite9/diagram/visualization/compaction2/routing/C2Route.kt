@@ -6,10 +6,6 @@ import org.kite9.diagram.visualization.compaction2.C2Slideable
 
 data class C2Route(val prev: C2Route?, val coords: C2Coords, val point: C2Point, val cost: C2Costing, val container: DiagramElement) : PathLocation<C2Route> {
 
-    constructor(r: C2Route?, point: C2Point, cost: C2Costing, container: DiagramElement) : this(r, buildCoords(r, point), point, cost, container)
-    constructor(r: C2Route, point: C2Point, cost: C2Costing) : this(simplifyRoute(r, point), buildCoords(r, point), point, cost, r.container)
-    constructor(r: C2Route, cost: C2Costing, container: DiagramElement) : this(simplifyRoute(r, r.point), buildCoords(r, r.point), r.point, cost, container)
-
     private var active = true
 
     override fun compareTo(other: C2Route): Int {
@@ -49,8 +45,16 @@ data class C2Route(val prev: C2Route?, val coords: C2Coords, val point: C2Point,
         }
     }
 
-    fun changeContainer(container: DiagramElement, c2: C2Costing): C2Route {
-        return C2Route(this, c2, container)
+    fun updateCost(newCost: C2Costing): C2Route {
+        return C2Route(simplifyRoute(this, this.point), buildCoords(this, this.point), this.point, newCost, this.container)
+    }
+
+    fun advance(newPoint: C2Point, newCost: C2Costing): C2Route {
+        return C2Route(simplifyRoute(this, newPoint), buildCoords(this, newPoint), newPoint, newCost, this.container)
+    }
+
+    fun changeContainer(container: DiagramElement, newCost: C2Costing): C2Route {
+        return C2Route(simplifyRoute(this, this.point), buildCoords(this, this.point), this.point, newCost, container)
     }
 
     companion object {
