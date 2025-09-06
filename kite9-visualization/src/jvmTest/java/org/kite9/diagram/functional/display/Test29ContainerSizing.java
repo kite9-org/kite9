@@ -89,7 +89,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		Context c1 = new Context("c1", HelpMethods.listOf(g1), true, new TextLabel("c1"), null);
 		Context c2 = new Context("c2", HelpMethods.listOf(g2), true, new TextLabel("c2"), null);
 		Context c3 = new Context("c3", HelpMethods.listOf(g3), true, new TextLabel("c3"), null);
-		Context c4 = new Context("c3", HelpMethods.listOf(g4), true, new TextLabel("c3"), null);
+		Context c4 = new Context("c4", HelpMethods.listOf(g4), true, new TextLabel("c4"), null);
 
 		new Link(g1, g2, null, null, null, null, Direction.DOWN);
 		new Link(g2, g3, null, null, null, null, Direction.RIGHT);
