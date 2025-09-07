@@ -38,6 +38,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 
+import javax.security.auth.login.LoginException;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -315,6 +316,10 @@ public class TestingEngine extends TestingHelp {
 
     static Color[] colors = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.WHITE, Color.BLACK, Color.GRAY };
 
+    static Stroke strokeIncreasing = new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 6, 21 }, 0);
+    static Stroke strokeDecreasing = new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 4, 17 }, 0);
+
+
     public static Color getColor(int i) {
         return colors[i % colors.length];
     }
@@ -365,19 +370,18 @@ public class TestingEngine extends TestingHelp {
 			}
 		});
 
-        g.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 6, 21 }, 0));
-        g.setColor(Color.BLACK);
         Set<Location> locations = c2.getLocations();
         locations.stream().forEach(l -> {
             C2Slideable h = l.getFirst();
             C2Slideable v = l.getSecond();
             Set<C2Slideable> toH = c2.getNeighbours(l, Dimension.H);
-            Set<C2Slideable> toV = c2.getNeighbours(l, Dimension.V);
             toH.stream().forEach(h2 -> {
                 if (h2.getMinimumPosition() > h.getMinimumPosition()) {
                     g.setColor(Color.RED);
+                    g.setStroke(strokeIncreasing);
                 } else {
                     g.setColor(Color.BLACK);
+                    g.setStroke(strokeDecreasing);
                 }
 
                 g.drawLine(h.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30, h2.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30);
@@ -385,11 +389,15 @@ public class TestingEngine extends TestingHelp {
                 g.fillRect(h.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
                 g.fillRect(h2.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
             });
+
+            Set<C2Slideable> toV = c2.getNeighbours(l, Dimension.V);
             toV.stream().forEach(v2 -> {
                 if (v2.getMinimumPosition() > v.getMinimumPosition()) {
                     g.setColor(Color.RED);
+                    g.setStroke(strokeIncreasing);
                 } else {
                     g.setColor(Color.BLACK);
+                    g.setStroke(strokeDecreasing);
                 }
 
                 g.drawLine(h.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30, h.getMinimumPosition() * 10 + 30, v2.getMinimumPosition() * 10 + 30);

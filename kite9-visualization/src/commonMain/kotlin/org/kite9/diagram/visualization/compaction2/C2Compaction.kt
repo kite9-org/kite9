@@ -5,7 +5,11 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
-data class Location(val first: C2Slideable, val second: C2Slideable)
+data class Location(val first: C2Slideable, val second: C2Slideable) {
+    override fun toString(): String {
+        return "(${first.number}, ${second.number})"
+    }
+}
 
 interface C2Compaction {
 

@@ -251,12 +251,14 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             if (l != newL) {
                 val hd = neighbourDetailsH.remove(l)
                 if (hd != null) {
-                    neighbourDetailsH[newL] = hd
+                    neighbourDetailsH.getOrPut(newL) { mutableSetOf() }
+                        .addAll(hd)
                 }
 
                 val vd = neighbourDetailsV.remove(l)
                 if (vd != null) {
-                    neighbourDetailsV[newL] = vd
+                    neighbourDetailsV.getOrPut(newL) { mutableSetOf() }
+                        .addAll(vd)
                 }
             }
         }
@@ -275,6 +277,14 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 if (it.isDone()) {
                     throw LogicException("Done slideable")
                 }
+//
+//                val reverseLocation = Location(it, l.second)
+//                val lookup = neighbourDetailsH[reverseLocation]
+//
+//                if (lookup?.contains(l.first) != true) {
+//                    throw LogicException("Reverse location should exist")
+//                }
+
             }
         }
 
@@ -289,6 +299,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 }
             }
         }
+//
+//        println("Consistency ${neighbourDetailsH.size} ${neighbourDetailsV.size} ${(neighbourDetailsH.keys + neighbourDetailsV.keys).size}")
+//        println("Consistency ${neighbourDetailsH.values.sumOf { it.size }} ${neighbourDetailsV.values.sumOf { it.size }}")
     }
 
 }
