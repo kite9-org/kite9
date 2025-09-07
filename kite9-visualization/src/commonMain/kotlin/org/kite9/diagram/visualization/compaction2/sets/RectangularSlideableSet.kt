@@ -5,7 +5,7 @@ import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
-interface RectangularSlideableSet : SlideableSet<RectangularSlideableSet> {
+sealed interface RectangularSlideableSet : SlideableSet<RectangularSlideableSet> {
 
     val e: Rectangular
     val l: C2Slideable

@@ -5,7 +5,7 @@ import org.kite9.diagram.visualization.compaction2.*
 /**
  * A routable slideable set maps to a group, allowing you to move above, below or through the group.
  */
-interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
+sealed interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
     val c: C2Slideable? // this is only set
     val bl: C2Slideable?

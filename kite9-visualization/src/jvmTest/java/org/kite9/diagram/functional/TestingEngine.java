@@ -1,6 +1,7 @@
 package org.kite9.diagram.functional;
 
 import kotlin.Pair;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
@@ -25,7 +26,7 @@ import org.kite9.diagram.testing.HopChecker.HopAction;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.compaction2.C2Compaction;
 import org.kite9.diagram.visualization.compaction2.C2Slideable;
-import org.kite9.diagram.visualization.compaction2.IntersectionType;
+import org.kite9.diagram.visualization.compaction2.Location;
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
@@ -282,15 +283,15 @@ public class TestingEngine extends TestingHelp {
 
 	private static void setColour(C2Slideable s, Graphics2D g) {
 		if (s.getOrbitAnchors().size() > 0) {
-			g.setColor(Color.GRAY);
+			g.setColor(new Color(100,100,100, 100));
 		} else if (s.getIntersectAnchors().size() >0) {
-			g.setColor(Color.BLACK);
+			g.setColor(new Color(0,0,0,100));
 		} else if (s.getRectAnchors().size() > 0) {
-			g.setColor(Color.RED);
+			g.setColor(new Color(255, 0, 0, 100));
 		} else if (s.getConnAnchors().size() > 0) {
-			g.setColor(Color.BLUE);
+			g.setColor(new Color(0,0,200, 100));
 		} else {
-			g.setColor(Color.GREEN);
+			g.setColor(new Color(0,90,0, 100));
 		}
 	}
 
@@ -316,17 +317,6 @@ public class TestingEngine extends TestingHelp {
 
     public static Color getColor(int i) {
         return colors[i % colors.length];
-    }
-
-    public static Paint getPaintForType(IntersectionType s) {
-        switch (s) {
-            case BUFFER: return new Color(128, 128,128, 128);
-            case INTERSECT: return new Color(0, 0,0, 128);
-            case PROPAGATED_OUTWARD: return new Color(255, 128,20, 128);
-            case PROPAGATED_INWARD: return new Color(128, 255,20, 128);
-        }
-
-        return null;
     }
 
 	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
@@ -361,14 +351,6 @@ public class TestingEngine extends TestingHelp {
                 g.setColor(getColor(nextCol[0]));
 				g.drawString("v" + s.getNumber(), new Random().nextInt(20), s.getMinimumPosition() * 10 + 15+new Random().nextInt(10));
 				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 20);
-				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
-				if (is != null) {
-					is.forEach((s2, v) -> {
-						g.setPaint(getPaintForType(v));
-						g.fillRect(s2.getMinimumPosition() * 10 + 20, s.getMinimumPosition() * 10 + 20,
-								20, 20);
-					});
-				}
 			}
 		});
 
@@ -380,18 +362,42 @@ public class TestingEngine extends TestingHelp {
                 g.setColor(getColor(nextCol[0]));
 				g.drawString("h" + s.getNumber(), s.getMinimumPosition() * 10 + 30, 10);
 				g.drawString("" + s.getMinimumPosition(), s.getMinimumPosition() * 10 + 30, ySize * 10 + 50);
-				Map<C2Slideable, IntersectionType> is = c2.getTypedIntersections(s);
-				if (is != null) {
-					is.forEach((s2, v) -> {
-                        g.setPaint(getPaintForType(v));
-                        g.fillRect(s.getMinimumPosition() * 10 + 20, s2.getMinimumPosition() * 10 + 20,
-								20, 20);
-					});
-				}
 			}
 		});
 
+        g.setStroke(new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 6, 21 }, 0));
+        g.setColor(Color.BLACK);
+        Set<Location> locations = c2.getLocations();
+        locations.stream().forEach(l -> {
+            C2Slideable h = l.getFirst();
+            C2Slideable v = l.getSecond();
+            Set<C2Slideable> toH = c2.getNeighbours(l, Dimension.H);
+            Set<C2Slideable> toV = c2.getNeighbours(l, Dimension.V);
+            toH.stream().forEach(h2 -> {
+                if (h2.getMinimumPosition() > h.getMinimumPosition()) {
+                    g.setColor(Color.RED);
+                } else {
+                    g.setColor(Color.BLACK);
+                }
 
+                g.drawLine(h.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30, h2.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30);
+                g.setColor(Color.BLACK);
+                g.fillRect(h.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
+                g.fillRect(h2.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
+            });
+            toV.stream().forEach(v2 -> {
+                if (v2.getMinimumPosition() > v.getMinimumPosition()) {
+                    g.setColor(Color.RED);
+                } else {
+                    g.setColor(Color.BLACK);
+                }
+
+                g.drawLine(h.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30, h.getMinimumPosition() * 10 + 30, v2.getMinimumPosition() * 10 + 30);
+                g.setColor(Color.BLACK);
+                g.fillRect(h.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
+                g.fillRect(h.getMinimumPosition()*10+25, v2.getMinimumPosition()*10+25, 10, 10);
+            });
+        });
 
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);

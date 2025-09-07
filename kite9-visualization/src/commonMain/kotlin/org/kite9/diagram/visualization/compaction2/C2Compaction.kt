@@ -1,21 +1,14 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
-
-enum class IntersectionType {
-    INTERSECT,
-    PROPAGATED_OUTWARD,
-    PROPAGATED_INWARD,
-    BUFFER
-}
-
+data class Location(val first: C2Slideable, val second: C2Slideable)
 
 interface C2Compaction {
+
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
     fun getDiagram(): Diagram
 
@@ -50,14 +43,16 @@ interface C2Compaction {
     /**
      * This is used when slideables merge (in C2SlackOptimisation)
      */
-    fun replaceIntersections(s1: C2Slideable?, s2: C2Slideable?, sNew: C2Slideable?)
+    fun replaceIntersections(s1: C2Slideable, s2: C2Slideable, sNew: C2Slideable)
 
     /**
      * Used to retrieve intersections when we're doing routing.
      */
-    fun getIntersections(s1: C2Slideable) : Set<C2Slideable>
+    fun getNeighbours(from: Location, d: Dimension) : Set<C2Slideable>
 
-    fun getTypedIntersections(s1: C2Slideable) : Map<C2Slideable, IntersectionType>
+    fun getLocations() : Set<Location>
+
+    fun getLocationsOn(s: C2Slideable) : Set<C2Slideable>
 
     fun checkConsistency()
 }

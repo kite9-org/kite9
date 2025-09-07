@@ -37,28 +37,28 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val vss = v.getSlideablesFor(d)!!
 
         val up = if (allowed(arriving, drawDirection, Direction.UP)) {
-                c2.getIntersections(vss.l)
+                c2.getLocationsOn(vss.l)
                     ?.map { C2Point(it, vss.l, if (arriving) Direction.DOWN else Direction.UP) } ?: emptyList()
             } else {
                 emptyList()
             }
 
         val down = if (allowed(arriving, drawDirection, Direction.DOWN)) {
-            c2.getIntersections(vss.r)
+            c2.getLocationsOn(vss.r)
                 ?.map { C2Point(it, vss.r, if (arriving) Direction.UP else Direction.DOWN) } ?: emptyList()
             } else {
                 emptyList()
             }
 
         val left = if (allowed(arriving, drawDirection, Direction.LEFT)) {
-            c2.getIntersections(hss.l)
+            c2.getLocationsOn(hss.l)
                 ?.map { C2Point(it, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT) } ?: emptyList()
             } else {
                 emptyList()
             }
 
         val right = if (allowed(arriving, drawDirection, Direction.RIGHT)) {
-            c2.getIntersections(hss.r)
+            c2.getLocationsOn(hss.r)
                 ?.map { C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT) } ?: emptyList()
         } else {
             emptyList()

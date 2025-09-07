@@ -11,6 +11,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.Constraint
+import org.kite9.diagram.visualization.compaction2.Location
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 
 class C2SlideableSSP(
@@ -184,7 +185,16 @@ class C2SlideableSSP(
             Direction.DOWN, Direction.RIGHT -> true
             Direction.LEFT, Direction.UP -> false
         }
-        val out = collectInDirection(startingAt, forward, c2.getIntersections(along) ?: emptySet(), going, along)
+
+        val dimension = along.dimension
+        val location = if (dimension == Dimension.H) {
+            Location(along, startingAt)
+        } else {
+            Location(startingAt, along)
+        }
+
+        val furtherPoints = c2.getNeighbours(location, dimension)
+        val out = collectInDirection(startingAt, forward, furtherPoints, going, along)
         return out
     }
 
