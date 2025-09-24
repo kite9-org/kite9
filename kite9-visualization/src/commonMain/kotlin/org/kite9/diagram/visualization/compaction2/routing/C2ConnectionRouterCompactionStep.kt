@@ -38,28 +38,32 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
         val up = if (allowed(arriving, drawDirection, Direction.UP)) {
                 c2.getLocationsOn(vss.l)
-                    ?.map { C2Point(it, vss.l, if (arriving) Direction.DOWN else Direction.UP) } ?: emptyList()
+                    .filter { it.getIntersectingElements().contains(d) }
+                    .map { C2Point(it, vss.l, if (arriving) Direction.DOWN else Direction.UP) }
             } else {
                 emptyList()
             }
 
         val down = if (allowed(arriving, drawDirection, Direction.DOWN)) {
             c2.getLocationsOn(vss.r)
-                ?.map { C2Point(it, vss.r, if (arriving) Direction.UP else Direction.DOWN) } ?: emptyList()
+                .filter { it.getIntersectingElements().contains(d) }
+                .map { C2Point(it, vss.r, if (arriving) Direction.UP else Direction.DOWN) }
             } else {
                 emptyList()
             }
 
         val left = if (allowed(arriving, drawDirection, Direction.LEFT)) {
             c2.getLocationsOn(hss.l)
-                ?.map { C2Point(it, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT) } ?: emptyList()
+                .filter { it.getIntersectingElements().contains(d) }
+                .map { C2Point(it, hss.l, if (arriving) Direction.RIGHT else Direction.LEFT) }
             } else {
                 emptyList()
             }
 
         val right = if (allowed(arriving, drawDirection, Direction.RIGHT)) {
             c2.getLocationsOn(hss.r)
-                ?.map { C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT) } ?: emptyList()
+                .filter { it.getIntersectingElements().contains(d) }
+                .map { C2Point(it, hss.r, if (arriving) Direction.LEFT else Direction.RIGHT) }
         } else {
             emptyList()
         }
@@ -98,14 +102,15 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val endingPoints = createPoints(c2, c.getTo(), true, d)
             val endZone = createZone(c2, c.getTo() as Rectangular)
 
-            // we might be able to reduce the call frequency of this - it's expensive
-            c2.getSlackOptimisation(Dimension.H).updateTDMatrix()
-            c2.getSlackOptimisation(Dimension.V).updateTDMatrix()
+            // we might be able to reduce the call frequency of this part - it's expensive.
+            // but for now I can live with it until it works.
+            c2.getSlackOptimisation(Dimension.H).updateSlideableOrdering()
+            c2.getSlackOptimisation(Dimension.V).updateSlideableOrdering()
+//            c2.simplifyNeighbours(Dimension.H, htdm)
+//            c2.simplifyNeighbours(Dimension.V, vtdm)
 
             val doer = C2SlideableSSP(
                 c, startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, d, c2,
-                c2.getSlackOptimisation(Dimension.H).getTransitiveDistanceMatrix(),
-                c2.getSlackOptimisation(Dimension.V).getTransitiveDistanceMatrix(),
                 log
             )
 
@@ -135,6 +140,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             return out3
 
         } catch (e: NoFurtherPathException) {
+            e.printStackTrace()
             log.error("Couldn't route: $c")
             return null
         } catch (e: LogicException) {
@@ -181,7 +187,7 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             val s1 = third.point.getAlong()
             val s2 = r.point.getAlong()
 
-            println("Comparing: \n   ${s1}\n   ${s2}")
+            println("Comparing: \n   $s1\n   $s2")
             val minDist = if (s1.minimumPosition < s2.minimumPosition) s1.minimumDistanceTo(s2) else s2.minimumDistanceTo(s1)
             if (minDist == 0) {
                 // ok, these slideables can be merged then we can simplify the route

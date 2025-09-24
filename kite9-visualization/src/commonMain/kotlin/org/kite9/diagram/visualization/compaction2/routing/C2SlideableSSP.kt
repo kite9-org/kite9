@@ -4,15 +4,13 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
-import org.kite9.diagram.visualization.compaction2.Constraint
-import org.kite9.diagram.visualization.compaction2.Location
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
+import kotlin.math.abs
 
 class C2SlideableSSP(
     val e: Connection,
@@ -23,8 +21,6 @@ class C2SlideableSSP(
     private val endZone: Zone,
     private val direction: Direction?,
     private val c2: C2Compaction,
-    private val hMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>>,
-    private val vMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>>,
     val log: Kite9Log
 ) : AbstractSSP<C2Route>() {
 
@@ -87,13 +83,13 @@ class C2SlideableSSP(
                                    perp: C2Slideable,
                                    r: C2Route,
                                    along: C2Slideable) : List<C2Route> {
-        val leavers = getForwardSlideables(along, perp, d)
+        val leavers = nextInDirection(perp, d, along)
         val out = leavers
-            .filter { k -> r.coords.isInBounds(k.key, d) }
+            .filter { k -> r.coords.isInBounds(k, d) }
             .map { k ->
-                val p = C2Point(along, k.key, d)
+                val p = C2Point(along, k, d)
                 val stride = r.coords.distanceTo(p)
-                val possibleRemainingDistance = getMinimumRemainingDistance(k.key)
+                val possibleRemainingDistance = getMinimumRemainingDistance(k)
                 val expensive = expensiveDirection(p)
                 val newCost = r.cost.addDistance(stride, possibleRemainingDistance, expensive)
                 r.advance(p, newCost)
@@ -138,12 +134,7 @@ class C2SlideableSSP(
     }
 
     private fun getAbsoluteDistance(from: C2Slideable, to: C2Slideable): Int {
-        val mat = when (from.dimension) {
-            Dimension.H -> hMatrix
-            Dimension.V -> vMatrix
-        }
-
-        return mat[from]!![to]?.dist ?: 0
+        return abs(to.minimumPosition - from.minimumPosition)
     }
 
     private fun getMinimumRemainingDistance(from: C2Slideable): Int {
@@ -152,50 +143,25 @@ class C2SlideableSSP(
             .minOfOrNull { it } ?: 0
     }
 
-    private fun getCorrectDistanceMatrix(from: C2Slideable, stops: Collection<C2Slideable>) : Map<C2Slideable, Constraint?> {
-        val mat = when (from.dimension) {
-            Dimension.H -> hMatrix
-            Dimension.V -> vMatrix
+    private fun nextInDirection(from: C2Slideable,  d: Direction, along: C2Slideable) : Set<C2Slideable> {
+        val neighbours = this.c2.getNeighbours(along, from)
+
+        val neighboursInRightDirection = when (d) {
+            Direction.UP, Direction.LEFT ->
+                neighbours.filter { it.minimumPosition - from.minimumPosition < 0 }
+            Direction.RIGHT, Direction.DOWN ->
+                neighbours.filter { it.minimumPosition - from.minimumPosition > 0  }
         }
 
-        val distances = mat.get(from)!!
-        val known = distances.filter { stops.contains(it.key) }
-        val unknown = stops.filter { !distances.containsKey(it) }.associateWith { null }
-        return (known + unknown).minus(from)
-    }
+        val minDistance = neighboursInRightDirection.map { getAbsoluteDistance(from, it) }.minOfOrNull { it }
 
-    private fun collectInDirection(from: C2Slideable, forward: Boolean, intersections: Set<C2Slideable>, d: Direction, along: C2Slideable) : Map<C2Slideable, Constraint?> {
-        val stopsDistances = getCorrectDistanceMatrix(from, intersections)
-
-        // remove all the ones in the wrong direction
-        val stopDistRightDirection = stopsDistances.filter { it.value != null && it.value!!.forward == forward }
-        val unboundedStops = stopsDistances.filter { it.value == null }
-
-        val closestBlocker = stopDistRightDirection.minByOrNull { it.value!!.dist }
-
-        if (closestBlocker != null) {
-            return unboundedStops.plus(closestBlocker.toPair())
-        }
-
-        return unboundedStops
-    }
-
-    private fun getForwardSlideables(along: C2Slideable, startingAt: C2Slideable, going: Direction) : Map<C2Slideable, Constraint?> {
-        val forward = when(going) {
-            Direction.DOWN, Direction.RIGHT -> true
-            Direction.LEFT, Direction.UP -> false
-        }
-
-        val dimension = along.dimension
-        val location = if (dimension == Dimension.H) {
-            Location(along, startingAt)
+        if (minDistance != null) {
+            val neighboursMinDistance =
+                neighboursInRightDirection.filter { getAbsoluteDistance(from, it) == minDistance }
+            return neighboursMinDistance.toSet()
         } else {
-            Location(startingAt, along)
+            return emptySet()
         }
-
-        val furtherPoints = c2.getNeighbours(location, dimension)
-        val out = collectInDirection(startingAt, forward, furtherPoints, going, along)
-        return out
     }
 
     private fun crossThreshold(perp: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing): C2Route? {

@@ -6,20 +6,6 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
-data class NullableLocation(val first: C2Slideable?, val second: C2Slideable?) {
-
-    fun toLocation() : Location {
-        if (first == null || second == null) throw LogicException("Both should be non-null")
-        if (first.dimension == second.dimension) throw LogicException("Should be different dimensions!")
-
-        return if (first.dimension == Dimension.H) {
-            Location(first!!, second!!)
-        } else {
-            Location(second!!, first!!)
-        }
-    }
-}
-
 /**
  * Flyweight class that handles the state of the compaction as it goes along.
  * Contains lots of utility methods too.
@@ -44,132 +30,135 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return diagram
     }
 
-    private val neighbourDetailsH = mutableMapOf<Location, MutableSet<C2Slideable>>()
-    private val neighbourDetailsV = mutableMapOf<Location, MutableSet<C2Slideable>>()
+    private val neighbourDetails = mutableMapOf<C2Slideable, MutableSet<Set<C2Slideable>>>()
 
-    override fun getLocationsOn(s: C2Slideable): Set<C2Slideable> {
-        return if (s.dimension == Dimension.H) {
-            neighbourDetailsH.filter { it.key.first == s }.keys.map { it.second }.toSet()
+    private fun addNeighbour(along: C2Slideable, n1: C2Slideable?, n2: C2Slideable?) {
+        if (along.getRectAnchors().isNotEmpty()) {
+            // you can't route along rectangular edges
+            return
+        }
+        if ((n1 == null) || (n2==null)) {
+            return
+        }
+        val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
+
+        val ns1 = superSet.find { it.contains(n1) }
+        val ns2 = superSet.find { it.contains(n2) }
+
+
+        if ((ns1 == null) && (ns2 == null)) {
+            superSet.add(mutableSetOf(n1, n2))
+        } else if ((ns1 == null) && (ns2 != null)){
+            superSet.remove(ns2)
+            superSet.add(ns2.plus(n1))
+        } else if ((ns2 == null) && (ns1 != null)) {
+            superSet.remove(ns1)
+            superSet.add(ns1.plus(n2))
+        } else if ((ns2 != ns1) && (ns2 != null) && (ns1!=null)) {
+            val ns3 = ns2.plus(ns1)
+            superSet.remove(ns2)
+            superSet.remove(ns1)
+            superSet.add(ns3)
+
         } else {
-            neighbourDetailsV.filter { it.key.second == s }.keys.map { it.first }.toSet()
+            // already in the same set.
         }
     }
 
-    private fun addNeighbour(l1: Location, l2: Location) {
-        if ((l1.first.dimension != Dimension.H) || (l2.first.dimension != Dimension.H)){
-            throw LogicException("First of pair should be horizontal")
+    /**
+     * If any sets within the superset share members, join those sets.
+     */
+    private fun simplifySuperSet(s: Set<Set<C2Slideable>>) : MutableSet<Set<C2Slideable>> {
+        val out = mutableSetOf<Set<C2Slideable>>()
+
+        s.forEach { s ->
+            val hitSets = out.filter { s2 -> s2.any { e -> s.contains(e) } }
+            val newSet = hitSets.flatMap { it }.toMutableSet()
+            newSet.addAll(s)
+            out.removeAll (hitSets.toSet())
+            out.add(newSet)
         }
 
-        if ((l1.second.dimension != Dimension.V) || (l2.second.dimension != Dimension.V)) {
-            throw LogicException("Second of pair should be vertical")
-        }
-
-        if ((l1.first != l2.first) && (l2.second != l2.second)) {
-            throw LogicException("Oops: going diagonal!")
-        } else if (l1 == l2) {
-            throw LogicException("Oops: going to the same place!")
-        } else if (l1.first != l2.first) {
-            val n1 = neighbourDetailsH.getOrPut(l1) { mutableSetOf() }
-            val n2 = neighbourDetailsH.getOrPut(l2) { mutableSetOf() }
-            n1.add(l2.first)
-            n2.add(l1.first)
-        } else {
-            val n1 = neighbourDetailsV.getOrPut(l1) { mutableSetOf() }
-            val n2 = neighbourDetailsV.getOrPut(l2) { mutableSetOf() }
-            n1.add(l2.second)
-            n2.add(l1.second)
-        }
+        return out
     }
 
-    private fun addNullableNeighbour(nl1: NullableLocation, nl2: NullableLocation) {
-        if ((nl1.first != null) && (nl1.second != null)) {
-            if ((nl2.first != null) && (nl2.second != null)) {
-                addNeighbour(nl1.toLocation(), nl2.toLocation())
-            }
-        }
+    override fun getNeighbours(along: C2Slideable, perp: C2Slideable) : Set<C2Slideable> {
+        val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
+        val neighbourSet = superSet.firstOrNull { it.contains(perp) } ?: emptySet()
+        return neighbourSet
     }
-
-
-    override fun getNeighbours(from: Location, d: Dimension) : Set<C2Slideable> {
-        return if (d == Dimension.H) {
-            neighbourDetailsH[from] ?: emptySet()
-        } else {
-            neighbourDetailsV[from] ?: emptySet()
-        }.toSet()
-    }
-
-    override fun getLocations() : Set<Location> {
-        return (neighbourDetailsH.keys + neighbourDetailsV.keys)
-    }
-
-
 
     override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
-        val tl = NullableLocation(ho.bl, vo.bl)
-        val to = NullableLocation(ho.c, vo.bl)
-        val tr = NullableLocation(ho.br, vo.bl)
+        setupRectangularIntersectionsInner(hr, vr, ho, vo)
+    }
 
-        addNullableNeighbour(tl, to)
-        addNullableNeighbour(to, tr)
+    fun setupRectangularIntersectionsInner(hr: RectangularSlideableSet?, vr: RectangularSlideableSet?, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
+        if (vo.bl != null) {
+            addNeighbour(vo.bl!!, ho.bl, ho.c)
+            addNeighbour(vo.bl!!, ho.c, ho.br)
+        }
 
-        val bl = NullableLocation(ho.bl, vo.br)
-        val bo = NullableLocation(ho.c, vo.br)
-        val br = NullableLocation(ho.br, vo.br)
+        if (vo.br != null) {
+            addNeighbour(vo.br!!, ho.bl, ho.c)
+            addNeighbour(vo.br!!, ho.c, ho.br)
+        }
 
-        addNullableNeighbour(bl, bo)
-        addNullableNeighbour(bo, br)
+        if (ho.bl != null) {
+            addNeighbour(ho.bl!!, vo.bl, vo.c)
+            addNeighbour(ho.bl!!, vo.c, vo.br)
+        }
 
-        val lo = NullableLocation(ho.bl, vo.c)
-        val ro = NullableLocation(ho.br, vo.c)
+        if (ho.br != null) {
+            addNeighbour(ho.br!!, vo.bl, vo.c)
+            addNeighbour(ho.br!!, vo.c, vo.br)
+        }
 
-        addNullableNeighbour(tl, lo)
-        addNullableNeighbour(tr, ro)
-        addNullableNeighbour(bl, lo)
-        addNullableNeighbour(br, ro)
-
-        val ti = NullableLocation(ho.c, vr.l)
-        val bi = NullableLocation(ho.c, vr.r)
-        val li = NullableLocation(hr.l, vo.c)
-        val ri = NullableLocation(hr.r, vo.c)
-
-        addNullableNeighbour(ti, to)
-        addNullableNeighbour(bi, bo)
-        addNullableNeighbour(ri, ro)
-        addNullableNeighbour(li, lo)
+        if ((vr != null) && (hr != null)) {
+            if (vo.c != null) {
+                addNeighbour(vo.c!!, ho.bl, hr.l)
+                addNeighbour(vo.c!!, ho.br, hr.r)
+            }
+            if (ho.c != null) {
+                addNeighbour(ho.c!!, vo.bl, vr.l)
+                addNeighbour(ho.c!!, vo.br, vr.r)
+            }
+        }
     }
 
     private fun propagateAllIntersections(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) && (to != null)) {
-            getLocations().forEach { l ->
-                if (l.first == from) {
-                    val l2 = Location(to, l.second)
-                    addNeighbour(l, l2)
-                } else if (l.second == from) {
-                    val l2 = Location(l.first, to)
-                    addNeighbour(l, l2)
-                }
-            }
+            // first, we're going to propagate all neighbour sets between the two
+
+            val fromSets = getNeighbourSetsOn(from)
+            val toSets = getNeighbourSetsOn(to)
+            val fromIncident = getSlideablesIncidentWith(from)
+            val toIncident = getSlideablesIncidentWith(to)
+            val newSuper = fromSets.flatMap { it } + toSets.flatMap { it } + fromIncident + toIncident
+
+            // next, let's find all the transverse sets and do those
+            newSuper.forEach { along -> addNeighbour(along, from, to) }
         }
     }
 
-//    private fun propagateElementIntersections(from: C2Slideable?, to: C2Slideable?) {
-//        if ((from != null) &&  (to!= null)) {
-//            val toPropagate1 = intersections[from] ?: emptyMap()
-//            val toPropagate2 = intersections[to] ?: emptyMap()
-//            toPropagate1.forEach { (slideable, _) ->
-//                // you can't route on rectangulars outside the rectangle itself.
-//                // but you can route on their intersections or internal buffer slideables
-//                val notRectangular = slideable.getRectAnchors().isEmpty()
-//                if (notRectangular) {
-//                    setIntersection(to, slideable, IntersectionType.PROPAGATED_OUTWARD)
-//                }
-//            }
-//
-//            toPropagate2.forEach { (slideable, _) ->
-//                setIntersection(from, slideable, IntersectionType.PROPAGATED_INWARD)
-//            }
-//        }
-//    }
+    private fun getSlideablesIncidentWith(s: C2Slideable) : Set<C2Slideable> {
+        return this.neighbourDetails.filter { (k, v) -> v.firstOrNull { it.contains(s) } != null }.keys
+    }
+    /**
+     * One-way propagation
+     **/
+    private fun propagateElementIntersections(from: C2Slideable?, to: C2Slideable?) {
+        if ((from != null) && (to != null)) {
+            // first, we're going to propagate all neighbour sets between the two
+
+            val fromSets = getNeighbourSetsOn(from)
+            val toSets = getNeighbourSetsOn(to)
+
+            val newSuper = fromSets.flatMap { it } + toSets.flatMap { it }
+
+            // next, let's find all the transverse sets and do those
+            newSuper.forEach { along -> addNeighbour(along, from, to) }
+        }
+    }
 
     override fun propagateIntersectionsFromRectangularToOuterRoutable(
         hi: RoutableSlideableSet,
@@ -188,79 +177,45 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         ho: RectangularSlideableSet,
         vo: RectangularSlideableSet,
     ) {
-//        propagateElementIntersections(hi.bl, ho.l)
-//        propagateElementIntersections(hi.br, ho.r)
-//        propagateElementIntersections(vi.bl, vo.l)
-//        propagateElementIntersections(vi.br, vo.r)
-        propagateAllIntersections(ho.l, hi.bl)
-        propagateAllIntersections(ho.r, hi.br)
-        propagateAllIntersections(vo.l, vi.bl)
-        propagateAllIntersections(vo.r, vi.br)
+        propagateElementIntersections(hi.bl, ho.l)
+        propagateElementIntersections(hi.br, ho.r)
+        propagateElementIntersections(vi.bl, vo.l)
+        propagateElementIntersections(vi.br, vo.r)
     }
 
-    override fun setupRoutableIntersections(ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
-        val tl = NullableLocation(ho.bl, vo.bl)
-        val to = NullableLocation(ho.c, vo.bl)
-        val tr = NullableLocation(ho.br, vo.bl)
-
-        addNullableNeighbour(tl, to)
-        addNullableNeighbour(to, tr)
-
-        val bl = NullableLocation(ho.bl, vo.br)
-        val bo = NullableLocation(ho.c, vo.br)
-        val br = NullableLocation(ho.br, vo.br)
-
-        addNullableNeighbour(bl, bo)
-        addNullableNeighbour(bo, br)
-
-        val lo = NullableLocation(ho.bl, vo.c)
-        val ro = NullableLocation(ho.br, vo.c)
-
-        addNullableNeighbour(tl, lo)
-        addNullableNeighbour(tr, ro)
-        addNullableNeighbour(bl, lo)
-        addNullableNeighbour(br, ro)
+    override fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
+        setupRectangularIntersectionsInner(null, null, h, v)
    }
 
     override fun replaceIntersections(s1: C2Slideable, s2: C2Slideable, sNew: C2Slideable) {
-        val locationsCopy = getLocations()
-        locationsCopy.forEach { l ->
-            // horizontal axis
-            val nh = neighbourDetailsH[l]
-            val nh2 = nh?.map {
-                if ((it == s1) || (it == s2)) sNew else it
-            }?.toMutableSet()
-            if (nh2 != null) {
-                neighbourDetailsH[l] = nh2
-            }
 
-            // vertical axis
-            val nv = neighbourDetailsV[l]
-            val nv2 = nv?.map {
-                if ((it == s1) || (it == s2)) sNew else it
-            }?.toMutableSet()
-            if (nv2 != null) {
-                neighbourDetailsV[l] = nv2
-            }
+        // merge alongs
+        val s1ss = neighbourDetails.remove(s1) ?: mutableSetOf()
+        val s2ss = neighbourDetails.remove(s2) ?: mutableSetOf()
+        val combinedSs = simplifySuperSet(s1ss + s2ss)
+        neighbourDetails[sNew] = combinedSs
 
-            // now do keys
-            val newH = if ((l.first == s1) || (l.first == s2)) sNew else l.first
-            val newV = if ((l.second == s1) || (l.second == s2)) sNew else l.second
-            val newL = Location(newH, newV)
+        fun replaceInSuperSet(ss: MutableSet<Set<C2Slideable>>) : MutableSet<Set<C2Slideable>> {
+            val out = mutableSetOf<Set<C2Slideable>>()
 
-            if (l != newL) {
-                val hd = neighbourDetailsH.remove(l)
-                if (hd != null) {
-                    neighbourDetailsH.getOrPut(newL) { mutableSetOf() }
-                        .addAll(hd)
-                }
-
-                val vd = neighbourDetailsV.remove(l)
-                if (vd != null) {
-                    neighbourDetailsV.getOrPut(newL) { mutableSetOf() }
-                        .addAll(vd)
+            ss.forEach {
+                if (it.contains(s1) || it.contains(s2)) {
+                    val newIt = it.minus(s1).minus(s2).plus(sNew)
+                    out.add(newIt)
+                } else {
+                    out.add(it)
                 }
             }
+
+            val out2 = simplifySuperSet(out)
+            return out2
+        }
+
+        // go through contents and replace
+        neighbourDetails.values.forEach { ss ->
+            val new = replaceInSuperSet(ss)
+            ss.clear()
+            ss.addAll(new)
         }
     }
 
@@ -268,40 +223,31 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         verticalSegmentSlackOptimisation.checkConsistency()
         horizontalSegmentSlackOptimisation.checkConsistency()
 
-        neighbourDetailsH.forEach { (l, n) ->
-            if (l.first.isDone() || l.second.isDone()) {
+        neighbourDetails.forEach { (s, ss) ->
+            if (s.isDone()) {
                 throw LogicException("Done slideable")
             }
 
-            n.forEach {
-                if (it.isDone()) {
-                    throw LogicException("Done slideable")
-                }
-//
-//                val reverseLocation = Location(it, l.second)
-//                val lookup = neighbourDetailsH[reverseLocation]
-//
-//                if (lookup?.contains(l.first) != true) {
-//                    throw LogicException("Reverse location should exist")
-//                }
-
-            }
-        }
-
-        neighbourDetailsV.forEach { (l, n) ->
-            if (l.first.isDone() || l.second.isDone()) {
-                throw LogicException("Done slideable")
-            }
-
-            n.forEach {
-                if (it.isDone()) {
-                    throw LogicException("Done slideable")
+            ss.forEach { m ->
+                m.forEach {
+                    if (it.isDone()) {
+                        throw LogicException("Done slideable")
+                    }
                 }
             }
         }
-//
-//        println("Consistency ${neighbourDetailsH.size} ${neighbourDetailsV.size} ${(neighbourDetailsH.keys + neighbourDetailsV.keys).size}")
-//        println("Consistency ${neighbourDetailsH.values.sumOf { it.size }} ${neighbourDetailsV.values.sumOf { it.size }}")
+
+        println("Consistency ${neighbourDetails.size} ${neighbourDetails.size}")
+        println("Consistency ${neighbourDetails.values.sumOf { it.size }}")
+    }
+
+    override fun getNeighbourSetsOn(s: C2Slideable) : Set<Set<C2Slideable>> {
+        val superSet = neighbourDetails.getOrPut(s) { mutableSetOf() }
+        return superSet
+    }
+
+    override fun getLocationsOn(s: C2Slideable): Set<C2Slideable> {
+        return getNeighbourSetsOn(s).flatMap { it }.toSet()
     }
 
 }

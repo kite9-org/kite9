@@ -5,12 +5,6 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 
-data class Location(val first: C2Slideable, val second: C2Slideable) {
-    override fun toString(): String {
-        return "(${first.number}, ${second.number})"
-    }
-}
-
 interface C2Compaction {
 
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
@@ -52,10 +46,13 @@ interface C2Compaction {
     /**
      * Used to retrieve intersections when we're doing routing.
      */
-    fun getNeighbours(from: Location, d: Dimension) : Set<C2Slideable>
+    fun getNeighbours(along: C2Slideable, perp: C2Slideable) : Set<C2Slideable>
 
-    fun getLocations() : Set<Location>
+    fun getNeighbourSetsOn(s: C2Slideable) : Set<Set<C2Slideable>>
 
+    /**
+     * Like the above but with less neighbour information.
+     */
     fun getLocationsOn(s: C2Slideable) : Set<C2Slideable>
 
     fun checkConsistency()

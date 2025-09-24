@@ -7,6 +7,7 @@ import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.common.algorithms.so.Slideable;
 import org.kite9.diagram.common.elements.Dimension;
 import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
@@ -26,7 +27,6 @@ import org.kite9.diagram.testing.HopChecker.HopAction;
 import org.kite9.diagram.visualization.compaction.rect.second.popout.AligningRectangularizer;
 import org.kite9.diagram.visualization.compaction2.C2Compaction;
 import org.kite9.diagram.visualization.compaction2.C2Slideable;
-import org.kite9.diagram.visualization.compaction2.Location;
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
@@ -314,7 +314,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-    static Color[] colors = { Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.WHITE, Color.BLACK, Color.GRAY };
+    static Color[] colors = {  Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.WHITE, Color.GRAY };
 
     static Stroke strokeIncreasing = new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 6, 21 }, 0);
     static Stroke strokeDecreasing = new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 4, 17 }, 0);
@@ -322,6 +322,14 @@ public class TestingEngine extends TestingHelp {
 
     public static Color getColor(int i) {
         return colors[i % colors.length];
+    }
+
+    static C2Slideable findLowest(Set<C2Slideable> in) {
+        return in.stream().min(Comparator.comparingInt(Slideable::getMinimumPosition)).get();
+    }
+
+    static C2Slideable findHighest(Set<C2Slideable> in) {
+        return in.stream().max(Comparator.comparingInt(Slideable::getMinimumPosition)).get();
     }
 
 	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
@@ -370,42 +378,45 @@ public class TestingEngine extends TestingHelp {
 			}
 		});
 
-        Set<Location> locations = c2.getLocations();
-        locations.stream().forEach(l -> {
-            C2Slideable h = l.getFirst();
-            C2Slideable v = l.getSecond();
-            Set<C2Slideable> toH = c2.getNeighbours(l, Dimension.H);
+        c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(l -> {
+            Set<Set<C2Slideable>> toH = c2.getNeighbourSetsOn(l);
+            int[] c = { 0 };
+
             toH.stream().forEach(h2 -> {
-                if (h2.getMinimumPosition() > h.getMinimumPosition()) {
-                    g.setColor(Color.RED);
-                    g.setStroke(strokeIncreasing);
-                } else {
-                    g.setColor(Color.BLACK);
-                    g.setStroke(strokeDecreasing);
-                }
+                C2Slideable lowest = findLowest(h2);
+                C2Slideable highest = findHighest(h2);
 
-                g.drawLine(h.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30, h2.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30);
-                g.setColor(Color.BLACK);
-                g.fillRect(h.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
-                g.fillRect(h2.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
-            });
+                g.setColor(colors[c[0]]);
+                c[0] = c[0] + 1 % colors.length;
 
-            Set<C2Slideable> toV = c2.getNeighbours(l, Dimension.V);
-            toV.stream().forEach(v2 -> {
-                if (v2.getMinimumPosition() > v.getMinimumPosition()) {
-                    g.setColor(Color.RED);
-                    g.setStroke(strokeIncreasing);
-                } else {
-                    g.setColor(Color.BLACK);
-                    g.setStroke(strokeDecreasing);
-                }
+                g.setStroke(strokeDecreasing);
+                g.drawLine(lowest.getMinimumPosition() * 10 + 30, l.getMinimumPosition() * 10 + 30, highest.getMinimumPosition() * 10 + 30, l.getMinimumPosition() * 10 + 30);
 
-                g.drawLine(h.getMinimumPosition() * 10 + 30, v.getMinimumPosition() * 10 + 30, h.getMinimumPosition() * 10 + 30, v2.getMinimumPosition() * 10 + 30);
-                g.setColor(Color.BLACK);
-                g.fillRect(h.getMinimumPosition()*10+25, v.getMinimumPosition()*10+25, 10, 10);
-                g.fillRect(h.getMinimumPosition()*10+25, v2.getMinimumPosition()*10+25, 10, 10);
+                h2.forEach(it -> {
+                    g.fillRect(it.getMinimumPosition()*10+25, l.getMinimumPosition()*10+25, 10, 10);
+                });
             });
         });
+
+        c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(l -> {
+            Set<Set<C2Slideable>> toV = c2.getNeighbourSetsOn(l);
+            int[] c = { 0 };
+            toV.stream().forEach(v2 -> {
+                C2Slideable lowest = findLowest(v2);
+                C2Slideable highest = findHighest(v2);
+
+                g.setColor(colors[c[0]]);
+                c[0] = c[0] + 1 % colors.length;
+
+                g.setStroke(strokeDecreasing);
+
+                g.drawLine(l.getMinimumPosition() * 10 + 30, lowest.getMinimumPosition() * 10 + 30, l.getMinimumPosition() * 10 + 30, highest.getMinimumPosition() * 10 + 30);
+                v2.forEach(it -> {
+                    g.fillRect(l.getMinimumPosition() * 10 + 25, it.getMinimumPosition() * 10 + 25, 10, 10);
+                });
+            });
+        });
+
 
 		g.dispose();
 		renderToFile(theTest, subtest, item, bi);

@@ -51,7 +51,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
     private val containment1: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
     private val containment2: MutableMap<RectangularSlideableSet, RoutableSlideableSet> = HashMap()
-    private var transitiveDistanceMatrix: Map<C2Slideable, Map<C2Slideable, Constraint>> = HashMap()
+    private var slideableOrdering: List<C2Slideable> = emptyList()
     private val laneGroups = mutableSetOf<Set<C2Slideable>>()
 
     override fun initialiseSlackOptimisation() {
@@ -301,70 +301,22 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return super.getAllSlideables() as Collection<C2Slideable>
     }
 
-    /**
-     * Implementation of Floyd-Warshall algorithm for transitive distances.  Runs in o(n^3)
-     */
-    fun updateTDMatrix(){
-        val out = mutableMapOf<C2Slideable, MutableMap<C2Slideable, Constraint>>()
 
-        // set initial constraints
-
-        this.getAllSlideables().forEach { f ->
-            this.getAllSlideables().forEach { t ->
-                if (f != t) {
-                    val d1 = f.getMinimumForwardConstraintTo(t)
-                    val d2 = t.getMinimumForwardConstraintTo(f)
-
-                    if ((d1 != null) || (d2 != null)) {
-
-                        val mapFrom = out.getOrPut(f) { mutableMapOf() }
-                        val mapTo = out.getOrPut(t) { mutableMapOf() }
-
-                        if (d1 != null) {
-                            mapFrom[t] = Constraint(true, d1)
-                            mapTo[f] = Constraint(false, d1)
-                        } else if (d2 != null) {
-                            mapFrom[t] = Constraint(false, d2)
-                            mapTo[f] = Constraint(true, d2)
-                        }
-                    }
-                }
+    fun updateSlideableOrdering() {
+        val out = this.getAllSlideables().sortedWith { a, b ->
+            if (a.minimumPosition != b.minimumPosition) {
+                b.minimumPosition - a.minimumPosition
+            } else {
+                val c = a.getMinimumForwardConstraintTo(b)
+                c ?: 0
             }
         }
 
-        this.getAllSlideables().forEach { k ->
-            val kMap = out.getOrPut(k) { mutableMapOf() }
-            this.getAllSlideables().forEach { f ->
-                if (f != k) {
-                    val fromMap = out.getOrPut(f) { mutableMapOf() }
-                    this.getAllSlideables().forEach { t ->
-                        if ((t != f) && (t != k)) {
-                            val ft = fromMap[t]
-                            val kt = kMap[t]
-                            val fk = fromMap[k]
-                            if ((fk != null) && (kt != null)) {
-                                if (kt.forward == fk.forward) {
-                                    val kft = kt + fk
-                                    try {
-                                        fromMap[t] = kft.max(ft)
-                                    } catch (e: LogicException) {
-                                        throw LogicException(e.message + "with: \n ${f} \n ${t}")
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-
-        this.transitiveDistanceMatrix = out
+        this.slideableOrdering = out
     }
 
-    fun getTransitiveDistanceMatrix() : Map<C2Slideable, Map<C2Slideable, Constraint>> {
-        return transitiveDistanceMatrix
+    fun getSlideableOrdering() : List<C2Slideable> {
+        return slideableOrdering
     }
 
 

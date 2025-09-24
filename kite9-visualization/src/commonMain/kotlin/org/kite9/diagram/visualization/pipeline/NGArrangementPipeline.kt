@@ -20,7 +20,6 @@ import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositi
 import org.kite9.diagram.visualization.compaction2.labels.C2ConnectionLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.labels.C2ContainerLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
-import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionFanningCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.*
