@@ -83,11 +83,12 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
             }
 
             c.propagateIntersectionsFromRectangularToOuterRoutable(
+                soContainer,
+                soxContainer,
                 soOuterRoutable,
                 soxOuterRoutable,
-                soContainer,
-                soxContainer
             )
+
         }
 
         return soOuterRoutable

@@ -154,6 +154,23 @@ class C2Slideable(
         return !somethingContains
     }
 
+    fun isInsideOneOf(containers: Set<DiagramElement>) : Boolean {
+        val myContainedElements = getIntersectingElements()
+
+        if (containers.find { c -> myContainedElements.contains(c) } != null) {
+            return true
+        }
+
+        val allElements = (myContainedElements + getOrbitingElements()).toSet()
+
+        val found = containers.filterIsInstance<Container>().find {
+            c -> allElements.find {
+                e-> c.deepContains(e)
+            } != null
+        } != null
+        return found
+    }
+
     fun replaceConnAnchors(ca: Set<ConnAnchor>) {
         val toKeep = anchors.filter { !(it is ConnAnchor) }
         anchors.clear()

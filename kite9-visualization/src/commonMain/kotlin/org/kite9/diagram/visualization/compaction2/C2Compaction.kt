@@ -31,7 +31,7 @@ interface C2Compaction {
     /**
      * When wrapping a rectangular slideable set in its routable, ensure that intersections are propagated.
      */
-    fun propagateIntersectionsFromRectangularToOuterRoutable(hi: RoutableSlideableSet, vi: RoutableSlideableSet, ho: RectangularSlideableSet, vo: RectangularSlideableSet)
+    fun propagateIntersectionsFromRectangularToOuterRoutable(hi: RectangularSlideableSet, vi: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet)
 
     /**
      * Used when we create the routable slideable sets, anything meeting an orbit slideable should form an intersection.
@@ -56,4 +56,5 @@ interface C2Compaction {
     fun getLocationsOn(s: C2Slideable) : Set<C2Slideable>
 
     fun checkConsistency()
+
 }

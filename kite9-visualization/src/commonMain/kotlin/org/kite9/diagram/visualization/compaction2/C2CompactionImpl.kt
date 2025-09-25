@@ -32,14 +32,28 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private val neighbourDetails = mutableMapOf<C2Slideable, MutableSet<Set<C2Slideable>>>()
 
-    private fun addNeighbour(along: C2Slideable, n1: C2Slideable?, n2: C2Slideable?) {
+    private fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?) {
+        if ((n1 == null) || (n2==null) || (along==null)) {
+            // first guard - along, n1 and n2 must be non-null
+            return
+        }
+
         if (along.getRectAnchors().isNotEmpty()) {
-            // you can't route along rectangular edges
+            // second guard - you can't route along rectangular edges
             return
         }
-        if ((n1 == null) || (n2==null)) {
-            return
+
+        if (n1.getRectAnchors().isNotEmpty() || n2.getRectAnchors().isNotEmpty()) {
+            // guard 3: you can't create neighbours for rectangulars unless the along is inside the rectangular
+
+            val possibleContainers = (n1.getRectAnchors().map { it.e } + n2.getRectAnchors().map { it.e }).toSet()
+
+            if (!along.isInsideOneOf(possibleContainers)) {
+                return
+            }
         }
+
+
         val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
 
         val ns1 = superSet.find { it.contains(n1) }
@@ -125,62 +139,73 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
-    private fun propagateAllIntersections(from: C2Slideable?, to: C2Slideable?) {
-        if ((from != null) && (to != null)) {
-            // first, we're going to propagate all neighbour sets between the two
-
-            val fromSets = getNeighbourSetsOn(from)
-            val toSets = getNeighbourSetsOn(to)
-            val fromIncident = getSlideablesIncidentWith(from)
-            val toIncident = getSlideablesIncidentWith(to)
-            val newSuper = fromSets.flatMap { it } + toSets.flatMap { it } + fromIncident + toIncident
-
-            // next, let's find all the transverse sets and do those
-            newSuper.forEach { along -> addNeighbour(along, from, to) }
-        }
-    }
-
     private fun getSlideablesIncidentWith(s: C2Slideable) : Set<C2Slideable> {
         return this.neighbourDetails.filter { (k, v) -> v.firstOrNull { it.contains(s) } != null }.keys
     }
-    /**
-     * One-way propagation
-     **/
-    private fun propagateElementIntersections(from: C2Slideable?, to: C2Slideable?) {
-        if ((from != null) && (to != null)) {
-            // first, we're going to propagate all neighbour sets between the two
-
-            val fromSets = getNeighbourSetsOn(from)
-            val toSets = getNeighbourSetsOn(to)
-
-            val newSuper = fromSets.flatMap { it } + toSets.flatMap { it }
-
-            // next, let's find all the transverse sets and do those
-            newSuper.forEach { along -> addNeighbour(along, from, to) }
-        }
-    }
 
     override fun propagateIntersectionsFromRectangularToOuterRoutable(
-        hi: RoutableSlideableSet,
-        vi: RoutableSlideableSet,
-        ho: RectangularSlideableSet,
-        vo: RectangularSlideableSet
+        hi: RectangularSlideableSet,
+        vi: RectangularSlideableSet,
+        ho: RoutableSlideableSet,
+        vo: RoutableSlideableSet
     ) {
-        propagateAllIntersections(ho.l, hi.bl)
-        propagateAllIntersections(ho.r, hi.br)
-        propagateAllIntersections(vo.l, vi.bl)
-        propagateAllIntersections(vo.r, vi.br)
+
+        fun getIncident(i: C2Slideable) : Set<C2Slideable> {
+            return (getNeighbourSetsOn(i).flatMap { it } + getSlideablesIncidentWith(i)).toSet()
+        }
+
+        fun propagate(incident: Set<C2Slideable>, from: C2Slideable, to: C2Slideable?) {
+            if ((from != null) && (to != null)) {
+                incident.forEach { along ->
+                    //if (along.getRectAnchors().isEmpty()) {
+                        addNeighbour(along, from, to)
+                    //}
+                }
+            }
+        }
+
+        val hlSet = getIncident(hi.l)
+        val hrSet = getIncident(hi.r)
+        val vlSet = getIncident(vi.l)
+        val vrSet = getIncident(vi.r)
+
+        propagate(hlSet, hi.l, ho.bl)
+        propagate(hrSet, hi.r, ho.br)
+        propagate(vlSet, vi.l, vo.bl)
+        propagate(vrSet, vi.r, vo.br)
     }
+
     override fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
         hi: RoutableSlideableSet,
         vi: RoutableSlideableSet,
         ho: RectangularSlideableSet,
         vo: RectangularSlideableSet,
     ) {
-        propagateElementIntersections(hi.bl, ho.l)
-        propagateElementIntersections(hi.br, ho.r)
-        propagateElementIntersections(vi.bl, vo.l)
-        propagateElementIntersections(vi.br, vo.r)
+
+        fun getIncident(a: C2Slideable, b: C2Slideable?) : Set<C2Slideable> {
+            return (
+                    getNeighbourSetsOn(a).flatMap { it } +
+                            if (b != null)
+                                getNeighbourSetsOn(b).flatMap { it }
+                            else emptySet()
+                    ).toSet()
+        }
+
+        fun propagate(incident: Set<C2Slideable>, from: C2Slideable?, to: C2Slideable?) {
+            if ((from != null) && (to != null)) {
+                incident.forEach { along -> addNeighbour(along, from, to) }
+            }
+        }
+
+        val hl = getIncident(ho.l, hi.bl)
+        val hr = getIncident(ho.r, hi.br)
+        val vl = getIncident(vo.l, vi.bl)
+        val vr = getIncident(vo.r, vi.br)
+
+        propagate(hl,hi.bl, ho.l)
+        propagate(hr, hi.br, ho.r)
+        propagate(vl, vi.bl, vo.l)
+        propagate(vr, vi.br, vo.r)
     }
 
     override fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
@@ -235,7 +260,15 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     }
                 }
             }
+
+            val ss2 = simplifySuperSet(ss)
+            if (ss2 != ss) {
+                throw LogicException("Simplified!")
+            }
+
         }
+
+
 
         println("Consistency ${neighbourDetails.size} ${neighbourDetails.size}")
         println("Consistency ${neighbourDetails.values.sumOf { it.size }}")
