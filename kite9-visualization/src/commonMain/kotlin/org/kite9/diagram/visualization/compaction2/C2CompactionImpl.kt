@@ -247,7 +247,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
     override fun getLocationsOn(s: C2Slideable): Set<C2Slideable> {
-        return getNeighbourSetsOn(s).flatMap { it }.toSet()
+        return getSlideablesIncidentWith(s)
     }
 
 }
