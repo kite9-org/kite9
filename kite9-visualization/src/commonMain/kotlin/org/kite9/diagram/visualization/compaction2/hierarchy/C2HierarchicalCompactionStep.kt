@@ -89,8 +89,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             if (e is Rectangular) {
                 val hso = c.getSlackOptimisation(Dimension.H)
                 val vso = c.getSlackOptimisation(Dimension.V)
-                val hr = checkCreateElement(e, Dimension.H, hso, null, g)!!
-                val vr = checkCreateElement(e, Dimension.V, vso, null, g)!!
+                val hr = checkCreateElement(e, Dimension.H, hso, null, g)
+                val vr = checkCreateElement(e, Dimension.V, vso, null, g)
 
                 val hss = hr.wrapInRoutable()
                 val vss = vr.wrapInRoutable()

@@ -250,7 +250,54 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 		renderDiagram(d1);
 	}
 
-	/**
+    @Test
+    public void test_29_13_NestedCrissCross() throws Exception {
+        Glyph g0 = new Glyph("g0", "", "method 0", null, null);
+        Glyph g1 = new Glyph("g1", "", "method 1", null, null);
+        Glyph g6 = new Glyph("g6", "", "method 6", null, null);
+
+        Glyph g2 = new Glyph("g2", "", "method 2", null, null);
+        Glyph g3 = new Glyph("g3", "", "method 3", null, null);
+
+        Glyph g4 = new Glyph("g4", "", "method 4", null, null);
+        Glyph g5 = new Glyph("g5", "", "method 5", null, null);
+
+        Context c0 = new Context("c0", HelpMethods.listOf(g1, g6), true, new TextLabel("c0"), Layout.DOWN);
+        Context c1 = new Context("c1", HelpMethods.listOf(g0, c0), true, new TextLabel("c1"), Layout.DOWN);
+        Context c2 = new Context("c2", HelpMethods.listOf(g2, g3), true, new TextLabel("c2"), Layout.DOWN);
+        Context c3 = new Context("c3", HelpMethods.listOf(g4, g5), true, new TextLabel("c3"), Layout.DOWN);
+
+        // links from c1 to c2
+        TurnLink b1 = new TurnLink(g0, g3);
+        new Link(g0, g2, null, new TextLabel("straight1"), null, new TextLabel("straight2"), Direction.RIGHT);
+        new Link(g1, g3, null, new TextLabel("straight3"), null, new TextLabel("straight4"), Direction.RIGHT);
+        new Link(g6, g5, null, null, null, new TextLabel("straight4"), Direction.RIGHT);
+
+        TurnLink b2 = new TurnLink(g1, g2);
+        b1.setFromLabel(new TextLabel("from"));
+        b2.setFromLabel(new TextLabel("from"));
+        b1.setToLabel(new TextLabel("to"));
+
+        // links from c2 to c3
+        new Link(g3, g4, null, new TextLabel("straight5"), null, new TextLabel("straight6"), Direction.RIGHT);
+        new TurnLink(g3, g5);
+
+        TurnLink b3 = new TurnLink(g2, g5);
+        TurnLink b4 = new TurnLink(g2, g4);
+        b3.setFromLabel(new TextLabel("from"));
+        b4.setFromLabel(new TextLabel("from"));
+        b3.setToLabel(new TextLabel("to"));
+        b4.setToLabel(new TextLabel("to"));
+
+        DiagramKite9XMLElement d1 = new DiagramKite9XMLElement(HelpMethods.listOf(c1, c2, c3),
+                new Key("Some down, some right links", "", new ArrayList<>()));
+
+        renderDiagram(d1);
+
+    }
+
+
+    /**
 	 * Sometimes mid-positioning doesn't work, if we mid-position both ends in
 	 * different ways
 	 * that happens on this test.

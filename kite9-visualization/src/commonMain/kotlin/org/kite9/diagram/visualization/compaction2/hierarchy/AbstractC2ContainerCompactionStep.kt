@@ -69,7 +69,6 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         if ((soxOuterRoutable != null) && (soOuterRoutable != null)) {
             c.setupRectangularIntersections(soContainer, soxContainer, soOuterRoutable, soxOuterRoutable)
-            c.setupRoutableIntersections(soxOuterRoutable, soInnerRoutable)
 
             if (soxInnerRoutable != null) {
                 // we redo this here as we want to propagate some of the intersections created

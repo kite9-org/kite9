@@ -43,16 +43,11 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             return
         }
 
-        if (n1.getRectAnchors().isNotEmpty() || n2.getRectAnchors().isNotEmpty()) {
-            // guard 3: you can't create neighbours for rectangulars unless the along is inside the rectangular
-
-            val possibleContainers = (n1.getRectAnchors().map { it.e } + n2.getRectAnchors().map { it.e }).toSet()
-
-            if (!along.isInsideOneOf(possibleContainers)) {
-                return
-            }
-        }
-
+//        if ((n1.getRectAnchors().isNotEmpty() && along.getIntersectAnchors().isEmpty()) ||
+//            (n2.getRectAnchors().isNotEmpty() && along.getIntersectAnchors().isEmpty())) {
+//            // third guard:  you can only meet a rectangular on it's intersect.
+//            return
+//        }
 
         val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
 
@@ -151,7 +146,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     ) {
 
         fun getIncident(i: C2Slideable) : Set<C2Slideable> {
-            return (getNeighbourSetsOn(i).flatMap { it } + getSlideablesIncidentWith(i)).toSet()
+            return (
+                        getNeighbourSetsOn(i).flatMap { it }
+                                + getSlideablesIncidentWith(i)
+                    ).toSet()
         }
 
         fun propagate(incident: Set<C2Slideable>, from: C2Slideable, to: C2Slideable?) {
@@ -182,6 +180,23 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         vo: RectangularSlideableSet,
     ) {
 
+        fun getInternalSlideables(ss: RoutableSlideableSet) : Set<C2Slideable> {
+            val so = ss.getAll().firstOrNull()?.so as C2SlackOptimisation?
+
+            if (so != null) {
+                val internalSS = so.getContents(ss) ?: emptySet<RectangularSlideableSet>()
+                val wrappers = internalSS.map { so.getContainer(it) }.filterNotNull().toSet()
+                val nested = (wrappers - ss).flatMap { getInternalSlideables(it) }
+                val slideables = wrappers.flatMap { it.getAll() } + ss.getAll() + nested
+                return slideables.toSet()
+            } else {
+                return emptySet<C2Slideable>()
+            }
+        }
+
+        val hAllowedSlideables = getInternalSlideables(hi).plus(ho.getAll())
+        val vAllowedSlideables = getInternalSlideables(vi).plus(vo.getAll())
+
         fun getIncident(a: C2Slideable, b: C2Slideable?) : Set<C2Slideable> {
             return (
                     getNeighbourSetsOn(a).flatMap { it } +
@@ -197,10 +212,16 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             }
         }
 
-        val hl = getIncident(ho.l, hi.bl)
-        val hr = getIncident(ho.r, hi.br)
-        val vl = getIncident(vo.l, vi.bl)
-        val vr = getIncident(vo.r, vi.br)
+        val hl = getIncident(ho.l, hi.bl).intersect(vAllowedSlideables)
+        val hr = getIncident(ho.r, hi.br).intersect(vAllowedSlideables)
+        val vl = getIncident(vo.l, vi.bl).intersect(hAllowedSlideables)
+        val vr = getIncident(vo.r, vi.br).intersect(hAllowedSlideables)
+
+
+//        val hl = getIncident(ho.l, hi.bl)
+//        val hr = getIncident(ho.r, hi.br)
+//        val vl = getIncident(vo.l, vi.bl)
+//        val vr = getIncident(vo.r, vi.br)
 
         propagate(hl,hi.bl, ho.l)
         propagate(hr, hi.br, ho.r)
