@@ -65,28 +65,31 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         }
 
         val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
-        val soxOuterRoutable = sox.getContainer(soxContainer)
+        val soxOuterRoutables = sox.getContainers(soxContainer)
 
-        if ((soxOuterRoutable != null) && (soOuterRoutable != null)) {
-            c.setupRectangularIntersections(soContainer, soxContainer, soOuterRoutable, soxOuterRoutable)
+        if (soOuterRoutable != null) {
+            soxOuterRoutables.forEach { soxOuterRoutable ->
+                c.setupRectangularIntersections(soContainer, soxContainer, soOuterRoutable, soxOuterRoutable)
 
-            if (soxInnerRoutable != null) {
-                // we redo this here as we want to propagate some of the intersections created
-                // in the above if too.
-                c.propagateIntersectionsBetweenRoutableAndOuterRectangular(
-                    soInnerRoutable,
-                    soxInnerRoutable,
+                if (soxInnerRoutable != null) {
+                    // we redo this here as we want to propagate some of the intersections created
+                    // in the above if too.
+                    c.propagateIntersectionsBetweenRoutableAndOuterRectangular(
+                        soInnerRoutable,
+                        soxInnerRoutable,
+                        soContainer,
+                        soxContainer
+                    )
+                }
+
+                c.propagateIntersectionsFromRectangularToOuterRoutable(
                     soContainer,
-                    soxContainer
+                    soxContainer,
+                    soOuterRoutable,
+                    soxOuterRoutable,
                 )
-            }
 
-            c.propagateIntersectionsFromRectangularToOuterRoutable(
-                soContainer,
-                soxContainer,
-                soOuterRoutable,
-                soxOuterRoutable,
-            )
+            }
 
         }
 

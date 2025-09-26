@@ -180,22 +180,24 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         vo: RectangularSlideableSet,
     ) {
 
-        fun getInternalSlideables(ss: RoutableSlideableSet) : Set<C2Slideable> {
+        fun getInternalSlideables(ss: RoutableSlideableSet, processed: MutableSet<RoutableSlideableSet>) : Set<C2Slideable> {
             val so = ss.getAll().firstOrNull()?.so as C2SlackOptimisation?
 
             if (so != null) {
                 val internalSS = so.getContents(ss) ?: emptySet<RectangularSlideableSet>()
-                val wrappers = internalSS.map { so.getContainer(it) }.filterNotNull().toSet()
-                val nested = (wrappers - ss).flatMap { getInternalSlideables(it) }
+                val wrappers = internalSS.flatMap { so.getContainers(it) }.filterNotNull().toSet()
+                val unprocessedWrappers = wrappers - processed
+                processed.addAll(wrappers)
+                val nested = unprocessedWrappers.flatMap { getInternalSlideables(it, processed) }
                 val slideables = wrappers.flatMap { it.getAll() } + ss.getAll() + nested
                 return slideables.toSet()
             } else {
-                return emptySet<C2Slideable>()
+                return emptySet()
             }
         }
 
-        val hAllowedSlideables = getInternalSlideables(hi).plus(ho.getAll())
-        val vAllowedSlideables = getInternalSlideables(vi).plus(vo.getAll())
+        val hAllowedSlideables = getInternalSlideables(hi, mutableSetOf()).plus(ho.getAll())
+        val vAllowedSlideables = getInternalSlideables(vi, mutableSetOf()).plus(vo.getAll())
 
         fun getIncident(a: C2Slideable, b: C2Slideable?) : Set<C2Slideable> {
             return (

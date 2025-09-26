@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.sets
 
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
@@ -35,9 +36,11 @@ data class RectangularSlideableSetImpl(
 
     override fun wrapInRoutable(): RoutableSlideableSet? {
         val so = l.so as C2SlackOptimisation
-        val existing = so.getContainer(this)
-        if (existing != null) {
-            return existing
+        val existing = so.getContainers(this)
+        if (existing.size == 1) {
+            return existing.first()
+        } else if (existing.size > 1) {
+            throw LogicException("Too many containers")
         }
 
         if (this.e.getParent() == null) {
