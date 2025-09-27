@@ -46,6 +46,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         // first, collect all groups and order
         val allGroups = collectGroups(g).sortedWith(compareBy({it.height} , { groupType(it) })).distinctBy { distinctOperation(it) }
         allGroups.forEach { processGroup(it, c) }
+
+        c.joinOverlappingNeighbourGroups()
     }
 
     private fun processGroup(

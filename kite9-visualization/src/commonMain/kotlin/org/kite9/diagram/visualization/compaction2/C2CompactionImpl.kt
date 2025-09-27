@@ -5,6 +5,8 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Flyweight class that handles the state of the compaction as it goes along.
@@ -148,8 +150,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
         fun getIncident(i: C2Slideable) : Set<C2Slideable> {
             return (
-                        getNeighbourSetsOn(i).flatMap { it }
-                               // + getSlideablesIncidentWith(i)
+                        getNeighbourSetsOn(i).flatMap { it } + getSlideablesIncidentWith(i)
                     ).toSet()
         }
 
@@ -301,6 +302,46 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     override fun getLocationsOn(s: C2Slideable): Set<C2Slideable> {
         return getSlideablesIncidentWith(s)
+    }
+
+    override fun joinOverlappingNeighbourGroups() {
+
+        fun calculateExtent(ss: Set<C2Slideable>) : Pair<Int, Int> {
+            return Pair(ss.minOf { it.minimumPosition }, ss.maxOf { it.minimumPosition })
+        }
+
+        fun inside(x: Int, a: Pair<Int, Int>) : Boolean {
+            return x>=a.first && x<=a.second
+        }
+
+        fun overlaps(a: Pair<Int, Int>, b: Pair<Int, Int>) : Boolean {
+            return inside(a.first, b)
+                    || inside(a.second, b)
+                    || inside(b.first, a)
+                    || inside(b.second, a)
+        }
+
+        fun mergeExtents(a: Pair<Int, Int>, b: Pair<Int, Int>) : Pair<Int, Int> {
+            return Pair(min(a.first, b.first), max(a.second, b.second))
+        }
+
+        neighbourDetails.keys.forEach { k ->
+            val oldGroups = neighbourDetails[k]!!
+            val extents = oldGroups.map { calculateExtent(it) to it }.toMap()
+            val newGroups = mutableMapOf<Pair<Int, Int>, Set<C2Slideable>>()
+            extents.forEach { (e, ss) ->
+                val overlapGroups = newGroups.filter { (k, v) -> overlaps(e, k) }
+                if (overlapGroups.isEmpty()) {
+                    newGroups[e] = ss
+                } else {
+                    val combinedExtent = overlapGroups.keys.reduce { a, b -> mergeExtents(a, b) }
+                    val combinedSet = overlapGroups.values.reduce { a, b -> a + b }
+                    overlapGroups.keys.forEach { newGroups.remove(it) }
+                    newGroups[mergeExtents(combinedExtent, e)] = combinedSet + ss
+                }
+            }
+            neighbourDetails[k] = newGroups.values.toMutableSet()
+        }
     }
 
 }

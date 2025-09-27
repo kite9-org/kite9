@@ -57,4 +57,5 @@ interface C2Compaction {
 
     fun checkConsistency()
 
+    fun joinOverlappingNeighbourGroups()
 }

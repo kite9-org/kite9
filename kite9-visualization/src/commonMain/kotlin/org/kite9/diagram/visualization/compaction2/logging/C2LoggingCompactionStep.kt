@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
@@ -16,6 +17,11 @@ class C2LoggingCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(
 
     override fun compact(c: C2Compaction, g:Group) {
         optimise(c, c.getSlackOptimisation(Dimension.H), c.getSlackOptimisation(Dimension.V))
+    }
+
+    fun addNeighbourDetails(s: C2Slideable, c: C2Compaction) : String {
+        val ns = c.getNeighbourSetsOn(s)
+        return "$s --  ${ns.size}"
     }
 
     fun optimise(
@@ -35,7 +41,7 @@ class C2LoggingCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(
   Vertical Segments: ${verticalSegments.pushCount} 
   Total: ${horizontalSegments.pushCount + verticalSegments.pushCount}"""
         )
-        log.send("Horizontal Segments:", horizontalSegments.getAllSlideables())
-        log.send("Vertical Segments:", verticalSegments.getAllSlideables())
+        log.send("Horizontal Segments:", horizontalSegments.getAllSlideables().map { addNeighbourDetails(it, c) } )
+        log.send("Vertical Segments:", verticalSegments.getAllSlideables().map { addNeighbourDetails(it, c) } )
     }
 }

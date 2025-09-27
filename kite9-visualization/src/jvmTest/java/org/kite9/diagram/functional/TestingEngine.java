@@ -332,6 +332,15 @@ public class TestingEngine extends TestingHelp {
         return in.stream().max(Comparator.comparingInt(Slideable::getMinimumPosition)).get();
     }
 
+    static int checkOccupied(int x, List<Integer> occupied) {
+        while (occupied.contains(x)) {
+            x=x+3;
+        }
+
+        occupied.add(x);
+        return x;
+    }
+
 	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");
 		if (!target.isDirectory()) {
@@ -356,65 +365,76 @@ public class TestingEngine extends TestingHelp {
 		outlineShape(c2.getDiagram(), c2, g);
 
 		final int[] nextCol = { 0 };
-		c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(s -> {
-			if (!s.isDone()) {
-				setColour(s, g);
-				g.drawLine(20, s.getMinimumPosition() * 10 + 30, xSize * 10 + 40, s.getMinimumPosition() * 10 + 30);
-				nextCol[0]++;
-                g.setColor(getColor(nextCol[0]));
-				g.drawString("v" + s.getNumber(), new Random().nextInt(20), s.getMinimumPosition() * 10 + 15+new Random().nextInt(10));
-				g.drawString("" + s.getMinimumPosition(), xSize * 10, s.getMinimumPosition() * 10 + 20);
-			}
-		});
 
-		c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(s -> {
-			if (!s.isDone()) {
-				setColour(s, g);
-				g.drawLine(s.getMinimumPosition() * 10 + 30, 20, s.getMinimumPosition() * 10 + 30, ySize * 10 + 40);
-				nextCol[0]++;
-                g.setColor(getColor(nextCol[0]));
-				g.drawString("h" + s.getNumber(), s.getMinimumPosition() * 10 + 30, 10);
-				g.drawString("" + s.getMinimumPosition(), s.getMinimumPosition() * 10 + 30, ySize * 10 + 50);
-			}
-		});
+
+
+        List<Integer> occupied = new ArrayList<>();
 
         c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(l -> {
-            Set<Set<C2Slideable>> toH = c2.getNeighbourSetsOn(l);
-            int[] c = { 0 };
+            if (!l.isDone()) {
+                final int y = checkOccupied(l.getMinimumPosition() * 10 + 30, occupied);
+                setColour(l, g);
+                g.setStroke(new BasicStroke());
 
-            toH.stream().forEach(h2 -> {
-                C2Slideable lowest = findLowest(h2);
-                C2Slideable highest = findHighest(h2);
+                g.drawLine(20, y, xSize * 10 + 40, y );
+                nextCol[0]++;
+                g.setColor(getColor(nextCol[0]));
+                g.drawString("v" + l.getNumber(), new Random().nextInt(20), y - 10);
+                g.drawString("" + l.getMinimumPosition(), xSize * 10, y - 10);
 
-                g.setColor(colors[c[0]]);
-                c[0] = c[0] + 1 % colors.length;
 
-                g.setStroke(strokeDecreasing);
-                g.drawLine(lowest.getMinimumPosition() * 10 + 30, l.getMinimumPosition() * 10 + 30, highest.getMinimumPosition() * 10 + 30, l.getMinimumPosition() * 10 + 30);
+                Set<Set<C2Slideable>> toH = c2.getNeighbourSetsOn(l);
+                int[] c = {0};
 
-                h2.forEach(it -> {
-                    g.fillRect(it.getMinimumPosition()*10+25, l.getMinimumPosition()*10+25, 10, 10);
+                toH.stream().forEach(h2 -> {
+                    C2Slideable lowest = findLowest(h2);
+                    C2Slideable highest = findHighest(h2);
+
+                    g.setColor(colors[c[0]]);
+                    c[0] = c[0] + 1 % colors.length;
+
+                    g.setStroke(strokeDecreasing);
+                    g.drawLine(lowest.getMinimumPosition() * 10 + 30, y, highest.getMinimumPosition() * 10 + 30, y);
+
+                    h2.forEach(it -> {
+                        g.fillRect(it.getMinimumPosition() * 10 + 25, y - 5, 10, 10);
+                    });
                 });
-            });
+            }
         });
 
+        occupied.clear();
+
         c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(l -> {
-            Set<Set<C2Slideable>> toV = c2.getNeighbourSetsOn(l);
-            int[] c = { 0 };
-            toV.stream().forEach(v2 -> {
-                C2Slideable lowest = findLowest(v2);
-                C2Slideable highest = findHighest(v2);
+            if (!l.isDone()) {
+                final int x = checkOccupied(l.getMinimumPosition() * 10 + 30, occupied);
+                setColour(l, g);
+                g.setStroke(new BasicStroke());
+                g.drawLine(x, 20, x, ySize * 10 + 40);
+                nextCol[0]++;
+                g.setColor(getColor(nextCol[0]));
+                g.drawString("h" + l.getNumber(), x, 10);
+                g.drawString("" + l.getMinimumPosition(), x, ySize * 10 + 50);
 
-                g.setColor(colors[c[0]]);
-                c[0] = c[0] + 1 % colors.length;
+                Set<Set<C2Slideable>> toV = c2.getNeighbourSetsOn(l);
+                int[] c = { 0 };
 
-                g.setStroke(strokeDecreasing);
+                toV.stream().forEach(v2 -> {
+                    C2Slideable lowest = findLowest(v2);
+                    C2Slideable highest = findHighest(v2);
 
-                g.drawLine(l.getMinimumPosition() * 10 + 30, lowest.getMinimumPosition() * 10 + 30, l.getMinimumPosition() * 10 + 30, highest.getMinimumPosition() * 10 + 30);
-                v2.forEach(it -> {
-                    g.fillRect(l.getMinimumPosition() * 10 + 25, it.getMinimumPosition() * 10 + 25, 10, 10);
+                    g.setColor(colors[c[0]]);
+                    c[0] = c[0] + 1 % colors.length;
+
+                    g.setStroke(strokeDecreasing);
+                    g.drawLine(x, lowest.getMinimumPosition() * 10 + 30, x, highest.getMinimumPosition() * 10 + 30);
+                    v2.forEach(it -> {
+                        g.fillRect(x-5, it.getMinimumPosition() * 10 + 25, 10, 10);
+                    });
                 });
-            });
+
+            }
+
         });
 
 
