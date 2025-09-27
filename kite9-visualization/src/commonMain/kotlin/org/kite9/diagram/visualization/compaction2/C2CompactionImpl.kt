@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import kotlin.math.max
@@ -94,10 +95,6 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
     override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
-        setupRectangularIntersectionsInner(hr, vr, ho, vo)
-    }
-
-    fun setupRectangularIntersectionsInner(hr: RectangularSlideableSet?, vr: RectangularSlideableSet?, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
         if (vo.bl != null) {
             addNeighbour(vo.bl!!, ho.bl, ho.c)
             addNeighbour(vo.bl!!, ho.c, ho.br)
@@ -149,14 +146,35 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     ) {
 
         fun getIncident(i: C2Slideable) : Set<C2Slideable> {
-            return (
-                        getNeighbourSetsOn(i).flatMap { it } + getSlideablesIncidentWith(i)
-                    ).toSet()
+            return getSlideablesIncidentWith(i).toSet()
         }
 
-        fun propagate(incident: Set<C2Slideable>, from: C2Slideable, to: C2Slideable?) {
+        fun isInBounds(s: C2Slideable) : Boolean {
+            val out = when (s.dimension) {
+                Dimension.H -> if ((ho.bl != null) && (ho.br != null)) {
+                    (ho.bl!!.minimumPosition <= s.minimumPosition) && (ho.br!!.minimumPosition >= s.minimumPosition)
+                } else {
+                    false
+                }
+                Dimension.V -> if ((vo.bl != null) && (vo.br != null)) {
+                    (vo.bl!!.minimumPosition <= s.minimumPosition) && (vo.br!!.minimumPosition >= s.minimumPosition)
+                } else {
+                    false
+                }
+            }
+
+            return out
+        }
+
+        fun propagate(incident: Set<C2Slideable>, from: C2Slideable, to: C2Slideable?, e: DiagramElement) {
             if ((from != null) && (to != null)) {
-                incident.forEach { along -> addNeighbour(along, from, to) }
+                if (to.getOrbitingElements().contains(e)) {
+                    incident.forEach { along ->
+                        if (isInBounds(along) && isInBounds(to) && isInBounds(from)) {
+                            addNeighbour(along, from, to)
+                        }
+                    }
+                }
             }
         }
 
@@ -164,12 +182,15 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         val hrSet = getIncident(hi.r)
         val vlSet = getIncident(vi.l)
         val vrSet = getIncident(vi.r)
+        val e = hi.e
 
-        propagate(hlSet, hi.l, ho.bl)
-        propagate(hrSet, hi.r, ho.br)
-        propagate(vlSet, vi.l, vo.bl)
-        propagate(vrSet, vi.r, vo.br)
+        propagate(hlSet, hi.l, ho.bl, e)
+        propagate(hrSet, hi.r, ho.br,e)
+        propagate(vlSet, vi.l, vo.bl,e)
+        propagate(vrSet, vi.r, vo.br,e )
+
     }
+
 
     override fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
         hi: RoutableSlideableSet,
@@ -177,25 +198,6 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         ho: RectangularSlideableSet,
         vo: RectangularSlideableSet,
     ) {
-
-        fun getInternalSlideables(ss: RoutableSlideableSet, processed: MutableSet<RoutableSlideableSet>) : Set<C2Slideable> {
-            val so = ss.getAll().firstOrNull()?.so as C2SlackOptimisation?
-
-            if (so != null) {
-                val internalSS = so.getContents(ss) ?: emptySet<RectangularSlideableSet>()
-                val wrappers = internalSS.flatMap { so.getContainers(it) }.filterNotNull().toSet()
-                val unprocessedWrappers = wrappers - processed
-                processed.addAll(wrappers)
-                val nested = unprocessedWrappers.flatMap { getInternalSlideables(it, processed) }
-                val slideables = wrappers.flatMap { it.getAll() } + ss.getAll() + nested
-                return slideables.toSet()
-            } else {
-                return emptySet()
-            }
-        }
-
-        val hAllowedSlideables = getInternalSlideables(hi, mutableSetOf()).plus(ho.getAll())
-        val vAllowedSlideables = getInternalSlideables(vi, mutableSetOf()).plus(vo.getAll())
 
         fun getIncident(a: C2Slideable, b: C2Slideable?) : Set<C2Slideable> {
             return (
@@ -206,22 +208,29 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     ).toSet()
         }
 
+        fun isInBounds(s: C2Slideable) : Boolean {
+            val out = when (s.dimension) {
+                Dimension.H -> (ho.l.minimumPosition <= s.minimumPosition) && (ho.r.minimumPosition >= s.minimumPosition)
+                Dimension.V -> (vo.l.minimumPosition <= s.minimumPosition) && (vo.r.minimumPosition >= s.minimumPosition)
+            }
+
+            return out
+        }
+
         fun propagate(incident: Set<C2Slideable>, from: C2Slideable?, to: C2Slideable?) {
             if ((from != null) && (to != null)) {
-                incident.forEach { along -> addNeighbour(along, from, to) }
+                incident.forEach { along ->
+                    if (isInBounds(along) && isInBounds(to) && isInBounds(from)) {
+                        addNeighbour(along, from, to)
+                    }
+                }
             }
         }
 
-        val hl = getIncident(ho.l, hi.bl).intersect(vAllowedSlideables)
-        val hr = getIncident(ho.r, hi.br).intersect(vAllowedSlideables)
-        val vl = getIncident(vo.l, vi.bl).intersect(hAllowedSlideables)
-        val vr = getIncident(vo.r, vi.br).intersect(hAllowedSlideables)
-
-
-//        val hl = getIncident(ho.l, hi.bl)
-//        val hr = getIncident(ho.r, hi.br)
-//        val vl = getIncident(vo.l, vi.bl)
-//        val vr = getIncident(vo.r, vi.br)
+        val hl = getIncident(ho.l, hi.bl)
+        val hr = getIncident(ho.r, hi.br)
+        val vl = getIncident(vo.l, vi.bl)
+        val vr = getIncident(vo.r, vi.br)
 
         propagate(hl,hi.bl, ho.l)
         propagate(hr, hi.br, ho.r)
@@ -230,7 +239,12 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
     override fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
-        setupRectangularIntersectionsInner(null, null, h, v)
+        if ((v.bl != null) && (v.br != null) && (h.bl != null) && (h.br != null)) {
+            addNeighbour(v.bl!!, h.bl, h.br)
+            addNeighbour(v.br!!, h.bl, h.br)
+            addNeighbour(h.bl!!, v.bl, v.br)
+            addNeighbour(h.br!!, v.bl, v.br)
+        }
    }
 
     override fun replaceIntersections(s1: C2Slideable, s2: C2Slideable, sNew: C2Slideable) {

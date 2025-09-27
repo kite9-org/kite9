@@ -16,6 +16,7 @@ import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionSt
 import org.kite9.diagram.visualization.compaction2.align.C2CenteringAligner
 import org.kite9.diagram.visualization.compaction2.align.C2LeftRightAligner
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
+import org.kite9.diagram.visualization.compaction2.hierarchy.C2NeighbourBuilderStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.labels.C2ConnectionLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.labels.C2ContainerLabelCompactionStep
@@ -123,6 +124,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         val gp = elementMapper.getGridPositioner()
         val steps = arrayOf<C2CompactionStep>(
             C2HierarchicalCompactionStep(cd, mr),
+            C2NeighbourBuilderStep(cd),
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
 //            C2ConnectionFanningCompactionStep(cd, gp),

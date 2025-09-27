@@ -46,8 +46,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
         // first, collect all groups and order
         val allGroups = collectGroups(g).sortedWith(compareBy({it.height} , { groupType(it) })).distinctBy { distinctOperation(it) }
         allGroups.forEach { processGroup(it, c) }
-
-        c.joinOverlappingNeighbourGroups()
     }
 
     private fun processGroup(
@@ -102,8 +100,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     hso.contains(hss, hr)
                     vso.contains(vss, vr)
                     c.setupRectangularIntersections(hr, vr, hss, vss)
-                    c.propagateIntersectionsFromRectangularToOuterRoutable(hr, vr, hss, vss)
-                    c.setupRoutableIntersections(hss, vss)
+                    // c.propagateIntersectionsFromRectangularToOuterRoutable(hr, vr, hss, vss)
                 }
             } else {
                 // leaf node must be for container arrival

@@ -60,8 +60,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
         val soxInnerRoutable = sox.getContents(soxContainer)
 
         if (soxInnerRoutable != null) {
-            c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
-            c.propagateIntersectionsBetweenRoutableAndOuterRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
+            // c.setupRoutableIntersections(soxInnerRoutable, soInnerRoutable)
+            // c.propagateIntersectionsBetweenRoutableAndOuterRectangular(soInnerRoutable, soxInnerRoutable, soContainer, soxContainer)
         }
 
         val soOuterRoutable = embedInContainerAndWrap(c, so, soContainer, soInnerRoutable, d, g)
@@ -69,25 +69,25 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
 
         if (soOuterRoutable != null) {
             soxOuterRoutables.forEach { soxOuterRoutable ->
-                c.setupRectangularIntersections(soContainer, soxContainer, soOuterRoutable, soxOuterRoutable)
+//                c.setupRectangularIntersections(soContainer, soxContainer, soOuterRoutable, soxOuterRoutable)
 
                 if (soxInnerRoutable != null) {
                     // we redo this here as we want to propagate some of the intersections created
                     // in the above if too.
-                    c.propagateIntersectionsBetweenRoutableAndOuterRectangular(
-                        soInnerRoutable,
-                        soxInnerRoutable,
-                        soContainer,
-                        soxContainer
-                    )
+//                    c.propagateIntersectionsBetweenRoutableAndOuterRectangular(
+//                        soInnerRoutable,
+//                        soxInnerRoutable,
+//                        soContainer,
+//                        soxContainer
+//                    )
                 }
 
-                c.propagateIntersectionsFromRectangularToOuterRoutable(
-                    soContainer,
-                    soxContainer,
-                    soOuterRoutable,
-                    soxOuterRoutable,
-                )
+//                c.propagateIntersectionsFromRectangularToOuterRoutable(
+//                    soContainer,
+//                    soxContainer,
+//                    soOuterRoutable,
+//                    soxOuterRoutable,
+//                )
 
             }
 
