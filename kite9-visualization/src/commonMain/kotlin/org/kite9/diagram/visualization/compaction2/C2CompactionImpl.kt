@@ -43,12 +43,6 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             return
         }
 
-//        if ((n1.getRectAnchors().isNotEmpty() && along.getIntersectAnchors().isEmpty()) ||
-//            (n2.getRectAnchors().isNotEmpty() && along.getIntersectAnchors().isEmpty())) {
-//            // third guard:  you can only meet a rectangular on it's intersect.
-//            return
-//        }
-
         val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
 
         val ns1 = superSet.find { it.contains(n1) }
@@ -123,11 +117,18 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
 
         if ((vr != null) && (hr != null)) {
-            if (vo.c != null) {
+
+            fun intersectMatchesRect(o: C2Slideable, r: C2Slideable) : Boolean {
+                val oe = o.getIntersectingElements()
+                val re = r.getRectElements()
+                return oe == re
+            }
+
+            if ((vo.c != null) && intersectMatchesRect(vo.c!!, hr.l)) {
                 addNeighbour(vo.c!!, ho.bl, hr.l)
                 addNeighbour(vo.c!!, ho.br, hr.r)
             }
-            if (ho.c != null) {
+            if ((ho.c != null) && intersectMatchesRect(ho.c!!, vr.l)) {
                 addNeighbour(ho.c!!, vo.bl, vr.l)
                 addNeighbour(ho.c!!, vo.br, vr.r)
             }
@@ -148,17 +149,13 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         fun getIncident(i: C2Slideable) : Set<C2Slideable> {
             return (
                         getNeighbourSetsOn(i).flatMap { it }
-                                + getSlideablesIncidentWith(i)
+                               // + getSlideablesIncidentWith(i)
                     ).toSet()
         }
 
         fun propagate(incident: Set<C2Slideable>, from: C2Slideable, to: C2Slideable?) {
             if ((from != null) && (to != null)) {
-                incident.forEach { along ->
-                    //if (along.getRectAnchors().isEmpty()) {
-                        addNeighbour(along, from, to)
-                    //}
-                }
+                incident.forEach { along -> addNeighbour(along, from, to) }
             }
         }
 

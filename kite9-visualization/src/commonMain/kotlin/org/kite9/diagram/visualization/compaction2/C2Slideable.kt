@@ -112,6 +112,10 @@ class C2Slideable(
         return getOrbitAnchors().map { it.e }.toSet()
     }
 
+    fun getRectElements() : Set<DiagramElement> {
+        return getRectAnchors().map { it.e }.toSet()
+    }
+
     fun getOrbitAnchors(): Set<OrbitAnchor> {
         return anchors.filterIsInstance<OrbitAnchor>().toSet()
     }
