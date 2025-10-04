@@ -11,6 +11,10 @@ interface C2Compaction {
     fun getDiagram(): Diagram
 
     /**
+     * Places a neighbour on the along slideable, allowing routing from n1 to n2 or vice versa.
+     */
+    fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?)
+    /**
      * Around a rectangular (e.g. container or glyph) the intersection slideables of one dimension should meet
      * the rectangular slideables of the other.
      */

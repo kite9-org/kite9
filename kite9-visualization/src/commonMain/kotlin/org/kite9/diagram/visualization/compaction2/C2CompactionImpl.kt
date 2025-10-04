@@ -35,7 +35,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private val neighbourDetails = mutableMapOf<C2Slideable, MutableSet<Set<C2Slideable>>>()
 
-    private fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?) {
+    override fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?) {
         if ((n1 == null) || (n2==null) || (along==null)) {
             // first guard - along, n1 and n2 must be non-null
             return
