@@ -45,9 +45,9 @@ class C2NeighbourBuilderStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(c
 
                 val hcs = hso.getContainers(hr)
                 val vcs = vso.getContainers(vr)
-                val cs = hcs.zip(vcs)
+                val cs = hcs.flatMap { h -> vcs.map { v-> Pair(h,v) } }.toSet()
 
-                cs.forEachIndexed { i, (h, v) ->
+                cs.forEach { (h, v) ->
                     c.setupRoutableIntersections(h, v)
                     c.propagateIntersectionsFromRectangularToOuterRoutable(hr, vr, h, v)
                 }

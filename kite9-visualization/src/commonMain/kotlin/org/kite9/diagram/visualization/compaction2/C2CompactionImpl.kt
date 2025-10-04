@@ -200,12 +200,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     ) {
 
         fun getIncident(a: C2Slideable, b: C2Slideable?) : Set<C2Slideable> {
-            return (
-                    getNeighbourSetsOn(a).flatMap { it } +
-                            if (b != null)
-                                getNeighbourSetsOn(b).flatMap { it }
-                            else emptySet()
-                    ).toSet()
+            val ai = getSlideablesIncidentWith(a)
+            val bi = if (b != null) getSlideablesIncidentWith(b) else emptySet()
+            return (ai + bi).toSet()
         }
 
         fun isInBounds(s: C2Slideable) : Boolean {
@@ -244,6 +241,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             addNeighbour(v.br!!, h.bl, h.br)
             addNeighbour(h.bl!!, v.bl, v.br)
             addNeighbour(h.br!!, v.bl, v.br)
+
         }
    }
 
