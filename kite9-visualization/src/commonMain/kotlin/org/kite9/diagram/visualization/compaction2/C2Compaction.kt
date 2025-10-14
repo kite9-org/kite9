@@ -10,6 +10,8 @@ interface C2Compaction {
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
     fun getDiagram(): Diagram
 
+    fun buildNeighbours()
+
     /**
      * Places a neighbour on the along slideable, allowing routing from n1 to n2 or vice versa.
      */

@@ -132,6 +132,13 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
             if (out3.prev != null) {
                 ensureSlackForConnection(out3.point, out3.prev, c, true)
             }
+
+            if (replacements.isNotEmpty()) {
+                // since we have re-ordered the diagram, recalculate neighbour map
+                c2.buildNeighbours()
+                c2.joinOverlappingNeighbourGroups()
+            }
+
             c2.checkConsistency()
 
             log.send("Horizontal Segments:", c2.getSlackOptimisation(Dimension.H).getAllSlideables())
