@@ -48,7 +48,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             return
         }
 
-        println("Adding neighbour ${along.number} ${n1.number}-${n2.number}")
+        //println("Adding neighbour ${along.number} ${n1.number}-${n2.number}")
 
         val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
 
@@ -407,7 +407,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 } else if (a.size > 1) {
                     throw LogicException("Not ready for this")
                 } else {
-                    println("Encountered ${s}")
+                    //println("Encountered ${s}")
                     val first = a.first()
                     if (first.s == Side.START) {
                         if (alongElements.contains(first.e)) {
@@ -448,7 +448,8 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     .toSet()
 
                 val relevantOrbitSlideables = sox.getAllSlideables()
-                    .filter { it.getOrbitingElements().intersect(blockingElements).isNotEmpty() }
+                    .filter { it.getOrbitingElements().isNotEmpty() ||
+                    it.getIntersectingElements().isNotEmpty() }
                     .toSet()
 
 

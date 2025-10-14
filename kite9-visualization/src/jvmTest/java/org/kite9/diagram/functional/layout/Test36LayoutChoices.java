@@ -59,11 +59,11 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 
 		Context con1 = new Context("con1",
 				misorder ? HelpMethods.listOf(g3, g2, g0, g1, g4, g5) : HelpMethods.listOf(g0, g1, g2, g3, g4, g5),
-				true, new TextLine("c1"), cl);
+				true, null, cl);
 
 		Context con2 = new Context("con2",
 				misorder ? HelpMethods.listOf(gn0, gn4, gn3, gn1, gn2) : HelpMethods.listOf(gn0, gn1, gn2, gn3, gn4),
-				true, new TextLine("c2"), cl);
+				true, null, cl);
 
 		createLink(going, g0, gn0);
 		createLink(going, g1, gn0);

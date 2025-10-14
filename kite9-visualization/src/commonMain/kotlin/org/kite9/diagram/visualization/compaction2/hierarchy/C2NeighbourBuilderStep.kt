@@ -19,6 +19,7 @@ class C2NeighbourBuilderStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(c
 
     override fun compact(c: C2Compaction, g: Group) {
         c.buildNeighbours()
+        c.joinOverlappingNeighbourGroups()
     }
 
 
