@@ -364,22 +364,23 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         neighbourDetails.clear()
         handleIntersections(this)
         handleOrbits(this)
+        joinOverlappingNeighbourGroups()
     }
 
     private fun handleIntersections(c2: C2Compaction) {
         val v = c2.getSlackOptimisation(Dimension.V)
         val h = c2.getSlackOptimisation(Dimension.H)
 
-        handleIntersectionsOnDimension(c2,v, h, Direction.RIGHT)
-        handleIntersectionsOnDimension(c2, h, v, Direction.DOWN)
+        handleNeighboursOnDimension(c2,v, h, Direction.RIGHT, v.getAllSlideables().filter { it.getIntersectingElements().isNotEmpty() })
+        handleNeighboursOnDimension(c2, h, v, Direction.DOWN, h.getAllSlideables().filter { it.getIntersectingElements().isNotEmpty() })
     }
 
     private fun handleOrbits(c2: C2Compaction) {
         val v = c2.getSlackOptimisation(Dimension.V)
         val h = c2.getSlackOptimisation(Dimension.H)
 
-        handleOrbitsOnDimension(c2,v, h, Direction.RIGHT)
-        handleOrbitsOnDimension(c2, h, v, Direction.DOWN)
+        handleNeighboursOnDimension(c2,v, h, Direction.RIGHT, v.getAllSlideables().filter { it.getOrbitingElements().isNotEmpty() })
+        handleNeighboursOnDimension(c2, h, v, Direction.DOWN, h.getAllSlideables().filter { it.getOrbitingElements().isNotEmpty() })
     }
 
 
@@ -387,10 +388,11 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
      * The basic approach here is to trace along the intersection and make sure that every rectangular that crosses the path of it
      * intersects with the intersection.
      */
-    private fun handleIntersectionsOnDimension(c2: C2Compaction,
-                                               so: C2SlackOptimisation,
-                                               sox: C2SlackOptimisation,
-                                               d: Direction) {
+    private fun handleNeighboursOnDimension(c2: C2Compaction,
+                                            so: C2SlackOptimisation,
+                                            sox: C2SlackOptimisation,
+                                            d: Direction,
+                                            toDo: List<C2Slideable>) {
 
         fun intersects(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Boolean {
             return (s.minimumPosition >= min(from.minimumPosition, to.minimumPosition)) &&
@@ -398,36 +400,39 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
 
         fun updateBlocking(s: C2Slideable, potentialBlockers: Set<C2Slideable>, alongElements: Set<DiagramElement>, currentBlockedBy: Set<DiagramElement>) : Set<DiagramElement> {
-            val a = s.getRectAnchors()
-            if (a.isEmpty()) {
-                return currentBlockedBy
-            } else if (a.size > 1) {
-                throw LogicException("Not ready for this")
-            } else {
-                println("Encountered ${s}")
-                val first = a.first()
-                if (first.s == Side.START) {
-                    if (alongElements.contains(first.e)) {
-                        // we can never traverse inside the intersection
-                        return currentBlockedBy + first.e
-                    } else if (first.e is Diagram) {
-                        return currentBlockedBy
-                    } else if (first.canCross(d)) {
-                        return currentBlockedBy
-                    } else {
-                        return currentBlockedBy + first.e
-                    }
+            if (potentialBlockers.contains(s)) {
+                val a = s.getRectAnchors()
+                if (a.isEmpty()) {
+                    return currentBlockedBy
+                } else if (a.size > 1) {
+                    throw LogicException("Not ready for this")
                 } else {
-                    return currentBlockedBy - s.getRectElements()
+                    println("Encountered ${s}")
+                    val first = a.first()
+                    if (first.s == Side.START) {
+                        if (alongElements.contains(first.e)) {
+                            // we can never traverse inside the intersection
+                            return currentBlockedBy + first.e
+                        } else if (first.e is Diagram) {
+                            return currentBlockedBy
+                        } else if (first.canCross(d)) {
+                            return currentBlockedBy
+                        } else {
+                            return currentBlockedBy + first.e
+                        }
+                    } else {
+                        return currentBlockedBy - s.getRectElements()
+                    }
                 }
+            } else {
+                return currentBlockedBy
             }
         }
 
 
         val allElements = so.getAllPositioned()
 
-        so.getAllSlideables()
-            .filter { it.getIntersectingElements().isNotEmpty() }
+        toDo
             .forEach { along ->
                 // anything that is along the path of along
                 val blockingElements = allElements
@@ -437,15 +442,18 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     .toSet()
 
                 // slideables for the above elements
-                val blockingSlideables = blockingElements
+                val relevantBlockingSlideables = blockingElements
                     .map { e -> sox.getSlideablesFor(e)!!}
                     .flatMap { it -> listOf(it.l, it.r) }
                     .toSet()
 
+                val relevantOrbitSlideables = sox.getAllSlideables()
+                    .filter { it.getOrbitingElements().intersect(blockingElements).isNotEmpty() }
+                    .toSet()
+
 
                 // actual intersecting elements
-                val traversalOrder = (blockingSlideables +
-                        sox.getAllSlideables().filter { it.getRectElements().isEmpty() })
+                val traversalOrder = (relevantBlockingSlideables + relevantOrbitSlideables)
                     .sortedBy { it.minimumPosition }
 
 
@@ -460,95 +468,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                         prev = curr
                     }
 
-                    blockedBy = updateBlocking(curr, blockingSlideables, along.getIntersectingElements(), blockedBy)
+                    blockedBy = updateBlocking(curr, relevantBlockingSlideables, along.getIntersectingElements(), blockedBy)
                 }
             }
     }
 
-    /**
-     * TODO: you can probably just use the same code as above.
-     */
-    private fun handleOrbitsOnDimension(c2: C2Compaction,
-                                        so: C2SlackOptimisation,
-                                        sox: C2SlackOptimisation,
-                                        d: Direction) {
 
-        fun intersects(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Boolean {
-            return (s.minimumPosition >= min(from.minimumPosition, to.minimumPosition)) &&
-                    (s.minimumPosition <= max(from.minimumPosition, to.minimumPosition));
-        }
-
-        fun canEmergeFrom(s: C2Slideable, blockedBy: DiagramElement) : DiagramElement? {
-            return if (s.getRectElements().contains(blockedBy)) {
-                null
-            } else {
-                blockedBy
-            }
-        }
-
-        fun canTraverse(s: C2Slideable, potentialBlockers: Set<C2Slideable>, alongElements: Set<DiagramElement>, d: Direction) : DiagramElement? {
-            if (potentialBlockers.contains(s)) {
-                val blocker = s.getRectAnchors()
-                if (blocker.isEmpty()) {
-                    return null
-                } else if (blocker.size == 1) {
-                    val first = blocker.first()
-                    if (alongElements.contains(first.e)) {
-                        // we can never traverse inside the intersection
-                        return first.e
-                    } else if (first.e is Diagram) {
-                        return null
-                    } else if (first.canCross(d)) {
-                        return null
-                    } else {
-                        return first.e
-                    }
-                } else {
-                    throw LogicException("What is this?")
-                }
-            } else {
-                return null
-            }
-        }
-
-        val allElements = so.getAllPositioned()
-
-        so.getAllSlideables()
-            .filter { it.getOrbitingElements().isNotEmpty() }
-            .forEach { along ->
-                // anything that is along the path of along
-                val blockingElements = allElements
-                    .filter { e ->
-                        val set = so.getSlideablesFor(e)!!
-                        intersects(along, set.l, set.r) }
-                    .toSet()
-
-                // slideables for the above elements
-                val blockingSlideables = blockingElements
-                    .map { e -> sox.getSlideablesFor(e)!!}
-                    .flatMap { it -> listOf(it.l, it.r) }
-                    .toSet()
-
-
-                // actual intersecting elements
-                val traversalOrder = (blockingSlideables +
-                        sox.getAllSlideables().filter { it.getRectElements().isEmpty() })
-                    .sortedBy { it.minimumPosition }
-
-
-                var prev : C2Slideable? = null
-                var blockedBy : DiagramElement? = null
-
-                for(curr in traversalOrder) {
-                    if (blockedBy == null) {
-                        c2.addNeighbour(along, prev, curr)
-                        prev = curr
-                        blockedBy = canTraverse(curr, blockingSlideables, along.getIntersectingElements(), d)
-                    } else {
-                        prev = curr
-                        blockedBy = canEmergeFrom(curr, blockedBy)
-                    }
-                }
-            }
-    }
 }

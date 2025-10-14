@@ -135,7 +135,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             C2DiagramSizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2MaximizeCompactionStep(cd),
-            C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
+            //C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
             C2FanMinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2RectangularPositionCompactionStep(cd),

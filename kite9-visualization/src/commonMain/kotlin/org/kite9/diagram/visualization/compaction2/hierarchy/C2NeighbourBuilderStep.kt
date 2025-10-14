@@ -18,12 +18,7 @@ import kotlin.math.min
 class C2NeighbourBuilderStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
 
     override fun compact(c: C2Compaction, g: Group) {
-        val d = c.getDiagram()
         c.buildNeighbours()
-        //buildNeighbours(c, d, null, null)
-//        handleIntersections(c)
-//        handleOrbits(c)
-        c.joinOverlappingNeighbourGroups()
     }
 
 

@@ -135,8 +135,8 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 
             if (replacements.isNotEmpty()) {
                 // since we have re-ordered the diagram, recalculate neighbour map
-                c2.buildNeighbours()
-                c2.joinOverlappingNeighbourGroups()
+                //c2.buildNeighbours()
+               // c2.joinOverlappingNeighbourGroups()
             }
 
             c2.checkConsistency()
@@ -297,14 +297,15 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-        queue.forEach {
-            if (it is Connection) {
-                val route = insertLink(c, it)
-                if (route != null) {
-                    writeRoute(it, route, 0, null)
-                }
-            }
-        }
+//        queue.toList().slice(0..1).forEach {
+//            if (it is Connection) {
+//                val route = insertLink(c, it)
+//                if (route != null) {
+//                    writeRoute(it, route, 0, null)
+//
+//                }
+//            }
+//        }
 
         println("Done")
     }
