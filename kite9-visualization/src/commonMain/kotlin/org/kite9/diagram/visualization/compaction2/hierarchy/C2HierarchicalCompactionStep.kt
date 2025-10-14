@@ -99,7 +99,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     vso.add(g, vss)
                     hso.contains(hss, hr)
                     vso.contains(vss, vr)
-                    c.setupRectangularIntersections(hr, vr, hss, vss)
+                    //c.setupRectangularIntersections(hr, vr, hss, vss)
                     // c.propagateIntersectionsFromRectangularToOuterRoutable(hr, vr, hss, vss)
                 }
             } else {
@@ -107,7 +107,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                 val f = g.container!!
                 val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
                 val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
-                c.setupRoutableIntersections(hss, vss)
+                //c.setupRoutableIntersections(hss, vss)
             }
 
         } else {

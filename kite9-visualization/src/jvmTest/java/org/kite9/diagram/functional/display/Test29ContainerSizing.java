@@ -281,6 +281,7 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
         // links from c2 to c3
         new Link(g3, g4, null, new TextLabel("straight5"), null, new TextLabel("straight6"), Direction.RIGHT);
         new TurnLink(g3, g5);
+        new Link(c3, c0);
 
         TurnLink b3 = new TurnLink(g2, g5);
         TurnLink b4 = new TurnLink(g2, g4);

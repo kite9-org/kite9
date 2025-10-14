@@ -94,7 +94,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return neighbourSet
     }
 
-    override fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
+    fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
         if (vo.bl != null) {
             addNeighbour(vo.bl!!, ho.bl, ho.c)
             addNeighbour(vo.bl!!, ho.c, ho.br)
@@ -138,7 +138,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return this.neighbourDetails.filter { (k, v) -> v.firstOrNull { it.contains(s) } != null }.keys
     }
 
-    override fun propagateIntersectionsFromRectangularToOuterRoutable(
+    fun propagateIntersectionsFromRectangularToOuterRoutable(
         hi: RectangularSlideableSet,
         vi: RectangularSlideableSet,
         ho: RoutableSlideableSet,
@@ -192,7 +192,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     }
 
 
-    override fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
+    fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
         hi: RoutableSlideableSet,
         vi: RoutableSlideableSet,
         ho: RectangularSlideableSet,
@@ -235,7 +235,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         propagate(vr, vi.br, vo.r)
     }
 
-    override fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
+    fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
         if ((v.bl != null) && (v.br != null) && (h.bl != null) && (h.br != null)) {
             addNeighbour(v.bl!!, h.bl, h.br)
             addNeighbour(v.br!!, h.bl, h.br)
@@ -245,7 +245,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
    }
 
-    override fun replaceIntersections(s1: C2Slideable, s2: C2Slideable, sNew: C2Slideable) {
+    fun replaceIntersections(s1: C2Slideable, s2: C2Slideable, sNew: C2Slideable) {
 
         // merge alongs
         val s1ss = neighbourDetails.remove(s1) ?: mutableSetOf()
