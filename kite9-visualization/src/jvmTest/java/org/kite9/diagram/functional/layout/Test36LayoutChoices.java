@@ -276,7 +276,7 @@ public class Test36LayoutChoices extends AbstractLayoutFunctionalTest {
 
 	@Test
 	public void test_36_14_SimpleCombSlackAllButOrdered() throws Exception {
-		DiagramKite9XMLElement d = doSimpleComb(null, null, null, false);
+		DiagramKite9XMLElement d = doSimpleComb(Layout.VERTICAL, null, null, false);
 		renderDiagram(d);
 		Document doc = Kite9SVGTranscoder.lastOutputDocument;
 		Element t = doc.getDocumentElement();

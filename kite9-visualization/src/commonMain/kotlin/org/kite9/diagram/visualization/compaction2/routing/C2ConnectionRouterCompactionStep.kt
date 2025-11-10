@@ -297,7 +297,9 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-        queue.toList().forEach {
+        queue.toList()
+            //.slice(0..1)
+            .forEach {
             if (it is Connection) {
                 val route = insertLink(c, it)
                 if (route != null) {

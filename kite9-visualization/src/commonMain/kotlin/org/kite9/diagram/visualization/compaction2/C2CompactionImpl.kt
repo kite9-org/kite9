@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -399,6 +400,29 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     (s.minimumPosition <= max(from.minimumPosition, to.minimumPosition));
         }
 
+        fun withinOrbit(along: Set<DiagramElement>, orbits: Set<DiagramElement>) : Boolean {
+            return along.filter { i ->
+                val inside = orbits
+                    .filterIsInstance<Container>()
+                    .find { o -> o.deepContains(i) || o == i } != null
+                inside
+            }.isNotEmpty()
+        }
+
+        fun updateOrbits(s: C2Slideable, currentOrbits: Set<DiagramElement>) : Set<DiagramElement> {
+            val orbs = s.getOrbitAnchors()
+            val out = currentOrbits.toMutableSet()
+            orbs.forEach {
+                if (it.s == Side.START) {
+                    out.add(it.e)
+                } else {
+                    out.remove(it.e)
+                }
+            }
+
+            return out.toSet()
+        }
+
         fun updateBlocking(s: C2Slideable, potentialBlockers: Set<C2Slideable>, alongElements: Set<DiagramElement>, currentBlockedBy: Set<DiagramElement>) : Set<DiagramElement> {
             if (potentialBlockers.contains(s)) {
                 val a = s.getRectAnchors()
@@ -434,6 +458,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
         toDo
             .forEach { along ->
+                val alongElements
+                    = (along.getIntersectingElements() + along.getOrbitingElements()).toSet()
+
                 // anything that is along the path of along
                 val blockingElements = allElements
                     .filter { e ->
@@ -459,10 +486,11 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
 
                 var prev : C2Slideable? = null
+                var withinOrbits: Set<DiagramElement> = emptySet()
                 var blockedBy : Set<DiagramElement> = emptySet()
 
                 for(curr in traversalOrder) {
-                    if (blockedBy.isEmpty()) {
+                    if (blockedBy.isEmpty() && (withinOrbit(alongElements, withinOrbits))) {
                         c2.addNeighbour(along, prev, curr)
                         prev = curr
                     } else {
@@ -470,6 +498,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     }
 
                     blockedBy = updateBlocking(curr, relevantBlockingSlideables, along.getIntersectingElements(), blockedBy)
+                    withinOrbits = updateOrbits(curr, withinOrbits)
                 }
             }
     }
