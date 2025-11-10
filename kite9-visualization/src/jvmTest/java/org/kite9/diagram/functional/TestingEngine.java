@@ -314,7 +314,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-    static Color[] colors = {  Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.WHITE, Color.GRAY };
+    static Color[] colors = {  Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.GRAY };
 
     static Stroke strokeIncreasing = new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 6, 21 }, 0);
     static Stroke strokeDecreasing = new BasicStroke(5, BasicStroke.CAP_ROUND, 0, 1, new float[] { 4, 17 }, 0);
@@ -391,7 +391,7 @@ public class TestingEngine extends TestingHelp {
                     C2Slideable highest = findHighest(h2);
 
                     g.setColor(colors[c[0]]);
-                    c[0] = c[0] + 1 % colors.length;
+                    c[0] = (c[0] + 1) % colors.length;
 
                     g.setStroke(strokeDecreasing);
                     g.drawLine(lowest.getMinimumPosition() * 10 + 30, y, highest.getMinimumPosition() * 10 + 30, y);

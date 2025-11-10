@@ -144,13 +144,33 @@ class C2SlideableSSP(
     }
 
     private fun nextInDirection(from: C2Slideable,  d: Direction, along: C2Slideable) : Set<C2Slideable> {
+        fun positionBefore(a: C2Slideable, b: C2Slideable) : Boolean {
+            return a.minimumPosition < b.minimumPosition
+        }
+
+        fun positionSame(a: C2Slideable, b: C2Slideable) : Boolean {
+            return a.minimumPosition  == b.minimumPosition
+        }
+
+        fun positionAfter(a: C2Slideable, b: C2Slideable) : Boolean {
+            return a.minimumPosition > b.minimumPosition
+        }
+
+        fun numericallyBefore(a: C2Slideable, b: C2Slideable) : Boolean {
+            return a.number < b.number
+        }
+
+        fun numericallyAfter(a: C2Slideable, b: C2Slideable) : Boolean {
+            return a.number > b.number
+        }
+
         val neighbours = this.c2.getNeighbours(along, from)
 
         val neighboursInRightDirection = when (d) {
             Direction.UP, Direction.LEFT ->
-                neighbours.filter { it.minimumPosition - from.minimumPosition < 0 }
+                neighbours.filter { positionBefore(it, from) || (positionSame(it, from) && numericallyBefore(it, from)) }
             Direction.RIGHT, Direction.DOWN ->
-                neighbours.filter { it.minimumPosition - from.minimumPosition > 0  }
+                neighbours.filter { positionAfter(it, from) || (positionSame(it, from) && numericallyAfter(it, from)) }
         }
 
         val minDistance = neighboursInRightDirection.map { getAbsoluteDistance(from, it) }.minOfOrNull { it }
