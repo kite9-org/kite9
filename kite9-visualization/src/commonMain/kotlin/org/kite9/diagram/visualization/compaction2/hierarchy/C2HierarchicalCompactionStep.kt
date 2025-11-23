@@ -104,15 +104,25 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             } else if (e is Port) {
                 // leaf node is a port
                 val f = g.container!!
-                when (e.getPortDirection()) {
-                    Direction.LEFT, Direction.RIGHT -> checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
-                    Direction.UP, Direction.DOWN -> checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                val direction = e.getPortDirection()
+                when (direction) {
+                    Direction.LEFT, Direction.RIGHT -> {
+                        val vso = c.getSlackOptimisation(Dimension.V)
+                        val pvi = checkCreateIntersectionOnly(vso, g, f, Dimension.V)
+                        val vr = checkCreateElement(f, Dimension.V, vso, null, null)
+                        ensurePortSlideablePosition(vso, vr, pvi.c)
+                    }
+                    Direction.UP, Direction.DOWN -> {
+                        val hso = c.getSlackOptimisation(Dimension.H)
+                        val phi = checkCreateIntersectionOnly(hso, g, f, Dimension.H)
+                        val hr = checkCreateElement(f, Dimension.H, hso, null, null)
+                        ensurePortSlideablePosition(hso, hr, phi.c)
+                    }
                 }
             }
             else {
                 // leaf node must be for container arrival
                 val f = g.container!!
-                if (e is Port)
                 checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
                 checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
             }

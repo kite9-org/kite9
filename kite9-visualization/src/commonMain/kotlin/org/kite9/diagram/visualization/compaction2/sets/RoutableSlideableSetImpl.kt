@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.sets
 
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.visualization.compaction2.*
 
 data class RoutableSlideableSetImpl(
@@ -26,11 +27,21 @@ data class RoutableSlideableSetImpl(
     }
 
     override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
+
+        // only centre slideables should get merged, so exclude those created for ports.
+        fun noPorts(s: C2Slideable?) : C2Slideable? {
+            return if ((s!=null) && (s.getIntersectingElements().filterIsInstance<Port>().isEmpty())) {
+                s
+            } else {
+                null
+            }
+        }
+
         val con1 = c2.getContents(this)
         val con2 = c2.getContents(over)
         val newL = c2.mergeSlideables(over.bl, bl)
         val newR = c2.mergeSlideables(over.br, br)
-        val newC = c2.mergeSlideables(over.c, c)
+        val newC = c2.mergeSlideables(noPorts(over.c), noPorts(c))
 
         done = true
         (over as RoutableSlideableSetImpl).done = true

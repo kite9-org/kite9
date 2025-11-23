@@ -6,14 +6,17 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
+import kotlin.math.absoluteValue
 
 abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2CompactionStep, Logable {
 
@@ -110,6 +113,33 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
             val minDist = ss.l.minimumDistanceTo(ss.r)
             cso.ensureMinimumDistance(ss.l, c, (minDist / 2.0).toInt())
             cso.ensureMinimumDistance(c, ss.r, (minDist / 2.0).toInt())
+        }
+    }
+
+    fun ensurePortSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2Slideable?) {
+        if (c != null) {
+            val port = c.getIntersectingElements().filterIsInstance<Port>().first()
+            val minDist = ss.l.minimumDistanceTo(ss.r)
+            val pp = port.getContainerPosition()
+            if (pp.type == Measurement.PERCENTAGE) {
+                val firstDist = minDist * (pp.amount / 100.0)
+                val secondDist =  minDist * ((100.0 - pp.amount) / 100.0)
+                cso.ensureMinimumDistance(ss.l, c, firstDist.toInt())
+                cso.ensureMinimumDistance(c, ss.r, secondDist.toInt())
+            } else {
+                // pixels
+                val absAmount = pp.amount.absoluteValue
+                if (absAmount > minDist) {
+                    // make sure it fits.
+                    cso.ensureMinimumDistance(ss.l, ss.r, absAmount.toInt())
+                }
+
+                if (pp.amount > 0) {
+                    cso.ensureMinimumDistance(ss.l, c, absAmount.toInt())
+                } else {
+                    cso.ensureMinimumDistance(c, ss.r, absAmount.toInt())
+                }
+            }
         }
     }
 
