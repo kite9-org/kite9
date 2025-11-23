@@ -3,11 +3,13 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
@@ -46,7 +48,10 @@ data class Constraint(val forward: Boolean, val dist: Int) {
  */
 class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptimisation(), Logable {
 
-    private val positionedMap: MutableMap<Positioned, RectangularSlideableSet> = HashMap()
+    /** Track mapping of elements to sets */
+    private val rectangularMap: MutableMap<Rectangular, RectangularSlideableSet> = HashMap()
+    private val portMap: MutableMap<Port, RoutableSlideableSet> = HashMap()
+
     private val groupMap: MutableMap<Group, MutableList<RoutableSlideableSet>> = HashMap()
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
     private val containment1: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
@@ -66,12 +71,16 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
-    fun getAllPositioned() : Set<Positioned> {
-        return positionedMap.keys.toSet()
+    fun getAllPositionedRectangulars() : Set<Positioned> {
+        return rectangularMap.keys.toSet()
     }
 
     fun getSlideablesFor(de: Positioned): RectangularSlideableSet? {
-        return positionedMap[de]
+        return rectangularMap[de]
+    }
+
+    fun getPortSlideablesFor(de: Port) : RoutableSlideableSet? {
+        return portMap[de]
     }
 
 
@@ -106,6 +115,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             val containsS2 = slideableMap.remove(s2) ?: mutableSetOf()
             containsS1.addAll(containsS2)
             updateSlideableSets(containsS1, s1, s2, sNew)
+            updatePortMap(s1, s2, sNew)
 
             slideables.add(sNew)
             slideables.remove(s1)
@@ -138,8 +148,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             updateContainment2(it, ssNew)
 
             if (ssNew is RectangularSlideableSet) {
-                val toReplaceDiagramElements = positionedMap.filter { (_, v) -> v == it }.keys
-                toReplaceDiagramElements.forEach { d -> positionedMap[d] = ssNew }
+                val toReplaceDiagramElements = rectangularMap.filter { (_, v) -> v == it }.keys
+                toReplaceDiagramElements.forEach { d -> rectangularMap[d] = ssNew }
             }
 
             if (ssNew is RoutableSlideableSet) {
@@ -150,6 +160,13 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
                     ss[idx] = ssNew
                 }
             }
+        }
+    }
+
+    private fun updatePortMap(sOld1: C2Slideable, sOld2: C2Slideable, newS: C2Slideable) {
+        val toReplacePorts = portMap.filter { (_, v) -> v.c == sOld1 || v.c == sOld2 }.keys
+        toReplacePorts.forEach { p ->
+            portMap[p] = RoutableSlideableSetImpl(newS, null, null)
         }
     }
 
@@ -191,7 +208,12 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     }
 
     fun add(de: Rectangular, ss: RectangularSlideableSet) {
-        positionedMap[de] = ss
+        rectangularMap[de] = ss
+        updateSlideableMap(ss)
+    }
+
+    fun add(p: Port, ss: RoutableSlideableSet) {
+        portMap[p] = ss
         updateSlideableMap(ss)
     }
 
@@ -263,7 +285,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     fun checkConsistency() {
         slideables.removeAll { it is C2Slideable && it.isDone() }
 
-        positionedMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
+        rectangularMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
 
         groupMap.forEach { (k, v) -> v.forEach { ss -> ss.getAll().forEach { it -> checkValid(it, k) } } }
 

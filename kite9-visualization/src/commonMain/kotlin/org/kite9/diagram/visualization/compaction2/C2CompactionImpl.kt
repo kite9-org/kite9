@@ -454,7 +454,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
 
 
-        val allElements = so.getAllPositioned()
+        val allElements = so.getAllPositionedRectangulars()
 
         toDo
             .forEach { along ->

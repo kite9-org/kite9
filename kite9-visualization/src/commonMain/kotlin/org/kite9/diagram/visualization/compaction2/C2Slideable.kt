@@ -5,6 +5,7 @@ import kotlin.math.min
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
@@ -43,7 +44,7 @@ class C2Slideable(
     constructor(
             so: C2SlackOptimisation,
             dimension: Dimension,
-            intersects: Rectangular,
+            intersects: DiagramElement,
             purpose: Purpose
     ) : this(so, dimension, mutable2(setOf(IntersectAnchor(intersects, purpose))), emptySet())
 

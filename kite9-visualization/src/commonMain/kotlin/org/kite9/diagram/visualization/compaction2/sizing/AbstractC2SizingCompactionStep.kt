@@ -16,7 +16,7 @@ abstract class AbstractC2SizingCompactionStep(cd: CompleteDisplayer) : AbstractC
 
     private fun size(c: C2Compaction, dimension: Dimension) {
         val so = c.getSlackOptimisation(dimension)
-        so.getAllPositioned()
+        so.getAllPositionedRectangulars()
             .filterIsInstance<Rectangular>()
             .filter { filter(it, dimension) }
             .distinct()

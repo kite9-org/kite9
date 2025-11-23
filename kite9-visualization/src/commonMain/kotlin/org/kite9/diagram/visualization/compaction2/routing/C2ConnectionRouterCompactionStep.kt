@@ -25,9 +25,48 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
     override val prefix = "C2CR"
     override val isLoggingEnabled = true
 
-    private fun createPoints(
+    private fun createPoints( c2: C2Compaction,
+                              d: Connected,
+                              arriving: Boolean,
+                              drawDirection: Direction?) : Set<C2Point> {
+
+        return when(d) {
+            is ConnectedRectangular -> createPointsOnRectangular(c2, d, arriving, drawDirection);
+            is Port -> createPointsOnPort(c2, d, arriving)
+            else -> throw LogicException("Unknown connected type ${d}")
+        }
+
+    }
+
+    private fun createPointsOnPort(
         c2: C2Compaction,
-        d: Connected,
+        p: Port,
+        arriving: Boolean,
+    ): Set<C2Point> {
+        val parent = p.getParent() as Rectangular
+        val h = c2.getSlackOptimisation(Dimension.H)
+        val v = c2.getSlackOptimisation(Dimension.V)
+        val parenthss = h.getSlideablesFor(parent)!!
+        val parentvss = v.getSlideablesFor(parent)!!
+        val porthss = h.getPortSlideablesFor(p)
+        val portvss = v.getPortSlideablesFor(p)
+        val d = p.getPortDirection()
+        val facing = if (arriving) Direction.reverse(d)!! else d!!
+        val out = when(d) {
+            Direction.RIGHT -> C2Point(portvss!!.c!!, parenthss.r, facing)
+            Direction.LEFT -> C2Point(portvss!!.c!!, parenthss.l, facing)
+            Direction.UP -> C2Point(porthss!!.c!!, parentvss.l, facing)
+            Direction.DOWN -> C2Point(porthss!!.c!!, parentvss.r, facing)
+            else -> throw LogicException("Can't proceed")
+        }
+
+        return setOf(out)
+    }
+
+
+    private fun createPointsOnRectangular(
+        c2: C2Compaction,
+        d: ConnectedRectangular,
         arriving: Boolean,
         drawDirection: Direction?
     ): Set<C2Point> {
@@ -71,36 +110,31 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         return (up+down+left+right).toSet()
     }
 
-private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction): Boolean {
-    return if (drawDirection == null) {
-        true
-    } else {
-        val dd = if (arriving) { Direction.reverse(drawDirection) } else { drawDirection }
-        dd == d
+    private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction): Boolean {
+        return if (drawDirection == null) {
+            true
+        } else {
+            val dd = if (arriving) { Direction.reverse(drawDirection) } else { drawDirection }
+            dd == d
+        }
     }
-}
-
-    private fun createZone(c2: C2Compaction, r: Rectangular): Zone {
-        val h = c2.getSlackOptimisation(Dimension.H)
-        val hs = h.getSlideablesFor(r)!!
-        val v = c2.getSlackOptimisation(Dimension.V)
-        val vs = v.getSlideablesFor(r)!!
-        return Zone(
-            hs.l, hs.r,
-            vs.l, vs.r
-        )
-    }
-
-
-
-
 
     private fun insertLink(c2: C2Compaction, c: Connection): C2Route? {
+
+        fun getConnectedRectangular(e: Connected) : ConnectedRectangular{
+            if (e is Port) {
+                return e.getParent() as ConnectedRectangular
+            } else if (e is ConnectedRectangular) {
+                return e
+            } else {
+                throw LogicException("Can't route to this")
+            }
+        }
+
         try {
             val d = if (c.getRenderingInformation().isContradicting) { null } else { c.getDrawDirection() }
             val startingPoints = createPoints(c2, c.getFrom(), false, d)
             val endingPoints = createPoints(c2, c.getTo(), true, d)
-            val endZone = createZone(c2, c.getTo() as Rectangular)
 
             // we might be able to reduce the call frequency of this part - it's expensive.
             // but for now I can live with it until it works.
@@ -109,8 +143,12 @@ private fun allowed(arriving: Boolean, drawDirection: Direction?, d: Direction):
 //            c2.simplifyNeighbours(Dimension.H, htdm)
 //            c2.simplifyNeighbours(Dimension.V, vtdm)
 
+
+            val startRect = getConnectedRectangular(c.getFrom())
+            val endRect = getConnectedRectangular(c.getTo())
+
             val doer = C2SlideableSSP(
-                c, startingPoints, endingPoints, c.getFrom(), c.getTo(), endZone, d, c2,
+                c, startingPoints, endingPoints, startRect, endRect, d, c2,
                 log
             )
 

@@ -4,6 +4,7 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -16,9 +17,8 @@ class C2SlideableSSP(
     val e: Connection,
     val start: Set<C2Point>,
     val end: Set<C2Point>,
-    private val startElem: DiagramElement,
-    private val endElem: DiagramElement,
-    private val endZone: Zone,
+    private val startElem: ConnectedRectangular,
+    private val endElem: ConnectedRectangular,
     private val direction: Direction?,
     private val c2: C2Compaction,
     val log: Kite9Log
@@ -37,8 +37,8 @@ class C2SlideableSSP(
     }
 
     val allowedToLeave : Map<DiagramElement, Int> = run {
-        var se = startElem
-        var ee = endElem
+        var se : DiagramElement = startElem
+        var ee : DiagramElement = endElem
         val out = mutableSetOf<DiagramElement>()
         while (se != ee) {
             out.add(se)

@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
@@ -99,15 +100,21 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
                     vso.add(g, vss)
                     hso.contains(hss, hr)
                     vso.contains(vss, vr)
-                    //c.setupRectangularIntersections(hr, vr, hss, vss)
-                    // c.propagateIntersectionsFromRectangularToOuterRoutable(hr, vr, hss, vss)
                 }
-            } else {
+            } else if (e is Port) {
+                // leaf node is a port
+                val f = g.container!!
+                when (e.getPortDirection()) {
+                    Direction.LEFT, Direction.RIGHT -> checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
+                    Direction.UP, Direction.DOWN -> checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                }
+            }
+            else {
                 // leaf node must be for container arrival
                 val f = g.container!!
-                val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
-                val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
-                //c.setupRoutableIntersections(hss, vss)
+                if (e is Port)
+                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+                checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
             }
 
         } else {
@@ -142,10 +149,19 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
             return ss1
         }
 
-        val ic = C2Slideable(cso, d,  c, Purpose.PORT)
-        val out = RoutableSlideableSetImpl(ic, null, null)
+        val out = if (g.connected is Port) {
+            val ic = C2Slideable(cso, d,  g.connected as Port, Purpose.PORT)
+            val out2 = RoutableSlideableSetImpl(ic, null, null)
+            cso.add(g.connected as Port, out2)
+            out2
+        } else {
+            val ic = C2Slideable(cso, d,  c as Connected, Purpose.PORT)
+            RoutableSlideableSetImpl(ic, null, null)
+        }
 
         cso.add(g, out)
+
+
         log.send("Created a RoutableSlideableSet for $c: ", out.getAll())
         return out
     }
