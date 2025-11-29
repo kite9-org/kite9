@@ -129,14 +129,12 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
             } else {
                 // pixels
                 val absAmount = pp.amount.absoluteValue
-                if (absAmount > minDist) {
-                    // make sure it fits.
-                    cso.ensureMinimumDistance(ss.l, ss.r, absAmount.toInt())
-                }
 
                 if (pp.amount > 0) {
                     cso.ensureMinimumDistance(ss.l, c, absAmount.toInt())
+                    cso.ensureMinimumDistance(c, ss.r, 0)
                 } else {
+                    cso.ensureMinimumDistance(ss.l, c, 0)
                     cso.ensureMinimumDistance(c, ss.r, absAmount.toInt())
                 }
             }
