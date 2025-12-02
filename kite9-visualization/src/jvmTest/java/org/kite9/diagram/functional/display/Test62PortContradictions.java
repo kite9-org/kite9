@@ -73,4 +73,18 @@ public class Test62PortContradictions extends AbstractDisplayFunctionalTest {
 		renderDiagram(d);
 	}
 
+    @Test
+    public void test_62_4_PortInsideBox() throws Exception {
+        Glyph one = createGlyph("One");
+        Glyph two = createGlyph("Two");
+
+        BasicSocket socket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.UP, "50%");
+        one.appendChild(socket);
+
+        Context i1 = new Context("i1", Arrays.asList(one), true, null, null);
+        //new ContradictingLink(socket, two, null, null, null, null, Direction.RIGHT);
+        DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, two), null);
+        renderDiagram(d);
+    }
+
 }

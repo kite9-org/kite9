@@ -15,12 +15,12 @@ abstract class Slideable(
     var minimumPosition: Int
         get() = minimum.position
         set(i) {
-            minimum.increasePosition(i!!)
+            minimum.increasePosition(i!!, so.getSize())
         }
     var maximumPosition: Int?
         get() = maximum.position
         set(i) {
-            maximum.increasePosition(i!!)
+            maximum.increasePosition(i!!, so.getSize())
         }
 
     fun getMinimumForwardConstraintTo(d: Slideable): Int? {
@@ -38,9 +38,9 @@ abstract class Slideable(
         return try {
             var maxSet = maximumPosition
             maxSet = maxSet ?: 20000 //
-            val slack1 = minimum.minimumDistanceTo(s.minimum, maxSet)
+            val slack1 = minimum.minimumDistanceTo(s.minimum, maxSet, so.getSize())
             so.log.send("Calculating minimum distance from $this to $s $slack1")
-            val slack2 = s.maximum.minimumDistanceTo(maximum, s.minimumPosition)
+            val slack2 = s.maximum.minimumDistanceTo(maximum, s.minimumPosition, so.getSize())
             so.log.send("Calculating minimum distance from $s to $this $slack2")
             if (slack2 == null) {
                 slack1 ?: 0
@@ -64,12 +64,12 @@ abstract class Slideable(
     }
 
     fun canAddMinimumForwardConstraint(to: Slideable, dist: Int): Boolean {
-        return minimum.canAddForwardConstraint(to.minimum, dist)
+        return minimum.canAddForwardConstraint(to.minimum, dist, so.getSize())
     }
 
     fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
         try {
-            minimum.addForwardConstraint(to.minimum, dist)
+            minimum.addForwardConstraint(to.minimum, dist, so.getSize())
         } catch (e: Throwable) {
             throw SlideableException("addMinimumForwardConstraint: $this to $to dist: $dist", e)
         }
@@ -77,7 +77,7 @@ abstract class Slideable(
 
     fun addMinimumBackwardConstraint(to: Slideable, dist: Int) {
         try {
-            minimum.addBackwardConstraint(to.minimum, dist)
+            minimum.addBackwardConstraint(to.minimum, dist, so.getSize())
             hasBackwardConstraints = true
         } catch (e: Throwable) {
             throw SlideableException("addMinimumBackwardConstraint: $this to $to dist: $dist", e)
@@ -93,7 +93,7 @@ abstract class Slideable(
 
     fun addMaximumForwardConstraint(to: Slideable, dist: Int) {
         try {
-            maximum.addForwardConstraint(to.maximum, dist)
+            maximum.addForwardConstraint(to.maximum, dist, so.getSize())
         } catch (e: RuntimeException) {
             throw SlideableException("addMaximumForwardConstraint: $this to $to dist: $dist", e)
         }
@@ -101,7 +101,7 @@ abstract class Slideable(
 
     fun addMaximumBackwardConstraint(to: Slideable, dist: Int) {
         try {
-            maximum.addBackwardConstraint(to.maximum, dist)
+            maximum.addBackwardConstraint(to.maximum, dist, so.getSize())
             hasBackwardConstraints = true
         } catch (e: RuntimeException) {
             throw SlideableException("addMaximumBackwardConstraint: $this to $to dist: $dist", e)

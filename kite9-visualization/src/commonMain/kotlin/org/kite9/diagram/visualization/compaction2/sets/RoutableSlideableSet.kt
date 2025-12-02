@@ -15,7 +15,7 @@ sealed interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
     fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
 
-    fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
+    fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet?
 
     fun getBufferSlideables() : Set<C2Slideable>
 }

@@ -2,6 +2,7 @@ package org.kite9.diagram.common.algorithms.so
 
 import org.kite9.diagram.logging.LogicException
 import kotlin.math.abs
+import kotlin.math.max
 
 /**
  * Handles the constraints for a [SegmentSlideable] in a single direction (e.g.
@@ -28,7 +29,10 @@ class SingleDirection(
         var on: SingleDirection? = null
     }
 
-    private fun update(newPos: Int, ci: Any?, changedConstraints: Boolean, depth: Int): Boolean {
+    private fun update(newPos: Int, ci: Any?, changedConstraints: Boolean, depth: Int, maxDepth: Int): Boolean {
+        if (depth > maxDepth) {
+            throw LogicException("Depth exceeded.  Gave up on ${this}")
+        }
         return try {
             if (cacheItem === ci && ci is QuitOnChange && ci.on === this) {
                 // we've visited here before - return false if we move
@@ -48,14 +52,14 @@ class SingleDirection(
                 for (fwd in forward.keys) {
                     val dist = forward[fwd]!!
                     val newPositionFwd = if (increasing) cachePosition!! + dist else cachePosition!! - dist
-                    ok = ok && fwd.update(newPositionFwd, ci, false, depth+1)
+                    ok = ok && fwd.update(newPositionFwd, ci, false, depth+1, maxDepth)
                 }
 
 				//println("(bck) depth ${depth}");
                 for (bck in backward.keys) {
                     val dist = backward[bck]
                     val newPositionBck = if (increasing) cachePosition!! - dist!! else cachePosition!! + dist!!
-                    ok = ok && bck.update(newPositionBck, ci, false, depth+1)
+                    ok = ok && bck.update(newPositionBck, ci, false, depth+1, maxDepth)
                 }
                 //println("(done) ${depth}");
                 if (ci == null) {
@@ -65,54 +69,54 @@ class SingleDirection(
             }
             ok
         } catch (e: Throwable) {
-            throw LogicException("Couldn't adjust (SO): $this pos: $position cachePos: $cachePosition")
+            throw LogicException("Couldn't adjust (SO): $this pos: $position cachePos: $cachePosition", e)
         }
     }
 
-    fun increasePosition(pos: Int) {
-        update(pos, null, false, 0)
+    fun increasePosition(pos: Int, maxDepth: Int) {
+        update(pos, null, false, 0, maxDepth)
     }
 
     /**
      * Works out minimum distance to ci, given that our item is in a certain start position.
      * Returns null if the elements aren't connected.
      */
-    fun minimumDistanceTo(ci: SingleDirection, startPosition: Int): Int? {
+    fun minimumDistanceTo(ci: SingleDirection, startPosition: Int, maxDepth: Int): Int? {
         val cacheMarker = Any()
-        update(startPosition, cacheMarker, false, 0)
+        update(startPosition, cacheMarker, false, 0, maxDepth)
         return if (ci.cacheItem !== cacheMarker) {
             // the two elements are independent, one doesn't push the other.
             null
         } else abs(ci.cachePosition!! - startPosition)
     }
 
-    fun canAddForwardConstraint(to: SingleDirection, distance: Int): Boolean {
+    fun canAddForwardConstraint(to: SingleDirection, distance: Int, maxDepth: Int): Boolean {
         val existing = forward[to]
         val qoc = QuitOnChange()
         qoc.on = this
         if (existing == null || existing < distance) {
             val curPos: Int
             curPos = position
-            update(curPos, qoc, false,0)
+            update(curPos, qoc, false,0, maxDepth)
             val newPos = if (increasing) curPos + distance else curPos - distance
-            return to.update(newPos, qoc, true,0)
+            return to.update(newPos, qoc, true,0, maxDepth)
         }
         return true
     }
 
-    fun addForwardConstraint(to: SingleDirection, distance: Int) {
+    fun addForwardConstraint(to: SingleDirection, distance: Int, maxDepth: Int) {
         val existing = forward[to]
         if (existing == null || existing < distance) {
             forward[to] = distance
-            update(position, null, true, 0)
+            update(position, null, true, 0, maxDepth)
         }
     }
 
-    fun addBackwardConstraint(to: SingleDirection, distance: Int) {
+    fun addBackwardConstraint(to: SingleDirection, distance: Int, maxDepth: Int) {
         val existing = backward[to]
         if (existing == null || existing > distance) {
             backward[to] = distance
-            update(position, null, true,0 )
+            update(position, null, true,0, maxDepth )
         }
     }
 
@@ -134,13 +138,13 @@ class SingleDirection(
         return """f: ${forward.size} b: ${backward.size} o: ${owner.toString()}"""
     }
 
-    fun merge(sd: SingleDirection, exclude: Set<SingleDirection>) {
+    fun merge(sd: SingleDirection, exclude: Set<SingleDirection>, maxDepth: Int) {
         sd.forward
             .filter { (k, v) -> !exclude.contains(k) }
-            .forEach { (k, v) -> this.addForwardConstraint(k, v) }
+            .forEach { (k, v) -> this.addForwardConstraint(k, v, maxDepth) }
         sd.backward
             .filter { (k, v) -> !exclude.contains(k) }
-            .forEach { (k, v) -> this.addBackwardConstraint(k, v) }
+            .forEach { (k, v) -> this.addBackwardConstraint(k, v, maxDepth) }
     }
 
     fun outputConstraints() {

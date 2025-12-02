@@ -186,10 +186,10 @@ class C2Slideable(
     fun isDone(): Boolean = this.mergedInto != null
 
     private fun handleMinimumMaximumAndDone(out: C2Slideable, s: C2Slideable) {
-        out.minimum.merge(minimum, setOf(s.minimum, minimum))
-        out.minimum.merge(s.minimum, setOf(s.minimum, minimum))
-        out.maximum.merge(maximum, setOf(s.maximum, maximum))
-        out.maximum.merge(s.maximum, setOf(s.maximum, maximum))
+        out.minimum.merge(minimum, setOf(s.minimum, minimum), so.getSize())
+        out.minimum.merge(s.minimum, setOf(s.minimum, minimum), so.getSize())
+        out.maximum.merge(maximum, setOf(s.maximum, maximum), so.getSize())
+        out.maximum.merge(s.maximum, setOf(s.maximum, maximum), so.getSize())
         out.minimumPosition = max(this.minimumPosition, s.minimumPosition)
         out.maximumPosition = optionalMin(s)
         this.mergedInto = out

@@ -75,14 +75,16 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult) : Abst
 
                 if ((ha != null) && (hb != null)) {
                     throw LogicException("Need to rethink this")
+                } else if ((ha== null) && (hb==null)) {
+                    // do nothing
+                } else {
+                    slackOptimisationV.add(g, va ?: vb!!)
+                    slackOptimisationH.add(g, ha ?: hb!!)
+                    slackOptimisationV.remove(g.a)
+                    slackOptimisationV.remove(g.b)
+                    slackOptimisationH.remove(g.a)
+                    slackOptimisationH.remove(g.b)
                 }
-
-                slackOptimisationV.add(g, va ?: vb!!)
-                slackOptimisationH.add(g, ha ?: hb!!)
-                slackOptimisationV.remove(g.a)
-                slackOptimisationV.remove(g.b)
-                slackOptimisationH.remove(g.a)
-                slackOptimisationH.remove(g.b)
             }
         } else if (g is LeafGroup) {
             // leaf group

@@ -13,6 +13,7 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionContradicting
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionRendered
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -130,6 +131,44 @@ abstract class GroupPhase(
                             hasRectangulars = true
                         } else if (c is Port) {
                             hasPorts = true
+                        }
+                    }
+                }
+
+                if (hasPorts) {
+                    // ensure we respect the port ordering, if we can ascertain one.
+
+                    val allPorts = (ord as Container).getContents()
+                        .filterIsInstance<Port>()
+                        .groupBy { it.getPortDirection() }
+
+                    allPorts.forEach { (d, ports) ->
+                        val portGroups = ports.groupBy {
+                            when (it.getContainerPosition().type) {
+                                Measurement.PIXELS -> if (it.getContainerPosition().amount < 0) 0 else 1
+                                Measurement.PERCENTAGE, Measurement.NONE -> 2
+                            }
+                        }
+
+                        portGroups.values.forEach { l ->
+                            val sortedPorts = l.sortedBy { it.getContainerPosition().amount }
+                            val directionBasedOnSide = when(d) {
+                                Direction.UP, Direction.DOWN -> Direction.RIGHT
+                                Direction.LEFT, Direction.RIGHT -> Direction.DOWN
+                            }
+                            var prev : Port? = null
+                            sortedPorts.forEach { next ->
+                                if (prev != null) {
+                                    val from = pMap[prev]
+                                    val to = pMap[next]
+                                    if ((from != null) && (to != null)) {
+                                        val tc = OrderingTemporaryBiDirectional(prev, next, directionBasedOnSide, ord)
+                                        from.sortLink(directionBasedOnSide, to, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                                        to.sortLink(Direction.reverse(directionBasedOnSide), from, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                                    }
+                                }
+                                prev = next
+                            }
                         }
                     }
                 }

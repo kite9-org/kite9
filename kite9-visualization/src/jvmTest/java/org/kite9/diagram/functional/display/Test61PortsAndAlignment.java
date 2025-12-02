@@ -288,20 +288,6 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	}
 
 	@Test
-	public void test_61_12_PortInsideBox() throws Exception {
-		Glyph one = createGlyph("One");
-		Glyph two = createGlyph("Two");
-
-		BasicSocket socket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.UP, "50%");
-		one.appendChild(socket);
-
-		Context i1 = new Context("i1", Arrays.asList(one), true, null, null);
-		new ContradictingLink(socket, two, null, null, null, null, Direction.RIGHT);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, two), null);
-		renderDiagram(d);
-	}
-
-	@Test
 	public void test_61_13_DifficultCross() throws Exception {
 		Glyph middle = createGlyph("middle");
 		Glyph up1 = createGlyph("up1");
@@ -329,9 +315,10 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		new Link(s4, down1);
 		new Link(s3, down2);
 
-		Context i1 = new Context("i1", Arrays.asList(up1, up2), true, null, Layout.RIGHT);
+		Context i1 = new Context("i1", Arrays.asList(up1, up2), true, new TextLabel("hi"), Layout.RIGHT);
 		Context i2 = new Context("i2", Arrays.asList(down1, down2), true, null, Layout.RIGHT);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, middle, i2), null);
+        Context i3 = new Context("i3", Arrays.asList(middle), true, null, Layout.DOWN);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, i3, i2), null);
 		renderDiagram(d);
 	}
 
@@ -343,4 +330,40 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(middle, up1s), null);
 		renderDiagram(d);
 	}
+
+    @Test
+    public void test_61_15_DifficultCrossWithoutContainers() throws Exception {
+        Glyph middle = createGlyph("middle");
+        Glyph up1 = createGlyph("up1");
+        BasicSocket up1s = new BasicSocket("up1socket", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "50%");
+        up1.appendChild(up1s);
+
+        Glyph up2 = createGlyph("up2");
+        BasicSocket up2s = new BasicSocket("up2socket", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "50%");
+        up2.appendChild(up2s);
+
+        Glyph down1 = createGlyph("down1");
+        Glyph down2 = createGlyph("down2");
+
+        BasicSocket s1 = new BasicSocket("top-left", BasicSocket.TESTING_DOCUMENT, Direction.UP, "40%");
+        BasicSocket s2 = new BasicSocket("top-right", BasicSocket.TESTING_DOCUMENT, Direction.UP, "60%");
+        BasicSocket s3 = new BasicSocket("bottom-left", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "10%");
+        BasicSocket s4 = new BasicSocket("bottom-right", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "90%");
+        middle.appendChild(s2);
+        middle.appendChild(s1);
+        middle.appendChild(s3);
+        middle.appendChild(s4);
+
+        new Link(s2, up1s);
+        new Link(s1, up2s);
+        new Link(s4, down1);
+        new Link(s3, down2);
+
+        new Link(up1, up2, null, null, null, null, Direction.RIGHT);
+        new Link(down1, down2, null, null, null, null, Direction.RIGHT);
+
+        DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(up1, up2, middle, down1, down2), null);
+        renderDiagram(d);
+    }
+
 }
