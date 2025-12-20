@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.compaction2.sets
 
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 
 /**
@@ -18,4 +19,6 @@ sealed interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
     fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet?
 
     fun getBufferSlideables() : Set<C2Slideable>
+
+    fun replaceSide(s: C2Slideable, side: Side) : RoutableSlideableSet
 }

@@ -57,7 +57,7 @@ abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2
     override fun isInPlane(to: RoutingInfo, from: RoutingInfo, horiz: Boolean): Boolean {
         val pto = to as PositionRoutingInfo
         val pfrom = from as PositionRoutingInfo
-        return if (!horiz) {
+        return if (horiz) {
             checkHorizontal(pto, pfrom)
         } else {
             checkVertical(pto, pfrom)

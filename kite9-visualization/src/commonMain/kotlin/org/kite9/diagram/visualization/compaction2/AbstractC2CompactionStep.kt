@@ -153,11 +153,7 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
 
 
     fun getNonDoneVersion(c2Slideable: C2Slideable): C2Slideable {
-        while (c2Slideable.isDone()) {
-            return getNonDoneVersion(c2Slideable.mergedInto!!)
-        }
-
-        return c2Slideable
+        return c2Slideable.getNotDoneVersion()
     }
 
     companion object {

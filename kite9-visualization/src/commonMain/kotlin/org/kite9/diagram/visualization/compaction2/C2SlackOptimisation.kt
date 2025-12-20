@@ -12,6 +12,9 @@ import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import kotlin.collections.contains
+import kotlin.collections.indexOf
 
 
 /**
@@ -52,7 +55,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     private val rectangularMap: MutableMap<Rectangular, RectangularSlideableSet> = HashMap()
     private val portMap: MutableMap<Port, RoutableSlideableSet> = HashMap()
 
-    private val groupMap: MutableMap<Group, MutableList<RoutableSlideableSet>> = HashMap()
+    private val groupMap: MutableMap<LeafGroup, MutableList<RoutableSlideableSet>> = HashMap()
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
     private val containment1: MutableMap<RoutableSlideableSet, MutableList<RectangularSlideableSet>> = HashMap()
     private val containment2: MutableMap<RectangularSlideableSet, RoutableSlideableSet> = HashMap()
@@ -93,7 +96,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
     }
 
 
-    fun getSlideablesFor(group: Group) : List<RoutableSlideableSet> {
+    fun getSlideablesFor(group: LeafGroup) : List<RoutableSlideableSet> {
         return groupMap.getOrElse(group) { emptyList()}
     }
 
@@ -134,6 +137,54 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
+    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side) : RoutableSlideableSet  {
+        val containerRoutable = container.wrapInRoutable()
+        if (containerRoutable != null) {
+            contains(containerRoutable!!, container)
+            updateSlideableMap(containerRoutable)
+            val new = when (side) {
+                Side.START -> {
+                    val newLeft = if (containerRoutable != null) {
+                        containerRoutable.bl!!
+                    } else {
+                        container.l
+                    }
+
+                    inner.replaceSide(newLeft, side)
+                }
+                Side.END -> {
+                    val newRight = if (containerRoutable != null) {
+                        containerRoutable.br!!
+                    } else {
+                        container.r
+                    }
+
+                    inner.replaceSide(newRight, side)
+                }
+                else -> {
+                    throw LogicException("Illegal Side")
+                }
+            }
+
+            this.updateContainment1(inner, new)
+            updateSlideableSet(inner, new)  // first spot
+            updateSlideableMap(new)
+            return new
+
+        } else {
+            return inner
+        }
+    }
+
+    private fun updateSlideableSet(old: SlideableSet<*>, new: RoutableSlideableSet) {
+        val toReplaceGroups = groupMap.filter { (_, v) -> v.contains(old) }.keys
+        toReplaceGroups.forEach { g ->
+            val ss = groupMap[g]!!
+            val idx = ss.indexOf(old)
+            ss[idx] = new
+        }
+    }
+
     private fun updateSlideableSets(
         contains: Set<SlideableSet<*>>?,
         sOld1: C2Slideable,
@@ -153,12 +204,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             }
 
             if (ssNew is RoutableSlideableSet) {
-                val toReplaceGroups = groupMap.filter { (_, v) -> v.contains(it) }.keys
-                toReplaceGroups.forEach { g ->
-                    val ss = groupMap[g]!!
-                    val idx = ss.indexOf(it)
-                    ss[idx] = ssNew
-                }
+                updateSlideableSet(it, ssNew)
             }
         }
     }
@@ -225,7 +271,9 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             slideables.add(it)
         }
 
-        slideableMap.values.forEach { ll -> ll.removeAll { it.done }}
+        slideableMap.values.forEach { ll -> ll.removeAll {
+            it.done
+        }}
     }
 
     private fun removeFromSlideableMap(ss: SlideableSet<*>) {
@@ -234,7 +282,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
-    fun add(g: Group?, ss: RoutableSlideableSet) {
+    fun add(g: LeafGroup?, ss: RoutableSlideableSet) {
         if (g != null) {
             val sets = groupMap.getOrPut(g) { mutableListOf<RoutableSlideableSet>() }
             sets.add(ss)

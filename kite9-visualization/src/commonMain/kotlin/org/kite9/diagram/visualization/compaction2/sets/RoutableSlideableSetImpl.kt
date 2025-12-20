@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.sets
 
 import org.kite9.diagram.model.Port
+import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 
 data class RoutableSlideableSetImpl(
@@ -77,5 +78,15 @@ data class RoutableSlideableSetImpl(
                 "\t c=${c},\n" +
                 "\t` bs=$bs,\n" +
                 "\t done=$done,\n)"
+    }
+
+    override fun replaceSide(s: C2Slideable, side: Side): RoutableSlideableSet {
+        val out = if (side == Side.START) {
+            RoutableSlideableSetImpl(this.c, s, this.br)
+        } else {
+            RoutableSlideableSetImpl(this.c, this.bl, s)
+        }
+        this.done = true
+        return out
     }
 }

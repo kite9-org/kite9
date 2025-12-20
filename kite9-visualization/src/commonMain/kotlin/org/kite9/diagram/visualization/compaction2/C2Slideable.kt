@@ -71,22 +71,22 @@ class C2Slideable(
                 null
             }
 
-    fun merge(s: C2Slideable): C2Slideable {
-        if (this.isDone() || s.isDone()) {
-            throw LogicException("Already merged")
-        } else if (s.dimension == dimension) {
+    fun merge(sIn: C2Slideable): C2Slideable {
+        val s1 = sIn.getNotDoneVersion()
+        val s2 = this.getNotDoneVersion()
+        if (s1.dimension == s2.dimension) {
             val out =
                     C2Slideable(
                             so as C2SlackOptimisation,
-                            dimension,
-                            this.anchors.plus(s.anchors).toMutableSet(),
-                            this.intersectingGroups.plus(s.intersectingGroups)
+                            s1.dimension,
+                            s1.anchors.plus(s2.anchors).toMutableSet(),
+                            s1.intersectingGroups.plus(s2.intersectingGroups)
                     )
 
-            handleMinimumMaximumAndDone(out, s)
+            s2.handleMinimumMaximumAndDone(out, s1)
             return out
         } else {
-            throw LogicException("Can't merge $this with $s")
+            throw LogicException("Can't merge $s1 with $s2")
         }
     }
 
@@ -215,6 +215,10 @@ class C2Slideable(
         return number
     }
 
+    fun getNotDoneVersion() : C2Slideable {
+        return getNonDoneVersion(this)
+    }
+
     companion object {
 
         var n: Int = 0
@@ -226,6 +230,14 @@ class C2Slideable(
 
         private fun mutable2(anchors: Set<Anchor<*>>): MutableSet<Anchor<*>> {
             @Suppress("UNCHECKED_CAST") return (anchors as Set<Anchor<Any>>).toMutableSet()
+        }
+
+        fun getNonDoneVersion(c2Slideable: C2Slideable): C2Slideable {
+            while (c2Slideable.isDone()) {
+                return getNonDoneVersion(c2Slideable.mergedInto!!)
+            }
+
+            return c2Slideable
         }
     }
 }
