@@ -64,12 +64,17 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, r: Group
                     val inside = checkCreateElement(c, dimension, so, null, topGroup)
                     so.addSide(inside, theRSS, s)
                     if (s == Side.START) {
-                        so.ensureMinimumDistance(inside.l, theRSS.bl!!, 0)
+                        if (theRSS.bl != null) {
+                            so.ensureMinimumDistance(inside.l, theRSS.bl!!, 0)
+                        }
                     } else {
-                        so.ensureMinimumDistance(theRSS.br!!, inside.r, 0)
+                        if (theRSS.br != null) {
+                            so.ensureMinimumDistance(theRSS.br!!, inside.r, 0)
+                        }
                     }
                 } else {
-                    throw LogicException("No routables for element")
+                    // throw LogicException("No routables for element")
+                    // do nothing.
                 }
             }
         }

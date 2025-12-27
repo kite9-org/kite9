@@ -51,10 +51,10 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult, rr: Ro
         val horiz2 = horiz.map {
             it.map { g ->
                 val so = c.getSlackOptimisation(Dimension.H)
-                val ga = so.getSlideablesFor(g).lastOrNull()!!
+                val ga = so.getSlideablesFor(g).lastOrNull()
                 so.remove(g)
                 ga
-            }.reduce { a, b ->
+            }.filterNotNull().reduceOrNull { a, b ->
                 mergeForAxis(c, a, b, Dimension.H, true)
             }
         }
@@ -62,16 +62,16 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult, rr: Ro
         val vert2 = vert.map {
             it.map { g ->
                 val so = c.getSlackOptimisation(Dimension.V)
-                val ga = so.getSlideablesFor(g).lastOrNull()!!
+                val ga = so.getSlideablesFor(g).lastOrNull()
                 so.remove(g)
                 ga
-            }.reduce {
+            }.filterNotNull().reduceOrNull {
                 a, b -> mergeForAxis(c, a, b, Dimension.V, true)
             }
         }
 
-        horiz2.reduce { a, b -> mergeForAxis(c, a, b, Dimension.H, false) }
-        vert2.reduce { a, b -> mergeForAxis(c, a, b, Dimension.V, false) }
+        horiz2.filterNotNull().reduce { a, b -> mergeForAxis(c, a, b, Dimension.H, false) }
+        vert2.filterNotNull().reduce { a, b -> mergeForAxis(c, a, b, Dimension.V, false) }
     }
 
     fun bucketLeafGroups(contents: List<LeafGroup>, horiz: Boolean) : List<Set<LeafGroup>> {
