@@ -117,7 +117,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) :
 
         val grouped: Map<Double?, List<RoutableSlideableSet?>> =
             contents.entries.groupBy(
-                keySelector = { (k, _) -> getEdgePosition(k.connected as DiagramElement?, d) },
+                keySelector = { (k, _) -> getEdgePosition(k, d) },
                 valueTransform = { (_, v) ->
                     when (d) {
                         Direction.UP, Direction.DOWN -> v.second

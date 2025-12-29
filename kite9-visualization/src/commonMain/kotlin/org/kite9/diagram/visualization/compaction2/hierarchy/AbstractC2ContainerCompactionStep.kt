@@ -23,7 +23,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  */
 abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: RoutableReader) : AbstractC2BuilderCompactionStep(cd) {
 
-    fun getEdgePosition(k: DiagramElement?, d: Direction) : Double? {
+    fun getEdgePosition(k: LeafGroup, d: Direction) : Double? {
         return if (k != null) {
             val p = rr.getPlacedPosition(k) as PositionRoutingInfo?
             if (p != null) {
@@ -41,10 +41,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
     }
 
-    fun findClosestToEdge(c: Container, d: Direction) : Set<DiagramElement> {
-        val contents = c.getContents().filterIsInstance<Connected>()
-
-        val positions = contents
+    fun findClosestToEdge(c: Container, d: Direction, allLeafGroups: Set<LeafGroup>) : Set<LeafGroup> {
+        val positions = allLeafGroups
             .map { e -> e to getEdgePosition(e, d) }
             .filter { (_, v) -> v != null }
             .map { (k, v) -> k to v!! }
@@ -68,10 +66,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
     }
 
-    fun applyContainerEdge(so: C2SlackOptimisation, c: Container, to: Set<DiagramElement>, s: Side, map: MutableMap<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>, dimension: Dimension, topGroup: Group, elementMapping: MutableMap<DiagramElement, Set<LeafGroup>>) {
-        val groups = to.flatMap { elementMapping[it] ?: emptySet() }
-
-        groups.forEach { lg ->
+    fun applyContainerEdge(so: C2SlackOptimisation, c: Container, to: Set<LeafGroup>, s: Side, map: MutableMap<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>, dimension: Dimension, topGroup: Group) {
+        to.forEach { lg ->
             val routables = map[lg]!!
             val inside = checkCreateElement(c, dimension, so, null, topGroup)
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
@@ -114,19 +110,19 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
 
             elementMapping[c] = allLeafGroups
 
-            val leftMost = findClosestToEdge(c, Direction.LEFT)
-            val rightMost = findClosestToEdge(c, Direction.RIGHT)
-            val topMost = findClosestToEdge(c, Direction.UP)
-            val bottomMost = findClosestToEdge(c, Direction.DOWN)
+            val leftMost = findClosestToEdge(c, Direction.LEFT, allLeafGroups)
+            val rightMost = findClosestToEdge(c, Direction.RIGHT, allLeafGroups)
+            val topMost = findClosestToEdge(c, Direction.UP, allLeafGroups)
+            val bottomMost = findClosestToEdge(c, Direction.DOWN, allLeafGroups)
 
             if ((leftMost.isNotEmpty()) && (topMost.isNotEmpty())) {
                 val sox = co.getSlackOptimisation(Dimension.H)
                 val soy = co.getSlackOptimisation(Dimension.V)
 
-                applyContainerEdge(sox, c, leftMost, Side.START, map, Dimension.H, topGroup, elementMapping)
-                applyContainerEdge(sox, c, rightMost, Side.END, map, Dimension.H, topGroup, elementMapping)
-                applyContainerEdge(soy, c, topMost, Side.START, map, Dimension.V, topGroup, elementMapping)
-                applyContainerEdge(soy, c, bottomMost, Side.END, map, Dimension.V, topGroup, elementMapping)
+                applyContainerEdge(sox, c, leftMost, Side.START, map, Dimension.H, topGroup)
+                applyContainerEdge(sox, c, rightMost, Side.END, map, Dimension.H, topGroup)
+                applyContainerEdge(soy, c, topMost, Side.START, map, Dimension.V, topGroup)
+                applyContainerEdge(soy, c, bottomMost, Side.END, map, Dimension.V, topGroup)
 
                 val containerBounds = c.getContents()
                     .map { rr.getPlacedPosition(it) }

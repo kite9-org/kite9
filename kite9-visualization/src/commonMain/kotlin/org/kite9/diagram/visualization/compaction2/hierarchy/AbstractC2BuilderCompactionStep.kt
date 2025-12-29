@@ -40,12 +40,13 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
 
             val l = C2Slideable(cso, d, de, Side.START, getRectangularPermeability(de, d, false))
             val r = C2Slideable(cso, d, de, Side.END, getRectangularPermeability(de, d, true))
-            cso.ensureMinimumDistance(l, r, ms.toInt())
 
             ss = RectangularSlideableSetImpl(de, l, r)
 
             ensureCentreSlideablePosition(cso, ss, cExisting)
             cso.add(de, ss)
+
+            cso.ensureMinimumDistance(l, r, ms.toInt())
 
             if (de is Container) {
                 checkCreateElementContentItems(cso, de, d, de.getLayout(), ss, topGroup)

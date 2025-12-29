@@ -30,7 +30,7 @@ class SingleDirection(
     }
 
     private fun update(newPos: Int, ci: Any?, changedConstraints: Boolean, depth: Int, maxDepth: Int): Boolean {
-        if (depth > maxDepth) {
+        if ((depth > maxDepth) && (depth > 20)) {
             throw LogicException("Depth exceeded.  Gave up on ${this}")
         }
         return try {

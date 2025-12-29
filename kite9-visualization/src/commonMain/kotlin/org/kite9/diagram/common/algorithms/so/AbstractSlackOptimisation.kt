@@ -37,6 +37,7 @@ abstract class AbstractSlackOptimisation : Logable, SlackOptimisation {
             right.addMaximumForwardConstraint(left, minLength)
             log.send(if (log.go()) null else "Updated min distance to $minLength for $left to $right")
         } catch (e: LogicException) {
+            e.printStackTrace()
             debugOutput(true)
         }
     }
