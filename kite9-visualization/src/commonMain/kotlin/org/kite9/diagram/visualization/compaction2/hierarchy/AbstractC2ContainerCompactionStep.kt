@@ -5,6 +5,7 @@ import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
@@ -66,6 +67,28 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
     }
 
+    private fun getPadding(c: Container, s: Side, d: Dimension) : Int {
+        val dir = if (s == Side.START) {
+            if (d == Dimension.H) {
+                Direction.LEFT
+            } else {
+                Direction.UP
+            }
+        } else {
+            if (d == Dimension.H) {
+                Direction.RIGHT
+            } else {
+                Direction.DOWN
+            }
+        }
+
+        return if (c is SizedRectangular) {
+            (c.getPadding(dir) / 2.0).toInt()
+        } else {
+            1
+        }
+    }
+
     fun applyContainerEdge(so: C2SlackOptimisation, c: Container, to: Set<LeafGroup>, s: Side, map: MutableMap<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>, dimension: Dimension, topGroup: Group) {
         to.forEach { lg ->
             val routables = map[lg]!!
@@ -73,13 +96,14 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
             if (theRSS != null) {
                 val newRSS = so.addSide(inside, theRSS, s)
+                val padding = getPadding(c, s, dimension)
                 if (s == Side.START) {
                     if (theRSS.bl != null) {
-                        so.ensureMinimumDistance(inside.l, theRSS.bl!!, 0)
+                        so.ensureMinimumDistance(inside.l, theRSS.bl!!, padding)
                     }
                 } else {
                     if (theRSS.br != null) {
-                        so.ensureMinimumDistance(theRSS.br!!, inside.r, 0)
+                        so.ensureMinimumDistance(theRSS.br!!, inside.r, padding)
                     }
                 }
                 if (dimension == Dimension.H) {

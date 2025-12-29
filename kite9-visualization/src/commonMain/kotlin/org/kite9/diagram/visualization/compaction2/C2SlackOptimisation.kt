@@ -11,10 +11,6 @@ import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
-import kotlin.collections.contains
-import kotlin.collections.indexOf
 
 
 /**
@@ -95,10 +91,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         return laneGroups
     }
 
-//    fun getSlideablesFor(group: LeafGroup) : List<RoutableSlideableSet> {
-//        return groupMap.getOrElse(group) { emptyList()}
-//    }
-
     fun mergeSlideables(s1: C2Slideable?, s2: C2Slideable?) : C2Slideable? {
         return mergeSlideablesInner(s1, s2)
     }
@@ -166,7 +158,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             }
 
             this.updateContainment1(inner, new)
-            //updateSlideableSet(inner, new)  // first spot
             updateSlideableMap(new)
             checkConsistency()
             return new
@@ -175,15 +166,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
             return inner
         }
     }
-
-//    private fun updateSlideableSet(old: SlideableSet<*>, new: RoutableSlideableSet) {
-//        val toReplaceGroups = groupMap.filter { (_, v) -> v.contains(old) }.keys
-//        toReplaceGroups.forEach { g ->
-//            val ss = groupMap[g]!!
-//            val idx = ss.indexOf(old)
-//            ss[idx] = new
-//        }
-//    }
 
     private fun updateSlideableSets(
         contains: Set<SlideableSet<*>>?,
@@ -202,10 +184,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
                 val toReplaceDiagramElements = rectangularMap.filter { (_, v) -> v == it }.keys
                 toReplaceDiagramElements.forEach { d -> rectangularMap[d] = ssNew }
             }
-
-//            if (ssNew is RoutableSlideableSet) {
-//                updateSlideableSet(it, ssNew)
-//            }
         }
     }
 
@@ -288,14 +266,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
         }
     }
 
-//    fun add(g: LeafGroup?, ss: RoutableSlideableSet) {
-//        if (g != null) {
-//            val sets = groupMap.getOrPut(g) { mutableListOf<RoutableSlideableSet>() }
-//            sets.add(ss)
-//        }
-//        updateSlideableMap(ss)
-//    }
-
     private fun checkValid(s: C2Slideable, k: Any) {
         if (!slideables.contains(s)) {
             throw LogicException("Wasn't expecting reference to $s for key $k")
@@ -341,8 +311,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
         rectangularMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
 
-        //groupMap.forEach { (k, v) -> v.forEach { ss -> ss.getAll().forEach { it -> checkValid(it, k) } } }
-
         slideables.forEach { k ->
             k.getForwardSlideables(true)
                 .forEach { checkValid(it, "referenced by $k") }
@@ -361,10 +329,6 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptim
 
         log.send("Consistent")
     }
-
-//    fun remove(g: Group) {
-//        groupMap.remove(g)
-//    }
 
     fun addSlideable(c: C2Slideable) {
         slideables.add(c)
