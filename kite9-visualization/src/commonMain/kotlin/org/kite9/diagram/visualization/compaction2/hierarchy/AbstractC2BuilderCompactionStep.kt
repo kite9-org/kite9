@@ -29,7 +29,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
         d: Dimension,
         cso: C2SlackOptimisation,
         cExisting: C2Slideable?,
-        topGroup: Group?
+        topGroup: Group?,
     ): RectangularSlideableSet {
         var ss = cso.getSlideablesFor(de)
 

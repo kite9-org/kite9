@@ -73,7 +73,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         }
     }
 
-    override fun narrow(d: Layout?, `in`: Bounds, horiz: Boolean, applyGutters: Boolean): Bounds {
+    override fun narrow(d: Layout?, `in`: Bounds, horiz: Boolean): Bounds {
         var `in`: Bounds? = `in`
         `in` = `in` ?: getTopLevelBounds(horiz)
         val multiplicationFrame = getMultiplicationFrame(d, horiz)
@@ -85,12 +85,6 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         var gw =
                 (bbounds.distanceMax - bbounds.distanceMin) *
                         (multiplicationFrame.distanceMax - multiplicationFrame.distanceMin)
-        if (applyGutters) {
-            val thick = isThickGutter(d, horiz)
-            val g = gw * if (thick) THICK_GUTTER else THIN_GUTTER
-            gx += g
-            gw -= 2 * g
-        }
         return BasicBounds(gx, gx + gw)
     }
 

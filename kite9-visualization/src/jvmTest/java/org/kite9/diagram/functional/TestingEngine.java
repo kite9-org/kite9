@@ -449,19 +449,16 @@ public class TestingEngine extends TestingHelp {
 				PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);
 
 				if (pri != null) {
-					int xr = new Random().nextInt(10) - 5;
-					int yr = new Random().nextInt(10) - 5;
-
 					g.setColor(cols[Math.abs(group.hashCode()) % 4]);
 					g.setStroke(new BasicStroke(1));
-					g.drawRoundRect((int) (pri.getMinX() * size + xr), (int) (pri.getMinY() * size + yr), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
+					g.drawRoundRect((int) (pri.getMinX() * size), (int) (pri.getMinY() * size), (int) (pri.getWidth() * size), (int) (pri.getHeight() * size), 3, 3);
 
 					String id = group.getID();
 					if (((LeafGroup) group).getConnected() != null) {
-						id += " "+((LeafGroup) group).getConnected().getID();
+						id += "("+((LeafGroup) group).getConnected().getID()+")";
 					}
 
-					g.drawString(id, (int) (pri.centerX() * size + xr), (int) (pri.centerY() * size + yr));
+					g.drawString(id, (int) (pri.centerX() * size), (int) (pri.centerY() * size));
 				}
 				done.add(group);
 			}

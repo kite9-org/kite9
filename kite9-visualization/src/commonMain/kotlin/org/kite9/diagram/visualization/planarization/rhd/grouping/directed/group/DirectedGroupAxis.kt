@@ -59,7 +59,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             out = if (parent != null) {
                 if (parent.axis.isLayoutRequired) {
                     val l = getLayoutFor(parent, g)
-                    rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz), horiz, true)
+                    rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz), horiz)
                 } else {
                     (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz)
                 }

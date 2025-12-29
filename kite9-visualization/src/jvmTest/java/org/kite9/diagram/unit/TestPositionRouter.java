@@ -206,8 +206,8 @@ public class TestPositionRouter {
 	@Test
 	public void boundsTesting() {
 		Bounds b = prh.getTopLevelBounds(true);
-		Bounds left = prh.narrow(Layout.LEFT, b, true, false);
-		Bounds right = prh.narrow(Layout.RIGHT, b, true, false);
+		Bounds left = prh.narrow(Layout.LEFT, b, true);
+		Bounds right = prh.narrow(Layout.RIGHT, b, true);
 		Assert.assertFalse(prh.overlaps(left, right));
 		Assert.assertTrue(prh.overlaps(b, right));
 		Assert.assertTrue(prh.overlaps(left, b));

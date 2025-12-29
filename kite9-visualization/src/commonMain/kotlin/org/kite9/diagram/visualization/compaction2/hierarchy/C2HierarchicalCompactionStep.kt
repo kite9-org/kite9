@@ -1,24 +1,23 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.Purpose
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
-import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
-class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult, rr: RoutableReader) : AbstractC2ContainerCompactionStep(cd, r, rr) {
+class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) : AbstractC2ContainerCompactionStep(cd, rr) {
 
     var first = true
     override fun compact(c: C2Compaction, g: Group) {
@@ -42,111 +41,149 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult, rr: Ro
         val leafGroups = allGroups
             .filterIsInstance<LeafGroup>()
 
-        leafGroups.forEach { processLeafGroup(it, c, g) }
-        wrapContainersIntoGroups(c, g)
+        val leafGroupMap = leafGroups.map { it to processLeafGroup(it, c, g) }.toMap()
+        val wrappedLeafGroupMap = wrapContainersIntoGroups(c, leafGroupMap, g)
 
-        val horiz = bucketLeafGroups(leafGroups, true)
-        val vert = bucketLeafGroups(leafGroups, false)
+        val left = alignLeafGroups(wrappedLeafGroupMap, Direction.LEFT)
+        val right = alignLeafGroups(wrappedLeafGroupMap, Direction.RIGHT)
+        val up = alignLeafGroups(wrappedLeafGroupMap, Direction.UP)
+        val down = alignLeafGroups(wrappedLeafGroupMap, Direction.DOWN)
 
-        val horiz2 = horiz.map {
-            it.map { g ->
-                val so = c.getSlackOptimisation(Dimension.H)
-                val ga = so.getSlideablesFor(g).lastOrNull()
-                so.remove(g)
-                ga
-            }.filterNotNull().reduceOrNull { a, b ->
-                mergeForAxis(c, a, b, Dimension.H, true)
-            }
-        }
+        val left2 = mergeSide(left, Side.START, c.getSlackOptimisation(Dimension.H))
+        val right2 = mergeSide(right, Side.END, c.getSlackOptimisation(Dimension.H))
+        val up2 = mergeSide(up, Side.START, c.getSlackOptimisation(Dimension.V))
+        val down2 = mergeSide(down, Side.END, c.getSlackOptimisation(Dimension.V))
 
-        val vert2 = vert.map {
-            it.map { g ->
-                val so = c.getSlackOptimisation(Dimension.V)
-                val ga = so.getSlideablesFor(g).lastOrNull()
-                so.remove(g)
-                ga
-            }.filterNotNull().reduceOrNull {
-                a, b -> mergeForAxis(c, a, b, Dimension.V, true)
-            }
-        }
-
-        horiz2.filterNotNull().reduce { a, b -> mergeForAxis(c, a, b, Dimension.H, false) }
-        vert2.filterNotNull().reduce { a, b -> mergeForAxis(c, a, b, Dimension.V, false) }
+        joinSides(right2, left2, c.getSlackOptimisation(Dimension.H), Dimension.H)
+        joinSides(down2, up2, c.getSlackOptimisation(Dimension.V), Dimension.V)
     }
 
-    fun bucketLeafGroups(contents: List<LeafGroup>, horiz: Boolean) : List<Set<LeafGroup>> {
-        val buckets = mutableListOf<MutableSet<LeafGroup>>()
-        contents.forEach { e ->
-            val b = buckets.firstOrNull {
-                val bp = this.rr.getPlacedPosition(it.first())
-                val ep = this.rr.getPlacedPosition(e)
-                if ((bp != null) && (ep != null)) {
-                    val res = this.rr.isInPlane(bp, ep, horiz)
-                    res
+    fun mergeSide(leaves: Map<Double, Set<RoutableSlideableSet>>, s: Side, so: C2SlackOptimisation) : Map<Double, C2Slideable?> {
+        return leaves.mapValues { (k, r) ->
+            r.map {
+                if (s == Side.START) {
+                    it.bl
                 } else {
-                    throw LogicException("oops null")
+                    it.br
                 }
             }
-
-            if (b != null) {
-                b.add(e)
-            } else {
-                val newB = mutableSetOf<LeafGroup>(e)
-                buckets.add(newB)
+            .reduce {
+                a, b -> so.mergeSlideables(a, b)
             }
-        }
-
-        return buckets.sortedBy {
-            val bp = this.rr.getPlacedPosition(it.first())!!
-            if (horiz)
-                bp.centerX()
-            else
-                bp.centerY()
         }
     }
 
-    fun processLeafGroup(g: LeafGroup, c: C2Compaction, topGroup: Group) {
+    fun joinSides(start: Map<Double, C2Slideable?>, end: Map<Double, C2Slideable?>, so: C2SlackOptimisation, d: Dimension) {
+        val allKeys = start.keys + end.keys
+        allKeys.forEach { k ->
+            val startS = start[k]
+            val endS = end[k]
+
+            if ((startS != null) && (endS != null)) {
+                val startR = startS.getOrbitingElements()
+                val endR = endS.getOrbitingElements()
+
+                so.mergeSlideables(startS, endS)
+
+                // ensure Separation of rectangulars
+                val distance = startR.maxOfOrNull { ae ->
+                    endR.maxOf { be -> getMinimumDistanceBetween(ae, Side.END, be, Side.START, d, null, true) }
+                } ?: 2.0
+
+                val startRects = startR.map {
+                    val rs = so.getSlideablesFor(it as Positioned)
+                    rs!!.r
+                }
+
+                val endRects = endR.map {
+                    val ls = so.getSlideablesFor(it as Positioned)
+                    ls!!.l
+                }
+
+                startRects.forEach { aS ->
+                    endRects.forEach { bS ->
+                        so.ensureMinimumDistance(aS, bS, distance.toInt())
+                    }
+                }
+            }
+        }
+
+    }
+
+    fun alignLeafGroups(
+        contents: Map<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
+        d: Direction
+    ): Map<Double, Set<RoutableSlideableSet>> {
+
+        val grouped: Map<Double?, List<RoutableSlideableSet?>> =
+            contents.entries.groupBy(
+                keySelector = { (k, _) -> getEdgePosition(k.connected as DiagramElement?, d) },
+                valueTransform = { (_, v) ->
+                    when (d) {
+                        Direction.UP, Direction.DOWN -> v.second
+                        Direction.LEFT, Direction.RIGHT -> v.first
+                    }
+                }
+            )
+
+        return grouped
+            .filterKeys { it != null }
+            .mapKeys { (k, _) -> k!! }
+            .mapValues { (_, list) ->
+            list.filterNotNull().toSet()
+        }
+    }
+
+    fun processLeafGroup(g: LeafGroup, c: C2Compaction, topGroup: Group) : Pair<RoutableSlideableSet?, RoutableSlideableSet?> {
         val e = g.connected
         if (e is Rectangular) {
             val hso = c.getSlackOptimisation(Dimension.H)
             val vso = c.getSlackOptimisation(Dimension.V)
-            val hr = checkCreateElement(e, Dimension.H, hso, null, g)
-            val vr = checkCreateElement(e, Dimension.V, vso, null, g)
+            val hr = checkCreateElement(e, Dimension.H, hso, null, topGroup)
+            val vr = checkCreateElement(e, Dimension.V, vso, null, topGroup)
 
             val hss = hr.wrapInRoutable()
             val vss = vr.wrapInRoutable()
+
+            hso.add(hss)
+            vso.add(vss)
+
             if ((hss != null) && (vss != null)) {
-                hso.add(g, hss)
-                vso.add(g, vss)
                 hso.contains(hss, hr)
                 vso.contains(vss, vr)
             }
+
+            return Pair(hss, vss)
         } else if (e is Port) {
             // leaf node is a port
             val f = g.container!!
             val direction = e.getPortDirection()
+            var pvi : RoutableSlideableSet? = null
+            var phi : RoutableSlideableSet?  = null
             when (direction) {
                 Direction.LEFT, Direction.RIGHT -> {
                     val vso = c.getSlackOptimisation(Dimension.V)
-                    val pvi = checkCreateIntersectionOnly(vso, g, f, Dimension.V)
+                    pvi = checkCreateIntersectionOnly(vso, g, f, Dimension.V)
                     val vr = checkCreateElement(f, Dimension.V, vso, null, topGroup)
                     ensurePortSlideablePosition(vso, vr, pvi.c)
                 }
                 Direction.UP, Direction.DOWN -> {
                     val hso = c.getSlackOptimisation(Dimension.H)
-                    val phi = checkCreateIntersectionOnly(hso, g, f, Dimension.H)
+                    phi = checkCreateIntersectionOnly(hso, g, f, Dimension.H)
                     val hr = checkCreateElement(f, Dimension.H, hso, null, topGroup)
                     ensurePortSlideablePosition(hso, hr, phi.c)
                 }
             }
+
+            return Pair(phi, pvi)
         }
         else {
             // leaf node must be for container arrival
             val f = g.container!!
-            checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
-            checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
+            val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
+            val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
+            return Pair(hss, vss)
         }
-
     }
 
     private fun isTopmostGroup(g: Group): Boolean {
@@ -162,12 +199,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult, rr: Ro
     }
 
     private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
-        val ss1 = cso.getSlideablesFor(g).lastOrNull()
-
-        if (ss1 != null) {
-            return ss1
-        }
-
         val out = if (g.connected is Port) {
             val ic = C2Slideable(cso, d,  g.connected as Port, Purpose.PORT)
             val out2 = RoutableSlideableSetImpl(ic, null, null)
@@ -178,15 +209,12 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer, r: GroupResult, rr: Ro
             RoutableSlideableSetImpl(ic, null, null)
         }
 
-        cso.add(g, out)
-
-
         log.send("Created a RoutableSlideableSet for $c: ", out.getAll())
         return out
     }
 
 
-    private fun mergeForAxis(c: C2Compaction, ha: RoutableSlideableSet, hb : RoutableSlideableSet, d: Dimension, overlap: Boolean) : RoutableSlideableSet {
+    private fun mergeForAxis(c: C2Compaction, ha: RoutableSlideableSet, hb : RoutableSlideableSet, d: Dimension, s: Side, overlap: Boolean) : RoutableSlideableSet {
         val so = c.getSlackOptimisation(d)
 
         val hm = if (!overlap) {

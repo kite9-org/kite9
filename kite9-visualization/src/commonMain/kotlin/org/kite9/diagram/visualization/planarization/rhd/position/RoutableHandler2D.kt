@@ -27,7 +27,7 @@ interface RoutableHandler2D : RoutableReader {
     fun clearTempPositions(horiz: Boolean)
     fun getTopLevelBounds(horiz: Boolean): Bounds
     fun portEdge(direction: Direction, b: Bounds, horiz: Boolean) : Bounds
-    fun narrow(layout: Layout?, b: Bounds, horiz: Boolean, applyGutters: Boolean): Bounds
+    fun narrow(layout: Layout?, b: Bounds, horiz: Boolean): Bounds
     fun createRouting(x: Bounds, y: Bounds): RoutingInfo
     fun outputSettings()
     fun getBoundsOf(ri: RoutingInfo?, horiz: Boolean): Bounds

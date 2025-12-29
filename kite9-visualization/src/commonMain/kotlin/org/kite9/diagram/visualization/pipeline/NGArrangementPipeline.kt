@@ -125,7 +125,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         // essential compaction steps
         val gp = elementMapper.getGridPositioner()
         val steps = arrayOf<C2CompactionStep>(
-            C2HierarchicalCompactionStep(cd, mr, rr!!),
+            C2HierarchicalCompactionStep(cd, rr!!),
             C2NeighbourBuilderStep(cd),
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
