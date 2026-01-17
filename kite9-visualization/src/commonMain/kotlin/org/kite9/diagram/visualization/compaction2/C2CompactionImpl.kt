@@ -21,8 +21,8 @@ import kotlin.math.min
  */
 class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
-    private val horizontalSegmentSlackOptimisation = C2SlackOptimisation(this)
-    private val verticalSegmentSlackOptimisation = C2SlackOptimisation(this)
+    private val horizontalSegmentSlackOptimisation = C2SlackOptimisation(this, Dimension.H)
+    private val verticalSegmentSlackOptimisation = C2SlackOptimisation(this, Dimension.V)
 
     override fun getSlackOptimisation(d: Dimension): C2SlackOptimisation {
         return if (d ==Dimension.H) {

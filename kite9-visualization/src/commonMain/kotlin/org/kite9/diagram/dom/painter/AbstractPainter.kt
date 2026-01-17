@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.painter
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.fraction.LongFraction
 import org.kite9.diagram.common.objects.OPair
 import org.kite9.diagram.common.objects.Pair
@@ -77,7 +78,7 @@ abstract class AbstractPainter : Painter {
             debug.append("rectangular: $usage; ")
             debug.append("rect-pos: " + xy(rri.position) + "; ")
             debug.append("rect-size: " + xy(rri.size) + "; ")
-            debug.append("position: " + (r as Rectangular).getContainerPosition() + "; ")
+            debug.append("position: " + (r as Rectangular).getContainerPosition(Dimension.H) + " " + (r as Rectangular).getContainerPosition(Dimension.V) + "; ")
 
             if ((c.getParent() is Container) && (c is Connected)) {
                 val parent = c.getParent() as Container?

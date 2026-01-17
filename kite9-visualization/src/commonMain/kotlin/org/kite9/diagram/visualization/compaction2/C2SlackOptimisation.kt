@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2
 
 import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Port
@@ -45,7 +46,7 @@ data class Constraint(val forward: Boolean, val dist: Int) {
  * Augments SlackOptimisation to keep track of diagram elements underlying the slideables.
  * @author robmoffat
  */
-class C2SlackOptimisation(val compaction: C2CompactionImpl) : AbstractSlackOptimisation(), Logable {
+class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimension) : AbstractSlackOptimisation(), Logable {
 
     /** Track mapping of elements to sets */
     private val rectangularMap: MutableMap<Rectangular, RectangularSlideableSet> = HashMap()

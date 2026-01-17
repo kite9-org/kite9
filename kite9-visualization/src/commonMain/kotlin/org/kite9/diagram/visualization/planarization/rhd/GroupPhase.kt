@@ -5,7 +5,6 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
@@ -13,9 +12,11 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionContradicting
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionRendered
+import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryBiDirectional
@@ -33,7 +34,6 @@ abstract class GroupPhase(
     val elements: Int,
     val ch: ContradictionHandler,
     val gp: GridPositioner,
-    val em: ElementMapper,
     var ef: DiagramElementFactory<*>
 ) : GroupBuilder, Logable {
 
@@ -144,14 +144,18 @@ abstract class GroupPhase(
 
                     allPorts.forEach { (d, ports) ->
                         val portGroups = ports.groupBy {
-                            when (it.getContainerPosition().type) {
-                                Measurement.PIXELS -> if (it.getContainerPosition().amount < 0) 0 else 1
+                            val pp = it.getContainerPosition(Direction.getDimension(d))
+                            when (pp.type) {
+                                Measurement.PIXELS -> if (pp.amount < 0) 0 else 1
                                 Measurement.PERCENTAGE, Measurement.NONE -> 2
                             }
                         }
 
                         portGroups.values.forEach { l ->
-                            val sortedPorts = l.sortedBy { it.getContainerPosition().amount }
+                            val sortedPorts = l.sortedBy {
+                                val side = it.getPortDirection()
+                                it.getContainerPosition(Direction.getDimension(side)).amount
+                            }
                             val directionBasedOnSide = when(d) {
                                 Direction.UP, Direction.DOWN -> Direction.RIGHT
                                 Direction.LEFT, Direction.RIGHT -> Direction.DOWN
@@ -225,8 +229,75 @@ abstract class GroupPhase(
             // we need at least one group in the GroupPhase, so if the diagram is empty, return a
             // single leaf group.
             true
-        } else !em.requiresPlanarizationCornerVertices(ord)
+        } else {
+            !requiresPlanarizationCornerVertices(ord)
+        }
     }
+
+    fun requiresPlanarizationCornerVertices(c: DiagramElement): Boolean {
+        if (c is Diagram) {
+            return true
+        }
+        // does anything inside it have connections?
+        if (c is Container) {
+            for (de in c.getContents()) {
+                if (hasNestedConnections(de)) {
+                    return true
+                }
+            }
+
+            // are connections allowed to pass through it?
+            val canTraverse = isElementTraversible(c)
+            if (canTraverse && hasNestedConnections(c)) {
+                return true
+            }
+        }
+
+        // is it embedded in a grid?  If yes, use corners
+        if (c is ConnectedRectangular) {
+            val l = if (c.getParent() == null) null else (c.getParent() as Container?)!!.getLayout()
+            return l == Layout.GRID
+        }
+
+        return false
+    }
+
+    private fun isElementTraversible(c: DiagramElement): Boolean {
+        return isElementTraversible(c, Direction.UP) ||
+                isElementTraversible(c, Direction.DOWN) ||
+                isElementTraversible(c, Direction.LEFT) ||
+                isElementTraversible(c, Direction.RIGHT)
+    }
+
+    private fun isElementTraversible(c: DiagramElement, d: Direction): Boolean {
+        return if (c is Container) {
+            c.getTraversalRule(d) == BorderTraversal.ALWAYS
+        } else false
+    }
+
+    private var hasConnections: MutableMap<DiagramElement?, Boolean> = HashMap()
+
+
+    fun hasNestedConnections(c: DiagramElement?): Boolean {
+        if (hasConnections.containsKey(c)) {
+            return hasConnections[c]!!
+        }
+        var has = false
+        if (c is Connected) {
+            has = c.getLinks().size > 0
+        }
+        if (has == false && c is Container) {
+            for (de in c.getContents()) {
+                if (hasNestedConnections(de)) {
+                    has = true
+                    break
+                }
+            }
+        }
+        hasConnections[c] = has
+        return has
+    }
+
 
     private fun hasConnectedContents(d: Diagram): Boolean {
         for (de in d.getContents()) {
@@ -275,9 +346,16 @@ abstract class GroupPhase(
     private fun getConnectionEnd(oe: Connected): LeafGroup {
         val otherGroup = pMap[oe]
         return if (otherGroup == null) {
-            val decomp = createLeafGroup(null, oe as Container)
-            allGroups.add(decomp)
-            decomp
+            if (needsLeafGroup(oe)) {
+                val decomp = createLeafGroup(oe, oe.getContainer())
+                allGroups.add(decomp)
+                decomp
+            } else {
+                val hub = TemporaryContainerHub(oe as Container)
+                val decomp = createLeafGroup(hub, oe as Container)
+                allGroups.add(decomp)
+                decomp
+            }
         } else {
             otherGroup
         }

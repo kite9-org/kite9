@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.planarization.rhd.links
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl.Companion.getXOccupies
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl.Companion.getYOccupies
-import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
@@ -11,7 +10,6 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionContradicting
 import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionRendered
 import org.kite9.diagram.visualization.planarization.Tools.Companion.setConnectionContradiction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.getDirectionForLayout
@@ -19,7 +17,7 @@ import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.is
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase.Companion.isVerticalDirection
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 
-class BasicContradictionHandler(var em: ElementMapper) : Logable, ContradictionHandler {
+class BasicContradictionHandler() : Logable, ContradictionHandler {
 
     private val log = Kite9Log.instance(this)
 

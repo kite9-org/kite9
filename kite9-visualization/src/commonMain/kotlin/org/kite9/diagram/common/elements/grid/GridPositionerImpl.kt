@@ -1,5 +1,6 @@
 package org.kite9.diagram.common.elements.grid
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.fraction.LongFraction.Companion.getReducedFraction
 import org.kite9.diagram.common.objects.OPair
@@ -145,7 +146,8 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
                 if (toPlace == null) {
                     toPlace = factory.createTemporaryConnected(ord, "$x-$y")
                     toPlace.setContainerPosition(
-                            GridContainerPosition(BasicIntegerRange(x, x), BasicIntegerRange(y, y))
+                        GridContainerPosition(BasicIntegerRange(x, x)),
+                        GridContainerPosition(BasicIntegerRange(y, y))
                     )
                     modifyContainerContents(ord, toPlace)
                     xMap[x] = toPlace
@@ -273,11 +275,11 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     companion object {
 
         fun getYOccupies(diagramElement: Rectangular): IntegerRange {
-            return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.y
+            return (diagramElement.getContainerPosition(Dimension.V) as GridContainerPosition?)!!.r
         }
 
         fun getXOccupies(diagramElement: Rectangular): IntegerRange {
-            return (diagramElement.getContainerPosition() as GridContainerPosition?)!!.x
+            return (diagramElement.getContainerPosition(Dimension.H) as GridContainerPosition?)!!.r
         }
 
         /**

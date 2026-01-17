@@ -62,42 +62,24 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
     }
 
     private fun visit(p: Port, c: C2Compaction, position: Dimension2D, size: Dimension2D) {
-        val pp = p.getContainerPosition()
-        val direction = p.getPortDirection()
+        val ppX = p.getContainerPosition(Dimension.H)
+        val ppY = p.getContainerPosition(Dimension.V)
         val ssx = c.getSlackOptimisation(Dimension.H).getPortSlideablesFor(p)
         val ssy = c.getSlackOptimisation(Dimension.V).getPortSlideablesFor(p)
 
-        when (direction) {
-            Direction.LEFT if (ssy != null) -> {
-                setPortPosition(p, position.x(), ssy.c!!.minimumPosition.toDouble())
-            }
-            Direction.RIGHT if ssy != null -> {
-                setPortPosition(p, position.x() + size.x(), ssy.c!!.minimumPosition.toDouble())
-            }
-            Direction.UP if ssx != null -> {
-                setPortPosition(p, ssx.c!!.minimumPosition.toDouble(), position.y())
-            }
-            Direction.DOWN if ssx != null -> {
-                setPortPosition(p, ssx.c!!.minimumPosition.toDouble(), position.y() + size.y())
-            }
-            else -> {
-                when (direction) {
-                    Direction.LEFT -> setPortPosition(p, position.x(), measure(position.y(), size.y(), pp))
-                    Direction.RIGHT -> setPortPosition(
-                        p,
-                        position.x() + size.x(),
-                        measure(position.y(), size.y(), pp)
-                    )
-
-                    Direction.UP -> setPortPosition(p, measure(position.x(), size.x(), pp), position.y())
-                    Direction.DOWN -> setPortPosition(
-                        p,
-                        measure(position.x(), size.x(), pp),
-                        position.y() + size.y()
-                    )
-                }
-            }
+        val portXPos = if (ssx != null) {
+            ssx.c!!.minimumPosition.toDouble()
+        } else {
+            measure(position.x(), size.x(), ppX)
         }
+
+        val portYPos = if (ssy != null) {
+            ssy.c!!.minimumPosition.toDouble()
+        } else {
+            measure(position.y(), size.y(), ppY)
+        }
+
+        setPortPosition(p, portXPos, portYPos)
     }
 
 

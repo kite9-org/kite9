@@ -2,11 +2,9 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.directed
 
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.AbstractGroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
@@ -49,9 +47,8 @@ abstract class AbstractRuleBasedGroupingStrategy(
     elements: Int,
     ch: ContradictionHandler,
     gp: GridPositioner,
-    em: ElementMapper,
     ef: DiagramElementFactory<*>
-) : AbstractGroupingStrategy(top, elements, ch, gp, em, ef) {
+) : AbstractGroupingStrategy(top, elements, ch, gp, ef) {
 
     override fun canGroupsMerge(
         a: Group,

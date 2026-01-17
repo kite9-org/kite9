@@ -2,17 +2,25 @@ package org.kite9.diagram.model.style
 
 import org.kite9.diagram.common.range.IntegerRange
 
-data class GridContainerPosition(val x: IntegerRange, val y: IntegerRange) : ContainerPosition {
+data class GridContainerPosition(val r: IntegerRange) : ContainerPosition {
 
     fun isSet(): Boolean {
-        return !IntegerRange.notSet(x) && !IntegerRange.notSet(y)
+        return !IntegerRange.notSet(r)
     }
 
     override fun toString(): String {
         return if (!isSet()) {
             "null"
         } else {
-            "[" + x.from + "," + x.to + "," + y.from + "," + y.to + "]"
+            "[" + r.from + "," + r.to + "]"
         }
+    }
+
+    fun getFrom() : Int {
+        return r.from
+    }
+
+    fun getTo() : Int {
+        return r.to
     }
 }

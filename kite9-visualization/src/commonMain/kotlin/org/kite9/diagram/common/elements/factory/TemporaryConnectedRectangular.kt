@@ -6,5 +6,5 @@ import org.kite9.diagram.model.style.ContainerPosition
 
 interface TemporaryConnectedRectangular : ConnectedRectangular, Temporary {
 
-    fun setContainerPosition(cp: ContainerPosition)
+    fun setContainerPosition(x: ContainerPosition, y: ContainerPosition)
 }

@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.common.elements.mapping.ElementMapper
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
@@ -38,9 +37,8 @@ class GeneratorBasedGroupingStrategyImpl(
     elements: Int,
     ch: ContradictionHandler,
     gp: GridPositioner,
-    em: ElementMapper,
     ef: DiagramElementFactory<*>) :
-    AxisHandlingGroupingStrategy(top, elements, ch, gp, em, ef,
+    AxisHandlingGroupingStrategy(top, elements, ch, gp, ef,
         GeneratorMergeState(
             ch, elements
         )

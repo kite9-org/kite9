@@ -192,7 +192,7 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private double getAlignPoint(double s, double len, Connected v, Direction connectionSide) {
-				Placement p = v.getConnectionAlignment(connectionSide);
+				Placement p = v.getConnectionAlignment(Direction.Companion.getDimension(connectionSide));
 				Pair<Double, Double> out = AligningRectangularizer.Companion.calculatePositionForPlacement(p, (int) len);
 				return s + out.component1();
 			}
@@ -203,7 +203,7 @@ public class TestingEngine extends TestingHelp {
 						return false;
 					}
 				}
-				return (!(v instanceof Port)) && (v.getConnectionAlignment(side) != Placement.Companion.getNONE());
+				return (!(v instanceof Port)) && (v.getConnectionAlignment(Direction.Companion.getDimension(side)) != Placement.Companion.getNONE());
 			}
 
 			/**
@@ -550,15 +550,19 @@ public class TestingEngine extends TestingHelp {
 				.collect(Collectors.toList());
 
 		connecteds.forEach(c -> {
-			GridContainerPosition gcpC = getGridContainerPosition(c);
-			RectangleRenderingInformation rriC = c.getRenderingInformation();
+            GridContainerPosition gcpCX = getGridContainerPosition(c, Dimension.H);
+            GridContainerPosition gcpCY = getGridContainerPosition(c, Dimension.V);
+
+            RectangleRenderingInformation rriC = c.getRenderingInformation();
 			connecteds.forEach(d -> {
 				if (d != c) {
-					GridContainerPosition gcpD = getGridContainerPosition(d);
-					if (gcpC.isSet()&& gcpD.isSet()) {
+                    GridContainerPosition gcpDX = getGridContainerPosition(d, Dimension.H);
+                    GridContainerPosition gcpDY = getGridContainerPosition(d, Dimension.V);
+
+                    if (gcpCX.isSet()&& gcpDX.isSet()) {
 						RectangleRenderingInformation rriD = d.getRenderingInformation();
-						boolean dBeforeCX = gcpD.getX().getTo() < gcpC.getX().getFrom();
-						boolean dAfterCX = gcpD.getX().getFrom() > gcpC.getX().getTo();
+						boolean dBeforeCX = gcpDX.getTo() < gcpCX.getFrom();
+						boolean dAfterCX = gcpDX.getFrom() > gcpCX.getTo();
 
 						if (dBeforeCX) {
 							checkBefore(rriD.getPosition().x(), rriD.getSize().width(), rriC.getPosition().x(), rriC.getSize().width(), d, c, Layout.RIGHT);
@@ -568,8 +572,8 @@ public class TestingEngine extends TestingHelp {
 							checkBefore(rriC.getPosition().x(), rriC.getSize().width(), rriD.getPosition().x(), rriD.getSize().width(), c, d, Layout.RIGHT);
 						}
 
-						boolean dBeforeCY = gcpD.getY().getTo() < gcpC.getY().getFrom();
-						boolean dAfterCY = gcpD.getY().getFrom() > gcpC.getY().getTo();
+						boolean dBeforeCY = gcpDY.getTo() < gcpCY.getFrom();
+						boolean dAfterCY = gcpDY.getFrom() > gcpCY.getTo();
 
 						if (dBeforeCY) {
 							checkBefore(rriD.getPosition().y(), rriD.getSize().height(), rriC.getPosition().y(), rriC.getSize().height(), d, c, Layout.DOWN);
@@ -584,8 +588,8 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
-	private static GridContainerPosition getGridContainerPosition(ConnectedRectangular c) {
-		ContainerPosition cp = c.getContainerPosition();
+	private static GridContainerPosition getGridContainerPosition(ConnectedRectangular c, Dimension d) {
+		ContainerPosition cp = c.getContainerPosition(d);
 		if (!(cp instanceof GridContainerPosition)) {
 			throw new ExpectedLayoutException("Was expecting grid for "+ c.getID());
 		}

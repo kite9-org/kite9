@@ -120,7 +120,7 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         if (c != null) {
             val port = c.getIntersectingElements().filterIsInstance<Port>().first()
             val minDist = ss.l.minimumDistanceTo(ss.r)
-            val pp = port.getContainerPosition()
+            val pp = port.getContainerPosition(cso.dimension)
             if (pp.type == Measurement.PERCENTAGE) {
                 val firstDist = minDist * (pp.amount / 100.0)
                 val secondDist =  minDist * ((100.0 - pp.amount) / 100.0)

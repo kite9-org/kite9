@@ -1,5 +1,6 @@
 package org.kite9.diagram.model
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.style.ContainerPosition
 
@@ -13,7 +14,8 @@ interface Positioned : DiagramElement {
     override fun getRenderingInformation(): RectangleRenderingInformation
 
     /**
-     * Any other details about how this is to be positioned in its container.
+     * Any other details about how this is to be positioned in its container, in a given
+     * dimension.
      */
-    fun getContainerPosition(): ContainerPosition?
+    fun getContainerPosition(d: Dimension): ContainerPosition?
 }

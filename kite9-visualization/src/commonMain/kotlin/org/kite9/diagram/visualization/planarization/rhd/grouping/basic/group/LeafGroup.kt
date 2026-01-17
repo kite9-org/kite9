@@ -8,7 +8,7 @@ import org.kite9.diagram.model.position.Direction
 
 sealed interface LeafGroup : Group {
 
-    val connected: Connected?
+    val connected: Connected
 
     val container: Container?
 

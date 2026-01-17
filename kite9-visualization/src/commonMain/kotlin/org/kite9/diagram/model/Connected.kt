@@ -1,5 +1,6 @@
 package org.kite9.diagram.model
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.style.Placement
@@ -32,9 +33,9 @@ interface Connected : Positioned {
     fun getConnectionsSeparationApproach(): ConnectionsSeparation
 
     /**
-     * In the case of single connections on a side, returns how that connection
-     * should meet the side.
+     * In the case of single connections on a side, or alignment of an element with respect to those
+     * it is aligned horizontally or vertically with, return the placement info.
      */
-    fun getConnectionAlignment(side: Direction): Placement
+    fun getConnectionAlignment(d: Dimension): Placement
 
 }

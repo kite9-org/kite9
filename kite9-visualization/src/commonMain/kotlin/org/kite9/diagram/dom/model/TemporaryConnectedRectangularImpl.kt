@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.model
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnectedRectangular
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
@@ -22,7 +23,9 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
 
     AbstractTemporaryConnectedRectangular(parent.getID() + "-g-" + id, parent), Container, HasSVGRepresentation, SizedRectangular {
 
-    private var gcp: ContainerPosition? = null
+    private var gcpH: ContainerPosition? = null
+    private var gcpV: ContainerPosition? = null
+
     override fun toString(): String {
         return "[grid-temporary: " + getID() + "]"
     }
@@ -32,12 +35,17 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
         return rri
     }
 
-    override fun getContainerPosition(): ContainerPosition? {
-        return gcp
+    override fun getContainerPosition(d: Dimension): ContainerPosition? {
+        return if (d== Dimension.H) {
+            gcpH
+        } else {
+            gcpV
+        }
     }
 
-    override fun setContainerPosition(cp: ContainerPosition) {
-        gcp = cp
+    override fun setContainerPosition(h: ContainerPosition, v: ContainerPosition) {
+        gcpH = h
+        gcpV = v
     }
 
     override fun getSizing(horiz: Boolean): DiagramElementSizing {
@@ -80,7 +88,7 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
         return 0.0
     }
 
-    override fun getConnectionAlignment(side: Direction): Placement {
+    override fun getConnectionAlignment(side: Dimension): Placement {
         return NONE
     }
 

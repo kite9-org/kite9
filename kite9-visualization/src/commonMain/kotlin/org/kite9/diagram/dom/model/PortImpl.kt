@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.model
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
@@ -35,9 +36,21 @@ class PortImpl(
         return portSide
     }
 
-    override fun getContainerPosition(): Placement {
+    override fun getContainerPosition(d: Dimension): Placement {
         ensureInitialized()
-        return portPlacement
+        if (d == Dimension.H) {
+            return when (portSide) {
+                Direction.UP, Direction.DOWN -> portPlacement
+                Direction.LEFT -> Placement(Measurement.PERCENTAGE, 0.0)
+                Direction.RIGHT -> Placement(Measurement.PERCENTAGE, 100.0)
+            }
+        } else {
+            return when (portSide) {
+                Direction.LEFT, Direction.RIGHT -> portPlacement
+                Direction.UP -> Placement(Measurement.PERCENTAGE, 0.0)
+                Direction.DOWN -> Placement(Measurement.PERCENTAGE, 100.0)
+            }
+        }
     }
 
     private var ri: RectangleRenderingInformation = RectangleRenderingInformationImpl()
@@ -59,7 +72,7 @@ class PortImpl(
         return ElementContext.getCssStyleEnumProperty<ConnectionsSeparation>(CSSConstants.CONNECTIONS_PROPERTY, theElement, ctx)!!
     }
 
-    override fun getConnectionAlignment(side: Direction): Placement {
+    override fun getConnectionAlignment(side: Dimension): Placement {
         throw UnsupportedOperationException()
     }
 

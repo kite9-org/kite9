@@ -1,9 +1,8 @@
 package org.kite9.diagram.visualization.pipeline
 
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
+import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.common.elements.grid.GridPositionerImpl
-import org.kite9.diagram.common.elements.mapping.ElementMapper
-import org.kite9.diagram.common.elements.mapping.ElementMapperImpl
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
@@ -46,10 +45,10 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
     private val log = Kite9Log.instance(this)
 
-    var em: ElementMapper? = null
     private var mr: GroupResult? = null
     private var rr: RoutableReader? = null
     private var c2: C2Compaction? = null
+    private val gp: GridPositioner = GridPositionerImpl(diagramElementFactory)
 
     override fun arrange(d: Diagram): Diagram {
         val mr = buildGrouping(d)
@@ -101,18 +100,10 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         }
     }
 
-    private val elementMapper: ElementMapper
-        get() {
-            if (em == null) {
-                em = ElementMapperImpl(GridPositionerImpl(diagramElementFactory))
-            }
-            return em!!
-        }
-
     private fun buildGrouping(d: Diagram) : GroupResult {
         val elements: Int = Util.countConnectedElements(d)
-        val ch: ContradictionHandler = BasicContradictionHandler(elementMapper)
-        val strategy = GeneratorBasedGroupingStrategyImpl(d, elements, ch, elementMapper.getGridPositioner(), elementMapper, diagramElementFactory)
+        val ch: ContradictionHandler = BasicContradictionHandler()
+        val strategy = GeneratorBasedGroupingStrategyImpl(d, elements, ch, gp, diagramElementFactory)
         strategy.buildInitialGroups()
         return strategy.group()
    }
@@ -123,7 +114,6 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 //            GridCellPositionCompactionStep(),
 //
         // essential compaction steps
-        val gp = elementMapper.getGridPositioner()
         val steps = arrayOf<C2CompactionStep>(
             C2HierarchicalCompactionStep(cd, rr!!),
             C2NeighbourBuilderStep(cd),
@@ -132,12 +122,12 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 //            C2ConnectionFanningCompactionStep(cd, gp),
 //            C2ConnectionLabelCompactionStep(cd, gp),
             C2ContainerLabelCompactionStep(cd),
-            C2MinimizeCompactionStep(cd),
+//            C2MinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2DiagramSizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
-            C2MaximizeCompactionStep(cd),
-            C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
+//            C2MaximizeCompactionStep(cd),
+//            C2AlignmentCompactionStep(cd, arrayOf(C2LeftRightAligner(), C2CenteringAligner())),
             C2FanMinimizeCompactionStep(cd),
             C2LoggingCompactionStep(cd),
             C2RectangularPositionCompactionStep(cd),

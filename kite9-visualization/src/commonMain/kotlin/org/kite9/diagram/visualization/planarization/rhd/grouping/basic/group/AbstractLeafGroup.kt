@@ -12,7 +12,7 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
  * Represents a single vertex (glyph, context) within the diagram
  */
 abstract class AbstractLeafGroup(
-    override val connected: Connected?,
+    override val connected: Connected,
     override val container: Container?,
     groupNumber: Int,
     hc: Int,

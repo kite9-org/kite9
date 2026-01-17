@@ -46,6 +46,13 @@ enum class Direction {
             return d == UP || d == DOWN
         }
 
+        fun getDimension(d: Direction) : Dimension {
+            return if (isHorizontal(d)) {
+                Dimension.H
+            } else {
+                Dimension.V
+            }
+        }
 
         fun getDirection(d: Dimension, increasing: Boolean) : Direction {
             return if (d == Dimension.V) {

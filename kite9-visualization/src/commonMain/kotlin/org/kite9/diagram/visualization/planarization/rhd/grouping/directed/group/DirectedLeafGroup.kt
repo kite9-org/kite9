@@ -7,7 +7,7 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
-class DirectedLeafGroup(contained: Connected?,
+class DirectedLeafGroup(contained: Connected,
                         container: Container?,
                         groupNumber: Int,
                         hc: Int,

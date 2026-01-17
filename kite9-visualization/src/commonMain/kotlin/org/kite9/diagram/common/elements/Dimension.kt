@@ -4,7 +4,7 @@
 package org.kite9.diagram.common.elements
 
 enum class Dimension {
-    V, H;
+    H, V;
 
     fun isHoriz() : Boolean {
         return this == H;

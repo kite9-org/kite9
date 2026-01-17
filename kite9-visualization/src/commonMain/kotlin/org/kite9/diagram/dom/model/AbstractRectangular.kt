@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.model
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.LeafPainter
@@ -56,24 +57,32 @@ abstract class AbstractRectangular(
     }
 
     protected fun initContainerPosition() {
-        if (containerPosition == null) {
+        if (containerPositionX == null) {
             if (getParent() is Container) {
                 if (getContainer()!!.getLayout() === Layout.GRID) {
                     val x = ctx.getCssStyleRangeProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY, theElement)
                     val y = ctx.getCssStyleRangeProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY, theElement)
-                    containerPosition = GridContainerPosition(x!!, y!!)
+                    containerPositionX = GridContainerPosition(x!!)
+                    containerPositionY = GridContainerPosition(y!!)
                 }
             }
-            if (containerPosition == null) {
-                containerPosition = NO_CONTAINER_POSITION
+            if (containerPositionX == null) {
+                containerPositionX = NO_CONTAINER_POSITION
+                containerPositionY = NO_CONTAINER_POSITION
             }
         }
     }
 
-    private var containerPosition: ContainerPosition? = null
-    override fun getContainerPosition(): ContainerPosition? {
+    private var containerPositionX: ContainerPosition? = null
+    private var containerPositionY: ContainerPosition? = null
+
+    override fun getContainerPosition(d: Dimension): ContainerPosition? {
         ensureInitialized()
-        return containerPosition
+        return if (d == Dimension.H) {
+            containerPositionX
+        } else {
+            containerPositionY
+        }
     }
 
     override fun getContainer(): Container? {
