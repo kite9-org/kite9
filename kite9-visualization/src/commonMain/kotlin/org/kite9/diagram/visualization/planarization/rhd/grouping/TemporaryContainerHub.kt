@@ -61,4 +61,8 @@ class TemporaryContainerHub(val c: Container) : AbstractDiagramElement(c), Place
     }
 
 
+    override fun toString(): String {
+        return "[hub-temporary: " + getID() + "]"
+
+    }
 }

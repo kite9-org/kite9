@@ -230,11 +230,12 @@ abstract class GroupPhase(
             // single leaf group.
             true
         } else {
-            !requiresPlanarizationCornerVertices(ord)
+            val out = !hasLowerLevelContents(ord)
+            out
         }
     }
 
-    fun requiresPlanarizationCornerVertices(c: DiagramElement): Boolean {
+    fun hasLowerLevelContents(c: DiagramElement): Boolean {
         if (c is Diagram) {
             return true
         }
@@ -353,6 +354,7 @@ abstract class GroupPhase(
             } else {
                 val hub = TemporaryContainerHub(oe as Container)
                 val decomp = createLeafGroup(hub, oe as Container)
+                oe.getContents().add(hub)
                 allGroups.add(decomp)
                 decomp
             }

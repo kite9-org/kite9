@@ -428,25 +428,24 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 val a = s.getRectAnchors()
                 if (a.isEmpty()) {
                     return currentBlockedBy
-                } else if (a.size > 1) {
-                    throw LogicException("Not ready for this")
                 } else {
-                    //println("Encountered ${s}")
-                    val first = a.first()
-                    if (first.s == Side.START) {
-                        if (alongElements.contains(first.e)) {
-                            // we can never traverse inside the intersection
-                            return currentBlockedBy + first.e
-                        } else if (first.e is Diagram) {
-                            return currentBlockedBy
-                        } else if (first.canCross(d)) {
-                            return currentBlockedBy
+                    val newBlockedBy = currentBlockedBy.toMutableSet()
+                    a.forEach {
+                        if (it.s == Side.START) {
+                            if (alongElements.contains(it.e)) {
+                                newBlockedBy.add(it.e)
+                            } else if (it.canCross(d)) {
+                                // do nothing
+                            } else if (it.e is Diagram) {
+                                // do nothing
+                            } else {
+                                newBlockedBy.add(it.e)
+                            }
                         } else {
-                            return currentBlockedBy + first.e
+                            newBlockedBy.remove(it.e)
                         }
-                    } else {
-                        return currentBlockedBy - s.getRectElements()
                     }
+                    return newBlockedBy.toSet()
                 }
             } else {
                 return currentBlockedBy
