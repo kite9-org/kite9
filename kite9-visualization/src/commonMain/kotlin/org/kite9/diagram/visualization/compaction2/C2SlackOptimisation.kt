@@ -4,6 +4,7 @@ import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
@@ -50,7 +51,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
 
     /** Track mapping of elements to sets */
     private val rectangularMap: MutableMap<Rectangular, RectangularSlideableSet> = HashMap()
-    private val portMap: MutableMap<Port, RoutableSlideableSet> = HashMap()
+    private val pointMap: MutableMap<PlacementPositioned, RoutableSlideableSet> = HashMap()
 
     //private val groupMap: MutableMap<LeafGroup, MutableList<RoutableSlideableSet>> = HashMap()
     private val slideableMap: MutableMap<C2Slideable, MutableSet<SlideableSet<*>>> = HashMap()
@@ -79,8 +80,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         return rectangularMap[de]
     }
 
-    fun getPortSlideablesFor(de: Port) : RoutableSlideableSet? {
-        return portMap[de]
+    fun getPPSlideablesFor(de: PlacementPositioned) : RoutableSlideableSet? {
+        return pointMap[de]
     }
 
 
@@ -189,9 +190,9 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
     }
 
     private fun updatePortMap(sOld1: C2Slideable, sOld2: C2Slideable, newS: C2Slideable) {
-        val toReplacePorts = portMap.filter { (_, v) -> v.c == sOld1 || v.c == sOld2 }.keys
+        val toReplacePorts = pointMap.filter { (_, v) -> v.c == sOld1 || v.c == sOld2 }.keys
         toReplacePorts.forEach { p ->
-            portMap[p] = RoutableSlideableSetImpl(newS, null, null)
+            pointMap[p] = RoutableSlideableSetImpl(newS, null, null)
         }
     }
 
@@ -243,8 +244,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         updateSlideableMap(ss)
     }
 
-    fun add(p: Port, ss: RoutableSlideableSet) {
-        portMap[p] = ss
+    fun add(p: PlacementPositioned, ss: RoutableSlideableSet) {
+        pointMap[p] = ss
         updateSlideableMap(ss)
     }
 

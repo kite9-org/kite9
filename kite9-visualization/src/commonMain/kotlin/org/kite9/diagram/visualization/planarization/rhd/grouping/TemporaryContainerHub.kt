@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractDiagramElement
+import org.kite9.diagram.model.AlignedRectangular
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.Container
@@ -22,7 +23,7 @@ class TemporaryContainerHub(val c: Container) : AbstractDiagramElement(c), Place
     val links = mutableListOf<Connection>()
 
     override fun getContainerPosition(d: Dimension): Placement {
-        if (c is Connected) {
+        if (c is AlignedRectangular) {
             val ca = c.getConnectionAlignment(d)
             if (ca is Placement) {
                 return ca
@@ -55,11 +56,6 @@ class TemporaryContainerHub(val c: Container) : AbstractDiagramElement(c), Place
             return ConnectionsSeparation.SAME_SIDE
         }
     }
-
-    override fun getConnectionAlignment(d: Dimension): Placement {
-        return Placement.NONE   // not used
-    }
-
 
     override fun toString(): String {
         return "[hub-temporary: " + getID() + "]"

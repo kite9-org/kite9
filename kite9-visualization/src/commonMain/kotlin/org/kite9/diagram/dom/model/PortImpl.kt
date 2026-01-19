@@ -72,10 +72,6 @@ class PortImpl(
         return ElementContext.getCssStyleEnumProperty<ConnectionsSeparation>(CSSConstants.CONNECTIONS_PROPERTY, theElement, ctx)!!
     }
 
-    override fun getConnectionAlignment(side: Dimension): Placement {
-        throw UnsupportedOperationException()
-    }
-
     override fun getContainer(): Container? {
         return getParent() as? Container
     }

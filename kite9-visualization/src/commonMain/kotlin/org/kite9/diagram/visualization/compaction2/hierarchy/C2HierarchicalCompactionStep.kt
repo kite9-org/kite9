@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -13,6 +14,7 @@ import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
+import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -154,35 +156,25 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) :
             }
 
             return Pair(hss, vss)
-        } else if (e is Port) {
+        } else if (e is PlacementPositioned) {
             // leaf node is a port
             val f = g.container!!
-            val direction = e.getPortDirection()
             var pvi : RoutableSlideableSet? = null
             var phi : RoutableSlideableSet?  = null
-            when (direction) {
-                Direction.LEFT, Direction.RIGHT -> {
-                    val vso = c.getSlackOptimisation(Dimension.V)
-                    pvi = checkCreateIntersectionOnly(vso, g, f, Dimension.V)
-                    val vr = checkCreateElement(f, Dimension.V, vso, null, topGroup)
-                    ensurePortSlideablePosition(vso, vr, pvi.c)
-                }
-                Direction.UP, Direction.DOWN -> {
-                    val hso = c.getSlackOptimisation(Dimension.H)
-                    phi = checkCreateIntersectionOnly(hso, g, f, Dimension.H)
-                    val hr = checkCreateElement(f, Dimension.H, hso, null, topGroup)
-                    ensurePortSlideablePosition(hso, hr, phi.c)
-                }
-            }
+
+            val vso = c.getSlackOptimisation(Dimension.V)
+            pvi = checkCreateIntersectionOnly(vso, g, f, Dimension.V)
+            val vr = checkCreateElement(f, Dimension.V, vso, null, topGroup)
+            ensureCentreSlideablePosition(vso, vr, pvi.c, e.getContainerPosition(Dimension.V))
+
+            val hso = c.getSlackOptimisation(Dimension.H)
+            phi = checkCreateIntersectionOnly(hso, g, f, Dimension.H)
+            val hr = checkCreateElement(f, Dimension.H, hso, null, topGroup)
+            ensureCentreSlideablePosition(hso, hr, phi.c, e.getContainerPosition(Dimension.H))
 
             return Pair(phi, pvi)
-        }
-        else {
-            // leaf node must be for container arrival
-            val f = g.container!!
-            val hss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.H), g, f, Dimension.H)
-            val vss = checkCreateIntersectionOnly(c.getSlackOptimisation(Dimension.V), g, f, Dimension.V)
-            return Pair(hss, vss)
+        } else {
+            throw LogicException("Can't process this element type")
         }
     }
 
@@ -199,14 +191,14 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) :
     }
 
     private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
-        val out = if (g.connected is Port) {
-            val ic = C2Slideable(cso, d,  g.connected as Port, Purpose.PORT)
+        val out = if (g.connected is PlacementPositioned) {
+            val purpose = if (g.connected is Port) Purpose.PORT else Purpose.CONTAINER_LAYOUT_MIDPOINT
+            val ic = C2Slideable(cso, d,  g.connected, purpose)
             val out2 = RoutableSlideableSetImpl(ic, null, null)
-            cso.add(g.connected as Port, out2)
+            cso.add(g.connected as PlacementPositioned, out2)
             out2
         } else {
-            val ic = C2Slideable(cso, d,  c as Connected, Purpose.PORT)
-            RoutableSlideableSetImpl(ic, null, null)
+            throw LogicException("So what is it?")
         }
 
         log.send("Created a RoutableSlideableSet for $c: ", out.getAll())

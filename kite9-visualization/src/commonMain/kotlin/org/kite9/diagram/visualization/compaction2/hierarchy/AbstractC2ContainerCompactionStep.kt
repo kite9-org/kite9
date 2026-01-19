@@ -13,6 +13,7 @@ import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
+import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo
@@ -180,7 +181,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
 
     private fun relevantElements(all: Set<LeafGroup>) : MutableMap<DiagramElement, Set<LeafGroup>> {
         return all
-            .filter { it.connected is Rectangular}
+            .filter { (it.connected is Rectangular) || (it.connected is TemporaryContainerHub)}
             .map { it.connected as DiagramElement to setOf(it) }
             .toMap()
             .toMutableMap()

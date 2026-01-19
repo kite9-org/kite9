@@ -149,7 +149,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
                         GridContainerPosition(BasicIntegerRange(x, x)),
                         GridContainerPosition(BasicIntegerRange(y, y))
                     )
-                    modifyContainerContents(ord, toPlace)
+                    ord.addTemporaryContent(toPlace)
                     xMap[x] = toPlace
                 }
             }
@@ -226,15 +226,6 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
     private fun shoudAddToGrid(diagramElement: DiagramElement): Boolean {
         return diagramElement is ConnectedRectangular
-    }
-
-    /**
-     * TODO: fix this
-     */
-    @Deprecated("because we wanted to have immutable containers.")
-    @Suppress("DEPRECATION")
-    private fun modifyContainerContents(ord: Container, d: DiagramElement) {
-        ord.getContents().add(d)
     }
 
     private fun scaleCoordinates(grid: Array<Array<DiagramElement>>, size: OPair<Int>) {

@@ -114,7 +114,7 @@ class C2SlideableSSP(
                 val ra = perp.getRectAnchors()
                 if (ra.isNotEmpty() && !isDestination(ra)) {
                     // if we arrive at a rectangular, we need to cross it
-                    val route2 = crossThreshold(perp, r, d, r.cost)
+                    val route2 = crossThreshold(perp, r, d, r.cost, along)
                     if (route2 != null) {
                         val ns = generateNextSteps(d, perp, route2, along)
                         ns
@@ -184,8 +184,8 @@ class C2SlideableSSP(
         }
     }
 
-    private fun crossThreshold(perp: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing): C2Route? {
-        val a = perp.getRelevantRectAnchor(routeIn.container)
+    private fun crossThreshold(perp: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing, along: C2Slideable): C2Route? {
+        val a = perp.getRelevantRectAnchor(routeIn.container, along)
 
         if (a == null) {
             // trying to leave the diagram

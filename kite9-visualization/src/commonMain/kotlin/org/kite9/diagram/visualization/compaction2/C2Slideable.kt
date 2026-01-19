@@ -10,6 +10,7 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -137,10 +138,18 @@ class C2Slideable(
      * For the current slideable (this), works out which anchor represents the intersection
      * with along.
      */
-    fun getRelevantRectAnchor(c: DiagramElement) : RectAnchor? {
+    fun getRelevantRectAnchor(c: DiagramElement, along: C2Slideable) : RectAnchor? {
+
+        fun isGridCell(e: DiagramElement) : Boolean {
+            return (e.getParent() as Container)?.getLayout() == Layout.GRID
+        }
+
         val relevant = anchors
             .filterIsInstance<RectAnchor>()
             .filter { it.e == c || ((c is Container) && (c.getContents().contains(it.e)))}
+            .filter { !isGridCell(it.e) }
+
+
 
         if (relevant.size > 1) {
             throw LogicException("Not sure how this can be a permeable anchor for multiple things")

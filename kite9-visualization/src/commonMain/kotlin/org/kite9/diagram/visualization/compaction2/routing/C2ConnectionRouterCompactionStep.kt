@@ -48,8 +48,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val v = c2.getSlackOptimisation(Dimension.V)
         val parenthss = h.getSlideablesFor(parent)!!
         val parentvss = v.getSlideablesFor(parent)!!
-        val porthss = h.getPortSlideablesFor(p)
-        val portvss = v.getPortSlideablesFor(p)
+        val porthss = h.getPPSlideablesFor(p)
+        val portvss = v.getPPSlideablesFor(p)
         val d = p.getPortDirection()
         val facing = if (arriving) Direction.reverse(d)!! else d!!
         val out = when(d) {

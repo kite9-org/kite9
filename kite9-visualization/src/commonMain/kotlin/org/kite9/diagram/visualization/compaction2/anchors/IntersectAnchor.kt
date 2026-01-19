@@ -5,20 +5,9 @@ import org.kite9.diagram.model.DiagramElement
 
 enum class Purpose {
     PORT,
-    CONTAINER_NON_LAYOUT,
     GLYPH_LAYOUT_MIDPOINT,
     CONTAINER_LAYOUT_MIDPOINT,
     LABEL_LAYOUT;
-
-    fun isLayout() : Boolean {
-        return when(this) {
-            PORT,
-            CONTAINER_NON_LAYOUT -> false
-            GLYPH_LAYOUT_MIDPOINT,
-            CONTAINER_LAYOUT_MIDPOINT,
-            LABEL_LAYOUT -> true
-        }
-    }
 }
 
 /**

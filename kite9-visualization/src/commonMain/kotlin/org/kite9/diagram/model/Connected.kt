@@ -32,10 +32,4 @@ interface Connected : Positioned {
 
     fun getConnectionsSeparationApproach(): ConnectionsSeparation
 
-    /**
-     * In the case of single connections on a side, or alignment of an element with respect to those
-     * it is aligned horizontally or vertically with, return the placement info.
-     */
-    fun getConnectionAlignment(d: Dimension): Placement
-
 }

@@ -1,5 +1,6 @@
 package org.kite9.diagram.dom.model
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.LeafPainter
@@ -14,6 +15,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.HorizontalAlignment
+import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
 import kotlin.math.max
@@ -31,6 +33,7 @@ abstract class AbstractCompactedRectangular(
     private var verticalAlignment: VerticalAlignment = VerticalAlignment.CENTER
     private var horizontalAlignment: HorizontalAlignment = HorizontalAlignment.CENTER
     private var minimumSize: Dimension2D? = null
+    protected var alignments: Array<Placement> = emptyArray()
 
     override fun getVerticalAlignment(): VerticalAlignment {
         ensureInitialized()
@@ -46,6 +49,14 @@ abstract class AbstractCompactedRectangular(
         super.initialize()
         initAlignment()
         initMinimumSize()
+        initConnectionAlignment()
+    }
+
+    protected fun initConnectionAlignment() {
+        alignments = arrayOf(
+            ctx.getCssStylePlacementProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
+            ctx.getCssStylePlacementProperty(CSSConstants.VERTICAL_ALIGN_POSITION, theElement)
+        )
     }
 
     private fun initAlignment() {
@@ -57,6 +68,11 @@ abstract class AbstractCompactedRectangular(
         val w = getCssDoubleValue(CSSConstants.RECT_MINIMUM_WIDTH)
         val h = getCssDoubleValue(CSSConstants.RECT_MINIMUM_HEIGHT)
         minimumSize = BasicDimension2D(w, h)
+    }
+
+    override fun getConnectionAlignment(d: Dimension): Placement {
+        ensureInitialized()
+        return alignments[d.ordinal]
     }
 
     override fun getMinimumSize(): Dimension2D {

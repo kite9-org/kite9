@@ -40,17 +40,9 @@ abstract class AbstractConnectedRectangular(
         initConnectionAlignment()
     }
 
-    protected fun initConnectionAlignment() {
-        alignments = arrayOf(
-            ctx.getCssStylePlacementProperty(CSSConstants.HORIZONTAL_ALIGN_POSITION, theElement),
-            ctx.getCssStylePlacementProperty(CSSConstants.VERTICAL_ALIGN_POSITION, theElement)
-        )
-    }
-
     private var links: Collection<Connection>? = null
     private var linkGutter = 0.0
     private var linkInset = 0.0
-    private var alignments: Array<Placement> = emptyArray()
 
     override fun getLinks(): Collection<Connection> {
         ensureInitialized()

@@ -3,9 +3,11 @@ package org.kite9.diagram.dom.model
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Decal
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.RectangleRenderingInformation
@@ -28,9 +30,13 @@ class DecalContainerImpl(
         return getParent()!!.getRenderingInformation() as RectangleRenderingInformation
     }
 
-    override fun getContents(): MutableList<DiagramElement> {
+    override fun getContents(): List<DiagramElement> {
         ensureInitialized()
-        return contents!!
+        return ctx.getChildDiagramElements(this)
+    }
+
+    override fun addTemporaryContent(t: Temporary) {
+        throw LogicException("Not needed for Decals")
     }
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
@@ -58,4 +64,5 @@ class DecalContainerImpl(
         initLayout()
         initSizing()
     }
+
 }

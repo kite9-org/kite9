@@ -6,11 +6,13 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.Measurement
+import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -108,19 +110,9 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         }
     }
 
-    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2Slideable?) {
+    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2Slideable?, pp: Placement) {
         if (c != null) {
             val minDist = ss.l.minimumDistanceTo(ss.r)
-            cso.ensureMinimumDistance(ss.l, c, (minDist / 2.0).toInt())
-            cso.ensureMinimumDistance(c, ss.r, (minDist / 2.0).toInt())
-        }
-    }
-
-    fun ensurePortSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2Slideable?) {
-        if (c != null) {
-            val port = c.getIntersectingElements().filterIsInstance<Port>().first()
-            val minDist = ss.l.minimumDistanceTo(ss.r)
-            val pp = port.getContainerPosition(cso.dimension)
             if (pp.type == Measurement.PERCENTAGE) {
                 val firstDist = minDist * (pp.amount / 100.0)
                 val secondDist =  minDist * ((100.0 - pp.amount) / 100.0)

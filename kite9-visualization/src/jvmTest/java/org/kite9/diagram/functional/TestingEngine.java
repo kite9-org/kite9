@@ -32,6 +32,7 @@ import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
@@ -192,7 +193,12 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private double getAlignPoint(double s, double len, Connected v, Direction connectionSide) {
-				Placement p = v.getConnectionAlignment(Direction.Companion.getDimension(connectionSide));
+				Placement p = null;
+                if (v instanceof AlignedRectangular) {
+                    p = ((AlignedRectangular) v).getConnectionAlignment(Direction.Companion.getDimension(connectionSide));
+                } else {
+                    p = Placement.Companion.getNONE();
+                }
 				Pair<Double, Double> out = AligningRectangularizer.Companion.calculatePositionForPlacement(p, (int) len);
 				return s + out.component1();
 			}
@@ -203,7 +209,7 @@ public class TestingEngine extends TestingHelp {
 						return false;
 					}
 				}
-				return (!(v instanceof Port)) && (v.getConnectionAlignment(Direction.Companion.getDimension(side)) != Placement.Companion.getNONE());
+				return (!(v instanceof Port));
 			}
 
 			/**
@@ -620,7 +626,7 @@ public class TestingEngine extends TestingHelp {
 				}
 			}
 			for (DiagramElement cc : d.getContents()) {
-				if (!(cc instanceof Label)) {
+				if ((!(cc instanceof Label)) && (!(cc instanceof TemporaryContainerHub))){
 					RenderingInformation ri = cc.getRenderingInformation();
 					if ((ri instanceof RectangleRenderingInformation)) {
 						checkContentContainment(cc, d, (RectangleRenderingInformation) ri);

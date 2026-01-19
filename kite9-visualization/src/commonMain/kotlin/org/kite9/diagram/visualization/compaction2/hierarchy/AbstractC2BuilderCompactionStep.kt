@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.model.AlignedRectangular
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
@@ -10,6 +11,7 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.ContainerPosition
 import org.kite9.diagram.model.style.GridContainerPosition
+import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
@@ -87,7 +89,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
 
             ss = RectangularSlideableSetImpl(de, l, r)
 
-            ensureCentreSlideablePosition(cso, ss, cExisting)
+            val position = if (de is AlignedRectangular) de.getConnectionAlignment(d) else Placement.NONE
+
+            ensureCentreSlideablePosition(cso, ss, cExisting, position)
             cso.add(de, ss)
 
             cso.ensureMinimumDistance(l, r, ms.toInt())

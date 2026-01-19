@@ -6,7 +6,6 @@ import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.Dimension2D
-import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.visualization.compaction.Side
@@ -64,8 +63,8 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
     private fun visit(p: Port, c: C2Compaction, position: Dimension2D, size: Dimension2D) {
         val ppX = p.getContainerPosition(Dimension.H)
         val ppY = p.getContainerPosition(Dimension.V)
-        val ssx = c.getSlackOptimisation(Dimension.H).getPortSlideablesFor(p)
-        val ssy = c.getSlackOptimisation(Dimension.V).getPortSlideablesFor(p)
+        val ssx = c.getSlackOptimisation(Dimension.H).getPPSlideablesFor(p)
+        val ssy = c.getSlackOptimisation(Dimension.V).getPPSlideablesFor(p)
 
         val portXPos = if (ssx != null) {
             ssx.c!!.minimumPosition.toDouble()

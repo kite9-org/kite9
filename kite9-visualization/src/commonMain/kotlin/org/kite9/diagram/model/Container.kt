@@ -15,7 +15,8 @@ import org.kite9.diagram.model.style.BorderTraversal
  */
 interface Container : Rectangular {
 
-    fun getContents(): MutableList<DiagramElement>
+    fun getContents(): List<DiagramElement>
+    fun addTemporaryContent(t: Temporary)
     fun getLayout(): Layout?
     fun getTraversalRule(d: Direction): BorderTraversal
     fun getGridColumns(): Int

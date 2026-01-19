@@ -6,6 +6,7 @@ import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
+import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
@@ -47,8 +48,14 @@ class LabelContainerImpl(
         }
     }
 
-    override fun getContents(): MutableList<DiagramElement> {
+    private val temporaryElements = mutableListOf<Temporary>()
+
+    override fun getContents(): List<DiagramElement> {
         ensureInitialized()
-        return ctx.getChildDiagramElements(this)
+        return ctx.getChildDiagramElements(this) + temporaryElements
+    }
+
+    override fun addTemporaryContent(t: Temporary) {
+        temporaryElements.add(t)
     }
 }

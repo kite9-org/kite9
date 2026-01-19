@@ -4,9 +4,11 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnectedRectangular
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.SizedRectangular
+import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.*
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.style.*
@@ -64,6 +66,10 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
         return mutableListOf()
     }
 
+    override fun addTemporaryContent(t: Temporary) {
+        throw LogicException("Not used")
+    }
+
     override fun getLayout(): Layout? {
         return null
     }
@@ -86,10 +92,6 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
 
     override fun getLinkInset(): Double {
         return 0.0
-    }
-
-    override fun getConnectionAlignment(side: Dimension): Placement {
-        return NONE
     }
 
     override fun output(d: Document, p: XMLProcessor): Element? {

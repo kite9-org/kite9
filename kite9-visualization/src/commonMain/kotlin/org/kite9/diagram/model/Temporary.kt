@@ -6,4 +6,4 @@ package org.kite9.diagram.model
  *
  * @author robmoffat
  */
-interface Temporary
+interface Temporary : DiagramElement

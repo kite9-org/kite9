@@ -354,7 +354,7 @@ abstract class GroupPhase(
             } else {
                 val hub = TemporaryContainerHub(oe as Container)
                 val decomp = createLeafGroup(hub, oe as Container)
-                oe.getContents().add(hub)
+                oe.addTemporaryContent(hub)
                 allGroups.add(decomp)
                 decomp
             }
