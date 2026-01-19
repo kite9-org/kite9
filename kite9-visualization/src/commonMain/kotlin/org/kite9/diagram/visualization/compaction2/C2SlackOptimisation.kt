@@ -130,43 +130,41 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         }
     }
 
-    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side) : RoutableSlideableSet?  {
-        val containerRoutable = container.wrapInRoutable()
+    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side, useOrbit: Boolean) : RoutableSlideableSet?  {
+        val containerRoutable = if (useOrbit) container.wrapInRoutable() else null
         if (containerRoutable != null) {
             contains(containerRoutable, container)
             updateSlideableMap(containerRoutable)
-            val new = when (side) {
-                Side.START -> {
-                    val newLeft = if (containerRoutable != null) {
-                        containerRoutable.bl!!
-                    } else {
-                        container.l
-                    }
-
-                    inner.replaceSide(newLeft, side)
-                }
-                Side.END -> {
-                    val newRight = if (containerRoutable != null) {
-                        containerRoutable.br!!
-                    } else {
-                        container.r
-                    }
-
-                    inner.replaceSide(newRight, side)
-                }
-                else -> {
-                    throw LogicException("Illegal Side")
-                }
-            }
-
-            this.updateContainment1(inner, new)
-            updateSlideableMap(new)
-            checkConsistency()
-            return new
-
-        } else {
-            return inner
         }
+
+        val new = when (side) {
+            Side.START -> {
+                val newLeft = if (containerRoutable != null) {
+                    containerRoutable.bl!!
+                } else {
+                    container.l
+                }
+
+                inner.replaceSide(newLeft, side)
+            }
+            Side.END -> {
+                val newRight = if (containerRoutable != null) {
+                    containerRoutable.br!!
+                } else {
+                    container.r
+                }
+
+                inner.replaceSide(newRight, side)
+            }
+            else -> {
+                throw LogicException("Illegal Side")
+            }
+        }
+
+        this.updateContainment1(inner, new)
+        updateSlideableMap(new)
+        checkConsistency()
+        return new
     }
 
     private fun updateSlideableSets(
