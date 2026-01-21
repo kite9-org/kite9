@@ -90,7 +90,7 @@ abstract class GroupPhase(
                         if (!gridGroups.containsKey(de)) {
                             var gg = populateLeafGroups(de as ConnectedRectangular, null, pMap)
                             if (gg == null) {
-                                gg = getConnectionEnd(de)
+                                gg = getConnectionEnd(de, Pair(x, y))
                             }
                             gridGroups[de] = gg
                         }
@@ -196,8 +196,8 @@ abstract class GroupPhase(
                     allLinks.add(c)
                     ch.checkForContainerContradiction(c)
                     if (isConnectionRendered(c)) {
-                        val to = getConnectionEnd(c.otherEnd(o))
-                        val from = getConnectionEnd(o)
+                        val to = getConnectionEnd(c.otherEnd(o), null)
+                        val from = getConnectionEnd(o, null)
                         var d = c.getDrawDirectionFrom(o)
                         if (isConnectionContradicting(c)) {
                             d = null
@@ -325,8 +325,8 @@ abstract class GroupPhase(
         }
         if (d != null) {
             val tc = OrderingTemporaryBiDirectional(prev, current, d, cnr)
-            val from = getConnectionEnd(prev)
-            val to = getConnectionEnd(current)
+            val from = getConnectionEnd(prev, null)
+            val to = getConnectionEnd(current, null)
             from.sortLink(d, to, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
             to.sortLink(reverse(d), from, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
         }
@@ -344,7 +344,7 @@ abstract class GroupPhase(
     /**
      * This has to handle decomposition
      */
-    private fun getConnectionEnd(oe: Connected): LeafGroup {
+    private fun getConnectionEnd(oe: Connected, gridPos: Pair<Int, Int>?): LeafGroup {
         val otherGroup = pMap[oe]
         return if (otherGroup == null) {
             if (needsLeafGroup(oe)) {
@@ -355,6 +355,9 @@ abstract class GroupPhase(
                 val hub = TemporaryContainerHub(oe as Container)
                 val decomp = createLeafGroup(hub, oe as Container)
                 oe.addTemporaryContent(hub)
+                if (gridPos != null) {
+                    hub.gridPosition = gridPos
+                }
                 allGroups.add(decomp)
                 decomp
             }

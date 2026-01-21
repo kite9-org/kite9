@@ -190,20 +190,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) :
         }
     }
 
-    private fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
-        val out = if (g.connected is PlacementPositioned) {
-            val purpose = if (g.connected is Port) Purpose.PORT else Purpose.CONTAINER_LAYOUT_MIDPOINT
-            val ic = C2Slideable(cso, d,  g.connected, purpose)
-            val out2 = RoutableSlideableSetImpl(ic, null, null)
-            cso.add(g.connected as PlacementPositioned, out2)
-            out2
-        } else {
-            throw LogicException("So what is it?")
-        }
-
-        log.send("Created a RoutableSlideableSet for $c: ", out.getAll())
-        return out
-    }
 
 
     private fun mergeForAxis(c: C2Compaction, ha: RoutableSlideableSet, hb : RoutableSlideableSet, d: Dimension, s: Side, overlap: Boolean) : RoutableSlideableSet {

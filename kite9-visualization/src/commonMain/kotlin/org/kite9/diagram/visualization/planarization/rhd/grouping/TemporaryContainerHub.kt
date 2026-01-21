@@ -20,6 +20,7 @@ import org.kite9.diagram.model.style.Placement
  */
 class TemporaryContainerHub(val c: Container) : AbstractDiagramElement(c), PlacementPositioned, Connected, Temporary {
 
+    var gridPosition: Pair<Int, Int>? = null
     val links = mutableListOf<Connection>()
 
     override fun getContainerPosition(d: Dimension): Placement {

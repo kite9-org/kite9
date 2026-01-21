@@ -1,10 +1,14 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.AlignedRectangular
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.PlacementPositioned
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
@@ -16,16 +20,23 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
+import org.kite9.diagram.visualization.compaction2.anchors.IntersectAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.Permeability
+import org.kite9.diagram.visualization.compaction2.anchors.Purpose
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSetImpl
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.display.CompleteDisplayer
+import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
 
-    private val gridSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
+    private val gridRectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
+    private val gridIntersectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
 
     /**
      * This is used to create a RectangularSlideableSet from a diagram element
@@ -55,10 +66,10 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             }
 
             val key = Triple(c!! as Container, lineNumber, d)
-            val existing = gridSlideables.get(key)
+            val existing = gridRectSlideables.get(key)
             if (existing == null) {
                 val new = C2Slideable(cso, d, de, s, p)
-                gridSlideables[key] = new
+                gridRectSlideables[key] = new
                 return new
             } else {
                 // just add the anchor
@@ -107,6 +118,49 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
         return ss
     }
 
+    protected fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
+
+        fun getGridPosition(c: Connected) : Pair<Int, Int>? {
+            return if (c is TemporaryContainerHub) {
+                c.gridPosition
+            } else {
+                null
+            }
+        }
+
+        fun createOrReuseIntersectionSlideable(gridMidpoint: Pair<Int, Int>?, purpose: Purpose) : C2Slideable {
+            return if (gridMidpoint != null) {
+                val gridContainer = c.getParent() as Container
+                val idx = if (d == Dimension.H) gridMidpoint.first else gridMidpoint.second
+                val key = Triple(gridContainer, idx, d)
+                val existing = gridIntersectSlideables[key]
+                if (existing != null) {
+                    existing.addIntersectAnchor(IntersectAnchor(g.connected, purpose))
+                    existing
+                } else {
+                    val out = C2Slideable(cso, d,  g.connected, purpose)
+                    gridIntersectSlideables[key] = out
+                    out
+                }
+            } else {
+                C2Slideable(cso, d,  g.connected, purpose)
+            }
+        }
+
+        val out = if (g.connected is PlacementPositioned) {
+            val purpose = if (g.connected is Port) Purpose.PORT else Purpose.CONTAINER_LAYOUT_MIDPOINT
+            val gridMidpoint = getGridPosition(g.connected)
+            val ic = createOrReuseIntersectionSlideable(gridMidpoint, purpose)
+            val out2 = RoutableSlideableSetImpl(ic, null, null)
+            cso.add(g.connected as PlacementPositioned, out2)
+            out2
+        } else {
+            throw LogicException("So what is it?")
+        }
+
+        log.send("Created a RoutableSlideableSet for $c: ", out.getAll())
+        return out
+    }
 
 
     /**
