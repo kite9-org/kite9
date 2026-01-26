@@ -50,22 +50,12 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
         topGroup: Group?,
     ): RectangularSlideableSet {
 
-        fun getGridSlideable(
-            cso: C2SlackOptimisation,
-            c: DiagramElement?,
-            d: Dimension,
-            containerPosition: ContainerPosition?,
-            de: Rectangular,
-            s: Side,
-            p: Permeability
-        ): C2Slideable {
-            val lineNumber = if (s == Side.START) {
-                (containerPosition as GridContainerPosition).getFrom()
-            } else {
-                (containerPosition as GridContainerPosition).getTo() + 1
-            }
-
-            val key = Triple(c!! as Container, lineNumber, d)
+        fun addToGridRectSlideables(c: Container,
+                                    lineNumber: Int,
+                                    d: Dimension,
+                                    s: Side,
+                                    p: Permeability) : C2Slideable {
+            val key = Triple(c, lineNumber, d)
             val existing = gridRectSlideables.get(key)
             if (existing == null) {
                 val new = C2Slideable(cso, d, de, s, p)
@@ -78,24 +68,70 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             }
         }
 
+        fun getGridContainerSlideable(
+            c: Container,
+            d: Dimension,
+            s: Side,
+            p: Permeability
+        ): C2Slideable {
+            val lineNumber = if (s == Side.START) {
+                0
+            } else {
+                gridRectSlideables.keys
+                    .filter { (it.first == c) && (it.third == d) }
+                    .map { it.second }
+                    .max()
+            }
+
+            return addToGridRectSlideables(c, lineNumber, d, s, p)
+        }
+
+        fun getGridSlideable(
+            c: Container,
+            d: Dimension,
+            containerPosition: ContainerPosition?,
+            s: Side,
+            p: Permeability
+        ): C2Slideable {
+            val lineNumber = if (s == Side.START) {
+                (containerPosition as GridContainerPosition).getFrom()
+            } else {
+                (containerPosition as GridContainerPosition).getTo() + 1
+            }
+
+            return addToGridRectSlideables(c, lineNumber, d, s, p)
+        }
+
         var ss = cso.getSlideablesFor(de)
 
         if (ss == null) {
             val parentLayoutIsGrid = (de.getParent() as? Container)?.getLayout() == Layout.GRID
+            val myLayoutIsGrid = false // (de as? Container)?.getLayout() == Layout.GRID
             log.send("Creating $de")
 
             // we need to create these then
             val ms = getMinimumDistanceBetween(de, Side.START, de, Side.END, d, null, false)
+            val lp = getRectangularPermeability(de, d, Side.START)
+            val rp = getRectangularPermeability(de, d, Side.END)
 
-            val l = if (parentLayoutIsGrid) {
-                getGridSlideable(cso, de.getParent(), d, de.getContainerPosition(d), de,Side.START, getRectangularPermeability(de, d, false))
+            val l =
+//                if (myLayoutIsGrid) {
+//                //getGridContainerSlideable(de, d, Side.START,lp)
+//            } else
+                if (parentLayoutIsGrid) {
+                getGridSlideable(de.getParent() as Container, d, de.getContainerPosition(d),Side.START, lp)
             } else {
-                C2Slideable(cso, d, de, Side.START, getRectangularPermeability(de, d, false))
+                C2Slideable(cso, d, de, Side.START, lp)
             }
-            val r = if(parentLayoutIsGrid) {
-                getGridSlideable(cso, de.getParent(), d, de.getContainerPosition(d), de,Side.END, getRectangularPermeability(de, d, true))
+
+            val r =
+//            if (myLayoutIsGrid) {
+//                //getGridContainerSlideable( de, d, Side.END,rp)
+//            } else
+                if (parentLayoutIsGrid) {
+                getGridSlideable( de.getParent() as Container, d, de.getContainerPosition(d),Side.END, rp)
             } else {
-                C2Slideable(cso, d, de, Side.END, getRectangularPermeability(de, d, true))
+                C2Slideable(cso, d, de, Side.END, rp)
             }
 
             ss = RectangularSlideableSetImpl(de, l, r)
@@ -166,7 +202,8 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
     /**
      * This works out whether we can route connections through this element (and in which direction).
      */
-    fun getRectangularPermeability(de: Rectangular, d: Dimension, increasing: Boolean): Permeability {
+    fun getRectangularPermeability(de: Rectangular, d: Dimension, s: Side): Permeability {
+        val increasing = if (s == Side.START) false else true
         val direction = Direction.getDirection(d, increasing)
         val rule = if (de is Container) {
             val bt = de.getTraversalRule(direction)

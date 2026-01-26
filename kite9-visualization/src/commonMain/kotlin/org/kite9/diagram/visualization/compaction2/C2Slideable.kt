@@ -138,7 +138,7 @@ class C2Slideable(
      * For the current slideable (this), works out which anchor represents the intersection
      * with along.
      */
-    fun getRelevantRectAnchor(c: DiagramElement, along: C2Slideable) : RectAnchor? {
+    fun getRelevantRectAnchor(c: DiagramElement) : RectAnchor? {
 
         fun isGridCell(e: DiagramElement) : Boolean {
             return (e.getParent() as Container)?.getLayout() == Layout.GRID
@@ -148,8 +148,6 @@ class C2Slideable(
             .filterIsInstance<RectAnchor>()
             .filter { it.e == c || ((c is Container) && (c.getContents().contains(it.e)))}
             .filter { !isGridCell(it.e) }
-
-
 
         if (relevant.size > 1) {
             throw LogicException("Not sure how this can be a permeable anchor for multiple things")

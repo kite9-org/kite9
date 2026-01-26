@@ -6,8 +6,11 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
+import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
@@ -184,12 +187,21 @@ class C2SlideableSSP(
         }
     }
 
+    private fun isGridCell(e: DiagramElement) : Boolean {
+        return (e.getParent() as Container)?.getLayout() == Layout.GRID
+    }
+
     private fun crossThreshold(perp: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing, along: C2Slideable): C2Route? {
-        val a = perp.getRelevantRectAnchor(routeIn.container, along)
+        val a = perp.getRelevantRectAnchor(routeIn.container)
 
         if (a == null) {
-            // trying to leave the diagram
-            return null
+            if (routeIn.container is Diagram) {
+                // trying to leave the diagram
+                return null
+            } else {
+                // crossing grid cells
+                return routeIn
+            }
         } else if (a.canCross(d)) {
             val entering = a.s.isEntering(d);
             val newContainer = if (!entering) a.e.getContainer() else a.e

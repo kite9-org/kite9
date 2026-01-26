@@ -41,7 +41,13 @@ class C2LoggingCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(
   Vertical Segments: ${verticalSegments.pushCount} 
   Total: ${horizontalSegments.pushCount + verticalSegments.pushCount}"""
         )
-        log.send("Horizontal Segments:", horizontalSegments.getAllSlideables().map { addNeighbourDetails(it, c) } )
-        log.send("Vertical Segments:", verticalSegments.getAllSlideables().map { addNeighbourDetails(it, c) } )
+        log.send("Horizontal Segments:", horizontalSegments
+            .getAllSlideables()
+            .sortedBy { it.minimumPosition }
+            .map { addNeighbourDetails(it, c) } )
+        log.send("Vertical Segments:", verticalSegments
+            .getAllSlideables()
+            .sortedBy { it.minimumPosition }
+            .map { addNeighbourDetails(it, c) } )
     }
 }

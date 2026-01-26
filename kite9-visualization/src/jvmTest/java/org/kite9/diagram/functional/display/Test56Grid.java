@@ -116,6 +116,41 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		return ctx;
 	}
 
+    private Grid createTwoByTwoGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
+        Cell tl = new Cell("tl", Arrays.asList(g1));
+        Cell tr = new Cell("tr", Arrays.asList(g2));
+        Cell bl = new Cell("bl", Arrays.asList(g3));
+        Cell br = new Cell("br", Arrays.asList(g4));
+
+        tl.setAttribute("style", "--kite9-occupies: 0 0; --kite9-min-size: 100px 100px; ");
+        bl.setAttribute("style", "--kite9-occupies: 0 1; --kite9-min-size: 40px 40px; ");
+        tr.setAttribute("style", "--kite9-occupies: 1 0; --kite9-min-size: 40px 40px; ");
+        br.setAttribute("style", "--kite9-occupies: 1 1; --kite9-min-size: 40px 10px; ");
+
+        Grid ctx = new Grid("outer", Arrays.asList(tl, tr, bl, br), null);
+        ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 2 2;");
+
+        return ctx;
+    }
+
+    @Test
+    public void test_56_3_TwoByTwo() throws Exception {
+        Glyph g1 = new Glyph("one", "", "one", null, null);
+        Glyph g2 = new Glyph("two", "", "two ", null, null);
+        Glyph g3 = new Glyph("three", "", "three ", null, null);
+        Glyph g4 = new Glyph("four", "", "four", null, null);
+
+        Grid ctx = createTwoByTwoGridContext(g1, g2, g3, g4);
+
+        new Link(g2, g1, null, null, "DIAMOND", null, null);
+        new Link(g3, g1, "CIRCLE", null, "CIRCLE", null, null);
+        new Link(g4, g1, "ARROW", null, null, null, null);
+        new Link(g2, g4, null, null, null, null, null);
+        new Link(g2, g3, null, null, null, null, null);
+
+        renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
+    }
+
 	@Test
 	public void test_56_4_OddSupergrid() throws Exception {
 		Grid ctx = createSupergrid(false, true, 5);

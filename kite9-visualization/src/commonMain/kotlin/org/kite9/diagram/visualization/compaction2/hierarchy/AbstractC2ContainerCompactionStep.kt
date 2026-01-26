@@ -104,8 +104,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
             if (theRSS != null) {
                 val isGridCell = (c.getParent() as Container?)?.getLayout() == Layout.GRID
                 val useOrbit = !isGridCell
-                val newRSS = so.addSide(outer, theRSS, s, useOrbit)
                 val padding = getPadding(c, s, dimension)
+                val newRSS = so.addSide(outer, theRSS, s, useOrbit, padding)
                 if (s == Side.START) {
                     if (theRSS.bl != null) {
                         so.ensureMinimumDistance(outer.l, theRSS.bl!!, padding)

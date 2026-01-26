@@ -8,6 +8,7 @@ import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -130,7 +131,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         }
     }
 
-    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side, useOrbit: Boolean) : RoutableSlideableSet?  {
+    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side, useOrbit: Boolean, separation: Int) : RoutableSlideableSet?  {
         val containerRoutable = if (useOrbit) container.wrapInRoutable() else null
         if (containerRoutable != null) {
             contains(containerRoutable, container)
@@ -144,8 +145,11 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
                 } else {
                     container.l
                 }
-
+                if (inner.bl != null) {
+                    ensureMinimumDistance(newLeft, inner.bl!!, separation)
+                }
                 inner.replaceSide(newLeft, side)
+
             }
             Side.END -> {
                 val newRight = if (containerRoutable != null) {
@@ -153,7 +157,9 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
                 } else {
                     container.r
                 }
-
+                if (inner.br != null) {
+                    ensureMinimumDistance(inner.br!!, newRight, separation)
+                }
                 inner.replaceSide(newRight, side)
             }
             else -> {
