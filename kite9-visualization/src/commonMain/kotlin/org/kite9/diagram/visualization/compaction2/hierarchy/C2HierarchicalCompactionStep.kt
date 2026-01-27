@@ -88,9 +88,15 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) :
                 so.mergeSlideables(startS, endS)
 
                 // ensure Separation of rectangulars
-                val distance = startR.maxOfOrNull { ae ->
-                    endR.maxOf { be -> getMinimumDistanceBetween(ae, Side.END, be, Side.START, d, null, true) }
-                } ?: 2.0
+                val distance = if (startR.isNotEmpty() && endR.isNotEmpty()) {
+                    startR.maxOf { ae ->
+                        endR.maxOf {
+                            be -> getMinimumDistanceBetween(ae, Side.END, be, Side.START, d, null, true)
+                        }
+                    }
+                } else {
+                    2.0
+                }
 
                 val startRects = startR.map {
                     val rs = so.getSlideablesFor(it as Positioned)

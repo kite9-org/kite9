@@ -62,12 +62,14 @@ class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val 
         return ConnectionsSeparation.SEPARATE // irrelevant, won't have connections
     }
 
+    private val temporaryContent = mutableListOf<DiagramElement>()
+
     override fun getContents(): MutableList<DiagramElement> {
-        return mutableListOf()
+        return temporaryContent
     }
 
     override fun addTemporaryContent(t: Temporary) {
-        throw LogicException("Not used")
+        temporaryContent.add(t)
     }
 
     override fun getLayout(): Layout? {
