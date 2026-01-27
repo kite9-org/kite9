@@ -91,12 +91,14 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
         if (ss == null) {
             val parentLayoutIsGrid = (de.getParent() as? Container)?.getLayout() == Layout.GRID
-            val myLayoutIsGrid = false // (de as? Container)?.getLayout() == Layout.GRID
+            val myLayoutIsGrid = (de as? Container)?.getLayout() == Layout.GRID
             log.send("Creating $de")
 
+            // ensure we've laid out the grid if one is needed
             if (parentLayoutIsGrid) {
-                // ensure we've laid out the grid if one is needed
                 gp.placeOnGrid(de.getParent() as Container)
+            } else if (myLayoutIsGrid) {
+                gp.placeOnGrid(de)
             }
 
             // we need to create these then
@@ -105,10 +107,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             val rp = getRectangularPermeability(de, d, Side.END)
 
             val l =
-//                if (myLayoutIsGrid) {
-//                //getGridContainerSlideable(de, d, Side.START,lp)
-//            } else
-                if (parentLayoutIsGrid) {
+                if (myLayoutIsGrid) {
+                    addToGridRectSlideables(de, 0, d, Side.START, lp)
+                } else if (parentLayoutIsGrid) {
                     val place = gp.getPlaceOnGrid(de, d, Side.START)
                     addToGridRectSlideables(de.getParent() as Container, place, d, Side.START, lp)
             } else {
@@ -116,10 +117,10 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             }
 
             val r =
-//            if (myLayoutIsGrid) {
-//                //getGridContainerSlideable( de, d, Side.END,rp)
-//            } else
-                if (parentLayoutIsGrid) {
+                if (myLayoutIsGrid) {
+                    val place = gp.getMaxPlace(de, d)
+                    addToGridRectSlideables(de, place, d, Side.END, rp)
+                } else if (parentLayoutIsGrid) {
                     val place = gp.getPlaceOnGrid(de, d, Side.END)
                     addToGridRectSlideables( de.getParent() as Container, place, d,Side.END, rp)
             } else {
@@ -231,8 +232,10 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
         val relyOnGroupLayout = usingGroups(contents, topGroup)
         val contentMap = contents.map { it to checkCreateElement(it, d, cso, null, topGroup) }
 
-        // ensure within container
-        contentMap.forEach { (e, v) -> embed(d, container, v, cso, e) }
+        if (l != Layout.GRID) {
+            // make sure contents are inside their containers.
+            contentMap.forEach { (e, v) -> embed(d, container, v, cso, e) }
+        }
 
         // ensure internal ordering
         if (!relyOnGroupLayout) {
@@ -241,8 +244,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
                 Layout.LEFT -> if (d == Dimension.H) setupInternalOrdering(contentMap.reversed(), d, cso)
                 Layout.DOWN, Layout.VERTICAL -> if (d == Dimension.V) setupInternalOrdering(contentMap, d, cso)
                 Layout.UP -> if (d == Dimension.V) setupInternalOrdering(contentMap.reversed(), d, cso)
-                Layout.GRID -> {
-                    // grid, don't handle this yet
+                Layout.GRID -> { // handled by checkCreateElement
                 }
             }
         } else {

@@ -22,4 +22,7 @@ interface GridPositioner {
     fun placeOnGrid(gridContainer: Container): Array<Array<DiagramElement>>
 
     fun getPlaceOnGrid(de: DiagramElement, d: Dimension, side: Side) : Int
+
+    fun getMaxPlace(container: Container, d: Dimension) : Int
+
 }

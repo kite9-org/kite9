@@ -119,6 +119,19 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         return done
     }
 
+    override fun getMaxPlace(
+        container: Container,
+        d: Dimension
+    ): Int {
+        val grid = placed[container] ?: throw LogicException("Grid not positioned: ${container.getID()}")
+
+        return if (d == Dimension.H) {
+            return grid[0].size
+        } else {
+            return grid.size
+        }
+    }
+
     override fun getPlaceOnGrid(
         de: DiagramElement,
         d: Dimension,
