@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.labels
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -10,7 +11,7 @@ import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
-class C2ContainerLabelCompactionStep(cd: CompleteDisplayer) : AbstractC2BuilderCompactionStep(cd)  {
+class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp)  {
 
     private var firstGroup = true
     override fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?): Boolean {

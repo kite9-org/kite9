@@ -20,7 +20,7 @@ import kotlin.math.max
 
 
 class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
-    AbstractC2BuilderCompactionStep(cd) {
+    AbstractC2BuilderCompactionStep(cd, gp) {
 
     override val prefix = "C2CR"
     override val isLoggingEnabled = true

@@ -16,7 +16,7 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) :
-    AbstractC2BuilderCompactionStep(cd) {
+    AbstractC2BuilderCompactionStep(cd, gp) {
 
     override val prefix = "C2LA"
     override val isLoggingEnabled = true

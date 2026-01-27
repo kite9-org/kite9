@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.AlignedRectangular
 import org.kite9.diagram.model.Connected
@@ -33,7 +34,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryConta
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
-abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
+abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: GridPositioner) : AbstractC2CompactionStep(cd) {
 
     private val gridRectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
     private val gridIntersectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
@@ -86,28 +87,17 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
             return addToGridRectSlideables(c, lineNumber, d, s, p)
         }
 
-        fun getGridSlideable(
-            c: Container,
-            d: Dimension,
-            containerPosition: ContainerPosition?,
-            s: Side,
-            p: Permeability
-        ): C2Slideable {
-            val lineNumber = if (s == Side.START) {
-                (containerPosition as GridContainerPosition).getFrom()
-            } else {
-                (containerPosition as GridContainerPosition).getTo() + 1
-            }
-
-            return addToGridRectSlideables(c, lineNumber, d, s, p)
-        }
-
         var ss = cso.getSlideablesFor(de)
 
         if (ss == null) {
             val parentLayoutIsGrid = (de.getParent() as? Container)?.getLayout() == Layout.GRID
             val myLayoutIsGrid = false // (de as? Container)?.getLayout() == Layout.GRID
             log.send("Creating $de")
+
+            if (parentLayoutIsGrid) {
+                // ensure we've laid out the grid if one is needed
+                gp.placeOnGrid(de.getParent() as Container)
+            }
 
             // we need to create these then
             val ms = getMinimumDistanceBetween(de, Side.START, de, Side.END, d, null, false)
@@ -119,7 +109,8 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
 //                //getGridContainerSlideable(de, d, Side.START,lp)
 //            } else
                 if (parentLayoutIsGrid) {
-                getGridSlideable(de.getParent() as Container, d, de.getContainerPosition(d),Side.START, lp)
+                    val place = gp.getPlaceOnGrid(de, d, Side.START)
+                    addToGridRectSlideables(de.getParent() as Container, place, d, Side.START, lp)
             } else {
                 C2Slideable(cso, d, de, Side.START, lp)
             }
@@ -129,7 +120,8 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer) : Abstract
 //                //getGridContainerSlideable( de, d, Side.END,rp)
 //            } else
                 if (parentLayoutIsGrid) {
-                getGridSlideable( de.getParent() as Container, d, de.getContainerPosition(d),Side.END, rp)
+                    val place = gp.getPlaceOnGrid(de, d, Side.END)
+                    addToGridRectSlideables( de.getParent() as Container, place, d,Side.END, rp)
             } else {
                 C2Slideable(cso, d, de, Side.END, rp)
             }

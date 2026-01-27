@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
@@ -23,7 +24,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * This makes sure that any time we have all the groups to complete a container, we wrap the groups in the
  * container(s) and use that instead.
  */
-abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: RoutableReader) : AbstractC2BuilderCompactionStep(cd) {
+abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: RoutableReader, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
 
     fun getEdgePosition(k: LeafGroup, d: Direction) : Double? {
         return if (k != null) {

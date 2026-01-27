@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.Direction
@@ -19,7 +20,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Co
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
-class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader) : AbstractC2ContainerCompactionStep(cd, rr) {
+class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, gp: GridPositioner) : AbstractC2ContainerCompactionStep(cd, rr, gp) {
 
     var first = true
     override fun compact(c: C2Compaction, g: Group) {

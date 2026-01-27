@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.compaction2
 import kotlin.math.max
 import kotlin.math.min
 import org.kite9.diagram.common.algorithms.so.Slideable
+import org.kite9.diagram.common.algorithms.so.SlideableException
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
@@ -232,6 +233,14 @@ class C2Slideable(
 
     fun getNotDoneVersion() : C2Slideable {
         return getNonDoneVersion(this)
+    }
+
+    override fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
+        if (this.number != (to as C2Slideable).number) {
+            super.addMinimumForwardConstraint(to, dist)
+        } else {
+            throw LogicException("Can't add a constraint to yourself")
+        }
     }
 
     companion object {

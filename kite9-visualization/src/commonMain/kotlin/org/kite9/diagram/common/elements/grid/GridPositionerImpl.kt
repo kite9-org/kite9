@@ -9,6 +9,7 @@ import org.kite9.diagram.common.range.IntegerRange
 import org.kite9.diagram.common.range.IntegerRange.Companion.notSet
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.logging.Table
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Container
@@ -16,6 +17,7 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.style.GridContainerPosition
+import org.kite9.diagram.visualization.compaction.Side
 
 /**
  * Tools for helping create Grid structure.
@@ -30,7 +32,6 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
     override fun placeOnGrid(
             gridContainer: Container,
-            allowSpanning: Boolean
     ): Array<Array<DiagramElement>> {
         if (placed.containsKey(gridContainer)) {
             return placed[gridContainer]!!
@@ -116,6 +117,54 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
         crri.setGridYSize(size.b)
         placed[gridContainer] = done
         return done
+    }
+
+    override fun getPlaceOnGrid(
+        de: DiagramElement,
+        d: Dimension,
+        side: Side
+    ): Int {
+        val c = de.getContainer()!!
+        val grid = placed[c] ?: throw LogicException("Grid not positioned: ${c.getID()}")
+
+        // Bounding box of all occurrences of `de` in the grid
+        var minRow = Int.MAX_VALUE
+        var maxRow = Int.MIN_VALUE
+        var minCol = Int.MAX_VALUE
+        var maxCol = Int.MIN_VALUE
+        var found = false
+
+        for (r in grid.indices) {
+            val row = grid[r]
+            for (col in row.indices) {
+                val cell = row[col]
+                if (cell === de || cell == de) { // pick one; keeping both is convenient
+                    found = true
+                    if (r < minRow) minRow = r
+                    if (r > maxRow) maxRow = r
+                    if (col < minCol) minCol = col
+                    if (col > maxCol) maxCol = col
+                }
+            }
+        }
+
+        if (!found) {
+            throw LogicException("Element ${de.getID()} not found on grid for container ${c.getID()}")
+        }
+
+        return when (d) {
+            Dimension.H -> when (side) {
+                Side.START  -> minCol
+                Side.END -> maxCol+1
+                else -> throw LogicException("Side $side not valid for horizontal dimension")
+            }
+
+            Dimension.V -> when (side) {
+                Side.START    -> minRow
+                Side.END -> maxRow+1
+                else -> throw LogicException("Side $side not valid for vertical dimension")
+            }
+        }
     }
 
     private fun padOrdinal(ordinals: MutableSet<Int>, s: Int) {

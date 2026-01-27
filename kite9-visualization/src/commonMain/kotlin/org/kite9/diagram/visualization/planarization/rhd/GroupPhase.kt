@@ -80,7 +80,7 @@ abstract class GroupPhase(
             val l = (ord as Container).getLayout()
             if (l === Layout.GRID) {
                 // need to iterate in 2d
-                val grid = gp.placeOnGrid((ord as Container), false)
+                val grid = gp.placeOnGrid((ord as Container))
 
                 // create unconnected groups
                 val gridGroups: MutableMap<DiagramElement, LeafGroup> = LinkedHashMap()

@@ -67,7 +67,7 @@ abstract class Slideable(
         return minimum.canAddForwardConstraint(to.minimum, dist, so.getSize())
     }
 
-    fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
+    open fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
         try {
             minimum.addForwardConstraint(to.minimum, dist, so.getSize())
         } catch (e: Throwable) {
