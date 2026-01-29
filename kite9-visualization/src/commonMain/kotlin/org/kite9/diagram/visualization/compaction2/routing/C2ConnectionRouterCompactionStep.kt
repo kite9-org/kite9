@@ -119,6 +119,14 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         }
     }
 
+    fun getElementHierarchy(e: DiagramElement?) : Set<DiagramElement> {
+        return if (e == null) {
+            emptySet()
+        } else {
+            setOf(e) + getElementHierarchy(e.getParent())
+        }
+    }
+
     private fun insertLink(c2: C2Compaction, c: Connection): C2Route? {
 
         fun getConnectedRectangular(e: Connected) : ConnectedRectangular{
@@ -146,9 +154,13 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
             val startRect = getConnectedRectangular(c.getFrom())
             val endRect = getConnectedRectangular(c.getTo())
+            val startHier = getElementHierarchy(c.getFrom())
+            val endHier = getElementHierarchy(c.getTo())
+            val commonHier = startHier.intersect(endHier)
+            val crossable = startHier + endHier - commonHier
 
             val doer = C2SlideableSSP(
-                c, startingPoints, endingPoints, startRect, endRect, d, c2,
+                c, startingPoints, endingPoints, crossable, startRect, endRect, d, c2,
                 log
             )
 

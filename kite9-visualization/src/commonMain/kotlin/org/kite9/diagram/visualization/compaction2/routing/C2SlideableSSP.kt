@@ -20,6 +20,7 @@ class C2SlideableSSP(
     val e: Connection,
     val start: Set<C2Point>,
     val end: Set<C2Point>,
+    val crossableElements: Set<DiagramElement>,
     private val startElem: ConnectedRectangular,
     private val endElem: ConnectedRectangular,
     private val direction: Direction?,
@@ -202,7 +203,7 @@ class C2SlideableSSP(
                 // crossing grid cells
                 return routeIn
             }
-        } else if (a.canCross(d)) {
+        } else if (a.canCross(d, crossableElements)) {
             val entering = a.s.isEntering(d);
             val newContainer = if (!entering) a.e.getContainer() else a.e
             if (newContainer == null) {

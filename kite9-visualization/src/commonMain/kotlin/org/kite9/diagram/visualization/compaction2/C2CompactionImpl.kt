@@ -5,6 +5,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
@@ -400,6 +401,16 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     (s.minimumPosition <= max(from.minimumPosition, to.minimumPosition));
         }
 
+        fun getAllPositionedInHierarchy(e: DiagramElement?) : Set<Positioned> {
+            return if (e == null) {
+                emptySet()
+            } else if (e is Positioned) {
+                setOf(e) + getAllPositionedInHierarchy(e.getParent())
+            } else {
+                emptySet()
+            }
+        }
+
         fun withinOrbit(along: Set<DiagramElement>, orbits: Set<DiagramElement>) : Boolean {
             return along.filter { i ->
                 val inside = orbits
@@ -423,7 +434,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             return out.toSet()
         }
 
-        fun updateBlocking(s: C2Slideable, potentialBlockers: Set<C2Slideable>, alongElements: Set<DiagramElement>, currentBlockedBy: Set<DiagramElement>) : Set<DiagramElement> {
+        fun updateBlocking(s: C2Slideable, potentialBlockers: Set<C2Slideable>, alongElements: Set<DiagramElement>, currentBlockedBy: Set<DiagramElement>, allCrossableParentElements: Set<DiagramElement>) : Set<DiagramElement> {
             if (potentialBlockers.contains(s)) {
                 val a = s.getRectAnchors()
                 if (a.isEmpty()) {
@@ -433,8 +444,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     a.forEach {
                         if (it.s == Side.START) {
                             if (alongElements.contains(it.e)) {
+                                // you shouldn't be able to move inside your own intersection
                                 newBlockedBy.add(it.e)
-                            } else if (it.canCross(d)) {
+                            } else if (it.canCross(d, allCrossableParentElements)) {
                                 // do nothing
                             } else if (it.e is Diagram) {
                                 // do nothing
@@ -452,16 +464,23 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
             }
         }
 
-
         val allElements = so.getAllPositionedRectangulars()
 
         toDo
             .forEach { along ->
-                val alongElements
-                    = (along.getIntersectingElements() + along.getOrbitingElements()).toSet()
+                val alongElements = (along.getIntersectingElements() + along.getOrbitingElements())
+                    .filterIsInstance<Positioned>()
+                    .toSet()
+
+                val allCrossableParentElements = alongElements
+                    .flatMap { getAllPositionedInHierarchy(it) }
+                    .minus(alongElements)
+                    .filter { it !is Diagram }
+                    .toSet()
 
                 // anything that is along the path of along
                 val blockingElements = allElements
+                    .minus(allCrossableParentElements)
                     .filter { e ->
                         val set = so.getSlideablesFor(e)!!
                         intersects(along, set.l, set.r) }
@@ -496,7 +515,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                         prev = curr
                     }
 
-                    blockedBy = updateBlocking(curr, relevantBlockingSlideables, along.getIntersectingElements(), blockedBy)
+                    blockedBy = updateBlocking(curr, relevantBlockingSlideables, along.getIntersectingElements(), blockedBy, allCrossableParentElements)
                     withinOrbits = updateOrbits(curr, withinOrbits)
                 }
             }
