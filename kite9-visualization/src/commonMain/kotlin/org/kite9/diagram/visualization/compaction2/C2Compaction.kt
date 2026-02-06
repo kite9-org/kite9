@@ -13,11 +13,6 @@ interface C2Compaction {
     fun buildNeighbours()
 
     /**
-     * Places a neighbour on the along slideable, allowing routing from n1 to n2 or vice versa.
-     */
-    fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?)
-
-    /**
      * Used to retrieve intersections when we're doing routing.
      */
     fun getNeighbours(along: C2Slideable, perp: C2Slideable) : Set<C2Slideable>

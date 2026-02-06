@@ -8,8 +8,6 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
-import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import kotlin.math.max
 import kotlin.math.min
 
@@ -39,7 +37,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     private val neighbourDetails = mutableMapOf<C2Slideable, MutableSet<Set<C2Slideable>>>()
 
-    override fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?) {
+    private fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?) {
         if ((n1 == null) || (n2==null) || (along==null)) {
             // first guard - along, n1 and n2 must be non-null
             return
@@ -100,156 +98,9 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return neighbourSet
     }
 
-    fun setupRectangularIntersections(hr: RectangularSlideableSet, vr: RectangularSlideableSet, ho: RoutableSlideableSet, vo: RoutableSlideableSet) {
-        if (vo.bl != null) {
-            addNeighbour(vo.bl!!, ho.bl, ho.c)
-            addNeighbour(vo.bl!!, ho.c, ho.br)
-        }
-
-        if (vo.br != null) {
-            addNeighbour(vo.br!!, ho.bl, ho.c)
-            addNeighbour(vo.br!!, ho.c, ho.br)
-        }
-
-        if (ho.bl != null) {
-            addNeighbour(ho.bl!!, vo.bl, vo.c)
-            addNeighbour(ho.bl!!, vo.c, vo.br)
-        }
-
-        if (ho.br != null) {
-            addNeighbour(ho.br!!, vo.bl, vo.c)
-            addNeighbour(ho.br!!, vo.c, vo.br)
-        }
-
-        if ((vr != null) && (hr != null)) {
-
-            fun intersectMatchesRect(o: C2Slideable, r: C2Slideable) : Boolean {
-                val oe = o.getIntersectingElements()
-                val re = r.getRectElements()
-                return oe == re
-            }
-
-            if ((vo.c != null) && intersectMatchesRect(vo.c!!, hr.l)) {
-                addNeighbour(vo.c!!, ho.bl, hr.l)
-                addNeighbour(vo.c!!, ho.br, hr.r)
-            }
-            if ((ho.c != null) && intersectMatchesRect(ho.c!!, vr.l)) {
-                addNeighbour(ho.c!!, vo.bl, vr.l)
-                addNeighbour(ho.c!!, vo.br, vr.r)
-            }
-        }
-    }
-
     private fun getSlideablesIncidentWith(s: C2Slideable) : Set<C2Slideable> {
-        return this.neighbourDetails.filter { (k, v) -> v.firstOrNull { it.contains(s) } != null }.keys
+        return this.neighbourDetails.filter { (_, v) -> v.firstOrNull { it.contains(s) } != null }.keys
     }
-
-    fun propagateIntersectionsFromRectangularToOuterRoutable(
-        hi: RectangularSlideableSet,
-        vi: RectangularSlideableSet,
-        ho: RoutableSlideableSet,
-        vo: RoutableSlideableSet
-    ) {
-
-        fun getIncident(i: C2Slideable) : Set<C2Slideable> {
-            return getSlideablesIncidentWith(i).toSet()
-        }
-
-        fun isInBounds(s: C2Slideable) : Boolean {
-            val out = when (s.dimension) {
-                Dimension.H -> if ((ho.bl != null) && (ho.br != null)) {
-                    (ho.bl!!.minimumPosition <= s.minimumPosition) && (ho.br!!.minimumPosition >= s.minimumPosition)
-                } else {
-                    false
-                }
-                Dimension.V -> if ((vo.bl != null) && (vo.br != null)) {
-                    (vo.bl!!.minimumPosition <= s.minimumPosition) && (vo.br!!.minimumPosition >= s.minimumPosition)
-                } else {
-                    false
-                }
-            }
-
-            return out
-        }
-
-        fun propagate(incident: Set<C2Slideable>, from: C2Slideable, to: C2Slideable?, e: DiagramElement) {
-            if ((from != null) && (to != null)) {
-                if (to.getOrbitingElements().contains(e)) {
-                    incident.forEach { along ->
-                        if (isInBounds(along) && isInBounds(to) && isInBounds(from)) {
-                            addNeighbour(along, from, to)
-                        }
-                    }
-                }
-            }
-        }
-
-        val hlSet = getIncident(hi.l)
-        val hrSet = getIncident(hi.r)
-        val vlSet = getIncident(vi.l)
-        val vrSet = getIncident(vi.r)
-        val e = hi.e
-
-        propagate(hlSet, hi.l, ho.bl, e)
-        propagate(hrSet, hi.r, ho.br,e)
-        propagate(vlSet, vi.l, vo.bl,e)
-        propagate(vrSet, vi.r, vo.br,e )
-
-    }
-
-
-    fun propagateIntersectionsBetweenRoutableAndOuterRectangular(
-        hi: RoutableSlideableSet,
-        vi: RoutableSlideableSet,
-        ho: RectangularSlideableSet,
-        vo: RectangularSlideableSet,
-    ) {
-
-        fun getIncident(a: C2Slideable, b: C2Slideable?) : Set<C2Slideable> {
-            val ai = getSlideablesIncidentWith(a)
-            val bi = if (b != null) getSlideablesIncidentWith(b) else emptySet()
-            return (ai + bi).toSet()
-        }
-
-        fun isInBounds(s: C2Slideable) : Boolean {
-            val out = when (s.dimension) {
-                Dimension.H -> (ho.l.minimumPosition <= s.minimumPosition) && (ho.r.minimumPosition >= s.minimumPosition)
-                Dimension.V -> (vo.l.minimumPosition <= s.minimumPosition) && (vo.r.minimumPosition >= s.minimumPosition)
-            }
-
-            return out
-        }
-
-        fun propagate(incident: Set<C2Slideable>, from: C2Slideable?, to: C2Slideable?) {
-            if ((from != null) && (to != null)) {
-                incident.forEach { along ->
-                    if (isInBounds(along) && isInBounds(to) && isInBounds(from)) {
-                        addNeighbour(along, from, to)
-                    }
-                }
-            }
-        }
-
-        val hl = getIncident(ho.l, hi.bl)
-        val hr = getIncident(ho.r, hi.br)
-        val vl = getIncident(vo.l, vi.bl)
-        val vr = getIncident(vo.r, vi.br)
-
-        propagate(hl,hi.bl, ho.l)
-        propagate(hr, hi.br, ho.r)
-        propagate(vl, vi.bl, vo.l)
-        propagate(vr, vi.br, vo.r)
-    }
-
-    fun setupRoutableIntersections(h: RoutableSlideableSet, v: RoutableSlideableSet) {
-        if ((v.bl != null) && (v.br != null) && (h.bl != null) && (h.br != null)) {
-            addNeighbour(v.bl!!, h.bl, h.br)
-            addNeighbour(v.br!!, h.bl, h.br)
-            addNeighbour(h.bl!!, v.bl, v.br)
-            addNeighbour(h.br!!, v.bl, v.br)
-
-        }
-   }
 
     fun replaceIntersections(s1: C2Slideable, s2: C2Slideable, sNew: C2Slideable) {
 
@@ -345,10 +196,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
         neighbourDetails.keys.forEach { k ->
             val oldGroups = neighbourDetails[k]!!
-            val extents = oldGroups.map { calculateExtent(it) to it }.toMap()
+            val extents = oldGroups.associateBy { calculateExtent(it) }
             val newGroups = mutableMapOf<Pair<Int, Int>, Set<C2Slideable>>()
             extents.forEach { (e, ss) ->
-                val overlapGroups = newGroups.filter { (k, v) -> overlaps(e, k) }
+                val overlapGroups = newGroups.filter { (k, _) -> overlaps(e, k) }
                 if (overlapGroups.isEmpty()) {
                     newGroups[e] = ss
                 } else {
@@ -364,25 +215,25 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
     override fun buildNeighbours() {
         neighbourDetails.clear()
-        handleIntersections(this)
-        handleOrbits(this)
+        handleIntersections()
+        handleOrbits()
         joinOverlappingNeighbourGroups()
     }
 
-    private fun handleIntersections(c2: C2Compaction) {
-        val v = c2.getSlackOptimisation(Dimension.V)
-        val h = c2.getSlackOptimisation(Dimension.H)
+    private fun handleIntersections() {
+        val v = getSlackOptimisation(Dimension.V)
+        val h = getSlackOptimisation(Dimension.H)
 
-        handleNeighboursOnDimension(c2,v, h, Direction.RIGHT, v.getAllSlideables().filter { it.getIntersectingElements().isNotEmpty() })
-        handleNeighboursOnDimension(c2, h, v, Direction.DOWN, h.getAllSlideables().filter { it.getIntersectingElements().isNotEmpty() })
+        handleNeighboursOnDimension(v, h, Direction.RIGHT, v.getAllSlideables().filter { it.getIntersectingElements().isNotEmpty() })
+        handleNeighboursOnDimension( h, v, Direction.DOWN, h.getAllSlideables().filter { it.getIntersectingElements().isNotEmpty() })
     }
 
-    private fun handleOrbits(c2: C2Compaction) {
-        val v = c2.getSlackOptimisation(Dimension.V)
-        val h = c2.getSlackOptimisation(Dimension.H)
+    private fun handleOrbits() {
+        val v = getSlackOptimisation(Dimension.V)
+        val h = getSlackOptimisation(Dimension.H)
 
-        handleNeighboursOnDimension(c2,v, h, Direction.RIGHT, v.getAllSlideables().filter { it.getOrbitingElements().isNotEmpty() })
-        handleNeighboursOnDimension(c2, h, v, Direction.DOWN, h.getAllSlideables().filter { it.getOrbitingElements().isNotEmpty() })
+        handleNeighboursOnDimension(v, h, Direction.RIGHT, v.getAllSlideables().filter { it.getOrbitingElements().isNotEmpty() })
+        handleNeighboursOnDimension(h, v, Direction.DOWN, h.getAllSlideables().filter { it.getOrbitingElements().isNotEmpty() })
     }
 
 
@@ -390,44 +241,50 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
      * The basic approach here is to trace along the intersection and make sure that every rectangular that crosses the path of it
      * intersects with the intersection.
      */
-    private fun handleNeighboursOnDimension(c2: C2Compaction,
-                                            so: C2SlackOptimisation,
+    private fun handleNeighboursOnDimension(so: C2SlackOptimisation,
                                             sox: C2SlackOptimisation,
                                             d: Direction,
                                             toDo: List<C2Slideable>) {
 
         fun intersects(s: C2Slideable, from: C2Slideable, to: C2Slideable) : Boolean {
             return (s.minimumPosition >= min(from.minimumPosition, to.minimumPosition)) &&
-                    (s.minimumPosition <= max(from.minimumPosition, to.minimumPosition));
+                    (s.minimumPosition <= max(from.minimumPosition, to.minimumPosition))
         }
 
         fun getAllPositionedInHierarchy(e: DiagramElement?) : Set<Positioned> {
-            return if (e == null) {
-                emptySet()
-            } else if (e is Positioned) {
-                setOf(e) + getAllPositionedInHierarchy(e.getParent())
-            } else {
-                emptySet()
+            return when (e) {
+                null -> { emptySet() }
+                is Positioned -> {  setOf(e) + getAllPositionedInHierarchy(e.getParent()) }
+                else -> { emptySet() }
             }
         }
 
+
         fun withinOrbit(along: Set<DiagramElement>, orbits: Set<DiagramElement>) : Boolean {
-            return along.filter { i ->
-                val inside = orbits
-                    .filterIsInstance<Container>()
-                    .find { o -> o.deepContains(i) || o == i } != null
-                inside
-            }.isNotEmpty()
+            if (orbits.isEmpty()) {
+                return false
+            }
+            val out = orbits
+                .filterIsInstance<Container>()
+                .all { o ->
+                    val found = along.any { i ->
+                        o.deepContains(i) || o == i
+                    }
+                    found
+                }
+            return out
         }
 
-        fun updateOrbits(s: C2Slideable, currentOrbits: Set<DiagramElement>) : Set<DiagramElement> {
+        fun updateOrbits(s: C2Slideable, currentOrbits: Set<DiagramElement>, relevantOrbitElements: Set<DiagramElement>) : Set<DiagramElement> {
             val orbs = s.getOrbitAnchors()
             val out = currentOrbits.toMutableSet()
             orbs.forEach {
-                if (it.s == Side.START) {
-                    out.add(it.e)
-                } else {
-                    out.remove(it.e)
+                if (relevantOrbitElements.contains(it.e)) {
+                    if (it.s == Side.START) {
+                        out.add(it.e)
+                    } else {
+                        out.remove(it.e)
+                    }
                 }
             }
 
@@ -472,6 +329,10 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                     .filterIsInstance<Positioned>()
                     .toSet()
 
+                val childElements =alongElements
+                    .flatMap { if (it is Container) it.getContents().toSet() else emptySet() }
+                    .toSet()
+
                 val allCrossableParentElements = alongElements
                     .flatMap { getAllPositionedInHierarchy(it) }
                     .minus(alongElements)
@@ -489,34 +350,47 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
                 // slideables for the above elements
                 val relevantBlockingSlideables = blockingElements
                     .map { e -> sox.getSlideablesFor(e)!!}
-                    .flatMap { it -> listOf(it.l, it.r) }
+                    .flatMap { listOf(it.l, it.r) }
                     .toSet()
 
-                val relevantOrbitSlideables = sox.getAllSlideables()
-                    .filter { it.getOrbitingElements().isNotEmpty() ||
-                    it.getIntersectingElements().isNotEmpty() }
-                    .toSet()
+                // tracks which slideables you need to be in the orbit of
+                // in order to have neighbours
+                val relevantOrbitElements = blockingElements + allCrossableParentElements + alongElements
 
+                // elements that we might want to include a neighbour intersection with
+                val allIntersectableElements = relevantOrbitElements + childElements
+
+                val allIntersectableSlideables = sox.getAllSlideables()
+                    .filter {
+                        it.getOrbitingElements().intersect(allIntersectableElements).isNotEmpty() ||
+                        it.getIntersectingElements().intersect(allIntersectableElements).isNotEmpty() }
+                    .toSet()
 
                 // actual intersecting elements
-                val traversalOrder = (relevantBlockingSlideables + relevantOrbitSlideables)
+                val traversalOrder = (relevantBlockingSlideables + allIntersectableSlideables)
                     .sortedBy { it.minimumPosition }
-
 
                 var prev : C2Slideable? = null
                 var withinOrbits: Set<DiagramElement> = emptySet()
                 var blockedBy : Set<DiagramElement> = emptySet()
 
                 for(curr in traversalOrder) {
-                    if (blockedBy.isEmpty() && (withinOrbit(alongElements, withinOrbits))) {
-                        c2.addNeighbour(along, prev, curr)
-                        prev = curr
-                    } else {
-                        prev = curr
+                    if (blockedBy.isEmpty() && withinOrbit(alongElements, withinOrbits) && (prev != null)) {
+                        // join this element to the previous one
+                        this.addNeighbour(along, prev, curr)
+                        if (along.number == 112) {
+                            println("Joining ${prev.number} ${curr.number}")
+                        }
                     }
 
                     blockedBy = updateBlocking(curr, relevantBlockingSlideables, along.getIntersectingElements(), blockedBy, allCrossableParentElements)
-                    withinOrbits = updateOrbits(curr, withinOrbits)
+                    withinOrbits = updateOrbits(curr, withinOrbits, relevantOrbitElements)
+
+                    if (blockedBy.isEmpty() && (withinOrbit(alongElements, withinOrbits))) {
+                        prev = curr
+                    } else {
+                        prev = null
+                    }
                 }
             }
     }

@@ -340,7 +340,7 @@ public class TestingEngine extends TestingHelp {
 
     static int checkOccupied(int x, List<Integer> occupied) {
         while (occupied.contains(x)) {
-            x=x+3;
+            x=x+2;
         }
 
         occupied.add(x);
@@ -403,7 +403,18 @@ public class TestingEngine extends TestingHelp {
                     g.drawLine(lowest.getMinimumPosition() * 10 + 30, y, highest.getMinimumPosition() * 10 + 30, y);
 
                     h2.forEach(it -> {
-                        g.fillRect(it.getMinimumPosition() * 10 + 25, y - 5, 10, 10);
+                        // triangle pointing up/right for slideables up to down
+                        g.fillPolygon(
+                                new int[]{
+                                        it.getMinimumPosition() * 10 + 25,
+                                        it.getMinimumPosition() * 10 + 35,
+                                        it.getMinimumPosition() * 10 + 35
+                                },
+                                new int[] {
+                                        y - 5,
+                                        y - 5,
+                                        y + 5
+                                }, 3);
                     });
                 });
             }
@@ -435,8 +446,17 @@ public class TestingEngine extends TestingHelp {
                     g.setStroke(strokeDecreasing);
                     g.drawLine(x, lowest.getMinimumPosition() * 10 + 30, x, highest.getMinimumPosition() * 10 + 30);
                     v2.forEach(it -> {
-                        g.fillRect(x-5, it.getMinimumPosition() * 10 + 25, 10, 10);
-                    });
+                        // triangle pointing down/left for slideables left to right
+                        g.fillPolygon(
+                                new int[] {
+                                        x - 5,
+                                        x - 5,
+                                        x + 5
+                                },new int[]{
+                                        it.getMinimumPosition() * 10 + 25,
+                                        it.getMinimumPosition() * 10 + 35,
+                                        it.getMinimumPosition() * 10 + 35
+                                }, 3);                    });
                 });
 
             }

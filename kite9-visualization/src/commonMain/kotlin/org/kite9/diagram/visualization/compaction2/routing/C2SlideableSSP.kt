@@ -188,10 +188,6 @@ class C2SlideableSSP(
         }
     }
 
-    private fun isGridCell(e: DiagramElement) : Boolean {
-        return (e.getParent() as Container)?.getLayout() == Layout.GRID
-    }
-
     private fun crossThreshold(perp: C2Slideable, routeIn: C2Route, d: Direction, c: C2Costing, along: C2Slideable): C2Route? {
         val a = perp.getRelevantRectAnchor(routeIn.container)
 
