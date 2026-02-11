@@ -102,6 +102,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
             val routables = map[lg]!!
             val outer = checkCreateElement(c, dimension, so, null, topGroup)
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
+            val otherRSS = if (dimension == Dimension.V) routables.first else routables.second
             if (theRSS != null) {
                 val isGridCell = (c.getParent() as Container?)?.getLayout() == Layout.GRID
                 val useOrbit = !isGridCell
@@ -116,7 +117,16 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                         so.ensureMinimumDistance(theRSS.br!!, outer.r, padding)
                     }
                 }
+
+                if (otherRSS?.c != null) {
+                    if (s == Side.START) {
+                        so.compaction.addNeighbour(otherRSS!!.c!!, outer.l, newRSS!!.bl)
+                    } else {
+                        so.compaction.addNeighbour(otherRSS!!.c!!, outer.r, newRSS!!.br)
+                    }
+                }
                 if (dimension == Dimension.H) {
+
                     map[lg] = Pair(newRSS, routables.second)
                 } else {
                     map[lg] = Pair(routables.first, newRSS)
@@ -169,6 +179,26 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                     }
 
                 (rr as RoutableHandler2D).setPlacedPosition(c, containerBounds!!)
+
+                val cx = sox.getSlideablesFor(c)
+                val cy = soy.getSlideablesFor(c)
+                if ((cx != null) && (cy != null)) {
+                    val sx = sox.getContainers(cx)
+                    val sy = soy.getContainers(cy)
+
+                    if (sx.isNotEmpty() && sy.isNotEmpty()) {
+                        val x1 = sx.first()
+                        val y1 = sy.first()
+                        createRoutableNeighbours(co, x1, y1, cx, cy)
+                        co.invertNeighbours(x1.bl)
+                        co.invertNeighbours(x1.br)
+                        co.invertNeighbours(y1.bl)
+                        co.invertNeighbours(y1.br)
+
+
+
+                    }
+                }
             }
         }
     }
@@ -190,7 +220,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
 
     private fun relevantElements(all: Set<LeafGroup>) : MutableMap<DiagramElement, Set<LeafGroup>> {
         return all
-            .filter { (it.connected is Rectangular) || (it.connected is TemporaryContainerHub)}
+            //.filter { (it.connected is Rectangular) || (it.connected is TemporaryContainerHub)}
             .map { it.connected as DiagramElement to setOf(it) }
             .toMap()
             .toMutableMap()

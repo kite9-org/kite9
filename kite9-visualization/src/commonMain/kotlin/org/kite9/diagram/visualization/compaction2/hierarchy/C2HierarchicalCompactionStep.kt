@@ -9,13 +9,9 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
-import org.kite9.diagram.visualization.compaction2.anchors.Purpose
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
-import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
-import org.kite9.diagram.visualization.compaction2.sets.SlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
-import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -86,7 +82,9 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
                 val startR = startS.getOrbitingElements()
                 val endR = endS.getOrbitingElements()
 
-                so.mergeSlideables(startS, endS)
+                val sOut = so.mergeSlideables(startS, endS)
+                so.compaction.joinOverlappingNeighbourGroups()
+                so.compaction.invertNeighbours(sOut)
 
                 // ensure Separation of rectangulars
                 val distance = if (startR.isNotEmpty() && endR.isNotEmpty()) {
@@ -157,24 +155,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
             hso.add(hss)
             vso.add(vss)
 
-            if ((vss != null) && (hss != null)) {
-                c.addNeighbour(hss.bl, vss.bl, vss.c)
-                c.addNeighbour(hss.bl, vss.c, vss.br)
-
-                c.addNeighbour(hss.br, vss.bl, vss.c)
-                c.addNeighbour(hss.br, vss.c, vss.br)
-
-                c.addNeighbour(vss.bl, hss.bl, hss.c)
-                c.addNeighbour(vss.bl, hss.c, hss.br)
-
-                c.addNeighbour(vss.br, hss.bl, hss.c)
-                c.addNeighbour(vss.br, hss.c, hss.br)
-
-                c.addNeighbour(vss.c, hss.bl, hr.l)
-                c.addNeighbour(vss.c, hss.br, hr.r)
-                c.addNeighbour(hss.c, vss.bl, vr.l)
-                c.addNeighbour(hss.c, vss.br, vr.r)
-            }
+            createRoutableNeighbours(c, hss, vss, hr, vr)
 
             if ((hss != null) && (vss != null)) {
                 hso.contains(hss, hr)
@@ -198,6 +179,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
             val hr = checkCreateElement(f, Dimension.H, hso, null, topGroup)
             ensureCentreSlideablePosition(hso, hr, phi.c, e.getContainerPosition(Dimension.H))
 
+            createRoutableNeighbours(c, phi, pvi, hr, vr)
+
             return Pair(phi, pvi)
         } else {
             throw LogicException("Can't process this element type")
@@ -208,50 +191,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         return when (g) {
             is CompoundGroup -> listOf(g) + collectGroups(g.a) + collectGroups(g.b)
             is LeafGroup -> listOf(g)
-        }
-    }
-
-
-
-    private fun mergeForAxis(c: C2Compaction, ha: RoutableSlideableSet, hb : RoutableSlideableSet, d: Dimension, s: Side, overlap: Boolean) : RoutableSlideableSet {
-        val so = c.getSlackOptimisation(d)
-
-        val hm = if (!overlap) {
-            separateRectangular(ha, hb, so, d)
-            ha.mergeWithGutter(hb, so)
-        } else {
-            hb.mergeWithOverlap(ha, so)
-        }
-
-        so.checkConsistency()
-        return hm!!
-    }
-
-    private fun separateRectangular(
-        a: SlideableSet<*>,
-        b: SlideableSet<*>,
-        cso: C2SlackOptimisation,
-        d: Dimension
-    ) {
-        val aSlideables =  cso.getRectangularsOnSide(Side.END,a)
-        val bSlideables = cso.getRectangularsOnSide(Side.START, b)
-
-        val aElements = aSlideables
-            .flatMap { r -> r.getRectAnchors() }
-            .map { it.e }
-
-        val bElements = bSlideables
-            .flatMap { r -> r.getRectAnchors() }
-            .map { it.e }
-
-        val distance = aElements.maxOfOrNull { ae ->
-            bElements.maxOf { be -> getMinimumDistanceBetween(ae, Side.END, be, Side.START, d, null, true) }
-        } ?: 2.0
-
-        aSlideables.forEach { aS ->
-            bSlideables.forEach { bS ->
-                cso.ensureMinimumDistance(aS, bS, distance.toInt())
-            }
         }
     }
 

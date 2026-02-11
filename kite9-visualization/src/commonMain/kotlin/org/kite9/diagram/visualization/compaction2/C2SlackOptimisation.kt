@@ -129,20 +129,22 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         }
     }
 
-    private fun copyNeighbourMap(from: C2Slideable, to: C2Slideable) {
-        val sets = compaction.getNeighbourSetsOn(from)
-        sets.flatMap { it }.forEach {
-            compaction.addNeighbour(it, from, to)
-        }
+    private fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?) {
+        if ((from != null) && (to != null)) {
+            val sets = compaction.getNeighbourSetsOn(from)
+            sets.flatMap { it }.forEach {
+                compaction.addNeighbour(it, from, to)
+            }
 
-        sets.forEach { s ->
-            var last : C2Slideable? = null
-            s.forEach {
-                if (last != null) {
-                    compaction.addNeighbour(to, last, it)
+            sets.forEach { s ->
+                var last: C2Slideable? = null
+                s.forEach {
+                    if (last != null) {
+                        compaction.addNeighbour(to, last, it)
+                    }
+
+                    last = it
                 }
-
-                last = it
             }
         }
     }
@@ -157,7 +159,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         val new = when (side) {
             Side.START -> {
                 val newLeft = if (containerRoutable != null) {
-                    copyNeighbourMap(inner.bl!!, containerRoutable.bl!!)
+                    copyNeighbourMap(inner.bl, containerRoutable.bl)
                     containerRoutable.bl!!
                 } else {
                     container.l
@@ -170,7 +172,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
             }
             Side.END -> {
                 val newRight = if (containerRoutable != null) {
-                    copyNeighbourMap(inner.br!!, containerRoutable.br!!)
+                    copyNeighbourMap(inner.br, containerRoutable.br)
                     containerRoutable.br!!
                 } else {
                     container.r

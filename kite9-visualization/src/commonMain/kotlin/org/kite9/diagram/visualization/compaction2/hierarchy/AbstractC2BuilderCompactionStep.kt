@@ -19,6 +19,7 @@ import org.kite9.diagram.model.style.GridContainerPosition
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
+import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.IntersectAnchor
@@ -236,6 +237,36 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
     abstract fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?): Boolean
 
+
+    fun createRoutableNeighbours(c: C2Compaction,
+                                 hss: RoutableSlideableSet?,
+                                 vss: RoutableSlideableSet?,
+                                 hr: RectangularSlideableSet?,
+                                 vr: RectangularSlideableSet?) {
+        if ((vss != null) && (hss != null)) {
+            c.addNeighbour(hss.bl, vss.bl, vss.c)
+            c.addNeighbour(hss.bl, vss.c, vss.br)
+
+            c.addNeighbour(hss.br, vss.bl, vss.c)
+            c.addNeighbour(hss.br, vss.c, vss.br)
+
+            c.addNeighbour(vss.bl, hss.bl, hss.c)
+            c.addNeighbour(vss.bl, hss.c, hss.br)
+
+            c.addNeighbour(vss.br, hss.bl, hss.c)
+            c.addNeighbour(vss.br, hss.c, hss.br)
+
+            if (hr != null) {
+                c.addNeighbour(vss.c, hss.bl, hr.l)
+                c.addNeighbour(vss.c, hss.br, hr.r)
+            }
+
+            if (vr != null) {
+                c.addNeighbour(hss.c, vss.bl, vr.l)
+                c.addNeighbour(hss.c, vss.br, vr.r)
+            }
+        }
+    }
 
     private fun setupInternalOrdering(
         orderedContents: List<Pair<Rectangular, RectangularSlideableSet?>>,

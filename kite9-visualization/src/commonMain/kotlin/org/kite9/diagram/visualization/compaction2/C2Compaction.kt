@@ -8,13 +8,20 @@ interface C2Compaction {
     fun getSlackOptimisation(d: Dimension): C2SlackOptimisation
     fun getDiagram(): Diagram
 
-//    fun buildNeighbours()
-
+    /**
+     * Sets up allowed intersections
+     */
     fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?)
-        /**
+
+    /**
      * Used to retrieve intersections when we're doing routing.
      */
     fun getNeighbours(along: C2Slideable, perp: C2Slideable) : Set<C2Slideable>
+
+    /**
+     * This makes sure that neighbours that arrive at a slideable can also leave
+     */
+    fun invertNeighbours(perp: C2Slideable?)
 
     fun getNeighbourSetsOn(s: C2Slideable) : Set<Set<C2Slideable>>
 
