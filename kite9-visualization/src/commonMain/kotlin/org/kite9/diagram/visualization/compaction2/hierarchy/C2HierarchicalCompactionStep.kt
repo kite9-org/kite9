@@ -55,6 +55,24 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
 
         joinSides(right2, left2, c.getSlackOptimisation(Dimension.H), Dimension.H)
         joinSides(down2, up2, c.getSlackOptimisation(Dimension.V), Dimension.V)
+
+        // stitch together orbits from next-to containers
+        gridOrbitSlideables.keys.forEach {
+            if (it.s == Side.START) {
+                val counterpart = Quad(it.c, it.i-1, it.d, Side.END)
+                val slideableA = gridOrbitSlideables[counterpart]
+                val slideableB = gridOrbitSlideables[it]
+                c.copyNeighbourMap(slideableB, slideableA)
+                c.copyNeighbourMap(slideableA, slideableB)
+            } else {
+                val counterpart = Quad(it.c, it.i+1, it.d, Side.START)
+                val slideableA = gridOrbitSlideables[counterpart]
+                val slideableB = gridOrbitSlideables[it]
+                c.copyNeighbourMap(slideableB, slideableA)
+                c.copyNeighbourMap(slideableA, slideableB)
+            }
+
+        }
     }
 
     fun mergeSide(leaves: Map<Double, Set<RoutableSlideableSet>>, s: Side, so: C2SlackOptimisation) : Map<Double, C2Slideable?> {

@@ -37,8 +37,11 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 
 abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: GridPositioner) : AbstractC2CompactionStep(cd) {
 
-    private val gridRectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
-    private val gridIntersectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
+    data class Quad(val c: Container, val i: Int, val d: Dimension, val s: Side)
+
+    val gridRectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
+    val gridIntersectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
+    val gridOrbitSlideables = mutableMapOf<Quad, C2Slideable>()
 
     /**
      * This is used to create a RectangularSlideableSet from a diagram element

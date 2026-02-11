@@ -11,6 +11,7 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
@@ -98,7 +99,15 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                            map: MutableMap<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
                            dimension: Dimension,
                            topGroup: Group) {
+
+        val allMergableRoutables = mutableSetOf<C2Slideable>()
+        var hub : TemporaryContainerHub? = null
+
+
         to.forEach { lg ->
+            if (lg.connected is TemporaryContainerHub) {
+                hub = lg.connected as TemporaryContainerHub
+            }
             val routables = map[lg]!!
             val outer = checkCreateElement(c, dimension, so, null, topGroup)
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
@@ -109,29 +118,45 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                 val padding = getPadding(c, s, dimension)
                 val newRSS = so.addSide(outer, theRSS, s, useOrbit, padding)
                 if (s == Side.START) {
-                    if (theRSS.bl != null) {
+                    if ((theRSS.bl != null) && (theRSS.bl != outer.l)) {
                         so.ensureMinimumDistance(outer.l, theRSS.bl!!, padding)
                     }
+                    if (theRSS?.bl != null) {
+                        allMergableRoutables.add(theRSS.bl!!)
+                    }
                 } else {
-                    if (theRSS.br != null) {
+                    if ((theRSS.br != null) && (theRSS.br != outer.r)) {
                         so.ensureMinimumDistance(theRSS.br!!, outer.r, padding)
+                    }
+                    if (theRSS?.br != null) {
+                        allMergableRoutables.add(theRSS.br!!)
                     }
                 }
 
-                if (otherRSS?.c != null) {
+                /*if (otherRSS?.c != null) {
                     if (s == Side.START) {
                         so.compaction.addNeighbour(otherRSS!!.c!!, outer.l, newRSS!!.bl)
                     } else {
                         so.compaction.addNeighbour(otherRSS!!.c!!, outer.r, newRSS!!.br)
                     }
-                }
-                if (dimension == Dimension.H) {
+                }*/
 
+                if (dimension == Dimension.H) {
                     map[lg] = Pair(newRSS, routables.second)
                 } else {
                     map[lg] = Pair(routables.first, newRSS)
                 }
             }
+        }
+
+        val done = allMergableRoutables.reduceOrNull { a, b ->
+            so.mergeSlideables(a, b)!!
+        }
+
+        if ((done != null) && (c.getContainer()?.getLayout() == Layout.GRID)) {
+            val i = if (dimension == Dimension.H) hub?.gridPosition?.first else hub?.gridPosition?.second
+            val q = Quad(c.getContainer()!!, i!!, dimension, s)
+            gridOrbitSlideables[q] = done
         }
     }
 
@@ -183,6 +208,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                 val cx = sox.getSlideablesFor(c)
                 val cy = soy.getSlideablesFor(c)
                 if ((cx != null) && (cy != null)) {
+
                     val sx = sox.getContainers(cx)
                     val sy = soy.getContainers(cy)
 
@@ -194,10 +220,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                         co.invertNeighbours(x1.br)
                         co.invertNeighbours(y1.bl)
                         co.invertNeighbours(y1.br)
-
-
-
                     }
+
                 }
             }
         }

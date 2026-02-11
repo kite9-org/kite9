@@ -116,8 +116,8 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		return ctx;
 	}
 
-    private Grid createTwoByTwoGridContext(Glyph g1, Glyph g2, Glyph g3, Glyph g4) {
-        Cell tl = new Cell("tl", Arrays.asList(g1));
+    private Grid createTwoByTwoGridContext(Glyph g1a, Glyph g1b, Glyph g2, Glyph g3, Glyph g4) {
+        Cell tl = new Cell("tl", Arrays.asList(g1a, g1b));
         Cell tr = new Cell("tr", Arrays.asList(g2));
         Cell bl = new Cell("bl", Arrays.asList(g3));
         Cell br = new Cell("br", Arrays.asList(g4));
@@ -135,16 +135,18 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
     @Test
     public void test_56_3_TwoByTwo() throws Exception {
-        Glyph g1 = new Glyph("one", "", "one", null, null);
+        Glyph g1a = new Glyph("one-a", "", "one", null, null);
+        Glyph g1b = new Glyph("one-b", "", "one", null, null);
+
         Glyph g2 = new Glyph("two", "", "two ", null, null);
         Glyph g3 = new Glyph("three", "", "three ", null, null);
         Glyph g4 = new Glyph("four", "", "four", null, null);
 
-        Grid ctx = createTwoByTwoGridContext(g1, g2, g3, g4);
+        Grid ctx = createTwoByTwoGridContext(g1a, g1b, g2, g3, g4);
 
-        new Link(g2, g1, null, null, "DIAMOND", null, null);
-        new Link(g3, g1, "CIRCLE", null, "CIRCLE", null, null);
-        new Link(g4, g1, "ARROW", null, null, null, null);
+        new Link(g2, g1a, null, null, "DIAMOND", null, null);
+        new Link(g3, g1b, "CIRCLE", null, "CIRCLE", null, null);
+        new Link(g4, g1a, "ARROW", null, null, null, null);
         new Link(g2, g4, null, null, null, null, null);
         new Link(g2, g3, null, null, null, null, null);
 

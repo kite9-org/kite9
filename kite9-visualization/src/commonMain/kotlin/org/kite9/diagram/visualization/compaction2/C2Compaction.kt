@@ -33,4 +33,9 @@ interface C2Compaction {
     fun checkConsistency()
 
     fun joinOverlappingNeighbourGroups()
+
+    /**
+     * Duplicates neighbours arriving on one slideable to the other
+     */
+    fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?)
 }
