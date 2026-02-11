@@ -185,11 +185,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         }
     }
 
-    private fun isTopmostGroup(g: Group): Boolean {
-        // if it's the top group, then all containers need to be completed
-        return g.isActive()
-    }
-
     private fun collectGroups(g: Group) : List<Group> {
         return when (g) {
             is CompoundGroup -> listOf(g) + collectGroups(g.a) + collectGroups(g.b)

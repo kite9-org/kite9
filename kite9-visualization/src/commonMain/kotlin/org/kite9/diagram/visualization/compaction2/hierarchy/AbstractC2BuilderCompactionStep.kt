@@ -69,24 +69,6 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             }
         }
 
-        fun getGridContainerSlideable(
-            c: Container,
-            d: Dimension,
-            s: Side,
-            p: Permeability
-        ): C2Slideable {
-            val lineNumber = if (s == Side.START) {
-                0
-            } else {
-                gridRectSlideables.keys
-                    .filter { (it.first == c) && (it.third == d) }
-                    .map { it.second }
-                    .max()
-            }
-
-            return addToGridRectSlideables(c, lineNumber, d, s, p)
-        }
-
         var ss = cso.getSlideablesFor(de)
 
         if (ss == null) {

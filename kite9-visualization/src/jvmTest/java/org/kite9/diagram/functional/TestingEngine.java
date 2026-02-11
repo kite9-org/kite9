@@ -1,7 +1,6 @@
 package org.kite9.diagram.functional;
 
 import kotlin.Pair;
-import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.kite9.diagram.adl.ContradictingLink;
 import org.kite9.diagram.adl.HopLink;
@@ -39,7 +38,6 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 
-import javax.security.auth.login.LoginException;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -338,13 +336,13 @@ public class TestingEngine extends TestingHelp {
         return in.stream().max(Comparator.comparingInt(Slideable::getMinimumPosition)).get();
     }
 
-    static int checkOccupied(int x, List<Integer> occupied) {
-        while (occupied.contains(x)) {
-            x=x+2;
+    static void checkOccupied(C2Slideable s, Map<C2Slideable, Integer> occupied) {
+        int nx = s.getMinimumPosition() * 10 + 30;
+        while (occupied.containsValue(nx)) {
+            nx=nx+5;
         }
 
-        occupied.add(x);
-        return x;
+        occupied.put(s, nx);
     }
 
 	public static void drawSlideables(C2Compaction c2, Class<?> theTest, String subtest, String item) {
@@ -374,11 +372,24 @@ public class TestingEngine extends TestingHelp {
 
 
 
-        List<Integer> occupied = new ArrayList<>();
+        Map<C2Slideable, Integer> occupiedV = new HashMap<>();
+        Map<C2Slideable, Integer> occupiedH = new HashMap<>();
 
         c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(l -> {
             if (!l.isDone()) {
-                final int y = checkOccupied(l.getMinimumPosition() * 10 + 30, occupied);
+                checkOccupied(l, occupiedV);
+            }
+        });
+
+        c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(l -> {
+            if (!l.isDone()) {
+                checkOccupied(l, occupiedH);
+            }
+        });
+
+        c2.getSlackOptimisation(Dimension.V).getAllSlideables().stream().forEach(l -> {
+            if (!l.isDone()) {
+                final int y = occupiedV.get(l);
                 setColour(l, g);
                 g.setStroke(new BasicStroke());
 
@@ -400,15 +411,16 @@ public class TestingEngine extends TestingHelp {
                     c[0] = (c[0] + 1) % colors.length;
 
                     g.setStroke(strokeDecreasing);
-                    g.drawLine(lowest.getMinimumPosition() * 10 + 30, y, highest.getMinimumPosition() * 10 + 30, y);
+                    g.drawLine(occupiedH.get(lowest), y, occupiedH.get(highest), y);
 
                     h2.forEach(it -> {
                         // triangle pointing up/right for slideables up to down
+                        int x = occupiedH.get(it);
                         g.fillPolygon(
                                 new int[]{
-                                        it.getMinimumPosition() * 10 + 25,
-                                        it.getMinimumPosition() * 10 + 35,
-                                        it.getMinimumPosition() * 10 + 35
+                                        x-5,
+                                        x+5,
+                                        x+5
                                 },
                                 new int[] {
                                         y - 5,
@@ -420,11 +432,10 @@ public class TestingEngine extends TestingHelp {
             }
         });
 
-        occupied.clear();
 
         c2.getSlackOptimisation(Dimension.H).getAllSlideables().stream().forEach(l -> {
             if (!l.isDone()) {
-                final int x = checkOccupied(l.getMinimumPosition() * 10 + 30, occupied);
+                final int x = occupiedH.get(l);
                 setColour(l, g);
                 g.setStroke(new BasicStroke());
                 g.drawLine(x, 20, x, ySize * 10 + 40);
@@ -444,18 +455,20 @@ public class TestingEngine extends TestingHelp {
                     c[0] = c[0] + 1 % colors.length;
 
                     g.setStroke(strokeDecreasing);
-                    g.drawLine(x, lowest.getMinimumPosition() * 10 + 30, x, highest.getMinimumPosition() * 10 + 30);
+                    g.drawLine(x, occupiedV.get(lowest), x, occupiedV.get(highest));
                     v2.forEach(it -> {
                         // triangle pointing down/left for slideables left to right
+                        int y = occupiedV.get(it);
+
                         g.fillPolygon(
                                 new int[] {
                                         x - 5,
                                         x - 5,
                                         x + 5
                                 },new int[]{
-                                        it.getMinimumPosition() * 10 + 25,
-                                        it.getMinimumPosition() * 10 + 35,
-                                        it.getMinimumPosition() * 10 + 35
+                                        y-5,
+                                        y+5,
+                                        y+5
                                 }, 3);                    });
                 });
 
