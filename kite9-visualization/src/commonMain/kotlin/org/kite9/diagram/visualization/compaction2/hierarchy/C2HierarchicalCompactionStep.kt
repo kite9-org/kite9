@@ -31,9 +31,9 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         first = true
 
         fun distinctOperation(g: Group) : Pair<DiagramElement?, Int?> {
-            return when {
-                g is CompoundGroup -> Pair(null, g.groupNumber)
-                g is LeafGroup && g.connected != null -> Pair(g.connected, 1)
+            return when (g) {
+                is CompoundGroup -> Pair(null, g.groupNumber)
+                is LeafGroup if g.connected != null -> Pair(g.connected, 1)
                 else -> Pair((g as LeafGroup).container, 2)
             }
         }
@@ -156,6 +156,25 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
 
             hso.add(hss)
             vso.add(vss)
+
+            if ((vss != null) && (hss != null)) {
+                c.addNeighbour(hss.bl, vss.bl, vss.c)
+                c.addNeighbour(hss.bl, vss.c, vss.br)
+
+                c.addNeighbour(hss.br, vss.bl, vss.c)
+                c.addNeighbour(hss.br, vss.c, vss.br)
+
+                c.addNeighbour(vss.bl, hss.bl, hss.c)
+                c.addNeighbour(vss.bl, hss.c, hss.br)
+
+                c.addNeighbour(vss.br, hss.bl, hss.c)
+                c.addNeighbour(vss.br, hss.c, hss.br)
+
+                c.addNeighbour(vss.c, hss.bl, hr.l)
+                c.addNeighbour(vss.c, hss.br, hr.r)
+                c.addNeighbour(hss.c, vss.bl, vr.l)
+                c.addNeighbour(hss.c, vss.br, vr.r)
+            }
 
             if ((hss != null) && (vss != null)) {
                 hso.contains(hss, hr)

@@ -8,7 +8,7 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Gr
 class C2NeighbourBuilderStep(cd: CompleteDisplayer) : AbstractC2CompactionStep(cd) {
 
     override fun compact(c: C2Compaction, g: Group) {
-        c.buildNeighbours()
+        //c.buildNeighbours()
         c.joinOverlappingNeighbourGroups()
     }
 

@@ -185,7 +185,7 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 
             if (replacements.isNotEmpty()) {
                 // since we have re-ordered the diagram, recalculate neighbour map
-                c2.buildNeighbours()
+                //c2.buildNeighbours()
                 c2.joinOverlappingNeighbourGroups()
             }
 
@@ -347,17 +347,17 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
         val queue = RankBasedConnectionQueue(PositionRoutableHandler2D())
         buildQueue(g, queue)
 
-//        queue.toList()
-//            //.slice(0..0)
-//            .forEach {
-//            if (it is Connection) {
-//                val route = insertLink(c, it)
-//                if (route != null) {
-//                    writeRoute(it, route, 0, null)
-//
-//                }
-//            }
-//        }
+        queue.toList()
+            //.slice(0..0)
+            .forEach {
+            if (it is Connection) {
+                val route = insertLink(c, it)
+                if (route != null) {
+                    writeRoute(it, route, 0, null)
+
+                }
+            }
+        }
 
         println("Done")
     }
