@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.compaction2
 
-import org.kite9.diagram.common.algorithms.so.AbstractSlackOptimisation
 import org.kite9.diagram.common.elements.Dimension
+import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.PlacementPositioned
@@ -46,7 +46,11 @@ data class Constraint(val forward: Boolean, val dist: Int) {
  * Augments SlackOptimisation to keep track of diagram elements underlying the slideables.
  * @author robmoffat
  */
-class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimension) : AbstractSlackOptimisation(), Logable {
+class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimension) : Logable {
+
+    val log by lazy { Kite9Log.instance(this) }
+    private val slideables: MutableCollection<C2Slideable> = LinkedHashSet()
+    var pushCount = 0;
 
     /** Track mapping of elements to sets */
     private val rectangularMap: MutableMap<Rectangular, RectangularSlideableSet> = HashMap()
@@ -59,15 +63,84 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
     private var slideableOrdering: List<C2Slideable> = emptyList()
     private val laneGroups = mutableSetOf<Set<C2Slideable>>()
 
-    override fun initialiseSlackOptimisation() {
+    fun getSize(): Int {
+        return slideables.size
+    }
 
+
+    fun ensureMinimumDistance(left: C2Slideable, right: C2Slideable, minLength: Int) {
+        if (left.so !== right.so) {
+            throw LogicException("Mixing dimensions")
+        }
+
+        if (left.isDone()) {
+            throw LogicException("Left is done")
+        }
+
+        if (right.isDone()) {
+            throw LogicException("Right is done")
+        }
+
+        try {
+            log.send(if (log.go()) null else "Updating min distance to $minLength for $left to $right")
+            left.addMinimumForwardConstraint(right, minLength)
+            right.addMaximumForwardConstraint(left, minLength)
+            log.send(if (log.go()) null else "Updated min distance to $minLength for $left to $right")
+        } catch (e: LogicException) {
+            e.printStackTrace()
+            debugOutput(true)
+        }
+    }
+
+    private fun debugOutput(minimums: Boolean) {
+        val alreadyDone: MutableSet<C2Slideable> = HashSet()
+        for (slideable in slideables) {
+            if (!alreadyDone.contains(slideable)) {
+                debugOutputSlideable(minimums, slideable, alreadyDone, 0)
+            }
+        }
+    }
+
+    private fun debugOutputSlideable(
+        minimums: Boolean,
+        slideable: C2Slideable,
+        alreadyDone: MutableSet<C2Slideable>,
+        indent: Int
+    ) {
+        log.send(indent, slideable.toString())
+        if (!alreadyDone.contains(slideable)) {
+            alreadyDone.add(slideable)
+            for (s2 in slideable.getForwardSlideables(minimums)) {
+                debugOutputSlideable(minimums, s2, alreadyDone, indent + 2)
+            }
+        }
+    }
+
+    fun ensureMaximumDistance(left: C2Slideable, right: C2Slideable, maxLength: Int) {
+        if (left.so !== right.so) {
+            throw LogicException("Mixing dimensions")
+        }
+
+        if (left.isDone()) {
+            throw LogicException("Left is done")
+        }
+
+        if (right.isDone()) {
+            throw LogicException("Right is done")
+        }
+        try {
+            log.send(if (log.go()) null else "Updating max distance to $maxLength for $left to $right")
+            right.addMinimumBackwardConstraint(left, maxLength)
+            left.addMaximumBackwardConstraint(right, maxLength)
+        } catch (_: LogicException) {
+            debugOutput(false)
+        }
     }
 
     fun getRectangularsOnSide(s: Side, ss: SlideableSet<*>) : Set<C2Slideable> {
         return when (ss) {
             is RectangularSlideableSet -> setOf(if (s == Side.START) ss.l else ss.r)
             is RoutableSlideableSet -> getContents(ss).flatMap { getRectangularsOnSide(s, it) }.toSet()
-            else -> throw LogicException("Type unknown")
         }
     }
 
@@ -129,38 +202,42 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         }
     }
 
-    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side, useOrbit: Boolean, separation: Int) : RoutableSlideableSet?  {
+    fun addSide(container: RectangularSlideableSet, inner: RoutableSlideableSet, side: Side, useOrbit: Boolean, separation: Int) : RoutableSlideableSet  {
         val containerRoutable = if (useOrbit) container.wrapInRoutable() else null
         if (containerRoutable != null) {
             contains(containerRoutable, container)
             updateSlideableMap(containerRoutable)
         }
 
+        val latestLeft = inner.bl?.getNotDoneVersion()
+        val latestRight = inner.br?.getNotDoneVersion()
+
+        val latestInner = inner.replaceSide(latestLeft, Side.START).replaceSide(latestRight, Side.END)
+
         val new = when (side) {
             Side.START -> {
                 val newLeft = if (containerRoutable != null) {
-                    compaction.copyNeighbourMap(inner.bl!!, containerRoutable.bl!!)
+                    compaction.copyNeighbourMap(latestLeft!!, containerRoutable.bl!!)
                     containerRoutable.bl!!
                 } else {
                     container.l
                 }
-                if (inner.bl != null) {
-                    ensureMinimumDistance(newLeft, inner.bl!!, separation)
+                if (latestRight != null) {
+                    ensureMinimumDistance(newLeft, latestRight, separation)
                 }
-                inner.replaceSide(newLeft, side)
-
+                latestInner.replaceSide(newLeft, Side.START)
             }
             Side.END -> {
                 val newRight = if (containerRoutable != null) {
-                    compaction.copyNeighbourMap(inner.br!!, containerRoutable.br!!)
+                    compaction.copyNeighbourMap(latestRight, containerRoutable.br!!)
                     containerRoutable.br!!
                 } else {
                     container.r
                 }
-                if (inner.br != null) {
-                    ensureMinimumDistance(inner.br!!, newRight, separation)
+                if (latestRight != null) {
+                    ensureMinimumDistance(latestRight, newRight, separation)
                 }
-                inner.replaceSide(newRight, side)
+                latestInner.replaceSide(newRight, side)
             }
             else -> {
                 throw LogicException("Illegal Side")
@@ -304,7 +381,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
     }
 
     fun getContents(outer: RectangularSlideableSet) : RoutableSlideableSet? {
-        return containment2.get(outer)
+        return containment2[outer]
     }
 
     fun getContainers(inner: RectangularSlideableSet) : Set<RoutableSlideableSet> {
@@ -313,7 +390,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
     }
 
     fun checkConsistency() {
-        slideables.removeAll { it is C2Slideable && it.isDone() }
+        slideables.removeAll { it.isDone() }
 
         rectangularMap.forEach { (k, v) -> v.getAll().forEach { checkValid(it, k) } }
 
@@ -341,8 +418,8 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun getAllSlideables(): Collection<C2Slideable> {
-        return super.getAllSlideables() as Collection<C2Slideable>
+    fun getAllSlideables(): Collection<C2Slideable> {
+        return this.slideables.toSet()
     }
 
 
@@ -358,6 +435,12 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
 
         this.slideableOrdering = out
     }
+
+    override val prefix: String
+        get() = "ASO "
+
+    override val isLoggingEnabled: Boolean
+        get() = true
 
     companion object {
 

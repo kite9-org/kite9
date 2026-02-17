@@ -10,6 +10,7 @@ import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Port
+import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
@@ -23,6 +24,7 @@ import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.IntersectAnchor
+import org.kite9.diagram.visualization.compaction2.anchors.OrbitAnchor
 import org.kite9.diagram.visualization.compaction2.anchors.Permeability
 import org.kite9.diagram.visualization.compaction2.anchors.Purpose
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
@@ -42,6 +44,16 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
     val gridRectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
     val gridIntersectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
     val gridOrbitSlideables = mutableMapOf<Quad, C2Slideable>()
+
+    fun ensureNoOldGridOrbitSlideables() {
+        for ((k, v) in gridOrbitSlideables) {
+            if (v.isDone()) {
+                val v2 = getNonDoneVersion(v)
+                gridOrbitSlideables[k] = v2
+            }
+        }
+    }
+
 
     /**
      * This is used to create a RectangularSlideableSet from a diagram element
@@ -143,6 +155,26 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             }
         }
 
+        fun createOrReuseOrbitSlideable(gridMidpoint: Pair<Int, Int>?, side: Side) : C2Slideable? {
+            if (gridMidpoint != null) {
+                val gridContainer = c.getParent() as Container
+                val idx = if (d == Dimension.H) gridMidpoint.first else gridMidpoint.second
+                val key = Quad(gridContainer, idx, d, side)
+                val existing = gridOrbitSlideables[key]
+                if (existing != null) {
+                    existing.addOrbitAnchor(OrbitAnchor(g.connected as Positioned, side))
+                    return existing
+                } else {
+                    val out = C2Slideable(cso, d, setOf(OrbitAnchor(g.connected as Positioned, side)))
+                    gridOrbitSlideables[key] = out
+                    return out
+                }
+            } else {
+                // only grids need the internal orbit
+                return null
+            }
+        }
+
         fun createOrReuseIntersectionSlideable(gridMidpoint: Pair<Int, Int>?, purpose: Purpose) : C2Slideable {
             return if (gridMidpoint != null) {
                 val gridContainer = c.getParent() as Container
@@ -166,7 +198,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             val purpose = if (g.connected is Port) Purpose.PORT else Purpose.CONTAINER_LAYOUT_MIDPOINT
             val gridMidpoint = getGridPosition(g.connected)
             val ic = createOrReuseIntersectionSlideable(gridMidpoint, purpose)
-            val out2 = RoutableSlideableSetImpl(ic, null, null)
+            val bl = createOrReuseOrbitSlideable(gridMidpoint, Side.START)
+            val br = createOrReuseOrbitSlideable(gridMidpoint, Side.END)
+            val out2 = RoutableSlideableSetImpl(ic, bl, br)
             cso.add(g.connected as PlacementPositioned, out2)
             out2
         } else {

@@ -1,12 +1,8 @@
 package org.kite9.diagram.visualization.compaction2
 
-import kotlin.math.max
-import kotlin.math.min
 import org.kite9.diagram.common.algorithms.so.Slideable
-import org.kite9.diagram.common.algorithms.so.SlideableException
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
@@ -15,6 +11,8 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.anchors.*
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import kotlin.math.max
+import kotlin.math.min
 
 class C2Slideable(
         so: C2SlackOptimisation,
@@ -214,6 +212,10 @@ class C2Slideable(
 
     fun addIntersectAnchor(a: IntersectAnchor) {
         anchors.add(a)
+    }
+
+    fun addOrbitAnchor(o: OrbitAnchor) {
+        anchors.add(o)
     }
 
     override fun equals(other: Any?): Boolean {

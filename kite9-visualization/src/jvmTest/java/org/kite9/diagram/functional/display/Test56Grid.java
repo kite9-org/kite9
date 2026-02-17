@@ -122,7 +122,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
         Cell bl = new Cell("bl", Arrays.asList(g3));
         Cell br = new Cell("br", Arrays.asList(g4));
 
-        tl.setAttribute("style", "--kite9-occupies: 0 0; --kite9-min-size: 100px 100px; ");
+        tl.setAttribute("style", "--kite9-occupies: 0 0; --kite9-min-size: 100px 40px; ");
         bl.setAttribute("style", "--kite9-occupies: 0 1; --kite9-min-size: 40px 40px; ");
         tr.setAttribute("style", "--kite9-occupies: 1 0; --kite9-min-size: 40px 40px; ");
         br.setAttribute("style", "--kite9-occupies: 1 1; --kite9-min-size: 40px 10px; ");
@@ -135,8 +135,8 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
     @Test
     public void test_56_3_TwoByTwo() throws Exception {
-        Glyph g1a = new Glyph("one-a", "", "one", null, null);
-        Glyph g1b = new Glyph("one-b", "", "one", null, null);
+        Glyph g1a = new Glyph("one-a", "", "one a", null, null);
+        Glyph g1b = new Glyph("one-b", "", "one b", null, null);
 
         Glyph g2 = new Glyph("two", "", "two ", null, null);
         Glyph g3 = new Glyph("three", "", "three ", null, null);
@@ -173,8 +173,8 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Glyph g2 = new Glyph("two", "", "two ", null, null);
 
 		Glyph g1 = new Glyph("one", "", "one", null, null);
-		Cell tl = new Cell("tl", Arrays.asList(g1));
-		Cell br = new Cell("br", Arrays.asList());
+		Cell tl = new Cell("tl", Arrays.asList());
+		Cell br = new Cell("br", Arrays.asList(g1));
 
 		tl.setAttribute("style", "--kite9-occupies: 0 0; ");
 		br.setAttribute("style", "--kite9-occupies: 1 1; --kite9-min-size: 100px 100px;");

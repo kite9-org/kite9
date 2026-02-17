@@ -20,5 +20,5 @@ sealed interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
 
     fun getBufferSlideables() : Set<C2Slideable>
 
-    fun replaceSide(s: C2Slideable, side: Side) : RoutableSlideableSet
+    fun replaceSide(s: C2Slideable?, side: Side) : RoutableSlideableSet
 }

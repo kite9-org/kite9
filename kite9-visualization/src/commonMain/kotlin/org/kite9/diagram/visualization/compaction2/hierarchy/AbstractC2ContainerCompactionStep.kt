@@ -2,6 +2,7 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
+import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
@@ -12,6 +13,7 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
+import org.kite9.diagram.visualization.compaction2.anchors.Permeability
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
@@ -118,18 +120,20 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                 val padding = getPadding(c, s, dimension)
                 val newRSS = so.addSide(outer, theRSS, s, useOrbit, padding)
                 if (s == Side.START) {
-                    if ((theRSS.bl != null) && (theRSS.bl != outer.l)) {
-                        so.ensureMinimumDistance(outer.l, theRSS.bl!!, padding)
+                    val bl = theRSS.bl?.getNotDoneVersion()
+                    if ((bl != null) && (bl != outer.l)) {
+                        so.ensureMinimumDistance(outer.l.getNotDoneVersion(), bl!!, padding)
                     }
-                    if (theRSS?.bl != null) {
-                        allMergableRoutables.add(theRSS.bl!!)
+                    if (bl != null) {
+                        allMergableRoutables.add(bl)
                     }
                 } else {
-                    if ((theRSS.br != null) && (theRSS.br != outer.r)) {
-                        so.ensureMinimumDistance(theRSS.br!!, outer.r, padding)
+                    val br = theRSS.br?.getNotDoneVersion()
+                    if ((br != null) && (br != outer.r)) {
+                        so.ensureMinimumDistance(br!!, outer.r, padding)
                     }
-                    if (theRSS?.br != null) {
-                        allMergableRoutables.add(theRSS.br!!)
+                    if (br != null) {
+                        allMergableRoutables.add(br!!)
                     }
                 }
 
@@ -153,10 +157,22 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
             so.mergeSlideables(a, b)!!
         }
 
-        if ((done != null) && (c.getContainer()?.getLayout() == Layout.GRID)) {
+        if (c.getContainer()?.getLayout() == Layout.GRID) {
+            if (hub == null) {
+                throw LogicException("grid cell without hub")
+            }
+
             val i = if (dimension == Dimension.H) hub?.gridPosition?.first else hub?.gridPosition?.second
             val q = Quad(c.getContainer()!!, i!!, dimension, s)
-            gridOrbitSlideables[q] = done
+            val existing = gridOrbitSlideables[q]
+
+            if (existing != null) {
+                gridOrbitSlideables[q] = so.mergeSlideables(existing, done)!!
+                ensureNoOldGridOrbitSlideables()
+            } else {
+                // we need to create a slideable
+                throw LogicException("was expecting orbit slideable for grid element")
+            }
         }
     }
 

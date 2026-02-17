@@ -80,13 +80,22 @@ data class RoutableSlideableSetImpl(
                 "\t done=$done,\n)"
     }
 
-    override fun replaceSide(s: C2Slideable, side: Side): RoutableSlideableSet {
+    override fun replaceSide(s: C2Slideable?, side: Side): RoutableSlideableSet {
         val out = if (side == Side.START) {
-            RoutableSlideableSetImpl(this.c, s, this.br)
+            if (s != bl) {
+                this.done = true
+                RoutableSlideableSetImpl(this.c, s, this.br)
+            } else {
+                return this
+            }
         } else {
-            RoutableSlideableSetImpl(this.c, this.bl, s)
+            if (s != br) {
+                this.done = true
+                RoutableSlideableSetImpl(this.c, this.bl, s)
+            } else {
+                return this
+            }
         }
-        this.done = true
         return out
     }
 }
