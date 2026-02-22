@@ -177,6 +177,14 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         } else if (s1 == s2) {
             return s1
         } else {
+            val s1o = s1.getOrbitAnchors().isNotEmpty()
+            val s1r = s1.getRectAnchors().isNotEmpty()
+            val s2o = s2.getOrbitAnchors().isNotEmpty()
+            val s2r = s2.getRectAnchors().isNotEmpty()
+            if ((s1o != s2o) && (s1r != s2r)) {
+                throw LogicException("Should only merge rects or orbits, not a combination")
+            }
+
             val sNew = s1.merge(s2)
             // now we need to replace s1 and s2 in their containers
             val containsS1 = slideableMap.remove(s1) ?: mutableSetOf()
@@ -217,9 +225,10 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         val new = when (side) {
             Side.START -> {
                 val newLeft = if (containerRoutable != null) {
-                    compaction.copyNeighbourMap(latestLeft!!, containerRoutable.bl!!)
+                    compaction.copyNeighbourMap(latestLeft!!, containerRoutable.bl!!, true)
                     containerRoutable.bl!!
                 } else {
+                    compaction.copyNeighbourMap(latestLeft!!, container.l, false)
                     container.l
                 }
                 if (latestRight != null) {
@@ -229,9 +238,10 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
             }
             Side.END -> {
                 val newRight = if (containerRoutable != null) {
-                    compaction.copyNeighbourMap(latestRight, containerRoutable.br!!)
+                    compaction.copyNeighbourMap(latestRight, containerRoutable.br!!, true)
                     containerRoutable.br!!
                 } else {
+                    compaction.copyNeighbourMap(latestRight, container.r, false)
                     container.r
                 }
                 if (latestRight != null) {

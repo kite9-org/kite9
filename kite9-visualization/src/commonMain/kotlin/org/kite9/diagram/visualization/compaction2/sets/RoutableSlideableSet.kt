@@ -12,13 +12,11 @@ sealed interface RoutableSlideableSet : SlideableSet<RoutableSlideableSet> {
     val bl: C2Slideable?
     val br: C2Slideable?
 
+    // the RSS before we replaced the side
+    val previous: RoutableSlideableSet?
+
     override fun getAll() : Set<C2Slideable>
 
-    fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet
-
-    fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation) : RoutableSlideableSet?
-
-    fun getBufferSlideables() : Set<C2Slideable>
 
     fun replaceSide(s: C2Slideable?, side: Side) : RoutableSlideableSet
 }

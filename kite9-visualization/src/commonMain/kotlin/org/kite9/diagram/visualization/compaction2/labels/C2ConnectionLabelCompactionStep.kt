@@ -209,17 +209,17 @@ class C2ConnectionLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner)
 
             if (toDo.isNotEmpty()) {
                 val labelledEdges = toDo.map { label ->
-                    val vSlideable = getNonDoneVersion(vLabelMap[label]!!)
-                    val hSlideable = getNonDoneVersion(hLabelMap[label]!!)
+                    val vSlideable = C2Slideable.getNonDoneVersion(vLabelMap[label])!!
+                    val hSlideable = C2Slideable.getNonDoneVersion(hLabelMap[label])!!
                     handleLabel(label, C2Point(vSlideable, hSlideable, Direction.DOWN), co, d, c)
                 }
 
                 val flattenedLabelEdges = labelledEdges.flatMap { p -> listOf(p.first, p.second) }
 
                 val unlabelledEdges = fanEdges
-                    .map { s -> getNonDoneVersion(s) }
+                    .map { s -> C2Slideable.getNonDoneVersion(s)!! }
                     .filter { s -> !flattenedLabelEdges.contains(s) }
-                    .map { s -> Pair(getNonDoneVersion(s), getNonDoneVersion(s)) }
+                    .map { s -> Pair(C2Slideable.getNonDoneVersion(s)!!, C2Slideable.getNonDoneVersion(s)!!) }
 
                 val sortedEdges = getLabelOrder(c, labelledEdges + unlabelledEdges)
 

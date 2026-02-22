@@ -143,11 +143,6 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         f(r)
     }
 
-
-    fun getNonDoneVersion(c2Slideable: C2Slideable): C2Slideable {
-        return c2Slideable.getNotDoneVersion()
-    }
-
     companion object {
 
         fun getPadding(d: Dimension, r: Rectangular) : Pair<Int, Int> {

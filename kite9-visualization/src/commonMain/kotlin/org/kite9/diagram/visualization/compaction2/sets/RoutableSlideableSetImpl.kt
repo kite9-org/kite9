@@ -1,64 +1,21 @@
 package org.kite9.diagram.visualization.compaction2.sets
 
-import org.kite9.diagram.model.Port
 import org.kite9.diagram.visualization.compaction.Side
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 
 data class RoutableSlideableSetImpl(
     override val c: C2Slideable?,
     override val bl: C2Slideable?,
     override val br: C2Slideable?,
-    override val number: Int = C2SlackOptimisation.nextNumber()
+    override val previous: RoutableSlideableSet? = null,
+    override val number: Int = C2SlackOptimisation.nextNumber(),
 ) : RoutableSlideableSet {
 
     val bs = setOfNotNull(bl, br)
     val a = setOfNotNull(c, bl, br)
 
     override var done = false
-
-    override fun mergeWithGutter(after: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet? {
-        val con1 = c2.getContents(this)
-        val con2 = c2.getContents(after)
-        val newC = c2.mergeSlideables(br, after.bl)
-        done = true
-        (after as RoutableSlideableSetImpl).done = true
-        if ((newC != null) || (bl != null) || (after.br != null)) {
-            val new = RoutableSlideableSetImpl(newC, bl, after.br)
-            c2.contains(new, con1.plus(con2))
-            return new
-        } else {
-            return null
-        }
-    }
-
-    override fun mergeWithOverlap(over: RoutableSlideableSet, c2: C2SlackOptimisation): RoutableSlideableSet {
-
-        // only centre slideables should get merged, so exclude those created for ports.
-        fun noPorts(s: C2Slideable?) : C2Slideable? {
-            return if ((s!=null) && (s.getIntersectingElements().filterIsInstance<Port>().isEmpty())) {
-                s
-            } else {
-                null
-            }
-        }
-
-        val con1 = c2.getContents(this)
-        val con2 = c2.getContents(over)
-        val newL = c2.mergeSlideables(over.bl, bl)
-        val newR = c2.mergeSlideables(over.br, br)
-        val newC = c2.mergeSlideables(noPorts(over.c), noPorts(c))
-
-        done = true
-        (over as RoutableSlideableSetImpl).done = true
-
-        val out = RoutableSlideableSetImpl(newC, newL, newR)
-        c2.contains(out, con1.plus(con2))
-        return out
-    }
-
-    override fun getBufferSlideables(): Set<C2Slideable> {
-        return bs
-    }
 
     override fun getAll(): Set<C2Slideable> {
         return a
@@ -69,7 +26,8 @@ data class RoutableSlideableSetImpl(
         return RoutableSlideableSetImpl(
             if (c == s) with else c,
             if (bl == s) with else bl,
-            if (br == s) with else br)
+            if (br == s) with else br,
+            this)
     }
 
 
@@ -84,14 +42,14 @@ data class RoutableSlideableSetImpl(
         val out = if (side == Side.START) {
             if (s != bl) {
                 this.done = true
-                RoutableSlideableSetImpl(this.c, s, this.br)
+                RoutableSlideableSetImpl(this.c, s, this.br, this)
             } else {
                 return this
             }
         } else {
             if (s != br) {
                 this.done = true
-                RoutableSlideableSetImpl(this.c, this.bl, s)
+                RoutableSlideableSetImpl(this.c, this.bl, s, this)
             } else {
                 return this
             }

@@ -207,6 +207,9 @@ class C2Slideable(
     }
 
     fun addRectAnchor(a: RectAnchor) {
+        if (anchors.filterIsInstance<OrbitAnchor>().isNotEmpty()) {
+            throw LogicException("You shouldn't have orbits and rects on the same slideable")
+        }
         anchors.add(a)
     }
 
@@ -234,7 +237,7 @@ class C2Slideable(
     }
 
     fun getNotDoneVersion() : C2Slideable {
-        return getNonDoneVersion(this)
+        return getNonDoneVersion(this)!!
     }
 
     override fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
@@ -258,9 +261,13 @@ class C2Slideable(
             @Suppress("UNCHECKED_CAST") return (anchors as Set<Anchor<Any>>).toMutableSet()
         }
 
-        fun getNonDoneVersion(c2Slideable: C2Slideable): C2Slideable {
+        fun getNonDoneVersion(c2Slideable: C2Slideable?): C2Slideable? {
+            if (c2Slideable == null) {
+                return null
+            }
+
             while (c2Slideable.isDone()) {
-                return getNonDoneVersion(c2Slideable.mergedInto!!)
+                return getNonDoneVersion(c2Slideable.mergedInto)
             }
 
             return c2Slideable

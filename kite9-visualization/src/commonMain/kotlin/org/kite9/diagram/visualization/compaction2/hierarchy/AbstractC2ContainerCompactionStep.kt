@@ -102,21 +102,29 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                            dimension: Dimension,
                            topGroup: Group) {
 
-        val allMergableRoutables = mutableSetOf<C2Slideable>()
-        var hub : TemporaryContainerHub? = null
+        log.send("Applying container edge ${c.getID()} $s to $to")
 
+        // slideable we are wrapping with
+        val outer = checkCreateElement(c, dimension, so, null, topGroup)
+        val isGridCell = (c.getParent() as Container?)?.getLayout() == Layout.GRID
+        val useOrbit = !isGridCell
+
+        // inner orbits we can merge together
+        val allMergableRoutables = mutableSetOf<C2Slideable>()
+
+        // should contain only the orbit of outer, or outer side itself if a grid
+        val allAddedSlideables = mutableSetOf<C2Slideable>()
+
+        // set if we're adding sides to an empty grid square
+        var hub : TemporaryContainerHub? = null
 
         to.forEach { lg ->
             if (lg.connected is TemporaryContainerHub) {
                 hub = lg.connected as TemporaryContainerHub
             }
             val routables = map[lg]!!
-            val outer = checkCreateElement(c, dimension, so, null, topGroup)
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
-            val otherRSS = if (dimension == Dimension.V) routables.first else routables.second
             if (theRSS != null) {
-                val isGridCell = (c.getParent() as Container?)?.getLayout() == Layout.GRID
-                val useOrbit = !isGridCell
                 val padding = getPadding(c, s, dimension)
                 val newRSS = so.addSide(outer, theRSS, s, useOrbit, padding)
                 if (s == Side.START) {
@@ -127,23 +135,17 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                     if (bl != null) {
                         allMergableRoutables.add(bl)
                     }
+                    allAddedSlideables.add(newRSS.bl!!)
                 } else {
                     val br = theRSS.br?.getNotDoneVersion()
                     if ((br != null) && (br != outer.r)) {
-                        so.ensureMinimumDistance(br!!, outer.r, padding)
+                        so.ensureMinimumDistance(br, outer.r, padding)
                     }
                     if (br != null) {
-                        allMergableRoutables.add(br!!)
+                        allMergableRoutables.add(br)
                     }
+                    allAddedSlideables.add(newRSS.br!!)
                 }
-
-                /*if (otherRSS?.c != null) {
-                    if (s == Side.START) {
-                        so.compaction.addNeighbour(otherRSS!!.c!!, outer.l, newRSS!!.bl)
-                    } else {
-                        so.compaction.addNeighbour(otherRSS!!.c!!, outer.r, newRSS!!.br)
-                    }
-                }*/
 
                 if (dimension == Dimension.H) {
                     map[lg] = Pair(newRSS, routables.second)
@@ -158,6 +160,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
 
         if (c.getContainer()?.getLayout() == Layout.GRID) {
+            // this handles merging in the temporary hub elements of a grid
             if (hub == null) {
                 throw LogicException("grid cell without hub")
             }
@@ -173,6 +176,10 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                 // we need to create a slideable
                 throw LogicException("was expecting orbit slideable for grid element")
             }
+        }
+
+        if (allAddedSlideables.size != 1) {
+            throw LogicException("Should be one added slideable for a container")
         }
     }
 

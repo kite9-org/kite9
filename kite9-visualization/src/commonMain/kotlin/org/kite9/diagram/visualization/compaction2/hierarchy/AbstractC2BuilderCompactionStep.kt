@@ -48,7 +48,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
     fun ensureNoOldGridOrbitSlideables() {
         for ((k, v) in gridOrbitSlideables) {
             if (v.isDone()) {
-                val v2 = getNonDoneVersion(v)
+                val v2 = v.getNotDoneVersion()
                 gridOrbitSlideables[k] = v2
             }
         }
@@ -200,6 +200,12 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             val ic = createOrReuseIntersectionSlideable(gridMidpoint, purpose)
             val bl = createOrReuseOrbitSlideable(gridMidpoint, Side.START)
             val br = createOrReuseOrbitSlideable(gridMidpoint, Side.END)
+            if (bl != null) {
+                cso.ensureMinimumDistance(bl, ic, 1)
+            }
+            if (br != null) {
+                cso.ensureMinimumDistance(ic, br, 1)
+            }
             val out2 = RoutableSlideableSetImpl(ic, bl, br)
             cso.add(g.connected as PlacementPositioned, out2)
             out2

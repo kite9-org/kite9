@@ -36,6 +36,7 @@ interface C2Compaction {
 
     /**
      * Duplicates neighbours arriving on one slideable to the other
+     * @param toIsOrbit set to true to link all the neighbours together the same as they are on from
      */
-    fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?)
+    fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?, toIsOrbit: Boolean)
 }

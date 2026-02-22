@@ -60,34 +60,72 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         gridOrbitSlideables.keys.forEach {
             if (it.s == Side.START) {
                 val counterpart = Quad(it.c, it.i-1, it.d, Side.END)
-                val slideableA = gridOrbitSlideables[counterpart]
-                val slideableB = gridOrbitSlideables[it]
-                c.copyNeighbourMap(slideableB, slideableA)
-                c.copyNeighbourMap(slideableA, slideableB)
+                val slideableA = C2Slideable.getNonDoneVersion(gridOrbitSlideables[counterpart])
+                val slideableB = C2Slideable.getNonDoneVersion(gridOrbitSlideables[it])
+                c.copyNeighbourMap(slideableB, slideableA, true)
+                c.copyNeighbourMap(slideableA, slideableB, true)
             } else {
                 val counterpart = Quad(it.c, it.i+1, it.d, Side.START)
-                val slideableA = gridOrbitSlideables[counterpart]
-                val slideableB = gridOrbitSlideables[it]
-                c.copyNeighbourMap(slideableB, slideableA)
-                c.copyNeighbourMap(slideableA, slideableB)
+                val slideableA = C2Slideable.getNonDoneVersion(gridOrbitSlideables[counterpart])
+                val slideableB = C2Slideable.getNonDoneVersion(gridOrbitSlideables[it])
+                c.copyNeighbourMap(slideableB, slideableA, true)
+                c.copyNeighbourMap(slideableA, slideableB, true)
             }
 
         }
     }
 
     fun mergeSide(leaves: Map<Double, Set<RoutableSlideableSet>>, s: Side, so: C2SlackOptimisation) : Map<Double, C2Slideable?> {
-        return leaves.mapValues { (k, r) ->
-            r.map {
-                if (s == Side.START) {
-                    it.bl
-                } else {
-                    it.br
-                }
+
+        fun ensureOrbitSlideableSet(s: RoutableSlideableSet, side: Side) : RoutableSlideableSet {
+            val slideable = if (side == Side.START) s.bl else s.br
+
+            if (slideable == null) {
+                return s;
             }
-            .reduce {
-                a, b -> so.mergeSlideables(a, b)
+
+            val slideableToCheck = slideable.getNotDoneVersion()
+            if (slideableToCheck.getRectAnchors().isNotEmpty()) {
+                // ok, get the previous version and test again
+                val previous = s.previous
+                if (previous == null) {
+                    throw LogicException("Should be a wrapper slideable set")
+                } else {
+                    return ensureOrbitSlideableSet(previous, side)
+                }
+            } else {
+                return s
             }
         }
+
+        fun mergeSlideablesInMap(l2: Map<Double, Set<RoutableSlideableSet>>) : Map<Double, C2Slideable?> {
+            val out = l2
+                    .mapValues { (_, r) -> r.map {
+                        if (s == Side.START) {
+                            C2Slideable.getNonDoneVersion(it.bl)
+                        } else {
+                            C2Slideable.getNonDoneVersion(it.br)
+                        }
+                    }.reduceOrNull {
+                            a, b -> so.mergeSlideables(a, b)
+                    }
+                }
+            return out
+        }
+
+        val orbitLeaves = leaves.mapValues { (_, r) -> r.map { ensureOrbitSlideableSet(it, s) }.toSet() }
+        val rectLeaves = leaves.mapValues { (k, v) -> v.minus(orbitLeaves[k] ?: emptySet()) }
+
+        val mergedOrbitLeaves = mergeSlideablesInMap(orbitLeaves)
+        var mergedRectLeaves = mergeSlideablesInMap(rectLeaves)
+
+        // which to return?  Choose rect if it's available as it will be the grid around the orbit.
+        val combinedLeaves = mergedOrbitLeaves.mapValues { (k,v) ->
+            val rv = mergedRectLeaves[k]
+            rv ?: v
+        }
+
+        return combinedLeaves
     }
 
     fun joinSides(start: Map<Double, C2Slideable?>, end: Map<Double, C2Slideable?>, so: C2SlackOptimisation, d: Dimension) {
@@ -117,13 +155,13 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
 
                 val startRects = startR.map {
                     val rs = so.getSlideablesFor(it as Positioned)
-                    rs!!.r
-                }
+                    rs?.r
+                }.filterNotNull()
 
                 val endRects = endR.map {
                     val ls = so.getSlideablesFor(it as Positioned)
-                    ls!!.l
-                }
+                    ls?.l
+                }.filterNotNull()
 
                 startRects.forEach { aS ->
                     endRects.forEach { bS ->

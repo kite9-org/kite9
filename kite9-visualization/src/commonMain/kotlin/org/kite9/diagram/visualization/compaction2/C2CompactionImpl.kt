@@ -228,21 +228,23 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         }
     }
 
-    override fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?) {
+    override fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?, toIsOrbit: Boolean) {
         if ((from != null) && (to != null)) {
             val sets = getNeighbourSetsOn(from)
             sets.flatMap { it }.forEach {
                 addNeighbour(it, from, to)
             }
 
-            sets.forEach { s ->
-                var last: C2Slideable? = null
-                s.forEach {
-                    if (last != null) {
-                        addNeighbour(to, last, it)
-                    }
+            if (toIsOrbit) {
+                sets.forEach { s ->
+                    var last: C2Slideable? = null
+                    s.forEach {
+                        if (last != null) {
+                            addNeighbour(to, last, it)
+                        }
 
-                    last = it
+                        last = it
+                    }
                 }
             }
         }

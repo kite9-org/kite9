@@ -176,7 +176,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		Cell tl = new Cell("tl", Arrays.asList());
 		Cell br = new Cell("br", Arrays.asList(g1));
 
-		tl.setAttribute("style", "--kite9-occupies: 0 0; ");
+		tl.setAttribute("style", "--kite9-occupies: 0 0;  --kite9-min-size: 100px 100px; ");
 		br.setAttribute("style", "--kite9-occupies: 1 1; --kite9-min-size: 100px 100px;");
 
 		Grid ctx = new Grid("outer", Arrays.asList(tl, br), null);
