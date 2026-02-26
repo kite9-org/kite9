@@ -62,14 +62,14 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
                 val counterpart = Quad(it.c, it.i-1, it.d, Side.END)
                 val slideableA = C2Slideable.getNonDoneVersion(gridOrbitSlideables[counterpart])
                 val slideableB = C2Slideable.getNonDoneVersion(gridOrbitSlideables[it])
-                c.copyNeighbourMap(slideableB, slideableA, true)
-                c.copyNeighbourMap(slideableA, slideableB, true)
+                c.copyNeighbourMap(slideableB, slideableA)
+                c.copyNeighbourMap(slideableA, slideableB)
             } else {
                 val counterpart = Quad(it.c, it.i+1, it.d, Side.START)
                 val slideableA = C2Slideable.getNonDoneVersion(gridOrbitSlideables[counterpart])
                 val slideableB = C2Slideable.getNonDoneVersion(gridOrbitSlideables[it])
-                c.copyNeighbourMap(slideableB, slideableA, true)
-                c.copyNeighbourMap(slideableA, slideableB, true)
+                c.copyNeighbourMap(slideableB, slideableA)
+                c.copyNeighbourMap(slideableA, slideableB)
             }
 
         }

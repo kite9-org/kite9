@@ -225,10 +225,10 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         val new = when (side) {
             Side.START -> {
                 val newLeft = if (containerRoutable != null) {
-                    compaction.copyNeighbourMap(latestLeft!!, containerRoutable.bl!!, true)
+                    compaction.copyNeighbourMap(latestLeft, containerRoutable.bl)
                     containerRoutable.bl!!
                 } else {
-                    compaction.copyNeighbourMap(latestLeft!!, container.l, false)
+                    compaction.copyNeighbourMap(latestLeft, container.l)
                     container.l
                 }
                 if (latestRight != null) {
@@ -238,10 +238,10 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
             }
             Side.END -> {
                 val newRight = if (containerRoutable != null) {
-                    compaction.copyNeighbourMap(latestRight, containerRoutable.br!!, true)
+                    compaction.copyNeighbourMap(latestRight, containerRoutable.br)
                     containerRoutable.br!!
                 } else {
-                    compaction.copyNeighbourMap(latestRight, container.r, false)
+                    compaction.copyNeighbourMap(latestRight, container.r)
                     container.r
                 }
                 if (latestRight != null) {

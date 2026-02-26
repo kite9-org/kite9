@@ -201,10 +201,10 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             val bl = createOrReuseOrbitSlideable(gridMidpoint, Side.START)
             val br = createOrReuseOrbitSlideable(gridMidpoint, Side.END)
             if (bl != null) {
-                cso.ensureMinimumDistance(bl, ic, 1)
+                cso.ensureMinimumDistance(bl, ic, 5) // TODO: Fixme
             }
             if (br != null) {
-                cso.ensureMinimumDistance(ic, br, 1)
+                cso.ensureMinimumDistance(ic, br, 5)
             }
             val out2 = RoutableSlideableSetImpl(ic, bl, br)
             cso.add(g.connected as PlacementPositioned, out2)

@@ -60,6 +60,9 @@ data class RectangularSlideableSetImpl(
         so.ensureMinimumDistance(l, intersection, size / 2)
         so.ensureMinimumDistance(intersection, r, size / 2)
 
+        so.compaction.copyNeighbourMap(l, bl)
+        so.compaction.copyNeighbourMap(r, br)
+
         val out = RoutableSlideableSetImpl(
             intersection,
             bl,

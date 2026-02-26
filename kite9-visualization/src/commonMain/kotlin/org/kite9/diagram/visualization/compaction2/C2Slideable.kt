@@ -140,7 +140,7 @@ class C2Slideable(
     fun getRelevantRectAnchor(c: DiagramElement) : RectAnchor? {
 
         fun isGridCell(e: DiagramElement) : Boolean {
-            return (e.getParent() as Container)?.getLayout() == Layout.GRID
+            return (e.getParent() as Container?)?.getLayout() == Layout.GRID
         }
 
         val relevant = anchors

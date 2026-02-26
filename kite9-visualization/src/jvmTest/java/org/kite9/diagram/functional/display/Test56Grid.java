@@ -274,4 +274,24 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
+    @Test
+    public void test_56_11_ConcentricGrids() throws Exception {
+        Glyph g2 = new Glyph("two", "", "two ", null, null);
+
+        Glyph g1 = new Glyph("one", "", "one", null, null);
+
+        Cell c1 = new Cell("cell-inner", Arrays.asList(g1));
+        Grid ctx1 = new Grid("grid-inner", Arrays.asList(c1), null);
+
+        Cell c2 = new Cell("cell-middle", Arrays.asList(ctx1));
+        Grid ctx2 = new Grid("grid-middle", Arrays.asList(c2), null);
+
+        Cell c3 = new Cell("cell-outer", Arrays.asList(ctx2));
+        Grid ctx3 = new Grid("grid-outer", Arrays.asList(c3), null);
+
+        new Link(g2, g1, null, null, "DIAMOND", null, Direction.LEFT);
+
+        renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx3, g2), null));
+    }
+
 }
