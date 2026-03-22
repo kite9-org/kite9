@@ -124,6 +124,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
             }
             val routables = map[lg]!!
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
+            val altRSS = if (dimension == Dimension.V) routables.first else routables.second
             if (theRSS != null) {
                 val padding = getPadding(c, s, dimension)+5 // TODO: FIxme
                 val newRSS = so.addSide(outer, theRSS, s, useOrbit, padding)
@@ -136,6 +137,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                         allMergableRoutables.add(bl)
                     }
                     allAddedSlideables.add(newRSS.bl!!)
+                    // for port intersection
+                    so.compaction.addNeighbour(altRSS?.c, outer.l, newRSS.bl)
                 } else {
                     val br = theRSS.br?.getNotDoneVersion()
                     if ((br != null) && (br != outer.r)) {
@@ -145,6 +148,8 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                         allMergableRoutables.add(br)
                     }
                     allAddedSlideables.add(newRSS.br!!)
+                    // for port intersection
+                    so.compaction.addNeighbour(altRSS?.c, outer.r, newRSS.br)
                 }
 
                 if (dimension == Dimension.H) {
