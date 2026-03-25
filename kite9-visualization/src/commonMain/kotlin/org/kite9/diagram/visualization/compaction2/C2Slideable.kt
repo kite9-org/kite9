@@ -243,8 +243,6 @@ class C2Slideable(
     override fun addMinimumForwardConstraint(to: Slideable, dist: Int) {
         if (this.number != (to as C2Slideable).number) {
             super.addMinimumForwardConstraint(to, dist)
-        } else {
-            throw LogicException("Can't add a constraint to yourself")
         }
     }
 

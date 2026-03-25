@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.compaction2.anchors
 
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.compaction.Side
@@ -10,7 +11,7 @@ enum class Permeability { INCREASING, DECREASING, ALL, NONE }
 /**
  * Anchor for part of a rectangular in a slideable, e.g. top, bottom etc.
  */
-data class RectAnchor(override val e: Rectangular, override val s: Side, val permeability: Permeability) : Anchor<Side> {
+data class RectAnchor(override val e: Positioned, override val s: Side, val permeability: Permeability) : Anchor<Side> {
 
     /**
      * Takes permeability into account when deciding whether we can cross over this element

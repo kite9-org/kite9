@@ -194,10 +194,33 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             }
         }
 
+        fun reuseContainerSlideable(side: Direction) : C2Slideable{
+            // we should use the edge of the container to intersect with the port
+            // this returns something we already created
+            val rss = checkCreateElement(c, d, cso, null, null)
+            if (side == Direction.UP || side == Direction.LEFT) {
+                return rss.l
+            } else {
+                return rss.r
+            }
+        }
+
         val out = if (g.connected is PlacementPositioned) {
-            val purpose = if (g.connected is Port) Purpose.PORT else Purpose.CONTAINER_LAYOUT_MIDPOINT
             val gridMidpoint = getGridPosition(g.connected)
-            val ic = createOrReuseIntersectionSlideable(gridMidpoint, purpose)
+            val ic = if (g.connected !is Port) {
+                createOrReuseIntersectionSlideable(gridMidpoint, Purpose.CONTAINER_LAYOUT_MIDPOINT)
+            } else {
+                val port = g.connected as Port
+                val dir = port.getPortDirection()
+                if (Direction.getDimension(dir) == d) {
+                    val out = reuseContainerSlideable(dir)
+                    val side = Side.getSideForDirection(dir)
+                    out.addRectAnchor(RectAnchor(port, side, Permeability.ALL))
+                    out
+                } else {
+                    createOrReuseIntersectionSlideable(gridMidpoint, Purpose.PORT)
+                }
+            }
             val bl = createOrReuseOrbitSlideable(gridMidpoint, Side.START)
             val br = createOrReuseOrbitSlideable(gridMidpoint, Side.END)
             if (bl != null) {

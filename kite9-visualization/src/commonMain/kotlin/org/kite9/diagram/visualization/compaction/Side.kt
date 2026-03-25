@@ -12,4 +12,14 @@ enum class Side {
             NEITHER -> false
         }
     }
+
+    companion object {
+
+        fun getSideForDirection(d: Direction) : Side {
+            return when (d) {
+                Direction.UP, Direction.LEFT -> Side.START
+                Direction.DOWN, Direction.RIGHT -> Side.END
+            }
+        }
+    }
 }
