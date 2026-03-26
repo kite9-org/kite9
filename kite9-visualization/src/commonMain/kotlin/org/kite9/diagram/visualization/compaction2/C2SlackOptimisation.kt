@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular
@@ -225,6 +226,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
         val new = when (side) {
             Side.START -> {
                 val newLeft = if (containerRoutable != null) {
+                    compaction.copyNeighbourMap(latestLeft, container.l)
                     compaction.copyNeighbourMap(latestLeft, containerRoutable.bl)
                     containerRoutable.bl!!
                 } else {
@@ -238,6 +240,7 @@ class C2SlackOptimisation(val compaction: C2CompactionImpl, val dimension: Dimen
             }
             Side.END -> {
                 val newRight = if (containerRoutable != null) {
+                    compaction.copyNeighbourMap(latestRight, container.r)
                     compaction.copyNeighbourMap(latestRight, containerRoutable.br)
                     containerRoutable.br!!
                 } else {

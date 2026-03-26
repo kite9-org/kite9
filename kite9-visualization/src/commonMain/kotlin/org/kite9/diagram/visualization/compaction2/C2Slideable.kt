@@ -6,6 +6,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
+import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction.Side
@@ -147,6 +148,7 @@ class C2Slideable(
             .filterIsInstance<RectAnchor>()
             .filter { it.e == c || ((c is Container) && (c.getContents().contains(it.e)))}
             .filter { !isGridCell(it.e) }
+            .filter { it.e !is Port }
 
         if (relevant.size > 1) {
             throw LogicException("Not sure how this can be a permeable anchor for multiple things")

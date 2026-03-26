@@ -152,8 +152,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
 //            c2.simplifyNeighbours(Dimension.V, vtdm)
 
 
-            val startRect = getConnectedRectangular(c.getFrom())
-            val endRect = getConnectedRectangular(c.getTo())
+            val startRect = c.getFrom()
+            val endRect = c.getTo()
             val startHier = getElementHierarchy(c.getFrom())
             val endHier = getElementHierarchy(c.getTo())
             val commonHier = startHier.intersect(endHier)

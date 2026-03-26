@@ -326,7 +326,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	public void test_61_14_InAndOut() throws Exception {
 		Glyph middle = createGlyph("middle");
 		BasicSocket up1s = new BasicSocket("up1socket", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "50%");
-        BasicSocket left1s = new BasicSocket("up1socket", BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%");
+        BasicSocket left1s = new BasicSocket("left1socket", BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%");
         middle.appendChild(up1s);
         middle.appendChild(left1s);
         new TurnLink(left1s, up1s);

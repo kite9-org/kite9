@@ -4,13 +4,12 @@ import org.kite9.diagram.common.algorithms.ssp.AbstractSSP
 import org.kite9.diagram.common.algorithms.ssp.State
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.anchors.RectAnchor
@@ -21,8 +20,8 @@ class C2SlideableSSP(
     val start: Set<C2Point>,
     val end: Set<C2Point>,
     val crossableElements: Set<DiagramElement>,
-    private val startElem: ConnectedRectangular,
-    private val endElem: ConnectedRectangular,
+    private val startElem: Connected,
+    private val endElem: Connected,
     private val direction: Direction?,
     private val c2: C2Compaction,
     val log: Kite9Log

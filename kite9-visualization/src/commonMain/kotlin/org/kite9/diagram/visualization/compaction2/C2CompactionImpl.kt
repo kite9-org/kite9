@@ -231,6 +231,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
     override fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?) {
         if ((from != null) && (to != null)) {
             val toIsOrbit = to.getOrbitAnchors().isNotEmpty()
+            val fromIsOrbit = from.getOrbitAnchors().isNotEmpty()
 
             val toGroup = mutableSetOf<C2Slideable>()
 
