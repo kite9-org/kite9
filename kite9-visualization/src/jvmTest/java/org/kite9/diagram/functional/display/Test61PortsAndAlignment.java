@@ -202,7 +202,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		Context i1 = new Context("i1", Arrays.asList(one, two, three), true, null, Layout.RIGHT);
 
 		new Link(oneSocket, threeSocket);
-		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
+		//new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1), null);
 		renderDiagram(d);

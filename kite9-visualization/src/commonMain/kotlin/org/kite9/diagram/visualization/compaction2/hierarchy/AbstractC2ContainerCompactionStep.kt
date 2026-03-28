@@ -244,10 +244,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                         val x1 = sx.first()
                         val y1 = sy.first()
                         createRoutableNeighbours(co, x1, y1, cx, cy)
-                        co.invertNeighbours(x1.bl)
-                        co.invertNeighbours(x1.br)
-                        co.invertNeighbours(y1.bl)
-                        co.invertNeighbours(y1.br)
+
                     }
 
                 }

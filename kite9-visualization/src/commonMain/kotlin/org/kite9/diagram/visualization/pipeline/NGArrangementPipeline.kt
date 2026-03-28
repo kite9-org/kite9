@@ -12,23 +12,22 @@ import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2CompactionImpl
 import org.kite9.diagram.visualization.compaction2.C2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2PluggableCompactor
-import org.kite9.diagram.visualization.compaction2.align.C2AlignmentCompactionStep
-import org.kite9.diagram.visualization.compaction2.align.C2CenteringAligner
-import org.kite9.diagram.visualization.compaction2.align.C2LeftRightAligner
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2HierarchicalCompactionStep
-import org.kite9.diagram.visualization.compaction2.hierarchy.C2NeighbourBuilderStep
+import org.kite9.diagram.visualization.compaction2.hierarchy.C2NeighbourCheckingStep
 import org.kite9.diagram.visualization.compaction2.hierarchy.C2RectangularPositionCompactionStep
-import org.kite9.diagram.visualization.compaction2.labels.C2ConnectionLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.labels.C2ContainerLabelCompactionStep
 import org.kite9.diagram.visualization.compaction2.logging.C2LoggingCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionPositionCompactionStep
 import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCompactionStep
-import org.kite9.diagram.visualization.compaction2.sizing.*
+import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactionStep
+import org.kite9.diagram.visualization.compaction2.sizing.C2FanMinimizeCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.*
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.generators.GeneratorBasedGroupingStrategyImpl
@@ -116,7 +115,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         // essential compaction steps
         val steps = arrayOf<C2CompactionStep>(
             C2HierarchicalCompactionStep(cd, rr!!, gp),
-            C2NeighbourBuilderStep(cd),
+            C2NeighbourCheckingStep(cd),
             C2LoggingCompactionStep(cd),
             C2ConnectionRouterCompactionStep(cd, gp),
 //            C2ConnectionFanningCompactionStep(cd, gp),

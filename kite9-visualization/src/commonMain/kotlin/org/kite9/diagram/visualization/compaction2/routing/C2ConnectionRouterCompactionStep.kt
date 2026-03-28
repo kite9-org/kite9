@@ -11,6 +11,7 @@ import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.anchors.AnchorType
 import org.kite9.diagram.visualization.compaction2.anchors.ConnAnchor
 import org.kite9.diagram.visualization.compaction2.hierarchy.AbstractC2BuilderCompactionStep
+import org.kite9.diagram.visualization.compaction2.hierarchy.C2NeighbourCheckingStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -184,9 +185,8 @@ class C2ConnectionRouterCompactionStep(cd: CompleteDisplayer, gp: GridPositioner
             }
 
             if (replacements.isNotEmpty()) {
-                // since we have re-ordered the diagram, recalculate neighbour map
-                //c2.buildNeighbours()
-                c2.joinOverlappingNeighbourGroups()
+                // since we have re-ordered the diagram, re-check neighbour map
+                C2NeighbourCheckingStep.joinOverlappingNeighbourGroups(c2 as C2CompactionImpl)
             }
 
             c2.checkConsistency()

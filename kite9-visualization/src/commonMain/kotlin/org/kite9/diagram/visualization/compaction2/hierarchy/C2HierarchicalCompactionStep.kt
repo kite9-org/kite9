@@ -56,22 +56,25 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         joinSides(right2, left2, c.getSlackOptimisation(Dimension.H), Dimension.H)
         joinSides(down2, up2, c.getSlackOptimisation(Dimension.V), Dimension.V)
 
-        // stitch together orbits from next-to containers
+        // stitch together orbits from next-to containers in a grid
+        handleGridNeighbours(c)
+    }
+
+    private fun handleGridNeighbours(c: C2Compaction) {
         gridOrbitSlideables.keys.forEach {
             if (it.s == Side.START) {
-                val counterpart = Quad(it.c, it.i-1, it.d, Side.END)
+                val counterpart = Quad(it.c, it.i - 1, it.d, Side.END)
                 val slideableA = C2Slideable.getNonDoneVersion(gridOrbitSlideables[counterpart])
                 val slideableB = C2Slideable.getNonDoneVersion(gridOrbitSlideables[it])
                 c.copyNeighbourMap(slideableB, slideableA)
                 c.copyNeighbourMap(slideableA, slideableB)
             } else {
-                val counterpart = Quad(it.c, it.i+1, it.d, Side.START)
+                val counterpart = Quad(it.c, it.i + 1, it.d, Side.START)
                 val slideableA = C2Slideable.getNonDoneVersion(gridOrbitSlideables[counterpart])
                 val slideableB = C2Slideable.getNonDoneVersion(gridOrbitSlideables[it])
                 c.copyNeighbourMap(slideableB, slideableA)
                 c.copyNeighbourMap(slideableA, slideableB)
             }
-
         }
     }
 
@@ -138,9 +141,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
                 val startR = startS.getOrbitingElements()
                 val endR = endS.getOrbitingElements()
 
-                val sOut = so.mergeSlideables(startS, endS)
-                so.compaction.joinOverlappingNeighbourGroups()
-                so.compaction.invertNeighbours(sOut)
+                so.mergeSlideables(startS, endS)
 
                 // ensure Separation of rectangulars
                 val distance = if (startR.isNotEmpty() && endR.isNotEmpty()) {

@@ -3,8 +3,6 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Diagram
-import kotlin.math.max
-import kotlin.math.min
 
 /**
  * Flyweight class that handles the state of the compaction as it goes along.
@@ -29,7 +27,7 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return diagram
     }
 
-    private val neighbourDetails = mutableMapOf<C2Slideable, MutableSet<Set<C2Slideable>>>()
+    val neighbourDetails = mutableMapOf<C2Slideable, MutableSet<Set<C2Slideable>>>()
 
     override fun addNeighbour(along: C2Slideable?, n1: C2Slideable?, n2: C2Slideable?) {
         if ((n1 == null) || (n2==null) || (along==null)) {
@@ -89,23 +87,6 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
 
         return out
     }
-
-    override fun invertNeighbours(perp: C2Slideable?) {
-        if (perp == null) {
-            throw LogicException("Was expecting perp to be set")
-        }
-        val all = neighbourDetails
-            .filterValues { it.flatMap { it }.contains(perp) }
-            .keys
-
-        val superSet = neighbourDetails.getOrPut(perp) { mutableSetOf() }
-        if (superSet.size == 1) {
-            val newContents = all  + superSet.first()
-            superSet.clear()
-            superSet.add(newContents)
-        }
-    }
-
 
     override fun getNeighbours(along: C2Slideable, perp: C2Slideable) : Set<C2Slideable> {
         val superSet = neighbourDetails.getOrPut(along) { mutableSetOf() }
@@ -188,72 +169,34 @@ class C2CompactionImpl(private val diagram: Diagram) : C2Compaction {
         return getSlideablesIncidentWith(s)
     }
 
-    override fun joinOverlappingNeighbourGroups() {
 
-        fun calculateExtent(ss: Set<C2Slideable>) : Pair<Int, Int> {
-            return Pair(ss.minOf { it.minimumPosition }, ss.maxOf { it.minimumPosition })
-        }
-
-        fun inside(x: Int, a: Pair<Int, Int>) : Boolean {
-            return x>=a.first && x<=a.second
-        }
-
-        fun overlaps(a: Pair<Int, Int>, b: Pair<Int, Int>) : Boolean {
-            return inside(a.first, b)
-                    || inside(a.second, b)
-                    || inside(b.first, a)
-                    || inside(b.second, a)
-        }
-
-        fun mergeExtents(a: Pair<Int, Int>, b: Pair<Int, Int>) : Pair<Int, Int> {
-            return Pair(min(a.first, b.first), max(a.second, b.second))
-        }
-
-        neighbourDetails.keys.forEach { k ->
-            val oldGroups = neighbourDetails[k]!!
-            val extents = oldGroups.associateBy { calculateExtent(it) }
-            val newGroups = mutableMapOf<Pair<Int, Int>, Set<C2Slideable>>()
-            extents.forEach { (e, ss) ->
-                val overlapGroups = newGroups.filter { (k, _) -> overlaps(e, k) }
-                if (overlapGroups.isEmpty()) {
-                    newGroups[e] = ss
-                } else {
-                    val combinedExtent = overlapGroups.keys.reduce { a, b -> mergeExtents(a, b) }
-                    val combinedSet = overlapGroups.values.reduce { a, b -> a + b }
-                    overlapGroups.keys.forEach { newGroups.remove(it) }
-                    newGroups[mergeExtents(combinedExtent, e)] = combinedSet + ss
-                }
-            }
-            neighbourDetails[k] = newGroups.values.toMutableSet()
-        }
-    }
 
     override fun copyNeighbourMap(from: C2Slideable?, to: C2Slideable?) {
-        if ((from != null) && (to != null)) {
-            val toIsOrbit = to.getOrbitAnchors().isNotEmpty()
-            val fromIsOrbit = from.getOrbitAnchors().isNotEmpty()
-
-            val toGroup = mutableSetOf<C2Slideable>()
-
-            // add "to" to any neighbour set containing from
-            this.neighbourDetails.entries.forEach { (k, ss) ->
-                val addTo = ss.filter { it.contains(from) }
-                ss.removeAll(addTo.toSet() )
-                val afterAdd = addTo.map { it + to }
-                ss.addAll(afterAdd)
-                if (addTo.isNotEmpty()) {
-                    toGroup.add(k)
-                }
-            }
-
-            if (toIsOrbit && toGroup.isNotEmpty()) {
-                val first = toGroup.first()
-                val rest = toGroup - first
-                rest.forEach { r ->
-                    addNeighbour(to, first, r)
-                }
-            }
-        }
+//        if ((from != null) && (to != null)) {
+//            val toIsOrbit = to.getOrbitAnchors().isNotEmpty()
+//            val fromIsOrbit = from.getOrbitAnchors().isNotEmpty()
+//
+//            val toGroup = mutableSetOf<C2Slideable>()
+//
+//            // add "to" to any neighbour set containing from
+//            this.neighbourDetails.entries.forEach { (k, ss) ->
+//                val addTo = ss.filter { it.contains(from) }
+//                ss.removeAll(addTo.toSet() )
+//                val afterAdd = addTo.map { it + to }
+//                ss.addAll(afterAdd)
+//                if (addTo.isNotEmpty()) {
+//                    toGroup.add(k)
+//                }
+//            }
+//
+//            if (toIsOrbit && toGroup.isNotEmpty()) {
+//                val first = toGroup.first()
+//                val rest = toGroup - first
+//                rest.forEach { r ->
+//                    addNeighbour(to, first, r)
+//                }
+//            }
+//        }
     }
 
 }
