@@ -19,6 +19,8 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Le
 class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, gp: GridPositioner) : AbstractC2ContainerCompactionStep(cd, rr, gp) {
 
     var first = true
+    var leafGroupElements : Set<DiagramElement> = emptySet()
+
     override fun compact(c: C2Compaction, g: Group) {
         if (!first) {
             return
@@ -39,6 +41,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
 
         val leafGroups = allGroups
             .filterIsInstance<LeafGroup>()
+
+        leafGroupElements = leafGroups.map { it.connected }.toSet()
 
         val leafGroupMap = leafGroups.map { it to processLeafGroup(it, c, g) }.toMap()
         val wrappedLeafGroupMap = wrapContainersIntoGroups(c, leafGroupMap, g)
@@ -256,24 +260,23 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
      * to just follow layout.
      */
     override fun usingGroups(contents: List<ConnectedRectangular>, topGroup: Group?) : Boolean {
-        val gm = contents.map { hasGroup(it, topGroup) }
+        val gm = contents.map { hasGroup(it) }
         return gm.reduceRightOrNull {  a, b -> a && b } ?: false
     }
 
-    private fun hasGroup(item: Connected, group: Group?) : Boolean {
-        return when (group) {
-            is CompoundGroup -> {
-                hasGroup(item, group.a) || hasGroup(item, group.b)
-            }
+    private fun hasGroup(item: DiagramElement) : Boolean {
+        if (leafGroupElements.contains(item)) {
+            return true
+        }
 
-            is LeafGroup -> {
-                (group.container == item) || (group.connected == item)
-            }
-
-            else -> {
-                false
+        if (item is Container) {
+            val contents = item.getContents()
+            if (contents.firstOrNull() { hasGroup(it) } != null) {
+                return true
             }
         }
+
+        return false
     }
 
     override val prefix: String
