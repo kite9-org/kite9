@@ -75,6 +75,16 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         vOrbits: Map<Double, C2Slideable>) :
             Map<Pair<Pair<Double, Double>, Pair<Double, Double>>, Pair<RoutableSlideableSet?, RoutableSlideableSet?>> {
 
+        val hIntersects = mutableMapOf<Double, C2Slideable>()
+        val vIntersects = mutableMapOf<Double, C2Slideable>()
+
+        fun createOrReuseIntersect(at: Double, d: Dimension) : C2Slideable {
+            return when (d) {
+                Dimension.H -> hIntersects.getOrPut(at) { C2Slideable(c.getSlackOptimisation(d), d) }
+                Dimension.V -> vIntersects.getOrPut(at) { C2Slideable(c.getSlackOptimisation(d), d)}
+            }
+        }
+
         fun overlaps(a: Pair<Double, Double>, b: Pair<Double, Double>) : Boolean {
             return a.first < b.second && b.first < a.second
         }
@@ -109,8 +119,10 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
                 val hbr = hOrbits[s.first.second]!!
                 val vbl = vOrbits[s.second.first]!!
                 val vbr = vOrbits[s.second.second]!!
-                val hc = C2Slideable(c.getSlackOptimisation(Dimension.H), Dimension.H)
-                val vc = C2Slideable(c.getSlackOptimisation(Dimension.V), Dimension.V)
+                val hmid = (s.first.first + s.first.second) / 2
+                val vmid = (s.second.first + s.second.second) / 2
+                val hc = createOrReuseIntersect(hmid, Dimension.H)
+                val vc = createOrReuseIntersect(vmid, Dimension.V)
                 val hrss = RoutableSlideableSetImpl(hc, hbl, hbr)
                 val vrss = RoutableSlideableSetImpl(vc, vbl, vbr)
                 val hso = c.getSlackOptimisation(Dimension.H)

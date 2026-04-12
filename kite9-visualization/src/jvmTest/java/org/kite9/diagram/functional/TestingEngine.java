@@ -296,7 +296,7 @@ public class TestingEngine extends TestingHelp {
 		} else if (s.getConnAnchors().size() > 0) {
 			g.setColor(new Color(0,0,200, 100));
 		} else {
-			g.setColor(new Color(0,90,0, 100));
+			g.setColor(new Color(255,234,0, 100));
 		}
 	}
 
