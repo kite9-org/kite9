@@ -10,6 +10,7 @@ import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
+import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -57,11 +58,74 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         val up2 = mergeSide(up, Side.START, c.getSlackOptimisation(Dimension.V))
         val down2 = mergeSide(down, Side.END, c.getSlackOptimisation(Dimension.V))
 
-        joinSides(right2, left2, c.getSlackOptimisation(Dimension.H), Dimension.H)
-        joinSides(down2, up2, c.getSlackOptimisation(Dimension.V), Dimension.V)
+        val hOrbits = joinSides(right2, left2, c.getSlackOptimisation(Dimension.H), Dimension.H)
+        val vOrbits = joinSides(down2, up2, c.getSlackOptimisation(Dimension.V), Dimension.V)
+        createEmptySpaceIntersections(c, left.keys + right.keys, up.keys+down.keys, wrappedLeafGroupMap, hOrbits, vOrbits)
 
         // stitch together orbits from next-to containers in a grid
         handleGridNeighbours(c)
+    }
+
+    private fun createEmptySpaceIntersections(
+        c: C2Compaction,
+        hp: Set<Double>,
+        vp: Set<Double>,
+        lg: Map<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
+        hOrbits: Map<Double, C2Slideable>,
+        vOrbits: Map<Double, C2Slideable>) :
+            Map<Pair<Pair<Double, Double>, Pair<Double, Double>>, Pair<RoutableSlideableSet?, RoutableSlideableSet?>> {
+
+        fun overlaps(a: Pair<Double, Double>, b: Pair<Double, Double>) : Boolean {
+            return a.first < b.second && b.first < a.second
+        }
+
+        fun isOccupied(e: Pair<Pair<Double, Double>, Pair<Double, Double>>) : Boolean {
+            val overlapper = lg.keys.firstOrNull {
+                val l = getEdgePosition(it, Direction.LEFT)
+                val r = getEdgePosition(it, Direction.RIGHT)
+                val u = getEdgePosition(it, Direction.UP)
+                val d = getEdgePosition(it, Direction.DOWN)
+
+                if ((l != null) && (r != null) && (u != null) && (d != null)) {
+                    val overlapsX = overlaps(e.first, Pair(l, r))
+                    val overlapsY = overlaps(e.second, Pair(u, d))
+                    overlapsY && overlapsX
+                } else {
+                    false
+                }
+            }
+
+            return overlapper != null
+        }
+
+        val hpPairs = hp.toList().sorted().windowed(2, 1).map { Pair(it[0], it[1]) }
+        val vpPairs = vp.toList().sorted().windowed(2, 1).map { Pair(it[0], it[1]) }
+        val allPossibleSpaces = hpPairs.flatMap { h -> vpPairs.map { v -> Pair(h,v) } }.toSet()
+
+        val emptySpaces = allPossibleSpaces.filter { !isOccupied(it) }
+        val intersections = emptySpaces
+            .map { s ->
+                val hbl = hOrbits[s.first.first]!!
+                val hbr = hOrbits[s.first.second]!!
+                val vbl = vOrbits[s.second.first]!!
+                val vbr = vOrbits[s.second.second]!!
+                val hc = C2Slideable(c.getSlackOptimisation(Dimension.H), Dimension.H)
+                val vc = C2Slideable(c.getSlackOptimisation(Dimension.V), Dimension.V)
+                val hrss = RoutableSlideableSetImpl(hc, hbl, hbr)
+                val vrss = RoutableSlideableSetImpl(vc, vbl, vbr)
+                val hso = c.getSlackOptimisation(Dimension.H)
+                val vso = c.getSlackOptimisation(Dimension.V)
+                hso.add(hrss)
+                vso.add(vrss)
+                hso.ensureMinimumDistance(hbl!!, hc, 1) //FIXME
+                hso.ensureMinimumDistance(hc, hbr!!, 1) //FIXME
+                vso.ensureMinimumDistance(vbl!!, vc, 1) //FIXME
+                vso.ensureMinimumDistance(vc, vbr!!, 1) //FIXME
+                createRoutableNeighbours(c, hrss, vrss, null, null)
+                Pair(s, Pair(hrss,vrss))
+            }
+            .toMap()
+        return intersections
     }
 
     private fun handleGridNeighbours(c: C2Compaction) {
@@ -135,7 +199,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
         return combinedLeaves
     }
 
-    fun joinSides(start: Map<Double, C2Slideable?>, end: Map<Double, C2Slideable?>, so: C2SlackOptimisation, d: Dimension) {
+    fun joinSides(start: Map<Double, C2Slideable?>, end: Map<Double, C2Slideable?>, so: C2SlackOptimisation, d: Dimension) : Map<Double, C2Slideable> {
+        val out = mutableMapOf<Double, C2Slideable>()
         val allKeys = start.keys + end.keys
         allKeys.forEach { k ->
             val startS = start[k]
@@ -145,7 +210,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
                 val startR = startS.getOrbitingElements()
                 val endR = endS.getOrbitingElements()
 
-                so.mergeSlideables(startS, endS)
+                val joined = so.mergeSlideables(startS, endS)
+                out[k] = joined!!
 
                 // ensure Separation of rectangulars
                 val distance = if (startR.isNotEmpty() && endR.isNotEmpty()) {
@@ -173,16 +239,21 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
                         so.ensureMinimumDistance(aS, bS, distance.toInt())
                     }
                 }
+            } else if (startS != null) {
+                out[k] = startS
+            } else if (endS != null) {
+                out[k] = endS
             }
         }
 
+        return out
     }
 
     fun alignLeafGroups(
         contents: Map<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
         d: Direction
     ): Map<Double, Set<RoutableSlideableSet>> {
-
+        val dimension = Direction.getDimension(d)
         val grouped: Map<Double?, List<RoutableSlideableSet?>> =
             contents.entries.groupBy(
                 keySelector = { (k, _) -> getEdgePosition(k, d) },

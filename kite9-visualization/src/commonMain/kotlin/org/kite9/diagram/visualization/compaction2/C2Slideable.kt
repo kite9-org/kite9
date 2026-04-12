@@ -25,6 +25,14 @@ class C2Slideable(
     val number: Int = nextNumber()
     var mergedInto: C2Slideable? = null
 
+    /**
+     * Used for empty spaces in the diagram
+     */
+    constructor(
+        so: C2SlackOptimisation,
+        dimension: Dimension) :
+        this(so, dimension, mutable2(emptySet()), emptySet())
+
     /** This is for rectangular Slideables */
     constructor(
             so: C2SlackOptimisation,

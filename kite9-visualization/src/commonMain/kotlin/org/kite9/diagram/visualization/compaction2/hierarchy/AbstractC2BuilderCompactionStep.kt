@@ -325,11 +325,17 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             if (hr != null) {
                 c.addNeighbour(vss.c, hss.bl, hr.l)
                 c.addNeighbour(vss.c, hss.br, hr.r)
+            } else {
+                // add a route straight through
+                c.addNeighbour(vss.c, hss.bl, hss.br)
             }
 
             if (vr != null) {
                 c.addNeighbour(hss.c, vss.bl, vr.l)
                 c.addNeighbour(hss.c, vss.br, vr.r)
+            } else {
+                // add a route straight through
+                c.addNeighbour(hss.c, vss.bl, vss.br)
             }
         }
     }
