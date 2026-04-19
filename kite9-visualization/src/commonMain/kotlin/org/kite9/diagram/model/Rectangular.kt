@@ -15,8 +15,13 @@ interface Rectangular : Positioned {
 
     fun getContents(): List<DiagramElement>
     fun addTemporaryContent(t: Temporary)
-    fun getLayout(): Layout?
+
     fun getTraversalRule(d: Direction): BorderTraversal
+
+    /**
+     * For the layout of contents within this rectangular
+     */
+    fun getLayout(): Layout?
     fun getGridColumns(): Int
     fun getGridRows(): Int
 

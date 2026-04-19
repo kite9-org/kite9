@@ -87,9 +87,9 @@ class TerminatorImpl(
         if ("x0" == name || "y0" == name) {
             return "0"
         } else if ("x1" == name || "width" == name) {
-            return "" + sizeBasedOnPadding.width()
+            return "" + getMinimumSize().width()
         } else if ("y1" == name || "height" == name) {
-            return "" + sizeBasedOnPadding.height()
+            return "" + getMinimumSize().height()
         }
         return null
     }
@@ -115,10 +115,6 @@ class TerminatorImpl(
     override fun getEnd(): End {
         ensureInitialized()
         return end!!
-    }
-
-    override fun getSize(within: Dimension2D): CostedDimension2D {
-        throw LogicException("Shouldn't be using size for terminators")
     }
 
     override fun getSizing(horiz: Boolean): DiagramElementSizing {

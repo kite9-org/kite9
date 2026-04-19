@@ -21,11 +21,11 @@ interface SizedRectangular : Rectangular {
      * elements.
      */
     fun getPadding(d: Direction): Double
-    fun getSize(within: Dimension2D): CostedDimension2D
 
     /**
-     * This is the user-defined minimum size the rectangle can take.  Acts as minimum limit on the
-     * getSize() method.
+     * This is the user-defined minimum size the rectangle can take due to
+     * its own contents, padding and any ports that might have a fixed position
+     * around it.
      */
     fun getMinimumSize(): Dimension2D
 

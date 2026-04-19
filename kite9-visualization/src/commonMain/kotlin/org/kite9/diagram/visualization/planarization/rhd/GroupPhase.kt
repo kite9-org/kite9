@@ -120,7 +120,7 @@ abstract class GroupPhase(
             created += populateLeafGroups(nextE)
             if ((prevLg != null) && (TEMPORARY_NEEDED.contains(l))) {
                 val gln = ConnectedGroupLinkNode(nextE, "-hub")
-
+                nextE.addTemporaryContent(gln)
                 val nextLg = createLeafGroup(gln, nextE)
                 created++
                 addContainerOrderingInfo(nextLg, prevLg)
@@ -143,6 +143,7 @@ abstract class GroupPhase(
                 val de = grid[y][x]
                 created += populateLeafGroups(de as ConnectedRectangular)
                 val gln = ConnectedGroupLinkNode(ord, "-grid", pos)
+                ord.addTemporaryContent(gln)
                 val ggGrid = createLeafGroup(gln, de)
                 created++
                 gridGroups[pos] = ggGrid
@@ -179,6 +180,7 @@ abstract class GroupPhase(
         // ok, so nothing connects to this, but we still need to create a
         // leaf group for it of some sort.
         val gln = ConnectedGroupLinkNode(ord, "-bareleaf")
+        ord.addTemporaryContent(gln)
         createLeafGroup(gln, ord)
         return 1
     }
@@ -201,6 +203,7 @@ abstract class GroupPhase(
         // map the directed links
         for (i in 1..directedLeafGroupsNeeded) {
             val gln = ConnectedGroupLinkNode(ord, "-dl$i")
+            ord.addTemporaryContent(gln)
             val lg = createLeafGroup(gln, ord)
             created ++
             val hLink = connectionsByDimension[Dimension.H]?.getOrNull(i-1)
@@ -221,6 +224,7 @@ abstract class GroupPhase(
         val undirectedConnections = connectionsByDimension[null]
         if (undirectedConnections?.isNotEmpty() ?: false) {
             val gln = ConnectedGroupLinkNode(ord, "-und")
+            ord.addTemporaryContent(gln)
             val lg = createLeafGroup(gln, ord)
             created ++
             undirectedConnections.forEach {

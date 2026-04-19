@@ -106,10 +106,6 @@ class TemporaryConnectedRectangularImpl(parent: Rectangular, id: String, val pai
         return 0.0
     }
 
-    override fun getSize(within: Dimension2D): CostedDimension2D {
-        return ZERO
-    }
-
     override fun getMinimumSize(): Dimension2D {
         return ZERO
     }

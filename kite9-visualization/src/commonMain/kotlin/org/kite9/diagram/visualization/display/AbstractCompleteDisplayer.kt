@@ -4,8 +4,6 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
-import org.kite9.diagram.model.position.CostedDimension2D
-import org.kite9.diagram.model.position.CostedDimension2D.Companion.UNBOUNDED
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
@@ -333,15 +331,15 @@ abstract class AbstractCompleteDisplayer(buffer: Boolean) :
         } else if (aSide == null || bSide == null) {
             throw LogicException("Don't know sides")
         } else if (aSide === Direction.LEFT || aSide === Direction.RIGHT) {
-            size(a, UNBOUNDED).w
+            size(a).w
         } else {
-            size(a, UNBOUNDED).h
+            size(a).h
         }
     }
 
     abstract fun getPadding(a: DiagramElement, d: Direction): Double
     abstract fun getMargin(element: DiagramElement, d: Direction): Double
-    protected abstract fun size(a: DiagramElement, s: Dimension2D): CostedDimension2D
+    protected abstract fun size(a: DiagramElement): Dimension2D
 
     /**
      * The smallest possible length of element, when the element is starting or ending in the length

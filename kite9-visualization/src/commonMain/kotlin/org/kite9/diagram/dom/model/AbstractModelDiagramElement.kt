@@ -7,8 +7,6 @@ import org.kite9.diagram.dom.processors.XMLProcessor
 import org.kite9.diagram.dom.transform.SVGTransformer
 import org.kite9.diagram.dom.transform.TransformFactory.initializeTransformer
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.position.CostedDimension2D
-import org.kite9.diagram.model.position.CostedDimension2D.Companion.UNBOUNDED
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.ContentTransform
 import org.w3c.dom.Document
@@ -67,16 +65,6 @@ abstract class AbstractModelDiagramElement(
         vals[Direction.LEFT.ordinal] = getCssDoubleValue(prefix + CSSConstants.LEFT)
         vals[Direction.RIGHT.ordinal] = getCssDoubleValue(prefix + CSSConstants.RIGHT)
     }
-
-    protected val sizeBasedOnPadding: CostedDimension2D
-        protected get() {
-            val left = getPadding(Direction.LEFT)
-            val right = getPadding(Direction.RIGHT)
-            val up = getPadding(Direction.UP)
-            val down = getPadding(Direction.DOWN)
-            return CostedDimension2D(left + right, up + down, UNBOUNDED)
-        }
-
 
     init {
         painter.setDiagramElement(this)

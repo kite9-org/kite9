@@ -4,6 +4,7 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractDiagramElement
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.RectangleRenderingInformation
+import org.kite9.diagram.model.position.RectangleRenderingInformationImpl
 import org.kite9.diagram.model.style.ConnectionsSeparation
 import org.kite9.diagram.model.style.Placement
 
@@ -31,7 +32,7 @@ class ConnectedGroupLinkNode(val c: Rectangular, suffix: String, val gridPositio
     }
 
     override fun getRenderingInformation(): RectangleRenderingInformation {
-        TODO("Not yet implemented")
+        return RectangleRenderingInformationImpl(null, null, false)
     }
 
     override fun getContainer(): Rectangular {

@@ -87,7 +87,8 @@ abstract class AbstractRectangular(
     }
 
     override fun getContainer(): Rectangular? {
-        return getParent() as Rectangular?
+        val p = getParent()
+        return p as? Rectangular
     }
 
     override fun getXPathVariable(name: String): String? {

@@ -157,7 +157,7 @@ public class TestingHelp {
 		return new Rowify() {
 
 			public String[] rowify(Object o) {
-			    if (o instanceof DiagramElement ) {
+			    if (o instanceof DiagramElement) {
 			    	int connections = (o instanceof ConnectedRectangular) ? ((ConnectedRectangular)o).getLinks().size() : 0;
 			    
 			    	String id = ((DiagramElement) o).getID();

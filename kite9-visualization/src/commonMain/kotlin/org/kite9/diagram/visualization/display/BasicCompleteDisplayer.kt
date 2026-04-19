@@ -10,9 +10,9 @@ import org.kite9.diagram.model.position.RenderingInformation
 
 class BasicCompleteDisplayer(buffer: Boolean) : AbstractCompleteDisplayer(buffer) {
 
-    override fun size(a: DiagramElement, s: Dimension2D): CostedDimension2D {
+    override fun size(a: DiagramElement): Dimension2D {
         return if (a is SizedRectangular) {
-            a.getSize(s)
+            a.getMinimumSize()
         } else ZERO
     }
 

@@ -15,6 +15,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.HorizontalAlignment
+import org.kite9.diagram.model.style.Measurement
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
@@ -65,9 +66,33 @@ abstract class AbstractCompactedRectangular(
     }
 
     private fun initMinimumSize() {
+
+        fun maxInPositionedDimension(d: Dimension) : Double? {
+            return getContents()
+                .filterIsInstance<PlacementPositioned>()
+                .map { it.getContainerPosition(d) }
+                .filter { it.type == Measurement.PIXELS }
+                .map { it.amount }
+                .maxOrNull()
+        }
+
         val w = getCssDoubleValue(CSSConstants.RECT_MINIMUM_WIDTH)
         val h = getCssDoubleValue(CSSConstants.RECT_MINIMUM_HEIGHT)
-        minimumSize = BasicDimension2D(w, h)
+
+        val pLeft = getPadding(Direction.LEFT)
+        val pRight = getPadding(Direction.RIGHT)
+        val pUp = getPadding(Direction.UP)
+        val pDown = getPadding(Direction.DOWN)
+
+        val w2 = pLeft + pRight + contentBounds.w
+        val h2 = pUp + pDown + contentBounds.h
+
+        val wPort = maxInPositionedDimension(Dimension.H) ?: 0.0
+        val hPort = maxInPositionedDimension(Dimension.V) ?: 0.0
+
+        minimumSize = BasicDimension2D(
+            doubleArrayOf(w, w2, wPort).max(),
+            doubleArrayOf(h, h2, hPort).max())
     }
 
     override fun getConnectionAlignment(d: Dimension): Placement {
@@ -85,31 +110,7 @@ abstract class AbstractCompactedRectangular(
         return if (horiz) sizingHoriz else sizingVert
     }
 
-    override fun getSize(within: Dimension2D): CostedDimension2D {
-        if (this is Decal) {
-            throw LogicException("Shouldn't be using size for decals")
-        } else if (this is Rectangular) {
-            return ensureMinimumSize(sizeBasedOnPadding, within)
-        } else {
-            val left = getPadding(Direction.LEFT)
-            val right = getPadding(Direction.RIGHT)
-            val up = getPadding(Direction.UP)
-            val down = getPadding(Direction.DOWN)
-            val bounds = leafBounds
-            return ensureMinimumSize(BasicDimension2D(left + right + bounds.w, up + down + bounds.h), within)
-        }
-        throw LogicException("Not sure how to size: $this")
-    }
-
-    open fun ensureMinimumSize(c: Dimension2D, within: Dimension2D): CostedDimension2D {
-        var min = (this as SizedRectangular).getMinimumSize()
-        return CostedDimension2D(
-            max(c.w, min.w),
-            max(c.h, min.h), within
-        )
-    }
-
-    private val leafBounds: Dimension2D
+    private val contentBounds: Dimension2D
         get() {
             val p = painter
             return if (p is LeafPainter && transformer is LeafTransformer) {
