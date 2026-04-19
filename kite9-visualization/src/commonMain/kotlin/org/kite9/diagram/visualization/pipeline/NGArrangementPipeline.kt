@@ -89,7 +89,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
                     + (g.a.groupNumber).toString() + " " + (g.b.groupNumber))
         } else {
             (sb.toString() + g.groupNumber +
-                    " " + g.toString())
+                    " " + g.toString()+" l="+g.linkManager.linkCount)
         }
         log.send(line)
         AxisHandlingGroupingStrategy.LAST_MERGE_DEBUG += line + "\n"

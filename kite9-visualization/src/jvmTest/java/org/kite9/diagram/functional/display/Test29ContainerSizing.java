@@ -17,10 +17,10 @@ public class Test29ContainerSizing extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_29_1_MidSetEdge() throws Exception {
-		Glyph g1 = new Glyph("g1", "", "some quite long label", null, null);
-		Glyph g2 = new Glyph("g2", "", "another long label", null, null);
-		Glyph g3 = new Glyph("g3", "", "blahdy blahdy blah", null, null);
-		Glyph g4 = new Glyph("g4", "", "andon andon andon", null, null);
+		Glyph g1 = new Glyph("g1", "g1", "some quite long label", null, null);
+		Glyph g2 = new Glyph("g2", "g2", "another long label", null, null);
+		Glyph g3 = new Glyph("g3", "g3", "blahdy blahdy blah", null, null);
+		Glyph g4 = new Glyph("g4", "g4", "andon andon andon", null, null);
 		Context c1 = new Context("c1", HelpMethods.listOf(g1, g2, g3, g4), true, null, null);
 
 		new Link(g1, g2, null, null, null, null, Direction.RIGHT);

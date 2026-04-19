@@ -1,8 +1,8 @@
 package org.kite9.diagram.common.elements.grid
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.compaction.Side
 
 /**
@@ -19,10 +19,10 @@ interface GridPositioner {
      *
      * @param allowSpanning Set to true if we should consider the full span of the "occupies-x" and "occupies-y" directive, or just the lower bound.
      */
-    fun placeOnGrid(gridContainer: Container): Array<Array<DiagramElement>>
+    fun placeOnGrid(gridContainer: Rectangular): Array<Array<DiagramElement>>
 
     fun getPlaceOnGrid(de: DiagramElement, d: Dimension, side: Side) : Int
 
-    fun getMaxPlace(container: Container, d: Dimension) : Int
+    fun getMaxPlace(container: Rectangular, d: Dimension) : Int
 
 }

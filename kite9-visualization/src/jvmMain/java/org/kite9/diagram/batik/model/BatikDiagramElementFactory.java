@@ -9,6 +9,7 @@ import org.kite9.diagram.dom.css.CSSConstants;
 import org.kite9.diagram.dom.model.AbstractDiagramElementFactory;
 import org.kite9.diagram.dom.model.TemporaryConnectedRectangularImpl;
 import org.kite9.diagram.dom.painter.*;
+import org.kite9.diagram.model.ConnectedRectangular;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
@@ -76,7 +77,7 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<El
 	}
 
 	@Override
-	public TemporaryConnectedRectangular createTemporaryConnected(DiagramElement parent, String idSuffix) {
+	public TemporaryConnectedRectangular createTemporaryConnected(ConnectedRectangular parent, String idSuffix) {
 		return new TemporaryConnectedRectangularImpl(parent, idSuffix, new SVGRectPainter("grid-temporary"));
 	}
 

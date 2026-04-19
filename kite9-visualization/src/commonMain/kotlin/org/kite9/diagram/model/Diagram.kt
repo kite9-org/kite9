@@ -6,7 +6,7 @@ package org.kite9.diagram.model
  *
  * @author robmoffat
  */
-interface Diagram : Container {
+interface Diagram : Rectangular {
 
     fun getConnectionsFor(c: Connected): Collection<Connection>
 

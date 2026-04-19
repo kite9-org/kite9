@@ -2,8 +2,9 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic
 
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupingStrategy
@@ -67,9 +68,9 @@ abstract class AbstractGroupingStrategy(
     private fun updateContainers(group: CompoundGroup, ms: BasicMergeState) {
         val containersA = ms.getContainersFor(group.a)!!
         val containersB = ms.getContainersFor(group.b)!!
-        val combined: MutableSet<Container> = LinkedHashSet(containersA.keys)
+        val combined: MutableSet<Rectangular> = LinkedHashSet(containersA.keys)
         combined.addAll(containersB.keys)
-        val iterator: Iterator<Container> = combined.iterator()
+        val iterator: Iterator<Rectangular> = combined.iterator()
         while (iterator.hasNext()) {
             val container = iterator.next()
             val aContained = containersA[container]
@@ -124,7 +125,7 @@ abstract class AbstractGroupingStrategy(
      */
     protected fun checkGroupsContainersAreComplete(group: Group, ms: BasicMergeState) {
         val containerMap = ms.getContainersFor(group)!!
-        val containers: Set<Container> = containerMap.keys
+        val containers: Set<Rectangular> = containerMap.keys
         val containers2 = ArrayList(containers)
         for (container in containers2) {
             val state = containerMap[container]
@@ -136,7 +137,7 @@ abstract class AbstractGroupingStrategy(
         }
     }
 
-    protected fun isContainerComplete(c: Container, ms: BasicMergeState): Boolean {
+    protected fun isContainerComplete(c: Rectangular, ms: BasicMergeState): Boolean {
         val csi = ms.getStateFor(c)!!
         if (csi.done) return true
         if (csi.incompleteSubcontainers.size > 0) {
@@ -146,14 +147,14 @@ abstract class AbstractGroupingStrategy(
         return csi.done
     }
 
-    protected abstract fun isContainerCompleteInner(c: Container, ms: BasicMergeState): Boolean
+    protected abstract fun isContainerCompleteInner(c: Rectangular, ms: BasicMergeState): Boolean
 
-    protected fun isContainerMergeable(c: Container, ms: BasicMergeState): Boolean {
+    protected fun isContainerMergeable(c: Rectangular, ms: BasicMergeState): Boolean {
         val csi = ms.getStateFor(c)!!
         return csi.incompleteSubcontainers.size == 0
     }
 
-    protected fun completeContainer(ms: BasicMergeState, c: Container) {
+    protected fun completeContainer(ms: BasicMergeState, c: Rectangular) {
         // ok, no need to merge this one - it needs removing from the list
         log.send(if (log.go()) null else "Completed container: $c")
         val csiChild = ms.getStateFor(c)!!
@@ -180,7 +181,7 @@ abstract class AbstractGroupingStrategy(
         }
     }
 
-    protected open fun startContainerMerge(ms: BasicMergeState, c: Container) {
+    protected open fun startContainerMerge(ms: BasicMergeState, c: Rectangular) {
         ms.addLiveContainer(c)
         val csi = ms.getStateFor(c)!!
         for (g in csi.contents) {
@@ -191,8 +192,8 @@ abstract class AbstractGroupingStrategy(
 
     private fun checkGroupChangeContainer(
             ms: BasicMergeState,
-            c: Container,
-            cc: Container,
+            c: Rectangular,
+            cc: Rectangular,
             g: Group
     ): Boolean {
         log.send("Moving group: " + g.groupOrdinal + " from " + c + " to " + cc)
@@ -210,14 +211,12 @@ abstract class AbstractGroupingStrategy(
     ) {
         // set up container details
         val c2 = toAdd.container
-        if (c2 != null) {
-            ms.addGroupContainerMapping(
-                    toAdd,
-                    c2,
-                    if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT
-                    else GroupContainerState.NO_CONTENT
-            )
-        }
+        ms.addGroupContainerMapping(
+                toAdd,
+                c2,
+                if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT
+                else GroupContainerState.NO_CONTENT
+        )
         leaves.add(toAdd)
     }
 
@@ -249,7 +248,7 @@ abstract class AbstractGroupingStrategy(
             initContained(ms, mutableListOf(), g as LeafGroup)
         }
         val bottomLevelContainers = ArrayList(ms.getContainers())
-        if (bottomLevelContainers.size > 0) {
+        if (bottomLevelContainers.isNotEmpty()) {
             for (c in bottomLevelContainers) {
                 if (isContainerMergeable(c, ms)) {
                     startContainerMerge(ms, c)

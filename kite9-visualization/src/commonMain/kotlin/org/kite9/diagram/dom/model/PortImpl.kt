@@ -5,9 +5,8 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Port
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl
@@ -16,7 +15,7 @@ import org.w3c.dom.Element
 
 class PortImpl(
     el: Element,
-    parent: DiagramElement,
+    parent: Rectangular,
     ctx: ElementContext,
     rp: Painter,
     t: ContentTransform
@@ -72,9 +71,12 @@ class PortImpl(
         return ElementContext.getCssStyleEnumProperty<ConnectionsSeparation>(CSSConstants.CONNECTIONS_PROPERTY, theElement, ctx)!!
     }
 
-    override fun getContainer(): Container? {
-        return getParent() as? Container
+    override fun getContainer(): Rectangular {
+        return getParent()
     }
 
+    override fun getParent() : Rectangular {
+        return getParent()
+    }
 
 }

@@ -15,7 +15,7 @@ import org.w3c.dom.Element
  * @author robmoffat
  */
 class DiagramImpl(el: Element, ctx: ElementContext, rp: Painter, t: ContentTransform) :
-        ConnectedContainerImpl(el, null, ctx, rp, t), Diagram {
+        ConnectedRectangularImpl(el, null, ctx, rp, t), Diagram {
 
     private val connections: MutableList<Connection> = mutableListOf()
 

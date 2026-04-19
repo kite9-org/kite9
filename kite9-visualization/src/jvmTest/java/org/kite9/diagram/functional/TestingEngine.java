@@ -12,7 +12,6 @@ import org.kite9.diagram.common.elements.factory.TemporaryConnectedRectangular;
 import org.kite9.diagram.dom.model.AbstractDOMDiagramElement;
 import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.*;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.*;
 import org.kite9.diagram.model.style.ContainerPosition;
@@ -31,7 +30,7 @@ import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub;
+import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
@@ -309,13 +308,13 @@ public class TestingEngine extends TestingHelp {
 		g.fillRect(hs.getL().getMinimumPosition()*10+30, vs.getL().getMinimumPosition()*10+30,
 				width*10, height*10);
 
-		if (d instanceof Container) {
-			((Container) d).getContents().forEach(i -> {
-				if (i instanceof Rectangular)
-					outlineShape((Rectangular) i, c, g);
-				}
-			);
-		}
+
+        d.getContents().forEach(i -> {
+            if (i instanceof Rectangular)
+                outlineShape((Rectangular) i, c, g);
+            }
+        );
+
 	}
 
     static Color[] colors = {  Color.BLACK, Color.GREEN, Color.RED, Color.BLUE, Color.DARK_GRAY, Color.YELLOW, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.CYAN, Color.GRAY };
@@ -582,7 +581,7 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
-	private static void checkContentsGrid(Container con) {
+	private static void checkContentsGrid(Rectangular con) {
 		List<ConnectedRectangular> connecteds = con.getContents().stream()
 				.filter(cc -> cc instanceof ConnectedRectangular)
 				.map(cc -> (ConnectedRectangular) cc)
@@ -636,43 +635,41 @@ public class TestingEngine extends TestingHelp {
 		return (GridContainerPosition) cp;
 	}
 
-	public static void testLayout(Container d) {
+	public static void testLayout(Rectangular d) {
 		Layout l = d.getLayout();
 
 		Connected prev = null;
 
-		if (d.getContents() != null) {
-			if (l != null) {
-				switch (l) {
-				case LEFT:
-				case RIGHT:
-				case UP:
-				case DOWN:
-					checkLayoutOrder(d, l, prev);
-					break;
-				case HORIZONTAL:
-				case VERTICAL:
-					checkContentsOverlap(d, l);
-					break;
-				case GRID:
-					checkContentsGrid(d);
-				}
-			}
-			for (DiagramElement cc : d.getContents()) {
-				if ((!(cc instanceof Label)) && (!(cc instanceof TemporaryContainerHub))){
-					RenderingInformation ri = cc.getRenderingInformation();
-					if ((ri instanceof RectangleRenderingInformation)) {
-						checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
-					}
-					if (cc instanceof Container) {
-						testLayout((Container) cc);
-					}
-				}
-			}
-		}
+        if (l != null) {
+            switch (l) {
+            case LEFT:
+            case RIGHT:
+            case UP:
+            case DOWN:
+                checkLayoutOrder(d, l, prev);
+                break;
+            case HORIZONTAL:
+            case VERTICAL:
+                checkContentsOverlap(d, l);
+                break;
+            case GRID:
+                checkContentsGrid(d);
+            }
+        }
+        for (DiagramElement cc : d.getContents()) {
+            if ((!(cc instanceof Label)) && (!(cc instanceof ConnectedGroupLinkNode))){
+                RenderingInformation ri = cc.getRenderingInformation();
+                if ((ri instanceof RectangleRenderingInformation)) {
+                    checkContentContainment(cc, d, (RectangleRenderingInformation) ri);
+                }
+                if (cc instanceof Rectangular) {
+                    testLayout((Rectangular) cc);
+                }
+            }
+        }
 	}
 	
-	private static void checkContentContainment(DiagramElement cc, Container d, RectangleRenderingInformation inside) {
+	private static void checkContentContainment(DiagramElement cc, Rectangular d, RectangleRenderingInformation inside) {
 		RectangleRenderingInformation outside = d.getRenderingInformation();
 		
 		Rectangle2D inR;
@@ -896,18 +893,14 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private boolean isChildOf(DiagramElement de, DiagramElement p) {
-				if (p instanceof Container) {
-					if (de instanceof Rectangular) {
-						if (((Container) p).getContents().contains(de)) {
-							return true;
-						} else if (de.getContainer() == null) {
-							return false;
-						} else {
-							return isChildOf(de.getContainer(), p);
-						}
-					} else {
-						return false;
-					}
+				if (de instanceof Rectangular) {
+                    if (((Rectangular) p).getContents().contains(de)) {
+                        return true;
+                    } else if (de.getContainer() == null) {
+                        return false;
+                    } else {
+                        return isChildOf(de.getContainer(), p);
+                    }
 				} else if (p instanceof Connection) {
 					return (((Connection) p).getFromLabel() == de) || (((Connection) p).getToLabel() == de);
 				} else {
@@ -938,7 +931,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void checkContentsOverlap(Container d, final Layout l) {
+	public static void checkContentsOverlap(Rectangular d, final Layout l) {
 		List<RectangleRenderingInformation> contRI = new ArrayList<RectangleRenderingInformation>(d.getContents().size());
 		for (DiagramElement c : d.getContents()) {
 			if (c instanceof ConnectedRectangular) {
@@ -978,7 +971,7 @@ public class TestingEngine extends TestingHelp {
 		}
 	}
 
-	public static void checkLayoutOrder(Container d, Layout l, Connected prev) {
+	public static void checkLayoutOrder(Rectangular d, Layout l, Connected prev) {
 		for (DiagramElement c : d.getContents()) {
 			if ((prev != null) && (c instanceof Connected)) {
 				Connected cc = (Connected) c;

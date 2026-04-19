@@ -3,7 +3,7 @@ package org.kite9.diagram.dom.transform
 import org.kite9.diagram.dom.painter.LeafPainter
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
-import org.kite9.diagram.model.Leaf
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
@@ -17,7 +17,7 @@ import org.w3c.dom.Element
  *
  * Content is all cropped between top-left and bottom right positions.
  */
-open class CroppingTransformer(private val owner: Leaf) :
+open class CroppingTransformer(private val owner: DiagramElement) :
         AbstractRectangularTransformer(), LeafTransformer {
 
     override fun postProcess(p: Painter, d: Document, postProcessor: XMLProcessor): Element? {

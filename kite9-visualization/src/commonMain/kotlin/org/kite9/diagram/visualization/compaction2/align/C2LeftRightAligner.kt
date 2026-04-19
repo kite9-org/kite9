@@ -3,11 +3,12 @@ package org.kite9.diagram.visualization.compaction2.align
 import org.kite9.diagram.common.algorithms.so.AlignStyle
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.model.AlignedRectangular
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.VerticalAlignment
-import org.kite9.diagram.visualization.compaction2.*
+import org.kite9.diagram.visualization.compaction2.C2Compaction
+import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
+import org.kite9.diagram.visualization.compaction2.C2Slideable
 
 /**
  * If you have contradictory alignments, (e.g. thing on left wants to align right, thing on right
@@ -15,7 +16,7 @@ import org.kite9.diagram.visualization.compaction2.*
  */
 class C2LeftRightAligner : Aligner {
 
-    override fun alignFor(co: Container, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
+    override fun alignFor(co: Rectangular, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
         val sso = c.getSlackOptimisation(d)
         for (r in de) {
             alignRectangular(r, sso, d)

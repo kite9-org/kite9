@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.algorithms.so.Slideable
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Port
@@ -149,12 +148,12 @@ class C2Slideable(
     fun getRelevantRectAnchor(c: DiagramElement) : RectAnchor? {
 
         fun isGridCell(e: DiagramElement) : Boolean {
-            return (e.getParent() as Container?)?.getLayout() == Layout.GRID
+            return (e.getParent() as Rectangular?)?.getLayout() == Layout.GRID
         }
 
         val relevant = anchors
             .filterIsInstance<RectAnchor>()
-            .filter { it.e == c || ((c is Container) && (c.getContents().contains(it.e)))}
+            .filter { it.e == c || ((c is Rectangular) && (c.getContents().contains(it.e)))}
             .filter { !isGridCell(it.e) }
             .filter { it.e !is Port }
 
@@ -171,7 +170,7 @@ class C2Slideable(
      */
     fun canMoveAlongInside(container: DiagramElement) : Boolean {
         val intersecting = getIntersectingElements()
-        val somethingContains = intersecting.filterIsInstance<Container>().find { it == container || it.deepContains(container)  } != null
+        val somethingContains = intersecting.filterIsInstance<Rectangular>().find { it == container || it.deepContains(container)  } != null
         return !somethingContains
     }
 

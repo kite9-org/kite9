@@ -3,9 +3,8 @@ package org.kite9.diagram.visualization.planarization.rhd.links
 import org.kite9.diagram.common.elements.AbstractBiDirectional
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.RenderingInformation
@@ -17,8 +16,7 @@ import org.kite9.diagram.model.position.RenderingInformation
  */
 class OrderingTemporaryBiDirectional(private val f: Connected,
                                      private val t: Connected,
-                                     private val dd: Direction,
-                                     private val c: Container) : AbstractBiDirectional<Connected>(), Temporary {
+                                     private val dd: Direction) : AbstractBiDirectional<Connected>(), Temporary {
 
     private val id = f.getID() + ":"+t.getID();
 
@@ -50,7 +48,7 @@ class OrderingTemporaryBiDirectional(private val f: Connected,
         return 0
     }
 
-    override fun getContainer(): Container? {
+    override fun getContainer(): Rectangular? {
         return null
     }
 

@@ -40,7 +40,7 @@ abstract class AbstractRectangular(
         initLayout()
     }
 
-    fun getLayout(): Layout? {
+    override fun getLayout(): Layout? {
         ensureInitialized()
         return layout
     }
@@ -56,10 +56,11 @@ abstract class AbstractRectangular(
             ElementContext.getCssStyleEnumProperty<DiagramElementSizing>(CSSConstants.ELEMENT_VERTICAL_SIZING_PROPERTY, theElement, ctx)!!
     }
 
-    protected fun initContainerPosition() {
+    protected open fun initContainerPosition() {
         if (containerPositionX == null) {
-            if (getParent() is Container) {
-                if (getContainer()!!.getLayout() === Layout.GRID) {
+            val c = getContainer()
+            if (c != null) {
+                if (c.getLayout() === Layout.GRID) {
                     val x = ctx.getCssStyleRangeProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY, theElement)
                     val y = ctx.getCssStyleRangeProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY, theElement)
                     containerPositionX = GridContainerPosition(x!!)
@@ -85,8 +86,8 @@ abstract class AbstractRectangular(
         }
     }
 
-    override fun getContainer(): Container? {
-        return getParent() as Container?
+    override fun getContainer(): Rectangular? {
+        return getParent() as Rectangular?
     }
 
     override fun getXPathVariable(name: String): String? {
@@ -106,7 +107,7 @@ abstract class AbstractRectangular(
             return "" + (getRenderingInformation().size?.h ?: "0")
         } else if ("x1" == name || "width" == name) {
             return "" + (getRenderingInformation().size?.w ?: "0")
-        } else if (getLayout() === Layout.GRID && this is Container) {
+        } else if (getLayout() === Layout.GRID) {
             val cellX = name.startsWith("cell-x-")
             val cellY = name.startsWith("cell-y-")
             if (cellX) {
@@ -140,7 +141,7 @@ abstract class AbstractRectangular(
 
 
     override fun deepContains(d: DiagramElement): Boolean {
-        return if ((d.getDepth() > this.getDepth()) && (this is Container)) {
+        return if ((d.getDepth() > this.getDepth())) {
             (getContents().contains(d)) ||
                     (getContents().filterIsInstance<Rectangular>().firstOrNull { it.deepContains(d) } != null)
         } else {

@@ -12,7 +12,6 @@ import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.logging.Table
 import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.RectangleRenderingInformation
@@ -28,10 +27,10 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
     private val log = Kite9Log.instance(this)
 
-    var placed: MutableMap<Container, Array<Array<DiagramElement>>> = HashMap()
+    var placed: MutableMap<Rectangular, Array<Array<DiagramElement>>> = HashMap()
 
     override fun placeOnGrid(
-            gridContainer: Container,
+            gridContainer: Rectangular,
     ): Array<Array<DiagramElement>> {
         if (placed.containsKey(gridContainer)) {
             return placed[gridContainer]!!
@@ -120,7 +119,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     }
 
     override fun getMaxPlace(
-        container: Container,
+        container: Rectangular,
         d: Dimension
     ): Int {
         val grid = placed[container] ?: throw LogicException("Grid not positioned: ${container.getID()}")
@@ -190,7 +189,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
 
     private fun fillInTheBlanks(
             contents: MutableMap<Int, MutableMap<Int, DiagramElement>>,
-            ord: Container,
+            ord: Rectangular,
             xs: List<Int>,
             ys: List<Int>
     ) {
@@ -206,7 +205,7 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
                 var toPlace = xMap[x]
 
                 if (toPlace == null) {
-                    toPlace = factory.createTemporaryConnected(ord, "$x-$y")
+                    toPlace = factory.createTemporaryConnected(ord as ConnectedRectangular, "$x-$y")
                     toPlace.setContainerPosition(
                         GridContainerPosition(BasicIntegerRange(x, x)),
                         GridContainerPosition(BasicIntegerRange(y, y))

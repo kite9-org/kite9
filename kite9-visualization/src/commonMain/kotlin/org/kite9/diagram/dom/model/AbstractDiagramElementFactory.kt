@@ -6,6 +6,7 @@ import org.kite9.diagram.dom.painter.LeafPainter
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.RectangularElementUsage
@@ -48,7 +49,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                     DiagramElementType.CONTAINER ->
                             when (usage) {
                                 RectangularElementUsage.LABEL ->
-                                        LabelContainerImpl(
+                                        LabelImpl(
                                                 el,
                                                 parent!!,
                                                 context!!,
@@ -56,7 +57,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 ContentTransform.POSITION
                                         )
                                 RectangularElementUsage.REGULAR ->
-                                        ConnectedContainerImpl(
+                                        ConnectedRectangularImpl(
                                                 el,
                                                 parent,
                                                 context!!,
@@ -72,7 +73,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                     DiagramElementType.TEXT ->
                             when (usage) {
                                 RectangularElementUsage.LABEL ->
-                                        LabelLeafImpl(
+                                        LabelImpl(
                                                 el,
                                                 parent!!,
                                                 context!!,
@@ -80,7 +81,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 ContentTransform.CROP
                                         )
                                 RectangularElementUsage.DECAL ->
-                                        DecalLeafImpl(
+                                        DecalImpl(
                                                 el,
                                                 parent!!,
                                                 context!!,
@@ -88,18 +89,18 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 ContentTransform.RESCALE
                                         )
                                 RectangularElementUsage.REGULAR ->
-                                        ConnectedLeafImpl(
-                                                el,
-                                                parent!!,
-                                                context!!,
-                                                getTextPainter(el),
-                                                ContentTransform.CROP
-                                        )
+                                    ConnectedRectangularImpl(
+                                            el,
+                                            parent!!,
+                                            context!!,
+                                            getTextPainter(el),
+                                            ContentTransform.CROP
+                                    )
                             }
                     DiagramElementType.SVG ->
                             when (usage) {
                                 RectangularElementUsage.LABEL ->
-                                        LabelLeafImpl(
+                                        LabelImpl(
                                                 el,
                                                 parent!!,
                                                 context!!,
@@ -107,7 +108,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 ContentTransform.CROP
                                         )
                                 RectangularElementUsage.DECAL ->
-                                        DecalLeafImpl(
+                                        DecalImpl(
                                                 el,
                                                 parent!!,
                                                 context!!,
@@ -115,13 +116,13 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 ContentTransform.POSITION
                                         )
                                 RectangularElementUsage.REGULAR ->
-                                        ConnectedLeafImpl(
-                                                el,
-                                                parent!!,
-                                                context!!,
-                                                getLeafPainter(el),
-                                                ContentTransform.CROP
-                                        )
+                                    ConnectedRectangularImpl(
+                                            el,
+                                            parent!!,
+                                            context!!,
+                                            getLeafPainter(el),
+                                            ContentTransform.CROP
+                                    )
                             }
                     DiagramElementType.LINK ->
                             ConnectionImpl(
@@ -150,7 +151,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                     DiagramElementType.PORT ->
                             PortImpl(
                                     el,
-                                    parent!!,
+                                    parent as Rectangular,
                                     context!!,
                                     getDirectPainter(el),
                                     ContentTransform.POSITION

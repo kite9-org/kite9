@@ -73,7 +73,7 @@ abstract class AbstractConnectedRectangular(
      * Connected elements might also have ports, which inform the size of the element
      */
     override fun ensureMinimumSize(c: Dimension2D, within: Dimension2D): CostedDimension2D {
-        fun maxInPositionedDimension(d: Dimension, c: Container) : Double? {
+        fun maxInPositionedDimension(d: Dimension, c: Rectangular) : Double? {
             return c.getContents()
                 .filterIsInstance<PlacementPositioned>()
                 .map { it.getContainerPosition(d) }
@@ -82,7 +82,7 @@ abstract class AbstractConnectedRectangular(
                 .maxOrNull()
         }
 
-        if (this is Container) {
+        if (this is Rectangular) {
             val maxH = maxInPositionedDimension(Dimension.H, this)
             val maxV = maxInPositionedDimension(Dimension.V, this)
             val c2 = CostedDimension2D(max(c.w, maxH ?: 0.0), max(c.h, maxV ?: 0.0))

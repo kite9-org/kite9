@@ -23,20 +23,20 @@ class C2AlignmentCompactionStep(cd: CompleteDisplayer, private val aligners: Arr
         alignContents(c.getDiagram(), c, Dimension.V)
     }
 
-    private fun alignContents(de: Container, c: C2Compaction, d: Dimension) {
+    private fun alignContents(de: Rectangular, c: C2Compaction, d: Dimension) {
         val contents: List<DiagramElement> = de.getContents()
         for (a in aligners) {
             alignConnecteds(c, contents, a, d, de)
             alignLabels(c, contents, a, d, de)
         }
         for (de2 in contents) {
-            if (de2 is Container) {
+            if (de2 is Rectangular) {
                 alignContents(de2, c, d)
             }
         }
     }
 
-    private fun alignConnecteds(c: C2Compaction, contents: List<DiagramElement>, a: Aligner, d: Dimension, de: Container) {
+    private fun alignConnecteds(c: C2Compaction, contents: List<DiagramElement>, a: Aligner, d: Dimension, de: Rectangular) {
         val filtered = contents
             .filterIsInstance<Connected>()
             .filterIsInstance<Rectangular>()
@@ -47,7 +47,7 @@ class C2AlignmentCompactionStep(cd: CompleteDisplayer, private val aligners: Arr
         }
     }
 
-    private fun alignLabels(c: C2Compaction, contents: List<DiagramElement>, a: Aligner, d: Dimension, de: Container) {
+    private fun alignLabels(c: C2Compaction, contents: List<DiagramElement>, a: Aligner, d: Dimension, de: Rectangular) {
         val filtered = contents
             .filterIsInstance<Label>()
             .filter { a.willAlign(it, d) }

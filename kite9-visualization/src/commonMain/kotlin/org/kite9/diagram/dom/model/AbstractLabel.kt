@@ -4,9 +4,9 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Label
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.End
 import org.kite9.diagram.model.style.ContentTransform
@@ -35,7 +35,7 @@ abstract class AbstractLabel(
 
     override fun isConnectionLabel(): Boolean {
         ensureInitialized()
-        return getParent() !is Container
+        return getParent() !is Rectangular
     }
 
     /**
@@ -52,7 +52,7 @@ abstract class AbstractLabel(
             return out
         }
 
-    override fun getContainer(): Container? {
+    override fun getContainer(): Rectangular? {
         ensureInitialized()
         return if (isConnectionLabel()) {
             val c = connectionParent

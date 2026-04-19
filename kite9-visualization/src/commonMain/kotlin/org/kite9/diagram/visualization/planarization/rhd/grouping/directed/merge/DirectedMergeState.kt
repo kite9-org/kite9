@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge
 
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
@@ -49,14 +50,14 @@ open class DirectedMergeState(ch: ContradictionHandler, elements: Int) :
      * return true.
      */
     fun increasesContainers(a: Group?, b: Group?): Boolean {
-        val ac: Map<Container, GroupContainerState?>? = getContainersFor(a)
-        val bc: Map<Container, GroupContainerState?>? = getContainersFor(b)
+        val ac: Map<Rectangular, GroupContainerState?>? = getContainersFor(a)
+        val bc: Map<Rectangular, GroupContainerState?>? = getContainersFor(b)
         return hasDifferentContainers(ac, bc) && hasDifferentContainers(bc, ac)
     }
 
     private fun hasDifferentContainers(
-            ac: Map<Container, GroupContainerState?>?,
-            bc: Map<Container, GroupContainerState?>?
+            ac: Map<Rectangular, GroupContainerState?>?,
+            bc: Map<Rectangular, GroupContainerState?>?
     ): Boolean {
         for (container in ac!!.keys) {
             if (bc!![container] == null) {

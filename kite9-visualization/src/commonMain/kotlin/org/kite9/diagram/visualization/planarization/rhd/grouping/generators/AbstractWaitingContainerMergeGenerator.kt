@@ -1,7 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -23,9 +23,9 @@ abstract class AbstractWaitingContainerMergeGenerator(
     gp, ms, grouper
 ) {
 
-    private var waitingOptions: MutableMap<Container?, MutableCollection<MergeOption>> = hashMapOf()
+    private var waitingOptions: MutableMap<Rectangular?, MutableCollection<MergeOption>> = hashMapOf()
 
-    override fun containerIsLive(c: Container) {
+    override fun containerIsLive(c: Rectangular) {
         if (liveOnly) {
             val waitList: Collection<MergeOption>? = waitingOptions.remove(c)
             if (waitList != null) {
@@ -36,16 +36,16 @@ abstract class AbstractWaitingContainerMergeGenerator(
         }
     }
 
-    fun getCommonContainer(a: Group, b: Group): Container? {
+    fun getCommonContainer(a: Group, b: Group): Rectangular {
         val ac = ms.getContainersFor(a)
         val bc = ms.getContainersFor(b)
         if (ac == null || bc == null) throw LogicException("Group has no containers?")
-        val itc: Set<Container> = if (ac.size < bc.size) ac.keys else bc.keys
-        val inc: Set<Container> = if (ac.size < bc.size) bc.keys else ac.keys
+        val itc: Set<Rectangular> = if (ac.size < bc.size) ac.keys else bc.keys
+        val inc: Set<Rectangular> = if (ac.size < bc.size) bc.keys else ac.keys
         for (container in itc) {
             if (inc.contains(container)) return container
         }
-        return null
+        throw LogicException("There should always be a common container")
     }
 
     override fun addMergeOption(

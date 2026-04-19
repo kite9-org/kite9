@@ -6,8 +6,6 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.AlignedRectangular
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Positioned
@@ -15,8 +13,6 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
-import org.kite9.diagram.model.style.ContainerPosition
-import org.kite9.diagram.model.style.GridContainerPosition
 import org.kite9.diagram.model.style.Placement
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
@@ -33,16 +29,16 @@ import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSetI
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
+import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
 abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: GridPositioner) : AbstractC2CompactionStep(cd) {
 
-    data class Quad(val c: Container, val i: Int, val d: Dimension, val s: Side)
+    data class Quad(val c: Rectangular, val i: Int, val d: Dimension, val s: Side)
 
-    val gridRectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
-    val gridIntersectSlideables = mutableMapOf<Triple<Container, Int, Dimension>, C2Slideable>()
+    val gridRectSlideables = mutableMapOf<Triple<Rectangular, Int, Dimension>, C2Slideable>()
+    val gridIntersectSlideables = mutableMapOf<Triple<Rectangular, Int, Dimension>, C2Slideable>()
     val gridOrbitSlideables = mutableMapOf<Quad, C2Slideable>()
 
     fun ensureNoOldGridOrbitSlideables() {
@@ -67,7 +63,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
         topGroup: Group?,
     ): RectangularSlideableSet {
 
-        fun addToGridRectSlideables(c: Container,
+        fun addToGridRectSlideables(c: Rectangular,
                                     lineNumber: Int,
                                     d: Dimension,
                                     s: Side,
@@ -88,13 +84,13 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
         var ss = cso.getSlideablesFor(de)
 
         if (ss == null) {
-            val parentLayoutIsGrid = (de.getParent() as? Container)?.getLayout() == Layout.GRID
-            val myLayoutIsGrid = (de as? Container)?.getLayout() == Layout.GRID
+            val containerLayoutIsGrid = de.getContainer()?.getLayout() == Layout.GRID
+            val myLayoutIsGrid = de.getLayout() == Layout.GRID
             log.send("Creating $de")
 
             // ensure we've laid out the grid if one is needed
-            if (parentLayoutIsGrid) {
-                gp.placeOnGrid(de.getParent() as Container)
+            if (containerLayoutIsGrid) {
+                gp.placeOnGrid(de.getContainer()!!)
             } else if (myLayoutIsGrid) {
                 gp.placeOnGrid(de)
             }
@@ -107,9 +103,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             val l =
                 if (myLayoutIsGrid) {
                     addToGridRectSlideables(de, 0, d, Side.START, lp)
-                } else if (parentLayoutIsGrid) {
+                } else if (containerLayoutIsGrid) {
                     val place = gp.getPlaceOnGrid(de, d, Side.START)
-                    addToGridRectSlideables(de.getParent() as Container, place, d, Side.START, lp)
+                    addToGridRectSlideables(de.getContainer()!!, place, d, Side.START, lp)
             } else {
                 C2Slideable(cso, d, de, Side.START, lp)
             }
@@ -118,9 +114,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
                 if (myLayoutIsGrid) {
                     val place = gp.getMaxPlace(de, d)
                     addToGridRectSlideables(de, place, d, Side.END, rp)
-                } else if (parentLayoutIsGrid) {
+                } else if (containerLayoutIsGrid) {
                     val place = gp.getPlaceOnGrid(de, d, Side.END)
-                    addToGridRectSlideables( de.getParent() as Container, place, d,Side.END, rp)
+                    addToGridRectSlideables( de.getContainer()!!, place, d,Side.END, rp)
             } else {
                 C2Slideable(cso, d, de, Side.END, rp)
             }
@@ -134,9 +130,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
             cso.ensureMinimumDistance(l, r, ms.toInt())
 
-            if (de is Container) {
-                checkCreateElementContentItems(cso, de, d, de.getLayout(), ss, topGroup)
-            }
+            checkCreateElementContentItems(cso, de, d, de.getLayout(), ss, topGroup)
 
             log.send("Created RectangularSlideableSetImpl: ${ss.e}", ss.getAll())
 
@@ -145,10 +139,10 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
         return ss
     }
 
-    protected fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Container, d: Dimension) : RoutableSlideableSet {
+    protected fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Rectangular, d: Dimension) : RoutableSlideableSet {
 
         fun getGridPosition(c: Connected) : Pair<Int, Int>? {
-            return if (c is TemporaryContainerHub) {
+            return if (c is ConnectedGroupLinkNode) {
                 c.gridPosition
             } else {
                 null
@@ -157,7 +151,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
         fun createOrReuseOrbitSlideable(gridMidpoint: Pair<Int, Int>?, side: Side) : C2Slideable? {
             if (gridMidpoint != null) {
-                val gridContainer = c.getParent() as Container
+                val gridContainer = c.getParent() as Rectangular
                 val idx = if (d == Dimension.H) gridMidpoint.first else gridMidpoint.second
                 val key = Quad(gridContainer, idx, d, side)
                 val existing = gridOrbitSlideables[key]
@@ -177,7 +171,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
         fun createOrReuseIntersectionSlideable(gridMidpoint: Pair<Int, Int>?, purpose: Purpose) : C2Slideable {
             return if (gridMidpoint != null) {
-                val gridContainer = c.getParent() as Container
+                val gridContainer = c.getParent() as Rectangular
                 val idx = if (d == Dimension.H) gridMidpoint.first else gridMidpoint.second
                 val key = Triple(gridContainer, idx, d)
                 val existing = gridIntersectSlideables[key]
@@ -194,10 +188,10 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
             }
         }
 
-        fun reuseContainerSlideable(side: Direction) : C2Slideable{
+        fun reuseContainerSlideable(side: Direction, r: Rectangular) : C2Slideable{
             // we should use the edge of the container to intersect with the port
             // this returns something we already created
-            val rss = checkCreateElement(c, d, cso, null, null)
+            val rss = checkCreateElement(r, d, cso, null, null)
             if (side == Direction.UP || side == Direction.LEFT) {
                 return rss.l
             } else {
@@ -213,7 +207,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
                 val port = g.connected as Port
                 val dir = port.getPortDirection()
                 if (Direction.getDimension(dir) == d) {
-                    val out = reuseContainerSlideable(dir)
+                    val out = reuseContainerSlideable(dir, port.getContainer()!!)
                     val side = Side.getSideForDirection(dir)
                     out.addRectAnchor(RectAnchor(port, side, Permeability.ALL))
                     out
@@ -247,7 +241,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
     fun getRectangularPermeability(de: Rectangular, d: Dimension, s: Side): Permeability {
         val increasing = if (s == Side.START) false else true
         val direction = Direction.getDirection(d, increasing)
-        val rule = if (de is Container) {
+        val rule = run {
             val bt = de.getTraversalRule(direction)
             when (bt) {
                 BorderTraversal.ALWAYS -> Permeability.ALL
@@ -257,10 +251,9 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
                     } else {
                         Permeability.DECREASING
                     }
+
                 BorderTraversal.PREVENT -> Permeability.NONE
             }
-        } else {
-            Permeability.NONE
         }
 
         return rule
@@ -268,7 +261,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
     private fun checkCreateElementContentItems(
         cso: C2SlackOptimisation,
-        de: Container,
+        de: Rectangular,
         d: Dimension,
         l: Layout?,
         container: RectangularSlideableSet,

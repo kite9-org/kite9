@@ -1,7 +1,6 @@
 package org.kite9.diagram.common.elements.factory
 
 import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 
@@ -12,7 +11,7 @@ abstract class AbstractDiagramElement(private val p: DiagramElement?) : DiagramE
     }
 
     override fun hashCode(): Int {
-        return _hc;
+        return _hc
     }
 
     private var depth = -1

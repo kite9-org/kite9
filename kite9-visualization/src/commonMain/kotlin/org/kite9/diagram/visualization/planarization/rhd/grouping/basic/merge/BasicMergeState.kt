@@ -6,8 +6,8 @@ import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -52,8 +52,8 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
 
     // merge options, legal ones
     // outrank illegal ones
-    private val groupContainers: MutableMap<Group, MutableMap<Container, GroupContainerState>> = HashMap(elements)
-    private val liveContainers: MutableSet<Container> = UnorderedSet(elements * 2)
+    private val groupContainers: MutableMap<Group, MutableMap<Rectangular, GroupContainerState>> = HashMap(elements)
+    private val liveContainers: MutableSet<Rectangular> = UnorderedSet(elements * 2)
     private var nextMergeNumber = 0
 
     open fun removeLiveGroup(a: Group) {
@@ -66,7 +66,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         }
     }
 
-    fun removeLiveContainer(c: Container) {
+    fun removeLiveContainer(c: Rectangular) {
         liveContainers.remove(c)
     }
 
@@ -99,7 +99,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         group.live = true
     }
 
-    fun addGroupContainerMapping(toAdd: Group, c2: Container, newState: GroupContainerState) {
+    fun addGroupContainerMapping(toAdd: Group, c2: Rectangular, newState: GroupContainerState) {
         var within = groupContainers[toAdd]
         if (within == null) {
             within = HashMap(5)
@@ -111,16 +111,16 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         csi!!.contents.add(toAdd)
     }
 
-    override fun getStateFor(c2: Container): ContainerStateInfo? {
+    override fun getStateFor(c2: Rectangular): ContainerStateInfo? {
         var csi = super.getStateFor(c2)
         if (csi == null) {
             csi = ContainerStateInfo(c2)
             super.containerStates[c2] = csi
             for (c in c2.getContents()) {
-                if (c is Container && c is ConnectedRectangular) {
-                    val csi2 = getStateFor(c as Container)
+                if (c is Rectangular && c is Connected) {
+                    val csi2 = getStateFor(c)
                     if (csi2 != null) {
-                        csi.incompleteSubcontainers.add((c as Container))
+                        csi.incompleteSubcontainers.add((c))
                     }
                 }
             }
@@ -128,7 +128,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         return csi
     }
 
-    fun addLiveContainer(c: Container) {
+    fun addLiveContainer(c: Rectangular) {
         log.send("Making container live:$c")
         liveContainers.add(c)
     }
@@ -154,20 +154,20 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
         } else true
     }
 
-    fun getContainersFor(a: Group?): Map<Container, GroupContainerState>? {
+    fun getContainersFor(a: Group?): Map<Rectangular, GroupContainerState>? {
         if (a is LeafGroup) {
-             return groupContainers.getOrPut(a, { mutableMapOf(a.container!! to GroupContainerState.HAS_CONTENT) } )
+             return groupContainers.getOrPut(a, { mutableMapOf(a.container to GroupContainerState.HAS_CONTENT) } )
         } else {
             return groupContainers[a]
         }
     }
 
-    fun removeGroupContainerMapping(g: Group, c: Container): GroupContainerState? {
+    fun removeGroupContainerMapping(g: Group, c: Rectangular): GroupContainerState? {
         val within = groupContainers[g] ?: throw LogicException("Group not present in an existing container$g")
         return within.remove(c)
     }
 
-    fun isContainerLive(container: Container?): Boolean {
+    fun isContainerLive(container: Rectangular): Boolean {
         return liveContainers.contains(container)
     }
 

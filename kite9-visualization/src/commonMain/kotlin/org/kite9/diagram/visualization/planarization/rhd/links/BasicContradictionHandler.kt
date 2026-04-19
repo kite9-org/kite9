@@ -202,13 +202,13 @@ class BasicContradictionHandler() : Logable, ContradictionHandler {
             }
 
             // check for illegal containment
-            if (to is Container) {
-                if ((to as Container).getContents().contains(from)) {
+            if (to is Rectangular) {
+                if ((to as Rectangular).getContents().contains(from)) {
                     setContradiction(c, true)
                 }
             }
-            if (from is Container) {
-                if ((from as Container).getContents().contains(to)) {
+            if (from is Rectangular) {
+                if ((from as Rectangular).getContents().contains(to)) {
                     setContradiction(c, true)
                 }
             }
@@ -302,7 +302,7 @@ class BasicContradictionHandler() : Logable, ContradictionHandler {
         d: Direction,
         from: Connected?,
         to: Connected?,
-        fromC: Container?,
+        fromC: Rectangular?,
         c: Connection?
     ) {
         val ld = getDirectionForLayout(l)

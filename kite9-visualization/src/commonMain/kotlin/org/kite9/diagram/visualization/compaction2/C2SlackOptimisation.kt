@@ -4,7 +4,6 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.PlacementPositioned
 import org.kite9.diagram.model.Positioned
 import org.kite9.diagram.model.Rectangular

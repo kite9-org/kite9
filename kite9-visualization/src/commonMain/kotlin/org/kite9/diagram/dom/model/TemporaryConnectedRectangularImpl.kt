@@ -4,15 +4,13 @@ import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractTemporaryConnectedRectangular
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.*
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.style.*
-import org.kite9.diagram.model.style.Placement.Companion.NONE
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
@@ -21,9 +19,8 @@ import org.w3c.dom.Element
  *
  * @author robmoffat
  */
-class TemporaryConnectedRectangularImpl(parent: DiagramElement, id: String, val painter: Painter) :
-
-    AbstractTemporaryConnectedRectangular(parent.getID() + "-g-" + id, parent), Container, HasSVGRepresentation, SizedRectangular {
+class TemporaryConnectedRectangularImpl(parent: Rectangular, id: String, val painter: Painter) :
+    AbstractTemporaryConnectedRectangular(parent.getID() + "-g-" + id, parent), HasSVGRepresentation, SizedRectangular {
 
     private var gcpH: ContainerPosition? = null
     private var gcpV: ContainerPosition? = null

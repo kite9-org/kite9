@@ -61,18 +61,16 @@ abstract class AbstractPainter : Painter {
             debug.append("horiz: " + lowercase((r as AlignedRectangular).getHorizontalAlignment()) + "; ")
             debug.append("vert: " + lowercase((r as AlignedRectangular).getVerticalAlignment()) + "; ")
         }
-        if (r is Container) {
-            val c = r as Container
-            debug.append("layout: " + lowercase((r as Container).getLayout()) + "; ")
+        if (r is Rectangular) {
+            val c = r as Rectangular
+            debug.append("layout: " + lowercase(c.getLayout()) + "; ")
             if (c.getLayout() === Layout.GRID) {
                 val rri = c.getRenderingInformation()
                 debug.append("grid-size: [" + rri.gridXSize() + " " + rri.gridYSize() + "]; ")
                 debug.append("cell-xs: [" + commaIntList(rri.cellXPositions) + "]; ")
                 debug.append("cell-ys: [" + commaIntList(rri.cellYPositions) + "]; ")
             }
-        }
-        if (r is Rectangular) {
-            val c = r as Rectangular
+
             val rri = c.getRenderingInformation()
             val usage = getUsage(r as Rectangular)
             debug.append("rectangular: $usage; ")
@@ -80,9 +78,9 @@ abstract class AbstractPainter : Painter {
             debug.append("rect-size: " + xy(rri.size) + "; ")
             debug.append("position: " + (r as Rectangular).getContainerPosition(Dimension.H) + " " + (r as Rectangular).getContainerPosition(Dimension.V) + "; ")
 
-            if ((c.getParent() is Container) && (c is Connected)) {
-                val parent = c.getParent() as Container?
-                val prri = parent!!.getRenderingInformation()
+            if ((c.getParent() is Rectangular) && (c is Connected)) {
+                val parent = c.getParent() as Rectangular
+                val prri = parent.getRenderingInformation()
                 val l = parent.getLayout()
                 if (l === Layout.GRID) {
                     val scaledX = scale(rri.gridXPosition(), prri.gridXSize())
@@ -182,8 +180,8 @@ abstract class AbstractPainter : Painter {
      * Outputs any SVG-renderable temporary elements to the output.
      */
     protected fun handleTemporaryElements(out: Element, d: Document, postProcessor: XMLProcessor) {
-        if (r is Container) {
-            (r as Container).getContents()
+        if (r is Rectangular) {
+            (r as Rectangular).getContents()
                 .filterIsInstance<Temporary>()
                 .filterIsInstance<HasSVGRepresentation>()
                 .forEach {

@@ -2,12 +2,7 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractDiagramElement
-import org.kite9.diagram.model.AlignedRectangular
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
-import org.kite9.diagram.model.PlacementPositioned
-import org.kite9.diagram.model.Temporary
+import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.style.ConnectionsSeparation
 import org.kite9.diagram.model.style.Placement
@@ -18,9 +13,10 @@ import org.kite9.diagram.model.style.Placement
  * involved in layouts, but they also have contents that are involved in
  * layouts too.
  */
-class TemporaryContainerHub(val c: Container) : AbstractDiagramElement(c), PlacementPositioned, Connected, Temporary {
+class ConnectedGroupLinkNode(val c: Rectangular, suffix: String, val gridPosition: Pair<Int, Int>? = null) : AbstractDiagramElement(c), PlacementPositioned, GroupLinkNode, Temporary {
 
-    var gridPosition: Pair<Int, Int>? = null
+    val id = c.getID()+'-'+suffix
+
     val links = mutableListOf<Connection>()
 
     override fun getContainerPosition(d: Dimension): Placement {
@@ -38,12 +34,12 @@ class TemporaryContainerHub(val c: Container) : AbstractDiagramElement(c), Place
         TODO("Not yet implemented")
     }
 
-    override fun getContainer(): Container {
+    override fun getContainer(): Rectangular {
         return c
     }
 
     override fun getID(): String {
-        return c.getID()+"-hub"
+        return id
     }
 
     override fun getLinks(): Collection<Connection> {

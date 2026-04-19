@@ -2,25 +2,26 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup.Companion.getAxisLayout
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
 /**
  * Represents a single vertex (glyph, context) within the diagram
  */
 abstract class AbstractLeafGroup(
-    override val connected: Connected,
-    override val container: Container?,
+    override val connected: GroupLinkNode,
+    override val container: Rectangular,
     groupNumber: Int,
     hc: Int,
 ) :
     AbstractGroup(groupNumber, hc), LeafGroup {
 
     override fun toString(): String {
-        return "[" + groupNumber + connected + "(" + (if (occupiesSpace()) "*" else ".") + (if (container is Diagram) "" else " c: " + container) + "," + axis + ")]"
+        return "[" + groupNumber + connected + "(" + (if (occupiesSpace()) "*" else ".") + (if (container is Diagram) "" else " c: $container") + "," + axis + ")]"
     }
 
     override fun contains(lg: Group): Boolean {
@@ -34,7 +35,7 @@ abstract class AbstractLeafGroup(
     override val height: Int = 0
     override val groupOrdinal: Int = groupNumber
     override val size: Int = 1
-    override var layout = container?.getLayout()
+    override var layout = getAxisLayout(container.getContainer())
 
     override fun sortLink(
         d: Direction?,

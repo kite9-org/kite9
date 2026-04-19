@@ -6,10 +6,11 @@ import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -89,7 +90,7 @@ abstract class AxisHandlingGroupingStrategy(
         if (isLinkAgainstAxis(out, ld)) {
             val aContainerMap = ms.getContainersFor(out.a)!!
             val bContainerMap = ms.getContainersFor(out.b)!!
-            val expandingContainers: MutableSet<Container?> = UnorderedSet(aContainerMap.keys)
+            val expandingContainers: MutableSet<Rectangular> = UnorderedSet(aContainerMap.keys)
             expandingContainers.retainAll(bContainerMap.keys)
             val axisChecker: LinkProcessor = object : LinkProcessor {
                 /**
@@ -118,7 +119,7 @@ abstract class AxisHandlingGroupingStrategy(
                     }
                 }
 
-                private fun isParentOrSelf(x: Container?, parent: Container): Boolean {
+                private fun isParentOrSelf(x: DiagramElement?, parent: DiagramElement): Boolean {
                     return if (x === parent) {
                         true
                     } else if (x == null) {
@@ -128,7 +129,7 @@ abstract class AxisHandlingGroupingStrategy(
                     }
                 }
 
-                private fun getFirstExpandingContainer(ms: BasicMergeState?, from: Container?): Container? {
+                private fun getFirstExpandingContainer(ms: BasicMergeState?, from: Rectangular?): Rectangular? {
                     return if (expandingContainers.contains(from)) {
                         from
                     } else if (from is ConnectedRectangular) {
@@ -190,7 +191,7 @@ abstract class AxisHandlingGroupingStrategy(
         }
     }
 
-    private fun getAxisLayoutForContainer(c: Container?): Layout? {
+    private fun getAxisLayoutForContainer(c: Rectangular?): Layout? {
         if (c == null) return null
         var layoutDirection = c.getLayout()
 
@@ -210,10 +211,10 @@ abstract class AxisHandlingGroupingStrategy(
      * Attempts to find a container shared by both a and b, in which both a and b actually have contents.
      * If there is no common content, then it returns false.
      */
-    private fun getCommonContainer(out: CompoundGroup): Container? {
+    private fun getCommonContainer(out: CompoundGroup): Rectangular? {
         val a2cs = ms.getContainersFor(out.a)!!
         val commonContainers = ms.getContainersFor(out.b)!!
-        var common: Container? = null
+        var common: Rectangular? = null
         for ((container, value) in a2cs) {
             if (value.hasContent() && ms.isContainerLive(container)) {
                 val bContained = commonContainers[container]
@@ -338,14 +339,11 @@ abstract class AxisHandlingGroupingStrategy(
         a.linkManager.notifyAxisChange()
     }
 
-    override fun createLeafGroup(ord: Connected, cnr: Container?): LeafGroup {
-        if (ord is Container) {
-            containerCount++
-        }
-        val out = DirectedLeafGroup(ord, cnr, groupCount, hashCodeGenerator.nextInt(), log, ms)
+    override fun createLeafGroup(gln: GroupLinkNode, ord: Rectangular): LeafGroup {
+        containerCount++
+        val out = DirectedLeafGroup(gln, ord, groupCount, hashCodeGenerator.nextInt(), log, ms)
         groupCount++
-        val layout = cnr?.getLayout()
-        out.layout = layout
+        allGroups.add(out)
         return out
     }
 
@@ -362,7 +360,7 @@ abstract class AxisHandlingGroupingStrategy(
         return out
     }
 
-    override fun isContainerCompleteInner(c: Container, ms: BasicMergeState): Boolean {
+    override fun isContainerCompleteInner(c: Rectangular, ms: BasicMergeState): Boolean {
         val csi = ms.getStateFor(c)
         if (csi!!.contents.size < 2) {
             csi.done = true

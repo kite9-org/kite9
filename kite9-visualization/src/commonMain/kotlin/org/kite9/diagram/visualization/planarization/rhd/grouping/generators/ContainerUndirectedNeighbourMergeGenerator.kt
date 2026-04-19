@@ -1,7 +1,8 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
@@ -22,16 +23,17 @@ class ContainerUndirectedNeighbourMergeGenerator(
         ms: BasicMergeState,
         grouper: GeneratorBasedGroupingStrategy
 ) : AbstractMergeGenerator(gp, ms, grouper) {
-    override fun containerIsLive(c: Container) {
+
+    override fun containerIsLive(c: Rectangular) {
         super.containerIsLive(c)
         dontDo[c] = UnorderedSet()
     }
 
     // keeps track of groups we've already done
-    var dontDo: MutableMap<Container, MutableSet<Group>> = HashMap()
+    var dontDo: MutableMap<Rectangular, MutableSet<Group>> = HashMap()
 
     private fun generateNeighboursForContainer(
-            c: Container,
+            c: Rectangular,
             ms: BasicMergeState,
             grouper: GeneratorBasedGroupingStrategy,
             mp: MergePlane

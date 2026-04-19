@@ -3,13 +3,13 @@ package org.kite9.diagram.dom.transform
 import org.kite9.diagram.dom.painter.LeafPainter
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.XMLProcessor
-import org.kite9.diagram.model.Leaf
+import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.w3c.dom.Document
 import org.w3c.dom.Element
 
-class RescalingTransformer(private val l: Leaf) :
+class RescalingTransformer(private val l: DiagramElement) :
         AbstractRectangularTransformer(), LeafTransformer {
 
     /** Ensures the decal is the same size as it's parent (for scaled decals) */

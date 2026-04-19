@@ -24,6 +24,6 @@ interface DiagramElement : Comparable<DiagramElement>, Deterministic {
      * Similar to parent element, but sometimes the parent doesn't do the containing.  e.g. with a terminator, the
      * container will be the thing the terminator is in, whereas the parent will be the link.
      */
-    fun getContainer() : Container?
+    fun getContainer() : Rectangular?
 
 }

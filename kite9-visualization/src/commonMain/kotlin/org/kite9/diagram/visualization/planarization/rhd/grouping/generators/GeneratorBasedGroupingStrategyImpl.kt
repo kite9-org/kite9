@@ -2,8 +2,9 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
@@ -209,7 +210,7 @@ class GeneratorBasedGroupingStrategyImpl(
         return (ms as GeneratorMergeState).rules!!
     }
 
-    override fun startContainerMerge(ms: BasicMergeState, c: Container) {
+    override fun startContainerMerge(ms: BasicMergeState, c: Rectangular) {
         super.startContainerMerge(ms, c)
         for (gen in (ms as GeneratorMergeState).generators!!) {
             gen.containerIsLive(c)

@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.compaction2.hierarchy
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
@@ -13,11 +12,10 @@ import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.C2Compaction
 import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
-import org.kite9.diagram.visualization.compaction2.anchors.Permeability
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
-import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
+import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo
@@ -47,7 +45,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
     }
 
-    fun findClosestToEdge(c: Container, d: Direction, allLeafGroups: Set<LeafGroup>) : Set<LeafGroup> {
+    fun findClosestToEdge(c: Rectangular, d: Direction, allLeafGroups: Set<LeafGroup>) : Set<LeafGroup> {
         val positions = allLeafGroups
             .map { e -> e to getEdgePosition(e, d) }
             .filter { (_, v) -> v != null }
@@ -72,7 +70,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
     }
 
-    private fun getPadding(c: Container, s: Side, d: Dimension) : Int {
+    private fun getPadding(c: Rectangular, s: Side, d: Dimension) : Int {
         val dir = if (s == Side.START) {
             if (d == Dimension.H) {
                 Direction.LEFT
@@ -95,7 +93,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
     }
 
     fun applyContainerEdge(so: C2SlackOptimisation,
-                           c: Container,
+                           c: Rectangular,
                            to: Set<LeafGroup>,
                            s: Side,
                            map: MutableMap<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
@@ -106,7 +104,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
 
         // slideable we are wrapping with
         val outer = checkCreateElement(c, dimension, so, null, topGroup)
-        val isGridCell = (c.getParent() as Container?)?.getLayout() == Layout.GRID
+        val isGridCell = c.getContainer()?.getLayout() == Layout.GRID
         val useOrbit = !isGridCell
 
         // inner orbits we can merge together
@@ -116,11 +114,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         val allAddedSlideables = mutableSetOf<C2Slideable>()
 
         // set if we're adding sides to an empty grid square
-        var hub : TemporaryContainerHub? = null
+        var hub : ConnectedGroupLinkNode? = null
 
         to.forEach { lg ->
-            if (lg.connected is TemporaryContainerHub) {
-                hub = lg.connected as TemporaryContainerHub
+            if (lg.connected is ConnectedGroupLinkNode) {
+                hub = lg.connected as ConnectedGroupLinkNode
             }
             val routables = map[lg]!!
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second
@@ -189,7 +187,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
     }
 
     private fun completeContainers(
-        c: Container,
+        c: Rectangular,
         co: C2Compaction,
         map: MutableMap<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
         topGroup: Group,
@@ -198,7 +196,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         val pp = rr.getPlacedPosition(c)
         if (pp == null) {
             c.getContents()
-                .filterIsInstance<Container>()
+                .filterIsInstance<Rectangular>()
                 .forEach { completeContainers(it, co, map, topGroup, elementMapping) }
 
             val allLeafGroups = c.getContents()

@@ -309,13 +309,13 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
             return Pair(hss, vss)
         } else if (e is PlacementPositioned) {
             // leaf node is a port
-            val f = g.container!!
+            val f = g.container
             var pvi : RoutableSlideableSet? = null
             var phi : RoutableSlideableSet?  = null
 
             val vso = c.getSlackOptimisation(Dimension.V)
             pvi = checkCreateIntersectionOnly(vso, g, f, Dimension.V)
-            val vr = checkCreateElement(f, Dimension.V, vso, null, topGroup)
+            val vr = checkCreateElement(f as Rectangular, Dimension.V, vso, null, topGroup)
             ensureCentreSlideablePosition(vso, vr, pvi.c, e.getContainerPosition(Dimension.V))
 
             val hso = c.getSlackOptimisation(Dimension.H)
@@ -352,7 +352,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, g
             return true
         }
 
-        if (item is Container) {
+        if (item is Rectangular) {
             val contents = item.getContents()
             if (contents.firstOrNull() { hasGroup(it) } != null) {
                 return true

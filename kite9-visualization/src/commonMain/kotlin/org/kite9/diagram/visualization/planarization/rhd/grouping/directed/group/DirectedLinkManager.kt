@@ -4,7 +4,7 @@ import kotlin.math.max
 import org.kite9.diagram.common.BiDirectional
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -242,7 +242,7 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
 
     fun sameContainer(`in`: Group?, ms: BasicMergeState): Boolean {
         var ac = containersFor(g, ms)
-        var bc: Set<Container?>? = emptySet()
+        var bc: Set<Rectangular?>? = emptySet()
         if (ac == null) {
             // deal with containers not being set to start with
             ac = containersFor((g as CompoundGroup).a, ms)
@@ -684,7 +684,8 @@ class DirectedLinkManager(private val ms: BasicMergeState, private val g: Group)
                 }
 
         private val NONE = Any()
-        private fun containersFor(a: Group?, ms: BasicMergeState): Set<Container>? {
+
+        private fun containersFor(a: Group?, ms: BasicMergeState): Set<Rectangular>? {
             val cf = ms.getContainersFor(a)
             return cf?.keys
         }

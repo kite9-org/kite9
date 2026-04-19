@@ -5,14 +5,16 @@ import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Connection
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.Terminator
 import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.End
+import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.w3c.dom.Element
@@ -38,7 +40,11 @@ class TerminatorImpl(
         markerReserve = ctx.getCssStyleDoubleProperty(CSSConstants.MARKER_RESERVE, theElement)
     }
 
-    override fun getContainer(): Container? {
+    override fun initContainerPosition() {
+
+    }
+
+    override fun getContainer(): Rectangular? {
         val c = getConnection()
         return when {
             this === c.getFromDecoration() -> {
@@ -48,7 +54,7 @@ class TerminatorImpl(
                 c.getTo().getContainer()
             }
             else -> {
-                throw ctx.contextualException("Couldn't get container for terminator " + getID(), theElement)
+                 throw ctx.contextualException("Couldn't get container for terminator " + getID(), theElement)
             }
         }
     }
@@ -117,6 +123,26 @@ class TerminatorImpl(
 
     override fun getSizing(horiz: Boolean): DiagramElementSizing {
         return DiagramElementSizing.MINIMIZE
+    }
+
+    override fun getContents(): List<DiagramElement> {
+        return emptyList()
+    }
+
+    override fun addTemporaryContent(t: Temporary) {
+        throw LogicException("Can't add contents to terminators")
+    }
+
+    override fun getTraversalRule(d: Direction): BorderTraversal {
+        throw LogicException("Can't traverse terminators")
+    }
+
+    override fun getGridColumns(): Int {
+        return 0
+    }
+
+    override fun getGridRows(): Int {
+        return 0
     }
 
     companion object {

@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd
 
 import org.kite9.diagram.common.BiDirectional
-import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
@@ -14,12 +13,12 @@ import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionContradicting
-import org.kite9.diagram.visualization.planarization.Tools.Companion.isConnectionRendered
-import org.kite9.diagram.visualization.planarization.rhd.grouping.TemporaryContainerHub
+import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryBiDirectional
+import kotlin.collections.contains
+import kotlin.math.max
 import kotlin.random.Random
 
 
@@ -47,185 +46,261 @@ abstract class GroupPhase(
 
 
     val allGroups: MutableSet<LeafGroup> = LinkedHashSet(elements * 2)
-    private val pMap: MutableMap<Connected, LeafGroup> = LinkedHashMap(elements * 2)
-    private val allLinks: MutableSet<Connection> = UnorderedSet(1000)
+    private val linkEndMap: MutableMap<Pair<Connection, Boolean>, LeafGroup> = LinkedHashMap(elements * 2)
+    private val done = mutableSetOf<DiagramElement>()
     protected val hashCodeGenerator = Random(elements.toLong())
+
+    private fun populateContainerPortsLeafGroups(ord: Rectangular) : Int {
+        var created = 0
+        // creates a LeafGroup for every port in the container,
+        // ensure we respect the port ordering, if we can ascertain one.
+        val allPorts = ord.getContents()
+            .filterIsInstance<Port>()
+            .groupBy { it.getPortDirection() }
+
+        allPorts.forEach { (d, ports) ->
+            val portGroups = ports.groupBy {
+                val pp = it.getContainerPosition(Direction.getDimension(d))
+                when (pp.type) {
+                    Measurement.PIXELS -> if (pp.amount < 0) 0 else 1
+                    Measurement.PERCENTAGE, Measurement.NONE -> 2
+                }
+            }
+
+            portGroups.values.forEach { l ->
+                val sortedPorts = l.sortedBy {
+                    val side = it.getPortDirection()
+                    it.getContainerPosition(Direction.getDimension(side)).amount
+                }
+                val directionBasedOnSide = when(d) {
+                    Direction.UP, Direction.DOWN -> Direction.RIGHT
+                    Direction.LEFT, Direction.RIGHT -> Direction.DOWN
+                }
+                var prevLg : LeafGroup? = null
+                sortedPorts.forEach { next ->
+                    val lg = createLeafGroup(next, ord)
+                    created ++
+                    if (prevLg != null) {
+                        val tc = OrderingTemporaryBiDirectional(prevLg.connected, next, directionBasedOnSide)
+                        prevLg.sortLink(directionBasedOnSide, lg, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                        lg.sortLink(Direction.reverse(directionBasedOnSide), prevLg, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                    }
+                    prevLg = lg
+                }
+            }
+        }
+
+        return created
+    }
+
+    /**
+     * Creates LeafGroups between elements where the layout is left, right, up, down
+     * to enforce that ordering.
+     */
+    private fun populateNonGridLayoutLeafGroups(ord: Rectangular) : Int {
+        var created = 0
+        val l = ord.getLayout()
+
+        fun addContainerOrderingInfo(
+            current: LeafGroup,
+            prev: LeafGroup,
+        ) {
+            val d = getDirectionForLayout(l)
+            val tc = OrderingTemporaryBiDirectional(prev.connected, current.connected, d)
+            prev.sortLink(d, current, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+            current.sortLink(reverse(d), prev, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+        }
+
+        val contents = ord.getContents()
+            .filterIsInstance<ConnectedRectangular>()
+
+        var prevLg = null
+
+        contents.forEach { nextE ->
+            created += populateLeafGroups(nextE)
+            if ((prevLg != null) && (TEMPORARY_NEEDED.contains(l))) {
+                val gln = ConnectedGroupLinkNode(nextE, "-hub")
+
+                val nextLg = createLeafGroup(gln, nextE)
+                created++
+                addContainerOrderingInfo(nextLg, prevLg)
+            }
+        }
+
+        return created
+    }
+
+    private fun populateGridContentsLeafGroups(ord: Rectangular) : Int {
+        var created = 0
+        // need to iterate in 2d
+        val grid = gp.placeOnGrid(ord)
+        val gridGroups = mutableMapOf<Pair<Int, Int>, LeafGroup>()
+
+        // create unconnected groups
+        for (y in grid.indices) {
+            for (x in grid[0].indices) {
+                val pos = Pair(x, y)
+                val de = grid[y][x]
+                created += populateLeafGroups(de as ConnectedRectangular)
+                val gln = ConnectedGroupLinkNode(ord, "-grid", pos)
+                val ggGrid = createLeafGroup(gln, de)
+                created++
+                gridGroups[pos] = ggGrid
+            }
+        }
+
+        // link them up
+        for (y in grid.indices) {
+            for (x in grid[0].indices) {
+                val pos = Pair(x, y)
+                val above = if (y>0) Pair(x,y -1 ) else null
+                val before = if (x>0) Pair(x-1, y) else null
+                val c = grid[y][x]
+                val g = gridGroups[pos]!!
+                val aboveG = gridGroups[above]
+                val beforeG = gridGroups[before]
+                if (g !== beforeG && beforeG != null) {
+                    val tc = OrderingTemporaryBiDirectional(beforeG.connected, g.connected, Direction.RIGHT)
+                    beforeG.sortLink(Direction.RIGHT, g, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                    g.sortLink(Direction.LEFT, beforeG, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                }
+                if (g !== aboveG && aboveG != null) {
+                    val tc = OrderingTemporaryBiDirectional(aboveG.connected, g.connected, Direction.DOWN)
+                    aboveG.sortLink(Direction.DOWN, g, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                    g.sortLink(Direction.UP, aboveG, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
+                }
+            }
+        }
+
+        return created
+    }
+
+    fun populateEmptyElementLeafGroup(ord: Rectangular) : Int {
+        // ok, so nothing connects to this, but we still need to create a
+        // leaf group for it of some sort.
+        val gln = ConnectedGroupLinkNode(ord, "-bareleaf")
+        createLeafGroup(gln, ord)
+        return 1
+    }
+
+    fun populateConnectedElementLeafGroups(ord: Rectangular) : Int {
+        var created = 0
+        val connectionsByDimension =
+            (ord as? Connected)?.getLinks()
+                ?.groupBy {
+                    if (it.getDrawDirection() == null)
+                        null
+                    else
+                        Direction.getDimension(it.getDrawDirection()!!)
+                } ?: emptyMap()
+
+        val directedLeafGroupsNeeded = max(
+            connectionsByDimension[Dimension.H]?.size ?: 0,
+            connectionsByDimension[Dimension.V]?.size ?: 0)
+
+        // map the directed links
+        for (i in 1..directedLeafGroupsNeeded) {
+            val gln = ConnectedGroupLinkNode(ord, "-dl$i")
+            val lg = createLeafGroup(gln, ord)
+            created ++
+            val hLink = connectionsByDimension[Dimension.H]?.getOrNull(i-1)
+            val vLink = connectionsByDimension[Dimension.V]?.getOrNull(i-1)
+
+            if (hLink != null) {
+                val hFrom = hLink?.getFrom() == ord
+                linkEndMap[Pair(hLink, hFrom)] = lg
+            }
+
+            if (vLink != null) {
+                val vFrom = vLink?.getFrom() == ord
+                linkEndMap[Pair(vLink, vFrom)] = lg
+            }
+        }
+
+        // for now, map all undirected links to the same node
+        val undirectedConnections = connectionsByDimension[null]
+        if (undirectedConnections?.isNotEmpty() ?: false) {
+            val gln = ConnectedGroupLinkNode(ord, "-und")
+            val lg = createLeafGroup(gln, ord)
+            created ++
+            undirectedConnections.forEach {
+                val from = it.getFrom() == ord
+                linkEndMap[Pair(it, from)] = lg
+            }
+        }
+
+        return created
+    }
 
     /**
      * Creates leaf groups and any ordering between them, recursively.
      * @param ord  The object to create the group for
-     * @param prev1 Previous element in the container
-     * @param pMap Map of Connected to LeafGroups (created)
      */
     private fun populateLeafGroups(
-        ord: Connected,
-        prev1: ConnectedRectangular?,
-        pMap: MutableMap<Connected, LeafGroup>
-    ): LeafGroup? {
-        if (pMap[ord] != null) {
+        ord: Rectangular
+    ) : Int {
+        if (done.contains(ord)) {
             throw LogicException("Diagram Element $ord appears multiple times in the diagram definition")
         }
-        val cnr = ord.getContainer()
-        val leaf = needsLeafGroup(ord)
-        var g: LeafGroup? = null
-        if (leaf) {
-            g = createLeafGroup(ord, cnr)
-            pMap[ord] = g
-            allGroups.add(g)
-        }
-        if (prev1 != null && prev1 !== ord && ord is ConnectedRectangular) {
-            addContainerOrderingInfo(ord, prev1, cnr, null)
-        }
+
+        val leaf = needsSelfLeafGroups(ord)
+        var created = 0
+
         if (!leaf) {
-            val l = (ord as Container).getLayout()
+            // handle element contents of this element
+            val l = ord.getLayout()
             if (l === Layout.GRID) {
-                // need to iterate in 2d
-                val grid = gp.placeOnGrid((ord as Container))
-
-                // create unconnected groups
-                val gridGroups: MutableMap<DiagramElement, LeafGroup> = LinkedHashMap()
-                for (y in grid.indices) {
-                    for (x in grid[0].indices) {
-                        val de = grid[y][x]
-                        if (!gridGroups.containsKey(de)) {
-                            var gg = populateLeafGroups(de as ConnectedRectangular, null, pMap)
-                            if (gg == null) {
-                                gg = getConnectionEnd(de, Pair(x, y))
-                            }
-                            gridGroups[de] = gg
-                        }
-                    }
-                }
-
-                // link them up
-                for (y in grid.indices) {
-                    for (x in grid[0].indices) {
-                        val prevy = (if (y > 0) grid[y - 1][x] else null) as ConnectedRectangular?
-                        val prevx = (if (x > 0) grid[y][x - 1] else null) as ConnectedRectangular?
-                        val c = grid[y][x] as ConnectedRectangular
-                        if (c !== prevx && prevx != null) {
-                            val tc = OrderingTemporaryBiDirectional(prevx, c, Direction.RIGHT, cnr!!)
-                            val from = gridGroups[prevx]!!
-                            val to = gridGroups[c]!!
-                            from.sortLink(Direction.RIGHT, to, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-                            to.sortLink(Direction.LEFT, from, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-                        }
-                        if (c !== prevy && prevy != null) {
-                            val tc = OrderingTemporaryBiDirectional(prevy, c, Direction.DOWN, cnr!!)
-                            val from = gridGroups[prevy]!!
-                            val to = gridGroups[c]!!
-                            from.sortLink(Direction.DOWN, to, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-                            to.sortLink(Direction.UP, from, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-                        }
-                    }
-                }
+                created += populateGridContentsLeafGroups(ord)
             } else {
-                var prev: ConnectedRectangular? = null
-                var hasPorts = false
-                var hasRectangulars = false
-                for (c in (ord as Container).getContents()) {
-                    if (c is Connected) {
-                        populateLeafGroups(c, prev, pMap)
-                        if (c is ConnectedRectangular) {
-                            prev = c
-                            hasRectangulars = true
-                        } else if (c is Port) {
-                            hasPorts = true
-                        }
-                    }
-                }
-
-                if (hasPorts) {
-                    // ensure we respect the port ordering, if we can ascertain one.
-
-                    val allPorts = (ord as Container).getContents()
-                        .filterIsInstance<Port>()
-                        .groupBy { it.getPortDirection() }
-
-                    allPorts.forEach { (d, ports) ->
-                        val portGroups = ports.groupBy {
-                            val pp = it.getContainerPosition(Direction.getDimension(d))
-                            when (pp.type) {
-                                Measurement.PIXELS -> if (pp.amount < 0) 0 else 1
-                                Measurement.PERCENTAGE, Measurement.NONE -> 2
-                            }
-                        }
-
-                        portGroups.values.forEach { l ->
-                            val sortedPorts = l.sortedBy {
-                                val side = it.getPortDirection()
-                                it.getContainerPosition(Direction.getDimension(side)).amount
-                            }
-                            val directionBasedOnSide = when(d) {
-                                Direction.UP, Direction.DOWN -> Direction.RIGHT
-                                Direction.LEFT, Direction.RIGHT -> Direction.DOWN
-                            }
-                            var prev : Port? = null
-                            sortedPorts.forEach { next ->
-                                if (prev != null) {
-                                    val from = pMap[prev]
-                                    val to = pMap[next]
-                                    if ((from != null) && (to != null)) {
-                                        val tc = OrderingTemporaryBiDirectional(prev, next, directionBasedOnSide, ord)
-                                        from.sortLink(directionBasedOnSide, to, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-                                        to.sortLink(Direction.reverse(directionBasedOnSide), from, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-                                    }
-                                }
-                                prev = next
-                            }
-                        }
-                    }
-                }
-
-                if (hasPorts && !hasRectangulars) {
-                    val tc = ef.createTemporaryConnected(ord, "-port-placeholder")
-                    populateLeafGroups(tc, null, pMap)
-                }
+                created += populateNonGridLayoutLeafGroups(ord)
             }
-        }
-        return g
-    }
 
-    private fun setupLinks(o: DiagramElement) {
-        if (o is Connected) {
-            if (o is Port) {
-                ch.checkForPortContradiction(o)
-            }
-            for (c in o.getLinks()) {
-                if (!allLinks.contains(c)) {
-                    allLinks.add(c)
-                    ch.checkForContainerContradiction(c)
-                    if (isConnectionRendered(c)) {
-                        val to = getConnectionEnd(c.otherEnd(o), null)
-                        val from = getConnectionEnd(o, null)
-                        var d = c.getDrawDirectionFrom(o)
-                        if (isConnectionContradicting(c)) {
-                            d = null
-                        }
-                        val ordering = false ///c instanceof OrderingTemporaryBiDirectional;
-                        from.sortLink(d, to, LINK_WEIGHT, ordering, getLinkRank(c), single(c))
-                        to.sortLink(reverse(d), from, LINK_WEIGHT, ordering, getLinkRank(c), single(c))
-                    }
-                }
-            }
-        }
-        if (o is Container) {
-            for (o2 in o.getContents()) {
-                setupLinks(o2)
-            }
-        }
-    }
+            // handle port contents of this element
+            created += populateContainerPortsLeafGroups(ord)
 
-    private fun getLinkRank(c: Connection): Int {
-        return if (c.getDrawDirection() != null) {
-            c.getRank()
+            // handle connections to this element
+            created += populateConnectedElementLeafGroups(ord)
+            if (created == 0) {
+                created += populateEmptyElementLeafGroup(ord)
+            }
         } else {
-            0
+            created +=populateConnectedElementLeafGroups(ord)
+            if (created == 0) {
+                created += populateEmptyElementLeafGroup(ord)
+            }
         }
+
+        return created
     }
 
-    private fun needsLeafGroup(ord: Connected): Boolean {
-        return if (ord is Diagram && !hasConnectedContents(ord as Diagram)) {
+    private fun setupLinks() {
+
+        fun getLinkRank(c: Connection): Int {
+            return if (c.getDrawDirection() != null) {
+                c.getRank()
+            } else {
+                0
+            }
+        }
+
+        linkEndMap.entries
+            .groupBy { it.key.first }
+            .forEach { (c, value) ->
+                if (value.size != 2) {
+                    throw LogicException("Should be two ends for every connection")
+                }
+                val first = value[0]
+                val second = value[1]
+                val from = if (first.key.second) first.value else second.value
+                val to = if (first.key.second) second.value else first.value
+                from.sortLink(c.getDrawDirectionFrom(from.container as Connected), to, LINK_WEIGHT, true, getLinkRank(c), single(c))
+                to.sortLink(c.getDrawDirectionFrom(to.container as Connected), from, LINK_WEIGHT, true, Int.MAX_VALUE, single(c))
+            }
+    }
+
+
+    private fun needsSelfLeafGroups(ord: Rectangular): Boolean {
+        return if (ord is Diagram && !hasConnectedContents(ord)) {
             // we need at least one group in the GroupPhase, so if the diagram is empty, return a
             // single leaf group.
             true
@@ -240,7 +315,7 @@ abstract class GroupPhase(
             return true
         }
         // does anything inside it have connections?
-        if (c is Container) {
+        if (c is Rectangular) {
             for (de in c.getContents()) {
                 if (hasNestedConnections(de)) {
                     return true
@@ -256,7 +331,7 @@ abstract class GroupPhase(
 
         // is it embedded in a grid?  If yes, use corners
         if (c is ConnectedRectangular) {
-            val l = if (c.getParent() == null) null else (c.getParent() as Container?)!!.getLayout()
+            val l = c.getContainer()?.getLayout()
             return l == Layout.GRID
         }
 
@@ -271,7 +346,7 @@ abstract class GroupPhase(
     }
 
     private fun isElementTraversible(c: DiagramElement, d: Direction): Boolean {
-        return if (c is Container) {
+        return if (c is Rectangular) {
             c.getTraversalRule(d) == BorderTraversal.ALWAYS
         } else false
     }
@@ -287,7 +362,7 @@ abstract class GroupPhase(
         if (c is Connected) {
             has = c.getLinks().size > 0
         }
-        if (has == false && c is Container) {
+        if (has == false && c is Rectangular) {
             for (de in c.getContents()) {
                 if (hasNestedConnections(de)) {
                     has = true
@@ -309,28 +384,7 @@ abstract class GroupPhase(
         return false
     }
 
-    private fun addContainerOrderingInfo(
-        current: ConnectedRectangular,
-        prev: ConnectedRectangular?,
-        cnr: Container?,
-        gridDimension: Dimension?
-    ) {
-        if (prev == null) return
-        val l = cnr!!.getLayout()
-        var d: Direction? = null
-        if (TEMPORARY_NEEDED.contains(l)) {
-            d = getDirectionForLayout(l)
-        } else if (gridDimension != null) {
-            d = if (gridDimension === Dimension.H) Direction.RIGHT else Direction.DOWN
-        }
-        if (d != null) {
-            val tc = OrderingTemporaryBiDirectional(prev, current, d, cnr)
-            val from = getConnectionEnd(prev, null)
-            val to = getConnectionEnd(current, null)
-            from.sortLink(d, to, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-            to.sortLink(reverse(d), from, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
-        }
-    }
+
 
 
     var groupCount = 0
@@ -339,31 +393,6 @@ abstract class GroupPhase(
 
     private fun single(c: BiDirectional<Connected>): Set<BiDirectional<Connected>> {
         return setOf(c)
-    }
-
-    /**
-     * This has to handle decomposition
-     */
-    private fun getConnectionEnd(oe: Connected, gridPos: Pair<Int, Int>?): LeafGroup {
-        val otherGroup = pMap[oe]
-        return if (otherGroup == null) {
-            if (needsLeafGroup(oe)) {
-                val decomp = createLeafGroup(oe, oe.getContainer())
-                allGroups.add(decomp)
-                decomp
-            } else {
-                val hub = TemporaryContainerHub(oe as Container)
-                val decomp = createLeafGroup(hub, oe as Container)
-                oe.addTemporaryContent(hub)
-                if (gridPos != null) {
-                    hub.gridPosition = gridPos
-                }
-                allGroups.add(decomp)
-                decomp
-            }
-        } else {
-            otherGroup
-        }
     }
 
     companion object {
@@ -414,8 +443,8 @@ abstract class GroupPhase(
 
 
     override fun buildInitialGroups() {
-        populateLeafGroups(top as ConnectedRectangular, null, pMap)
-        setupLinks(top)
+        populateLeafGroups(top as ConnectedRectangular)
+        setupLinks()
         for (group in allGroups) {
             group.log(log)
         }

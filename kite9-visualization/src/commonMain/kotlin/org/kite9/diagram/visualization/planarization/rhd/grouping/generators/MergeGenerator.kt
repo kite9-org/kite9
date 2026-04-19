@@ -1,6 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.generators
 
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
@@ -17,5 +18,5 @@ interface MergeGenerator {
     /**
      * Signals that a container has become live.
      */
-    fun containerIsLive(c: Container)
+    fun containerIsLive(c: Rectangular)
 }

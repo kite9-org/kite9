@@ -5,7 +5,6 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.AlignedRectangular
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.isHorizontal
@@ -32,7 +31,7 @@ class C2CenteringAligner : Aligner, Logable {
 
     private var log = Kite9Log.instance(this)
 
-    override fun alignFor(co: Container, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
+    override fun alignFor(co: Rectangular, de: Set<Rectangular>, c: C2Compaction, d: Dimension) {
         val sso = c.getSlackOptimisation(d)
         log.send("Center Align: $d $co", de)
         val l = co.getLayout()

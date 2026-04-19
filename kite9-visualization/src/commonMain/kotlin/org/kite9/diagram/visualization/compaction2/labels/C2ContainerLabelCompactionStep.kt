@@ -25,10 +25,10 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         }
     }
 
-    private fun addLabels(c: Container, c2: C2Compaction) {
+    private fun addLabels(c: Rectangular, c2: C2Compaction) {
         // handle recursion
         c.getContents()
-            .filterIsInstance<Container>()
+            .filterIsInstance<Rectangular>()
             .forEach { addLabels(it, c2) }
 
         val allContent = c.getContents()
@@ -72,7 +72,7 @@ class C2ContainerLabelCompactionStep(cd: CompleteDisplayer, gp: GridPositioner) 
         }
     }
 
-    private fun addLabelsToSide(d: Direction, ll: List<Label>, c: Container, c2: C2Compaction, allContent: List<Rectangular>) {
+    private fun addLabelsToSide(d: Direction, ll: List<Label>, c: Rectangular, c2: C2Compaction, allContent: List<Rectangular>) {
         if (ll.isEmpty()) {
             return
         }

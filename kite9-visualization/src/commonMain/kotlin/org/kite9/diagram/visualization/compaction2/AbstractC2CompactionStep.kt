@@ -3,11 +3,7 @@ package org.kite9.diagram.visualization.compaction2
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Container
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.PlacementPositioned
-import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
@@ -88,7 +84,6 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
             }
             null -> {
             }
-            else -> throw LogicException("Unknown type")
         }
     }
 
@@ -134,11 +129,9 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
     }
 
     fun visitRectangulars(r: Rectangular, f: (r: Rectangular) -> Unit) {
-        if (r is Container) {
-            r.getContents()
-                .filterIsInstance<Rectangular>()
-                .forEach { visitRectangulars(it, f) }
-        }
+        r.getContents()
+            .filterIsInstance<Rectangular>()
+            .forEach { visitRectangulars(it, f) }
 
         f(r)
     }

@@ -2,8 +2,9 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.rules
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.logging.LogicException
+import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
@@ -120,9 +121,9 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
             ms: BasicMergeState,
             alignedSide: Direction?
     ): Boolean {
-        val ac: Set<Container> = ms.getContainersFor(a)!!.keys
-        val bc: Set<Container> = ms.getContainersFor(b)!!.keys
-        val alignedc: Set<Container> = ms.getContainersFor(aligned)!!.keys
+        val ac: Set<Rectangular> = ms.getContainersFor(a)!!.keys
+        val bc: Set<Rectangular> = ms.getContainersFor(b)!!.keys
+        val alignedc: Set<Rectangular> = ms.getContainersFor(aligned)!!.keys
         for (con in alignedc) {
             if (ms.isContainerLive(con)) {
                 // a and b sharing a container with alignedGroup will fail if con has a layout
@@ -238,7 +239,7 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
         return a.size == b.size && a.containsAll(b)
     }
 
-    private fun checkContainerAllowsAlignedMerge(c: Container?, alignedState: MergePlane): Boolean {
+    private fun checkContainerAllowsAlignedMerge(c: Rectangular?, alignedState: MergePlane): Boolean {
         // exclude merge options where the aligned merge is incompatible with the container
         if (c!!.getLayout() === Layout.HORIZONTAL) {
             if (alignedState === MergePlane.X_FIRST_MERGE) {
@@ -252,11 +253,11 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
         return true
     }
 
-    fun checkSharedContainers(ac: Set<Container?>?, bc: Set<Container?>?, mp: MergePlane): Boolean {
+    fun checkSharedContainers(ac: Set<Rectangular?>?, bc: Set<Rectangular?>?, mp: MergePlane): Boolean {
         var ac = ac
         var bc = bc
         if (ac == null || bc == null) throw LogicException("Group has no containers?")
-        val done: MutableSet<Container?> = UnorderedSet(ac.size + bc.size)
+        val done: MutableSet<Rectangular?> = UnorderedSet(ac.size + bc.size)
         var cont = false
         for (c1 in ac) {
             if (bc.contains(c1)) {
@@ -277,8 +278,8 @@ class AlignedDirectedPriorityRule(val axis: Boolean) : PriorityRule {
         }
     }
 
-    private fun getParentContainers(ac: Set<Container?>, done: Set<Container?>): Set<Container?> {
-        val out: MutableSet<Container?> = UnorderedSet(ac.size)
+    private fun getParentContainers(ac: Set<Rectangular?>, done: Set<Rectangular?>): Set<Rectangular?> {
+        val out: MutableSet<Rectangular?> = UnorderedSet(ac.size)
         for (c in ac) {
             if (!done.contains(c) && c is ConnectedRectangular) {
                 out.add((c as ConnectedRectangular).getContainer())

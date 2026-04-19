@@ -3,9 +3,8 @@ package org.kite9.diagram.dom.model
 import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
@@ -13,23 +12,40 @@ import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.ContentTransform
 import org.w3c.dom.Element
 
-/**
- * Container and link-end labels. (TEMPORARY)
- *
- * @author robmoffat
- */
-class LabelContainerImpl(
+open class ConnectedRectangularImpl(
     el: Element,
-    parent: DiagramElement,
+    parent: DiagramElement?,
     ctx: ElementContext,
     rp: Painter,
     t: ContentTransform
-) : AbstractLabel(
+) : AbstractConnectedRectangular(
     el, parent, ctx, rp, t
-), Label, Container {
+) {
+
+    companion object {
+        val TRAVERSAL_PROPERTIES: MutableMap<Direction, String> = HashMap()
+
+        init {
+            TRAVERSAL_PROPERTIES[Direction.UP] =
+                CSSConstants.TRAVERSAL_TOP_PROPERTY
+            TRAVERSAL_PROPERTIES[Direction.DOWN] =
+                CSSConstants.TRAVERSAL_BOTTOM_PROPERTY
+            TRAVERSAL_PROPERTIES[Direction.LEFT] =
+                CSSConstants.TRAVERSAL_LEFT_PROPERTY
+            TRAVERSAL_PROPERTIES[Direction.RIGHT] =
+                CSSConstants.TRAVERSAL_RIGHT_PROPERTY
+        }
+    }
+
+    override fun initialize() {
+        super.initialize()
+        initLayout()
+        initSizing()
+        initConnections()
+    }
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
-        return BorderTraversal.PREVENT
+        return ElementContext.getCssStyleEnumProperty<BorderTraversal>(TRAVERSAL_PROPERTIES[d]!!, theElement, ctx)!!
     }
 
     override fun getGridColumns(): Int {
@@ -46,6 +62,12 @@ class LabelContainerImpl(
         } else {
             0
         }
+    }
+
+    fun initConnections() {
+        ctx.getChildDiagramElements(this)
+            .filterIsInstance<Connection>()
+            .forEach { registerConnection(it) }
     }
 
     private val temporaryElements = mutableListOf<Temporary>()

@@ -33,12 +33,12 @@ class ConnectionImpl(
 
     override fun initialize() {
         super.initialize()
-        initLabelsAndDecorations()
         initReferences()
         initFromTo()
         initDrawDirection()
         initRank()
         initSize()
+        initLabelsAndDecorations()
     }
 
     private fun initReferences() {
@@ -277,7 +277,7 @@ class ConnectionImpl(
         } else drawDirection
     }
 
-    override fun getContainer() : Container? {
+    override fun getContainer() : Rectangular? {
         return diagram
     }
 }

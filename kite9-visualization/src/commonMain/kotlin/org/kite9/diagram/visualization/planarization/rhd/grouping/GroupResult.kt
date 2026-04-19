@@ -1,7 +1,8 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
-import org.kite9.diagram.model.Container
+import org.kite9.diagram.model.Connected
+import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
@@ -10,25 +11,25 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Gr
  */
 abstract class GroupResult {
 
-	protected val containerStates: MutableMap<Container, ContainerStateInfo> = mutableMapOf()
+	protected val containerStates: MutableMap<Rectangular, ContainerStateInfo> = mutableMapOf()
 
     abstract fun groups(): Collection<Group>
 
-    open fun getStateFor(c: Container): ContainerStateInfo? {
+    open fun getStateFor(c: Rectangular): ContainerStateInfo? {
         return containerStates[c]
     }
 
-    fun getContainers() : Collection<Container> {
+    fun getContainers() : Collection<Rectangular> {
         return containerStates.keys
     }
 
-    inner class ContainerStateInfo(c: Container) {
+    inner class ContainerStateInfo(c: Rectangular) {
 		val contents: MutableSet<Group>
-		val incompleteSubcontainers: MutableSet<Container>
+		val incompleteSubcontainers: MutableSet<Rectangular>
 		var done = false
 
         init {
-            contents = LinkedHashSet(c.getContents().size * 2)
+            contents = LinkedHashSet((c.getContents().size ?: 0) * 2)
             incompleteSubcontainers = UnorderedSet(4)
             containerStates[c] = this
         }

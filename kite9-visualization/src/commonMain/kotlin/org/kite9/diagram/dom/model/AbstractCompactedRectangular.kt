@@ -88,9 +88,9 @@ abstract class AbstractCompactedRectangular(
     override fun getSize(within: Dimension2D): CostedDimension2D {
         if (this is Decal) {
             throw LogicException("Shouldn't be using size for decals")
-        } else if (this is Container) {
+        } else if (this is Rectangular) {
             return ensureMinimumSize(sizeBasedOnPadding, within)
-        } else if (this is Leaf) {
+        } else {
             val left = getPadding(Direction.LEFT)
             val right = getPadding(Direction.RIGHT)
             val up = getPadding(Direction.UP)

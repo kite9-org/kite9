@@ -39,25 +39,23 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
                 throw LogicException("Slideable issue")
             }
             rri.size = size
-            if (r is Container) {
-                r.getContents()
-                    .filterIsInstance<Port>()
-                    .forEach { visit(it, c, position, size) }
+
+            r.getContents()
+                .filterIsInstance<Port>()
+                .forEach { visit(it, c, position, size) }
+        }
+
+
+        r.getContents()
+            .filterIsInstance<Rectangular>()
+            .forEach { visit(it, c) }
+
+        r.getContents()
+            .filterIsInstance<Connection>()
+            .forEach { conn ->
+                conn.getFromLabel()?.let { visit(it, c) }
+                conn.getToLabel()?.let { visit(it, c) }
             }
-        }
-
-        if (r is Container) {
-            r.getContents()
-                .filterIsInstance<Rectangular>()
-                .forEach { visit(it, c) }
-
-            r.getContents()
-                .filterIsInstance<Connection>()
-                .forEach { conn ->
-                    conn.getFromLabel()?.let { visit(it, c) }
-                    conn.getToLabel()?.let { visit(it, c) }
-                }
-        }
     }
 
     private fun visit(p: Port, c: C2Compaction, position: Dimension2D, size: Dimension2D) {

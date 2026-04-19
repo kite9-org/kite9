@@ -2,7 +2,7 @@ package org.kite9.diagram.common.elements.factory
 
 import org.kite9.diagram.model.*
 
-abstract class AbstractTemporaryConnectedRectangular(private val _id: String, private val p: DiagramElement) : AbstractDiagramElement(p), TemporaryConnectedRectangular {
+abstract class AbstractTemporaryConnectedRectangular(private val _id: String, private val p: Rectangular) : AbstractDiagramElement(p), TemporaryConnectedRectangular {
 
     private val links: Collection<Connection> = ArrayList()
 
@@ -23,8 +23,12 @@ abstract class AbstractTemporaryConnectedRectangular(private val _id: String, pr
         return firstConnectionTo(c) != null
     }
 
-    override fun getContainer(): Container {
-        return getParent() as Container
+    override fun getContainer(): Rectangular {
+        return getParent()
+    }
+
+    override fun getParent() : Rectangular {
+        return p
     }
 
     override fun getID(): String {

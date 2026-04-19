@@ -2,7 +2,6 @@ package org.kite9.diagram.dom.transform
 
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Leaf
 import org.kite9.diagram.model.style.ContentTransform
 
 object TransformFactory {
@@ -17,16 +16,8 @@ object TransformFactory {
             t = defaultTransform
         }
         return when (t) {
-            ContentTransform.RESCALE, ContentTransform.CROP -> {
-                if (diagramElement is Leaf) {
-                    if (t === ContentTransform.RESCALE) {
-                        return RescalingTransformer(diagramElement)
-                    } else if (t === ContentTransform.CROP) {
-                        return CroppingTransformer(diagramElement)
-                    }
-                }
-                PositioningTransformer(diagramElement)
-            }
+            ContentTransform.RESCALE -> RescalingTransformer(diagramElement)
+            ContentTransform.CROP -> CroppingTransformer(diagramElement)
             ContentTransform.POSITION -> PositioningTransformer(diagramElement)
             ContentTransform.NONE -> NoopTransformer()
             ContentTransform.NORMAL ->
