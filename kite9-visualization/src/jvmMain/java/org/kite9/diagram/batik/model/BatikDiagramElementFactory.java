@@ -11,6 +11,7 @@ import org.kite9.diagram.dom.model.TemporaryConnectedRectangularImpl;
 import org.kite9.diagram.dom.painter.*;
 import org.kite9.diagram.model.ConnectedRectangular;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.position.End;
 import org.kite9.diagram.model.style.DiagramElementType;
 import org.kite9.diagram.model.style.RectangularElementUsage;
 import org.w3c.dom.Element;
@@ -43,12 +44,13 @@ public class BatikDiagramElementFactory extends AbstractDiagramElementFactory<El
 	public DiagramElement createDiagramElement(Element x, DiagramElement parent) {
 		DiagramElementType type = getCssStyleEnumProperty(CSSConstants.ELEMENT_TYPE_PROPERTY, x, getContext(), DiagramElementType.class);
 		RectangularElementUsage usage = getCssStyleEnumProperty(CSSConstants.ELEMENT_USAGE_PROPERTY, x, getContext(), RectangularElementUsage.class);
+        End end = getCssStyleEnumProperty(CSSConstants.LINK_END, x, getContext(), End.class);
 
 		if ((type == null) || (usage == null)) {
 			return null;
 		}
 
-		DiagramElement out = instantiateDiagramElement(parent, x, type, usage);
+		DiagramElement out = instantiateDiagramElement(parent, x, type, usage, end);
 
 		if (out != null) {
 			if (parent != null) {

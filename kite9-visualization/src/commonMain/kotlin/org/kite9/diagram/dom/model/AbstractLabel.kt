@@ -19,23 +19,21 @@ abstract class AbstractLabel(
     parent: DiagramElement,
     ctx: ElementContext,
     rp: Painter,
-    t: ContentTransform
+    t: ContentTransform,
+    private val end: End?
 ) : AbstractCompactedRectangular(
     el, parent, ctx, rp, t
 ), Label, LayoutAligns {
 
-    private var end: End? = null
     private var labelPlacement: Direction? = null
 
     override fun initialize() {
         super.initialize()
-        end = ElementContext.getCssStyleEnumProperty<End>(CSSConstants.LINK_END, theElement, ctx)
         labelPlacement = ElementContext.getCssStyleEnumProperty<Direction>(CSSConstants.DIRECTION, theElement, ctx)
     }
 
     override fun isConnectionLabel(): Boolean {
-        ensureInitialized()
-        return getParent() !is Rectangular
+        return end != null
     }
 
     /**
@@ -68,11 +66,6 @@ abstract class AbstractLabel(
         }
     }
 
-    override fun getEnd(): End? {
-        ensureInitialized()
-        return end
-    }
-
     override fun getLabelPlacement(): Direction? {
         ensureInitialized()
         return labelPlacement
@@ -95,5 +88,9 @@ abstract class AbstractLabel(
 
     override fun setHorizontalAlignment(ha: HorizontalAlignment) {
         overrideHorizontalAlignment = ha
+    }
+
+    override fun getEnd() : End? {
+        return end
     }
 }

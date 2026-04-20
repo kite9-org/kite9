@@ -4,16 +4,16 @@ import org.kite9.diagram.dom.bridge.ElementContext
 import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.DiagramElement
-import org.kite9.diagram.model.Label
 import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.End
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.ContentTransform
 import org.w3c.dom.Element
 
 /**
- * Container and link-end labels. (TEMPORARY)
+ * Container and link-end labels.
  *
  * @author robmoffat
  */
@@ -22,10 +22,11 @@ class LabelImpl(
     parent: DiagramElement,
     ctx: ElementContext,
     rp: Painter,
-    t: ContentTransform
+    t: ContentTransform,
+    end: End?
 ) : AbstractLabel(
-    el, parent, ctx, rp, t
-), Label {
+    el, parent, ctx, rp, t, end
+) {
 
     override fun getTraversalRule(d: Direction): BorderTraversal {
         return BorderTraversal.PREVENT

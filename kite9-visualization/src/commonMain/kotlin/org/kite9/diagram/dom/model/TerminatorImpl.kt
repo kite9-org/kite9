@@ -9,7 +9,6 @@ import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.Temporary
 import org.kite9.diagram.model.Terminator
-import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D.Companion.ZERO
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.position.Direction
@@ -24,19 +23,18 @@ class TerminatorImpl(
     parent: DiagramElement,
     ctx: ElementContext,
     rp: Painter,
-    t: ContentTransform
+    t: ContentTransform,
+    private val end: End
 ) : AbstractRectangular(
     el, parent, ctx, rp, t
 ), Terminator {
 
     private var markerReserve = 0.0
     private var arrivalSide: Direction? = null
-    private var end: End? = null
 
     override fun initialize() {
         super.initialize()
         arrivalSide = ElementContext.getCssStyleEnumProperty<Direction>(CSSConstants.DIRECTION, theElement, ctx)
-        end = ElementContext.getCssStyleEnumProperty<End>(CSSConstants.LINK_END, theElement, ctx)
         markerReserve = ctx.getCssStyleDoubleProperty(CSSConstants.MARKER_RESERVE, theElement)
     }
 
@@ -113,8 +111,7 @@ class TerminatorImpl(
     }
 
     override fun getEnd(): End {
-        ensureInitialized()
-        return end!!
+        return end
     }
 
     override fun getSizing(horiz: Boolean): DiagramElementSizing {

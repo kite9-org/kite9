@@ -212,7 +212,7 @@ class GeneratorBasedGroupingStrategyImpl(
 
     override fun startContainerMerge(ms: BasicMergeState, c: Rectangular) {
         super.startContainerMerge(ms, c)
-        for (gen in (ms as GeneratorMergeState).generators!!) {
+        for (gen in (ms as GeneratorMergeState).generators) {
             gen.containerIsLive(c)
         }
     }

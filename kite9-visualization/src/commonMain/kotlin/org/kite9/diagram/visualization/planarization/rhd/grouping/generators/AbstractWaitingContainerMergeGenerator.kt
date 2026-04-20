@@ -37,15 +37,18 @@ abstract class AbstractWaitingContainerMergeGenerator(
     }
 
     fun getCommonContainer(a: Group, b: Group): Rectangular {
-        val ac = ms.getContainersFor(a)
-        val bc = ms.getContainersFor(b)
-        if (ac == null || bc == null) throw LogicException("Group has no containers?")
-        val itc: Set<Rectangular> = if (ac.size < bc.size) ac.keys else bc.keys
-        val inc: Set<Rectangular> = if (ac.size < bc.size) bc.keys else ac.keys
-        for (container in itc) {
-            if (inc.contains(container)) return container
+        var ac = ms.getContainersFor(a)?.keys ?: emptySet()
+        var bc = ms.getContainersFor(b)?.keys ?: emptySet()
+        while (true) {
+            if (ac.isEmpty() || bc.isEmpty())
+                throw LogicException("Group has no containers?")
+            for (container in ac) {
+                if (bc.contains(container)) return container
+            }
+
+            ac = ac + ac.mapNotNull { it.getContainer() }.toSet()
+            bc = bc + bc.mapNotNull { it.getContainer() }.toSet()
         }
-        throw LogicException("There should always be a common container")
     }
 
     override fun addMergeOption(

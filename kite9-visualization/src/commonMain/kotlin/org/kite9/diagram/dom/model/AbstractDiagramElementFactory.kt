@@ -7,6 +7,7 @@ import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.Connection
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
+import org.kite9.diagram.model.position.End
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.RectangularElementUsage
@@ -25,7 +26,8 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
             parent: DiagramElement?,
             el: Element,
             lt: DiagramElementType,
-            usage: RectangularElementUsage
+            usage: RectangularElementUsage,
+            end: End?
     ): DiagramElement? {
         return if (parent == null && lt !== DiagramElementType.DIAGRAM) {
             // all elements apart from diagram must have a parent
@@ -54,7 +56,8 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 parent!!,
                                                 context!!,
                                                 getContainerPainter(el),
-                                                ContentTransform.POSITION
+                                                ContentTransform.POSITION,
+                                                end
                                         )
                                 RectangularElementUsage.REGULAR ->
                                         ConnectedRectangularImpl(
@@ -78,7 +81,8 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 parent!!,
                                                 context!!,
                                                 getTextPainter(el),
-                                                ContentTransform.CROP
+                                                ContentTransform.CROP,
+                                                end
                                         )
                                 RectangularElementUsage.DECAL ->
                                         DecalImpl(
@@ -105,7 +109,8 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                                 parent!!,
                                                 context!!,
                                                 getLeafPainter(el),
-                                                ContentTransform.CROP
+                                                ContentTransform.CROP,
+                                                end
                                         )
                                 RectangularElementUsage.DECAL ->
                                         DecalImpl(
@@ -133,7 +138,7 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                     ContentTransform.POSITION
                             )
                     DiagramElementType.LINK_END -> {
-                        if (!(parent is Connection)) {
+                        if (parent !is Connection) {
                             throw context!!.contextualException(
                                     "Terminators must be inside link' @ " + getId(el),
                                     el
@@ -144,7 +149,8 @@ abstract class AbstractDiagramElementFactory<X>(val failOnUnspecified: Boolean =
                                 parent!!,
                                 context!!,
                                 getDirectPainter(el),
-                                ContentTransform.POSITION
+                                ContentTransform.POSITION,
+                                end!!
                         )
                     }
                     DiagramElementType.NONE -> null
