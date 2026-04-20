@@ -117,7 +117,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         var hub : ConnectedGroupLinkNode? = null
 
         to.forEach { lg ->
-            if (lg.connected is ConnectedGroupLinkNode) {
+            if ((lg.connected is ConnectedGroupLinkNode) && ((lg.connected as ConnectedGroupLinkNode).gridPosition != null)) {
                 hub = lg.connected as ConnectedGroupLinkNode
             }
             val routables = map[lg]!!

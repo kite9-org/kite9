@@ -142,8 +142,8 @@ abstract class GroupPhase(
                 val pos = Pair(x, y)
                 val de = grid[y][x]
                 created += populateLeafGroups(de as ConnectedRectangular)
-                val gln = ConnectedGroupLinkNode(ord, "-grid", pos)
-                ord.addTemporaryContent(gln)
+                val gln = ConnectedGroupLinkNode(ord, "-grid-$pos", pos)
+                de.addTemporaryContent(gln)
                 val ggGrid = createLeafGroup(gln, de)
                 created++
                 gridGroups[pos] = ggGrid

@@ -49,7 +49,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
 
-	private Grid createSupergrid(boolean addLinks, boolean addContentLink, int size) {
+	private Grid createSupergrid(boolean addContentLink, int size) {
 		List<Element> contents = new ArrayList<>();
 		Cell[][] elems = new Cell[size][];
 		for (int i = 0; i < elems.length; i++) {
@@ -57,15 +57,6 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 			for (int j = 0; j < elems[i].length; j++) {
 				elems[i][j] = new Cell("c" + i + "-" + j, null);
 				elems[i][j].setAttribute("style", "--kite9-occupies: " + i + " " + i + " " + j + " " + j + ";");
-				if (addLinks) {
-					if (j > 0) {
-						new Link(elems[i][j], elems[i][j - 1], "", null, "", null, Direction.RIGHT);
-					}
-					if (i > 0) {
-						new Link(elems[i][j], elems[i - 1][j], "", null, "", null, Direction.UP);
-					}
-				}
-
 				contents.add(elems[i][j]);
 			}
 		}
@@ -155,7 +146,7 @@ public class Test56Grid extends AbstractDisplayFunctionalTest {
 
 	@Test
 	public void test_56_4_OddSupergrid() throws Exception {
-		Grid ctx = createSupergrid(false, true, 5);
+		Grid ctx = createSupergrid(true, 5);
 		ctx.setAttribute("style", "--kite9-layout: grid; --kite9-grid-size: 5 5;");
 		renderDiagram(new DiagramKite9XMLElement("diagram", Arrays.asList(ctx), null));
 	}
