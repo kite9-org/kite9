@@ -18,14 +18,14 @@ class UndirectedPriorityRule : PriorityRule {
         axis: MergePlane,
         horizontalMergesFirst: Boolean
     ): Int {
-        val aDirectedLeavers = hasDirectedLeaversInContainer(a, axis, ms)
-        val bDirectedLeavers = hasDirectedLeaversInContainer(b, axis, ms)
+        val aDirectedLeavers = hasDirectedLeaversInLiveContainer(a, axis, ms)
+        val bDirectedLeavers = hasDirectedLeaversInLiveContainer(b, axis, ms)
         return if (!aDirectedLeavers || !bDirectedLeavers) {
             getPriority(a, b, alignedGroup, ms)
         } else PriorityRule.UNDECIDED
     }
 
-    private fun hasDirectedLeaversInContainer(
+    private fun hasDirectedLeaversInLiveContainer(
         a: Group,
         axis: MergePlane,
         ms: BasicMergeState
@@ -34,7 +34,17 @@ class UndirectedPriorityRule : PriorityRule {
             axis, true, true,
             Direction.UP, Direction.DOWN, Direction.LEFT, Direction.RIGHT
         )
-        return a.linkManager.subset(mask).size > 0
+
+        fun groupInLiveContainer(g: Group) : Boolean {
+            // if any part of what we connect to is not in a live container, then we
+            // can't merge with it yet
+            val containers = ms.getContainersFor(g)!!.keys.map { k -> ms.isContainerLive(k) }
+            return !containers.contains(false)
+        }
+
+        val inContainerLeavers = a.linkManager.subsetGroup(mask)
+        val inLiveContainerLeavers = inContainerLeavers.filter { groupInLiveContainer(it) }
+        return inLiveContainerLeavers.isNotEmpty()
     }
 
     private fun getPriority(
