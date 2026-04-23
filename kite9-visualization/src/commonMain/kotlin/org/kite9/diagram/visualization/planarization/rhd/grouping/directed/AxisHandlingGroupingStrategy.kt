@@ -216,9 +216,9 @@ abstract class AxisHandlingGroupingStrategy(
         val commonContainers = ms.getContainersFor(out.b)!!
         var common: Rectangular? = null
         for ((container, value) in a2cs) {
-            if (value.hasContent() && ms.isContainerLive(container)) {
+            if ( ms.isContainerLive(container)) {
                 val bContained = commonContainers[container]
-                if (bContained != null && bContained.hasContent()) {
+                if (bContained != null) {
                     if (common?.getLayout() == null) {
                         common = container
                     }

@@ -12,8 +12,6 @@ sealed interface LeafGroup : Group {
     val connected: GroupLinkNode
     val container: Rectangular
 
-    fun occupiesSpace() : Boolean
-
     fun sortLink(
         d: Direction?,
         otherGroup: Group,

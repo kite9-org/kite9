@@ -75,13 +75,13 @@ abstract class AbstractGroupingStrategy(
             val container = iterator.next()
             val aContained = containersA[container]
             val bContained = containersB[container]
-            val contained =
-                    aContained != null && aContained.hasContent() ||
-                            bContained != null && bContained.hasContent()
+//            val contained =
+//                    aContained != null && aContained.hasContent() ||
+//                            bContained != null && bContained.hasContent()
             val isComplete =
                     aContained != null && aContained.isComplete ||
                             bContained != null && bContained.isComplete
-            val out = GroupContainerState.get(contained, isComplete)
+            val out = GroupContainerState.get(isComplete)
             ms.addGroupContainerMapping(group, container, out)
         }
     }
@@ -198,7 +198,7 @@ abstract class AbstractGroupingStrategy(
     ): Boolean {
         log.send("Moving group: " + g.groupOrdinal + " from " + c + " to " + cc)
         ms.removeGroupContainerMapping(g, c)
-        ms.addGroupContainerMapping(g, cc, GroupContainerState.HAS_CONTENT)
+        ms.addGroupContainerMapping(g, cc, GroupContainerState.INCOMPLETE)
         return true
     }
 
@@ -214,8 +214,7 @@ abstract class AbstractGroupingStrategy(
         ms.addGroupContainerMapping(
                 toAdd,
                 c2,
-                if (toAdd.occupiesSpace()) GroupContainerState.HAS_CONTENT
-                else GroupContainerState.NO_CONTENT
+            GroupContainerState.INCOMPLETE
         )
         leaves.add(toAdd)
     }

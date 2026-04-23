@@ -18,27 +18,15 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
 
     val log = Kite9Log.instance(this)
 
-    enum class GroupContainerState(var hc: Boolean, var isComplete: Boolean) {
-        HAS_CONTENT(true, false), COMPLETE_WITH_CONTENT(true, true), NO_CONTENT(
-            false,
-            false
-        ),
-        COMPLETE_NO_CONTENT(false, true);
-
-        fun hasContent(): Boolean {
-            return hc
-        }
+    enum class GroupContainerState(val isComplete: Boolean) {
+        COMPLETE(true),
+        INCOMPLETE(false);
 
         companion object {
             operator fun get(
-                contained: Boolean,
                 isComplete: Boolean
             ): GroupContainerState {
-                return if (contained) {
-                    if (isComplete) COMPLETE_WITH_CONTENT else HAS_CONTENT
-                } else {
-                    if (isComplete) COMPLETE_NO_CONTENT else NO_CONTENT
-                }
+                return if (isComplete) COMPLETE else INCOMPLETE
             }
         }
     }
@@ -156,7 +144,7 @@ open class BasicMergeState(var contradictionHandler: ContradictionHandler, eleme
 
     fun getContainersFor(a: Group?): Map<Rectangular, GroupContainerState>? {
         if (a is LeafGroup) {
-             return groupContainers.getOrPut(a, { mutableMapOf(a.container to GroupContainerState.HAS_CONTENT) } )
+             return groupContainers.getOrPut(a, { mutableMapOf(a.container to GroupContainerState.INCOMPLETE) } )
         } else {
             return groupContainers[a]
         }
