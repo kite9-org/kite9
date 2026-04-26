@@ -12,12 +12,12 @@ import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
 
-class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableReader, gp: GridPositioner) : AbstractC2ContainerCompactionStep(cd, rr, gp) {
+class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: PositionRoutableHandler2D, gp: GridPositioner) : AbstractC2ContainerCompactionStep(cd, rr, gp) {
 
     var first = true
     var leafGroupElements : Set<DiagramElement> = emptySet()

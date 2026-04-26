@@ -1,25 +1,21 @@
 package org.kite9.diagram.visualization.planarization.rhd.position
 
-import kotlin.math.abs
-import kotlin.math.max
-import kotlin.math.min
 import org.kite9.diagram.common.HintMap
-import org.kite9.diagram.common.elements.Routable
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.mgt.router.LineRoutingInfo
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
 import org.kite9.diagram.visualization.planarization.rhd.position.Tools.contains
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 
 /**
- * Implementation of the [RoutableReader] functionality, but using 2D RoutableHandler Bounds as the
+ * Implementation of the [RoutableHandler2D] functionality, but using 2D RoutableHandler Bounds as the
  * underlying storage.
  *
  * @author robmoffat
@@ -73,16 +69,14 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         }
     }
 
-    override fun narrow(d: Layout?, `in`: Bounds, horiz: Boolean): Bounds {
-        var `in`: Bounds? = `in`
-        `in` = `in` ?: getTopLevelBounds(horiz)
+    override fun narrow(d: Layout?, using: Bounds, horiz: Boolean): Bounds {
         val multiplicationFrame = getMultiplicationFrame(d, horiz)
-        val bbounds = `in` as BasicBounds?
-        var gx =
+        val bbounds = using as BasicBounds?
+        val gx =
                 bbounds!!.distanceMin +
                         (bbounds.distanceMax - bbounds.distanceMin) *
                                 multiplicationFrame.distanceMin
-        var gw =
+        val gw =
                 (bbounds.distanceMax - bbounds.distanceMin) *
                         (multiplicationFrame.distanceMax - multiplicationFrame.distanceMin)
         return BasicBounds(gx, gx + gw)
@@ -103,30 +97,6 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
                     Layout.DOWN -> if (horiz) TOP else BOTTOM_HALF
                     else -> TOP
                 }
-    }
-
-    /**
-     * Note: "HORIZONTAL" and "VERTICAL" seem to go against the grain. This is deliberate so that if
-     * for example, a container is horizontal, then links to it are placed preferentially above or
-     * below it.
-     */
-    fun isThickGutter(d: Layout?, horiz: Boolean): Boolean {
-        if (d == null) {
-            return false
-        }
-        return if (horiz) {
-            when (d) {
-                Layout.UP, Layout.DOWN, Layout.HORIZONTAL -> true
-                Layout.VERTICAL, Layout.LEFT, Layout.RIGHT -> false
-                else -> false
-            }
-        } else {
-            when (d) {
-                Layout.LEFT, Layout.RIGHT, Layout.VERTICAL -> true
-                Layout.HORIZONTAL, Layout.UP, Layout.DOWN -> false
-                else -> false
-            }
-        }
     }
 
     override fun getPosition(r: Any, horiz: Boolean): Bounds? {
@@ -274,32 +244,12 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         return BoundsBasedPositionRoutingInfo(ba.x.expand(bb.x)!!, ba.y.expand(bb.y)!!)
     }
 
-    override fun move(current: LineRoutingInfo?, past: RoutingInfo, r: Routing?): LineRoutingInfo {
-        return LinePositionRoutingInfo(
-                current as LinePositionRoutingInfo?,
-                (past as BoundsBasedPositionRoutingInfo),
-                r
-        )
-    }
-
-    private fun getBoundsInternal(o: Any): BoundsBasedPositionRoutingInfo? {
-        return if (o is BoundsBasedPositionRoutingInfo) {
-            o
-        } else if (o is Routable) {
-            o.routingInfo as BoundsBasedPositionRoutingInfo?
-        } else {
-            getPlacedPosition(o) as BoundsBasedPositionRoutingInfo?
-        }
-    }
-
     companion object {
         val TOP = BasicBounds(0.0, 1.0)
         private const val THIN_GUTTER = 0.001
         private const val THICK_GUTTER = 0.01
         val TOP_HALF = BasicBounds(0.0, .5)
         val BOTTOM_HALF = BasicBounds(.5, 1.0)
-
-        val BASIC_AVOIDANCE_CORNERS: MutableMap<Routing, Corner> = HashMap()
 
         /**
          * Although we have a planarization line (1d) and a set of positions (2d), there is no
@@ -319,92 +269,6 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         fun meq(a: Double, b: Double): Boolean {
             return a - b > -TOLERANCE
         }
-
-        init {
-            BASIC_AVOIDANCE_CORNERS[Routing.OVER_BACKWARDS] = Corner.TOP_RIGHT
-            BASIC_AVOIDANCE_CORNERS[Routing.OVER_FORWARDS] = Corner.TOP_RIGHT
-            BASIC_AVOIDANCE_CORNERS[Routing.UNDER_FORWARDS] = Corner.BOTTOM_LEFT
-            BASIC_AVOIDANCE_CORNERS[Routing.UNDER_BACKWARDS] = Corner.BOTTOM_LEFT
-        }
-    }
-
-    override fun initRoutableOrdering(items: List<Any>) {
-        for (i in items.indices) {
-            val prev = if (i == 0) null else getBoundsInternal(items[i - 1])
-            val current = getBoundsInternal(items[i])
-            val next = if (i == items.size - 1) null else getBoundsInternal(items[i + 1])
-            var ac = BASIC_AVOIDANCE_CORNERS
-            val dPrev = getDirectionOfB(prev, current)
-            if (dPrev === Direction.UP || dPrev === Direction.LEFT) {
-                ac = ensureCopy(ac)
-                ac[Routing.OVER_BACKWARDS] = Corner.BOTTOM_LEFT
-                ac[Routing.UNDER_BACKWARDS] = Corner.TOP_RIGHT
-                val err = "Assumption not met: " + items[i - 1] + " " + items[i] + " " + dPrev
-                log.send(err)
-                if (THROW_ON_ASSUMPTION_FAIL) {
-                    throw LogicException(err)
-                }
-            }
-            val dNext = getDirectionOfB(current, next)
-            if (dNext === Direction.UP || dNext === Direction.LEFT) {
-                ac = ensureCopy(ac)
-                ac[Routing.OVER_FORWARDS] = Corner.BOTTOM_LEFT
-                ac[Routing.UNDER_FORWARDS] = Corner.TOP_RIGHT
-                val err = "Assumption not met: " + items[i] + " " + items[i + 1] + " " + dNext
-                log.send(err)
-                if (THROW_ON_ASSUMPTION_FAIL) {
-                    throw LogicException(err)
-                }
-            }
-            current!!.avoidanceCorners = ac
-        }
-    }
-
-    private fun ensureCopy(ac: MutableMap<Routing, Corner>): MutableMap<Routing, Corner> {
-        var ac = ac
-        if (ac === BASIC_AVOIDANCE_CORNERS) {
-            ac = HashMap(6)
-            for ((key, value) in BASIC_AVOIDANCE_CORNERS) {
-                ac[key] = value
-            }
-        }
-        return ac
-    }
-
-    private fun getDirectionOfB(
-            a: BoundsBasedPositionRoutingInfo?,
-            b: BoundsBasedPositionRoutingInfo?
-    ): Any? {
-        return if (a == null || b == null) {
-            null
-        } else if (overlaps(a, b)) {
-            OVERLAP
-        } else if (meq(b.x.distanceMin, a.x.distanceMax)) {
-            Direction.RIGHT
-        } else if (meq(b.y.distanceMin, a.y.distanceMax)) {
-            Direction.DOWN
-        } else if (meq(a.x.distanceMin, b.x.distanceMax)) {
-            Direction.LEFT
-        } else if (meq(a.y.distanceMin, b.y.distanceMax)) {
-            Direction.UP
-        } else if (isSamePoint(a, b)) {
-            null
-        } else {
-            throw LogicException("Overlap?")
-        }
-    }
-
-    private fun isSamePoint(
-            a: BoundsBasedPositionRoutingInfo,
-            b: BoundsBasedPositionRoutingInfo
-    ): Boolean {
-        return isSamePointBounds(a.x, b.x) && isSamePointBounds(a.y, b.y)
-    }
-
-    private fun isSamePointBounds(b1: Bounds, b2: Bounds): Boolean {
-        return (eq(b1.distanceMin, b2.distanceMin) &&
-                eq(b1.distanceMax, b2.distanceMax) &&
-                eq(b1.distanceMin, b2.distanceMax))
     }
 
     override fun setHints(hm: HintMap?, bounds: RoutingInfo?) {

@@ -50,13 +50,13 @@ class DirectedCompoundGroup(
         when (axis) {
             MergePlane.X_FIRST_MERGE -> {
                 used.state = MergePlane.X_FIRST_MERGE
-                used.isHorizontal = false
-                used.isVertical = true
+                used.isHorizontal = true
+                used.isVertical = false
             }
             MergePlane.Y_FIRST_MERGE -> {
                 used.state = MergePlane.Y_FIRST_MERGE
-                used.isHorizontal = true
-                used.isVertical = false
+                used.isHorizontal = false
+                used.isVertical = true
             }
             null, MergePlane.UNKNOWN -> {
                 used.state = MergePlane.UNKNOWN

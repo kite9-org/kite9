@@ -31,11 +31,12 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         rh.clearTempPositions(false)
         val gt = gg.axis
         val ld = gg.layout
-        val canBeHoriz = gt.isHorizontal && gt.isLayoutRequired
-        val canBeVert = gt.isVertical && gt.isLayoutRequired
+        val canBeHoriz = gt.isHorizontal
+        val canBeVert = gt.isVertical
         val horizLayoutUnknown = (ld == null || ld === Layout.HORIZONTAL) && canBeHoriz
         val vertLayoutUnknown = (ld == null || ld === Layout.VERTICAL) && canBeVert
         val canDecideLayout = horizLayoutUnknown || vertLayoutUnknown
+
         log.send("Group A: " + gg.a)
         log.send("Group B: " + gg.b)
         if (canDecideLayout) {
@@ -50,8 +51,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                                 gg,
                                 best,
                                 filterLayout(hintedLayout, horizLayoutUnknown, vertLayoutUnknown),
-                                canBeHoriz,
-                                canBeVert,
                                 true
                         )
                 best =
@@ -63,8 +62,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                                         horizLayoutUnknown,
                                         vertLayoutUnknown
                                 ),
-                                canBeHoriz,
-                                canBeVert,
                                 false
                         )
                 best =
@@ -76,8 +73,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                                         horizLayoutUnknown,
                                         vertLayoutUnknown
                                 ),
-                                canBeHoriz,
-                                canBeVert,
                                 false
                         )
                 best =
@@ -89,8 +84,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                                         horizLayoutUnknown,
                                         vertLayoutUnknown
                                 ),
-                                canBeHoriz,
-                                canBeVert,
                                 false
                         )
                 best?.choose()
@@ -103,7 +96,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                         ld
                     }
 
-            val pa = createPlacementApproach(gg, ld2, canBeHoriz, canBeVert, true)
+            val pa = createPlacementApproach(gg, ld2, true)
             pa.choose()
             log.send("Group layout = $ld2")
         }
@@ -221,12 +214,10 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
             gg: CompoundGroup,
             best: PlacementApproach?,
             d: Layout?,
-            setHoriz: Boolean,
-            setVert: Boolean,
             natural: Boolean
     ): PlacementApproach? {
         if (d != null && (best == null || best.score > 0)) {
-            val newpl = createPlacementApproach(gg, d, setHoriz, setVert, natural)
+            val newpl = createPlacementApproach(gg, d, natural)
             newpl.evaluate()
             log.send(if (log.go()) null else "${gg.groupNumber} going $d  score: ${newpl.score}")
             return if (best == null) {
@@ -251,8 +242,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     protected abstract fun createPlacementApproach(
             gg: CompoundGroup,
             ld: Layout?,
-            setHoriz: Boolean,
-            setVert: Boolean,
             natural: Boolean
     ): PlacementApproach
 

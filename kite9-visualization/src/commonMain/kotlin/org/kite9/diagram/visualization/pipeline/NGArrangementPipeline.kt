@@ -22,7 +22,6 @@ import org.kite9.diagram.visualization.compaction2.routing.C2ConnectionRouterCom
 import org.kite9.diagram.visualization.compaction2.sizing.C2DiagramSizeCompactionStep
 import org.kite9.diagram.visualization.compaction2.sizing.C2FanMinimizeCompactionStep
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.Util
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
@@ -45,7 +44,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     private val log = Kite9Log.instance(this)
 
     private var mr: GroupResult? = null
-    private var rr: RoutableReader? = null
+    private var rr: PositionRoutableHandler2D? = null
     private var c2: C2Compaction? = null
     private val gp: GridPositioner = GridPositionerImpl(diagramElementFactory)
 
@@ -85,7 +84,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
             val v = if (g.axis.isVertical) "v" else " "
             (sb.toString() + g.groupNumber +
                     " " + axis
-                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v " + (if (g.axis.isLayoutRequired) "LR " else " ")
+                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v "
                     + (g.a.groupNumber).toString() + " " + (g.b.groupNumber))
         } else {
             (sb.toString() + g.groupNumber +
@@ -147,7 +146,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         return mr
     }
 
-    fun getRoutableReader(): RoutableReader? {
+    fun getRoutableReader(): PositionRoutableHandler2D? {
         return rr
     }
 

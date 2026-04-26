@@ -24,11 +24,6 @@ interface GroupAxis {
     val isVertical: Boolean
 
     /**
-     * Determine whether layout is needed at all for this group.
-     */
-    val isLayoutRequired: Boolean
-
-    /**
      * Figures out where the group is, and returns routing info for it.
      * Set temp during the layout strategy phase to evaluate a layout before committing to it.
      */

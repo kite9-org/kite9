@@ -28,13 +28,13 @@ import org.kite9.diagram.visualization.compaction2.C2Slideable;
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
+import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 
 import java.awt.*;
@@ -265,7 +265,7 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
-	public static void drawPositions(GroupResult gr, RoutableReader rr, Class<?> theTest, String subtest, String item) {
+	public static void drawPositions(GroupResult gr, PositionRoutableHandler2D rr, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");
 		if (!target.isDirectory()) {
 			return;
@@ -481,7 +481,7 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	private static void drawGroup(Group group, RoutableReader rr, Color[] cols, Graphics2D g, int size, HashSet<Group> done) {
+	private static void drawGroup(Group group, PositionRoutableHandler2D rr, Color[] cols, Graphics2D g, int size, HashSet<Group> done) {
 		if (group instanceof LeafGroup) {
 			if (!done.contains(group)) {
 				PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);

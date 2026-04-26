@@ -5,16 +5,33 @@ import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 
 /**
- * Manages the position of objects in 2D space by considering 2D position individually.
- * This extends [RoutableReader] by adding the ability to set positions in a given
- * axis.
+ * Manages the position of objects in subdividable 2D space.
  *
  * @author robmoffat
  */
-interface RoutableHandler2D : RoutableReader {
+interface RoutableHandler2D {
+
+    fun getPlacedPosition(r: Any): RoutingInfo?
+
+    fun isWithin(area: RoutingInfo, pos: RoutingInfo): Boolean
+
+    /**
+     * Checks that to and from occupy the same horiz/vert plane
+     */
+    fun isInPlane(to: RoutingInfo, from: RoutingInfo, horiz: Boolean): Boolean
+
+    /**
+     * Creates a space containing all the area from/to
+     */
+    fun increaseBounds(a: RoutingInfo, b: RoutingInfo): RoutingInfo
+
+    /**
+     * Returns true if there is a common intersection
+     */
+    fun overlaps(a: RoutingInfo, b: RoutingInfo): Boolean
+
 
     enum class DPos {
         BEFORE, OVERLAP, AFTER
@@ -34,14 +51,8 @@ interface RoutableHandler2D : RoutableReader {
     fun compare(a: Any?, b: Any?, horiz: Boolean): DPos
     fun compareBounds(ab: Bounds, bb: Bounds): DPos
     fun setPlacedPosition(a: Any, cri: RoutingInfo)
-    override fun overlaps(a: RoutingInfo, b: RoutingInfo): Boolean
     fun overlaps(a: Bounds, b: Bounds): Boolean
     fun distance(from: RoutingInfo, to: RoutingInfo, horiz: Boolean): Double
-
-    /**
-     * Expands the area in bounding to cover ri
-     */
-    override fun increaseBounds(bounding: RoutingInfo, ri: RoutingInfo): RoutingInfo
 
     /**
      * Returns a routing which represents an empty area.

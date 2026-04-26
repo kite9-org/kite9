@@ -20,8 +20,6 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 
 class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
-    override var isLayoutRequired = true
-
     var state = MergePlane.UNKNOWN
 
     override var active = true
@@ -57,7 +55,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             val parent: Group? =
                 if (horiz) horizParentGroup else vertParentGroup
             out = if (parent != null) {
-                if (parent.axis.isLayoutRequired) {
+                if (parent.axis.isHorizontal || parent.axis.isVertical) {
                     val l = getLayoutFor(parent, g)
                     rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz), horiz)
                 } else {

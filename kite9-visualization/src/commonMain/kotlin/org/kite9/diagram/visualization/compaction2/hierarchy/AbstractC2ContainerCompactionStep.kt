@@ -14,10 +14,10 @@ import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
@@ -25,7 +25,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  * This makes sure that any time we have all the groups to complete a container, we wrap the groups in the
  * container(s) and use that instead.
  */
-abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: RoutableReader, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
+abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: PositionRoutableHandler2D, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
 
     fun getEdgePosition(k: LeafGroup, d: Direction) : Double? {
         return if (k != null) {

@@ -3,7 +3,6 @@ package org.kite9.diagram.visualization.planarization.rhd.position
 import kotlin.math.max
 import kotlin.math.min
 import org.kite9.diagram.common.elements.RoutingInfo
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
 
 /**
  *
@@ -11,7 +10,7 @@ import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader
  * RoutingInfo is based on position. This class handles pretty much all of the cost arrangements and
  * distance calculations.
  */
-abstract class AbstractPositionRoutableReader : RoutableReader, RoutableHandler2D {
+abstract class AbstractPositionRoutableReader : RoutableHandler2D {
 
     private fun minDist(min1: Double, max1: Double, min2: Double, max2: Double): Double {
         return if (min2 > min1) {

@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.rhd.position
 
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
-import org.kite9.diagram.visualization.planarization.mgt.router.RoutableReader.Routing
 
 class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRoutingInfo() {
 
@@ -56,5 +55,4 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
         return y.compareTo((with as BoundsBasedPositionRoutingInfo).y)
     }
 
-    var avoidanceCorners: Map<Routing, Corner>? = null
 }

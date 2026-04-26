@@ -7,8 +7,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
 class DirectionLayoutStrategy(rh: RoutableHandler2D) : AbstractTopDownLayoutStrategy(rh) {
 
     public override fun createPlacementApproach(
-        gg: CompoundGroup, ld: Layout?,
-        setHoriz: Boolean, setVert: Boolean, natural: Boolean
+        gg: CompoundGroup, ld: Layout?, natural: Boolean
     ): PlacementApproach {
         return DirectionPlacementApproach(log, ld, gg, rh, natural)
     }
