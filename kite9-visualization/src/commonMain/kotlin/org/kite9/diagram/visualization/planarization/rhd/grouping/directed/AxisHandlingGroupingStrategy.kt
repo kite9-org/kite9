@@ -4,12 +4,12 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.elements.factory.DiagramElementFactory
 import org.kite9.diagram.common.elements.grid.GridPositioner
 import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.Containers
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -149,8 +149,8 @@ abstract class AxisHandlingGroupingStrategy(
     }
 
     open fun identifyGroupDirection(out: CompoundGroup, ms: BasicMergeState) {
-        val c = getCommonContainer(out)
-        val layoutDirection = getAxisLayoutForContainer(c)
+        val c = Containers.getCommonContainers(ms, out.a, out.b)
+        val layoutDirection = getAxisLayoutForContainers(c)
         val lda = out.internalLinkA
         val ldb = out.internalLinkB
         checkForInternalContradictions(out, out.internalLinkA, out.internalLinkB, ms)
@@ -173,10 +173,7 @@ abstract class AxisHandlingGroupingStrategy(
         // we may be able to establish a layout from one or more of the 
         // containers that the groups are in.  Layout will be horizontal or vertical,
         // unless there is a contradiction.
-        val layoutNeeded = c != null
-        if (!layoutNeeded && out.layout == null) {
-            DirectedGroupAxis.getType(out).isLayoutRequired = false
-        } else if (out.layout == null) {
+        if (out.layout == null) {
             out.layout = layoutDirection
         } else if (out.layout === Layout.UP || out.layout === Layout.DOWN) {
             if (layoutDirection === Layout.HORIZONTAL) {
@@ -191,41 +188,25 @@ abstract class AxisHandlingGroupingStrategy(
         }
     }
 
-    private fun getAxisLayoutForContainer(c: Rectangular?): Layout? {
-        if (c == null) return null
-        var layoutDirection = c.getLayout()
+    private fun getAxisLayoutForContainers(cc: Set<Rectangular>): Layout? {
+        if (cc.isEmpty()) return null
 
-        // sanitize to a single axis
-        if (layoutDirection != null) {
-            when (layoutDirection) {
-                Layout.LEFT, Layout.RIGHT -> layoutDirection = Layout.HORIZONTAL
-                Layout.UP, Layout.DOWN -> layoutDirection = Layout.VERTICAL
-                else -> {
-                }
+        val layoutDirections = cc.map { c ->
+            // sanitize to a single axis
+            when (val layoutDirection = c.getLayout()) {
+                Layout.LEFT, Layout.RIGHT -> Layout.HORIZONTAL
+                Layout.UP, Layout.DOWN -> Layout.VERTICAL
+                else -> layoutDirection
             }
         }
-        return layoutDirection
-    }
 
-    /**
-     * Attempts to find a container shared by both a and b, in which both a and b actually have contents.
-     * If there is no common content, then it returns false.
-     */
-    private fun getCommonContainer(out: CompoundGroup): Rectangular? {
-        val a2cs = ms.getContainersFor(out.a)!!
-        val commonContainers = ms.getContainersFor(out.b)!!
-        var common: Rectangular? = null
-        for ((container, value) in a2cs) {
-            if ( ms.isContainerLive(container)) {
-                val bContained = commonContainers[container]
-                if (bContained != null) {
-                    if (common?.getLayout() == null) {
-                        common = container
-                    }
-                }
-            }
+        // ok, so we should have either nulls, horizontals or verticals only.
+        if (layoutDirections.contains(Layout.HORIZONTAL) &&
+            layoutDirections.contains(Layout.VERTICAL)) {
+            throw LogicException("Two live containers with conflicting layouts - not handled yet")
         }
-        return common
+
+        return layoutDirections.filterNotNull().firstOrNull()
     }
 
     private fun writeGroup(g: CompoundGroup, mo: MergeOption) {
@@ -347,15 +328,15 @@ abstract class AxisHandlingGroupingStrategy(
         return out
     }
 
-    override fun createCompoundGroup(a: Group, b: Group, treatAsLeaf: Boolean, mo: MergeOption?, size: Int): CompoundGroup {
-        val hashCode = if (!treatAsLeaf) {
+    override fun createCompoundGroup(a: Group, b: Group, treatAsComplete: Boolean, mo: MergeOption?, size: Int): CompoundGroup {
+        val hashCode = if (!treatAsComplete) {
             // this is done so that a different compound group containing the same leaves can
             // occupy the same position in a hashmap
             a.hashCode() + b.hashCode()
         } else {
             hashCodeGenerator.nextInt()
         }
-        val out = DirectedCompoundGroup(a, b, treatAsLeaf, groupCount, size, hashCode, ms, log, mo?.alignedDirection)
+        val out = DirectedCompoundGroup(a, b, treatAsComplete, groupCount, size, hashCode, ms, log, mo?.alignedDirection)
         groupCount++
         return out
     }

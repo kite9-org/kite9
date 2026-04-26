@@ -4,6 +4,7 @@ import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.GroupPhase
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.Containers
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption
@@ -36,21 +37,6 @@ abstract class AbstractWaitingContainerMergeGenerator(
         }
     }
 
-    fun getCommonContainer(a: Group, b: Group): Rectangular {
-        var ac = ms.getContainersFor(a)?.keys ?: emptySet()
-        var bc = ms.getContainersFor(b)?.keys ?: emptySet()
-        while (true) {
-            if (ac.isEmpty() || bc.isEmpty())
-                throw LogicException("Group has no containers?")
-            for (container in ac) {
-                if (bc.contains(container)) return container
-            }
-
-            ac = ac + ac.mapNotNull { it.getContainer() }.toSet()
-            bc = bc + bc.mapNotNull { it.getContainer() }.toSet()
-        }
-    }
-
     override fun addMergeOption(
         g1: Group,
         g2: Group,
@@ -58,19 +44,22 @@ abstract class AbstractWaitingContainerMergeGenerator(
         alignedSide: Direction?
     ) {
         if (liveOnly) {
-            val c = getCommonContainer(g1, g2)
-            if (ms.isContainerLive(c)) {
+            val cc = Containers.getCommonContainers(ms, g1, g2)
+            val liveCC = Containers.getLiveContainers(ms, cc)
+            if (liveCC.isNotEmpty()) {
                 super.addMergeOption(g1, g2, alignedGroup, alignedSide)
             } else {
-                // add to the wait-list
-                var waitList = waitingOptions[c]
-                if (waitList == null) {
-                    waitList = ArrayList()
-                    waitingOptions[c] = waitList
+                cc.forEach { c ->
+                    // add to the wait-list
+                    var waitList = waitingOptions[c]
+                    if (waitList == null) {
+                        waitList = ArrayList()
+                        waitingOptions[c] = waitList
+                    }
+                    val p = getMyBestPriority()
+                    val mo = MergeOption(g1, g2, ms.nextMergeOptionNumber(), p, alignedGroup, alignedSide)
+                    waitList.add(mo)
                 }
-                val p = getMyBestPriority()
-                val mo = MergeOption(g1, g2, ms.nextMergeOptionNumber(), p, alignedGroup, alignedSide)
-                waitList.add(mo)
             }
         } else {
             super.addMergeOption(g1, g2, alignedGroup, alignedSide)

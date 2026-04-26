@@ -11,12 +11,12 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
  * contents of any container to be expressed as a binary tree.
  */
 abstract class AbstractCompoundGroup(
-        override val a: Group,
-        override val b: Group,
-        private val treatAsLeaf: Boolean,
-        groupNumber: Int,
-        override val size: Int,
-        hc: Int
+    override val a: Group,
+    override val b: Group,
+    private val completeMerge: Boolean,  // true if non-axis merge
+    groupNumber: Int,
+    override val size: Int,
+    hc: Int
 ) : AbstractGroup(groupNumber, hc), CompoundGroup {
 
     override val groupOrdinal = min(a.groupOrdinal, b.groupOrdinal)
@@ -25,7 +25,7 @@ abstract class AbstractCompoundGroup(
     override var layout: Layout? = null
 
     override fun addLeafGroupOrdinalsToSet(s: MutableSet<Int>) {
-        if (treatAsLeaf) {
+        if (completeMerge) {
             s.add(groupNumber)
         } else {
             a.addLeafGroupOrdinalsToSet(s)

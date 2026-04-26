@@ -1,8 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge
 
-import org.kite9.diagram.model.Connected
-import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.Containers
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.ContainerMergeType
@@ -24,47 +23,14 @@ open class DirectedMergeState(ch: ContradictionHandler, elements: Int) :
     }
 
     fun getContainerMergeType(a: Group, b: Group): ContainerMergeType {
-        val common = hasCommonLiveContainer(a, b)
-        val increases = increasesContainers(a, b)
+        val common = Containers.hasCommonLiveContainer(this, a, b)
+        val increases = Containers.increasesContainers(this, a, b)
         return if (common) {
             if (increases) ContainerMergeType.JOINING_EXTRA_CONTAINERS
             else ContainerMergeType.WITHIN_LIVE_CONTAINER
         } else {
             ContainerMergeType.NO_LIVE_CONTAINER
         }
-    }
-
-    private fun hasCommonLiveContainer(a: Group, b: Group): Boolean {
-        val ac = getContainersFor(a)!!.keys
-        val bc = getContainersFor(b)!!.keys
-        val itc = if (ac.size < bc.size) ac else bc
-        val inc = if (ac.size < bc.size) bc else ac
-        for (container in itc) {
-            if (inc.contains(container) && isContainerLive(container)) return true
-        }
-        return false
-    }
-
-    /**
-     * If the resulting group is going to end up with more live containers than a or b individually,
-     * return true.
-     */
-    fun increasesContainers(a: Group?, b: Group?): Boolean {
-        val ac: Map<Rectangular, GroupContainerState?>? = getContainersFor(a)
-        val bc: Map<Rectangular, GroupContainerState?>? = getContainersFor(b)
-        return hasDifferentContainers(ac, bc) && hasDifferentContainers(bc, ac)
-    }
-
-    private fun hasDifferentContainers(
-            ac: Map<Rectangular, GroupContainerState?>?,
-            bc: Map<Rectangular, GroupContainerState?>?
-    ): Boolean {
-        for (container in ac!!.keys) {
-            if (bc!![container] == null) {
-                return true
-            }
-        }
-        return false
     }
 
     class ShapeIndex(private val g: Group) {

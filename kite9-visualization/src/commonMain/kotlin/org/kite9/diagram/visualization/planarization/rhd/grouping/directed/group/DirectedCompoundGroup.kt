@@ -10,14 +10,14 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge
 class DirectedCompoundGroup(
         a: Group,
         b: Group,
-        treatAsLeaf: Boolean,
+        completeMerge: Boolean,
         groupNumber: Int,
         size: Int,
         hc: Int,
         bs: DirectedMergeState,
         log: Kite9Log,
         alignedDirection: Direction?
-) : AbstractCompoundGroup(a, b, treatAsLeaf, groupNumber, size, hc) {
+) : AbstractCompoundGroup(a, b, completeMerge, groupNumber, size, hc) {
 
     override val axis: DirectedGroupAxis = buildCompoundAxis(a, b, alignedDirection, log)
 

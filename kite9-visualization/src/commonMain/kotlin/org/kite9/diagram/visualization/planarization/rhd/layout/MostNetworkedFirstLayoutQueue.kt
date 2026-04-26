@@ -17,9 +17,9 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     var log = Kite9Log.instance(this)
 
-    data class NetworkedItem(val group: Group, val size: Int) {
+    data class NetworkedItem(val group: Group, val size: Int/*, val inAxisMerge: Boolean*/) {
         override fun toString(): String {
-            return "NI: " + group.groupNumber + " size = " + size
+            return "NI: " + group.groupNumber + " size = " + size/* + " in axis = "+inAxisMerge */
         }
     }
 
@@ -71,6 +71,13 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
             PriorityQueue(
                     size,
                     Comparator { arg0, arg1 ->
+
+                        /**
+                         * First, in axis groups get priority over others
+                         */
+//                        if (arg0.inAxisMerge != arg1.inAxisMerge) {
+//                            return@Comparator -arg0.inAxisMerge.compareTo(arg1.inAxisMerge)
+//                        }
 
                         /**
                          * Although priority is top down, within a given level, do groups in the
