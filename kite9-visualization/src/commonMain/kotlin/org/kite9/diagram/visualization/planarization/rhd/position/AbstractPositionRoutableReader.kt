@@ -1,8 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.position
 
-import kotlin.math.max
-import kotlin.math.min
-import org.kite9.diagram.common.elements.RoutingInfo
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 
 /**
  *
@@ -28,95 +26,10 @@ abstract class AbstractPositionRoutableReader : RoutableHandler2D {
         }
     }
 
-    override fun cost(from: RoutingInfo, to: RoutingInfo): Double {
-        val fd = from as PositionRoutingInfo
-        val td = to as PositionRoutingInfo
+    override fun cost(from: Group, to: Group): Double {
+        val fd = getPlacedPosition(from)
+        val td = getPlacedPosition(to)
         return (minDist(fd.getMinX(), fd.getMaxX(), td.getMinX(), td.getMaxX()) +
                 minDist(fd.getMinY(), fd.getMaxY(), td.getMinY(), td.getMaxY()))
-    }
-
-    private fun narrow(a1: Double, a2: Double, b1: Double, b2: Double): DoubleArray {
-        return if (a2 < b1) {
-            doubleArrayOf(b1, b1, b1 - a2)
-        } else if (a1 > b2) {
-            doubleArrayOf(b2, b2, a1 - b2)
-        } else {
-            doubleArrayOf(max(a1, b1), min(a2, b2), 0.0)
-        }
-    }
-
-    override fun emptyBounds(): RoutingInfo {
-        return EMPTY_BOUNDS
-    }
-
-    override fun isEmptyBounds(bounds: RoutingInfo): Boolean {
-        return bounds === EMPTY_BOUNDS
-    }
-
-    override fun isInPlane(to: RoutingInfo, from: RoutingInfo, horiz: Boolean): Boolean {
-        val pto = to as PositionRoutingInfo
-        val pfrom = from as PositionRoutingInfo
-        return if (horiz) {
-            checkHorizontal(pto, pfrom)
-        } else {
-            checkVertical(pto, pfrom)
-        }
-    }
-
-    private fun checkHorizontal(pto: PositionRoutingInfo, pfrom: PositionRoutingInfo): Boolean {
-        return narrow(pto.getMinX(), pto.getMaxX(), pfrom.getMinX(), pfrom.getMaxX())[2] == 0.0
-    }
-
-    private fun checkVertical(pto: PositionRoutingInfo, pfrom: PositionRoutingInfo): Boolean {
-        return narrow(pto.getMinY(), pto.getMaxY(), pfrom.getMinY(), pfrom.getMaxY())[2] == 0.0
-    }
-
-    companion object {
-        val EMPTY_BOUNDS: PositionRoutingInfo =
-                object : PositionRoutingInfo() {
-                    override fun centerY(): Double {
-                        return 0.0
-                    }
-
-                    override fun getMinX(): Double {
-                        return 0.0
-                    }
-
-                    override fun getMaxX(): Double {
-                        return 0.0
-                    }
-
-                    override fun getMinY(): Double {
-                        return 0.0
-                    }
-
-                    override fun getMaxY(): Double {
-                        return 0.0
-                    }
-
-                    override fun getWidth(): Double {
-                        return 0.0
-                    }
-
-                    override fun getHeight(): Double {
-                        return 0.0
-                    }
-
-                    override fun centerX(): Double {
-                        return 0.0
-                    }
-
-                    override fun compareTo(other: RoutingInfo): Int {
-                        throw UnsupportedOperationException("Can't compare empty bounds")
-                    }
-
-                    override fun compareX(with: RoutingInfo): Int {
-                        throw UnsupportedOperationException("Can't compare empty bounds")
-                    }
-
-                    override fun compareY(with: RoutingInfo): Int {
-                        throw UnsupportedOperationException("Can't compare empty bounds")
-                    }
-                }
     }
 }

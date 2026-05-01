@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.grouping
 
 import org.kite9.diagram.common.algorithms.det.UnorderedSet
-import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 

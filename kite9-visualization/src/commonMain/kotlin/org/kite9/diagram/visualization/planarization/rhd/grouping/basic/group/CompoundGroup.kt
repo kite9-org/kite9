@@ -11,4 +11,7 @@ sealed interface CompoundGroup : Group {
     val internalLinkA: LinkManager.LinkDetail?
 
     val internalLinkB: LinkManager.LinkDetail?
+
+    fun setLayout(l: Layout?)
+
 }

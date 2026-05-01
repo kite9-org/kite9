@@ -3,6 +3,7 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -18,19 +19,17 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  */
 class DistancePlacementApproach(
         log: Kite9Log,
-        aDirection: Layout?,
+        aDirection: Direction?,
         overall: CompoundGroup,
-        val rh: RoutableHandler2D,
+        rh: RoutableHandler2D,
         natural: Boolean
-) : AbstractPlacementApproach(log, aDirection, overall, natural) {
+) : AbstractPlacementApproach(log, aDirection, overall, natural, rh) {
 
     override fun evaluate() {
-        overall.layout = aDirection
+        overall.setLayout(Layout.fromDirection(aDirection))
         score = 0.0
-        rh.clearTempPositions(false)
-        rh.clearTempPositions(true)
-        log.send("Position of A" + overall.a.axis.getPosition(rh, true))
-        log.send("Position of B" + overall.b.axis.getPosition(rh, true))
+        log.send("Position of A" + rh.getPlacedPosition(overall.a))
+        log.send("Position of B" + rh.getPlacedPosition(overall.b))
         evaluateLinks(overall.a)
         evaluateLinks(overall.b)
     }
@@ -43,14 +42,12 @@ class DistancePlacementApproach(
                             destinationGroup: Group,
                             ld: LinkDetail
                     ) {
-                        val aRI = originatingGroup.axis.getPosition(rh, true)
-                        val bRI = destinationGroup.axis.getPosition(rh, true)
-                        val cost = rh.cost(aRI, bRI) * ld!!.numberOfLinks
+                        val cost = rh.cost(originatingGroup, destinationGroup) * ld.numberOfLinks
                         score += cost
                         log.send(
                                 """Evaluating: $cost
-	from ${(originatingGroup as LeafGroup).connected} at $aRI
-	to ${(destinationGroup as LeafGroup).connected} at $bRI"""
+	from ${(originatingGroup as LeafGroup).connected} at ${rh.getPlacedPosition(originatingGroup)}
+	to ${(destinationGroup as LeafGroup).connected} at ${rh.getPlacedPosition(destinationGroup)}"""
                         )
                     }
                 }

@@ -2,7 +2,6 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group
 
 import org.kite9.diagram.common.algorithms.det.Deterministic
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.GroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
@@ -60,7 +59,7 @@ sealed interface Group : Deterministic {
      */
     fun log(log: Kite9Log)
 
-    var layout: Layout?
+    fun getLayout() : Layout?
 
     /**
      * Whether the group is ready to be merged

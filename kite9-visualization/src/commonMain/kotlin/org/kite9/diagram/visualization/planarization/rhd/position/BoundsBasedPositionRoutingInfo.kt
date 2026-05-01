@@ -1,7 +1,9 @@
 package org.kite9.diagram.visualization.planarization.rhd.position
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
+import org.kite9.diagram.logging.LogicException
 
 class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRoutingInfo() {
 
@@ -11,6 +13,13 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
 
     override fun centerY(): Double {
         return y.distanceCenter
+    }
+
+    override fun getBounds(d: Dimension): Bounds {
+        return when (d) {
+            Dimension.H -> x
+            Dimension.V -> y
+        }
     }
 
     override fun getMinX(): Double {
@@ -37,6 +46,14 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
         return getMaxY() - getMinY()
     }
 
+    override fun expandTo(o: PositionRoutingInfo): PositionRoutingInfo {
+        if (o is BoundsBasedPositionRoutingInfo) {
+            return BoundsBasedPositionRoutingInfo(x.expand(o.x), y.expand(o.y))
+        } else {
+            throw LogicException("not implemented")
+        }
+    }
+
     override fun compareTo(other: RoutingInfo): Int {
         val bbri = other as BoundsBasedPositionRoutingInfo
         val yc = y.compareTo(bbri.y)
@@ -45,14 +62,6 @@ class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRou
         } else {
             x.compareTo(bbri.x)
         }
-    }
-
-    override fun compareX(with: RoutingInfo): Int {
-        return x.compareTo((with as BoundsBasedPositionRoutingInfo).x)
-    }
-
-    override fun compareY(with: RoutingInfo): Int {
-        return y.compareTo((with as BoundsBasedPositionRoutingInfo).y)
     }
 
 }

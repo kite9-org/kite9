@@ -79,7 +79,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         }
         val line = if (g is CompoundGroup) {
             val axis = g.axis as DirectedGroupAxis
-            val l: Layout? = g.layout
+            val l: Layout? = g.getLayout()
             val h = if (g.axis.isHorizontal) "h" else " "
             val v = if (g.axis.isVertical) "v" else " "
             (sb.toString() + g.groupNumber +
@@ -87,7 +87,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
                     + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v "
                     + (g.a.groupNumber).toString() + " " + (g.b.groupNumber))
         } else {
-            (sb.toString() + g.groupNumber +
+            (sb.toString() + g.groupNumber + " "+rr.getPlacedPosition(g) +
                     " " + g.toString()+" l="+g.linkManager.linkCount)
         }
         log.send(line)

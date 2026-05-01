@@ -10,10 +10,23 @@ enum class Layout {
 
     companion object {
 
-        fun needsLayoutEdge(d: Layout?) : Boolean {
-            return if (d == null) false else when (d) {
-                HORIZONTAL,  VERTICAL ,LEFT,RIGHT,UP, DOWN -> true
-                else -> false
+        fun fromDirection(d: Direction?) : Layout? {
+            return when(d) {
+                Direction.UP -> Layout.UP
+                Direction.DOWN -> DOWN
+                Direction.LEFT -> Layout.LEFT
+                Direction.RIGHT -> Layout.RIGHT
+                null -> null
+            }
+        }
+
+        fun toDirection(l: Layout?) : Direction? {
+            return when(l) {
+                Layout.UP -> Direction.UP
+                Layout.DOWN -> Direction.DOWN
+                Layout.LEFT -> Direction.LEFT
+                Layout.RIGHT -> Direction.RIGHT
+                else -> null
             }
         }
 

@@ -1,8 +1,11 @@
 package org.kite9.diagram.common.objects
 
-import org.kite9.diagram.common.fraction.LongFraction
+enum class DPos {
+    BEFORE, OVERLAP, AFTER
+}
 
 interface Bounds : Comparable<Bounds> {
+
     val distanceMin: Double
     val distanceMax: Double
     val distanceCenter: Double
@@ -12,14 +15,5 @@ interface Bounds : Comparable<Bounds> {
      */
     fun expand(other: Bounds): Bounds
 
-    /**
-     * Returns a new bounds with just the common distance inside
-     */
-    fun narrow(other: Bounds): Bounds
-    fun keep(buffer: Double, width: Double, atFraction: LongFraction): Bounds
-    fun keep(buffer: Double, width: Double, atFraction: Double): Bounds
-    fun narrow(trim: Double): Bounds
-
-    fun size() : Double
-
+    fun compareBounds(other: Bounds): DPos
 }

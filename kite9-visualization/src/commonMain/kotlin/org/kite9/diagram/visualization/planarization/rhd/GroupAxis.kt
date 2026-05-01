@@ -24,20 +24,9 @@ interface GroupAxis {
     val isVertical: Boolean
 
     /**
-     * Figures out where the group is, and returns routing info for it.
-     * Set temp during the layout strategy phase to evaluate a layout before committing to it.
-     */
-    fun getPosition(rh: RoutableHandler2D, temp: Boolean): RoutingInfo
-
-    /**
      * Returns false if the group no longer needs combining into CompoundGroups
      */
     var active: Boolean
-
-    /**
-     * Returns true if this group's parents are all positioned, and we can choose the position of this one.
-     */
-    fun isReadyToPosition(completedGroups: Set<Group>): Boolean
 
     /**
      * Potentially, groups can have 2 parents, a horizontal and a vertical one.

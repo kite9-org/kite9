@@ -22,7 +22,15 @@ abstract class AbstractCompoundGroup(
     override val groupOrdinal = min(a.groupOrdinal, b.groupOrdinal)
     override val height: Int = max(a.height, b.height) + 1
     override val hints: Map<String, Float?> = emptyMap()
-    override var layout: Layout? = null
+    private var _layout: Layout? = null
+
+    override fun setLayout(layout: Layout?) {
+        this._layout = layout
+    }
+
+    override fun getLayout() : Layout? {
+        return _layout;
+    }
 
     override fun addLeafGroupOrdinalsToSet(s: MutableSet<Int>) {
         if (completeMerge) {

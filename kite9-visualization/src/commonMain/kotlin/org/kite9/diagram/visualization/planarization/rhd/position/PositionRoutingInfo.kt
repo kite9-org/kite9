@@ -23,4 +23,5 @@ abstract class PositionRoutingInfo : RoutingInfo {
         return outputX() + ", " + outputY()
     }
 
+    abstract fun expandTo(o: PositionRoutingInfo) : PositionRoutingInfo
 }

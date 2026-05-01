@@ -3,7 +3,9 @@
  */
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.logging.Kite9Log
+import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
@@ -23,29 +25,27 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  */
 class DirectionPlacementApproach(
     log: Kite9Log,
-    aDirection: Layout?,
+    aDirection: Direction?,
     overall: CompoundGroup,
-    val rh: RoutableHandler2D,
+    rh: RoutableHandler2D,
     natural: Boolean
 ) : AbstractPlacementApproach(
-    log, aDirection, overall, natural
+    log, aDirection, overall, natural, rh
 ) {
 
     val ev = ExitMatrixEvaluator()
 
     override fun evaluate() {
-        overall.layout = aDirection
-        rh.clearTempPositions(false)
-        rh.clearTempPositions(true)
-        log.send("Position of A" + overall.a.axis.getPosition(rh, true))
+        overall.setLayout(Layout.fromDirection(aDirection))
+        log.send("Position of A" + rh.getPlacedPosition(overall.a))
         val aMatrix = createMatrix(overall.a, overall.internalLinkA)
         log.send("A Matrix: $aMatrix")
-        log.send("Position of B" + overall.b.axis.getPosition(rh, true))
+        log.send("Position of B" + rh.getPlacedPosition(overall.b))
         val bMatrix = createMatrix(overall.b, overall.internalLinkB)
         log.send("B Matrix: $bMatrix")
 
         // can't understand how this got reversed
-        val matrixDirection = reverse(aDirection)
+        val matrixDirection = Layout.fromDirection(Direction.reverse(aDirection))
         score = ev.countOverlaps(aMatrix, bMatrix, matrixDirection!!, rh)
         val externalDistance = ev.calculateExtraExternalLinkDistance(aMatrix, bMatrix, matrixDirection, rh)
         val internalDistance = ev.calculateInternalDistance(overall.internalLinkA, rh)
@@ -56,9 +56,8 @@ class DirectionPlacementApproach(
     }
 
     private fun createMatrix(with: Group, ignore: LinkDetail?): ExitMatrix {
-        val position = with.axis.getPosition(rh, true)
         val out = ExitMatrix()
-        out.setSize(rh.getBoundsOf(position, true), rh.getBoundsOf(position, false))
+        out.setSize(rh.getBoundsOf(with, Dimension.H), rh.getBoundsOf(with, Dimension.V))
         with.processAllLeavingLinks(true, DirectedLinkManager.all(), object : LinkProcessor {
             override fun process(
                 originatingGroup: Group,
@@ -66,13 +65,13 @@ class DirectionPlacementApproach(
                 ld: LinkDetail
             ) {
                 if (ld !== ignore) {
-                    ld!!.processLowestLevel(object : LinkProcessor {
+                    ld.processLowestLevel(object : LinkProcessor {
                         override fun process(
                             originatingGroup: Group,
                             destinationGroup: Group,
                             ld: LinkDetail
                         ) {
-                            out.addLink(originatingGroup, destinationGroup, ld!!, rh)
+                            out.addLink(originatingGroup, destinationGroup, ld, rh)
                         }
                     })
                 }

@@ -1,40 +1,45 @@
 package org.kite9.diagram.common.objects
 
-import org.kite9.diagram.common.fraction.LongFraction
-import org.kite9.diagram.logging.LogicException
+import kotlin.math.max
+import kotlin.math.min
 
-data class BasicBounds(override val distanceMin: Double, override val distanceMax: Double) : Bounds {
+enum class Division {
+    FIRST_HALF, SECOND_HALF
+}
 
-    override fun expand(other: Bounds): Bounds {
-        if (this === EMPTY_BOUNDS) {
-            return other
-        } else if (other === EMPTY_BOUNDS) {
-            return this
-        }
-        val o2 = other as BasicBounds
-        //System.out.println("merging "+o2+" with "+this);
-        return BasicBounds(
-            o2.distanceMin.coerceAtMost(distanceMin),
-            o2.distanceMax.coerceAtLeast(distanceMax)
-        )
-    }
+data class BasicBounds(
+    val parent: BasicBounds?,
+    val div: Division?,
+    val depth : Int,
+    val range : ClosedFloatingPointRange<Double>) : Bounds {
 
-    override fun narrow(other: Bounds): Bounds {
-        if (this === EMPTY_BOUNDS) {
-            return this
-        } else if (other === EMPTY_BOUNDS) {
-            return other
-        }
-        val o2 = other as BasicBounds
-        val lower = o2.distanceMin.coerceAtLeast(distanceMin)
-        val upper = o2.distanceMax.coerceAtMost(distanceMax)
-        return if (lower >= upper) {
-            EMPTY_BOUNDS
-        } else BasicBounds(lower, upper)
-    }
+    constructor() : this(null, null, 0, 0.0 .. 1.0)
+
+    constructor(parent: BasicBounds, div: Division) : this(parent, div, parent.depth+1, calcRange(parent, div))
+
+    override val distanceMax: Double
+        get() = this.range.endInclusive
+
+    override val distanceMin: Double
+        get() = this.range.start
 
     override val distanceCenter: Double
         get() = (distanceMax + distanceMin) / 2.0
+
+    override fun expand(other: Bounds): Bounds {
+        return MergedBounds(min(this.distanceMin, other.distanceMin), max(this.distanceMax, other.distanceMax))
+    }
+
+
+    override fun compareBounds(other: Bounds): DPos {
+        return if (this.distanceMax <= other.distanceMin) {
+            DPos.BEFORE
+        } else if (this.distanceMin >= other.distanceMax) {
+            DPos.AFTER
+        } else {
+            DPos.OVERLAP
+        }
+    }
 
     override fun toString(): String {
         return "(bb, g=$distanceMin - $distanceMax)"
@@ -54,48 +59,25 @@ data class BasicBounds(override val distanceMin: Double, override val distanceMa
         }
     }
 
-    override fun keep(buffer: Double, width: Double, atFraction: LongFraction): Bounds {
-        val span = distanceMax - distanceMin - buffer * 2.0
-        val pos = atFraction.doubleValue() * span
-        var lower = distanceMin + pos - width / 2.0 + buffer
-        var upper = distanceMin + pos + width / 2.0 + buffer
-        lower = (distanceMin + buffer).coerceAtLeast(lower)
-        upper = (distanceMax - buffer).coerceAtMost(upper)
-        return BasicBounds(lower, upper)
-    }
-
-    override fun keep(buffer: Double, width: Double, atFraction: Double): Bounds {
-        val span = (distanceMax - distanceMin - buffer * 2.0).coerceAtLeast(0.0)
-        val pos = atFraction * span
-        var lower = distanceMin + pos - width / 2.0 + buffer
-        var upper = distanceMin + pos + width / 2.0 + buffer
-        lower = (distanceMin + buffer).coerceAtLeast(lower).coerceAtMost(upper)
-        upper = (distanceMax - buffer).coerceAtMost(upper).coerceAtLeast(lower)
-        return BasicBounds(lower, upper)
-    }
-
-    override fun size(): Double {
-        return distanceMax - distanceMin
-    }
-
-    override fun narrow(trim: Double): Bounds {
-        return BasicBounds(distanceMin + trim, distanceMax - trim)
-    }
-
     companion object {
 
-        val EMPTY_BOUNDS = BasicBounds(-1.0, -1.0)
-    }
+        val EMPTY_BOUNDS = BasicBounds()
 
-    init {
-        if ((distanceMin == -1.0) && (distanceMax == -1.0)) {
-            // empty bounds, fine
-        } else if ((distanceMin < 0) || (distanceMin > 1)) {
-            throw LogicException("Illegal Bounds")
-        } else if ((distanceMax < 0) || (distanceMax > 1)) {
-            throw LogicException("Illegal Bounds")
-        } else if (distanceMin > distanceMax) {
-            throw LogicException("Illegal Bounds")
+        fun extendBounds(parent: BasicBounds, division: Division?) : BasicBounds {
+            if (division != null) {
+                return BasicBounds(parent, division)
+            } else {
+                return parent
+            }
         }
+
+        fun calcRange(parent: BasicBounds, div: Division) : ClosedFloatingPointRange<Double> {
+            val halfway = (parent.range.start + parent.range.endInclusive) / 2.0
+            return when (div) {
+                Division.FIRST_HALF -> parent.range.start .. halfway
+                Division.SECOND_HALF -> halfway .. parent.range.endInclusive
+            }
+        }
+
     }
 }

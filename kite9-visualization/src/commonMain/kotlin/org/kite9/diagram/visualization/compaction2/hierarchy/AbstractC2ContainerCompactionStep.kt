@@ -27,6 +27,8 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  */
 abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: PositionRoutableHandler2D, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
 
+    val containerPositions = mutableMapOf<DiagramElement, PositionRoutingInfo>()
+
     fun getEdgePosition(k: LeafGroup, d: Direction) : Double? {
         return if (k != null) {
             val p = rr.getPlacedPosition(k) as PositionRoutingInfo?
@@ -186,6 +188,14 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         }
     }
 
+    private fun mergePositions(a: PositionRoutingInfo?, b: PositionRoutingInfo?) : PositionRoutingInfo? {
+        return if ((a != null) && (b != null)) {
+            a.expandTo(b)
+        } else {
+            a ?: b
+        }
+    }
+
     private fun completeContainers(
         c: Rectangular,
         co: C2Compaction,
@@ -193,7 +203,7 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         topGroup: Group,
         elementMapping: MutableMap<DiagramElement, Set<LeafGroup>>) {
         println("Completing ${c}")
-        val pp = rr.getPlacedPosition(c)
+        val pp = containerPositions[c]
         if (pp == null) {
             c.getContents()
                 .filterIsInstance<Rectangular>()
@@ -220,16 +230,10 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
                 applyContainerEdge(soy, c, bottomMost, Side.END, map, Dimension.V, topGroup)
 
                 val containerBounds = c.getContents()
-                    .map { rr.getPlacedPosition(it) }
-                    .reduceOrNull { a, b ->
-                        if ((a != null) && (b != null)) {
-                            rr.increaseBounds(a, b)
-                        } else {
-                            a ?: b
-                        }
-                    }
+                    .map { containerPositions[it] }
+                    .reduceOrNull { a, b -> mergePositions(a,b) }
 
-                (rr as RoutableHandler2D).setPlacedPosition(c, containerBounds!!)
+                containerPositions[c] = containerBounds!!
 
                 val cx = sox.getSlideablesFor(c)
                 val cy = soy.getSlideablesFor(c)
@@ -252,8 +256,10 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
 
     private fun ensurePositionsOfElements(mapping: Map<DiagramElement, Set<LeafGroup>>) {
         mapping.forEach { (k, v) ->
-            val pos = rr.getPlacedPosition(v.first())
-            (rr as RoutableHandler2D).setPlacedPosition(k, pos!!)
+            val combinedPos = v
+                .map { rr.getPlacedPosition(it) }
+                .reduce { a, b -> mergePositions(a, b)!! }
+            containerPositions[k] = combinedPos
         }
     }
 

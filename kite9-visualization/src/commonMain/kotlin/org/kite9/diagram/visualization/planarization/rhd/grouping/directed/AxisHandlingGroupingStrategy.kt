@@ -62,12 +62,12 @@ abstract class AxisHandlingGroupingStrategy(
 
         log.send(
             if (log.go()) null else """Compound Group ${out.groupNumber} created: 
-	${out.a}
-	${out.b}
-	${out.layout}
-	axis:${out.axis}
-	links:""", (out.linkManager as DirectedLinkManager).links
-        )
+            ${out.a}
+            ${out.b}
+            ${out.getLayout()}
+            axis:${out.axis}
+            links:""", (out.linkManager).links
+                )
 
         writeGroup(out, mo)
         return out
@@ -148,43 +148,42 @@ abstract class AxisHandlingGroupingStrategy(
                 DirectedGroupAxis.getState(out) === MergePlane.Y_FIRST_MERGE && isHorizontalDirection(ld.direction)
     }
 
-    open fun identifyGroupDirection(out: CompoundGroup, ms: BasicMergeState) {
+    private fun identifyGroupDirection(out: DirectedCompoundGroup, ms: BasicMergeState) {
         val c = Containers.getCommonContainers(ms, out.a, out.b)
         val layoutDirection = getAxisLayoutForContainers(c)
-        val lda = out.internalLinkA
-        val ldb = out.internalLinkB
-        checkForInternalContradictions(out, out.internalLinkA, out.internalLinkB, ms)
-        if (lda != null && ldb != null) {
-            val layout = getLayoutForDirection(
-                ms.contradictionHandler.checkContradiction(
-                    lda.direction, lda.isOrderingLink, lda.linkRank, lda.connections,
-                    reverse(ldb.direction), ldb.isOrderingLink, ldb.linkRank, ldb.connections,
-                    layoutDirection
+        val axisAligned = out.axis.isAxisAligned
+
+        if (axisAligned) {
+            val lda = out.internalLinkA
+            val ldb = out.internalLinkB
+            checkForInternalContradictions(out, out.internalLinkA, out.internalLinkB, ms)
+            val internalLinkDirection = if (lda != null && ldb != null) {
+                val layout = getLayoutForDirection(
+                    ms.contradictionHandler.checkContradiction(
+                        lda.direction, lda.isOrderingLink, lda.linkRank, lda.connections,
+                        reverse(ldb.direction), ldb.isOrderingLink, ldb.linkRank, ldb.connections,
+                        layoutDirection
+                    )
                 )
-            )
-            out.layout = layout
-        } else if (lda != null) {
-            out.layout = getLayoutForDirection(lda.direction)
-        } else if (ldb != null) {
-            out.layout = getLayoutForDirection(ldb.direction)
+                layout
+            } else if (lda != null) {
+                getLayoutForDirection(lda.direction)
+            } else if (ldb != null) {
+                getLayoutForDirection(ldb.direction)
+            } else {
+                null
+            }
+
+            if (internalLinkDirection != null) {
+                out.setLayout(internalLinkDirection)
+            }
         }
 
-
-        // we may be able to establish a layout from one or more of the 
+        // we may be able to establish a layout from one or more of the
         // containers that the groups are in.  Layout will be horizontal or vertical,
         // unless there is a contradiction.
-        if (out.layout == null) {
-            out.layout = layoutDirection
-        } else if (out.layout === Layout.UP || out.layout === Layout.DOWN) {
-            if (layoutDirection === Layout.HORIZONTAL) {
-                out.layout = Layout.HORIZONTAL
-            }
-        } else if (out.layout === Layout.LEFT || out.layout === Layout.RIGHT) {
-            if (layoutDirection === Layout.VERTICAL) {
-                out.layout = Layout.VERTICAL
-            }
-        } else if (out.layout !== layoutDirection) {
-            throw LogicException("Layout contradiction")
+        if (out.getLayout() == null) {
+            out.setLayout(layoutDirection)
         }
     }
 
@@ -202,7 +201,8 @@ abstract class AxisHandlingGroupingStrategy(
 
         // ok, so we should have either nulls, horizontals or verticals only.
         if (layoutDirections.contains(Layout.HORIZONTAL) &&
-            layoutDirections.contains(Layout.VERTICAL)) {
+            layoutDirections.contains(Layout.VERTICAL)
+        ) {
             throw LogicException("Two live containers with conflicting layouts - not handled yet")
         }
 
@@ -276,22 +276,22 @@ abstract class AxisHandlingGroupingStrategy(
         val aType = DirectedGroupAxis.getType(a)
         val cgType = DirectedGroupAxis.getType(cg)
         if (cgType.state === MergePlane.X_FIRST_MERGE) {
-            aType.vertParentGroup = cg
+            aType.vAxisParentGroup = cg
             if (aType.state === MergePlane.X_FIRST_MERGE || aType.state === MergePlane.Y_FIRST_MERGE) {
                 aType.active = false
-                if (aType.horizParentGroup == null) {
-                    aType.horizParentGroup = cg
+                if (aType.hAxisParentGroup == null) {
+                    aType.hAxisParentGroup = cg
                 }
             } else {
                 aType.state = MergePlane.Y_FIRST_MERGE
                 axisChanged(a)
             }
         } else if (cgType.state === MergePlane.Y_FIRST_MERGE) {
-            aType.horizParentGroup = cg
+            aType.hAxisParentGroup = cg
             if (aType.state === MergePlane.X_FIRST_MERGE || aType.state === MergePlane.Y_FIRST_MERGE) {
                 aType.active = false
-                if (aType.vertParentGroup == null) {
-                    aType.vertParentGroup = cg
+                if (aType.vAxisParentGroup == null) {
+                    aType.vAxisParentGroup = cg
                 }
             } else {
                 aType.state = MergePlane.X_FIRST_MERGE
@@ -311,13 +311,22 @@ abstract class AxisHandlingGroupingStrategy(
     }
 
     private fun setBothParents(cg: CompoundGroup, aType: DirectedGroupAxis) {
-        aType.horizParentGroup = cg
-        aType.vertParentGroup = cg
+        aType.hAxisParentGroup = cg
+        aType.vAxisParentGroup = cg
         aType.active = false
     }
 
     private fun axisChanged(a: Group) {
         a.linkManager.notifyAxisChange()
+    }
+
+    private fun isSingleDirectedAxisMerge(p: Int?): Boolean {
+        val rightPriorities = listOf(
+            AXIS_SINGLE_NEIGHBOUR,
+            AXIS_SINGLE_NEIGHBOUR + ContainerMergeType.JOINING_EXTRA_CONTAINERS.priorityAdjustment,
+            AXIS_SINGLE_NEIGHBOUR + ContainerMergeType.NO_LIVE_CONTAINER.priorityAdjustment
+        )
+        return rightPriorities.contains(p)
     }
 
     override fun createLeafGroup(gln: GroupLinkNode, ord: Rectangular): LeafGroup {
@@ -328,7 +337,7 @@ abstract class AxisHandlingGroupingStrategy(
         return out
     }
 
-    override fun createCompoundGroup(a: Group, b: Group, treatAsComplete: Boolean, mo: MergeOption?, size: Int): CompoundGroup {
+    override fun createCompoundGroup(a: Group, b: Group, treatAsComplete: Boolean, mo: MergeOption?, size: Int): DirectedCompoundGroup {
         val hashCode = if (!treatAsComplete) {
             // this is done so that a different compound group containing the same leaves can
             // occupy the same position in a hashmap
@@ -336,7 +345,7 @@ abstract class AxisHandlingGroupingStrategy(
         } else {
             hashCodeGenerator.nextInt()
         }
-        val out = DirectedCompoundGroup(a, b, treatAsComplete, groupCount, size, hashCode, ms, log, mo?.alignedDirection)
+        val out = DirectedCompoundGroup(a, b, treatAsComplete, groupCount, size, hashCode, ms, log, mo?.alignedDirection, isSingleDirectedAxisMerge(mo?.priority))
         groupCount++
         return out
     }

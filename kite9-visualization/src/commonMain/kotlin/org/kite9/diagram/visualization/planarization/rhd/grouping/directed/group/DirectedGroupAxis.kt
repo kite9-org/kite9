@@ -3,20 +3,12 @@
  */
 package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group
 
-import org.kite9.diagram.common.elements.RoutingInfo
-import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.Kite9Log
-import org.kite9.diagram.logging.LogicException
-import org.kite9.diagram.model.Port
 import org.kite9.diagram.model.position.Direction
-import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.GroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
-import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
@@ -30,82 +22,13 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
     override var isHorizontal = false
     override var isVertical = false
+    var isAxisAligned = false
 
-    var horizParentGroup: CompoundGroup? = null
-    var vertParentGroup: CompoundGroup? = null
+    var hAxisParentGroup: CompoundGroup? = null
+    var vAxisParentGroup: CompoundGroup? = null
 
     override fun getParentGroup(horizontal: Boolean): CompoundGroup? {
-        return if (horizontal) horizParentGroup else vertParentGroup
-    }
-
-    fun isSet(rh: RoutableHandler2D?, ri: Bounds?, horiz: Boolean): Boolean {
-        return ri != null
-    }
-
-    fun getPosition1D(rh: RoutableHandler2D, temp: Boolean, horiz: Boolean): Bounds {
-        var ri = rh.getPosition(g!!, horiz)
-
-        if ((ri == null) && temp) {
-            ri = rh.getTempPosition(g!!, horiz)
-        }
-
-        return if (ri == null) {
-            // ok, calculate via parent groups.  
-            var out: Bounds? = null
-            val parent: Group? =
-                if (horiz) horizParentGroup else vertParentGroup
-            out = if (parent != null) {
-                if (parent.axis.isHorizontal || parent.axis.isVertical) {
-                    val l = getLayoutFor(parent, g)
-                    rh.narrow(l, (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz), horiz)
-                } else {
-                    (parent.axis as DirectedGroupAxis).getPosition1D(rh, temp, horiz)
-                }
-            } else {
-                // no parent group = top
-                rh.getTopLevelBounds(horiz)
-            }
-
-            var port = getPortGroup(g)
-            if (port != null) {
-                out = rh.portEdge(port.getPortDirection(), out, horiz)
-            }
-
-            //log.send("Setting "+(temp? "temp" : "real") + (horiz ? "horiz" : "vert")+" position for "+g+"\n\t"+out);
-            if (temp) {
-                rh.setTempPosition(g, out, horiz)
-            } else {
-                log.send("Placed: " + g.groupNumber + " " + horiz + " " + out)
-                rh.setPlacedPosition(g, out, horiz)
-            }
-            if (!temp && g is LeafGroup) {
-                // this means the routable handler also has final positions for each contained element
-                rh.setPlacedPosition(g.connected, out, horiz)
-            }
-            out
-        } else {
-            ri
-        }
-    }
-
-    private fun getPortGroup(g: Group) : Port? {
-        return if (g is LeafGroup) {
-            g.connected as? Port
-        } else {
-            null
-        }
-    }
-
-    override fun getPosition(rh: RoutableHandler2D, temp: Boolean): RoutingInfo {
-        val xBounds = getPosition1D(rh, temp, true)
-        val yBounds = getPosition1D(rh, temp, false)
-        return rh.createRouting(xBounds, yBounds)
-    }
-
-    override fun isReadyToPosition(completedGroups: Set<Group>): Boolean {
-        val hready = horizParentGroup == null || completedGroups.contains(horizParentGroup as Group)
-        val vready = vertParentGroup == null || completedGroups.contains(vertParentGroup as Group)
-        return hready && vready
+        return if (horizontal) hAxisParentGroup else vAxisParentGroup
     }
 
     companion object {
@@ -167,37 +90,7 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
             return (group.axis as DirectedGroupAxis).state
         }
 
-        fun getLayoutFor(`in`: Group, g: Group?): Layout? {
-            val ax = getType(`in`)
-            return if (`in`.layout == null) {
-                null
-            } else when (`in`.layout) {
-                Layout.LEFT, Layout.RIGHT -> if (ax.isHorizontal) layoutSide(
-                    `in`,
-                    g
-                ) else null
-                Layout.UP, Layout.DOWN -> if (ax.isVertical) layoutSide(
-                    `in`,
-                    g
-                ) else null
-                else ->            //HORIZONTAL, VERTICAL:
-                    `in`.layout
-            }
-        }
-
-        private fun layoutSide(`in`: Group, g: Group?): Layout? {
-            val cg = `in` as CompoundGroup
-            return if (cg.b === g) {
-                cg.layout
-            } else if (cg.a === g) {
-                reverse(cg.layout)
-            } else {
-                throw LogicException()
-            }
-        }
-
-
-		fun getType(g: Group): DirectedGroupAxis {
+        fun getType(g: Group): DirectedGroupAxis {
             return g.axis as DirectedGroupAxis
         }
     }

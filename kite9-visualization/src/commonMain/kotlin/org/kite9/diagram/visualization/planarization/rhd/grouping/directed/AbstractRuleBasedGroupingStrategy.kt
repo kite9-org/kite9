@@ -115,13 +115,13 @@ abstract class AbstractRuleBasedGroupingStrategy(
             }
             axis = group!!.axis as DirectedGroupAxis
             parent = when (axis.state) {
-                MergePlane.X_FIRST_MERGE -> axis.vertParentGroup
-                MergePlane.Y_FIRST_MERGE -> axis.horizParentGroup
+                MergePlane.X_FIRST_MERGE -> axis.vAxisParentGroup
+                MergePlane.Y_FIRST_MERGE -> axis.hAxisParentGroup
                 else -> {
-                    if (axis.horizParentGroup != axis.vertParentGroup) {
+                    if (axis.hAxisParentGroup != axis.vAxisParentGroup) {
                         throw LogicException("Not decided")
                     }
-                    axis.horizParentGroup
+                    axis.hAxisParentGroup
                 }
             }
         } while (parent != null)

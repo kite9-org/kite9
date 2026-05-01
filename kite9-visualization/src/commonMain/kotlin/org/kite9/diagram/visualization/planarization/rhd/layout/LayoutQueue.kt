@@ -8,7 +8,7 @@ interface LayoutQueue {
     /**
      * Adds another group to the work queue
      */
-    fun offer(item: Group)
+    fun offer(item: CompoundGroup)
 
     /**
      * Informs the queue that you have completed work on item.

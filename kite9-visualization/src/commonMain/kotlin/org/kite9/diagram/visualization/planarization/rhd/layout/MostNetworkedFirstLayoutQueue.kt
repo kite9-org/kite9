@@ -6,6 +6,7 @@ import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 
@@ -17,54 +18,47 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     var log = Kite9Log.instance(this)
 
-    data class NetworkedItem(val group: Group, val size: Int/*, val inAxisMerge: Boolean*/) {
+    data class NetworkedItem(val group: CompoundGroup, val size: Int, val isAxisAligned: Boolean) {
         override fun toString(): String {
-            return "NI: " + group.groupNumber + " size = " + size/* + " in axis = "+inAxisMerge */
+            return "NI: " + group.groupNumber + " size = " + size + " in axis = "+isAxisAligned
         }
     }
 
-    override fun offer(item: Group) {
-        if (canLayout(item)) {
-            var liveGroupLinkCount = 0
-            val lm = item.linkManager
-            log.send(if (log.go()) null else "Counting Network size for " + item.groupNumber)
-            val links = lm.subset(lm.allMask())
-            for (ld in links) {
-                liveGroupLinkCount += countLinkNetworkSize(ld)
-            }
-            networkSizes[item] = liveGroupLinkCount
-            val ni = NetworkedItem(item, liveGroupLinkCount)
-            todo.add(ni)
-            log.send("Created: $ni")
+    override fun offer(item: CompoundGroup) {
+        var liveGroupLinkCount = 0
+        val lm = item.linkManager
+        log.send(if (log.go()) null else "Counting Network size for " + item.groupNumber)
+        val links = lm.subset(lm.allMask())
+        for (ld in links) {
+            liveGroupLinkCount += ld.numberOfLinks.toInt()
         }
-    }
-
-    private fun canLayout(item: Group): Boolean {
-        return item.axis.isReadyToPosition(completedGroups)
+        val isAxisAligned = (item.axis as DirectedGroupAxis).isAxisAligned
+        val ni = NetworkedItem(item, liveGroupLinkCount, isAxisAligned)
+        todo.add(ni)
+        log.send("Created: $ni")
     }
 
     private fun countLinkNetworkSize(ld: LinkDetail): Int {
-        val complete = completedGroups.contains(ld.group)
-        return if (complete) {
-            // drill down looking for first ready group
-            val out = intArrayOf(0)
-            ld.processToLevel(
-                    object : LinkProcessor {
-                        override fun process(
-                                originatingGroup: Group,
-                                destinationGroup: Group,
-                                ld: LinkDetail
-                        ) {
-                            out[0] += countLinkNetworkSize(ld!!)
-                        }
-                    },
-                    1
-            )
-            out[0]
-        } else {
-            log.send(if (log.go()) null else " -- link to " + ld.group)
-            1
-        }
+        // drill down looking for first ready group
+        val out = intArrayOf(0)
+        ld.processToLevel(
+                object : LinkProcessor {
+                    override fun process(
+                            originatingGroup: Group,
+                            destinationGroup: Group,
+                            ld: LinkDetail
+                    ) {
+                        out[0] += countLinkNetworkSize(ld)
+                    }
+                },
+                1
+        )
+        return out[0]
+    }
+
+    private fun mergesAxis(g: CompoundGroup) : Boolean {
+        val axis = g.axis as DirectedGroupAxis
+        return !axis.isHorizontal && !axis.isVertical
     }
 
     var todo: PriorityQueue<NetworkedItem> =
@@ -75,15 +69,17 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
                         /**
                          * First, in axis groups get priority over others
                          */
-//                        if (arg0.inAxisMerge != arg1.inAxisMerge) {
-//                            return@Comparator -arg0.inAxisMerge.compareTo(arg1.inAxisMerge)
-//                        }
+                        if (arg0.isAxisAligned != arg1.isAxisAligned) {
+                            return@Comparator -arg0.isAxisAligned.compareTo(arg1.isAxisAligned)
+                        }
 
                         /**
-                         * Although priority is top down, within a given level, do groups in the
-                         * same order than they were merged in. This means that we do "hub" groups
-                         * before "edge" ones.
+                         * Then let's process any that are merging axes together
                          */
+                        if (mergesAxis(arg0.group) != mergesAxis(arg1.group)) {
+                            return@Comparator -mergesAxis(arg0.group).compareTo(mergesAxis(arg1.group))
+                        }
+
                         // most networked first
                         var a0d = arg0.size
                         var a1d = arg1.size
@@ -98,89 +94,24 @@ class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
                             return@Comparator -a0d.compareTo(a1d)
                         }
 
-                        // lowest number first
+                        // lowest number first (reflects merge ordering)
                         val a0n = arg0.group.groupNumber
                         val a1n = arg1.group.groupNumber
                         a0n.compareTo(a1n)
                     }
             )
-    var networkSizes: MutableMap<Group, Int> = HashMap(size * 2)
-    var completedGroups: MutableSet<Group> = UnorderedSet(size * 2)
+
     override fun poll(): Group? {
         while (todo.size() > 0) {
             val nw = todo.remove()!!
             val out = nw.group
-            networkSizes.remove(out)
-            if (!completedGroups.contains(out)) {
-                out.linkManager.linkCount = nw.size
-                return out
-            }
+            return out
         }
         return null
     }
 
     /** Updates (by creating new NetworkedItems) the groups currently in todo. */
     override fun complete(item: CompoundGroup) {
-        completedGroups.add(item)
-        val a = item.a
-        val b = item.b
-        val horiz = item.axis.isHorizontal
-        val links = item.linkManager.subset(item.linkManager.allMask())
-        for (ld in links) {
-            val group = ld.group
-            checkAndIncrementGroup(group, a, b, ld, horiz)
-        }
-    }
-
-    private fun checkAndIncrementGroup(
-            group: Group?,
-            a: Group,
-            b: Group,
-            ld: LinkDetail,
-            horiz: Boolean
-    ) {
-        var group: Group? = group
-        if (completedGroups.contains(group)) {
-            if (group is CompoundGroup) {
-                // need to work our way down to incomplete ones, no point updating complete groups
-                ld.processToLevel(
-                        object : LinkProcessor {
-                            override fun process(
-                                    originatingGroup: Group,
-                                    destinationGroup: Group,
-                                    ld: LinkDetail
-                            ) {
-                                checkAndIncrementGroup(destinationGroup, a, b, ld!!, horiz)
-                            }
-                        },
-                        1
-                )
-            }
-        } else {
-            group = getGroupBeingLaidOut(group!!, horiz)
-            if (group != null && ld.from(a) && ld.from(b)) {
-                val existingLinks = safeGet(group)
-                networkSizes[group] = existingLinks + 1
-                val ni = NetworkedItem(group, existingLinks + 1)
-                todo.add(ni)
-                log.send("Bumped priority: $ni")
-            }
-        }
-    }
-
-    private fun getGroupBeingLaidOut(group: Group, horiz: Boolean): Group? {
-        var group = group
-        while (!canLayout(group)) {
-            if (completedGroups.contains(group)) {
-                return null
-            }
-            group = group.axis.getParentGroup(horiz)!!
-        }
-        return group
-    }
-
-    private fun safeGet(group: Group): Int {
-        return networkSizes[group] ?: return 0
     }
 
     override val prefix: String

@@ -3,6 +3,7 @@ package org.kite9.diagram.visualization.planarization.rhd.layout
 import kotlin.math.max
 import kotlin.math.min
 import org.kite9.diagram.common.objects.Bounds
+import org.kite9.diagram.common.objects.DPos
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
@@ -10,7 +11,6 @@ import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrix.Relat
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
-import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
 
 /**
  * Tries to work out the likelihood of an overlap.
@@ -19,7 +19,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  */
 class ExitMatrixEvaluator {
 
-    /** A heuristic calculation for the likely number of crossings due to this arragement */
+    /** A heuristic calculation for the likely number of crossings due to this arrangement */
     fun countOverlaps(
             aMatrix: ExitMatrix,
             bMatrix: ExitMatrix,
@@ -72,9 +72,7 @@ class ExitMatrixEvaluator {
                             destinationGroup: Group,
                             ld: LinkDetail
                     ) {
-                        val aRI = originatingGroup.axis.getPosition(rh, true)
-                        val bRI = destinationGroup.axis.getPosition(rh, true)
-                        val cost = rh.cost(aRI, bRI) * ld!!.numberOfLinks
+                        val cost = rh.cost(originatingGroup, destinationGroup) * ld.numberOfLinks
                         out[0] += cost
                         //				log.send("Evaluating: "+cost+
                         //						"\n\tfrom "+((LeafGroup)originatingGroup).getContained()+" at "+aRI+
@@ -126,11 +124,11 @@ class ExitMatrixEvaluator {
         // large span check
         val aSpan = aMatrix.getSpanInDirectionOfLayout(reverse(ad)!!)
         val bSpan = bMatrix.getSpanInDirectionOfLayout(reverse(ad)!!)
-        if (rh.compareBounds(aSpan!!, bSpan!!) === DPos.OVERLAP) {
+        if (aSpan!!.compareBounds(bSpan!!) === DPos.OVERLAP) {
             val bOccluding = bMatrix.getLinkCount(ad, RelativeSide.OPPOSITE, 0)
 
             // works out the occluded span
-            val occludedMin = max(aSpan!!.distanceMin, bSpan!!.distanceMin)
+            val occludedMin = max(aSpan.distanceMin, bSpan.distanceMin)
             val occludedMax = min(aSpan.distanceMax, bSpan.distanceMax)
             val topOccludedFrac =
                     (occludedMax - occludedMin) / (aSpan.distanceMax - aSpan.distanceMin)

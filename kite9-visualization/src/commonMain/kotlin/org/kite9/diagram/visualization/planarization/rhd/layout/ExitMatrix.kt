@@ -1,15 +1,16 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
+import org.kite9.diagram.common.objects.DPos
 import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
-import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D.DPos
 
 /**
  * The exit matrix keeps track of links leaving a group in order that we can perform
@@ -51,7 +52,7 @@ class ExitMatrix {
 
     override fun toString(): String {
         val sb = StringBuilder()
-        sb.append("ExitMatrix[spans=");
+        sb.append("ExitMatrix[spans=")
         spans.forEach {
             sb.append(it)
             sb.append(" ")
@@ -98,10 +99,10 @@ class ExitMatrix {
         rh: RoutableHandler2D
     ) {
         //System.out.println("Adding link from "+originatingGroup+ " to "+destinationGroup);
-        val oPos = originatingGroup.axis.getPosition(rh, true)
-        val dPos = destinationGroup.axis.getPosition(rh, true)
-        val xCompare = rh.compareBounds(rh.getBoundsOf(dPos, true), rh.getBoundsOf(oPos, true))
-        val yCompare = rh.compareBounds(rh.getBoundsOf(dPos, false), rh.getBoundsOf(oPos, false))
+        val oPos = rh.getPlacedPosition(originatingGroup)
+        val dPos = rh.getPlacedPosition(destinationGroup)
+        val xCompare = dPos.getBounds(Dimension.H).compareBounds(oPos.getBounds(Dimension.H))
+        val yCompare = dPos.getBounds(Dimension.V).compareBounds(oPos.getBounds(Dimension.V))
         incrCount(xCompare, yCompare, ld.numberOfLinks)
         if (yCompare === DPos.OVERLAP) {
             if (xCompare === DPos.BEFORE) {
@@ -122,16 +123,8 @@ class ExitMatrix {
     }
 
     private fun expandBounds(d: Direction, oPos: RoutingInfo, rh: RoutableHandler2D) {
-        val b: Bounds = when (d) {
-            Direction.LEFT, Direction.RIGHT -> rh.getBoundsOf(
-                oPos,
-                false
-            )
-            Direction.UP, Direction.DOWN -> rh.getBoundsOf(
-                oPos,
-                true
-            )
-        }
+        val dim = Direction.getDimension(d)
+        val b = oPos.getBounds(dim)
         spans[d.ordinal] = spans[d.ordinal].expand(b)
     }
 

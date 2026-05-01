@@ -1,8 +1,11 @@
 package org.kite9.diagram.common.elements
 
+import org.kite9.diagram.common.objects.Bounds
+
 /**
- * Stores some kind of information about the planarization position of a vertex in order that we
- * can route edges around it.
+ * Stores some kind of information about a planarization position so
+ * that we can compare it with another position.   Allows us to place
+ * elements of the diagram relatively so we can score the layouts.
  *
  * @author robmoffat
  */
@@ -11,6 +14,5 @@ interface RoutingInfo : Comparable<RoutingInfo> {
     fun outputY(): String
     fun centerX(): Double
     fun centerY(): Double
-    fun compareX(with: RoutingInfo): Int
-    fun compareY(with: RoutingInfo): Int
+    fun getBounds(d: Dimension) : Bounds
 }

@@ -1,7 +1,7 @@
 package org.kite9.diagram.common.hints
 
-import org.kite9.diagram.common.objects.BasicBounds
 import org.kite9.diagram.common.objects.Bounds
+import org.kite9.diagram.common.objects.MergedBounds
 
 /**
  * Standalone distance calculation functions to replace deprecated PositioningHints functions. These
@@ -52,7 +52,7 @@ private fun createBounds(a: Map<String, Float?>, b1: String, b2: String?): Bound
     val max = a[b2]
     return if (min == null || max == null) {
         null
-    } else BasicBounds(min.toDouble(), max.toDouble())
+    } else MergedBounds(min.toDouble(), max.toDouble())
 }
 
 fun compareEitherXBounds(from: Map<String, Float?>, to: Map<String, Float?>): Int? {

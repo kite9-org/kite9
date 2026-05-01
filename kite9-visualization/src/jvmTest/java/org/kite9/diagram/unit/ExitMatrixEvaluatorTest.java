@@ -6,6 +6,7 @@ import org.kite9.diagram.AbstractFunctionalTest;
 import org.kite9.diagram.AbstractTest;
 import org.kite9.diagram.common.objects.BasicBounds;
 import org.kite9.diagram.common.objects.Bounds;
+import org.kite9.diagram.common.objects.MergedBounds;
 import org.kite9.diagram.model.position.Layout;
 import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrix;
 import org.kite9.diagram.visualization.planarization.rhd.layout.ExitMatrixEvaluator;
@@ -100,7 +101,7 @@ public class ExitMatrixEvaluatorTest extends AbstractTest {
 						new float[] { 0, 0, 0 } },
 				false);
 
-		left.setSize(new BasicBounds(0, .25), new BasicBounds(0, .5));
+		left.setSize(new MergedBounds(0, .25), new MergedBounds(0, .5));
 		ExitMatrix right = new ExitMatrix(
 				new float[][] {
 						new float[] { 0, 3, 0 },
@@ -108,7 +109,7 @@ public class ExitMatrixEvaluatorTest extends AbstractTest {
 						new float[] { 0, 0, 0 } },
 				false);
 
-		right.setSize(new BasicBounds(0, .25), new BasicBounds(0, .5));
+		right.setSize(new MergedBounds(0, .25), new MergedBounds(0, .5));
 
 		// right matrix left side gets cost of .25, left matrix right side gets .25
 		Assert.assertEquals(.5f,
@@ -162,12 +163,12 @@ public class ExitMatrixEvaluatorTest extends AbstractTest {
 						new float[] { 0, 1, 0 } },
 				false);
 
-		wide.setSpans(new Bounds[] { new BasicBounds(0, 1), new BasicBounds(0, 1), new BasicBounds(0, 1),
-				new BasicBounds(0, 1) });
-		narrow.setSpans(new Bounds[] { new BasicBounds(.25, .5), new BasicBounds(.25, .5), new BasicBounds(.25, .5),
-				new BasicBounds(.25, .5) });
-		wide.setSize(new BasicBounds(0, 1), new BasicBounds(0, 1));
-		narrow.setSize(new BasicBounds(.25, .5), new BasicBounds(.25, .5));
+		wide.setSpans(new Bounds[] { new MergedBounds(0, 1), new MergedBounds(0, 1), new MergedBounds(0, 1),
+				new MergedBounds(0, 1) });
+		narrow.setSpans(new Bounds[] { new MergedBounds(.25, .5), new MergedBounds(.25, .5), new MergedBounds(.25, .5),
+				new MergedBounds(.25, .5) });
+		wide.setSize(new MergedBounds(0, 1), new MergedBounds(0, 1));
+		narrow.setSize(new MergedBounds(.25, .5), new MergedBounds(.25, .5));
 
 		// since wide is wider than narrow, we are only likely to cross about 1/2 of the
 		// wide stuff.
@@ -207,10 +208,10 @@ public class ExitMatrixEvaluatorTest extends AbstractTest {
 						new float[] { 0, 1, 0 } },
 				false);
 
-		wide.setSpans(new Bounds[] { new BasicBounds(0, .75), new BasicBounds(0, .75), new BasicBounds(0, .75),
-				new BasicBounds(0, .75) });
-		narrow.setSpans(new Bounds[] { new BasicBounds(.5, 1), new BasicBounds(.5, 1), new BasicBounds(.5, 1),
-				new BasicBounds(.5, 1) });
+		wide.setSpans(new Bounds[] { new MergedBounds(0, .75), new MergedBounds(0, .75), new MergedBounds(0, .75),
+				new MergedBounds(0, .75) });
+		narrow.setSpans(new Bounds[] { new MergedBounds(.5, 1), new MergedBounds(.5, 1), new MergedBounds(.5, 1),
+				new MergedBounds(.5, 1) });
 
 		// wide on top, but only 1 link is obscured, having 1/2 chance of crossing b,
 		// and 1/2 multiplier

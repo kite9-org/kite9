@@ -13,6 +13,8 @@ import org.kite9.diagram.model.position.Layout.Companion.rotateClockwise
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
@@ -27,12 +29,18 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     var log = Kite9Log.instance(this)
 
     private fun chooseBestCompoundGroupPlacement(gg: CompoundGroup) {
-        rh.clearTempPositions(true)
-        rh.clearTempPositions(false)
         val gt = gg.axis
-        val ld = gg.layout
+        val ld = gg.getLayout()
         val canBeHoriz = gt.isHorizontal
         val canBeVert = gt.isVertical
+
+        if (!canBeVert && !canBeHoriz) {
+            // this is where we combine horizontal and vertical groups
+            applyAxisGroupingRules(gg.b, gg.a)
+            applyAxisGroupingRules(gg.a, gg.b)
+            return
+        }
+
         val horizLayoutUnknown = (ld == null || ld === Layout.HORIZONTAL) && canBeHoriz
         val vertLayoutUnknown = (ld == null || ld === Layout.VERTICAL) && canBeVert
         val canDecideLayout = horizLayoutUnknown || vertLayoutUnknown
@@ -50,14 +58,14 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                         tryPlacement(
                                 gg,
                                 best,
-                                filterLayout(hintedLayout, horizLayoutUnknown, vertLayoutUnknown),
+                                createDirectionOption(hintedLayout, horizLayoutUnknown, vertLayoutUnknown),
                                 true
                         )
                 best =
                         tryPlacement(
                                 gg,
                                 best,
-                                filterLayout(
+                                createDirectionOption(
                                         reverse(hintedLayout),
                                         horizLayoutUnknown,
                                         vertLayoutUnknown
@@ -68,7 +76,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                         tryPlacement(
                                 gg,
                                 best,
-                                filterLayout(
+                                createDirectionOption(
                                         rotateClockwise(hintedLayout),
                                         horizLayoutUnknown,
                                         vertLayoutUnknown
@@ -79,7 +87,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                         tryPlacement(
                                 gg,
                                 best,
-                                filterLayout(
+                                createDirectionOption(
                                         rotateAntiClockwise(hintedLayout),
                                         horizLayoutUnknown,
                                         vertLayoutUnknown
@@ -93,7 +101,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                     if ((ld == Layout.HORIZONTAL) || (ld == Layout.VERTICAL)) {
                         null
                     } else {
-                        ld
+                        Layout.toDirection(ld)
                     }
 
             val pa = createPlacementApproach(gg, ld2, true)
@@ -102,10 +110,141 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         }
     }
 
-    private fun filterLayout(naturalLayout: Layout?, horiz: Boolean, vert: Boolean): Layout? {
+    private fun applyAxisGroupingRules(setsGroup: Group, rulesGroup: Group) {
+
+        fun effectiveLeaf(g: Group) : Boolean {
+            if (g is LeafGroup) {
+                return true
+            } else {
+                val axis = g.axis as DirectedGroupAxis
+                val stillSingleAxis = axis.isVertical != axis.isHorizontal
+                return !stillSingleAxis
+            }
+        }
+
+        fun contentsShouldBeCombined(g: Group) : Boolean {
+            val axis = g.axis as DirectedGroupAxis
+            return axis.isAxisAligned
+        }
+
+        fun combineEffectiveLeaves(g: Group) : Set<Group> {
+            return if (effectiveLeaf(g)) {
+                setOf(g)
+            } else if (g is CompoundGroup) {
+                combineEffectiveLeaves(g.a) + combineEffectiveLeaves(g.b)
+            } else {
+                throw LogicException("Should be first if")
+            }
+        }
+
+        fun separateEffectiveLeaves(g: Group) : Set<Set<Group>> {
+            return if (contentsShouldBeCombined(g)) {
+                setOf(combineEffectiveLeaves(g))
+            } else if (g is CompoundGroup) {
+                separateEffectiveLeaves(g.a) + separateEffectiveLeaves(g.b)
+            } else {
+                setOf(setOf(g))
+            }
+        }
+
+        val leafGroups = separateEffectiveLeaves(setsGroup)
+        val rules = mutableMapOf<Pair<Set<Group>, Set<Group>>, Layout>()
+
+        fun scanRuleGroup(g: Group) : Set<Group> {
+            if (!effectiveLeaf(g)) {
+                val aLeaves = scanRuleGroup((g as CompoundGroup).a)
+                val bLeaves = scanRuleGroup(g.b)
+                val layout = g.getLayout()
+                if (layout != null) {
+                    val leafGroupsIntersectingA = leafGroups.filter { aLeaves.intersect(it).isNotEmpty() }
+                    val leafGroupsIntersectingB = leafGroups.filter { bLeaves.intersect(it).isNotEmpty() }
+                    leafGroupsIntersectingA.forEach { a ->
+                        leafGroupsIntersectingB.forEach { b ->
+                            rules[Pair(a, b)] = layout
+                        }
+                    }
+                }
+                return aLeaves+bLeaves
+            } else {
+                return setOf(g)
+            }
+        }
+
+        scanRuleGroup(rulesGroup)
+
+        fun <T, U> generatePairs(set1: Set<T>, set2: Set<U>): List<Pair<T, U>> {
+            return set1.flatMap { element1 ->
+                set2.map { element2 ->
+                    Pair(element1, element2)
+                }
+            }
+        }
+
+        fun consolidateLayout(l: List<Layout>) : Layout? {
+            return l.reduceOrNull { a, b ->
+                return if (a == b) {
+                    a
+                } else {
+                    when (a) {
+                        Layout.HORIZONTAL -> when (b) {
+                            Layout.LEFT, Layout.RIGHT, Layout.HORIZONTAL -> b
+                            else -> null
+                        }
+
+                        Layout.VERTICAL -> when (b) {
+                            Layout.UP, Layout.DOWN, Layout.VERTICAL -> b
+                            else -> null
+                        }
+
+                        Layout.UP, Layout.DOWN -> when (b) {
+                            Layout.VERTICAL -> a
+                            else -> null
+                        }
+
+                        Layout.LEFT, Layout.RIGHT -> when (b) {
+                            Layout.HORIZONTAL -> a
+                            else -> null
+                        }
+
+                        else ->
+                            throw LogicException("shouldn't be grid")
+                    }
+                }
+            }
+        }
+
+        fun applyRuleGroup(g: Group) : Set<Group> {
+            if (!effectiveLeaf(g)) {
+                val aLeaves = applyRuleGroup((g as CompoundGroup).a)
+                val bLeaves = applyRuleGroup(g.b)
+                val layout = g.getLayout()
+                if (Layout.toDirection(layout) == null) {
+                    val leafGroupsIntersectingA = leafGroups.filter { aLeaves.intersect(it).isNotEmpty() }.toSet()
+                    val leafGroupsIntersectingB = leafGroups.filter { bLeaves.intersect(it).isNotEmpty() }.toSet()
+                    val overlap = leafGroupsIntersectingA.intersect(leafGroupsIntersectingB)
+
+                    if (overlap.isEmpty()) {
+                        val keys = generatePairs(leafGroupsIntersectingA, leafGroupsIntersectingB).toSet()
+                        val rules = keys.map { rules[it] }.filterNotNull()
+                        val consolidatedRule = consolidateLayout(rules)
+                        if (consolidatedRule != null) {
+                            g.setLayout(consolidatedRule)
+                        }
+                    }
+                }
+                return aLeaves + bLeaves
+            } else {
+                return setOf(g)
+            }
+        }
+
+        applyRuleGroup(rulesGroup)
+    }
+
+    private fun createDirectionOption(naturalLayout: Layout?, horiz: Boolean, vert: Boolean): Direction? {
         return when (naturalLayout) {
-            Layout.LEFT, Layout.RIGHT -> if (horiz) naturalLayout else null
-            Layout.DOWN, Layout.UP -> if (vert) naturalLayout else null
+            Layout.LEFT, Layout.RIGHT -> if (horiz) Layout.toDirection(naturalLayout) else null
+            Layout.DOWN, Layout.UP -> if (vert) Layout.toDirection(naturalLayout) else null
             else ->
                     throw LogicException(
                             "Layout should be definite for an approach: $naturalLayout"
@@ -205,15 +344,13 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     private fun groupsOverlap(a: Group, b: Group): Boolean {
-        val ari = a.axis.getPosition(rh, true)
-        val bri = b.axis.getPosition(rh, true)
-        return rh.overlaps(ari, bri)
+        return rh.overlaps(a, b)
     }
 
     private fun tryPlacement(
             gg: CompoundGroup,
             best: PlacementApproach?,
-            d: Layout?,
+            d: Direction?,
             natural: Boolean
     ): PlacementApproach? {
         if (d != null && (best == null || best.score > 0)) {
@@ -241,14 +378,13 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
 
     protected abstract fun createPlacementApproach(
             gg: CompoundGroup,
-            ld: Layout?,
+            ld: Direction?,
             natural: Boolean
     ): PlacementApproach
 
     private fun chooseBestPlacement(lq: LayoutQueue) {
         var g = lq.poll()
         while (g != null) {
-            g.axis.getPosition(rh, false)
             log.send(
                     if (log.go()) null
                     else
@@ -265,8 +401,6 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                 val cg = g
                 chooseBestCompoundGroupPlacement(cg)
                 lq.complete(cg)
-                lq.offer(cg.a)
-                lq.offer(cg.b)
             }
             g = lq.poll()
         }
@@ -278,8 +412,17 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         get() = true
 
     override fun layout(mr: GroupResult, lq: LayoutQueue) {
+
+        fun offerAllGroups(g: Group) {
+            if (g is CompoundGroup) {
+                lq.offer(g)
+                offerAllGroups(g.a)
+                offerAllGroups(g.b)
+            }
+        }
+
         val g = mr.groups().iterator().next()
-        lq.offer(g)
+        offerAllGroups(g)
         chooseBestPlacement(lq)
     }
 

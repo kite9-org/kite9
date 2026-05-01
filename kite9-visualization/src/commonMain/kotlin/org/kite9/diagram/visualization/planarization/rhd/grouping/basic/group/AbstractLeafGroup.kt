@@ -5,6 +5,7 @@ import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup.Companion.getAxisLayout
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
@@ -35,7 +36,11 @@ abstract class AbstractLeafGroup(
     override val height: Int = 0
     override val groupOrdinal: Int = groupNumber
     override val size: Int = 1
-    override var layout = getAxisLayout(container.getContainer())
+    private val layout = getAxisLayout(container.getContainer())
+
+    override fun getLayout(): Layout? {
+        return layout
+    }
 
     override fun sortLink(
         d: Direction?,
