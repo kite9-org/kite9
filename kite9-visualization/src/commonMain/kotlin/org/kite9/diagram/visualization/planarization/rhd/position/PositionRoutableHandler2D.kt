@@ -31,12 +31,12 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
     }
 
     override fun getBoundsOf(r: Group, d: Dimension): BasicBounds {
-        val out = return when (d) {
-            Dimension.H -> return placedX.getOrPut(r) { calculateSubBounds(r, d) }
-            Dimension.V -> return placedY.getOrPut(r) { calculateSubBounds(r, d) }
+        val out =  when (d) {
+            Dimension.H -> placedX.getOrPut(r) { calculateSubBounds(r, d) }
+            Dimension.V -> placedY.getOrPut(r) { calculateSubBounds(r, d) }
         }
 
-        println("$r $d = $out")
+        return out
     }
 
     override fun setPlacedPosition(
@@ -86,7 +86,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
                     return BasicBounds()
                 } else {
                     val pBounds = getBoundsOf(parent, Dimension.H)
-                    val pp = decidedPositionsX[parent]
+                    val pp = decidedPositionsX[r]
                     BasicBounds.extendBounds(pBounds, pp)
                 }
             }
@@ -96,7 +96,7 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
                     return BasicBounds()
                 } else {
                     val pBounds = getBoundsOf(parent, Dimension.V)
-                    val pp = decidedPositionsY[parent]
+                    val pp = decidedPositionsY[r]
                     BasicBounds.extendBounds(pBounds, pp)
                 }
             }
@@ -120,16 +120,5 @@ class PositionRoutableHandler2D : AbstractPositionRoutableReader(), RoutableHand
         get() = "RH2D"
     override val isLoggingEnabled: Boolean
         get() = true
-
-    override fun overlaps(a: Group, b: Group): Boolean {
-        val ahb = getBoundsOf(a, Dimension.H)
-        val bhb = getBoundsOf(b, Dimension.H)
-        val avb = getBoundsOf(a, Dimension.V)
-        val bvb = getBoundsOf(b, Dimension.V)
-
-        val ox = ahb.compareBounds(bhb) == DPos.OVERLAP
-        val oy = avb.compareBounds(bvb) == DPos.OVERLAP
-        return ox && oy
-    }
 
 }

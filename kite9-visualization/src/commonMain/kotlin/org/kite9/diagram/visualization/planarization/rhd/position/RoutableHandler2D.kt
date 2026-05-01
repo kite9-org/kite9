@@ -24,8 +24,6 @@ interface RoutableHandler2D {
 
     fun setPlacedPosition(r: CompoundGroup, d: Direction?)
 
-    fun overlaps(a: Group, b: Group): Boolean
-
     /**
      * Works out distance cost of from -> to.
      */

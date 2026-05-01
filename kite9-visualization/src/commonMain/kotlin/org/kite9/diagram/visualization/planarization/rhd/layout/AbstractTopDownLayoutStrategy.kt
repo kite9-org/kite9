@@ -319,14 +319,16 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         if (groupsOverlap(a, b)) {
             return true
         }
-        val straightVerticals = groupsHaveStraightEdges(a, b, false)
-        if ((horizLayoutUnknown || l === Layout.VERTICAL) && straightVerticals) {
-            return true
-        }
-        val straightHorizontals = groupsHaveStraightEdges(a, b, true)
-        return if ((vertLayoutUnknown || l === Layout.HORIZONTAL) && straightHorizontals) {
-            true
-        } else false
+//        val straightVerticals = groupsHaveStraightEdges(a, b, false)
+//        if ((horizLayoutUnknown || l === Layout.VERTICAL) && straightVerticals) {
+//            return true
+//        }
+//        val straightHorizontals = groupsHaveStraightEdges(a, b, true)
+//        return if ((vertLayoutUnknown || l === Layout.HORIZONTAL) && straightHorizontals) {
+//            true
+//        } else false
+
+        return false // TODO: decide if we need the above code.
     }
 
     private fun groupsHaveStraightEdges(a: Group, b: Group, horiz: Boolean): Boolean {
@@ -344,7 +346,22 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
     }
 
     private fun groupsOverlap(a: Group, b: Group): Boolean {
-        return rh.overlaps(a, b)
+
+        fun getLeafGroups(a: Group) : Set<LeafGroup> {
+            if (a is LeafGroup) {
+                return setOf(a)
+            } else {
+                return getLeafGroups((a as CompoundGroup).a) + getLeafGroups(a.b)
+            }
+        }
+
+        val aLeaves = getLeafGroups(a)
+        val bLeaves = getLeafGroups(b)
+
+        val aPositions = aLeaves.map { rh.getPlacedPosition(it) }.toSet()
+        val bPositions = bLeaves.map { rh.getPlacedPosition(it) }.toSet()
+        val out= aPositions.intersect(bPositions).isNotEmpty()
+        return out
     }
 
     private fun tryPlacement(

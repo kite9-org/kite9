@@ -60,7 +60,7 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: PositionRoutableH
 
         val hOrbits = joinSides(right2, left2, c.getSlackOptimisation(Dimension.H), Dimension.H)
         val vOrbits = joinSides(down2, up2, c.getSlackOptimisation(Dimension.V), Dimension.V)
-        createEmptySpaceIntersections(c, left.keys + right.keys, up.keys+down.keys, wrappedLeafGroupMap, hOrbits, vOrbits)
+        createEmptySpaceIntersections(c, wrappedLeafGroupMap, hOrbits, vOrbits)
 
         // stitch together orbits from next-to containers in a grid
         handleGridNeighbours(c)
@@ -68,8 +68,6 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: PositionRoutableH
 
     private fun createEmptySpaceIntersections(
         c: C2Compaction,
-        hp: Set<Double>,
-        vp: Set<Double>,
         lg: Map<LeafGroup, Pair<RoutableSlideableSet?, RoutableSlideableSet?>>,
         hOrbits: Map<Double, C2Slideable>,
         vOrbits: Map<Double, C2Slideable>) :
@@ -108,8 +106,8 @@ class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: PositionRoutableH
             return overlapper != null
         }
 
-        val hpPairs = hp.toList().sorted().windowed(2, 1).map { Pair(it[0], it[1]) }
-        val vpPairs = vp.toList().sorted().windowed(2, 1).map { Pair(it[0], it[1]) }
+        val hpPairs = hOrbits.keys.toList().sorted().windowed(2, 1).map { Pair(it[0], it[1]) }
+        val vpPairs = vOrbits.keys.toList().sorted().windowed(2, 1).map { Pair(it[0], it[1]) }
         val allPossibleSpaces = hpPairs.flatMap { h -> vpPairs.map { v -> Pair(h,v) } }.toSet()
 
         val emptySpaces = allPossibleSpaces.filter { !isOccupied(it) }

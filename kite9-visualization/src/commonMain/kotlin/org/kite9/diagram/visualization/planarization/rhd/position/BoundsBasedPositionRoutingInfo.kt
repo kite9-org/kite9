@@ -5,7 +5,7 @@ import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.logging.LogicException
 
-class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRoutingInfo() {
+data class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : PositionRoutingInfo() {
 
     override fun centerX(): Double {
         return x.distanceCenter
