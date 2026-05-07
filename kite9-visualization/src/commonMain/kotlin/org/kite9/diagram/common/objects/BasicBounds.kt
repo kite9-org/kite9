@@ -42,7 +42,7 @@ data class BasicBounds(
     }
 
     override fun toString(): String {
-        return "(bb, g=$distanceMin - $distanceMax)"
+        return "[$distanceMin - $distanceMax]"
     }
 
     /**

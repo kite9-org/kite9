@@ -86,6 +86,11 @@ abstract class GroupPhase(
                         lg.sortLink(Direction.reverse(directionBasedOnSide), prevLg, LINK_WEIGHT, true, Int.MAX_VALUE, single(tc))
                     }
                     prevLg = lg
+                    val connections = (next as? Connected)?.getLinks() ?: emptyList()
+                    connections.forEach { c ->
+                        val from = c.getFrom() == next
+                        this.linkEndMap[Pair(c, from)] = lg
+                    }
                 }
             }
         }
@@ -187,20 +192,20 @@ abstract class GroupPhase(
 
     fun populateConnectedElementLeafGroups(ord: Rectangular) : Int {
         var created = 0
-        val connectionsByDimension =
-            (ord as? Connected)?.getLinks()
-                ?.groupBy {
-                    if (it.getDrawDirection() == null)
-                        null
-                    else
-                        Direction.getDimension(it.getDrawDirection()!!)
-                } ?: emptyMap()
+        val connectionsByDimension = (ord as? Connected)?.getLinks()
+            ?.groupBy {
+                if (it.getDrawDirection() == null)
+                    null
+                else
+                    Direction.getDimension(it.getDrawDirection()!!)
+            } ?: emptyMap()
 
         val directedLeafGroupsNeeded = max(
             connectionsByDimension[Dimension.H]?.size ?: 0,
             connectionsByDimension[Dimension.V]?.size ?: 0)
 
         // map the directed links
+        // TODO: not sure this is right.  We might want to create a leaf for ever
         for (i in 1..directedLeafGroupsNeeded) {
             val gln = ConnectedGroupLinkNode(ord, "-dl$i")
             ord.addTemporaryContent(gln)
@@ -297,8 +302,11 @@ abstract class GroupPhase(
                 val second = value[1]
                 val from = if (first.key.second) first.value else second.value
                 val to = if (first.key.second) second.value else first.value
-                from.sortLink(c.getDrawDirectionFrom(from.container as Connected), to, LINK_WEIGHT, true, getLinkRank(c), single(c))
-                to.sortLink(c.getDrawDirectionFrom(to.container as Connected), from, LINK_WEIGHT, true, Int.MAX_VALUE, single(c))
+                val dFrom = if (first.key.second) c.getDrawDirection()  else Direction.reverse(c.getDrawDirection())
+                val dTo = if (first.key.second) Direction.reverse(c.getDrawDirection()) else c.getDrawDirection()
+
+                from.sortLink(dFrom, to, LINK_WEIGHT, true, getLinkRank(c), single(c))
+                to.sortLink(dTo, from, LINK_WEIGHT, true, Int.MAX_VALUE, single(c))
             }
     }
 

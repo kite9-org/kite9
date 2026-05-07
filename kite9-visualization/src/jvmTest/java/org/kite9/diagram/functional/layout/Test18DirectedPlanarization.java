@@ -6,13 +6,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.NotAddressed;
-import org.kite9.diagram.adl.LinkBody;
-import org.kite9.diagram.adl.Context;
-import org.kite9.diagram.adl.DiagramKite9XMLElement;
-import org.kite9.diagram.adl.Glyph;
-import org.kite9.diagram.adl.HopLink;
-import org.kite9.diagram.adl.Link;
-import org.kite9.diagram.adl.TurnLink;
+import org.kite9.diagram.adl.*;
 import org.w3c.dom.Element;
 import org.kite9.diagram.model.position.Direction;
 import org.kite9.diagram.model.position.Layout;
@@ -664,4 +658,73 @@ public class Test18DirectedPlanarization extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement dia = new DiagramKite9XMLElement("dia", HelpMethods.listOf(a, bs, cs), null);
 		renderDiagram(dia);
 	}
+
+    @Test
+    public void test_18_26_PortVersionOfVerticalBoxes() throws Exception {
+        Glyph s = new Glyph("S", "", "S", null, null);
+        BasicSocket s1 = new BasicSocket("S1", BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "10px");
+        BasicSocket s2 = new BasicSocket("S2", BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50px");
+        BasicSocket s3 = new BasicSocket("S3", BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "100px");
+        s.appendChild(s1);
+        s.appendChild(s2);
+        s.appendChild(s3);
+
+        Glyph e = new Glyph("E", "", "E", null, null);
+        BasicSocket e1 = new BasicSocket("E1", BasicSocket.TESTING_DOCUMENT,Direction.LEFT, "10px");
+        BasicSocket e2 = new BasicSocket("E2", BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50px");
+        BasicSocket e3 = new BasicSocket("E3", BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "100px");
+        e.appendChild(e1);
+        e.appendChild(e2);
+        e.appendChild(e3);
+
+        Glyph one = new Glyph("one", "", "one", null, null);
+        Glyph two = new Glyph("two", "", "two", null, null);
+        Glyph three = new Glyph("three", "", "three", null, null);
+
+        new Link(s1, one, null, null, null, null, Direction.RIGHT);
+        new Link(s2, two, null, null, null, null, Direction.RIGHT);
+        new Link(s3, three, null, null, null, null, Direction.RIGHT);
+
+        new Link(e1, one, null, null, null, null, Direction.LEFT);
+        new Link(e2, two, null, null, null, null, Direction.LEFT);
+        new Link(e3, three, null, null, null, null, Direction.LEFT);
+        DiagramKite9XMLElement diag = new DiagramKite9XMLElement("dia", createList(s, e, one, two, three), null);
+
+        renderDiagram(diag);
+
+    }
+
+    @Test
+    public void test_18_27_BuddyBothSides() throws Exception {
+        Glyph s = new Glyph("S", "", "S", null, null);
+        BasicSocket s1 = new BasicSocket("S1", BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "10px");
+        BasicSocket s2 = new BasicSocket("S2", BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "100px");
+        s.appendChild(s1);
+        s.appendChild(s2);
+
+
+        Glyph e = new Glyph("E", "", "E", null, null);
+        BasicSocket e1 = new BasicSocket("E1", BasicSocket.TESTING_DOCUMENT,Direction.LEFT, "10px");
+        BasicSocket e2 = new BasicSocket("E2", BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "100px");
+        e.appendChild(e1);
+        e.appendChild(e2);
+
+
+        Glyph one = new Glyph("one", "", "one", null, null);
+        Glyph two = new Glyph("two", "", "two", null, null);
+        Glyph three = new Glyph("three", "", "three", null, null);
+
+
+        new Link(s1, one, null, null, null, null, Direction.RIGHT);
+        new Link(s1, two, null, null, null, null, Direction.RIGHT);
+        new Link(s2, three, null, null, null, null, Direction.RIGHT);
+
+        new Link(e1, one, null, null, null, null, Direction.LEFT);
+        new Link(e2, two, null, null, null, null, Direction.LEFT);
+        new Link(e2, three, null, null, null, null, Direction.LEFT);
+        DiagramKite9XMLElement diag = new DiagramKite9XMLElement("dia", createList(s, e, one, two, three), null);
+
+        renderDiagram(diag);
+
+    }
 }

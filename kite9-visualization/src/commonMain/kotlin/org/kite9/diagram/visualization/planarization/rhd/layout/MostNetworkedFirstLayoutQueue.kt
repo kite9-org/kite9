@@ -4,11 +4,13 @@ import org.kite9.diagram.common.algorithms.det.UnorderedSet
 import org.kite9.diagram.common.algorithms.ssp.PriorityQueue
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.logging.Logable
+import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
+import kotlin.collections.plusAssign
 
 /**
  * Modifies the queue so that we layout the groups with the most disparate group of links first.
@@ -18,22 +20,27 @@ import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkP
 class MostNetworkedFirstLayoutQueue(size: Int) : LayoutQueue, Logable {
     var log = Kite9Log.instance(this)
 
-    data class NetworkedItem(val group: CompoundGroup, val size: Int, val isAxisAligned: Boolean) {
+    data class NetworkedItem(val group: CompoundGroup, val size: Int, val isAxisAligned: Boolean, val horizontal: Boolean, val vertical: Boolean, val decided: Boolean) {
         override fun toString(): String {
-            return "NI: " + group.groupNumber + " size = " + size + " in axis = "+isAxisAligned
+            return "NI: ${group.groupNumber} size=$size axis=$isAxisAligned h=$horizontal v=$vertical decided=${decided} g=$group"
         }
     }
 
-    override fun offer(item: CompoundGroup) {
+    fun liveLinkCount(g: CompoundGroup) : Int {
         var liveGroupLinkCount = 0
-        val lm = item.linkManager
-        log.send(if (log.go()) null else "Counting Network size for " + item.groupNumber)
+        val lm = g.linkManager
+        log.send(if (log.go()) null else "Counting Network size for " + g.groupNumber)
         val links = lm.subset(lm.allMask())
         for (ld in links) {
             liveGroupLinkCount += ld.numberOfLinks.toInt()
         }
-        val isAxisAligned = (item.axis as DirectedGroupAxis).isAxisAligned
-        val ni = NetworkedItem(item, liveGroupLinkCount, isAxisAligned)
+        return liveGroupLinkCount
+    }
+
+    override fun offer(item: CompoundGroup) {
+        val axis = item.axis as DirectedGroupAxis
+        val decided = Layout.toDirection(item.getLayout()) != null
+        val ni = NetworkedItem(item, liveLinkCount(item), axis.isAxisAligned, axis.isHorizontal, axis.isVertical, decided)
         todo.add(ni)
         log.send("Created: $ni")
     }

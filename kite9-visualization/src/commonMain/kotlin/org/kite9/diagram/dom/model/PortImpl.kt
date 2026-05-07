@@ -76,7 +76,7 @@ class PortImpl(
     }
 
     override fun getParent() : Rectangular {
-        return getParent()
+        return super.getParent() as Rectangular
     }
 
 }

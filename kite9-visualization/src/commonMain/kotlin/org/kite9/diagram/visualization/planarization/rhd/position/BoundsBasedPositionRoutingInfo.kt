@@ -64,4 +64,9 @@ data class BoundsBasedPositionRoutingInfo(val x: Bounds, val y: Bounds) : Positi
         }
     }
 
+    override fun toString(): String {
+        return "[x=$x, y=$y]"
+    }
+
+
 }
