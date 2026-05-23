@@ -50,15 +50,17 @@ public class Kite9LogImpl implements Kite9Log {
 	}
 
 	public void send(String string) {
-		if (logFor.isLoggingEnabled() && (logFile != null))
+		if (logFor.isLoggingEnabled() && (logFile != null)) {
 			logFile.println(logFor.getPrefix() + " " + string);
+		}
 	}
 	
 	public void send(int indent, String string) {
-		if (logFor.isLoggingEnabled() && (logFile != null))
+		if (logFor.isLoggingEnabled() && (logFile != null)) {
 			logFile.print(logFor.getPrefix());
-			logFile.write(INDENT.getBytes(), 0, 1+indent);
+			logFile.write(INDENT.getBytes(), 0, 1 + indent);
 			logFile.println(string);
+		}
 	}
 
 	public void send(String prefix, Collection<?> items) {

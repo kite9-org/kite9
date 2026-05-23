@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.batik.dom.GenericDocument;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -18,11 +18,10 @@ import org.kite9.diagram.model.position.Direction;
 
 public class TestDirectedMatrix extends AbstractPerformanceTest {
 
-
 	public Map<Metrics, String> generateSuite(int minConnected, int maxConnected, int step1, int size) {
 		Map<Metrics, String> out = new HashMap<Metrics, String>();
 		for (int i = minConnected; i <= maxConnected; i += step1) {
-			Metrics m = new Metrics("d-r" + i+"s"+size);
+			Metrics m = new Metrics("d-r" + i + "s" + size);
 			m.connecteds = i;
 			String d = generateDiagram(m, size);
 			out.put(m, d);
@@ -40,7 +39,7 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		for (int i = 0; i < space.length; i++) {
 			space[i] = new Glyph[size];
 		}
-		
+
 		Glyph[] items = new Glyph[m.connecteds];
 		for (int i = 0; i < items.length; i++) {
 			int x, y;
@@ -49,7 +48,7 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 				y = r.nextInt(size);
 			} while (space[y][x] != null);
 
-			Glyph g = new Glyph("x" + x+"y"+y, "", "x " + x+"y "+y, null, null);
+			Glyph g = new Glyph("x" + x + "y" + y, "", "x " + x + "y " + y, null, null);
 			items[i] = g;
 			space[y][x] = items[i];
 		}
@@ -98,12 +97,10 @@ public class TestDirectedMatrix extends AbstractPerformanceTest {
 		render(suite1);
 	}
 
-	
 	@Test
 	public void size6IncreasingConnecteds() throws Exception {
 		Map<Metrics, String> suite1 = generateSuite(15, 5, 5, 6);
 		render(suite1);
 	}
-	
 
 }

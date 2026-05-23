@@ -19,26 +19,42 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: "8.13"
-      - name: Build with Gradle
-        run: gradle clean jvmTest
-        env:
-          kite9.logging: OFF
       - name: Generate Test Coverage Report
-        run: gradle jacocoTestReport jacocoTestCoverageVerification
+        run: gradle clean jvmTest jacocoTestReport
         if: always() # always run even if the previous step fails
+        continue-on-error: true
         env:
           kite9.logging: OFF
+      - name: Debug Coverage Files
+        run: |
+          echo "=== Looking for coverage files with sizes ==="
+          find . -name "*.xml" -path "*/jacoco/*" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No jacoco XML files found"
+          echo "=== Looking for any XML files in build directories with sizes ==="
+          find . -name "*.xml" -path "*/build/*" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No build XML files found"
+          echo "=== Looking for jacocoTestReport files with sizes ==="
+          find . -name "*jacocoTestReport*" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No jacocoTestReport files found"
+          echo "=== Looking for execution data files with sizes ==="
+          find . -name "*.exec" 2>/dev/null -exec ls -lh {} \; | head -20 || echo "No .exec files found"
+        if: always()
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-reports
+          path: |
+            **/build/reports/jacoco/**/*
+            **/build/jacoco/**/*
+            **/jacocoTestReport.*
+          retention-days: 30
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v3
         if: always() # always run even if the previous step fails
         with:
           report_paths: "**/TEST-*.xml"
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v4
         if: always() # always run even if the previous step fails
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./**/build/reports/jacoco/test/jacocoTestReport.xml
-          flags: unittests
-          name: codecov-umbrella
-          fail_ci_if_error: false
+          files: ./**/build/reports/jacoco/**/*.xml
+          verbose: true

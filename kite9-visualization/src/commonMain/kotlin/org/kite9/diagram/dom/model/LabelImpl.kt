@@ -1,0 +1,61 @@
+package org.kite9.diagram.dom.model
+
+import org.kite9.diagram.dom.bridge.ElementContext
+import org.kite9.diagram.dom.css.CSSConstants
+import org.kite9.diagram.dom.painter.Painter
+import org.kite9.diagram.model.DiagramElement
+import org.kite9.diagram.model.Temporary
+import org.kite9.diagram.model.position.Direction
+import org.kite9.diagram.model.position.End
+import org.kite9.diagram.model.position.Layout
+import org.kite9.diagram.model.style.BorderTraversal
+import org.kite9.diagram.model.style.ContentTransform
+import org.w3c.dom.Element
+
+/**
+ * Container and link-end labels.
+ *
+ * @author robmoffat
+ */
+class LabelImpl(
+    el: Element,
+    parent: DiagramElement,
+    ctx: ElementContext,
+    rp: Painter,
+    t: ContentTransform,
+    end: End?
+) : AbstractLabel(
+    el, parent, ctx, rp, t, end
+) {
+
+    override fun getTraversalRule(d: Direction): BorderTraversal {
+        return BorderTraversal.PREVENT
+    }
+
+    override fun getGridColumns(): Int {
+        return if (getLayout() === Layout.GRID) {
+            ctx.getCssStyleDoubleProperty(CSSConstants.GRID_COLUMNS_PROPERTY, theElement).toInt()
+        } else {
+            0
+        }
+    }
+
+    override fun getGridRows(): Int {
+        return if (getLayout() === Layout.GRID) {
+            ctx.getCssStyleDoubleProperty(CSSConstants.GRID_ROWS_PROPERTY, theElement).toInt()
+        } else {
+            0
+        }
+    }
+
+    private val temporaryElements = mutableListOf<Temporary>()
+
+    override fun getContents(): List<DiagramElement> {
+        ensureInitialized()
+        return ctx.getChildDiagramElements(this) + temporaryElements
+    }
+
+    override fun addTemporaryContent(t: Temporary) {
+        temporaryElements.add(t)
+    }
+}

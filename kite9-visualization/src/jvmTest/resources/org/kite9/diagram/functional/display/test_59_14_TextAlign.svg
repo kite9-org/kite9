@@ -5,7 +5,7 @@
 >
 <svg:defs xmlns:svg="http://www.w3.org/2000/svg"
   ><svg:style xmlns:xml="http://www.w3.org/XML/1998/namespace" xmlns:svg="http://www.w3.org/2000/svg" xml:space="preserve"
-    > @import url("file:/Users/rob/Documents/kite9/kite9/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.css");</svg:style
+    > @import url("file:/Users/rob/Documents/kite9/kite9-a-different-approach/kite9-visualization/build/processedResources/jvm/test/stylesheets/tester.css");</svg:style
     ><svg:linearGradient xmlns:xml="http://www.w3.org/XML/1998/namespace" x1="0%" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" x2="0%" y1="0%" y2="100%" xlink:type="simple" xlink:actuate="onLoad" id="glyph-background" xlink:show="other" xml:id="glyph-background"
     ><svg:stop offset="0%" stop-color="#FFF" xmlns:svg="http://www.w3.org/2000/svg"
       /><svg:stop offset="100%" stop-color="#DDD" xmlns:svg="http://www.w3.org/2000/svg"

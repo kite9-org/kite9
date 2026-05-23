@@ -6,8 +6,8 @@ import java.util.Set;
 
 import org.kite9.diagram.model.Connected;
 import org.kite9.diagram.model.Connection;
-import org.kite9.diagram.model.Container;
 import org.kite9.diagram.model.DiagramElement;
+import org.kite9.diagram.model.Rectangular;
 
 
 /**
@@ -24,7 +24,7 @@ public class DiagramElementVisitor {
 	/**
 	 * Start here by calling this method on the top-level diagram element container.
 	 */
-	public void visit(Container d, VisitorAction va) {
+	public void visit(Rectangular d, VisitorAction va) {
 		push(d, visited, va);
 	}
 
@@ -42,7 +42,7 @@ public class DiagramElementVisitor {
 		visitChildren(d,visited,va);
 	}
 
-	protected void visit(Container c, Set<DiagramElement> visited, VisitorAction va) {
+	protected void visit(Rectangular c, Set<DiagramElement> visited, VisitorAction va) {
 		if (c==null)
 			return;
 		
@@ -60,8 +60,8 @@ public class DiagramElementVisitor {
 	}
 
 	protected void visitChildren(DiagramElement de, Set<DiagramElement> visited, VisitorAction va) {
-		if (de instanceof Container) {
-			visit((Container) de, visited, va);
+		if (de instanceof Rectangular) {
+			visit((Rectangular) de, visited, va);
 		} else if (de instanceof Connected) {
 			visit((Connected) de, visited, va);
 		} else if (de instanceof Connection) {
