@@ -1,8 +1,7 @@
 package org.kite9.diagram.visualization.planarization.rhd
 
-import org.kite9.diagram.model.Connected
 import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
+import org.kite9.diagram.model.LinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
@@ -17,7 +16,7 @@ interface GroupBuilder {
      * if you want to lay out a container and also some of its contents, the container must be given
      * ports, which are therefore at the same "level" as the contents.
      */
-    fun createLeafGroup(gln: GroupLinkNode, ord: Rectangular) : LeafGroup
+    fun createLeafGroup(gln: LinkNode, ord: Rectangular) : LeafGroup
 
     /**
      * We combine leaf groups together in a compound hierarchy.

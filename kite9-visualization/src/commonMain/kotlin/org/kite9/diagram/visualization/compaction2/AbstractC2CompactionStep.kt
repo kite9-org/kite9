@@ -8,7 +8,7 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.SizedRectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
@@ -105,7 +105,7 @@ abstract class AbstractC2CompactionStep(val cd: CompleteDisplayer) : C2Compactio
         }
     }
 
-    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2Slideable?, pp: Placement) {
+    fun ensureCentreSlideablePosition(cso: C2SlackOptimisation, ss: RectangularSlideableSet, c: C2Slideable?, pp: MeasuredRectangularPosition) {
         if (c != null) {
             val minDist = ss.l.minimumDistanceTo(ss.r)
             if (pp.type == Measurement.PERCENTAGE) {

@@ -6,7 +6,6 @@ import org.kite9.diagram.dom.css.CSSConstants
 import org.kite9.diagram.dom.painter.LeafPainter
 import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.transform.LeafTransformer
-import org.kite9.diagram.logging.LogicException
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D
@@ -16,10 +15,9 @@ import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementSizing
 import org.kite9.diagram.model.style.HorizontalAlignment
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import org.kite9.diagram.model.style.VerticalAlignment
 import org.w3c.dom.Element
-import kotlin.math.max
 
 abstract class AbstractCompactedRectangular(
     el: Element,
@@ -34,7 +32,7 @@ abstract class AbstractCompactedRectangular(
     private var verticalAlignment: VerticalAlignment = VerticalAlignment.CENTER
     private var horizontalAlignment: HorizontalAlignment = HorizontalAlignment.CENTER
     private var minimumSize: Dimension2D? = null
-    protected var alignments: Array<Placement> = emptyArray()
+    protected var alignments: Array<MeasuredRectangularPosition> = emptyArray()
 
     override fun getVerticalAlignment(): VerticalAlignment {
         ensureInitialized()
@@ -95,7 +93,7 @@ abstract class AbstractCompactedRectangular(
             doubleArrayOf(h, h2, hPort).max())
     }
 
-    override fun getConnectionAlignment(d: Dimension): Placement {
+    override fun getConnectionAlignment(d: Dimension): MeasuredRectangularPosition {
         ensureInitialized()
         return alignments[d.ordinal]
     }

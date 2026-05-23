@@ -5,7 +5,7 @@ import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.logging.Kite9ProcessingException
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import org.w3c.dom.Element
 
 interface ElementContext {
@@ -33,7 +33,7 @@ interface ElementContext {
     fun getCssStyleDoubleProperty(prop: String, e: Element): Double
     fun getCssStyleStringProperty(prop: String, e: Element): String?
     fun getCssStyleRangeProperty(prop: String, e: Element): IntegerRange?
-    fun getCssStylePlacementProperty(prop: String, e: Element): Placement
+    fun getCssStylePlacementProperty(prop: String, e: Element): MeasuredRectangularPosition
 
     fun addChild(parent: DiagramElement, out: DiagramElement)
     fun getChildDiagramElements(parent: DiagramElement): MutableList<DiagramElement>

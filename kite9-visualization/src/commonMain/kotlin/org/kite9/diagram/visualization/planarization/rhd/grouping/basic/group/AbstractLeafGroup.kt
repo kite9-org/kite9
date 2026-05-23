@@ -6,15 +6,14 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
-import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
-import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup.Companion.getAxisLayout
+import org.kite9.diagram.model.LinkNode
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager
 
 /**
  * Represents a single vertex (glyph, context) within the diagram
  */
 abstract class AbstractLeafGroup(
-    override val connected: GroupLinkNode,
+    override val connected: LinkNode,
     override val container: Rectangular,
     groupNumber: Int,
     hc: Int,
@@ -36,7 +35,7 @@ abstract class AbstractLeafGroup(
     override val height: Int = 0
     override val groupOrdinal: Int = groupNumber
     override val size: Int = 1
-    private val layout = getAxisLayout(container.getContainer())
+    private val layout = getAxisLayout()
 
     override fun getLayout(): Layout? {
         return layout

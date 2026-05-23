@@ -26,7 +26,7 @@ class PortImpl(
         out
     }
 
-    private val portPlacement : Placement by lazy {
+    private val portPlacement : MeasuredRectangularPosition by lazy {
         ctx.getCssStylePlacementProperty(CSSConstants.PORT_POSITION, theElement)
     }
 
@@ -35,19 +35,19 @@ class PortImpl(
         return portSide
     }
 
-    override fun getContainerPosition(d: Dimension): Placement {
+    override fun getContainerPosition(d: Dimension): MeasuredRectangularPosition {
         ensureInitialized()
         if (d == Dimension.H) {
             return when (portSide) {
                 Direction.UP, Direction.DOWN -> portPlacement
-                Direction.LEFT -> Placement(Measurement.PERCENTAGE, 0.0)
-                Direction.RIGHT -> Placement(Measurement.PERCENTAGE, 100.0)
+                Direction.LEFT -> MeasuredRectangularPosition(Measurement.PERCENTAGE, 0.0)
+                Direction.RIGHT -> MeasuredRectangularPosition(Measurement.PERCENTAGE, 100.0)
             }
         } else {
             return when (portSide) {
                 Direction.LEFT, Direction.RIGHT -> portPlacement
-                Direction.UP -> Placement(Measurement.PERCENTAGE, 0.0)
-                Direction.DOWN -> Placement(Measurement.PERCENTAGE, 100.0)
+                Direction.UP -> MeasuredRectangularPosition(Measurement.PERCENTAGE, 0.0)
+                Direction.DOWN -> MeasuredRectangularPosition(Measurement.PERCENTAGE, 100.0)
             }
         }
     }

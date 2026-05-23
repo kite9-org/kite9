@@ -5,6 +5,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractCompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LayoutSetPoint
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
@@ -77,14 +78,14 @@ class DirectedCompoundGroup(
      * Directed compound groups have an axis, so layouts
      * must respect the axis.
      */
-    override fun setLayout(l: Layout?) {
+    override fun setLayout(l: Layout?, t: LayoutSetPoint) {
         if (Layout.isHorizontal(l)) {
             if (this.axis.isHorizontal) {
-                super.setLayout(l)
+                super.setLayout(l, t)
             }
         } else {
             if (this.axis.isVertical) {
-                super.setLayout(l)
+                super.setLayout(l, t)
             }
         }
     }

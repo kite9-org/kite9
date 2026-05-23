@@ -10,6 +10,13 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Co
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.MergePlane
 
+enum class AxisType {
+    UNDIRECTED,         // you can choose left, right, up or down for the layout of the CompoundGroup
+    NONE,               // no decision - this is a group combining X and Y axes groups or is a leaf
+    ALIGNED_IN_AXIS,    // this group dictates the direction within a horizontal or vertical axis, due to a directed edge.
+    AGAINST_AXIS        // this group is merging other ALIGNED_IN_AXIS groups together - no axis directed edges.
+}
+
 class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
     var state = MergePlane.UNKNOWN
@@ -71,20 +78,9 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
         /**
          * Only allows the merge if the neighbour is in the right state
          */
-
 		fun compatibleNeighbour(originatingGroup: Group, destinationGroup: Group): Boolean {
             return getMergePlane(originatingGroup, destinationGroup) != null
         }
-
-        fun inState(group: Group, vararg okStates: Any): Boolean {
-            for (i in 0 until okStates.size) {
-                if (getState(group) === okStates[i]) {
-                    return true
-                }
-            }
-            return false
-        }
-
 
 		fun getState(group: Group): MergePlane {
             return (group.axis as DirectedGroupAxis).state
@@ -92,6 +88,28 @@ class DirectedGroupAxis(val log: Kite9Log, val g: Group) : GroupAxis {
 
         fun getType(g: Group): DirectedGroupAxis {
             return g.axis as DirectedGroupAxis
+        }
+    }
+
+    override fun getAxisType() : AxisType {
+        return if (g is CompoundGroup) {
+            if ((this.state == MergePlane.X_FIRST_MERGE) || (this.state == MergePlane.Y_FIRST_MERGE)) {
+                if (isAxisAligned) {
+                    AxisType.ALIGNED_IN_AXIS
+                } else {
+                    AxisType.AGAINST_AXIS
+                }
+            } else {
+                val ax = g.a.axis as DirectedGroupAxis
+                val bx = g.b.axis as DirectedGroupAxis
+                if (ax.state != bx.state) {
+                    AxisType.NONE
+                } else {
+                    AxisType.UNDIRECTED
+                }
+            }
+        } else {
+            AxisType.NONE
         }
     }
 }

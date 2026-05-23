@@ -14,10 +14,10 @@ import org.kite9.diagram.logging.LogicException;
 import org.kite9.diagram.model.*;
 import org.kite9.diagram.model.Label;
 import org.kite9.diagram.model.position.*;
-import org.kite9.diagram.model.style.ContainerPosition;
+import org.kite9.diagram.model.style.RectangularPosition;
 import org.kite9.diagram.model.style.DiagramElementSizing;
-import org.kite9.diagram.model.style.GridContainerPosition;
-import org.kite9.diagram.model.style.Placement;
+import org.kite9.diagram.model.style.GridRectangularPosition;
+import org.kite9.diagram.model.style.MeasuredRectangularPosition;
 import org.kite9.diagram.testing.*;
 import org.kite9.diagram.testing.DiagramChecker.ConnectionAction;
 import org.kite9.diagram.testing.DiagramChecker.ExpectedLayoutException;
@@ -29,7 +29,7 @@ import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet;
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer;
 import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult;
-import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode;
+import org.kite9.diagram.model.RectangularLinkNode;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
@@ -190,11 +190,11 @@ public class TestingEngine extends TestingHelp {
 			}
 
 			private double getAlignPoint(double s, double len, Connected v, Direction connectionSide) {
-				Placement p = null;
+				MeasuredRectangularPosition p = null;
                 if (v instanceof AlignedRectangular) {
                     p = ((AlignedRectangular) v).getConnectionAlignment(Direction.Companion.getDimension(connectionSide));
                 } else {
-                    p = Placement.Companion.getNONE();
+                    p = MeasuredRectangularPosition.Companion.getNONE();
                 }
 				Pair<Double, Double> out = AligningRectangularizer.Companion.calculatePositionForPlacement(p, (int) len);
 				return s + out.component1();
@@ -588,14 +588,14 @@ public class TestingEngine extends TestingHelp {
 				.collect(Collectors.toList());
 
 		connecteds.forEach(c -> {
-            GridContainerPosition gcpCX = getGridContainerPosition(c, Dimension.H);
-            GridContainerPosition gcpCY = getGridContainerPosition(c, Dimension.V);
+            GridRectangularPosition gcpCX = getGridContainerPosition(c, Dimension.H);
+            GridRectangularPosition gcpCY = getGridContainerPosition(c, Dimension.V);
 
             RectangleRenderingInformation rriC = c.getRenderingInformation();
 			connecteds.forEach(d -> {
 				if (d != c) {
-                    GridContainerPosition gcpDX = getGridContainerPosition(d, Dimension.H);
-                    GridContainerPosition gcpDY = getGridContainerPosition(d, Dimension.V);
+                    GridRectangularPosition gcpDX = getGridContainerPosition(d, Dimension.H);
+                    GridRectangularPosition gcpDY = getGridContainerPosition(d, Dimension.V);
 
                     if (gcpCX.isSet()&& gcpDX.isSet()) {
 						RectangleRenderingInformation rriD = d.getRenderingInformation();
@@ -626,13 +626,13 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
-	private static GridContainerPosition getGridContainerPosition(ConnectedRectangular c, Dimension d) {
-		ContainerPosition cp = c.getContainerPosition(d);
-		if (!(cp instanceof GridContainerPosition)) {
+	private static GridRectangularPosition getGridContainerPosition(ConnectedRectangular c, Dimension d) {
+		RectangularPosition cp = c.getContainerPosition(d);
+		if (!(cp instanceof GridRectangularPosition)) {
 			throw new ExpectedLayoutException("Was expecting grid for "+ c.getID());
 		}
 
-		return (GridContainerPosition) cp;
+		return (GridRectangularPosition) cp;
 	}
 
 	public static void testLayout(Rectangular d) {
@@ -657,7 +657,7 @@ public class TestingEngine extends TestingHelp {
             }
         }
         for (DiagramElement cc : d.getContents()) {
-            if ((!(cc instanceof Label)) && (!(cc instanceof ConnectedGroupLinkNode))){
+            if ((!(cc instanceof Label)) && (!(cc instanceof RectangularLinkNode))){
                 RenderingInformation ri = cc.getRenderingInformation();
                 if ((ri instanceof RectangleRenderingInformation)) {
                     checkContentContainment(cc, d, (RectangleRenderingInformation) ri);

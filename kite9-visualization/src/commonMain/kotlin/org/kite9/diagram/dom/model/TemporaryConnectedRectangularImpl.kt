@@ -22,8 +22,8 @@ import org.w3c.dom.Element
 class TemporaryConnectedRectangularImpl(parent: Rectangular, id: String, val painter: Painter) :
     AbstractTemporaryConnectedRectangular(parent.getID() + "-g-" + id, parent), HasSVGRepresentation, SizedRectangular {
 
-    private var gcpH: ContainerPosition? = null
-    private var gcpV: ContainerPosition? = null
+    private var gcpH: RectangularPosition? = null
+    private var gcpV: RectangularPosition? = null
 
     override fun toString(): String {
         return "[grid-temporary: " + getID() + "]"
@@ -34,7 +34,7 @@ class TemporaryConnectedRectangularImpl(parent: Rectangular, id: String, val pai
         return rri
     }
 
-    override fun getContainerPosition(d: Dimension): ContainerPosition? {
+    override fun getContainerPosition(d: Dimension): RectangularPosition? {
         return if (d== Dimension.H) {
             gcpH
         } else {
@@ -42,7 +42,7 @@ class TemporaryConnectedRectangularImpl(parent: Rectangular, id: String, val pai
         }
     }
 
-    override fun setContainerPosition(h: ContainerPosition, v: ContainerPosition) {
+    override fun setContainerPosition(h: RectangularPosition, v: RectangularPosition) {
         gcpH = h
         gcpV = v
     }

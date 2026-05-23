@@ -23,13 +23,24 @@ abstract class AbstractCompoundGroup(
     override val height: Int = max(a.height, b.height) + 1
     override val hints: Map<String, Float?> = emptyMap()
     private var _layout: Layout? = null
+    private var _layoutSetPoint: LayoutSetPoint? = null
 
-    override fun setLayout(layout: Layout?) {
-        this._layout = layout
+    override fun setLayout(layout: Layout?, t: LayoutSetPoint) {
+        if (layout != _layout) {
+            if ((this._layoutSetPoint != null) && (this._layoutSetPoint != t)) {
+                throw LogicException("Layout already set")
+            }
+            this._layout = layout
+            this._layoutSetPoint = t
+        }
     }
 
     override fun getLayout() : Layout? {
         return _layout;
+    }
+
+    override fun getLayoutSetPoint(): LayoutSetPoint? {
+        return _layoutSetPoint
     }
 
     override fun addLeafGroupOrdinalsToSet(s: MutableSet<Int>) {

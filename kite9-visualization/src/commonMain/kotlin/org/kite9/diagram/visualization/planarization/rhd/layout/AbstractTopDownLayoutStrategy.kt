@@ -13,6 +13,7 @@ import org.kite9.diagram.model.position.Layout.Companion.rotateClockwise
 import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupResult
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LayoutSetPoint
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
@@ -228,7 +229,7 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
                         val rules = keys.map { rules[it] }.filterNotNull()
                         val consolidatedRule = consolidateLayout(rules)
                         if (consolidatedRule != null) {
-                            g.setLayout(consolidatedRule)
+                            g.setLayout(consolidatedRule, LayoutSetPoint.AXIS_FORCED)
                         }
                     }
                 }
@@ -358,9 +359,9 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
         val aLeaves = getLeafGroups(a)
         val bLeaves = getLeafGroups(b)
 
-        val aPositions = aLeaves.map { rh.getPlacedPosition(it) }.toSet()
-        val bPositions = bLeaves.map { rh.getPlacedPosition(it) }.toSet()
-        val out= aPositions.intersect(bPositions).isNotEmpty()
+        val aPositions = aLeaves.map { rh.getPlacedPosition(it) }
+        val bPositions = bLeaves.map { rh.getPlacedPosition(it) }
+        val out= aPositions.intersect(bPositions.toSet()).isNotEmpty()
         return out
     }
 

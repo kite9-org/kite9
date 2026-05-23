@@ -8,10 +8,10 @@ import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.dom.processors.xpath.XPathAware
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.*
-import org.kite9.diagram.model.style.ContainerPosition
+import org.kite9.diagram.model.style.RectangularPosition
 import org.kite9.diagram.model.style.ContentTransform
 import org.kite9.diagram.model.style.DiagramElementSizing
-import org.kite9.diagram.model.style.GridContainerPosition
+import org.kite9.diagram.model.style.GridRectangularPosition
 import org.w3c.dom.Element
 
 abstract class AbstractRectangular(
@@ -63,8 +63,8 @@ abstract class AbstractRectangular(
                 if (c.getLayout() === Layout.GRID) {
                     val x = ctx.getCssStyleRangeProperty(CSSConstants.GRID_OCCUPIES_X_PROPERTY, theElement)
                     val y = ctx.getCssStyleRangeProperty(CSSConstants.GRID_OCCUPIES_Y_PROPERTY, theElement)
-                    containerPositionX = GridContainerPosition(x!!)
-                    containerPositionY = GridContainerPosition(y!!)
+                    containerPositionX = GridRectangularPosition(x!!)
+                    containerPositionY = GridRectangularPosition(y!!)
                 }
             }
             if (containerPositionX == null) {
@@ -74,10 +74,10 @@ abstract class AbstractRectangular(
         }
     }
 
-    private var containerPositionX: ContainerPosition? = null
-    private var containerPositionY: ContainerPosition? = null
+    private var containerPositionX: RectangularPosition? = null
+    private var containerPositionY: RectangularPosition? = null
 
-    override fun getContainerPosition(d: Dimension): ContainerPosition? {
+    override fun getContainerPosition(d: Dimension): RectangularPosition? {
         ensureInitialized()
         return if (d == Dimension.H) {
             containerPositionX
@@ -133,7 +133,7 @@ abstract class AbstractRectangular(
 
 
     companion object {
-        val NO_CONTAINER_POSITION: ContainerPosition = object : ContainerPosition {
+        val NO_CONTAINER_POSITION: RectangularPosition = object : RectangularPosition {
             override fun toString(): String {
                 return "none"
             }

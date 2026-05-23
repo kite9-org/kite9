@@ -13,7 +13,7 @@ import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
+import org.kite9.diagram.model.RectangularLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.OrderingTemporaryBiDirectional
@@ -124,7 +124,7 @@ abstract class GroupPhase(
         contents.forEach { nextE ->
             created += populateLeafGroups(nextE)
             if ((prevLg != null) && (TEMPORARY_NEEDED.contains(l))) {
-                val gln = ConnectedGroupLinkNode(nextE, "-hub")
+                val gln = RectangularLinkNode(nextE, "-hub")
                 nextE.addTemporaryContent(gln)
                 val nextLg = createLeafGroup(gln, nextE)
                 created++
@@ -147,7 +147,7 @@ abstract class GroupPhase(
                 val pos = Pair(x, y)
                 val de = grid[y][x]
                 created += populateLeafGroups(de as ConnectedRectangular)
-                val gln = ConnectedGroupLinkNode(ord, "-grid-$pos", pos)
+                val gln = RectangularLinkNode(ord, "-grid-$pos", pos)
                 de.addTemporaryContent(gln)
                 val ggGrid = createLeafGroup(gln, de)
                 created++
@@ -184,7 +184,7 @@ abstract class GroupPhase(
     fun populateEmptyElementLeafGroup(ord: Rectangular) : Int {
         // ok, so nothing connects to this, but we still need to create a
         // leaf group for it of some sort.
-        val gln = ConnectedGroupLinkNode(ord, "-bareleaf")
+        val gln = RectangularLinkNode(ord, "-bareleaf")
         ord.addTemporaryContent(gln)
         createLeafGroup(gln, ord)
         return 1
@@ -207,7 +207,7 @@ abstract class GroupPhase(
         // map the directed links
         // TODO: not sure this is right.  We might want to create a leaf for ever
         for (i in 1..directedLeafGroupsNeeded) {
-            val gln = ConnectedGroupLinkNode(ord, "-dl$i")
+            val gln = RectangularLinkNode(ord, "-dl$i")
             ord.addTemporaryContent(gln)
             val lg = createLeafGroup(gln, ord)
             created ++
@@ -228,7 +228,7 @@ abstract class GroupPhase(
         // for now, map all undirected links to the same node
         val undirectedConnections = connectionsByDimension[null]
         if (undirectedConnections?.isNotEmpty() ?: false) {
-            val gln = ConnectedGroupLinkNode(ord, "-und")
+            val gln = RectangularLinkNode(ord, "-und")
             ord.addTemporaryContent(gln)
             val lg = createLeafGroup(gln, ord)
             created ++

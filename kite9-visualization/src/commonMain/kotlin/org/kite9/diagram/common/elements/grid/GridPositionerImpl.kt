@@ -15,7 +15,7 @@ import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.RectangleRenderingInformation
-import org.kite9.diagram.model.style.GridContainerPosition
+import org.kite9.diagram.model.style.GridRectangularPosition
 import org.kite9.diagram.visualization.compaction.Side
 
 /**
@@ -207,8 +207,8 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
                 if (toPlace == null) {
                     toPlace = factory.createTemporaryConnected(ord as ConnectedRectangular, "$x-$y")
                     toPlace.setContainerPosition(
-                        GridContainerPosition(BasicIntegerRange(x, x)),
-                        GridContainerPosition(BasicIntegerRange(y, y))
+                        GridRectangularPosition(BasicIntegerRange(x, x)),
+                        GridRectangularPosition(BasicIntegerRange(y, y))
                     )
                     ord.addTemporaryContent(toPlace)
                     xMap[x] = toPlace
@@ -327,11 +327,11 @@ class GridPositionerImpl(private val factory: DiagramElementFactory<*>) : GridPo
     companion object {
 
         fun getYOccupies(diagramElement: Rectangular): IntegerRange {
-            return (diagramElement.getContainerPosition(Dimension.V) as GridContainerPosition?)!!.r
+            return (diagramElement.getContainerPosition(Dimension.V) as GridRectangularPosition?)!!.r
         }
 
         fun getXOccupies(diagramElement: Rectangular): IntegerRange {
-            return (diagramElement.getContainerPosition(Dimension.H) as GridContainerPosition?)!!.r
+            return (diagramElement.getContainerPosition(Dimension.H) as GridRectangularPosition?)!!.r
         }
 
         /**

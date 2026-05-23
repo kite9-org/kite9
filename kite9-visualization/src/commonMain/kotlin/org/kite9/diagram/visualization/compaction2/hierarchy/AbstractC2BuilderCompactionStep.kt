@@ -13,7 +13,7 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.style.BorderTraversal
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.AbstractC2CompactionStep
 import org.kite9.diagram.visualization.compaction2.C2Compaction
@@ -29,7 +29,7 @@ import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSetI
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSetImpl
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
+import org.kite9.diagram.model.RectangularLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 
@@ -123,7 +123,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
 
             ss = RectangularSlideableSetImpl(de, l, r)
 
-            val position = if (de is AlignedRectangular) de.getConnectionAlignment(d) else Placement.NONE
+            val position = if (de is AlignedRectangular) de.getConnectionAlignment(d) else MeasuredRectangularPosition.NONE
 
             ensureCentreSlideablePosition(cso, ss, cExisting, position)
             cso.add(de, ss)
@@ -142,7 +142,7 @@ abstract class AbstractC2BuilderCompactionStep(cd: CompleteDisplayer, val gp: Gr
     protected fun checkCreateIntersectionOnly(cso: C2SlackOptimisation, g: LeafGroup, c: Rectangular, d: Dimension) : RoutableSlideableSet {
 
         fun getGridPosition(c: Connected) : Pair<Int, Int>? {
-            return if (c is ConnectedGroupLinkNode) {
+            return if (c is RectangularLinkNode) {
                 c.gridPosition
             } else {
                 null

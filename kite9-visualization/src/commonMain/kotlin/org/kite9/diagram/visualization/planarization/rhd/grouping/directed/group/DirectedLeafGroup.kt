@@ -2,11 +2,11 @@ package org.kite9.diagram.visualization.planarization.rhd.grouping.directed.grou
 
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.model.Rectangular
-import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
+import org.kite9.diagram.model.LinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.AbstractLeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.merge.DirectedMergeState
 
-class DirectedLeafGroup(contained: GroupLinkNode,
+class DirectedLeafGroup(contained: LinkNode,
                         container: Rectangular,
                         groupNumber: Int,
                         hc: Int,

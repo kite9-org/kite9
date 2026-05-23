@@ -1,34 +1,33 @@
-package org.kite9.diagram.visualization.planarization.rhd.grouping
+package org.kite9.diagram.model
 
 import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.elements.factory.AbstractDiagramElement
-import org.kite9.diagram.model.*
 import org.kite9.diagram.model.position.RectangleRenderingInformation
 import org.kite9.diagram.model.position.RectangleRenderingInformationImpl
 import org.kite9.diagram.model.style.ConnectionsSeparation
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 
 /**
- * This is created for containers that need to participate in grouping,
+ * This is created for rectangulars that need to participate in grouping,
  * because they have either directed connections arriving at them or they are
  * involved in layouts, but they also have contents that are involved in
  * layouts too.
  */
-class ConnectedGroupLinkNode(val c: Rectangular, suffix: String, val gridPosition: Pair<Int, Int>? = null) : AbstractDiagramElement(c), PlacementPositioned, GroupLinkNode, Temporary {
+class RectangularLinkNode(val c: Rectangular, suffix: String, val gridPosition: Pair<Int, Int>? = null) : AbstractDiagramElement(c), PlacementPositioned, LinkNode, Temporary {
 
     val id = c.getID()+'-'+suffix
 
     val links = mutableListOf<Connection>()
 
-    override fun getContainerPosition(d: Dimension): Placement {
+    override fun getContainerPosition(d: Dimension): MeasuredRectangularPosition {
         if (c is AlignedRectangular) {
             val ca = c.getConnectionAlignment(d)
-            if (ca is Placement) {
+            if (ca is MeasuredRectangularPosition) {
                 return ca
             }
         }
 
-        return Placement.NONE   // default, middle of the container
+        return MeasuredRectangularPosition.NONE   // default, middle of the container
     }
 
     override fun getRenderingInformation(): RectangleRenderingInformation {

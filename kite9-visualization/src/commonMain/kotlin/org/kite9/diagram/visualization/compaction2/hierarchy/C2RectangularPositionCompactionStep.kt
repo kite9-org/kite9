@@ -7,7 +7,7 @@ import org.kite9.diagram.model.position.BasicDimension2D
 import org.kite9.diagram.model.position.CostedDimension2D
 import org.kite9.diagram.model.position.Dimension2D
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import org.kite9.diagram.visualization.compaction.Side
 import org.kite9.diagram.visualization.compaction2.*
 import org.kite9.diagram.visualization.compaction2.sets.RectangularSlideableSet
@@ -89,7 +89,7 @@ class C2RectangularPositionCompactionStep(cd: CompleteDisplayer) : AbstractC2Com
         }
     }
 
-    private fun measure(start: Double, size: Double, pa: Placement) : Double {
+    private fun measure(start: Double, size: Double, pa: MeasuredRectangularPosition) : Double {
         val unbounded = when (pa.type) {
             Measurement.PERCENTAGE -> start + (pa.amount / 100.0) * size
             else -> if (pa.amount > 0) {

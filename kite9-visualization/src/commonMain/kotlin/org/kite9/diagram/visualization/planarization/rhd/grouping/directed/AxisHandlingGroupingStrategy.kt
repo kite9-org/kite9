@@ -10,9 +10,11 @@ import org.kite9.diagram.model.Rectangular
 import org.kite9.diagram.model.position.Direction.Companion.reverse
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.Containers
-import org.kite9.diagram.visualization.planarization.rhd.grouping.GroupLinkNode
+import org.kite9.diagram.model.LinkNode
+import org.kite9.diagram.model.RectangularLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LayoutSetPoint
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.BasicMergeState
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.merge.MergeOption
@@ -175,15 +177,23 @@ abstract class AxisHandlingGroupingStrategy(
             }
 
             if (internalLinkDirection != null) {
-                out.setLayout(internalLinkDirection)
+                out.setLayout(internalLinkDirection, LayoutSetPoint.ON_CREATION)
             }
         }
 
         // we may be able to establish a layout from one or more of the
         // containers that the groups are in.  Layout will be horizontal or vertical,
         // unless there is a contradiction.
-        if (out.getLayout() == null) {
-            out.setLayout(layoutDirection)
+
+        fun containsRectangulars(g: Group) : Boolean {
+            return when (g) {
+                is LeafGroup -> g.connected is RectangularLinkNode
+                is CompoundGroup -> containsRectangulars(g.a) || containsRectangulars(g.b)
+            }
+        }
+
+        if ((out.getLayout() == null) && (layoutDirection != null) && containsRectangulars(out.a) && containsRectangulars(out.b)){
+            out.setLayout(layoutDirection, LayoutSetPoint.ON_CREATION)
         }
     }
 
@@ -329,7 +339,7 @@ abstract class AxisHandlingGroupingStrategy(
         return rightPriorities.contains(p)
     }
 
-    override fun createLeafGroup(gln: GroupLinkNode, ord: Rectangular): LeafGroup {
+    override fun createLeafGroup(gln: LinkNode, ord: Rectangular): LeafGroup {
         containerCount++
         val out = DirectedLeafGroup(gln, ord, groupCount, hashCodeGenerator.nextInt(), log, ms)
         groupCount++

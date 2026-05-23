@@ -3,10 +3,10 @@ package org.kite9.diagram.model.style
 import org.kite9.diagram.common.range.IntegerRange
 
 /**
- * Represents the space a container (cell) of a grid can take up in a single
- * dimension.
+ * Represents the space a cell can take up (in a single
+ * dimension), within a rectangular area divided into a grid.
  */
-data class GridContainerPosition(val r: IntegerRange) : ContainerPosition {
+data class GridRectangularPosition(val r: IntegerRange) : RectangularPosition {
 
     fun isSet(): Boolean {
         return !IntegerRange.notSet(r)

@@ -1,8 +1,7 @@
 package org.kite9.diagram.visualization.compaction.rect.second.popout
 
-import org.kite9.diagram.model.*
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import kotlin.math.abs
 
 /**
@@ -14,7 +13,7 @@ abstract class AligningRectangularizer {
     companion object {
 
         fun calculatePositionForPlacement(
-            p: Placement,
+            p: MeasuredRectangularPosition,
             totalDist: Int
         ): Pair<Double, Double> {
             val amount = p.amount

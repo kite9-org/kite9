@@ -67,6 +67,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         val topGroup: Group = mr.groups().iterator().next()
         val routableReader = PositionRoutableHandler2D()
         val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
+        outputGroupInfo(topGroup, 1, routableReader)
         layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
         outputGroupInfo(topGroup, 1, routableReader)
         this.rr = routableReader
@@ -80,11 +81,13 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         val line = if (g is CompoundGroup) {
             val axis = g.axis as DirectedGroupAxis
             val l: Layout? = g.getLayout()
+            val t = g.getLayoutSetPoint()
+            val at = g.axis.getAxisType()
             val h = if (g.axis.isHorizontal) "h" else " "
             val v = if (g.axis.isVertical) "v" else " "
             (sb.toString() + g.groupNumber +
                     " " + axis
-                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v "
+                    + "   " + rr.getPlacedPosition(g) + "  " + l + " $h $v $t $at "
                     + (g.a.groupNumber).toString() + " " + (g.b.groupNumber))
         } else {
             (sb.toString() + g.groupNumber + " "+rr.getPlacedPosition(g) +

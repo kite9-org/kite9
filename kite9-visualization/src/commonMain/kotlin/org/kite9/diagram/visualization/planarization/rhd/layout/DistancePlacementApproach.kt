@@ -7,6 +7,7 @@ import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LayoutSetPoint
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
@@ -26,7 +27,7 @@ class DistancePlacementApproach(
 ) : AbstractPlacementApproach(log, aDirection, overall, natural, rh) {
 
     override fun evaluate() {
-        overall.setLayout(Layout.fromDirection(aDirection))
+        overall.setLayout(Layout.fromDirection(aDirection), LayoutSetPoint.PLACEMENT_APPROACH)
         score = 0.0
         log.send("Position of A" + rh.getPlacedPosition(overall.a))
         log.send("Position of B" + rh.getPlacedPosition(overall.b))

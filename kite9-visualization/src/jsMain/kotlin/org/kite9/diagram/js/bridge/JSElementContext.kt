@@ -13,8 +13,8 @@ import org.kite9.diagram.model.Diagram
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.position.Rectangle2D
 import org.kite9.diagram.model.style.Measurement
-import org.kite9.diagram.model.style.Placement
-import org.kite9.diagram.model.style.Placement.Companion.NONE
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
+import org.kite9.diagram.model.style.MeasuredRectangularPosition.Companion.NONE
 import org.w3c.dom.Element
 import org.w3c.dom.svg.*
 import kotlin.random.Random
@@ -191,13 +191,13 @@ class JSElementContext : ElementContext {
         return children.getOrElse(parent) { mutableListOf() }
     }
 
-    override fun getCssStylePlacementProperty(prop: String, e: Element): Placement {
+    override fun getCssStylePlacementProperty(prop: String, e: Element): MeasuredRectangularPosition {
         val s = (e.asDynamic().computedStyleMap() as StylePropertyMapReadOnly).get(prop)
 
         if (s.asDynamic().unit == "percent") {
-            return Placement(Measurement.PERCENTAGE, s.asDynamic().value);
+            return MeasuredRectangularPosition(Measurement.PERCENTAGE, s.asDynamic().value);
         } else if (s.asDynamic().unit == "pixels") {
-            return Placement(Measurement.PIXELS, s.asDynamic().value);
+            return MeasuredRectangularPosition(Measurement.PIXELS, s.asDynamic().value);
         } else {
             return NONE;
         }

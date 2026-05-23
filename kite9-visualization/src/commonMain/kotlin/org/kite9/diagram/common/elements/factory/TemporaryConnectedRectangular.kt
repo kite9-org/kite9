@@ -2,9 +2,9 @@ package org.kite9.diagram.common.elements.factory
 
 import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.Temporary
-import org.kite9.diagram.model.style.ContainerPosition
+import org.kite9.diagram.model.style.RectangularPosition
 
 interface TemporaryConnectedRectangular : ConnectedRectangular, Temporary {
 
-    fun setContainerPosition(x: ContainerPosition, y: ContainerPosition)
+    fun setContainerPosition(x: RectangularPosition, y: RectangularPosition)
 }

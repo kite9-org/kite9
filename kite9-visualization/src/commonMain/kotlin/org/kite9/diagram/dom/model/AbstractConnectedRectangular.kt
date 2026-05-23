@@ -7,7 +7,7 @@ import org.kite9.diagram.dom.painter.Painter
 import org.kite9.diagram.model.*
 import org.kite9.diagram.model.style.ConnectionsSeparation
 import org.kite9.diagram.model.style.ContentTransform
-import org.kite9.diagram.model.style.Placement
+import org.kite9.diagram.model.style.MeasuredRectangularPosition
 import org.w3c.dom.Element
 
 /**
@@ -60,7 +60,7 @@ abstract class AbstractConnectedRectangular(
         return linkInset
     }
 
-    override fun getConnectionAlignment(d: Dimension): Placement {
+    override fun getConnectionAlignment(d: Dimension): MeasuredRectangularPosition {
         ensureInitialized()
         return alignments[d.ordinal]
     }

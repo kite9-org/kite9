@@ -14,12 +14,11 @@ import org.kite9.diagram.visualization.compaction2.C2SlackOptimisation
 import org.kite9.diagram.visualization.compaction2.C2Slideable
 import org.kite9.diagram.visualization.compaction2.sets.RoutableSlideableSet
 import org.kite9.diagram.visualization.display.CompleteDisplayer
-import org.kite9.diagram.visualization.planarization.rhd.grouping.ConnectedGroupLinkNode
+import org.kite9.diagram.model.RectangularLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo
-import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
  * This makes sure that any time we have all the groups to complete a container, we wrap the groups in the
@@ -116,11 +115,11 @@ abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: 
         val allAddedSlideables = mutableSetOf<C2Slideable>()
 
         // set if we're adding sides to an empty grid square
-        var hub : ConnectedGroupLinkNode? = null
+        var hub : RectangularLinkNode? = null
 
         to.forEach { lg ->
-            if ((lg.connected is ConnectedGroupLinkNode) && ((lg.connected as ConnectedGroupLinkNode).gridPosition != null)) {
-                hub = lg.connected as ConnectedGroupLinkNode
+            if ((lg.connected is RectangularLinkNode) && ((lg.connected as RectangularLinkNode).gridPosition != null)) {
+                hub = lg.connected as RectangularLinkNode
             }
             val routables = map[lg]!!
             val theRSS = if (dimension == Dimension.H) routables.first else routables.second

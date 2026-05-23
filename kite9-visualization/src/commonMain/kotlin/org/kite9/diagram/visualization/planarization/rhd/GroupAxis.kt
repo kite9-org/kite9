@@ -32,4 +32,9 @@ interface GroupAxis {
      * Potentially, groups can have 2 parents, a horizontal and a vertical one.
      */
     fun getParentGroup(horizontal: Boolean): CompoundGroup?
+
+    /**
+     * Returns details of the kind of axis this is.  (DirectedGroupAxis specialises this)
+     */
+    fun getAxisType(): Any
 }

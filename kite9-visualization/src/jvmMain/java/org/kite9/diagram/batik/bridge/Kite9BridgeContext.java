@@ -43,15 +43,13 @@ import org.kite9.diagram.model.Diagram;
 import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.Rectangle2D;
 import org.kite9.diagram.model.style.Measurement;
-import org.kite9.diagram.model.style.Placement;
+import org.kite9.diagram.model.style.MeasuredRectangularPosition;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.css.CSSPrimitiveValue;
 import org.w3c.dom.svg.SVGDocument;
 import org.w3c.dom.xpath.XPathResult;
-
-import kotlin.reflect.KClass;
 
 /**
  * The Kite9 bridge context has to manage the conversion of XML elements into {@link GraphicsNode} 
@@ -233,14 +231,14 @@ public class Kite9BridgeContext extends SVG12BridgeContext implements ElementCon
 
 	@NotNull
 	@Override
-	public Placement getCssStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
+	public MeasuredRectangularPosition getCssStylePlacementProperty(@NotNull String prop, @NotNull Element e) {
 		Value v = getCSSValue(prop, e);
 		if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PERCENTAGE) {
-			return new Placement(Measurement.PERCENTAGE, v.getFloatValue());
+			return new MeasuredRectangularPosition(Measurement.PERCENTAGE, v.getFloatValue());
 		} else if (v.getPrimitiveType() == CSSPrimitiveValue.CSS_PX) {
-			return new Placement(Measurement.PIXELS, v.getFloatValue());
+			return new MeasuredRectangularPosition(Measurement.PIXELS, v.getFloatValue());
 		} else {
-			return Placement.Companion.getNONE();
+			return MeasuredRectangularPosition.Companion.getNONE();
 		}
 	}
 

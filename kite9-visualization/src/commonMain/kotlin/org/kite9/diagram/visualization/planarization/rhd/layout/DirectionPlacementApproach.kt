@@ -10,6 +10,7 @@ import org.kite9.diagram.model.position.Layout
 import org.kite9.diagram.model.position.Layout.Companion.reverse
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
+import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LayoutSetPoint
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkDetail
 import org.kite9.diagram.visualization.planarization.rhd.links.LinkManager.LinkProcessor
@@ -36,7 +37,7 @@ class DirectionPlacementApproach(
     val ev = ExitMatrixEvaluator()
 
     override fun evaluate() {
-        overall.setLayout(Layout.fromDirection(aDirection))
+        overall.setLayout(Layout.fromDirection(aDirection), LayoutSetPoint.PLACEMENT_APPROACH)
         log.send("Position of A" + rh.getPlacedPosition(overall.a))
         val aMatrix = createMatrix(overall.a, overall.internalLinkA)
         log.send("A Matrix: $aMatrix")
