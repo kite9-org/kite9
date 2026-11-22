@@ -1,6 +1,6 @@
 package org.kite9.diagram.performance;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractPerformanceTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -49,7 +49,7 @@ public class TestConnectedHorizontal extends AbstractPerformanceTest {
 
 	private String generateDiagram(Metrics m) {
 		DiagramKite9XMLElement.TESTING_DOCUMENT = DiagramKite9XMLElement.newDocument();
-		
+
 		r = new Random(m.toString().hashCode());
 		Glyph[] items = new Glyph[m.connecteds];
 		for (int i = 0; i < items.length; i++) {
@@ -66,10 +66,10 @@ public class TestConnectedHorizontal extends AbstractPerformanceTest {
 			if (g1 != g2) {
 				Glyph g1g = items[g1];
 				Glyph g2g = items[g2];
-				//if (!g1g.isConnectedDirectlyTo(g2g)) {
+				// if (!g1g.isConnectedDirectlyTo(g2g)) {
 				new Link(g1g, g2g);
 				tc++;
-			// }
+				// }
 			}
 		}
 
@@ -77,7 +77,7 @@ public class TestConnectedHorizontal extends AbstractPerformanceTest {
 		Collections.addAll(cl, items);
 
 		DiagramKite9XMLElement out = new DiagramKite9XMLElement("bigd", cl, Layout.HORIZONTAL, null);
-		
+
 		return wrap(out);
 	}
 

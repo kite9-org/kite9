@@ -1,7 +1,7 @@
 package org.kite9.diagram.functional.layout;
 
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractLayoutFunctionalTest;
 import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.adl.Context;
@@ -18,7 +18,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 	// the players
 
 	LinkBody one;
-	//Glyph one;
+	// Glyph one;
 	Glyph two;
 	Glyph three;
 	Glyph four;
@@ -38,7 +38,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		five = new Glyph("g5", "", "five", null, null);
 		six = new Glyph("g6", "", "six", null, null);
 		seven = new Glyph("g7", "", "seven", null, null);
-		
+
 		con1 = new Context("b1", listOf(one, two, three, four, five, six, seven),
 				true, new TextLine("inside"), Layout.RIGHT);
 	}
@@ -58,7 +58,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", listOf(con1), null);
 		super.renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_23_2_SomeArrowHeads() throws Exception {
 		new Link(one, two, LinkEndStyle.ARROW, null, null, null, null);
@@ -67,10 +67,10 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		new Link(one, five, LinkEndStyle.ARROW, null, null, null, null);
 		new Link(one, six);
 		new Link(one, seven);
-		
+
 		renderDiagram();
 	}
-	
+
 	@Test
 	public void test_23_3_AwkwardCuss() throws Exception {
 		new Link(one, two, LinkEndStyle.ARROW, null, null, null, null);
@@ -79,7 +79,7 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 		new Link(one, five, LinkEndStyle.ARROW, null, null, null, null);
 		new Link(one, six);
 		new Link(one, seven);
-		
+
 		renderDiagram();
 	}
 
@@ -87,6 +87,5 @@ public class Test23LinkBucketing extends AbstractLayoutFunctionalTest {
 	protected boolean checkEverythingStraight() {
 		return false;
 	}
-	
-	
+
 }

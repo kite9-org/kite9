@@ -7,7 +7,7 @@ import org.kite9.diagram.js.logging.JSKite9Log
 import org.kite9.diagram.js.model.JSDiagramElementFactory
 import org.kite9.diagram.logging.Kite9Log
 import org.kite9.diagram.visualization.display.BasicCompleteDisplayer
-import org.kite9.diagram.visualization.pipeline.BasicArrangementPipeline
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline
 import org.w3c.dom.Element
 
 /**
@@ -39,7 +39,7 @@ fun formatSVG(e: Element) {
 
     // process diagrams
     for (d in p.diagrams) {
-        val pipeline = BasicArrangementPipeline(ef, BasicCompleteDisplayer(false))
+        val pipeline = NGArrangementPipeline(ef, BasicCompleteDisplayer(false))
         pipeline.arrange(d)
         val p2 = DiagramPositionProcessor(context, XPathValueReplacer(context))
         p2.processContents(e)

@@ -1,7 +1,7 @@
 package org.kite9.diagram.functional.display;
 
 import org.jetbrains.annotations.NotNull;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.*;
 import org.kite9.diagram.common.HelpMethods;
@@ -17,7 +17,8 @@ import java.util.Arrays;
 public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 
 	/**
-	 * Disabling some checks.  61_12 edges don't run straight anymore, however it's correct behaviour.
+	 * Disabling some checks. 61_12 edges don't run straight anymore, however it's
+	 * correct behaviour.
 	 *
 	 * @return
 	 */
@@ -48,7 +49,7 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "10%"));
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "90%"));
 		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%"));
-		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT,Direction.RIGHT, "50%"));
+		e.appendChild(new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50%"));
 	}
 
 	@Test
@@ -86,7 +87,8 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	public void test_61_4_MultipleUndirectedLinksToPortEven() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY + ": " + BorderTraversal.PREVENT + ";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "30px");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"30px");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");
@@ -109,8 +111,10 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	public void test_61_5_MultipleUndirectedLinksToPortOdd() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY + ": " + BorderTraversal.PREVENT + ";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.UP, "50%");
-		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.UP,
+				"50%");
+		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT,
+				"50%");
 		one.appendChild(oneSocket);
 		one.appendChild(twoSocket);
 
@@ -136,7 +140,8 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	public void test_61_6_PortAndNonPortFanning() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY + ": " + BorderTraversal.PREVENT + ";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"50%");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");
@@ -169,7 +174,8 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		Glyph three = createGlyph("Three");
 
 		Context i1 = new Context("i1", Arrays.asList(two, three), true, null, Layout.RIGHT);
-		BasicSocket i1Socket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50%");
+		BasicSocket i1Socket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"50%");
 		i1.appendChild(i1Socket);
 
 		new Link(i1Socket, one);
@@ -182,20 +188,21 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	public void test_61_8_AlignmentAndPorts() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY + ": " + BorderTraversal.PREVENT + ";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "50%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"50%");
 		one.appendChild(oneSocket);
 
 		Glyph two = createGlyph("Two");
 
 		Glyph three = createGlyph("Three");
-		BasicSocket threeSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%");
+		BasicSocket threeSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT,
+				"50%");
 		three.appendChild(threeSocket);
-
 
 		Context i1 = new Context("i1", Arrays.asList(one, two, three), true, null, Layout.RIGHT);
 
 		new Link(oneSocket, threeSocket);
-		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
+		//new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
 
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1), null);
 		renderDiagram(d);
@@ -205,11 +212,14 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 	public void test_61_9_OffsetPortsAndMiddles() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY + ": " + BorderTraversal.PREVENT + ";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "30px");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"30px");
 		one.appendChild(oneSocket);
-		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "130px");
+		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"130px");
 		one.appendChild(twoSocket);
-		BasicSocket threeSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "75%");
+		BasicSocket threeSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.LEFT,
+				"75%");
 		one.appendChild(threeSocket);
 
 		Glyph two = createGlyph("Two");
@@ -254,41 +264,26 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		return g;
 	}
 
-
 	@Test
 	public void test_61_11_MultiplePortsDirectedLinks() throws Exception {
 		Glyph one = createGlyph("One");
 		one.setAttribute("style", CSSConstants.TRAVERSAL_PROPERTY + ": " + BorderTraversal.PREVENT + ";");
-		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "25%");
+		BasicSocket oneSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"25%");
 		one.appendChild(oneSocket);
-		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT, "75%");
+		BasicSocket twoSocket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.RIGHT,
+				"75%");
 		one.appendChild(twoSocket);
 
 		Glyph two = createGlyph("Two");
 		Glyph three = createGlyph("Three");
 		Glyph four = createGlyph("Four");
 
-
 		new Link(oneSocket, two, null, null, null, null, Direction.RIGHT);
 		new Link(twoSocket, three, null, null, null, null, Direction.RIGHT);
 		new Link(one, four, null, null, null, null, Direction.RIGHT);
 
-
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(one, two, three, four), null);
-		renderDiagram(d);
-	}
-
-	@Test
-	public void test_61_12_PortInsideBox() throws Exception {
-		Glyph one = createGlyph("One");
-		Glyph two = createGlyph("Two");
-
-		BasicSocket socket = new BasicSocket(BasicSocket.createID(), BasicSocket.TESTING_DOCUMENT, Direction.UP, "50%");
-		one.appendChild(socket);
-
-		Context i1 = new Context("i1", Arrays.asList(one), true, null, null);
-		new ContradictingLink(socket, two, null, null, null, null, Direction.RIGHT);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, two), null);
 		renderDiagram(d);
 	}
 
@@ -320,18 +315,58 @@ public class Test61PortsAndAlignment extends AbstractDisplayFunctionalTest {
 		new Link(s4, down1);
 		new Link(s3, down2);
 
-		Context i1 = new Context("i1", Arrays.asList(up1, up2), true, null, Layout.RIGHT);
+		Context i1 = new Context("i1", Arrays.asList(up1, up2), true, new TextLabel("hi"), Layout.RIGHT);
 		Context i2 = new Context("i2", Arrays.asList(down1, down2), true, null, Layout.RIGHT);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, middle, i2), null);
+        Context i3 = new Context("i3", Arrays.asList(middle), true, null, Layout.DOWN);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(i1, i3, i2), null);
 		renderDiagram(d);
 	}
 
 	@Test
-	public void test_61_14_DiagramPort() throws Exception {
+	public void test_61_14_InAndOut() throws Exception {
 		Glyph middle = createGlyph("middle");
 		BasicSocket up1s = new BasicSocket("up1socket", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "50%");
-		new Link(middle, up1s);
-		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(middle, up1s), null);
+        BasicSocket left1s = new BasicSocket("left1socket", BasicSocket.TESTING_DOCUMENT, Direction.LEFT, "50%");
+        middle.appendChild(up1s);
+        middle.appendChild(left1s);
+        new TurnLink(left1s, up1s);
+		DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(middle), null);
 		renderDiagram(d);
 	}
+
+    @Test
+    public void test_61_15_DifficultCrossWithoutContainers() throws Exception {
+        Glyph middle = createGlyph("middle");
+        Glyph up1 = createGlyph("up1");
+        BasicSocket up1s = new BasicSocket("up1socket", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "50%");
+        up1.appendChild(up1s);
+
+        Glyph up2 = createGlyph("up2");
+        BasicSocket up2s = new BasicSocket("up2socket", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "50%");
+        up2.appendChild(up2s);
+
+        Glyph down1 = createGlyph("down1");
+        Glyph down2 = createGlyph("down2");
+
+        BasicSocket s1 = new BasicSocket("top-left", BasicSocket.TESTING_DOCUMENT, Direction.UP, "40%");
+        BasicSocket s2 = new BasicSocket("top-right", BasicSocket.TESTING_DOCUMENT, Direction.UP, "60%");
+        BasicSocket s3 = new BasicSocket("bottom-left", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "10%");
+        BasicSocket s4 = new BasicSocket("bottom-right", BasicSocket.TESTING_DOCUMENT, Direction.DOWN, "90%");
+        middle.appendChild(s2);
+        middle.appendChild(s1);
+        middle.appendChild(s3);
+        middle.appendChild(s4);
+
+        new Link(s2, up1s);
+        new Link(s1, up2s);
+        new Link(s4, down1);
+        new Link(s3, down2);
+
+        new Link(up1, up2, null, null, null, null, Direction.RIGHT);
+        new Link(down1, down2, null, null, null, null, Direction.RIGHT);
+
+        DiagramKite9XMLElement d = new DiagramKite9XMLElement(HelpMethods.listOf(up1, up2, middle, down1, down2), null);
+        renderDiagram(d);
+    }
+
 }

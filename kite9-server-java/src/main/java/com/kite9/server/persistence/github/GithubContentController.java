@@ -1,6 +1,6 @@
 package com.kite9.server.persistence.github;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,39 +25,40 @@ import com.kite9.server.sources.SourceAPIFactory;
 import com.kite9.server.web.URIRewriter;
 
 /**
- * Allows uploading of files into github.  Used for images.
+ * Allows uploading of files into github. Used for images.
  * 
  * @author robmoffat
  *
  */
 @RestController
 public class GithubContentController extends AbstractContentController {
-	
+
 	public GithubContentController(FormatSupplier fs, SourceAPIFactory factory) {
-		super(fs, factory); 
+		super(fs, factory);
 	}
 
 	public static final String GITHUB = "github";
-		
+
 	public static final String DEFAULT_GITHUB_UPLOADS = "/.kite9/uploads";
-	
+
 	public static final String DEFAULT_GITHUB_TEMPLATES = ".kite9/templates";
-	
+
 	@Autowired
 	protected GithubSourceAPIFactory apiFactory;
-	
-	@PostMapping(path = { "/"+GITHUB+"/**" }, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@PostMapping(path = { "/" + GITHUB
+			+ "/**" }, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Void> upload(@RequestHeader HttpHeaders headers, HttpServletRequest req,
 			@RequestParam("file") MultipartFile file, Authentication authentication) throws Exception {
 		K9URI uri = URIRewriter.getCompleteCurrentRequestURI();
-		SourceAPI api = apiFactory.createAPI(uri,authentication);
+		SourceAPI api = apiFactory.createAPI(uri, authentication);
 		if (api instanceof ModifiableAPI) {
 			byte[] bytes = StreamUtils.copyToByteArray(file.getInputStream());
-			((ModifiableAPI) api).commitRevisionAsBytes("File Upload "+uri, authentication, bytes);
+			((ModifiableAPI) api).commitRevisionAsBytes("File Upload " + uri, authentication, bytes);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		} else {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't  modify this resource: "+uri);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can't  modify this resource: " + uri);
 		}
 	}
-	
+
 }

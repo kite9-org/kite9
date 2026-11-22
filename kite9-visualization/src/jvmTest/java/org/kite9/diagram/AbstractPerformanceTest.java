@@ -1,9 +1,9 @@
 package org.kite9.diagram;
 
-import org.junit.Test;
-import org.kite9.diagram.adl.LinkBody;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.adl.Context;
 import org.kite9.diagram.adl.Glyph;
+import org.kite9.diagram.adl.LinkBody;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
 import org.kite9.diagram.common.Kite9XMLProcessingException;
 import org.kite9.diagram.common.StackHelp;
@@ -20,8 +20,7 @@ import org.kite9.diagram.performance.Metrics;
 import org.kite9.diagram.testing.DiagramElementVisitor;
 import org.kite9.diagram.testing.TestingHelp;
 import org.kite9.diagram.testing.VisitorAction;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.planarization.mgt.MGTPlanarization;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.Element;
 
 import java.io.File;
@@ -36,12 +35,11 @@ import java.util.Map.Entry;
 import java.util.TreeSet;
 
 public class AbstractPerformanceTest extends AbstractFunctionalTest {
-	
-	
+
 	public static final DateFormat DF = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	public void render(Map<Metrics, String> diagrams) throws IOException {
-		if (diagrams.size()>2) {
+		if (diagrams.size() > 2) {
 			Kite9LogImpl.setLogging(Destination.OFF);
 		}
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
@@ -68,7 +66,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 		File metricsFile = getMetricsFile();
 		FileWriter fw = new FileWriter(metricsFile, true);
-		if (metricsFile.length()==0) {
+		if (metricsFile.length() == 0) {
 			t.addArrayRow(Metrics.HEADINGS);
 			for (String s : Metrics.HEADINGS) {
 				fw.write(s);
@@ -76,8 +74,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			}
 			fw.write("\n");
 		}
-		
-		
+
 		for (Metrics metrics2 : metrics) {
 			String[] items = metrics2.getMetrics();
 			t.addArrayRow(items);
@@ -91,15 +88,15 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 		StringBuilder out = new StringBuilder(200);
 		t.display(out);
-		//System.out.println(out);
+		// System.out.println(out);
 
 		System.gc();
-		
+
 		if (fail != null) {
-			throw new Kite9XMLProcessingException("Could not run all tests. Last error: " ,fail, null);
+			throw new Kite9XMLProcessingException("Could not run all tests. Last error: ", fail, null);
 		}
 	}
-	
+
 	protected String wrap(Element x) {
 		String xml = new XMLHelper().toXML(x.getOwnerDocument(), true);
 		return xml;
@@ -107,31 +104,32 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 
 	private void writeFailedDiagram(Metrics key, String value) {
 		File f = getOutputFile("failed.xml");
-		
-//		RepositoryHelp.
-//		writeOutput(this.getClass(), "f.xm;ailed" , key.name+".xml", value);
+
+		// RepositoryHelp.
+		// writeOutput(this.getClass(), "f.xm;ailed" , key.name+".xml", value);
 	}
 
 	private void renderDiagram(String xml, Class<?> theTest, String subtest, boolean watermark, Metrics m)
 			throws Exception {
 		try {
-			//System.out.println("Beginning: "+m);
+			// System.out.println("Beginning: "+m);
 			currentMetrics = m;
-			
+
 			transcodeSVG(xml);
 			Diagram d = Kite9SVGTranscoder.lastDiagram;
-			AbstractArrangementPipeline pipeline = Kite9SVGTranscoder.lastPipeline;
-			
-			TestingEngine.drawPositions(((MGTPlanarization) pipeline.getPln()).getVertexOrder(), theTest, subtest, subtest+"-"+m.name+"-positions.png");
+			NGArrangementPipeline pipeline = Kite9SVGTranscoder.lastPipeline;
+
+			TestingEngine.drawPositions(pipeline.getGrouping(), pipeline.getRoutableReader(), theTest, subtest,
+					subtest + "-" + m.name + "-positions.png");
 			TestingEngine.testConnectionPresence(d, false, true, true);
 			TestingEngine.testLayout(d);
-			
+
 			// write the outputs
 			measure(d, m);
 
 			// TestingEngine.testEdgeDirections(d);
 		} catch (Throwable t) {
-			throw new Exception("Could not run "+m+": ",t);
+			throw new Exception("Could not run " + m + ": ", t);
 		}
 
 	}
@@ -148,8 +146,8 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			}
 		});
 		Dimension2D ds = d.getRenderingInformation().getSize();
-		
-		m.totalDiagramSize =(long) (ds.getW() * ds.getH());
+
+		m.totalDiagramSize = (long) (ds.getW() * ds.getH());
 		m.crossings = m.crossings / 4;
 		m.runDate = DF.format(new Date());
 	}
@@ -182,7 +180,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 			Dimension2D pos = ri.getWaypoint(i);
 			boolean cross = ri.isHop(i);
 			if (cross) {
-				crosses+=1;
+				crosses += 1;
 			}
 
 			Direction currentD = null;
@@ -218,7 +216,7 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 		m.turns += turns;
 
 	}
-	
+
 	public File getMetricsFile() {
 		File dir = new File("target/functional-test/metrics/");
 		dir.mkdirs();
@@ -227,15 +225,14 @@ public class AbstractPerformanceTest extends AbstractFunctionalTest {
 	}
 
 	private static Metrics currentMetrics;
-	
+
 	@Override
 	protected File getOutputFile(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, "", m.getName()+currentMetrics.name+"-"+ending);
+		File f = TestingHelp.prepareFileName(theTest, "", m.getName() + currentMetrics.name + "-" + ending);
 		return f;
-	
+
 	}
-	
 
 }

@@ -1,6 +1,7 @@
 package org.kite9.diagram;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.adl.AbstractMutableXMLElement;
 import org.kite9.diagram.adl.Link;
 import org.kite9.diagram.batik.format.Kite9SVGTranscoder;
@@ -17,8 +18,7 @@ import org.kite9.diagram.model.DiagramElement;
 import org.kite9.diagram.model.position.RouteRenderingInformation;
 import org.kite9.diagram.testing.DiagramChecker;
 import org.kite9.diagram.testing.TestingHelp;
-import org.kite9.diagram.visualization.pipeline.AbstractArrangementPipeline;
-import org.kite9.diagram.visualization.pipeline.ArrangementPipeline;
+import org.kite9.diagram.visualization.pipeline.NGArrangementPipeline;
 import org.w3c.dom.*;
 
 import javax.xml.XMLConstants;
@@ -28,25 +28,25 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 
+@Tag("ci")
 public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
-	
 
 	protected void renderDiagram(Element d) throws Exception {
 		String xml = new XMLHelper().toXML(d.getOwnerDocument(), true);
 		renderDiagram(xml);
 	}
 
-
 	protected void renderDiagram(String xml) throws Exception {
-		//transcodePNG(full);
+		// transcodePNG(full);
 		try {
 			transcodeSVG(xml);
 			copyTo(getOutputFile(".svg"), "svg-output");
 		} finally {
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
-			AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+			NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
 			boolean addressed = isAddressed();
-			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
+			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed,
+					lastPipeline);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 	protected File getOutputFile(String ending) {
 		Method m = StackHelp.getAnnotatedMethod(Test.class);
 		Class<?> theTest = m.getDeclaringClass();
-		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName()+ending);
+		File f = TestingHelp.prepareFileName(theTest, m.getName(), m.getName() + ending);
 		return f;
 	}
 
@@ -73,40 +73,39 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 		out.checkMidConnection = checkMidConnections();
 		return out;
 	}
-	
+
 	protected boolean checkMidConnections() {
 		return true;
 	}
 
-
 	protected boolean checkOcclusion() {
 		return true;
 	}
-	
+
 	protected boolean checkDiagramSize() {
 		return false;
 	}
-	
+
 	protected boolean checkEdgeDirections() {
 		return true;
 	}
-	
+
 	protected boolean checkNoHops() {
 		return true;
 	}
-	
+
 	protected boolean checkEverythingStraight() {
 		return true;
 	}
-	
+
 	protected boolean checkLayout() {
 		return true;
 	}
-	
+
 	protected boolean checkNoContradictions() {
 		return true;
 	}
-		
+
 	protected DiagramElement getById(final String id, Element d) {
 		Element x = d.getOwnerDocument().getElementById(id);
 		DiagramElement de = Kite9SVGTranscoder.lastContext.getRegisteredDiagramElement(x);
@@ -115,7 +114,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected void mustTurn(Diagram d, Link l) {
 		DiagramChecker.checkConnnectionElements(d, new DiagramChecker.ConnectionAction() {
-	
+
 			@Override
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
 				if (l == c) {
@@ -129,7 +128,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 
 	protected void mustContradict(Diagram diag, Link l) {
 		DiagramChecker.checkConnnectionElements(diag, new DiagramChecker.ConnectionAction() {
-			
+
 			@Override
 			public void action(RouteRenderingInformation rri, Object d, Connection c) {
 				if (c == l) {
@@ -140,10 +139,10 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 			}
 		});
 	}
-	
+
 	public void generate(String name) throws Exception {
 		try {
-			InputStream is = this.getClass().getResourceAsStream("/org/kite9/diagram/xml/"+name);
+			InputStream is = this.getClass().getResourceAsStream("/org/kite9/diagram/xml/" + name);
 			InputStreamReader isr = new InputStreamReader(is);
 			StringWriter sw = new StringWriter();
 			StreamHelp.streamCopy(isr, sw, true);
@@ -151,30 +150,37 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 			XMLHelper xmlHelper = new XMLHelper();
 			Document dxe = xmlHelper.fromXML(s);
 			convertOldStructure(dxe.getDocumentElement());
-			dxe.getDocumentElement().setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xslt", Kite9Namespaces.XSL_TEMPLATE_NAMESPACE);
-			dxe.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template", AbstractMutableXMLElement.TRANSFORM);
+			dxe.getDocumentElement().setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xslt",
+					Kite9Namespaces.XSL_TEMPLATE_NAMESPACE);
+			dxe.getDocumentElement().setAttributeNS(Kite9Namespaces.XSL_TEMPLATE_NAMESPACE, "xslt:template",
+					AbstractMutableXMLElement.TRANSFORM);
 
 			// fix for old-style <allLinks> tag
 			String theXML = xmlHelper.toXML(dxe, true);
-			//Kite9Log.setLogging(false);
+			// Kite9Log.setLogging(false);
 			transcodeSVG(theXML);
 			copyTo(getOutputFile(".svg"), "svg-output");
 		} finally {
 			boolean addressed = isAddressed();
 			Diagram lastDiagram = Kite9SVGTranscoder.lastDiagram;
-			AbstractArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
-			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed, lastPipeline);
+			NGArrangementPipeline lastPipeline = Kite9SVGTranscoder.lastPipeline;
+			new TestingEngine().testDiagram(lastDiagram, this.getClass(), getTestMethod(), checks(), addressed,
+					lastPipeline);
 		}
 	}
 
 	private void convertOldStructure(Element dxe) {
 		if (dxe.getTagName().equals("allLinks")) {
 			moveChildrenIntoParentAndDelete(dxe);
-		} if (dxe.getTagName().equals("text")) {
+		}
+		if (dxe.getTagName().equals("text")) {
 			moveChildrenIntoParentAndDelete(dxe);
-		} if (dxe.getTagName().equals("hints")) {
+		}
+		if (dxe.getTagName().equals("hints")) {
 			dxe.getParentNode().removeChild(dxe);
-		} if ((dxe.getTagName().equals("symbols")) && (((Element) dxe.getParentNode()).getTagName().equals("text-line"))) {
+		}
+		if ((dxe.getTagName().equals("symbols"))
+				&& (((Element) dxe.getParentNode()).getTagName().equals("text-line"))) {
 			dxe.getParentNode().removeChild(dxe);
 		} else {
 			NodeList nl = dxe.getChildNodes();
@@ -187,7 +193,7 @@ public class AbstractLayoutFunctionalTest extends AbstractFunctionalTest {
 			convertAttributeToTag(dxe, "label");
 			convertAttributeToTag(dxe, "stereotype");
 		}
-		
+
 	}
 
 	private void moveChildrenIntoParentAndDelete(Element dxe) {

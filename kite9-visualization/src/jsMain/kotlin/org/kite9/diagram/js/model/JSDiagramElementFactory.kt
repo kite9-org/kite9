@@ -8,6 +8,7 @@ import org.kite9.diagram.dom.model.TemporaryConnectedRectangularImpl
 import org.kite9.diagram.dom.painter.*
 import org.kite9.diagram.js.bridge.JSElementContext
 import org.kite9.diagram.js.painter.JSLeafPainter
+import org.kite9.diagram.model.ConnectedRectangular
 import org.kite9.diagram.model.DiagramElement
 import org.kite9.diagram.model.style.DiagramElementType
 import org.kite9.diagram.model.style.RectangularElementUsage
@@ -40,7 +41,7 @@ class JSDiagramElementFactory(context: JSElementContext) : AbstractDiagramElemen
         return out
     }
 
-    override fun createTemporaryConnected(parent: DiagramElement, idSuffix: String): TemporaryConnectedRectangular {
+    override fun createTemporaryConnected(parent: ConnectedRectangular, idSuffix: String): TemporaryConnectedRectangular {
         return TemporaryConnectedRectangularImpl(parent, idSuffix, SVGRectPainter("grid-temporary"))
     }
 

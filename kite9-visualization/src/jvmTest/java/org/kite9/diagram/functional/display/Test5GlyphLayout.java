@@ -1,6 +1,6 @@
 package org.kite9.diagram.functional.display;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kite9.diagram.AbstractDisplayFunctionalTest;
 import org.kite9.diagram.adl.DiagramKite9XMLElement;
 import org.kite9.diagram.adl.Glyph;
@@ -47,7 +47,7 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 		Glyph one = new Glyph("Stereo", "One",
 				createList(
 						new TextLine("Here is line 1"),
-						new TextLine("Here is line 2"), 
+						new TextLine("Here is line 2"),
 						new TextLine("Here is line 3")),
 				createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
@@ -61,17 +61,17 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_5_7_GlyphWithMultilineTextSymbol() throws Exception {
 		Glyph one = new Glyph("Stereo\ntwoer", "One", createList(
-					new TextLine("Here is line 1"),
-					new TextLine("Here is line 2\nand it goes onto multiple\nlines"), 
-					new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
+				new TextLine("Here is line 1"),
+				new TextLine("Here is line 2\nand it goes onto multiple\nlines"),
+				new TextLine("Here is line 3")), createList(new Symbol("Some text", 'q', SymbolShape.DIAMOND)));
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);
 	}
-	
+
 	@Test
 	public void test_5_8_TemplatedGlyphFinal() throws Exception {
 		Glyph one = new Glyph("", "Rob's Glyph", createList(
@@ -80,5 +80,5 @@ public class Test5GlyphLayout extends AbstractDisplayFunctionalTest {
 		DiagramKite9XMLElement d = new DiagramKite9XMLElement("The Diagram", createList(one), null);
 		renderDiagram(d);
 	}
-	
+
 }

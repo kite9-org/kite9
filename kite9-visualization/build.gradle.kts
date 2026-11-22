@@ -1,32 +1,26 @@
 import org.jetbrains.kotlin.gradle.tasks.Kotlin2JsCompile;
+import org.gradle.api.tasks.testing.Test
+import org.gradle.api.tasks.testing.TestDescriptor
+import org.gradle.api.tasks.testing.TestResult
+import java.util.Collections
 
 plugins {
-    id("org.kite9.java-conventions")
     kotlin("multiplatform")
     id("com.dorongold.task-tree") version "2.1.1"
     id("distribution")
     id("jacoco")
 }
 
+jacoco {
+    toolVersion = "0.8.12"
+    reportsDirectory = layout.buildDirectory.dir("reports/jacoco")
+}
+
 kotlin {
 
     jvmToolchain(17)
 
-
-    jvm {
-        withJava()
-        dependencies {
-            implementation("org.apache.xmlgraphics:batik-svggen:1.14")
-            implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
-            implementation("org.apache.xmlgraphics:batik-bridge:1.14")
-            implementation("org.apache.xmlgraphics:batik-ext:1.14")
-            implementation("org.apache.xmlgraphics:xmlgraphics-commons:2.7")
-            implementation("org.apache.xmlgraphics:batik-rasterizer:1.14")
-            implementation("org.apache.xmlgraphics:batik-codec:1.14")
-            testImplementation("junit:junit:4.13.2")
-            testImplementation("org.xmlunit:xmlunit-core:2.9.0")
-        }
-    }
+    jvm()
 
     js(IR) {
         browser()
@@ -34,14 +28,42 @@ kotlin {
     }
 
     sourceSets {
-        val common by creating
-
-        getByName("jvmMain") {
-            dependsOn(common)
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+            }
         }
 
-        getByName("jsMain") {
-            dependsOn(common)
+        val jvmMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib")
+                implementation("org.apache.xmlgraphics:batik-svggen:1.14")
+                implementation("org.apache.xmlgraphics:batik-transcoder:1.14")
+                implementation("org.apache.xmlgraphics:batik-bridge:1.14")
+                implementation("org.apache.xmlgraphics:batik-ext:1.14")
+                implementation("org.apache.xmlgraphics:xmlgraphics-commons:2.7")
+                implementation("org.apache.xmlgraphics:batik-rasterizer:1.14")
+                implementation("org.apache.xmlgraphics:batik-codec:1.14")
+            }
+        }
+
+        val jvmTest by getting {
+            dependencies {
+                implementation("org.junit.jupiter:junit-jupiter:5.10.0")
+                implementation("org.junit.vintage:junit-vintage-engine:5.10.0")
+                implementation("org.junit.platform:junit-platform-suite:1.10.0")
+                implementation("org.junit.platform:junit-platform-suite-engine:1.10.0")
+                implementation("org.xmlunit:xmlunit-core:2.9.0")
+            }
+            tasks.withType<Test> {
+                finalizedBy(tasks.withType(JacocoReport::class))
+            }
+        }
+
+        val jsMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
+            }
         }
     }
 
@@ -51,18 +73,17 @@ gradle.taskGraph.whenReady {
     // this is necessary because otherwise the metadata for the
     // common sourceSet fails to compile (due to DOM classes).
     tasks {
-        getByName("compileCommonKotlinMetadata") {
+        getByName("compileCommonMainKotlinMetadata") {
             enabled = false
         }
     }
 }
 
 tasks.withType<Kotlin2JsCompile>().configureEach {
-    // there are loads of name shadowed warnings which we should eventually fix
-    kotlinOptions.suppressWarnings = true
-
-    // this means source maps work in safari but it blows out the time
-    kotlinOptions.sourceMapEmbedSources = "always"
+    compilerOptions {
+        // this means source maps work in safari but it blows out the time
+        //sourceMapEmbedSources.set(org.jetbrains.kotlin.gradle.targets.js.dsl.JsSourceMapEmbedMode.SOURCE_MAP_SOURCE_CONTENT_ALWAYS)
+    }
 }
 
 description = "Kite9 Visualization"
@@ -77,7 +98,47 @@ val jvmMainSourceJar by tasks.registering(Jar::class) {
     archiveClassifier.set("jvm-sources")
 }
 
-// Exclude performance tests from regular test runs to avoid coverage instrumentation overhead
-tasks.named<Test>("test") {
-    exclude("**/performance/**")
+// Configure JUnit 5
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform {
+        includeTags("ci")
+    }
+}
+
+// Configure JaCoCo to generate XML reports
+tasks.register("jacocoTestReport", JacocoReport::class) {
+      val coverageSourceDirs = arrayOf(
+      "src/jvmMain/kotlin",
+      "src/commonMain/kotlin"
+    )
+
+    val buildDirectory = layout.buildDirectory
+
+    val classFiles = buildDirectory.dir("classes/kotlin/jvm").get().asFile
+        .walkBottomUp()
+        .toSet()
+
+    classDirectories.setFrom(classFiles)
+    
+    // Add path prefix to help Codecov map package paths correctly
+    sourceDirectories.setFrom(files(
+        projectDir.resolve("src/jvmMain/kotlin"),
+        projectDir.resolve("src/commonMain/kotlin")
+    ))
+
+    buildDirectory.files("jacoco/jvmTest.exec").let {
+        executionData.setFrom(it)
+    }
+
+    reports {
+        xml.required = true
+        csv.required = true
+        html.required = true
+    }
+
+}
+
+// Make tests always generate coverage reports, even if they fail
+tasks.withType<Test>().configureEach {
+    finalizedBy(tasks.named("jacocoTestReport"))
 }
