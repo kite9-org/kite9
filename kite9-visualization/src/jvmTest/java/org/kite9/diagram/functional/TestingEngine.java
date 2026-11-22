@@ -34,6 +34,8 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Co
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup;
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.AxisHandlingGroupingStrategy;
+import org.kite9.diagram.visualization.planarization.rhd.position.DistanceBasedRoutableHandler2D;
+import org.kite9.diagram.visualization.planarization.rhd.position.LayeredRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D;
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo;
 
@@ -265,7 +267,7 @@ public class TestingEngine extends TestingHelp {
 		});
 	}
 
-	public static void drawPositions(GroupResult gr, PositionRoutableHandler2D rr, Class<?> theTest, String subtest, String item) {
+	public static void drawPositions(GroupResult gr, LayeredRoutableHandler2D rr, Class<?> theTest, String subtest, String item) {
 		File target = new File("build");
 		if (!target.isDirectory()) {
 			return;
@@ -481,7 +483,7 @@ public class TestingEngine extends TestingHelp {
 
 	}
 
-	private static void drawGroup(Group group, PositionRoutableHandler2D rr, Color[] cols, Graphics2D g, int size, HashSet<Group> done) {
+	private static void drawGroup(Group group, LayeredRoutableHandler2D rr, Color[] cols, Graphics2D g, int size, HashSet<Group> done) {
 		if (group instanceof LeafGroup) {
 			if (!done.contains(group)) {
 				PositionRoutingInfo pri = (PositionRoutingInfo) rr.getPlacedPosition(group);

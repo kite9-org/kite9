@@ -1,7 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.position
 
 import org.kite9.diagram.common.elements.Dimension
-import org.kite9.diagram.common.elements.RoutingInfo
 import org.kite9.diagram.common.objects.Bounds
 import org.kite9.diagram.model.position.Direction
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup

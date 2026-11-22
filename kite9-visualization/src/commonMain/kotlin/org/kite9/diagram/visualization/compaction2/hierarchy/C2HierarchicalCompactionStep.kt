@@ -15,9 +15,11 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.CompoundGroup
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.position.DistanceBasedRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
-class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: PositionRoutableHandler2D, gp: GridPositioner) : AbstractC2ContainerCompactionStep(cd, rr, gp) {
+class C2HierarchicalCompactionStep(cd: CompleteDisplayer,  rr: RoutableHandler2D, gp: GridPositioner) : AbstractC2ContainerCompactionStep(cd, rr, gp) {
 
     var first = true
     var leafGroupElements : Set<DiagramElement> = emptySet()

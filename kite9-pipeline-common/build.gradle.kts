@@ -3,6 +3,10 @@ plugins {
     id("org.kite9.java-conventions")
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 dependencies {
     implementation(project(":kite9-visualization"))
     implementation("org.xmlunit:xmlunit-core:2.9.0")

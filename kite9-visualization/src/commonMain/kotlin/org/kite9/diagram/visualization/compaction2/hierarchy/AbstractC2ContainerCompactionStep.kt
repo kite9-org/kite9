@@ -17,14 +17,16 @@ import org.kite9.diagram.visualization.display.CompleteDisplayer
 import org.kite9.diagram.model.RectangularLinkNode
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.position.DistanceBasedRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutingInfo
+import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
  * This makes sure that any time we have all the groups to complete a container, we wrap the groups in the
  * container(s) and use that instead.
  */
-abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: PositionRoutableHandler2D, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
+abstract class AbstractC2ContainerCompactionStep(cd: CompleteDisplayer, val rr: RoutableHandler2D, gp: GridPositioner) : AbstractC2BuilderCompactionStep(cd, gp) {
 
     val containerPositions = mutableMapOf<DiagramElement, PositionRoutingInfo>()
 

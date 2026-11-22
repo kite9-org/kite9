@@ -1,5 +1,6 @@
 package org.kite9.diagram.visualization.planarization.rhd.layout
 
+import org.kite9.diagram.common.elements.Dimension
 import org.kite9.diagram.common.hints.compareEitherXBounds
 import org.kite9.diagram.common.hints.compareEitherYBounds
 import org.kite9.diagram.logging.Kite9Log
@@ -15,8 +16,10 @@ import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Co
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.Group
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LayoutSetPoint
 import org.kite9.diagram.visualization.planarization.rhd.grouping.basic.group.LeafGroup
+import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.AxisType
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedGroupAxis
 import org.kite9.diagram.visualization.planarization.rhd.grouping.directed.group.DirectedLinkManager
+import org.kite9.diagram.visualization.planarization.rhd.position.LayeredRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 /**
@@ -25,7 +28,7 @@ import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandle
  *
  * @author robmoffat
  */
-abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : LayoutStrategy, Logable {
+abstract class AbstractTopDownLayoutStrategy(val rh: LayeredRoutableHandler2D) : LayoutStrategy, Logable {
 
     var log = Kite9Log.instance(this)
 
@@ -431,16 +434,76 @@ abstract class AbstractTopDownLayoutStrategy(val rh: RoutableHandler2D) : Layout
 
     override fun layout(mr: GroupResult, lq: LayoutQueue) {
 
-        fun offerAllGroups(g: Group) {
+        val topGroup = mr.groups().iterator().next()
+
+        fun layer(g: Group) : Pair<Set<Set<Group>>, Set<Set<Group>>> {
             if (g is CompoundGroup) {
-                lq.offer(g)
-                offerAllGroups(g.a)
-                offerAllGroups(g.b)
+                val aLayers = layer(g.a)
+                val bLayers = layer(g.b)
+
+                val ha = aLayers.first
+                val hb = bLayers.first
+                val horiz = if ((g.axis.getAxisType() == AxisType.ALIGNED_IN_AXIS)  && (g.axis.isHorizontal)) {
+                    if ((ha.size == 1) && (hb.size == 1)) {
+                        setOf(ha.first() + hb.first())
+                    } else {
+                        ha + hb
+                    }
+                } else {
+                    ha + hb
+                }
+
+                val va = aLayers.second
+                val vb = bLayers.first
+
+                val vert = if ((g.axis.getAxisType() == AxisType.ALIGNED_IN_AXIS) && (g.axis.isVertical)) {
+                    if ((va.size == 1) && (vb.size == 1)) {
+                        setOf(va.first()+ vb.first())
+                    } else {
+                        va + vb
+                    }
+                } else {
+                    va + vb
+                }
+
+                return Pair(horiz, vert)
+            } else if (g is LeafGroup) {
+                return Pair(setOf(setOf(g)), setOf(setOf(g)))
+            } else {
+                throw LogicException("Should be a leaf or a compound" )
             }
         }
 
-        val g = mr.groups().iterator().next()
-        offerAllGroups(g)
+        val layers = layer(topGroup)
+
+        layers.first.forEach { rh.createLayer(it, Dimension.H)}
+        layers.second.forEach { rh.createLayer(it, Dimension.V)}
+
+        fun order(g: Group) : Pair<Set<Group>, Set<Group>> {
+            if (g is CompoundGroup) {
+                val aGroups = order(g.a)
+                val bGroups = order(g.b)
+
+                val layout = g.getLayout()
+
+                when (layout) {
+                    Layout.RIGHT -> rh.orderLayers(aGroups.first, bGroups.first, Dimension.H)
+                    Layout.LEFT -> rh.orderLayers(bGroups.first, aGroups.first, Dimension.H)
+                    Layout.DOWN -> rh.orderLayers(aGroups.second, bGroups.second, Dimension.V)
+                    Layout.RIGHT -> rh.orderLayers(bGroups.second, aGroups.second, Dimension.V)
+                    else -> null // nothing
+                }
+
+                return Pair(aGroups.first + bGroups.first, aGroups.second + bGroups.second)
+            } else if (g is LeafGroup) {
+                return Pair(setOf(g), setOf(g))
+            } else {
+                throw LogicException("Should be a leaf or a compound" )
+            }
+        }
+
+        order(topGroup)
+
         chooseBestPlacement(lq)
     }
 

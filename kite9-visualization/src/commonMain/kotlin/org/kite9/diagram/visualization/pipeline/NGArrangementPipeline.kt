@@ -35,7 +35,8 @@ import org.kite9.diagram.visualization.planarization.rhd.layout.LayoutStrategy
 import org.kite9.diagram.visualization.planarization.rhd.layout.MostNetworkedFirstLayoutQueue
 import org.kite9.diagram.visualization.planarization.rhd.links.BasicContradictionHandler
 import org.kite9.diagram.visualization.planarization.rhd.links.ContradictionHandler
-import org.kite9.diagram.visualization.planarization.rhd.position.PositionRoutableHandler2D
+import org.kite9.diagram.visualization.planarization.rhd.position.DistanceBasedRoutableHandler2D
+import org.kite9.diagram.visualization.planarization.rhd.position.LayeredRoutableHandler2D
 import org.kite9.diagram.visualization.planarization.rhd.position.RoutableHandler2D
 
 class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFactory<*>,
@@ -44,7 +45,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
     private val log = Kite9Log.instance(this)
 
     private var mr: GroupResult? = null
-    private var rr: PositionRoutableHandler2D? = null
+    private var rr: LayeredRoutableHandler2D? = null
     private var c2: C2Compaction? = null
     private val gp: GridPositioner = GridPositionerImpl(diagramElementFactory)
 
@@ -65,7 +66,7 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
 
     private fun layout(mr: GroupResult) {
         val topGroup: Group = mr.groups().iterator().next()
-        val routableReader = PositionRoutableHandler2D()
+        val routableReader = DistanceBasedRoutableHandler2D()
         val layout: LayoutStrategy = DirectionLayoutStrategy(routableReader)
         outputGroupInfo(topGroup, 1, routableReader)
         layout.layout(mr, MostNetworkedFirstLayoutQueue(topGroup.groupNumber))
@@ -149,8 +150,8 @@ class NGArrangementPipeline(private val diagramElementFactory: DiagramElementFac
         return mr
     }
 
-    fun getRoutableReader(): PositionRoutableHandler2D? {
-        return rr
+    fun getRoutableReader(): LayeredRoutableHandler2D {
+        return rr!!
     }
 
     fun getCompaction():  C2Compaction? {
